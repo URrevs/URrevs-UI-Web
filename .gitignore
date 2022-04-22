@@ -21,3 +21,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Local Netlify folder
+.netlify
+
+# .env
+.env
+
+.vscode
+
+src/firebase-config.json

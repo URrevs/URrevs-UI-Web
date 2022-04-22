@@ -1,0 +1,2 @@
+/api/*  https://urrevsdemo.herokuapp.com/:splat 200
+/*  /index.html  200
