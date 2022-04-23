@@ -93,7 +93,7 @@ export default function Layout(props) {
           <animated.div
             style={{
               ...logoAnimationStyles,
-              margin: "7px 10px 0 18px",
+              margin: "5px 0px 0px 0px",
             }}
           >
             <img
