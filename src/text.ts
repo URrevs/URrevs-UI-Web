@@ -95,7 +95,7 @@ export const text: FullDictionary = {
         },
       },
       actions: {
-        like: "اعجاب",
+        like: "إعجاب",
         liked: "أعجبني",
         comment: "تعليق",
         share: "مشاركة",
