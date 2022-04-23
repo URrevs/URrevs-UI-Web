@@ -49,9 +49,12 @@ function App() {
         searchBarColor: isDark ? "#3A3B3C" : COLORS.ce5e5e7,
         searchIcon: isDark ? "#B0B3B8" : COLORS.c65676B,
       },
+      authenticationButtons: {
+        googleButtonColor: COLORS.c65676b,
+      },
       leaderBoard: {
         entryCard: COLORS.cffffff,
-        rankCircle: COLORS.cf0f2f5
+        rankCircle: COLORS.cf0f2f5,
       },
       bottomNavigationBar: isDark ? "#18191A" : COLORS.cffffff,
       background: {
