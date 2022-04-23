@@ -9,9 +9,8 @@ const LoginButton = styled(Button, {
   justifyContent: "center",
   alignItems: "center",
   width: "80%",
-  padding: "12px 24px",
-  height: "48px",
-  boxShadow: `0px 2px 6px 0px ${color} `,
+  minHeight: "40px",
+  boxShadow: `2px 2px 6px -2px ${color} `,
   border: `1.5px solid  ${color}`,
   borderRadius: "26px",
 }));
@@ -34,6 +33,7 @@ export const AuthenticationButton = ({
             margin: "0px 16px",
           }}
         />
+
         <Typography variant={`S18W700C${textColor}`}>{text}</Typography>
       </LoginButton>
     </div>

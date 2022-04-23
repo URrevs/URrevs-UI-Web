@@ -10,6 +10,7 @@ const ComponentsTest = (props) => {
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
+        backgroundColor: "#FFF",
       }}
     >
       <br />
