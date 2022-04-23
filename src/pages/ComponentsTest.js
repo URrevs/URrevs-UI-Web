@@ -1,11 +1,13 @@
 import { Star } from "@mui/icons-material";
 import { SvgIcon } from "@mui/material";
 import { Fragment } from "react";
+import { AuthenticationButtons } from "../Components/Authentication/LoginButtons";
 import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
 
 const ComponentsTest = (props) => {
   return (
     <Fragment>
+      <AuthenticationButtons />
       <LeaderboardEntry />
       <Star />
       {/* <img width={48} height={48} src="./images/google.png" />
