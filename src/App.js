@@ -52,6 +52,7 @@ function App() {
       },
       authenticationButtons: {
         googleButtonColor: COLORS.c65676b,
+        facebookButtonColor: COLORS.c2196f3,
       },
       leaderBoard: {
         entryCard: COLORS.cffffff,

@@ -21,6 +21,7 @@ export const GoogleButton = () => {
       alt="google logo"
       color={theme.palette.authenticationButtons.googleButtonColor}
       text={authenticationPage.ar.GoogleButton}
+      textColor="65676B"
       imageSrc="./images/google.png"
     ></AuthenticationButton>
   );
