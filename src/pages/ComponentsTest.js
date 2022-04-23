@@ -1,11 +1,13 @@
 import { Fragment } from "react";
-import { AuthenticationButtons } from "../Components/Authentication/LoginButtons";
+import { AuthenticationButton } from "../Components/Authentication/AuthenticationButton";
+import { GoogleButton } from "../Components/Authentication/GoogleButton";
 import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
 
 const ComponentsTest = (props) => {
   return (
     <Fragment>
-      <AuthenticationButtons />
+      <GoogleButton />
+      <br />
       <LeaderboardEntry />
       <div>dasdna </div>
       <div>dasdna </div>
