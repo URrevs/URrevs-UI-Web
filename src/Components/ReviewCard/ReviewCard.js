@@ -20,6 +20,10 @@ import StarRating from "../AddReview/StarRating";
 import BottomCardActionBtn from "./BottomCardActionBtn";
 import ExpansionArrow from "./ExpansionArrow";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import ArrowLeftRoundedIcon from "@mui/icons-material/ArrowLeftRounded";
+import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
 
 const useStyles = makeStyles({
   card: {
@@ -131,23 +135,45 @@ export default function ReviewCard({ ukey, onExpand, index }) {
             <div
               style={{
                 display: "flex",
-                flexWrap: "wrap",
+                alignItems: "center",
               }}
             >
-              <Typography
-                variant="S16W700C050505"
+              <Typography variant="S16W700C050505">
+                {reviewDetails.user_name + " "}
+              </Typography>
+              <div
                 style={{
-                  direction: theme.direction,
-                  display: theme.direction === "rtl" ? "flex" : "block",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
-                {reviewDetails.user_name + " "}
-                <Typography variant="S16W700C050505" sx={{ padding: "0 4px" }}>
-                  {theme.direction === "ltr" ? "▶" : "◀"}
-                </Typography>
-              </Typography>
-              <Typography variant="S16W700C050505">
-                {reviewDetails.brand + " " + reviewDetails.product + " "}
+                {theme.direction === "rtl" ? (
+                  <ArrowLeftRoundedIcon
+                    htmlColor={theme.palette.reviewCard.reviewArrow}
+                    sx={{ fontSize: 30 }}
+                  />
+                ) : (
+                  <ArrowRightRoundedIcon
+                    htmlColor={theme.palette.reviewCard.reviewArrow}
+                    sx={{ fontSize: 30 }}
+                  />
+                )}
+              </div>
+              <Typography
+                variant="S16W700C050505"
+                sx={{
+                  display: "-webkit-box",
+                  overflow: "hidden",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 2,
+                }}
+                text
+              >
+                {reviewDetails.brand +
+                  " " +
+                  reviewDetails.product +
+                  " " +
+                  "asdkj baskb dasn dksanl dnasljd laskjd klasjd "}
               </Typography>
             </div>
           </React.Fragment>
@@ -158,12 +184,28 @@ export default function ReviewCard({ ukey, onExpand, index }) {
               {reviewDetails.user}
             </Typography>
 
-            <Typography variant="S14W400C65676b">
-              {reviewDetails.date_rev.split(" ")[0] +
-                " • " +
-                "امتلكه منذ " +
-                reviewDetails.date_buy.split(" ")[0]}
-            </Typography>
+            <div style={{}}>
+              <Typography variant="S14W400C65676b">
+                {reviewDetails.date_rev.split(" ")[0]}
+              </Typography>
+              <Typography variant="S14W700C050505"> • </Typography>
+
+              <Typography variant="S14W400C65676b">
+                {"امتلكه منذ " + reviewDetails.date_buy.split(" ")[0]}
+              </Typography>
+              <Typography variant="S14W700C050505"> •</Typography>
+
+              <Typography variant="S14W400C65676b">
+                <RemoveRedEyeIcon
+                  style={{
+                    fontSize: "19",
+                    verticalAlign: "middle",
+                    margin: "0 2px",
+                  }}
+                />
+                100
+              </Typography>
+            </div>
           </React.Fragment>
         }
       />
@@ -258,7 +300,7 @@ export default function ReviewCard({ ukey, onExpand, index }) {
 
           <BottomCardActionBtn
             title={textContainer.reviewCard.actions.comment}
-            icon={<CommentOutlinedIcon fontSize="medium" />}
+            icon={<ChatBubbleOutlineOutlinedIcon fontSize="medium" />}
           />
 
           <BottomCardActionBtn
