@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
+import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import { Container } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import * as React from "react";
@@ -31,7 +31,7 @@ const ExpansionArrow = ({
         }}
       >
         {expanded ? (
-          <ArrowDropUpIcon
+          <ArrowDropUpRoundedIcon
             onClick={() => {
               setExpanded(false);
               handleExpandClick();
@@ -39,7 +39,7 @@ const ExpansionArrow = ({
             }}
           />
         ) : (
-          <ArrowDropDownIcon
+          <ArrowDropDownRoundedIcon
             onClick={() => {
               handleExpandClick();
               onExpand(index);
