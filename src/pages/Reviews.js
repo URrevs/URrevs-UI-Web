@@ -1,18 +1,18 @@
 import { useTheme } from "@emotion/react";
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
 import {
   AutoSizer,
   CellMeasurer,
   CellMeasurerCache,
   List,
-  WindowScroller,
+  WindowScroller
 } from "react-virtualized";
 import LoadingReviewSkeleton, {
-  loadingSkeletonHeight,
+  loadingSkeletonHeight
 } from "../Components/Loaders/LoadingReviewSkeleton";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import { useGetAllReviewsQuery } from "../services/reviews";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
 
 const cache = new CellMeasurerCache({
