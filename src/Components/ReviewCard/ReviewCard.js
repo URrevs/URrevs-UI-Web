@@ -3,7 +3,7 @@ import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
-import { Button, Container, useMediaQuery } from "@mui/material";
+import { Button, Container, Stack, useMediaQuery } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -29,6 +29,7 @@ import {
   MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND,
   MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND,
 } from "../../constants";
+import FooterButton from "./FooterButton";
 
 const useStyles = makeStyles({
   card: {
@@ -359,11 +360,63 @@ export default function ReviewCard({ ukey, onExpand, index }) {
         ) : (
           <></>
         )}{" "}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            margin: "8px 0px 6px 0px",
+          }}
+        >
+          <FooterButton
+            icon={
+              <ThumbUpAltOutlinedIcon
+                style={{
+                  color: theme.palette.reviewCard.actionBtnIcon,
+                  fontSize: "20px",
+                }}
+              />
+            }
+            number={100}
+            isClickable={false}
+          />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <FooterButton
+              icon={
+                <ChatBubbleOutlineOutlinedIcon
+                  style={{
+                    color: theme.palette.reviewCard.actionBtnIcon,
+                    fontSize: "20px",
+                  }}
+                />
+              }
+              number={100}
+              isClickable={true}
+            />
+            <div style={{ width: "10px" }}></div>
+            <FooterButton
+              icon={
+                <ShareOutlinedIcon
+                  style={{
+                    color: theme.palette.reviewCard.actionBtnIcon,
+                    fontSize: "20px",
+                  }}
+                />
+              }
+              number={100}
+              isClickable={false}
+            />
+          </div>
+        </div>
       </CardContent>
       <hr
         style={{
           background: "white",
-          margin: "15px 12px 0px 12px",
+          margin: "0px 12px 0px 12px",
           padding: "0",
           border: "double white 10",
         }}
