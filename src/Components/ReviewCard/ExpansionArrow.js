@@ -32,6 +32,7 @@ const ExpansionArrow = ({
       >
         {expanded ? (
           <ArrowDropUpRoundedIcon
+            sx={{ fontSize: "30px" }}
             onClick={() => {
               setExpanded(false);
               handleExpandClick();
@@ -40,6 +41,7 @@ const ExpansionArrow = ({
           />
         ) : (
           <ArrowDropDownRoundedIcon
+            sx={{ fontSize: "30px" }}
             onClick={() => {
               handleExpandClick();
               onExpand(index);

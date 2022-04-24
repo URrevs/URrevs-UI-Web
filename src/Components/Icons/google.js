@@ -1,6 +1,7 @@
-import GoogleIcon from "@mui/icons-material/Google";
+// import GoogleSVG from "./images/google.svg";
 
 const GoogleLogo = ({ size }) => {
-  return <img alt="google-logo" src="./google.png" />;
+  return ;
 };
+
 export default GoogleLogo;

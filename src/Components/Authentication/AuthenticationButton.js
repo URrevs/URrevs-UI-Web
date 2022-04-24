@@ -8,8 +8,8 @@ const LoginButton = styled(Button, {
   flexDirection: "row",
   justifyContent: "center",
   alignItems: "center",
+  padding: 0,
   width: "80%",
-  minHeight: "40px",
   boxShadow: `2px 2px 6px -2px ${color} `,
   border: `1.5px solid  ${color}`,
   borderRadius: "26px",
@@ -17,23 +17,15 @@ const LoginButton = styled(Button, {
 export const AuthenticationButton = ({
   text,
   textColor,
-  imageSrc,
+  image,
   alt,
   color,
 }) => {
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div style={{ display: "flex", justifyContent: "center", minHeight: 48 }}>
       <LoginButton color={color}>
-        <img
-          src={imageSrc}
-          alt={alt}
-          width="40 px"
-          height="40 px"
-          style={{
-            margin: "0px 16px",
-          }}
-        />
-
+        {image}
+        <div style={{ width: "10px" }}></div>
         <Typography variant={`S18W700C${textColor}`}>{text}</Typography>
       </LoginButton>
     </div>
