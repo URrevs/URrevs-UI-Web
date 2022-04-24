@@ -51,6 +51,9 @@ function App() {
         searchBarColor: isDark ? "#3A3B3C" : COLORS.ce5e5e7,
         searchIcon: isDark ? "#B0B3B8" : COLORS.c65676B,
       },
+      commentCard: {
+        backgroundColor: COLORS.cffffff,
+      },
       authenticationButtons: {
         googleButtonColor: COLORS.c65676b,
         facebookButtonColor: COLORS.c2196f3,

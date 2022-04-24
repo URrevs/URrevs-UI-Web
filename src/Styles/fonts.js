@@ -16,6 +16,11 @@ export const fonts = {
     fontSize: 13,
     color: "#2196F3",
   },
+  S13W400C65676B: {
+    fontWeight: 400,
+    fontSize: 13,
+    color: "#65676B",
+  },
   // bottom nav bar focused
   S14W700C2196f3: {
     fontWeight: 700,
@@ -49,7 +54,11 @@ export const fonts = {
     fontSize: 14,
     color: "#050505",
   },
-
+  S14W400C000000: {
+    fontWeight: 400,
+    fontSize: 14,
+    color: "#000000",
+  },
   S16W800C050505: {
     fontWeight: 800,
     fontSize: 16,
