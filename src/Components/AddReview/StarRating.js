@@ -49,7 +49,11 @@ const StarRating = ({
               <Rating
                 readOnly={readOnly}
                 value={starValue}
-                emptyIcon={<StarBorderRoundedIcon htmlColor="#000" />}
+                emptyIcon={
+                  <Star
+                    color={globalTheme.palette.reviewCard.emptyStarColor}
+                  />
+                }
                 icon={
                   <Star
                     color={globalTheme.palette.reviewCard.filledStarColor}

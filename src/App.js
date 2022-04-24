@@ -38,6 +38,7 @@ function App() {
         actionBtnBG: isDark ? COLORS.c000000 : COLORS.c000000,
         expandIcon: isDark ? "#4ED5F6" : COLORS.c4ed5f6,
         filledStarColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
+        emptyStarColor: isDark ? COLORS.c65676b : COLORS.c65676b,
         reviewArrow: isDark ? COLORS.c65676b : COLORS.c65676b,
       },
       drawer: {
