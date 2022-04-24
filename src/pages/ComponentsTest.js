@@ -25,6 +25,7 @@ const testComments = {
 };
 const ComponentsTest = (props) => {
   return (
+<<<<<<< HEAD
     <div>
       <div
         style={{
@@ -56,6 +57,24 @@ const ComponentsTest = (props) => {
         <LeaderboardEntry />
         <Star />
         {/* <img width={48} height={48} src="./images/google.png" />
+=======
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        backgroundColor: "#FFF",
+      }}
+    >
+      <br />
+      <GoogleButton />
+      <br />
+      <FacebookButton />
+      <br />
+      <LeaderboardEntry />
+      <Star />
+      {/* <img width={48} height={48} src="./images/google.png" />
+>>>>>>> 7326c3fcc73ed0bc84e382f7d79d11707498a3d2
       <img width={48} height={48} src="./images/google1.png" /> */}
         <img
           alt="svgImg"
