@@ -24,6 +24,11 @@ import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutline
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import ArrowLeftRoundedIcon from "@mui/icons-material/ArrowLeftRounded";
 import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
+import { cropText } from "../../functions/cropText";
+import {
+  MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND,
+  MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND,
+} from "../../constants";
 
 const useStyles = makeStyles({
   card: {
@@ -43,6 +48,14 @@ export default function ReviewCard({ ukey, onExpand, index }) {
     (state) => state.reviews.newReviews[index]
   );
 
+  let pros =
+    "Xiaomi mi9t or k20  الهاتف باختصار اداك مميزات كثيرة جدا بسعر قليل لو المميزات دي حطتها في شركة تانيه يعدى ال ١٠ الف و هو اعلى نسخة منه ٥٩٩٩ اولا processor Snapdragon 730  الصراحه جربته على كل ال apps التقيلة و مهنجش فاي واحد ده غير التنقل بين ال apps بسرعه جدا و مدة فتح اي واحد من ثانية لي اثنين  Ram 6gb و طبعا مساعدة فالسرعه جدا    اهم جزء camera  بيجي ب٣ كاميرات  ١ . كاميرا ٤٨ ميجا و زاوية واسعة ودي فالتفاصيل خرافة + معالجة الصور في الكام دي حلوة جدا   ٢. Wide angle ودي خالتني اصور بزاوية واسعه جدا ٠.٦ x ومتوقعتش ان الصورة تطلع فيه حلوة وخصوصا فالاضاءة القوية  ٣. كاميرا العزل ودي شايف انها مش اوي الصراحة وشاومي قالت هتظبطها مع الابديت الجديد  تجربة ال hdr فالصور حلوة جدا  .من اكتر الحجات الحلوة night mide و دي بتوزع الاضاءة بشكل ممتاز بالليل وده من اهم السوفتوير فيتشرز اللي اضافتها  بالنسبة للزوم فانت لحد ٢x الصورة حلوة اما بتزود الصورة بتتدمر  الفيديو بيصور لحد 4k او 1080 60 fps ده موجود فاي موبايل انما الجديد ال staplizer اللي شاومي حطته فالموبايل مثبت الكاميرا فالفيديو بشكل رهيب زي كاميرا gopro لو عارفينها +حطو التثبيت ده كمان في الزاوية الواسعه لك ان تتخيل با  في برضو بعض الحجات زي تايم لابس و slow motion بس شايفهم عاديين  ال pop up فيها كل الmodes اللي فوق +٢٠ ميجا وصورها حلوة بس مش واو يعني بس ممكن تغير صوت الكام حاجه روشه متخافش من البوب اب لان احساس الشاشه الكاملة حاجه تانية.   الشاشة amaloed حاجه فخمه جدا وصورة جميلة جدا و خصوصا لما جربت hdr+ على اليوتيوب الشاشة الكاملة حلوة جدا فالفيديوهات  البصمة المدمجه فالشاشة اثبتت نجاحها مش زي a70 سريعه جدا  .برضو قفل الوجه سريع و بيفتح فالاضاءة القليلة   تصميم الموبايل   مريح فالايد والضهر ازاز وشكله جميل و الشاشة gorilla 5plus الموبايل وقع مرتين ومنكسرش   في با بعض الحجات هتلاقوها فالسيتنج لزيزة بس موجودة في موبايلات كتير زي الموبايلين عشان الخصوصية     الموبايل بيشحن في ساعه لحد ٩٠/١٠٠  ";
+
+  let cons = reviewDetails.cons;
+
+  const userName = reviewDetails.user_name;
+  const productName = reviewDetails.brand + " " + reviewDetails.product + " ";
+
   const classes = useStyles({ isMobile });
 
   const initialIsExpanded = reviewDetails.isExpanded === true ? true : false;
@@ -50,6 +63,26 @@ export default function ReviewCard({ ukey, onExpand, index }) {
 
   const initialIsLiked = reviewDetails.isExpanded === true ? true : false;
   const [isLiked, setIsLiked] = React.useState(initialIsLiked);
+
+  const [croppedText, setCroppedText] = React.useState({
+    pros: "",
+    cons: "",
+    endOfText: false,
+  });
+
+  React.useEffect(() => {
+    setCroppedText(
+      cropText(
+        pros,
+        cons,
+        MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND,
+        MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND
+      )
+    );
+    onExpand(index);
+  }, []);
+
+  console.log(croppedText);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const starsRatingTextContainer = useAppSelector(
@@ -65,7 +98,34 @@ export default function ReviewCard({ ukey, onExpand, index }) {
         isExpanded: !expanded,
       })
     );
-    setExpanded(!expanded);
+    onExpand(index);
+    if (croppedText.endOfText) {
+      // shrink
+      setExpanded(false);
+      setCroppedText(
+        cropText(
+          pros,
+          cons,
+          MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND,
+          MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND
+        )
+      );
+    } else if (expanded) {
+      // expand to infinity
+      setExpanded(true);
+      setCroppedText(cropText(pros, cons, 10000, 10000));
+    } else {
+      setExpanded(true);
+      // expand to limit
+      setCroppedText(
+        cropText(
+          pros,
+          cons,
+          MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND,
+          MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND
+        )
+      );
+    }
   };
 
   const actionButtonsDivider = (
@@ -113,10 +173,6 @@ export default function ReviewCard({ ukey, onExpand, index }) {
             reviewDetails.user_avatar === "" ? null : (
               <img
                 src={reviewDetails.user_avatar}
-                onError={({ currentTarget }) => {
-                  currentTarget.onerror = null; // prevents looping
-                  currentTarget.src = "/male.jpg";
-                }}
                 style={{
                   width: `${userAvatarRadius}px`,
                   height: `${userAvatarRadius}px`,
@@ -138,8 +194,19 @@ export default function ReviewCard({ ukey, onExpand, index }) {
                 alignItems: "center",
               }}
             >
-              <Typography variant="S16W700C050505">
-                {reviewDetails.user_name + " "}
+              <Typography
+                sx={{
+                  display: "-webkit-box",
+                  overflow: "hidden",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 2,
+                  textAlign: "center",
+                  direction: "rtl",
+                  maxWidth: "50%",
+                }}
+                variant="S16W700C050505"
+              >
+                {userName}
               </Typography>
               <div
                 style={{
@@ -166,14 +233,12 @@ export default function ReviewCard({ ukey, onExpand, index }) {
                   overflow: "hidden",
                   WebkitBoxOrient: "vertical",
                   WebkitLineClamp: 2,
+                  textAlign: "center",
+                  direction: "rtl",
+                  maxWidth: "50%",
                 }}
-                text
               >
-                {reviewDetails.brand +
-                  " " +
-                  reviewDetails.product +
-                  " " +
-                  "asdkj baskb dasn dksanl dnasljd laskjd klasjd "}
+                {productName}
               </Typography>
             </div>
           </React.Fragment>
@@ -257,13 +322,43 @@ export default function ReviewCard({ ukey, onExpand, index }) {
             handleExpandClick={handleExpandClick}
           />
         )}
-
         {prosConsTitle(textContainer.reviewCard.body.pros)}
-        <Typography variant="S16W400C050505">{reviewDetails.pros}</Typography>
+        <Typography variant="S16W400C050505">{croppedText.pros}</Typography>
         {`\n`}
-
-        {prosConsTitle(textContainer.reviewCard.body.cons)}
-        <Typography variant="S16W400C050505">{reviewDetails.cons}</Typography>
+        {/* {croppedText.cons.length === 0 && (
+          <div>
+            <Typography
+              sx={{ textDecoration: "underline" }}
+              variant="S18W800C050505"
+            >
+              المزيد
+            </Typography>
+          </div>
+        )} */}
+        {croppedText.cons.length != 0 &&
+          prosConsTitle(textContainer.reviewCard.body.cons)}
+        <Typography variant="S16W400C050505">{croppedText.cons}</Typography>
+        {croppedText.endOfText === false || expanded ? (
+          <div
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={() => handleExpandClick()}
+          >
+            <Typography
+              sx={{ textDecoration: "underline" }}
+              variant="S18W800C050505"
+            >
+              {croppedText.endOfText
+                ? "اقل"
+                : expanded
+                ? "المزيد والمزيد"
+                : "المزيد"}
+            </Typography>
+          </div>
+        ) : (
+          <></>
+        )}{" "}
       </CardContent>
       <hr
         style={{
