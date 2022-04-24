@@ -45,6 +45,7 @@ const useStyles = makeStyles({
 export default function ReviewCard({ ukey, onExpand, index }) {
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width:700px)");
+
   const reviewDetails = useAppSelector(
     (state) => state.reviews.newReviews[index]
   );
@@ -83,8 +84,6 @@ export default function ReviewCard({ ukey, onExpand, index }) {
     onExpand(index);
   }, []);
 
-  console.log(croppedText);
-
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const starsRatingTextContainer = useAppSelector(
     (state) => state.language.textContainer.reviewCard.body.starsRating
@@ -92,13 +91,49 @@ export default function ReviewCard({ ukey, onExpand, index }) {
 
   const dispatch = useAppDispatch();
 
-  const handleExpandClick = () => {
+  const arrowExpansion = () => {
+    if (expanded) {
+      // shrink
+      setExpanded(false);
+      // shrink to limit
+      setCroppedText(
+        cropText(
+          pros,
+          cons,
+          MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND,
+          MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND
+        )
+      );
+    } else {
+      // expand
+      setExpanded(true);
+      // expand to limit
+      setCroppedText(
+        cropText(
+          pros,
+          cons,
+          MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND,
+          MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND
+        )
+      );
+    }
     dispatch(
       reviewsActions.setIsExpanded({
         index: index,
         isExpanded: !expanded,
       })
     );
+  };
+
+  const handleExpandClick = () => {
+    console.log(expanded);
+
+    // dispatch(
+    //   reviewsActions.setIsExpanded({
+    //     index: index,
+    //     isExpanded: !expanded,
+    //   })
+    // );
     onExpand(index);
     if (croppedText.endOfText) {
       // shrink
@@ -290,7 +325,7 @@ export default function ReviewCard({ ukey, onExpand, index }) {
             index={index}
             expanded={expanded}
             setExpanded={setExpanded}
-            handleExpandClick={handleExpandClick}
+            handleExpandClick={arrowExpansion}
           />
         )}
         {expanded && (
@@ -320,7 +355,7 @@ export default function ReviewCard({ ukey, onExpand, index }) {
             index={index}
             expanded={expanded}
             setExpanded={setExpanded}
-            handleExpandClick={handleExpandClick}
+            handleExpandClick={arrowExpansion}
           />
         )}
         {prosConsTitle(textContainer.reviewCard.body.pros)}
