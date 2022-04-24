@@ -28,13 +28,18 @@ export default function BottomNavBar() {
 
   const [currentPage, setValue] = React.useState(map[location.pathname]);
   const theme = useTheme();
+  const backgroundColor = theme.palette.bottomNavigationBar.backgroundColor;
+  const focusedColor = theme.palette.bottomNavigationBar.selectedTap;
+  const unFocusedColor = theme.palette.bottomNavigationBar.unselectedTap;
+
   const dictionary = useAppSelector(
     (state) => state.language.textContainer.bottomNavBar
   );
   const navigate = useNavigate();
 
   // item styles
-  const iconColor = (val) => (currentPage === val ? "#2196F3" : "#050505");
+  const iconColor = (val) =>
+    currentPage === val ? focusedColor : unFocusedColor;
   const focusedIconSize = 45; //45
   const unfocusedIconSize = 39; //39
 
@@ -119,8 +124,7 @@ export default function BottomNavBar() {
         padding: 0,
         minHeight: 60,
         zIndex: 1000,
-        backgroundColor: theme.palette.bottomNavigationBar,
-        backgroundColor: theme.palette.bottomNavigationBar,
+        backgroundColor: backgroundColor,
         borderRadius: "10px 10px 0px 0px",
         boxShadow: "0px 2px 6px 0px",
       }}
@@ -148,7 +152,7 @@ export default function BottomNavBar() {
               variant={
                 item.itemValue === currentPage
                   ? "S14W700C2196f3"
-                  : "S14W400C050505"
+                  : "S14W400C606266"
               }
               style={{
                 lineHeight: 1,

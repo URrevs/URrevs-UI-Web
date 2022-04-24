@@ -28,7 +28,7 @@ function App() {
       appBar: {
         appBarColor: isDark ? "#242526" : COLORS.cffffff,
         appBarIconBackgroundColor: isDark ? "#E5E5E7" : COLORS.ce5e5e7,
-        appBarIcon: isDark ? "#E5E5E7" : COLORS.c050505,
+        appBarIcon: isDark ? "#000" : COLORS.c050505,
       },
       reviewCard: {
         reviewCardColor: isDark ? "#18191A" : COLORS.cffffff,
@@ -62,7 +62,11 @@ function App() {
         entryCard: COLORS.cffffff,
         rankCircle: COLORS.cf0f2f5,
       },
-      bottomNavigationBar: isDark ? "#18191A" : COLORS.cffffff,
+      bottomNavigationBar: {
+        background: isDark ? "#18191A" : COLORS.cffffff,
+        selectedTap: isDark ? "#2196F3" : COLORS.c2196f3,
+        unselectedTap: isDark ? "#606266" : COLORS.c606266,
+      },
       background: {
         default: isDark ? "#18191A" : COLORS.cf0f2f5,
       },
