@@ -50,7 +50,7 @@ const StarRating = ({
                 readOnly={readOnly}
                 value={starValue}
                 emptyIcon={
-                  <Star
+                 <Star
                     color={globalTheme.palette.reviewCard.emptyStarColor}
                   />
                 }

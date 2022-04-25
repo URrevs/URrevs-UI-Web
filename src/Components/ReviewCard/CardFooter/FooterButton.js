@@ -1,6 +1,7 @@
 import { useTheme } from "@emotion/react";
 import { Typography } from "@mui/material";
 
+
 export const FooterButton = ({ number, icon, isClickable }) => {
   const theme = useTheme();
   return (
@@ -12,7 +13,9 @@ export const FooterButton = ({ number, icon, isClickable }) => {
       }}
     >
       {icon}
+      {/* spaceing between icon and number */}
       <div style={{ width: "6px" }}></div>
+      {/* counter beside icon*/}
       <Typography
         sx={{
           "&:hover": {

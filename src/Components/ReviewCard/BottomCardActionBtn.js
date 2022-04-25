@@ -10,6 +10,8 @@ const BottomCardActionBtn = ({ icon, title, onClickAction, isHighlighted }) => {
       onClick={onClickAction}
       startIcon={icon}
       style={{
+        // display: "flex",
+        // justifyContent: "start",
         width: "100%",
         color: isHighlighted
           ? theme.palette.reviewCard.actionBtnIconHighlight

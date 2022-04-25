@@ -4,6 +4,8 @@ import { Comment } from "../Components/Comment/Comment";
 import { FacebookButton } from "../Components/Authentication/FacebookButton";
 import { GoogleButton } from "../Components/Authentication/GoogleButton";
 import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
+import ReviewCard from "../Components/ReviewCard/ReviewCard";
+
 const testComments = {
   a1: {
     likes: 200,
@@ -33,6 +35,29 @@ const ComponentsTest = (props) => {
           flexDirection: "column",
         }}
       >
+        <br />
+        {/* <ReviewCard
+          reviewDetails={{
+            _id: "Review1",
+            user_name: "Fady Ahmed",
+            brand: "Oppo",
+            product: "Reno 5",
+            rating: 1,
+            pros: "asd sad kjasdn askd lasmldk as saopdj slajd las",
+            cons: "aslk dnksan dksand klasdn a",
+            ratings: {},
+            approved: true,
+            brand_rating: 1,
+            brand_pros: "sa dnsajkdn jkasnd naskndk asnkj",
+            brand_cons: "ask kdnsajkd asnd kasnjk dnasknd sj",
+            date_buy: "22/8/2020",
+            date_rev: "22/8/2022",
+            isExpanded: false,
+            user_avatar: "",
+          }}
+          index={0}
+          onExpand={() => {}}
+        /> */}
         <br />
         <Comment
           date="0.1"
