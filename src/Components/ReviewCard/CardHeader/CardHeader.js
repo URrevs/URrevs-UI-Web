@@ -20,7 +20,7 @@ const CardHeader = ({
   const theme = useTheme();
 
   return (
-    <div>
+    <>
       <MUICardHeader
         sx={{
           paddingBottom: 1,
@@ -67,7 +67,7 @@ const CardHeader = ({
           }}
         />
       </div>
-    </div>
+    </>
   );
 };
 
