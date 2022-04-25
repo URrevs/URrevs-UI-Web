@@ -4,13 +4,20 @@ import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import * as React from "react";
 import FooterButton from "./FooterButton";
 import { useTheme } from "@emotion/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpLong } from "@fortawesome/free-solid-svg-icons";
 
-const CardFooter = () => {
+const CardFooter = ({ isReview }) => {
   const theme = useTheme();
   const iconStyle = {
     color: theme.palette.reviewCard.actionBtnIcon,
     fontSize: "20px",
   };
+  const firstIcon = isReview ? (
+    <ThumbUpAltOutlinedIcon style={iconStyle} />
+  ) : (
+    <FontAwesomeIcon style={iconStyle} icon={faUpLong} />
+  );
 
   return (
     <div
@@ -20,11 +27,7 @@ const CardFooter = () => {
         margin: "8px 0px 6px 0px",
       }}
     >
-      <FooterButton
-        icon={<ThumbUpAltOutlinedIcon style={iconStyle} />}
-        number={100}
-        isClickable={false}
-      />
+      <FooterButton icon={firstIcon} number={100} isClickable={false} />
       <div
         style={{
           display: "flex",

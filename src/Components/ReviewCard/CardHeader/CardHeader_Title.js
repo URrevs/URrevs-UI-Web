@@ -15,6 +15,7 @@ const CardHeaderTitle = ({ userName, productName }) => {
           alignItems: "center",
         }}
       >
+        {/* user name */}
         <Typography
           sx={{
             display: "-webkit-box",
@@ -29,24 +30,27 @@ const CardHeaderTitle = ({ userName, productName }) => {
         >
           {userName}
         </Typography>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          {theme.direction === "rtl" ? (
-            <ArrowLeftRoundedIcon
-              htmlColor={theme.palette.reviewCard.reviewArrow}
-              sx={{ fontSize: 30 }}
-            />
-          ) : (
-            <ArrowRightRoundedIcon
-              htmlColor={theme.palette.reviewCard.reviewArrow}
-              sx={{ fontSize: 30 }}
-            />
-          )}
-        </div>
+        {/* product name and arrow */}
+        {productName && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {theme.direction === "rtl" ? (
+              <ArrowLeftRoundedIcon
+                htmlColor={theme.palette.reviewCard.reviewArrow}
+                sx={{ fontSize: 30 }}
+              />
+            ) : (
+              <ArrowRightRoundedIcon
+                htmlColor={theme.palette.reviewCard.reviewArrow}
+                sx={{ fontSize: 30 }}
+              />
+            )}
+          </div>
+        )}
         <Typography
           variant="S16W700C050505"
           sx={{

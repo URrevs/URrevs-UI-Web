@@ -5,8 +5,28 @@ import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import CardActions from "@mui/material/CardActions";
 import * as React from "react";
 import BottomCardActionBtn from "./BottomCardActionBtn";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpLong } from "@fortawesome/free-solid-svg-icons";
 
-const CardActionButtons = ({textContainer, isLiked, setIsLiked}) => {
+const CardActionButtons = ({
+  textContainer,
+  isLiked,
+  setIsLiked,
+  isReview,
+}) => {
+  console.log(isReview);
+  const activeFirstIcon = () =>
+    isReview ? (
+      <ThumbUpIcon fontSize="medium" />
+    ) : (
+      <FontAwesomeIcon icon={faUpLong} />
+    );
+  const nonActiveFirstIcon = isReview ? (
+    <ThumbUpAltOutlinedIcon fontSize="medium" />
+  ) : (
+    <FontAwesomeIcon icon={faUpLong} />
+  );
+
   return (
     <div>
       <CardActions
@@ -20,17 +40,15 @@ const CardActionButtons = ({textContainer, isLiked, setIsLiked}) => {
           onClickAction={() => setIsLiked(!isLiked)}
           isHighlighted={isLiked}
           title={
-            isLiked
+            isReview
+              ? isLiked
+                ? textContainer.reviewCard.actions.liked
+                : textContainer.reviewCard.actions.like
+              : isLiked
               ? textContainer.reviewCard.actions.liked
               : textContainer.reviewCard.actions.like
           }
-          icon={
-            isLiked ? (
-              <ThumbUpIcon fontSize="medium" />
-            ) : (
-              <ThumbUpAltOutlinedIcon fontSize="medium" />
-            )
-          }
+          icon={nonActiveFirstIcon}
         />
 
         <BottomCardActionBtn

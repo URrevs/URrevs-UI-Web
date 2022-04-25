@@ -1,14 +1,14 @@
 import { useTheme } from "@emotion/react";
 import * as React from "react";
 import StarRating from "../../AddReview/StarRating";
-import ExpansionArrow from "../ExpansionArrow";
+import ExpansionArrow from "./ExpansionArrow";
 
 const FullStars = ({
   // from number of objects in {starsRatingTextContainer}, number of rows will be rendered
   starsRatingTextContainer,
   // to know if card is expanded or not
   expanded,
-  onExpand,
+  clearIndexCache,
   index,
   setExpanded,
   arrowExpansion,
@@ -20,7 +20,7 @@ const FullStars = ({
       {/* Expansion arrow */}
       {!expanded && (
         <ExpansionArrow
-          onExpand={onExpand}
+          clearIndexCache={clearIndexCache}
           index={index}
           expanded={expanded}
           setExpanded={setExpanded}
@@ -52,7 +52,7 @@ const FullStars = ({
       {/* Shrinking Arrow */}
       {expanded && (
         <ExpansionArrow
-          onExpand={onExpand}
+          clearIndexCache={clearIndexCache}
           index={index}
           expanded={expanded}
           setExpanded={setExpanded}

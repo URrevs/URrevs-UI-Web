@@ -9,34 +9,29 @@ import { cropText } from "../../functions/cropText";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
 import StarRating from "../AddReview/StarRating";
-import Card from "../Card";
+import Cardm from "../Card";
 import CardActionButtons from "./CardActions/CardActionButtons";
 import FullStars from "./CardBody/FullStars";
 import ProsConsText from "./CardBody/ProsConsText";
 import CardFooter from "./CardFooter/CardFooter";
 import CardHeader from "./CardHeader/CardHeader";
 
-export default function ReviewCard({
+export default function QuestionCard({
   ukey,
   clearIndexCache,
   index,
   reviewDetails,
-  isPhoneReview,
 }) {
-  const isReview = true;
+  const isReview = false;
   const theme = useTheme();
 
   let pros =
     "Xiaomi mi9t or k20  الهاتف باختصار اداك مميزات كثيرة جدا بسعر قليل لو المميزات دي حطتها في شركة تانيه يعدى ال ١٠ الف و هو اعلى نسخة منه ٥٩٩٩ اولا processor Snapdragon 730  الصراحه جربته على كل ال apps التقيلة و مهنجش فاي واحد ده غير التنقل بين ال apps بسرعه جدا و مدة فتح اي واحد من ثانية لي اثنين  Ram 6gb و طبعا مساعدة فالسرعه جدا    اهم جزء camera  بيجي ب٣ كاميرات  ١ . كاميرا ٤٨ ميجا و زاوية واسعة ودي فالتفاصيل خرافة + معالجة الصور في الكام دي حلوة جدا   ٢. Wide angle ودي خالتني اصور بزاوية واسعه جدا ٠.٦ x ومتوقعتش ان الصورة تطلع فيه حلوة وخصوصا فالاضاءة القوية  ٣. كاميرا العزل ودي شايف انها مش اوي الصراحة وشاومي قالت هتظبطها مع الابديت الجديد  تجربة ال hdr فالصور حلوة جدا  .من اكتر الحجات الحلوة night mide و دي بتوزع الاضاءة بشكل ممتاز بالليل وده من اهم السوفتوير فيتشرز اللي اضافتها  بالنسبة للزوم فانت لحد ٢x الصورة حلوة اما بتزود الصورة بتتدمر  الفيديو بيصور لحد 4k او 1080 60 fps ده موجود فاي موبايل انما الجديد ال staplizer اللي شاومي حطته فالموبايل مثبت الكاميرا فالفيديو بشكل رهيب زي كاميرا gopro لو عارفينها +حطو التثبيت ده كمان في الزاوية الواسعه لك ان تتخيل با  في برضو بعض الحجات زي تايم لابس و slow motion بس شايفهم عاديين  ال pop up فيها كل الmodes اللي فوق +٢٠ ميجا وصورها حلوة بس مش واو يعني بس ممكن تغير صوت الكام حاجه روشه متخافش من البوب اب لان احساس الشاشه الكاملة حاجه تانية.   الشاشة amaloed حاجه فخمه جدا وصورة جميلة جدا و خصوصا لما جربت hdr+ على اليوتيوب الشاشة الكاملة حلوة جدا فالفيديوهات  البصمة المدمجه فالشاشة اثبتت نجاحها مش زي a70 سريعه جدا  .برضو قفل الوجه سريع و بيفتح فالاضاءة القليلة   تصميم الموبايل   مريح فالايد والضهر ازاز وشكله جميل و الشاشة gorilla 5plus الموبايل وقع مرتين ومنكسرش   في با بعض الحجات هتلاقوها فالسيتنج لزيزة بس موجودة في موبايلات كتير زي الموبايلين عشان الخصوصية     الموبايل بيشحن في ساعه لحد ٩٠/١٠٠  ";
 
-  let cons = reviewDetails.cons;
+  let cons = "";
 
   const userName = reviewDetails.user_name;
-  console.log(reviewDetails.product ?? "aa");
-
-  const brand = reviewDetails.brand ?? "";
-  const product = reviewDetails.product ?? "";
-  const productName = brand + " " + product + " ";
+  const productName = reviewDetails.brand + " " + reviewDetails.product + " ";
 
   const initialIsExpanded = reviewDetails.isExpanded === true ? true : false;
   const [expanded, setExpanded] = React.useState(initialIsExpanded);
@@ -106,46 +101,23 @@ export default function ReviewCard({
   const userAvatarRadius = 40;
 
   return (
-    <Card key={ukey}>
+    <Cardm key={ukey}>
       <CardHeader
         userAvatar={reviewDetails.user_avatar}
         userName={userName}
         avatarRadius={userAvatarRadius}
         productName={productName}
         reviewDate={reviewDetails.date_rev}
-        buyDate={reviewDetails.date_buy}
-        showViewsCounter={true}
+        showViewsCounter={false}
       />
       <CardContent style={{ paddingBottom: 0, paddingTop: 0 }}>
-        {/* General stars rating */}
-        <StarRating
-          text={starsRatingTextContainer["productGeneralRating"]}
-          textSize="S14W500C050505"
-          starValue={2}
-          isVertical={false}
-          readOnly
-          rtl={theme.direction === "rtl" ? true : false}
-        />
-
-        {isPhoneReview && (
-          <div>
-            <FullStars
-              starsRatingTextContainer={starsRatingTextContainer}
-              expanded={expanded}
-              clearIndexCache={clearIndexCache}
-              index={index}
-              setExpanded={setExpanded}
-              arrowExpansion={arrowExpansion}
-            />
-          </div>
-        )}
         <ProsConsText
           index={index}
           pros={pros}
-          cons={cons}
+          cons=""
           expanded={expanded}
-          prosTitle={`${textContainer.reviewCard.body.pros}:`}
-          consTitle={`${textContainer.reviewCard.body.cons}:`}
+          prosTitle=""
+          consTitle=""
           clearIndexCache={clearIndexCache}
           croppedText={croppedText}
           setExpanded={setExpanded}
@@ -153,6 +125,7 @@ export default function ReviewCard({
           maxLetters={MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND}
           maxOfMaxLetters={MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND}
         />
+
         <CardFooter isReview={isReview} />
         {/* divider */}
         <hr
@@ -170,6 +143,6 @@ export default function ReviewCard({
           isLiked={isLiked}
         />
       </CardContent>
-    </Card>
+    </Cardm>
   );
 }

@@ -12,6 +12,7 @@ const CardHeader = ({
   productName,
   reviewDate,
   buyDate,
+  showViewsCounter,
 }) => {
   return (
     <MUICardHeader
@@ -23,7 +24,13 @@ const CardHeader = ({
       }
       action={<ActionButton />}
       title={<CardHeaderTitle userName={userName} productName={productName} />}
-      subheader={<CardSubheader reviewDate={reviewDate} buyDate={buyDate} />}
+      subheader={
+        <CardSubheader
+          reviewDate={reviewDate}
+          buyDate={buyDate}
+          showViewsCounter={showViewsCounter}
+        />
+      }
     />
   );
 };

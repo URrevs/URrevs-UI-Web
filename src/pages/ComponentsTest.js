@@ -5,6 +5,8 @@ import { FacebookButton } from "../Components/Authentication/FacebookButton";
 import { GoogleButton } from "../Components/Authentication/GoogleButton";
 import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
+import QuestionCard from "../Components/ReviewCard/QuestionCard";
+import CompanyReview from "../Components/ReviewCard/CompanyReview";
 
 const testComments = {
   a1: {
@@ -35,8 +37,31 @@ const ComponentsTest = (props) => {
           flexDirection: "column",
         }}
       >
+        <CompanyReview
+          isReview={true}
+          reviewDetails={{
+            _id: "Review1",
+            user_name: "Fady Ahmed",
+            brand: "Oppo",
+            rating: 1,
+            pros: "asd sad kjasdn askd lasmldk as saopdj slajd las",
+            cons: "aslk dnksan dksand klasdn a",
+            ratings: {},
+            approved: true,
+            brand_rating: 1,
+            brand_pros: "sa dnsajkdn jkasnd naskndk asnkj",
+            brand_cons: "ask kdnsajkd asnd kasnjk dnasknd sj",
+            date_rev: "22/8/2022",
+            isExpanded: false,
+            user_avatar: "",
+          }}
+          index={0}
+          clearIndexCache={() => {}}
+          isPhoneReview={false}
+        />
         <br />
-        {/* <ReviewCard
+        <ReviewCard
+          isReview={true}
           reviewDetails={{
             _id: "Review1",
             user_name: "Fady Ahmed",
@@ -56,8 +81,32 @@ const ComponentsTest = (props) => {
             user_avatar: "",
           }}
           index={0}
-          onExpand={() => {}}
-        /> */}
+          clearIndexCache={() => {}}
+          isPhoneReview={true}
+        />
+        <QuestionCard
+          reviewDetails={{
+            _id: "Review1",
+            user_name: "Fady Ahmed",
+            brand: "Oppo",
+            product: "Reno 5",
+            rating: 1,
+            pros: "asd sad kjasdn askd lasmldk as saopdj slajd las",
+            cons: "aslk dnksan dksand klasdn a",
+            ratings: {},
+            approved: true,
+            brand_rating: 1,
+            brand_pros: "sa dnsajkdn jkasnd naskndk asnkj",
+            brand_cons: "ask kdnsajkd asnd kasnjk dnasknd sj",
+            date_buy: "22/8/2020",
+            date_rev: "22/8/2022",
+            isExpanded: false,
+            user_avatar: "",
+          }}
+          index={0}
+          clearIndexCache={() => {}}
+        />
+
         <br />
         <Comment
           date="0.1"
