@@ -7,6 +7,7 @@ import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import QuestionCard from "../Components/ReviewCard/QuestionCard";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
+import ProductDetailsTable from "../Components/ProductDetailsTable";
 
 const testComments = {
   a1: {
@@ -29,7 +30,11 @@ const testComments = {
 };
 const ComponentsTest = (props) => {
   return (
-    <div style={{}}>
+    <>
+      <br />
+      <ProductDetailsTable />
+      <br />
+      <ProductDetailsTable isComparison={true} />
       <CompanyReview
         isReview={true}
         reviewDetails={{
@@ -134,7 +139,7 @@ const ComponentsTest = (props) => {
       <div>dasdna </div>
       <div>dasdna </div>
       <div>dasdna </div>
-    </div>
+    </>
   );
 };
 
