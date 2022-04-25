@@ -105,7 +105,8 @@ export default function ReviewCard({
   };
 
   return (
-    <Card key={ukey}>
+    <Card key={ukey}         reviewIcon={true}
+    >
       <CardHeader
         userAvatar={reviewDetails.user_avatar}
         userName={userName}

@@ -147,6 +147,7 @@ function Reviews() {
                       ref={listRef}
                       autoHeight
                       onScroll={(scrollData) => {
+                        // save current scroll position
                         dispatch(
                           reviewsActions.setIndex({
                             currentIndex: scrollData.scrollTop,

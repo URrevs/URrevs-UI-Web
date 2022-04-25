@@ -77,6 +77,7 @@ const ComponentsTest = (props) => {
         clearIndexCache={() => {}}
         isPhoneReview={true}
       />
+      <br />
       <QuestionCard
         reviewDetails={{
           _id: "Review1",

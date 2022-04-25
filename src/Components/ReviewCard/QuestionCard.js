@@ -100,7 +100,7 @@ export default function QuestionCard({
   };
 
   return (
-    <Cardm key={ukey}>
+    <Cardm key={ukey} reviewIcon={false}>
       <CardHeader
         userAvatar={reviewDetails.user_avatar}
         userName={userName}

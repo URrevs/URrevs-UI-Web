@@ -8,6 +8,7 @@ const CompanyReview = ({ reviewDetails, isReview, index, clearIndexCache }) => {
       index={index}
       clearIndexCache={() => {}}
       isPhoneReview={false}
+      reviewIcon={true}
     />
   );
 };
