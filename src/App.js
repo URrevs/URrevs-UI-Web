@@ -40,6 +40,7 @@ function App() {
         filledStarColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
         emptyStarColor: isDark ? COLORS.c65676b : COLORS.c65676b,
         reviewArrow: isDark ? COLORS.c65676b : COLORS.c65676b,
+        indicatorColor: isDark ? COLORS.c65676b : COLORS.c2196f3,
       },
       drawer: {
         drawerColor: isDark ? "#242526" : COLORS.cffffff,

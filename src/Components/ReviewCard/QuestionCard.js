@@ -4,6 +4,7 @@ import * as React from "react";
 import {
   MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND,
   MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND,
+  USER_CIRCLE_AVATAR_LARGE,
 } from "../../constants";
 import { cropText } from "../../functions/cropText";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -98,14 +99,12 @@ export default function QuestionCard({
     );
   };
 
-  const userAvatarRadius = 40;
-
   return (
     <Cardm key={ukey}>
       <CardHeader
         userAvatar={reviewDetails.user_avatar}
         userName={userName}
-        avatarRadius={userAvatarRadius}
+        avatarRadius={USER_CIRCLE_AVATAR_LARGE}
         productName={productName}
         reviewDate={reviewDetails.date_rev}
         showViewsCounter={false}

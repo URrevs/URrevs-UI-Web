@@ -32,7 +32,7 @@ const ComponentsTest = (props) => {
     <div>
       <div
         style={{
-          display: "flex",
+         
           justifyContent: "center",
           flexDirection: "column",
         }}
