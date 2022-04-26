@@ -202,7 +202,10 @@ const ProductDetailsTable = ({
                     }}
                     align="center"
                   >
-                    <Button variant="text">
+                    <Button
+                      variant="text"
+                      disabled={key != "manufacturingCompany"}
+                    >
                       <Typography
                         dir="ltr"
                         variant={
@@ -232,7 +235,10 @@ const ProductDetailsTable = ({
                       }}
                       align="center"
                     >
-                      <Button variant="text">
+                      <Button
+                        variant="text"
+                        disabled={key != "manufacturingCompany"}
+                      >
                         <Typography
                           dir="ltr"
                           variant={

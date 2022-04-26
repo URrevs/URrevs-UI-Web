@@ -102,9 +102,9 @@ const ComponentsTest = (props) => {
         clearIndexCache={() => {}}
       />
       <br />
-      <ProductDetailsTable />
+      {/* <ProductDetailsTable /> */}
       <br />
-      <ProductDetailsTable isComparison={true} />
+      {/* <ProductDetailsTable isComparison={true} /> */}
       <br />
       <br />
       <br />
