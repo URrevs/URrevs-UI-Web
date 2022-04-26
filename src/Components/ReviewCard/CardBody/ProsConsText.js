@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import React from "react";
-
+import { useAppSelector } from "../../../store/hooks";
 import { cropText } from "../../../functions/cropText";
 import BodyCardText from "./BodyCardText";
 
@@ -19,12 +19,6 @@ const ProsConsText = ({
   maxOfMaxLetters,
 }) => {
   const handleExpandClick = () => {
-    // dispatch(
-    //   reviewsActions.setIsExpanded({
-    //     index: index,
-    //     isExpanded: !expanded,
-    //   })
-    // );
     clearIndexCache(index);
     if (croppedText.endOfText) {
       // shrink
@@ -40,6 +34,8 @@ const ProsConsText = ({
       setCroppedText(cropText(pros, cons, maxOfMaxLetters, maxOfMaxLetters));
     }
   };
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   return (
     <div>
       <BodyCardText title={prosTitle} text={croppedText.pros} />
@@ -61,10 +57,10 @@ const ProsConsText = ({
             variant="S18W800C050505"
           >
             {croppedText.endOfText
-              ? "اقل"
+              ? textContainer.seeLess
               : expanded
-              ? "عرض الكل"
-              : "المزيد"}
+              ? textContainer.seeMore
+              : textContainer.seeMore}
           </Typography>
         </div>
       ) : (
