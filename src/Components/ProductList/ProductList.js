@@ -55,12 +55,13 @@ export default function ProductList({ list, title }) {
   return (
     <Card
       sx={{
+        padding: 0,
         borderRadius: "15px",
-        // backgroundColor: "#000",
+        backgroundColor: theme.palette.productList.backgroundColor,
       }}
     >
       <List
-        //   sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+        sx={{ padding: 0 }}
         component="nav"
         aria-labelledby="nested-list-subheader"
       >
@@ -75,10 +76,14 @@ export default function ProductList({ list, title }) {
           <List component="div" disablePadding>
             {list.map((item, index) => (
               <React.Fragment key={index}>
-                <ListItem>
-                  <ListItemAvatar>
-                    <PhoneAndroidIcon />
-                  </ListItemAvatar>
+                <ListItem sx={{ padding: 0 }}>
+                  <PhoneAndroidIcon
+                    sx={{
+                      marginRight: "17px",
+                      fontSize: "45px",
+                      color: theme.palette.productList.mobileColor,
+                    }}
+                  />
                   <ListItemText
                     primaryTypographyProps={{
                       ...theme.typography.S20W700C050505,
