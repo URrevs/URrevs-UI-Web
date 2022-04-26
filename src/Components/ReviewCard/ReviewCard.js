@@ -46,9 +46,18 @@ export default function ReviewCard({
   const [isLiked, setIsLiked] = React.useState(initialIsLiked);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  const starsRatingTextContainer = useAppSelector(
-    (state) => state.language.textContainer.reviewCard.body.starsRating
-  );
+
+  const starsRatingTextContainer = [
+    textContainer.generalProductRating,
+    textContainer.userInterface,
+    textContainer.manufacturingQuality,
+    textContainer.priceQuality,
+    textContainer.camera,
+    textContainer.callsQuality,
+    textContainer.battery,
+  ];
+
+  console.log(starsRatingTextContainer);
 
   const dispatch = useAppDispatch();
 
@@ -105,8 +114,7 @@ export default function ReviewCard({
   };
 
   return (
-    <Card key={ukey}         reviewIcon={true}
-    >
+    <Card key={ukey} reviewIcon={true}>
       <CardHeader
         userAvatar={reviewDetails.user_avatar}
         userName={userName}
@@ -119,7 +127,7 @@ export default function ReviewCard({
       <CardContent style={{ paddingBottom: 0, paddingTop: 0 }}>
         {/* General stars rating */}
         <StarRating
-          text={starsRatingTextContainer["productGeneralRating"]}
+          text={starsRatingTextContainer[0]}
           textSize="S14W500C050505"
           starValue={2}
           isVertical={false}
@@ -144,8 +152,8 @@ export default function ReviewCard({
           pros={pros}
           cons={cons}
           expanded={expanded}
-          prosTitle={`${textContainer.reviewCard.body.pros}:`}
-          consTitle={`${textContainer.reviewCard.body.cons}:`}
+          prosTitle={`${textContainer.pros}:`}
+          consTitle={`${textContainer.cons}:`}
           clearIndexCache={clearIndexCache}
           croppedText={croppedText}
           setExpanded={setExpanded}
@@ -168,6 +176,8 @@ export default function ReviewCard({
           textContainer={textContainer}
           setIsLiked={setIsLiked}
           isLiked={isLiked}
+          firstButtonNonPressedText={textContainer.like}
+          firstButtonPressedText={textContainer.liked}
         />
       </CardContent>
     </Card>

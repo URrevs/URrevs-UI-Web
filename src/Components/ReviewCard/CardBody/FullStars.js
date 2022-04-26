@@ -30,14 +30,14 @@ const FullStars = ({
       {/* Full Stars Rating */}
       {expanded && (
         <div>
-          {Object.keys(starsRatingTextContainer).map((text, index) => {
+          {starsRatingTextContainer.map((text, index) => {
             return (
               <React.Fragment>
                 {index === 0 ? (
                   <></>
                 ) : (
                   <StarRating
-                    text={starsRatingTextContainer[text]}
+                    text={starsRatingTextContainer[index]}
                     starValue={index}
                     isVertical={false}
                     readOnly

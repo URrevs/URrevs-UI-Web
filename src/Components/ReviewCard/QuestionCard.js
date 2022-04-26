@@ -41,9 +41,6 @@ export default function QuestionCard({
   const [isLiked, setIsLiked] = React.useState(initialIsLiked);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  const starsRatingTextContainer = useAppSelector(
-    (state) => state.language.textContainer.reviewCard.body.starsRating
-  );
 
   const dispatch = useAppDispatch();
 
@@ -140,6 +137,8 @@ export default function QuestionCard({
           textContainer={textContainer}
           setIsLiked={setIsLiked}
           isLiked={isLiked}
+          firstButtonNonPressedText={textContainer.vote}
+          firstButtonPressedText={textContainer.vote}
         />
       </CardContent>
     </Cardm>

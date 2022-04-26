@@ -85,7 +85,7 @@ export const fonts = {
     color: "#2196F3",
   },
   S16W500C050505: {
-    fontWeight: 800,
+    fontWeight: 500,
     fontSize: 16,
     color: "#050505",
   },

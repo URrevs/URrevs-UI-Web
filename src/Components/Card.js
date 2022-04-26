@@ -2,18 +2,16 @@ import { useTheme } from "@emotion/react";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import { styled } from "@mui/material";
-import { default as MUICard } from "@mui/material/Card";
+import { default as Paper } from "@mui/material/Paper";
 
 const StyledCard = styled(
-  MUICard,
+  Paper,
   {}
 )(({ theme }) => ({
   margin: "10px 18px",
   padding: "0",
   borderRadius: "10px",
   backgroundColor: theme.palette.reviewCard.reviewCardColor,
-  boxShadow:
-    "0px 4px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);",
 }));
 
 const Card = ({ children, reviewIcon }) => {
@@ -22,7 +20,7 @@ const Card = ({ children, reviewIcon }) => {
 
   return (
     <div style={{ position: "sticky" }}>
-      <StyledCard>{children}</StyledCard>
+      <StyledCard sx={{ boxShadow: 3 }}>{children}</StyledCard>
       <div
         style={{
           position: "absolute",
@@ -44,7 +42,7 @@ const Card = ({ children, reviewIcon }) => {
           <RateReviewOutlinedIcon
             style={{
               color: theme.palette.reviewCard.indicatorColor,
-              borderRadius: "50%",
+              borderRadius: "40%",
               backgroundColor: theme.palette.background.default,
               width: `${indicatorIconRadius}px`,
               height: `${indicatorIconRadius}px`,

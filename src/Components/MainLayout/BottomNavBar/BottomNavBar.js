@@ -32,9 +32,7 @@ export default function BottomNavBar() {
   const focusedColor = theme.palette.bottomNavigationBar.selectedTap;
   const unFocusedColor = theme.palette.bottomNavigationBar.unselectedTap;
 
-  const dictionary = useAppSelector(
-    (state) => state.language.textContainer.bottomNavBar
-  );
+  const dictionary = useAppSelector((state) => state.language.textContainer);
   const navigate = useNavigate();
 
   // item styles
@@ -53,7 +51,7 @@ export default function BottomNavBar() {
           htmlColor={iconColor(0)}
         />
       ),
-      label: dictionary[0],
+      label: dictionary.categoryNavBarItem,
       itemValue: 0,
       path: "/products",
     },
@@ -67,7 +65,7 @@ export default function BottomNavBar() {
           htmlColor={iconColor(1)}
         />
       ),
-      label: dictionary[1],
+      label: dictionary.AddNavBarItem,
       path: "/add-review",
     },
     {
@@ -79,7 +77,7 @@ export default function BottomNavBar() {
           htmlColor={iconColor(2)}
         />
       ),
-      label: dictionary[2],
+      label: dictionary.homeNavBarItem,
       itemValue: 2,
       path: "/",
     },
@@ -92,7 +90,7 @@ export default function BottomNavBar() {
           htmlColor={iconColor(3)}
         />
       ),
-      label: dictionary[3],
+      label: dictionary.leaderboardNavBarItem,
       itemValue: 3,
       path: "/about",
     },
@@ -105,7 +103,7 @@ export default function BottomNavBar() {
           htmlColor={iconColor(4)}
         />
       ),
-      label: dictionary[4],
+      label: dictionary.menuNavBarItem,
       itemValue: 4,
       path: "/menu",
     },

@@ -11,16 +11,18 @@ import { faUpLong } from "@fortawesome/free-solid-svg-icons";
 const CardActionButtons = ({
   textContainer,
   isLiked,
+  // text shown on first button (Like or Upvote)
+  firstButtonPressedText,
+  // text shown on first button (Liked or Upvote)
+  firstButtonNonPressedText,
   setIsLiked,
   isReview,
 }) => {
-  console.log(isReview);
-  const activeFirstIcon = () =>
-    isReview ? (
-      <ThumbUpIcon fontSize="medium" />
-    ) : (
-      <FontAwesomeIcon icon={faUpLong} />
-    );
+  const activeFirstIcon = isReview ? (
+    <ThumbUpIcon fontSize="medium" />
+  ) : (
+    <FontAwesomeIcon icon={faUpLong} />
+  );
   const nonActiveFirstIcon = isReview ? (
     <ThumbUpAltOutlinedIcon fontSize="medium" />
   ) : (
@@ -42,22 +44,22 @@ const CardActionButtons = ({
           title={
             isReview
               ? isLiked
-                ? textContainer.reviewCard.actions.liked
-                : textContainer.reviewCard.actions.like
+                ? firstButtonPressedText
+                : firstButtonNonPressedText
               : isLiked
-              ? textContainer.reviewCard.actions.liked
-              : textContainer.reviewCard.actions.like
+              ? firstButtonPressedText
+              : firstButtonNonPressedText
           }
-          icon={nonActiveFirstIcon}
+          icon={isLiked ? activeFirstIcon : nonActiveFirstIcon}
         />
 
         <BottomCardActionBtn
-          title={textContainer.reviewCard.actions.comment}
+          title={textContainer.comment}
           icon={<ChatBubbleOutlineOutlinedIcon fontSize="medium" />}
         />
 
         <BottomCardActionBtn
-          title={textContainer.reviewCard.actions.share}
+          title={textContainer.share}
           icon={<ShareOutlinedIcon fontSize="medium" />}
         />
       </CardActions>
