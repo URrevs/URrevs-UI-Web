@@ -27,6 +27,16 @@ export const fonts = {
     fontSize: 14,
     color: "#2196F3",
   },
+  S14W400C65676b: {
+    fontWeight: 400,
+    fontSize: 14,
+    color: "#65676B",
+  },
+  S14W400C606266: {
+    fontWeight: 400,
+    fontSize: 14,
+    color: "#606266",
+  },
   S14W700CFFFFFF: {
     fontWeight: 700,
     fontSize: 14,
@@ -75,7 +85,7 @@ export const fonts = {
     color: "#2196F3",
   },
   S16W500C050505: {
-    fontWeight: 800,
+    fontWeight: 500,
     fontSize: 16,
     color: "#050505",
   },

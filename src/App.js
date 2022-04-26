@@ -28,7 +28,7 @@ function App() {
       appBar: {
         appBarColor: isDark ? "#242526" : COLORS.cffffff,
         appBarIconBackgroundColor: isDark ? "#E5E5E7" : COLORS.ce5e5e7,
-        appBarIcon: isDark ? "#E5E5E7" : COLORS.c050505,
+        appBarIcon: isDark ? "#000" : COLORS.c050505,
       },
       reviewCard: {
         reviewCardColor: isDark ? "#18191A" : COLORS.cffffff,
@@ -38,7 +38,9 @@ function App() {
         actionBtnBG: isDark ? COLORS.c000000 : COLORS.c000000,
         expandIcon: isDark ? "#4ED5F6" : COLORS.c4ed5f6,
         filledStarColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
+        emptyStarColor: isDark ? COLORS.c65676b : COLORS.c65676b,
         reviewArrow: isDark ? COLORS.c65676b : COLORS.c65676b,
+        indicatorColor: isDark ? COLORS.c65676b : COLORS.c2196f3,
       },
       drawer: {
         drawerColor: isDark ? "#242526" : COLORS.cffffff,
@@ -61,7 +63,12 @@ function App() {
         entryCard: COLORS.cffffff,
         rankCircle: COLORS.cf0f2f5,
       },
-      bottomNavigationBar: isDark ? "#18191A" : COLORS.cffffff,
+      bottomNavigationBar: {
+        background: isDark ? "#18191A" : COLORS.cffffff,
+        selectedTap: isDark ? "#2196F3" : COLORS.c2196f3,
+        unselectedTap: isDark ? "#606266" : COLORS.c606266,
+      },
+      divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
       background: {
         default: isDark ? "#18191A" : COLORS.cf0f2f5,
       },
@@ -77,7 +84,9 @@ function App() {
             <Layout>
               <Grid
                 container
-                style={{ display: theme.isMobile ? "block" : "flex" }}
+                style={{
+                  display: theme.isMobile ? "block" : "flex",
+                }}
               >
                 <Grid item md={2} sm={0}></Grid>
                 <Grid item md={8} sm={12}>

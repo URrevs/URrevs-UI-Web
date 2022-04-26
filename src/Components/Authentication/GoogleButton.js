@@ -2,6 +2,7 @@ import { AuthenticationButton } from "./AuthenticationButton";
 import { styled } from "@mui/styles";
 import React from "react";
 import { useTheme } from "@emotion/react";
+import GoogleIcon from "../Icons/GoogleIcon";
 
 // To be added to text.ts file
 const authenticationPage = {
@@ -22,7 +23,7 @@ export const GoogleButton = () => {
       color={theme.palette.authenticationButtons.googleButtonColor}
       text={authenticationPage.ar.GoogleButton}
       textColor="65676B"
-      imageSrc="./images/google.png"
+      image={<GoogleIcon />}
     ></AuthenticationButton>
   );
 };

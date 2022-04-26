@@ -1,6 +1,5 @@
 import { useTheme } from "@emotion/react";
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
 import {
   AutoSizer,
   CellMeasurer,
@@ -13,6 +12,7 @@ import LoadingReviewSkeleton, {
 } from "../Components/Loaders/LoadingReviewSkeleton";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import { useGetAllReviewsQuery } from "../services/reviews";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
 
 const cache = new CellMeasurerCache({
@@ -33,7 +33,7 @@ function Reviews() {
   const listRef = useRef();
   const [ex, setEx] = useState(false);
 
-  const expand = (index) => {
+  const clearCache = (index) => {
     setEx(!ex);
     if (index === 0) {
       cache.clear(0);
@@ -89,7 +89,6 @@ function Reviews() {
       !isFetching &&
       maxIndex === reviewsList.length
     ) {
-      console.log("aaaa");
       maxIndex = 0;
       dispatch(reviewsActions.increasePage());
     }
@@ -122,7 +121,12 @@ function Reviews() {
             rowIndex={index}
           >
             <div style={{ ...style, direction: theme.direction }}>
-              <ReviewCard index={index} onExpand={expand} />
+              <ReviewCard
+                index={index}
+                clearIndexCache={clearCache}
+                reviewDetails={reviewsList[index]}
+                isPhoneReview={true}
+              />
             </div>
           </CellMeasurer>
         )}
@@ -143,6 +147,7 @@ function Reviews() {
                       ref={listRef}
                       autoHeight
                       onScroll={(scrollData) => {
+                        // save current scroll position
                         dispatch(
                           reviewsActions.setIndex({
                             currentIndex: scrollData.scrollTop,

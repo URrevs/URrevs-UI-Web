@@ -28,13 +28,16 @@ export default function BottomNavBar() {
 
   const [currentPage, setValue] = React.useState(map[location.pathname]);
   const theme = useTheme();
-  const dictionary = useAppSelector(
-    (state) => state.language.textContainer.bottomNavBar
-  );
+  const backgroundColor = theme.palette.bottomNavigationBar.backgroundColor;
+  const focusedColor = theme.palette.bottomNavigationBar.selectedTap;
+  const unFocusedColor = theme.palette.bottomNavigationBar.unselectedTap;
+
+  const dictionary = useAppSelector((state) => state.language.textContainer);
   const navigate = useNavigate();
 
   // item styles
-  const iconColor = (val) => (currentPage === val ? "#2196F3" : "#050505");
+  const iconColor = (val) =>
+    currentPage === val ? focusedColor : unFocusedColor;
   const focusedIconSize = 45; //45
   const unfocusedIconSize = 39; //39
 
@@ -48,7 +51,7 @@ export default function BottomNavBar() {
           htmlColor={iconColor(0)}
         />
       ),
-      label: dictionary[0],
+      label: dictionary.categoryNavBarItem,
       itemValue: 0,
       path: "/products",
     },
@@ -62,7 +65,7 @@ export default function BottomNavBar() {
           htmlColor={iconColor(1)}
         />
       ),
-      label: dictionary[1],
+      label: dictionary.AddNavBarItem,
       path: "/add-review",
     },
     {
@@ -74,7 +77,7 @@ export default function BottomNavBar() {
           htmlColor={iconColor(2)}
         />
       ),
-      label: dictionary[2],
+      label: dictionary.homeNavBarItem,
       itemValue: 2,
       path: "/",
     },
@@ -87,7 +90,7 @@ export default function BottomNavBar() {
           htmlColor={iconColor(3)}
         />
       ),
-      label: dictionary[3],
+      label: dictionary.leaderboardNavBarItem,
       itemValue: 3,
       path: "/about",
     },
@@ -100,7 +103,7 @@ export default function BottomNavBar() {
           htmlColor={iconColor(4)}
         />
       ),
-      label: dictionary[4],
+      label: dictionary.menuNavBarItem,
       itemValue: 4,
       path: "/menu",
     },
@@ -119,8 +122,7 @@ export default function BottomNavBar() {
         padding: 0,
         minHeight: 60,
         zIndex: 1000,
-        backgroundColor: theme.palette.bottomNavigationBar,
-        backgroundColor: theme.palette.bottomNavigationBar,
+        backgroundColor: backgroundColor,
         borderRadius: "10px 10px 0px 0px",
         boxShadow: "0px 2px 6px 0px",
       }}
@@ -148,7 +150,7 @@ export default function BottomNavBar() {
               variant={
                 item.itemValue === currentPage
                   ? "S14W700C2196f3"
-                  : "S14W400C050505"
+                  : "S14W400C606266"
               }
               style={{
                 lineHeight: 1,

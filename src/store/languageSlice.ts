@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { text } from "../text";
-import Dictionary from "../text";
+import { text } from "../Dictionary";
+import Dictionary from "../Dictionary";
 
 interface LanguageState {
   language: string;

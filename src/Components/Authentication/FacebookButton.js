@@ -1,6 +1,7 @@
 import { AuthenticationButton } from "./AuthenticationButton";
 import React from "react";
 import { useTheme } from "@emotion/react";
+import FacebookIcon from "../Icons/FacebookIcon";
 
 // To be added to text.ts file
 const authenticationPage = {
@@ -21,7 +22,7 @@ export const FacebookButton = () => {
       color={theme.palette.authenticationButtons.facebookButtonColor}
       text={authenticationPage.ar.FacebookButton}
       textColor="2196F3"
-      imageSrc="./images/facebook.png"
+      image={<FacebookIcon />}
     ></AuthenticationButton>
   );
 };

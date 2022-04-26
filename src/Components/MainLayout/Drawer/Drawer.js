@@ -16,8 +16,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
-import { useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
+import { useAppSelector } from "../../../store/hooks";
 
 export const drawerWidth = 240;
 
@@ -71,8 +71,8 @@ const PerDrawer = styled(
 }));
 
 export const MyDrawer = (props) => {
-  const language = useSelector((state) => state.language.language);
-  const textContainer = useSelector((state) => state.language.textContainer);
+  const language = useAppSelector((state) => state.language.language);
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const theme = useTheme();
 
@@ -83,27 +83,27 @@ export const MyDrawer = (props) => {
 
   const drawerTiles = [
     {
-      title: textContainer.drawerTitles.homePage,
+      title: textContainer.homeNavBarItem,
       icon: <HomeTwoToneIcon />,
       path: "/",
     },
     {
-      title: textContainer.drawerTitles.reviews,
+      title: textContainer.homeNavBarItem,
       icon: <RateReviewTwoToneIcon />,
       path: "/reviews",
     },
     {
-      title: textContainer.drawerTitles.addReview,
+      title: textContainer.AddNavBarItem,
       icon: <AddBoxTwoToneIcon />,
       path: "/add-review",
     },
     {
-      title: textContainer.drawerTitles.articles,
+      title: textContainer.homeNavBarItem,
       icon: <ForumTwoToneIcon />,
       path: "/blog",
     },
     {
-      title: textContainer.drawerTitles.aboutUs,
+      title: textContainer.categoryNavBarItem,
       icon: <ErrorTwoToneIcon />,
       path: "/about",
     },

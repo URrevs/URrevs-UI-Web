@@ -33,9 +33,7 @@ export default function Layout(props) {
   const logoHeight = 30;
   const appBarHeight = theme.isMobile ? 45 : null;
 
-  const searchBar = useAppSelector(
-    (state) => state.language.textContainer.searchBar
-  );
+  const dictionary = useAppSelector((state) => state.language.textContainer);
 
   // modal
   const [openReg, setOpenReg] = React.useState(false);
@@ -105,7 +103,7 @@ export default function Layout(props) {
           </animated.div>
 
           <SearchBar
-            searchTitle={searchBar.title}
+            searchTitle={dictionary.search}
             onSearchBarFocus={onSearchBarFocus}
             onSearchBarBlur={onSearchBarBlur}
             isSearchBarFocused={searchBarFocused}
