@@ -1,10 +1,11 @@
 import { Star } from "@mui/icons-material";
 
-import { Comment } from "../Components/Comment/Comment";
+import { Comment } from "../Components/Interactions/Comment";
 import { FacebookButton } from "../Components/Authentication/FacebookButton";
 import { GoogleButton } from "../Components/Authentication/GoogleButton";
 import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
-import { Reply } from "../Components/Comment/Reply";
+import { CommentReply } from "../Components/Interactions/CommentReply";
+import { Answer } from "../Components/Interactions/Answer";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import QuestionCard from "../Components/ReviewCard/QuestionCard";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
@@ -45,12 +46,19 @@ const ComponentsTest = (props) => {
         user="Fady Ahmed"
       ></Comment>
       <br />
-      <Reply
+      <CommentReply
         date="0.1"
         likes={testComments.a3.likes}
         text={testComments.a3.text}
         user={testComments.a3.user}
-      ></Reply>
+      ></CommentReply>
+      <br />
+      <Answer
+        date="0.1"
+        likes={testComments.a3.likes}
+        text={testComments.a3.text}
+        user={testComments.a3.user}
+      ></Answer>
       <br />
       <Comment
         date="-8"

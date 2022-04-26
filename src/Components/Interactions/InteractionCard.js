@@ -1,8 +1,7 @@
 import React from "react";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { Card, styled, Typography } from "@mui/material";
 
-const CommentCardStyle = styled(
+const InteractionCardStyle = styled(
   Card,
   {}
 )(({ theme }) => ({
@@ -12,7 +11,7 @@ const CommentCardStyle = styled(
   overflow: "unset",
   padding: "8px 12px",
   borderRadius: "12px",
-  backgroundColor: theme.palette.commentCard.backgroundColor,
+  backgroundColor: theme.palette.interactionCard.backgroundColor,
 }));
 const LikeCounterStyle = styled(
   Card,
@@ -29,23 +28,18 @@ const LikeCounterStyle = styled(
   right: "-15px",
 }));
 
-export const CommentCard = ({ user, text, likes }) => {
+export const InteractionCard = ({ user, text, likes, renderIcon }) => {
   return (
     <div>
-      <CommentCardStyle>
+      <InteractionCardStyle>
         <Typography variant="S14W700C050505">{user}</Typography>
         <Typography variant="S14W400C000000">{text}</Typography>
         <LikeCounterStyle>
-          <ThumbUpIcon
-            sx={{
-              fontSize: "14px",
-              color: "#2196F3",
-            }}
-          />
+          {renderIcon()}
           <div style={{ width: "3px" }}></div>
           <Typography variant="S14W400C050505">{likes}</Typography>
         </LikeCounterStyle>
-      </CommentCardStyle>
+      </InteractionCardStyle>
     </div>
   );
 };
