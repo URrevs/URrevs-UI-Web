@@ -10,10 +10,16 @@ const CommentButton = styled(
   //   fontFamily: "Tajawal",
 }));
 
-export const InteractionFooter = ({ date, buttonName, condition, reply }) => {
+export const InteractionFooter = ({
+  date,
+  buttonName,
+  onClickHandler,
+  condition,
+  reply,
+}) => {
   return (
     <div>
-      <CommentButton>
+      <CommentButton onClick={onClickHandler}>
         <Typography variant={condition ? "S13W700C2196F3" : "S13W700C050505"}>
           {buttonName}
         </Typography>

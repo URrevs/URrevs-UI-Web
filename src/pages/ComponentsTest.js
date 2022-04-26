@@ -1,15 +1,14 @@
 import { Star } from "@mui/icons-material";
-
-import { Comment } from "../Components/Interactions/Comment";
 import { FacebookButton } from "../Components/Authentication/FacebookButton";
 import { GoogleButton } from "../Components/Authentication/GoogleButton";
-import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
-import { CommentReply } from "../Components/Interactions/CommentReply";
 import { Answer } from "../Components/Interactions/Answer";
-import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import QuestionCard from "../Components/ReviewCard/QuestionCard";
+import { Comment } from "../Components/Interactions/Comment";
+import { CommentReply } from "../Components/Interactions/CommentReply";
+import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
+import ProductList from "../Components/ProductList/ProductList";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
-import ProductDetailsTable from "../Components/ProductDetailsTable";
+import QuestionCard from "../Components/ReviewCard/QuestionCard";
+import ReviewCard from "../Components/ReviewCard/ReviewCard";
 
 const testComments = {
   a1: {
@@ -37,31 +36,41 @@ const testComments = {
 };
 const ComponentsTest = (props) => {
   return (
-    <div>
+    <div style={{ marginRight: "18px" }}>
+      <br />
+      <ProductList></ProductList>
       <br />
       <Comment
-        date="0.1"
+        date="منذ 8 ساعات"
         likes={testComments.a2.likes}
         text={testComments.a2.text}
         user="Fady Ahmed"
       ></Comment>
       <br />
       <CommentReply
-        date="0.1"
+        date="منذ يوم"
         likes={testComments.a3.likes}
         text={testComments.a3.text}
         user={testComments.a3.user}
       ></CommentReply>
       <br />
       <Answer
-        date="0.1"
+        date="منذ شهر"
         likes={testComments.a3.likes}
         text={testComments.a3.text}
         user={testComments.a3.user}
       ></Answer>
       <br />
+      <Answer
+        date="منذ شهر"
+        likes={testComments.a3.likes}
+        text={testComments.a3.text}
+        user={testComments.a3.user}
+        admin={true}
+      ></Answer>
+      <br />
       <Comment
-        date="-8"
+        date="منذ 4 ساعات"
         likes="20000"
         text="يعم أحلى ريفيو."
         user="Fady Ahmed"
