@@ -44,13 +44,15 @@ const rows = {
 const ProductDetailsTable = ({ isComparison, comparedRows }) => {
   comparedRows = rows;
   return (
-    <Paper
-      style={{
-        borderRadius: "10px",
-      }}
-    >
-      <Table>
-        {/* <TableHead>
+    <div style={{ overflowX: "auto", margin: "10px" }}>
+      <Paper
+        sx={{
+          borderRadius: "10px",
+        }}
+        elevation={25}
+      >
+        <Table>
+          {/* <TableHead>
           <TableRow>
             <TableCell align="center">
               <Typography variant="S16W500C050505">نقطة المقارنة</Typography>
@@ -65,33 +67,34 @@ const ProductDetailsTable = ({ isComparison, comparedRows }) => {
             )} 
           </TableRow>
         </TableHead> */}
-        <TableBody>
-          {Object.keys(rows).map((key) => {
-            return (
-              <TableRow key={key}>
-                <TableCell align="left">
-                  <Typography variant="S16W500C050505">{key}:</Typography>
-                </TableCell>
-                {/* main product details */}
-                <TableCell align="center">
-                  <Typography dir="ltr" variant="S16W400C050505">
-                    {rows[key]}
-                  </Typography>
-                </TableCell>
-                {/* compared product details */}
-                {isComparison && (
+          <TableBody>
+            {Object.keys(rows).map((key) => {
+              return (
+                <TableRow key={key}>
+                  <TableCell align="left">
+                    <Typography variant="S16W500C050505">{key}:</Typography>
+                  </TableCell>
+                  {/* main product details */}
                   <TableCell align="center">
                     <Typography dir="ltr" variant="S16W400C050505">
-                      {comparedRows[key]}
+                      {rows[key]}
                     </Typography>
                   </TableCell>
-                )}
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </Paper>
+                  {/* compared product details */}
+                  {isComparison && (
+                    <TableCell align="center">
+                      <Typography dir="ltr" variant="S16W400C050505">
+                        {comparedRows[key]}
+                      </Typography>
+                    </TableCell>
+                  )}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </Paper>
+    </div>
   );
 };
 

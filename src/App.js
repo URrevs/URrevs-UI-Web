@@ -83,7 +83,9 @@ function App() {
             <Layout>
               <Grid
                 container
-                style={{ display: theme.isMobile ? "block" : "flex" }}
+                style={{
+                  display: theme.isMobile ? "block" : "flex",
+                }}
               >
                 <Grid item md={2} sm={0}></Grid>
                 <Grid item md={8} sm={12}>
