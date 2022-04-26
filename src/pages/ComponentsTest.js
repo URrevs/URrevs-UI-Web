@@ -4,6 +4,7 @@ import { Comment } from "../Components/Comment/Comment";
 import { FacebookButton } from "../Components/Authentication/FacebookButton";
 import { GoogleButton } from "../Components/Authentication/GoogleButton";
 import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
+import { Reply } from "../Components/Comment/Reply";
 const testComments = {
   a1: {
     likes: 200,
@@ -21,6 +22,11 @@ const testComments = {
     Doo-doo-doo-doo-doo, la-la-laa-laa
     Doo-doo-doo-doo-doo-doo-doo-doo-doo
     Doo-doo-doo-doo-doo, la-la-laa`,
+  },
+  a3: {
+    likes: 1,
+    user: "زياد المقمر",
+    text: "شكرا يا محترم.",
   },
 };
 const ComponentsTest = (props) => {
@@ -40,6 +46,13 @@ const ComponentsTest = (props) => {
           text={testComments.a2.text}
           user="Fady Ahmed"
         ></Comment>
+        <Reply
+          date="0.1"
+          likes={testComments.a3.likes}
+          text={testComments.a3.text}
+          user={testComments.a3.user}
+        ></Reply>
+
         <br />
         <br />
         <Comment

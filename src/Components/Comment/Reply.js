@@ -2,7 +2,7 @@ import { Avatar, Box, Button, Card, styled, Typography } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import React from "react";
 const rtf2 = new Intl.RelativeTimeFormat("ar", { numeric: "auto" });
-const CommentButton = styled(
+const ReplyButton = styled(
   Button,
   {}
 )((theme) => ({
@@ -11,7 +11,7 @@ const CommentButton = styled(
   lineHeight: 0,
   //   fontFamily: "Tajawal",
 }));
-const CommentCard = styled(
+const ReplyCard = styled(
   Card,
   {}
 )(({ theme }) => ({
@@ -23,15 +23,21 @@ const CommentCard = styled(
   borderRadius: "12px",
   backgroundColor: theme.palette.commentCard.backgroundColor,
 }));
-export const Comment = ({ user, text, likes, date }) => {
+export const Reply = ({ user, text, likes, date }) => {
   return (
-    <div style={{ marginLeft: "20px" }}>
+    <div
+      style={{
+        marginLeft: "20px",
+        marginTop: "28px",
+        marginRight: "46px",
+      }}
+    >
       <Box sx={{ display: "flex" }}>
         <Avatar
-          sx={{ marginRight: "6px", height: "44px", width: "44px" }}
+          sx={{ marginRight: "6px", height: "32px", width: "32px" }}
         ></Avatar>
         <Box>
-          <CommentCard>
+          <ReplyCard>
             <Typography variant="S14W700C050505">{user}</Typography>
             <Typography variant="S14W400C000000">{text}</Typography>
             <Card
@@ -56,7 +62,7 @@ export const Comment = ({ user, text, likes, date }) => {
               <div style={{ width: "3px" }}></div>
               <Typography variant="S14W400C050505">{likes}</Typography>
             </Card>
-          </CommentCard>
+          </ReplyCard>
 
           <Box
             sx={{
@@ -65,12 +71,12 @@ export const Comment = ({ user, text, likes, date }) => {
               justifyContent: "space-around",
             }}
           >
-            <CommentButton>
+            <ReplyButton>
               <Typography variant="S13W700C050505">إعجاب</Typography>
-            </CommentButton>
-            <CommentButton>
+            </ReplyButton>
+            <ReplyButton>
               <Typography variant="S13W700C050505">رد</Typography>
-            </CommentButton>
+            </ReplyButton>
             <Typography variant="S13W400C65676B">
               {rtf2.format(date, "hour")}
             </Typography>
