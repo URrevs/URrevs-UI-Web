@@ -67,6 +67,7 @@
     ]
   },
   "devDependencies": {
-    "file-loader": "^6.2.0"
+    "file-loader": "^6.2.0",
+    "json-schema-to-typescript": "^10.1.5"
   }
 }
