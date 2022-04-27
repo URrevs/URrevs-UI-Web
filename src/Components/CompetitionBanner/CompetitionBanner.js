@@ -31,6 +31,7 @@ export const CompetitionBanner = (props) => {
         <Box
           sx={{
             display: "flex",
+            justifyContent: "space-between",
             padding: "8px 22px",
           }}
         >
