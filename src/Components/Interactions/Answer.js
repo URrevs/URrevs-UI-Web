@@ -25,7 +25,7 @@ export const Answer = (props) => {
     );
   };
   return (
-    <div style={{ display: "flex", marginRight: "20px" }}>
+    <div style={{ display: "flex" }}>
       {accepted && props.admin ? (
         <CheckIcon
           sx={{
@@ -35,7 +35,7 @@ export const Answer = (props) => {
           }}
         ></CheckIcon>
       ) : null}
-      <div style={{ marginRight: "12px" }}>
+      <div>
         <InteractionBody
           {...props}
           condition={accepted}

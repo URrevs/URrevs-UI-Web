@@ -1,11 +1,12 @@
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import useConvertNumberToHumanLanguage from "../../../hooks/useMillify";
 
 const CardSubheader = ({ reviewDate, buyDate, showViewsCounter }) => {
   return (
     <React.Fragment>
-      <div style={{}}>
+      <div>
         <Typography variant="S14W400C65676b">
           {reviewDate.split(" ")[0]}
         </Typography>
@@ -29,7 +30,7 @@ const CardSubheader = ({ reviewDate, buyDate, showViewsCounter }) => {
                 margin: "0 2px",
               }}
             />
-            100
+            useCon
           </Typography>
         )}
       </div>

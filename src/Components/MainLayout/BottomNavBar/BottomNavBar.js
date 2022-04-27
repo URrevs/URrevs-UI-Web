@@ -24,7 +24,6 @@ const map = {
 
 export default function BottomNavBar() {
   const location = useLocation();
-  console.log(map[location.pathname]);
 
   const [currentPage, setValue] = React.useState(map[location.pathname]);
   const theme = useTheme();

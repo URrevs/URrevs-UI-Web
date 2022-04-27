@@ -10,6 +10,7 @@ import ProductList from "../Components/ProductList/ProductList";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
 import QuestionCard from "../Components/ReviewCard/QuestionCard";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
+import ProductDetailsTable from "../Components/ProductDetailsTable";
 import { StarCounter } from "../Components/StarCounter/StarCounter";
 
 const testComments = {
@@ -19,7 +20,7 @@ const testComments = {
     text: "يعم أحلى ريفيو.",
   },
   a2: {
-    likes: 20000000000000,
+    likes: 20000000,
     user: "Sweet Trips",
     text: `Doo-doo-doo-doo-doo-doo-doo-doo-doo
     Doo-doo-doo-doo-doo, la-la-laa
@@ -36,6 +37,7 @@ const testComments = {
     text: "شكرا يا محترم.",
   },
 };
+
 const ComponentsTest = (props) => {
   return (
     <div style={{ marginRight: "18px" }}>
