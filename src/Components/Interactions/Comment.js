@@ -22,7 +22,7 @@ export const Comment = (props) => {
     );
   };
   return (
-    <div style={{ marginRight: "28px" }}>
+    <div style={{ maxWidth: "calc(100% - 20px)" }}>
       <InteractionBody
         {...props}
         buttonName={buttonName}

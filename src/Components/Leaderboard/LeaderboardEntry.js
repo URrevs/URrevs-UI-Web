@@ -8,7 +8,6 @@ const LeaderboardEntryCard = styled(
   {}
 )(({ theme }) => ({
   backgroundColor: theme.palette.leaderBoard.entryCard,
-  margin: "0 16px",
   minHeight: 60,
   display: "flex",
   alignItems: "center",

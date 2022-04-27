@@ -21,7 +21,7 @@ export const CommentReply = (props) => {
     );
   };
   return (
-    <div style={{ marginRight: "76px" }}>
+    <div style={{ marginRight: "56px" }}>
       <InteractionBody
         {...props}
         avatar="32px"

@@ -8,7 +8,9 @@ const StyledCard = styled(
   Paper,
   {}
 )(({ theme }) => ({
-  margin: "10px 18px",
+  // margin: "10px 18px",
+  margin: "10px 0px",
+
   padding: "0",
   borderRadius: "10px",
   backgroundColor: theme.palette.reviewCard.reviewCardColor,
