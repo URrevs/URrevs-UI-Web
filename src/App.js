@@ -57,6 +57,10 @@ function App() {
         iconColor: COLORS.c2196f3,
         buttonActiveColor: COLORS.c2196f3,
       },
+      productList: {
+        backgroundColor: COLORS.cffffff,
+        mobileColor: COLORS.c606266,
+      },
       authenticationButtons: {
         googleButtonColor: COLORS.c65676b,
         facebookButtonColor: COLORS.c2196f3,

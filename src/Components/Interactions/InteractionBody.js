@@ -10,7 +10,9 @@ export const InteractionBody = ({
   likes,
   date,
   condition,
+  children,
   reply,
+  onClickHandler,
   renderIcon,
   avatar = "44px",
 }) => {
@@ -27,12 +29,7 @@ export const InteractionBody = ({
             likes={likes}
             renderIcon={renderIcon}
           ></InteractionCard>
-          <InteractionFooter
-            date={date}
-            condition={condition}
-            reply={reply}
-            buttonName={buttonName}
-          ></InteractionFooter>
+          {children}
         </Box>
       </Box>
     </div>

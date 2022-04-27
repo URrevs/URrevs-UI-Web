@@ -9,7 +9,7 @@ const InteractionCardStyle = styled(
   position: "relative",
   flexDirection: "column",
   overflow: "unset",
-  padding: "8px 12px",
+  padding: "12px 12px",
   borderRadius: "12px",
   backgroundColor: theme.palette.interactionCard.backgroundColor,
 }));

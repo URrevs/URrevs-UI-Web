@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { InteractionBody } from "./InteractionBody";
 import { useTheme } from "@emotion/react";
+import { InteractionFooter } from "./InteractionFooter";
 
 export const Comment = (props) => {
-  const condition = true;
-  const buttonName = condition ? "أعجبني" : "اعجاب";
+  const [like, setLike] = useState(false);
+  const onClickHandler = () => {
+    setLike(!like);
+  };
+  const buttonName = like ? "أعجبني" : "اعجاب";
   const theme = useTheme();
   const renderIcon = () => {
     return (
@@ -22,9 +26,16 @@ export const Comment = (props) => {
       <InteractionBody
         {...props}
         buttonName={buttonName}
-        condition={condition}
         renderIcon={renderIcon}
-      ></InteractionBody>
+      >
+        <InteractionFooter
+          date={props.date}
+          condition={like}
+          onClickHandler={onClickHandler}
+          reply={false}
+          buttonName={buttonName}
+        ></InteractionFooter>
+      </InteractionBody>
     </div>
   );
 };
