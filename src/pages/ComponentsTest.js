@@ -1,6 +1,7 @@
 import { Star } from "@mui/icons-material";
 import { FacebookButton } from "../Components/Authentication/FacebookButton";
 import { GoogleButton } from "../Components/Authentication/GoogleButton";
+import { CompetitionBanner } from "../Components/CompetitionBanner/CompetitionBanner";
 import { Answer } from "../Components/Interactions/Answer";
 import { Comment } from "../Components/Interactions/Comment";
 import { CommentReply } from "../Components/Interactions/CommentReply";
@@ -38,9 +39,10 @@ const testComments = {
 const ComponentsTest = (props) => {
   return (
     <div style={{ marginRight: "18px" }}>
-      <br />
-      <StarCounter value={20}></StarCounter>
-      <br />
+      <CompetitionBanner
+        daysLeft="12"
+        prize="Xiaomi Mi Band 5"
+      ></CompetitionBanner>
     </div>
   );
 };
@@ -57,6 +59,9 @@ const ComponentsTest = (props) => {
 //         user="Fady Ahmed"
 //       ></Comment>
 //       <br />
+//        <br />
+//        <StarCounter value={20}></StarCounter>
+//        <br />
 //       <CommentReply
 //         date="منذ يوم"
 //         likes={testComments.a3.likes}

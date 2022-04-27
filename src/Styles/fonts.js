@@ -174,6 +174,13 @@ export const fonts = {
     fontSize: 18,
     color: "#2196F3",
   },
+  //I added this line idk what's the order
+  S18W800CFFFFFF: {
+    fontWeight: 800,
+    fontSize: 18,
+    color: "#FFFFFF",
+  },
+
   S20W400C65676B: {
     fontWeight: 400,
     fontSize: 20,

@@ -34,14 +34,5 @@ export const StarCounter = (props) => {
         <BorderLinearProgress variant="determinate" {...props} />
       </Box>
     </Box>
-    // <Box sx={{ display: "flex", alignItems: "center" }}>
-    //   <Star></Star>
-    //   <Box>
-    //     <BorderLinearProgress
-    //       variant="determinate"
-    //       value={20}
-    //     ></BorderLinearProgress>
-    //   </Box>
-    // </Box>
   );
 };

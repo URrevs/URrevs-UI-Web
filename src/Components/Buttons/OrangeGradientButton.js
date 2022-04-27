@@ -18,8 +18,8 @@ const OrangeGradientButton = styled(Button, {
       : "0 3px 5px 2px rgba(33, 203, 243, .3)",
   color: "white",
   minHeight: 40,
-  width: "100%",
-  padding: "0 30px",
+  // width: "100%", why 100%?
+  // padding: "0 30px", didn't need padding or margin
   // margin: "8px",
 }));
 
