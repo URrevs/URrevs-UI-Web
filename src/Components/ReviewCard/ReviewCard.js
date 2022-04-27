@@ -33,7 +33,6 @@ export default function ReviewCard({
   let cons = reviewDetails.cons;
 
   const userName = reviewDetails.user_name;
-  console.log(reviewDetails.product ?? "aa");
 
   const brand = reviewDetails.brand ?? "";
   const product = reviewDetails.product ?? "";
@@ -57,7 +56,6 @@ export default function ReviewCard({
     textContainer.battery,
   ];
 
-  console.log(starsRatingTextContainer);
 
   const dispatch = useAppDispatch();
 

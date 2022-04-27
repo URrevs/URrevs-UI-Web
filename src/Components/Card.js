@@ -8,9 +8,7 @@ const StyledCard = styled(
   Paper,
   {}
 )(({ theme }) => ({
-  // margin: "10px 18px",
   margin: "10px 0px",
-
   padding: "0",
   borderRadius: "10px",
   backgroundColor: theme.palette.reviewCard.reviewCardColor,
@@ -26,8 +24,8 @@ const Card = ({ children, reviewIcon }) => {
       <div
         style={{
           position: "absolute",
-          left: theme.direction === "rtl" ? "10px" : "auto",
-          right: theme.direction === "rtl" ? "auto" : "10px",
+          left: theme.direction === "rtl" ? "-2px" : "auto",
+          right: theme.direction === "rtl" ? "auto" : "-2px",
           top: "-5px",
           transform:
             theme.direction === "rtl" ? "rotate(-45deg)" : "rotate(45deg)",
@@ -46,8 +44,8 @@ const Card = ({ children, reviewIcon }) => {
               color: theme.palette.reviewCard.indicatorColor,
               borderRadius: "40%",
               backgroundColor: theme.palette.background.default,
-              width: `${indicatorIconRadius}px`,
-              height: `${indicatorIconRadius}px`,
+              width: `${indicatorIconRadius-2}px`,
+              height: `${indicatorIconRadius-2}px`,
             }}
           />
         ) : (
