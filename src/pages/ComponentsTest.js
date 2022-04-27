@@ -18,7 +18,7 @@ const testComments = {
     text: "يعم أحلى ريفيو.",
   },
   a2: {
-    likes: 20000000000000,
+    likes: 20000000,
     user: "Sweet Trips",
     text: `Doo-doo-doo-doo-doo-doo-doo-doo-doo
     Doo-doo-doo-doo-doo, la-la-laa
@@ -35,6 +35,7 @@ const testComments = {
     text: "شكرا يا محترم.",
   },
 };
+
 const ComponentsTest = (props) => {
   return (
     <div style={{ margin: "10px" }}>

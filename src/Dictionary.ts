@@ -76,6 +76,10 @@ export default interface Dictionary {
   tabBarReview: string;
   tabBarQuestion: string;
   tabBarQuestionsAndAnswers: string;
+  search: string;
+  short_thousands: string;
+  short_millions: string;
+  short_billions: string;
 }
 
 interface FullDictionary {

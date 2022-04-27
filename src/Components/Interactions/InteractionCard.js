@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, styled, Typography } from "@mui/material";
+import { useConvertNumberToHumanLanguage } from "../../hooks/useMillify";
 
 const InteractionCardStyle = styled(
   Card,
@@ -29,6 +30,7 @@ const LikeCounterStyle = styled(
 }));
 
 export const InteractionCard = ({ user, text, likes, renderIcon }) => {
+  console.log(useConvertNumberToHumanLanguage(likes));
   return (
     <div>
       <InteractionCardStyle>
@@ -37,7 +39,9 @@ export const InteractionCard = ({ user, text, likes, renderIcon }) => {
         <LikeCounterStyle>
           {renderIcon()}
           <div style={{ width: "3px" }}></div>
-          <Typography variant="S14W400C050505">{likes}</Typography>
+          <Typography variant="S14W400C050505">
+            {useConvertNumberToHumanLanguage(likes)}
+          </Typography>
         </LikeCounterStyle>
       </InteractionCardStyle>
     </div>
