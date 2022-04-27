@@ -13,7 +13,7 @@ const BannerStyle = styled(
 export const CompetitionBanner = (props) => {
   return (
     <React.Fragment>
-      <BannerStyle>
+      <BannerStyle elevation={3}>
         <Box
           sx={{
             display: "flex",
