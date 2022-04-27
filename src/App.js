@@ -61,6 +61,11 @@ function App() {
         backgroundColor: COLORS.cffffff,
         mobileColor: COLORS.c606266,
       },
+      starCounter: {
+        backgroundColor: COLORS.cffffff,
+        barColor: COLORS.c2196f3,
+        barBorder: COLORS.c050505,
+      },
       authenticationButtons: {
         googleButtonColor: COLORS.c65676b,
         facebookButtonColor: COLORS.c2196f3,
