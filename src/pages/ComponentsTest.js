@@ -14,6 +14,7 @@ import ProductDetailsTable from "../Components/ProductDetailsTable";
 import { StarCounter } from "../Components/StarCounter/StarCounter";
 import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
 import { useSelector } from "react-redux";
+import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
 
 const testComments = {
   a1: {
@@ -55,6 +56,8 @@ const xiaomiImg =
 const ComponentsTest = (props) => {
   return (
     <div style={{ marginRight: "18px" }}>
+      <br />
+      <CompanyHorizontalList></CompanyHorizontalList>
       <br />
       <CompetitionPrompt
         text={CompPrompt}
