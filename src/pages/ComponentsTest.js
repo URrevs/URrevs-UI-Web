@@ -54,8 +54,11 @@ const ComponentsTest = (props) => {
 
   return (
     <div style={{ margin: "12px" }}>
-     
-      {/* <ProductRateCard viewer="100"></ProductRateCard> */}
+      <ProductRateCard
+        viewer="100"
+        phone="Nokia 7 Plus"
+        type="هاتف ذكي"
+      ></ProductRateCard>
       <br />
       <br />
 
