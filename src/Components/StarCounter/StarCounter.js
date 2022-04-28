@@ -11,21 +11,21 @@ export const StarCounter = (props) => {
     height: 14,
     borderRadius: 30,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor: theme.palette.starCounter.backgroundColor,
+      backgroundColor: theme.palette.progressBar.backgroundColor,
       // border: ` 0.2px solid ${theme.palette.starCounter.barBorder}`,
       //   boxSizing: "border-box",
       boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)",
     },
     [`& .${linearProgressClasses.bar}`]: {
       borderRadius: 30,
-      backgroundColor: theme.palette.starCounter.barColor,
+      backgroundColor: theme.palette.progressBar.barColor,
     },
   }));
   const theme = useTheme();
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <Star size="25" color={theme.palette.starCounter.barColor}></Star>
+        <Star size="25" color={theme.palette.progressBar.barColor}></Star>
         <Typography variant="S18W400C050505" sx={{ ml: "1.5px", mr: "1.5px" }}>
           {props.value}
         </Typography>

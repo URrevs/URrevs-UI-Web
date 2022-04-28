@@ -61,7 +61,7 @@ function App() {
         backgroundColor: COLORS.cffffff,
         mobileColor: COLORS.c606266,
       },
-      starCounter: {
+      progressBar: {
         backgroundColor: COLORS.cffffff,
         barColor: COLORS.c2196f3,
         barBorder: COLORS.c050505,
@@ -84,6 +84,11 @@ function App() {
         inputFieldText: isDark ? "#18191A" : COLORS.c050505,
         borderColor: isDark ? "#18191A" : COLORS.c606266,
       },
+      productRateCard: {
+        addPlaylistIconColor: isDark ? "#18191A" : COLORS.c050505,
+        barPrimaryColor: isDark ? "#18191A" : COLORS.c2196f3,
+        barSecondaryColor: isDark ? "#18191A" : COLORS.c2196F314,
+      },
       allProductsScreen: {
         selectedItemBackground: isDark ? "#18191A" : COLORS.c2196f3,
       },
@@ -101,25 +106,28 @@ function App() {
         <RTL direction={theme.direction}>
           <BrowserRouter>
             <Layout>
-            <Grid
-              container
-              style={{
-                display: theme.isMobile ? "block" : "flex",
-              }}
-            >
-              <Grid item md={2} sm={0}></Grid>
-              <Grid item md={8} sm={12}>
-                <Routes>
-                  <Route path="/" element={<Reviews />} />
-                  <Route path="/add-review" element={<AddReviewFormik />} />
-                  <Route path="/blog" element={<div>blog</div>} />
-                  <Route path="/about" element={<div>about</div>} />
-                  <Route path="/test" element={<AddReview />} />
-                  <Route path="/Components-test" element={<ComponentsTest />} />
-                </Routes>
+              <Grid
+                container
+                style={{
+                  display: theme.isMobile ? "block" : "flex",
+                }}
+              >
+                <Grid item md={2} sm={0}></Grid>
+                <Grid item md={8} sm={12}>
+                  <Routes>
+                    <Route path="/" element={<Reviews />} />
+                    <Route path="/add-review" element={<AddReviewFormik />} />
+                    <Route path="/blog" element={<div>blog</div>} />
+                    <Route path="/about" element={<div>about</div>} />
+                    <Route path="/test" element={<AddReview />} />
+                    <Route
+                      path="/Components-test"
+                      element={<ComponentsTest />}
+                    />
+                  </Routes>
+                </Grid>
+                <Grid item md={2} sm={0}></Grid>
               </Grid>
-              <Grid item md={2} sm={0}></Grid>
-            </Grid>
             </Layout>
           </BrowserRouter>
         </RTL>
