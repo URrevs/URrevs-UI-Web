@@ -90,14 +90,12 @@
   "helpOthersAndGetPoints": "ساعد غيرك واحصل على نقاط المساعدة",
   "reviews": "المراجعات",
   "askedQuestions": "الأسئلة المطروحة",
-  "menuOfRecentlyAddedProducts":"قائمة المنتجات المضافة حديثاً",
-  "menuOfRecentlyAddedCompanies":"قائمة الشركات المضافة حديثاً",
-  "inviteFriends":"أدع أصدقائك",
-  "howToWin":"كيف تربح",
-
-  "addedByMe":"added by me",
-  "search": "بحث",
   "short_thousands": "ألف",
   "short_millions": "مليون",
-  "short_billions": "مليار"
+  "short_billions": "مليار",
+  "setAsOwnedPhone": "تعيين كمنتج ممتلك",
+  "generalCompanyRating": "التقييم العام للشركة",
+  "writeAComment": "اكتب تعليق",
+  "writeAnAnswer": "اكتب إجابة",
+  "shareInvitationLink": "مشاركة رابط الدعوة"
 }

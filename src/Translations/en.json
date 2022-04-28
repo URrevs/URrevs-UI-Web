@@ -5,7 +5,7 @@
   "camera": "Camera",
   "comment": "Comment",
   "cons": "Cons",
-  "generalProductRating": "General Rating",
+  "generalProductRating": "General Product Rating",
   "like": "Like",
   "manufacturingQuality": "Manufacturing Quality",
   "priceQuality": "Price Quality",
@@ -90,14 +90,12 @@
   "questionsOnMyProducts": "Questions on my products",
   "reviews": "reviews",
   "yourInvitationCode": "Your invitation code",
-  "menuOfRecentlyAddedProducts":"Recently added products",
-  "menuOfRecentlyAddedCompanies":"Recently added companies",
-  "inviteFriends":"Invite friends",
-  "howToWin":"How to win",
-  
-  "addedByMe": "added by me",
-  "search": "Search",
   "short_thousands": "K",
   "short_millions": "M",
-  "short_billions": "B"
+  "short_billions": "B",
+  "setAsOwnedPhone": "Set as owned product",
+  "generalCompanyRating": "General Company Rating",
+  "writeAComment": "Write a comment",
+  "writeAnAnswer": "Write an answer",
+  "shareInvitationLink": "Share invitation link"
 }

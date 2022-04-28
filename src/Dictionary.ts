@@ -93,11 +93,14 @@ export default interface Dictionary {
   helpOthersAndGetPoints: string;
   reviews: string;
   askedQuestions: string;
-  addedByMe: string;
-  search: string;
   short_thousands: string;
   short_millions: string;
   short_billions: string;
+  setAsOwnedPhone: string;
+  generalCompanyRating: string;
+  writeAComment: string;
+  writeAnAnswer: string;
+  shareInvitationLink: string;
 }
 
 interface FullDictionary {
