@@ -8,6 +8,7 @@ const InteractionCardStyle = styled(
 )(({ theme }) => ({
   display: "flex",
   position: "relative",
+  minWidth: "60vw",
   flexDirection: "column",
   overflow: "unset",
   padding: "12px 12px",
@@ -25,7 +26,6 @@ const LikeCounterStyle = styled(
   minWidth: "33px",
   borderRadius: "50px",
   position: "absolute",
-  display: "flex",
   alignItems: "center",
   bottom: "-4px",
   right: "-15px",

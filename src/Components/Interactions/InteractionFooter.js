@@ -1,13 +1,15 @@
 import React from "react";
 import { styled, Button, Typography, ButtonBase } from "@mui/material";
 const CommentButton = styled(
-  Button,
+  ButtonBase,
   {}
 )((theme) => ({
-  margin: 0,
+  marginRight: "8px",
   padding: 0,
   lineHeight: 0,
-  //   fontFamily: "Tajawal",
+  ".MuiTypography-root": {
+    fontFamily: "Tajawal",
+  },
 }));
 
 export const InteractionFooter = ({
