@@ -21,7 +21,7 @@ const PromptStyled = styled(
   {}
 )((theme) => ({
   borderRadius: "12px",
-  padding: "12px",
+  padding: "20px 20px",
 }));
 
 export const CompetitionPrompt = ({ text, button, imgSrc }) => {
@@ -97,13 +97,13 @@ export const CompetitionPrompt = ({ text, button, imgSrc }) => {
             <Typography variant="S16W700C050505"> اضافة مسابقة</Typography>
             <IconButton
               sx={{
-                border: "1px solid #000",
+                border: "1px solid #050505",
                 padding: 0,
                 margin: 0,
                 backgroundColor: "#E8E8E8",
               }}
             >
-              <CloseIcon htmlColor="#000" fontSize="large" />
+              <CloseIcon htmlColor="#000" fontSize="medium" />
             </IconButton>
           </Box>
 
