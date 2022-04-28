@@ -21,16 +21,18 @@ export const InteractionFooter = ({
 }) => {
   return (
     <React.Fragment>
-      <CommentButton onClick={onClickHandler}>
-        <Typography variant={condition ? "S13W700C2196F3" : "S13W700C050505"}>
-          {buttonName}
-        </Typography>
-      </CommentButton>
-      {!reply ? (
-        <CommentButton>
-          <Typography variant={"S13W700C050505"}>رد</Typography>
+      <div style={{ marginLeft: "4px" }}>
+        <CommentButton onClick={onClickHandler}>
+          <Typography variant={condition ? "S13W700C2196F3" : "S13W700C050505"}>
+            {buttonName}
+          </Typography>
         </CommentButton>
-      ) : null}
+        {!reply ? (
+          <CommentButton>
+            <Typography variant={"S13W700C050505"}>رد</Typography>
+          </CommentButton>
+        ) : null}
+      </div>
       <Typography variant="S13W400C65676B">{date}</Typography>
     </React.Fragment>
   );
