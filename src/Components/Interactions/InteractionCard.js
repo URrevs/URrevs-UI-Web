@@ -31,12 +31,23 @@ const LikeCounterStyle = styled(
   right: "-15px",
 }));
 
-export const InteractionCard = ({ user, text, likes, renderIcon }) => {
+export const InteractionCard = ({
+  user,
+  text,
+  likes,
+  subtitle,
+  renderIcon,
+}) => {
   console.log(useConvertNumberToHumanLanguage(likes));
   return (
     <div>
       <InteractionCardStyle>
         <Typography variant="S14W700C050505">{user}</Typography>
+        {subtitle ? (
+          <Typography variant="S14W400C65676b">{subtitle}</Typography>
+        ) : (
+          <React.Fragment></React.Fragment>
+        )}
         <Typography variant="S14W400C000000">{text}</Typography>
         <LikeCounterStyle>
           {renderIcon()}
