@@ -12,6 +12,8 @@ const LeaderboardEntryCard = styled(
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
+  padding: "0px 12px",
+  borderRadius: "12px",
 }));
 
 const RankCircle = styled(
@@ -33,7 +35,7 @@ const UserAvatar = styled(
 
 const LeaderboardEntry = (props) => {
   const theme = useTheme();
-  
+
   const { fontSize, ref } = useFitText({
     maxFontSize: 90,
   });
@@ -65,8 +67,9 @@ const LeaderboardEntry = (props) => {
             {userRank}
           </div>
         </RankCircle>
-
+        <div style={{ width: "18px" }}></div>
         <UserAvatar></UserAvatar>
+        <div style={{ width: "18px" }}></div>
         <Typography variant="S20W700C050505">{userName}</Typography>
       </div>
 

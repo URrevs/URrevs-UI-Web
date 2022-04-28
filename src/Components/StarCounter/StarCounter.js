@@ -12,7 +12,7 @@ export const StarCounter = (props) => {
     borderRadius: 30,
     [`&.${linearProgressClasses.colorPrimary}`]: {
       backgroundColor: theme.palette.starCounter.backgroundColor,
-      border: ` 0.2px solid ${theme.palette.starCounter.barBorder}`,
+      // border: ` 0.2px solid ${theme.palette.starCounter.barBorder}`,
       //   boxSizing: "border-box",
       boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)",
     },
@@ -31,7 +31,7 @@ export const StarCounter = (props) => {
         </Typography>
       </div>
       <Box sx={{ width: "100%" }}>
-        <BorderLinearProgress variant="determinate" {...props} />
+        <BorderLinearProgress dir="rtl" variant="determinate" {...props} />
       </Box>
     </Box>
   );

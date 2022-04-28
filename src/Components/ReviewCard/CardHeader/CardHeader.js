@@ -5,7 +5,6 @@ import CardSubheader from "./CardHeader_Subheader";
 import CardHeaderTitle from "./CardHeader_Title";
 import CircleAvatar from "./CircleAvatar";
 
-
 const CardHeader = ({
   userAvatar,
   avatarRadius,

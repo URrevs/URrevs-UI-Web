@@ -1,5 +1,12 @@
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import { Box, Card, styled, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  IconButton,
+  styled,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
 import { useTheme } from "@emotion/react";
@@ -7,6 +14,14 @@ import {
   TEXT_FIELD_BORDER_RADIUS,
   TEXT_FIELD_BORDER_THICKNESS,
 } from "../../constants";
+
+const PromptStyled = styled(
+  Card,
+  {}
+)((theme) => ({
+  borderRadius: "12px",
+  padding: "12px",
+}));
 
 export const CompetitionPrompt = ({ text, button, imgSrc }) => {
   text = {
@@ -62,14 +77,15 @@ export const CompetitionPrompt = ({ text, button, imgSrc }) => {
   ];
   return (
     <React.Fragment>
-      <Box
-        sx={{
-          // padding: "28px 40px",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {/* <IconButton sx={{ alignSelf: "end" }}>
+      <PromptStyled>
+        <Box
+          sx={{
+            // padding: "28px 40px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {/* <IconButton sx={{ alignSelf: "end" }}>
             <CancelIcon
               sx={{
                 fill: "#E8E8E8",
@@ -79,35 +95,32 @@ export const CompetitionPrompt = ({ text, button, imgSrc }) => {
             />
           </IconButton> */}
 
-        <Typography variant="S16W700C050505"> اضافة مسابقة</Typography>
+          <Typography variant="S16W700C050505"> اضافة مسابقة</Typography>
 
-        {array.map((field) => {
-          return (
-            <React.Fragment key={field.q}>
-              {renderFields(field.q, field.l)}
-            </React.Fragment>
-          );
-        })}
+          {array.map((field) => {
+            return renderFields(field.q, field.l);
+          })}
 
-        <img
-          alt=""
-          src={imgSrc}
-          style={{
-            alignSelf: "center",
-            margin: "10px 0px",
-            height: "120px",
-            width: "auto",
-          }}
-        />
+          <img
+            alt=""
+            src={imgSrc}
+            style={{
+              alignSelf: "center",
+              margin: "10px 0px",
+              height: "120px",
+              width: "auto",
+            }}
+          />
 
-        <OrangeGradientButton
-          color="red"
-          // startIcon={<AddOutlinedIcon sx={{ fontSize: "28px" }} />} not used because size is not applied
-        >
-          <AddOutlinedIcon sx={{ fontSize: "28px" }} />
-          <Typography variant="S18W700Cffffff"> {button}</Typography>
-        </OrangeGradientButton>
-      </Box>
+          <OrangeGradientButton
+            color="red"
+            // startIcon={<AddOutlinedIcon sx={{ fontSize: "28px" }} />} not used because size is not applied
+          >
+            <AddOutlinedIcon sx={{ fontSize: "28px" }} />
+            <Typography variant="S18W700Cffffff"> {button}</Typography>
+          </OrangeGradientButton>
+        </Box>
+      </PromptStyled>
     </React.Fragment>
   );
 };
