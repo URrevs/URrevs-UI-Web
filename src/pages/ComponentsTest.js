@@ -52,7 +52,7 @@ const ComponentsTest = (props) => {
     <div>
       <br />
       <br />
-      {/* <ProductRateCard viewers="100"></ProductRateCard> */}
+      <ProductRateCard viewer="100"></ProductRateCard>
       <br />
       <br />
 
