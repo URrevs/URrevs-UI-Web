@@ -46,23 +46,13 @@ const testComments = {
 const xiaomiImg =
   "https://m.media-amazon.com/images/I/41o9nGF3rPL._AC_SY580_.jpg";
 
-const LargeContainer = styled(
-  Container,
-  {}
-)(({ theme }) => ({
-  position: theme.isMobile ? "absolute" : "relative",
-}));
-
 const ComponentsTest = (props) => {
   return (
-    <LargeContainer>
+    <div>
       <br />
       <CompanyHorizontalList></CompanyHorizontalList>
 
-      <CompetitionPrompt
-        button="أضف المسابقة"
-        imgSrc={xiaomiImg}
-      />
+      <CompetitionPrompt button="أضف المسابقة" imgSrc={xiaomiImg} />
       <br />
       <CompetitionBanner
         daysLeft="12"
@@ -206,7 +196,7 @@ const ComponentsTest = (props) => {
       <div>dasdna </div>
       <div>dasdna </div>
       <div>dasdna </div>
-    </LargeContainer>
+    </div>
   );
 };
 
