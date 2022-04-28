@@ -8,7 +8,10 @@ const InteractionCardStyle = styled(
 )(({ theme }) => ({
   display: "flex",
   position: "relative",
-  minWidth: "60vw",
+  [theme.breakpoints.down("sm")]: {
+    minWidth: "45vw !important", // Overrides inline-style
+  },
+  minWidth: "20vw",
   flexDirection: "column",
   overflow: "unset",
   padding: "12px 12px",
