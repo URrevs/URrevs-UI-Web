@@ -33,7 +33,6 @@ export const InteractionBody = ({
           <Box
             sx={{
               display: "flex",
-              alignItems: "center",
               marginLeft: "8px",
             }}
           >
