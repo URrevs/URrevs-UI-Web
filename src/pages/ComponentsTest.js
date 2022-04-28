@@ -99,6 +99,7 @@ const ComponentsTest = (props) => {
       <br />
       <Answer
         date="شهر"
+        subtitle="امتلك هذا المنتج لمدة 3 أشهر"
         likes={testComments.a3.likes}
         text={testComments.a3.text}
         user={testComments.a3.user}
@@ -106,6 +107,7 @@ const ComponentsTest = (props) => {
       <br />
       <Answer
         date="شهر"
+        subtitle="امتلك هذا المنتج لمدة 3 أشهر"
         likes={testComments.a3.likes}
         text={testComments.a3.text}
         user={testComments.a3.user}

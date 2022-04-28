@@ -1,12 +1,12 @@
-import React from "react";
 import { Avatar, Box } from "@mui/material";
+import React from "react";
 import { InteractionCard } from "./InteractionCard";
-import { InteractionFooter } from "./InteractionFooter";
 
 export const InteractionBody = ({
   user,
   text,
   buttonName,
+  subtitle,
   likes,
   date,
   condition,
@@ -26,10 +26,17 @@ export const InteractionBody = ({
           <InteractionCard
             user={user}
             text={text}
+            subtitle={subtitle}
             likes={likes}
             renderIcon={renderIcon}
           ></InteractionCard>
-          {children}
+          <Box
+            sx={{
+              display: "flex",
+            }}
+          >
+            {children}
+          </Box>
         </Box>
       </Box>
     </div>

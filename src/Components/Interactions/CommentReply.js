@@ -33,7 +33,7 @@ export const CommentReply = (props) => {
           date={props.date}
           condition={like}
           onClickHandler={onClickHandler}
-          reply={false}
+          reply={true}
           buttonName={buttonName}
         ></InteractionFooter>
       </InteractionBody>
