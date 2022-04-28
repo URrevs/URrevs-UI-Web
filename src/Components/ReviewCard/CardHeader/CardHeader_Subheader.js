@@ -31,6 +31,7 @@ const CardSubheader = ({ reviewDate, buyDate, showViewsCounter }) => {
                 fontSize: "19",
                 verticalAlign: "middle",
                 margin: "0 2px",
+                marginTop: "-3px",
               }}
             />
             {convert(1000)}

@@ -25,7 +25,10 @@ const CompanyButton = styled(Button, {
   borderRadius: 3,
   backgroundColor: backgroundColor,
   "&:hover": {
-    backgroundColor: theme.palette.allProductsScreen.selectedItemBackground,
+    backgroundColor:
+      backgroundColor === "white"
+        ? "#d9d9d9"
+        : theme.palette.allProductsScreen.selectedItemBackground,
     boxShadow: "none",
   },
 }));
@@ -84,10 +87,16 @@ export const CompanyHorizontalList = () => {
     <List
       sx={{
         bgcolor: "background.paper",
-        overflow: "scroll",
+        overflowX: "scroll",
+        msOverflowStyle: "none" /* IE and Edge */,
+        scrollbarWidth: "none" /* Firefox */,
+
         display: "flex",
         margin: "0px",
         padding: "0px",
+        borderBottomLeftRadius: "10px",
+        borderBottomRightRadius: "10px",
+        boxShadow: 3,
       }}
     >
       {Array(40)

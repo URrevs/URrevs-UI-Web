@@ -6,6 +6,7 @@ import FooterButton from "./FooterButton";
 import { useTheme } from "@emotion/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpLong } from "@fortawesome/free-solid-svg-icons";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 
 const CardFooter = ({ isReview }) => {
   const theme = useTheme();
@@ -14,11 +15,21 @@ const CardFooter = ({ isReview }) => {
     fontSize: "20px",
   };
   const firstIcon = isReview ? (
-    <ThumbUpAltOutlinedIcon style={iconStyle} />
+    <ThumbUpIcon
+      style={{
+        ...iconStyle,
+        color: theme.palette.reviewCard.actionBtnIconHighlight,
+      }}
+    />
   ) : (
-    <FontAwesomeIcon style={iconStyle} icon={faUpLong} />
+    <FontAwesomeIcon
+      style={{
+        ...iconStyle,
+        color: theme.palette.reviewCard.actionBtnIconHighlight,
+      }}
+      icon={faUpLong}
+    />
   );
-
   return (
     <div
       style={{

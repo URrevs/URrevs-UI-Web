@@ -3,6 +3,7 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import { styled } from "@mui/material";
 import { default as Paper } from "@mui/material/Paper";
+import Tooltip from "@mui/material/Tooltip";
 
 const StyledCard = styled(
   Paper,
@@ -16,49 +17,124 @@ const StyledCard = styled(
 
 const Card = ({ children, reviewIcon }) => {
   const theme = useTheme();
-  const indicatorIconRadius = 24;
+  const indicatorIconRadius = 20;
 
   return (
     <div style={{ position: "sticky" }}>
       <StyledCard sx={{ boxShadow: 3 }}>{children}</StyledCard>
+      {/* outer */}
       <div
-        style={{
-          position: "absolute",
-          left: theme.direction === "rtl" ? "-2px" : "auto",
-          right: theme.direction === "rtl" ? "auto" : "-2px",
-          top: "-5px",
-          transform:
-            theme.direction === "rtl" ? "rotate(-45deg)" : "rotate(45deg)",
-          backgroundColor: theme.palette.background.default,
-          width: `${indicatorIconRadius + 4}px`,
-          height: `${indicatorIconRadius + 4}px`,
-          borderRadius: "50%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+        style={
+          reviewIcon
+            ? {
+                position: "absolute",
+                left: theme.direction === "rtl" ? "-2px" : "auto",
+                right: theme.direction === "rtl" ? "auto" : "-2px",
+                top: "-4px",
+
+                backgroundColor: theme.palette.background.default,
+                // hole width
+                width: `${indicatorIconRadius + 8}px`,
+                height: `${indicatorIconRadius + 8}px`,
+                borderRadius: "50%",
+
+                padding: "0px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }
+            : {
+                position: "absolute",
+                left: theme.direction === "rtl" ? "-2px" : "auto",
+                right: theme.direction === "rtl" ? "auto" : "-2px",
+                top: "-4px",
+                transform:
+                  theme.direction === "rtl"
+                    ? "rotate(-24deg)"
+                    : "rotate(24deg)",
+                backgroundColor: theme.palette.background.default,
+                // hole width
+                width: `${indicatorIconRadius + 4}px`,
+                height: `${indicatorIconRadius + 4}px`,
+                borderRadius: "50%",
+
+                padding: "0px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }
+        }
       >
-        {reviewIcon ? (
-          <RateReviewOutlinedIcon
-            style={{
-              color: theme.palette.reviewCard.indicatorColor,
-              borderRadius: "40%",
-              backgroundColor: theme.palette.background.default,
-              width: `${indicatorIconRadius-2}px`,
-              height: `${indicatorIconRadius-2}px`,
-            }}
-          />
-        ) : (
-          <HelpOutlineOutlinedIcon
-            style={{
-              color: theme.palette.reviewCard.indicatorColor,
-              borderRadius: "50%",
-              backgroundColor: theme.palette.background.default,
-              width: `${indicatorIconRadius}px`,
-              height: `${indicatorIconRadius}px`,
-            }}
-          />
-        )}
+        {/* border */}
+        <div
+          style={
+            reviewIcon
+              ? {
+                  position: "absolute",
+                  left: theme.direction === "rtl" ? "2px" : "auto",
+                  right: theme.direction === "rtl" ? "auto" : "2px",
+                  top: "2px",
+                  transform:
+                    theme.direction === "rtl"
+                      ? "rotate(-24deg)"
+                      : "rotate(24deg)",
+                  backgroundColor: theme.palette.background.default,
+                  width: `${indicatorIconRadius + 2}px`,
+                  height: `${indicatorIconRadius + 2}px`,
+                  borderRadius: "50%",
+                  border: reviewIcon
+                    ? `3px solid ${theme.palette.reviewCard.indicatorColor}`
+                    : "none",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }
+              : {
+                  position: "absolute",
+                  left: theme.direction === "rtl" ? "+2px" : "auto",
+                  right: theme.direction === "rtl" ? "auto" : "+2px",
+                  top: "1px",
+
+                  backgroundColor: theme.palette.background.default,
+                  width: `${indicatorIconRadius + 0}px`,
+                  height: `${indicatorIconRadius + 0}px`,
+                  borderRadius: "50%",
+
+                  padding: "0px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }
+          }
+        >
+          {reviewIcon ? (
+            <Tooltip title="Review">
+              <RateReviewOutlinedIcon
+                style={{
+                  color: theme.palette.reviewCard.indicatorColor,
+                  borderRadius: "40%",
+                  backgroundColor: theme.palette.background.default,
+                  padding: "1px",
+
+                  width: `${indicatorIconRadius - 2}px`,
+                  height: `${indicatorIconRadius - 2}px`,
+                }}
+              />
+            </Tooltip>
+          ) : (
+            <Tooltip title="Question">
+              <HelpOutlineOutlinedIcon
+                style={{
+                  color: theme.palette.reviewCard.indicatorColor,
+                  borderRadius: "50%",
+                  backgroundColor: theme.palette.background.default,
+                  width: `${indicatorIconRadius}px`,
+                  height: `${indicatorIconRadius}px`,
+                }}
+              />
+            </Tooltip>
+          )}
+        </div>
       </div>
     </div>
   );

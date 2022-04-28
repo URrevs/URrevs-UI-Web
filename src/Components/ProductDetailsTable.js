@@ -10,9 +10,9 @@ import { useAppSelector } from "../store/hooks";
 import Button from "@mui/material/Button";
 
 const rows = {
-  price: 3400,
+  price: "3400",
   manufacturingCompany: "Nokia",
-  releaseDate: "2018/3",
+  releaseDate: "مارس 2018",
   productDimensions: "158 x 75 x 8 mm",
   networkType: "GSM / HSPA / LTE",
   productWeight: "181 gram",
@@ -159,16 +159,16 @@ const ProductDetailsTable = ({
               textContainer.productImage,
               <img
                 loading="auto"
-                src={`https://d3tygoy974vfbk.cloudfront.net/images/phones/${encodeURIComponent(
-                  `${brand} ${product}`
-                )}.jpg`}
+                width="40px"
+                height="40px"
+                src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Acer_Logo.svg"
                 alt={`${brand} ${product}`}
               />,
               <img
                 loading="auto"
-                src={`https://d3tygoy974vfbk.cloudfront.net/images/phones/${encodeURIComponent(
-                  `${comparedBrand} ${comparedProduct}`
-                )}.jpg`}
+                width="40px"
+                height="40px"
+                src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Acer_Logo.svg"
                 alt={`${comparedBrand} ${comparedProduct}`}
               />
             )}
@@ -205,6 +205,9 @@ const ProductDetailsTable = ({
                   <Button
                     variant="text"
                     disabled={key != "manufacturingCompany"}
+                    sx={{
+                      textTransform: "none",
+                    }}
                   >
                     <Typography
                       dir="ltr"
@@ -236,6 +239,9 @@ const ProductDetailsTable = ({
                     <Button
                       variant="text"
                       disabled={key != "manufacturingCompany"}
+                      sx={{
+                        textTransform: "none",
+                      }}
                     >
                       <Typography
                         dir="ltr"

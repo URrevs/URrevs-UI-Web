@@ -15,7 +15,7 @@ const PromptStyled = styled(
   {}
 )((theme) => ({
   borderRadius: "12px",
-  marginRight: "20px", //just for testing
+  padding: "12px",
 }));
 
 export const CompetitionPrompt = ({ text, button, imgSrc }) => {
@@ -68,14 +68,15 @@ export const CompetitionPrompt = ({ text, button, imgSrc }) => {
   ];
   return (
     <React.Fragment>
-      <Box
-        sx={{
-          // padding: "28px 40px",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {/* <IconButton sx={{ alignSelf: "end" }}>
+      <PromptStyled>
+        <Box
+          sx={{
+            // padding: "28px 40px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <IconButton sx={{ alignSelf: "end" }}>
             <CancelIcon
               sx={{
                 fill: "#E8E8E8",
@@ -83,33 +84,34 @@ export const CompetitionPrompt = ({ text, button, imgSrc }) => {
               }}
               fontSize="large"
             />
-          </IconButton> */}
+          </IconButton>
 
-        <Typography variant="S16W700C050505"> اضافة مسابقة</Typography>
+          <Typography variant="S16W700C050505"> اضافة مسابقة</Typography>
 
-        {array.map((field) => {
-          return renderFields(field.q, field.l);
-        })}
+          {array.map((field) => {
+            return renderFields(field.q, field.l);
+          })}
 
-        <img
-          alt=""
-          src={imgSrc}
-          style={{
-            alignSelf: "center",
-            margin: "10px 0px",
-            height: "120px",
-            width: "auto",
-          }}
-        />
+          <img
+            alt=""
+            src={imgSrc}
+            style={{
+              alignSelf: "center",
+              margin: "10px 0px",
+              height: "120px",
+              width: "auto",
+            }}
+          />
 
-        <OrangeGradientButton
-          color="red"
-          // startIcon={<AddOutlinedIcon sx={{ fontSize: "28px" }} />} not used because size is not applied
-        >
-          <AddOutlinedIcon sx={{ fontSize: "28px" }} />
-          <Typography variant="S18W700Cffffff"> {button}</Typography>
-        </OrangeGradientButton>
-      </Box>
+          <OrangeGradientButton
+            color="red"
+            // startIcon={<AddOutlinedIcon sx={{ fontSize: "28px" }} />} not used because size is not applied
+          >
+            <AddOutlinedIcon sx={{ fontSize: "28px" }} />
+            <Typography variant="S18W700Cffffff"> {button}</Typography>
+          </OrangeGradientButton>
+        </Box>
+      </PromptStyled>
     </React.Fragment>
   );
 };

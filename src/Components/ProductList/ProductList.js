@@ -13,7 +13,6 @@ import { useAppSelector } from "../../store/hooks";
 
 export default function ProductList({ list, title }) {
   const [open, setOpen] = React.useState(true);
-  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   list = [
     {
@@ -53,6 +52,7 @@ export default function ProductList({ list, title }) {
     setOpen(!open);
   };
   const theme = useTheme();
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   return (
     <Card
@@ -70,7 +70,7 @@ export default function ProductList({ list, title }) {
         <ListItemButton onClick={handleClick}>
           <ListItemText
             primaryTypographyProps={{ ...theme.typography.S20W500C050505 }}
-            primary={textContainer.recentlyAddedProducts}
+            primary={title}
           />
           {open ? <ArrowDropUpRoundedIcon /> : <ArrowDropDownRoundedIcon />}
         </ListItemButton>

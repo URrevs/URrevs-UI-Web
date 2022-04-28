@@ -18,6 +18,8 @@ const LikeCounterStyle = styled(
   Card,
   {}
 )(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
   padding: "0px 3px",
   minHeight: "15px",
   minWidth: "33px",
