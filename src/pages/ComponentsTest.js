@@ -46,7 +46,8 @@ const testComments = {
   },
 };
 
-const xiaomiImg = "";
+const xiaomiImg =
+  "https://m.media-amazon.com/images/I/41o9nGF3rPL._AC_SY580_.jpg";
 
 const ComponentsTest = (props) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
@@ -55,7 +56,7 @@ const ComponentsTest = (props) => {
     <div style={{ margin: "12px" }}>
       <br />
       <br />
-      <ProductRateCard viewer="100"></ProductRateCard>
+      {/* <ProductRateCard viewer="100"></ProductRateCard> */}
       <br />
       <br />
 
