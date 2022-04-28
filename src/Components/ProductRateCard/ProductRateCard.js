@@ -1,29 +1,39 @@
 import RemoveRedEyeRoundedIcon from "@mui/icons-material/RemoveRedEyeRounded";
+import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
 import { Box, Button, Card, Grid, styled, Typography } from "@mui/material";
 import React from "react";
+import { useSelector } from "react-redux";
 
-import { CARD_BORDER_RADIUS } from "../../constants";
+import { CARD_BORDER_RADIUS, BUTTON_BORDER_RADIUS } from "../../constants";
 import { useConvertNumberToHumanLanguage } from "../../hooks/useMillify";
 import StarRating from "../Form/StarRating";
 import { CircularProductRate } from "./CircularProductRate";
+import { useTheme } from "@emotion/react";
 const CardStyled = styled(
   Card,
   {}
 )((theme) => ({
   borderRadius: `${CARD_BORDER_RADIUS}px`,
 }));
-const textContainer = {
-  addProduct: "تعين كمنتج ممتلك",
-  generalProductReview: "التقيم العام للمنتج",
-  generalBrandReview: "التقيم العام للشركة",
-  ui: "واجهة المستخدم",
-  manufactureQuality: "جودة التصنيع",
-  price: "القيمة للسعر",
-  camera: "الكاميرا",
-  callQuality: "جودة المكالمة",
-  battery: "البطارية",
-};
-export const ProductRateCard = ({ viewer, phone, type }) => {
+const ButtonStyled = styled(
+  Button,
+  {}
+)((theme) => ({
+  borderRadius: `${BUTTON_BORDER_RADIUS}px`,
+  padding: "6px 3px 6px 6px",
+  background: "#2196F359",
+}));
+export const ProductRateCard = ({
+  viewer,
+  phone,
+  type,
+  productRating,
+  companyRating,
+}) => {
+  const textContainer = useSelector((state) => {
+    return state.language.textContainer;
+  });
+  const theme = useTheme();
   return (
     <React.Fragment>
       <CardStyled>
@@ -70,7 +80,14 @@ export const ProductRateCard = ({ viewer, phone, type }) => {
           </Grid>
         </Grid>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Button variant="outlined">{textContainer.addProduct}</Button>
+          <ButtonStyled elevation="3" variant="contained">
+            <PlaylistAddOutlinedIcon
+              sx={{ color: theme.palette.productRateCard.addPlaylistIconColor }}
+            ></PlaylistAddOutlinedIcon>
+            <Typography variant="S14W400C050505">
+              {textContainer.setAsOwnedPhone}
+            </Typography>
+          </ButtonStyled>
         </Box>
         <Box
           sx={{
@@ -79,8 +96,16 @@ export const ProductRateCard = ({ viewer, phone, type }) => {
             alignItems: "center",
           }}
         >
-          <CircularProductRate></CircularProductRate>
-          <CircularProductRate></CircularProductRate>
+          <CircularProductRate
+            barPrimaryColor={theme.palette.productRateCard.barPrimaryColor}
+            barSecondaryColor={theme.palette.productRateCard.barSecondaryColor}
+            value={productRating}
+          ></CircularProductRate>
+          <CircularProductRate
+            barPrimaryColor={theme.palette.productRateCard.barPrimaryColor}
+            barSecondaryColor={theme.palette.productRateCard.barSecondaryColor}
+            value={companyRating}
+          ></CircularProductRate>
         </Box>
         <Box>
           <StarRating text="asdasd" isVertical={false}></StarRating>

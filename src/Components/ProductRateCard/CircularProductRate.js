@@ -1,10 +1,36 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
 
-export const CircularProductRate = () => {
+export const CircularProductRate = ({
+  value,
+  barPrimaryColor,
+  barSecondaryColor,
+}) => {
   return (
     <Box sx={{ position: "relative", display: "inline-flex" }}>
-      <CircularProgress variant="determinate" value="60" />
+      <CircularProgress
+        sx={{
+          color: barSecondaryColor,
+          // animationDuration: "550ms",
+          position: "absolute",
+          left: 0,
+        }}
+        variant="determinate"
+        value="100"
+        size="56px"
+      />
+      <CircularProgress
+        size="56px"
+        sx={
+          {
+            // color: barPrimaryColor,
+          }
+        }
+        variant="determinate"
+        value={(value * 100) / 5}
+      />
+
       <Box
         sx={{
           top: 0,
@@ -17,9 +43,7 @@ export const CircularProductRate = () => {
           justifyContent: "center",
         }}
       >
-        <Typography variant="caption" component="div" color="text.secondary">
-          {`3/5`}
-        </Typography>
+        <Typography variant="S20W500C050505">{`${value}/5`}</Typography>
       </Box>
     </Box>
   );
