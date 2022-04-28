@@ -9,40 +9,42 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
+import { useAppSelector } from "../../store/hooks";
 
 export default function ProductList({ list, title }) {
   const [open, setOpen] = React.useState(true);
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   list = [
     {
       brand: "Xiaomi",
       product: "",
-      type: "هاتف ذكي",
+      type: "smart_phone",
     },
     {
       brand: "Xiaomi",
       product: "",
-      type: "هاتف ذكي",
+      type: "smart_phone",
     },
     {
       brand: "Xiaomi",
       product: "",
-      type: "هاتف ذكي",
+      type: "smart_phone",
     },
     {
       brand: "Xiaomi",
       product: "",
-      type: "هاتف ذكي",
+      type: "smart_phone",
     },
     {
       brand: "Xiaomi",
       product: "",
-      type: "هاتف ذكي",
+      type: "smart_phone",
     },
     {
       brand: "Xiaomi",
       product: "",
-      type: "هاتف ذكي",
+      type: "smart_phone",
     },
   ];
   // list = new Array(5);
@@ -68,7 +70,7 @@ export default function ProductList({ list, title }) {
         <ListItemButton onClick={handleClick}>
           <ListItemText
             primaryTypographyProps={{ ...theme.typography.S20W500C050505 }}
-            primary="قائمة المنتجات المضافة حديثاً (20)"
+            primary={textContainer.recentlyAddedProducts}
           />
           {open ? <ArrowDropUpRoundedIcon /> : <ArrowDropDownRoundedIcon />}
         </ListItemButton>
@@ -92,7 +94,7 @@ export default function ProductList({ list, title }) {
                     secondaryTypographyProps={{
                       ...theme.typography.S18W400C65676B,
                     }}
-                    secondary="هاتف ذكي"
+                    secondary={textContainer.smartphone}
                   />
                 </ListItem>
                 <Divider></Divider>

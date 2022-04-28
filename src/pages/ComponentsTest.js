@@ -15,6 +15,8 @@ import { StarCounter } from "../Components/StarCounter/StarCounter";
 import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
 import { useSelector } from "react-redux";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
+import { Container } from "@mui/material";
+import styled from "@emotion/styled";
 
 const testComments = {
   a1: {
@@ -40,27 +42,24 @@ const testComments = {
     text: "شكرا يا محترم.",
   },
 };
-const CompPrompt = {
-  q1: "ادخل تاريخ انتهاء المسابقة:",
-  l1: "تاريخ انتهاء المسابقة ",
-  q2: "ادخل عدد الفائزين:",
-  l2: "عدد الفائزين",
-  q3: "ادخل اسم الجائزة:",
-  l3: "اسم الجائزة",
-  q4: "ادخل رابط صورة للجائزة:",
-  l4: "رابط صورة الجائزة",
-};
+
 const xiaomiImg =
   "https://m.media-amazon.com/images/I/41o9nGF3rPL._AC_SY580_.jpg";
 
+const LargeContainer = styled(
+  Container,
+  {}
+)(({ theme }) => ({
+  position: theme.isMobile ? "absolute" : "relative",
+}));
+
 const ComponentsTest = (props) => {
   return (
-    <div style={{ marginRight: "18px" }}>
+    <LargeContainer>
       <br />
       <CompanyHorizontalList></CompanyHorizontalList>
-      <br />
+
       <CompetitionPrompt
-        text={CompPrompt}
         button="أضف المسابقة"
         imgSrc={xiaomiImg}
       />
@@ -183,9 +182,9 @@ const ComponentsTest = (props) => {
         clearIndexCache={() => {}}
       />
       <br />
-      {/* <ProductDetailsTable /> */}
+      <ProductDetailsTable />
       <br />
-      {/* <ProductDetailsTable isComparison={true} /> */}
+      <ProductDetailsTable isComparison={true} />
       <br />
       <br />
       <br />
@@ -207,7 +206,7 @@ const ComponentsTest = (props) => {
       <div>dasdna </div>
       <div>dasdna </div>
       <div>dasdna </div>
-    </div>
+    </LargeContainer>
   );
 };
 

@@ -30,7 +30,7 @@ export const StarCounter = (props) => {
           {props.value}
         </Typography>
       </div>
-      <Box sx={{ width: "100%", mr: 1 }}>
+      <Box sx={{ width: "100%" }}>
         <BorderLinearProgress variant="determinate" {...props} />
       </Box>
     </Box>

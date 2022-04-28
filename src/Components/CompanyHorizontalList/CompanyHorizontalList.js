@@ -1,16 +1,25 @@
-import * as React from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
+import styled from "@emotion/styled";
+import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import ImageIcon from "@mui/icons-material/Image";
 import WorkIcon from "@mui/icons-material/Work";
-import BeachAccessIcon from "@mui/icons-material/BeachAccess";
+import { Container } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemText from "@mui/material/ListItemText";
+import * as React from "react";
+
+const LargeContainer = styled(
+  Container,
+  {}
+)(({ theme }) => ({
+  direction: theme.direction,
+  position: theme.isMobile ? "absolute" : "relative",
+}));
 
 export const CompanyHorizontalList = () => {
   return (
-    <div style={{ width: "100%" }}>
       <List
         sx={{
           bgcolor: "background.paper",
@@ -91,6 +100,5 @@ export const CompanyHorizontalList = () => {
           <ListItemText primary="Vacation" secondary="July 20, 2014" />
         </ListItem>
       </List>
-    </div>
   );
 };

@@ -19,6 +19,17 @@ const PromptStyled = styled(
 }));
 
 export const CompetitionPrompt = ({ text, button, imgSrc }) => {
+  text = {
+    q1: "ادخل تاريخ انتهاء المسابقة:",
+    l1: "تاريخ انتهاء المسابقة ",
+    q2: "ادخل عدد الفائزين:",
+    l2: "عدد الفائزين",
+    q3: "ادخل اسم الجائزة:",
+    l3: "اسم الجائزة",
+    q4: "ادخل رابط صورة للجائزة:",
+    l4: "رابط صورة الجائزة",
+  };
+
   const theme = useTheme();
   const renderFields = (text, label) => {
     return (

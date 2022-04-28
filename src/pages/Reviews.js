@@ -93,7 +93,7 @@ function Reviews() {
       dispatch(reviewsActions.increasePage());
     }
     maxIndex = Math.max(index, maxIndex);
-
+    console.log(style);
     return (
       <div key={key}>
         {index >= reviewsList.length ? (

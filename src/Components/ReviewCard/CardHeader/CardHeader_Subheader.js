@@ -1,9 +1,12 @@
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import useConvertNumberToHumanLanguage from "../../../hooks/useMillify";
+import { useConvertNumberToHumanLanguage } from "../../../hooks/useMillify";
+import { useAppSelector } from "../../../store/hooks";
 
 const CardSubheader = ({ reviewDate, buyDate, showViewsCounter }) => {
+  const convert = useConvertNumberToHumanLanguage;
+  const textContainer = useAppSelector((state) => state.language.textContainer);
   return (
     <React.Fragment>
       <div>
@@ -15,7 +18,7 @@ const CardSubheader = ({ reviewDate, buyDate, showViewsCounter }) => {
             {" "}
             •{" "}
             <Typography variant="S14W400C65676b">
-              {"امتلكه منذ " + buyDate.split(" ")[0]}
+              {textContainer.usedThisFor + buyDate.split(" ")[0]}
             </Typography>
           </Typography>
         )}
@@ -30,7 +33,7 @@ const CardSubheader = ({ reviewDate, buyDate, showViewsCounter }) => {
                 margin: "0 2px",
               }}
             />
-            useCon
+            {convert(1000)}
           </Typography>
         )}
       </div>

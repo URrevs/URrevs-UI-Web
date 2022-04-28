@@ -104,169 +104,164 @@ const ProductDetailsTable = ({
   };
   comparedRows = rows;
   return (
-    <div style={{ width: "150px" }}>
-      <div>
-        <Paper
-          sx={{
-            borderRadius: "15px",
-            padding: "0 10px",
-            boxShadow: 3,
-          }}
-        >
-          <Table style={{ overflowX: "auto" }}>
-            <TableHead>
+    <Paper
+      sx={{
+        borderRadius: "15px",
+        padding: "0 10px",
+        boxShadow: 3,
+        overflow: "auto",
+      }}
+    >
+      <Table style={{ overflow: "auto", maxWidth: "100%" }}>
+        <TableHead>
+          {isComparison && (
+            <TableRow key={textContainer.productName}>
+              <TableCell
+                sx={{
+                  borderBottom: borderBottom,
+                  borderRight: borderRight,
+                }}
+                align={isComparison ? "center" : "left"}
+              >
+                <Typography variant="S16W500C050505">
+                  {textContainer.productName}:
+                </Typography>
+              </TableCell>
+              {/* main product details */}
+              <TableCell
+                sx={{
+                  borderBottom: borderBottom,
+                  borderRight: borderRight,
+                }}
+                align="center"
+              >
+                <Typography dir="ltr" variant="S20W500C050505">
+                  {product}
+                </Typography>
+              </TableCell>
+              {/* compared product details */}
               {isComparison && (
-                <TableRow key={textContainer.productName}>
-                  <TableCell
-                    sx={{
-                      borderBottom: borderBottom,
-                      borderRight: borderRight,
-                    }}
-                    align={isComparison ? "center" : "left"}
+                <TableCell
+                  sx={{
+                    borderBottom: borderBottom,
+                  }}
+                  align="center"
+                >
+                  <Typography dir="ltr" variant="S20W500C050505">
+                    {comparedProduct}
+                  </Typography>
+                </TableCell>
+              )}
+            </TableRow>
+          )}
+          {isComparison &&
+            tableRow(
+              textContainer.productImage,
+              <img
+                loading="auto"
+                src={`https://d3tygoy974vfbk.cloudfront.net/images/phones/${encodeURIComponent(
+                  `${brand} ${product}`
+                )}.jpg`}
+                alt={`${brand} ${product}`}
+              />,
+              <img
+                loading="auto"
+                src={`https://d3tygoy974vfbk.cloudfront.net/images/phones/${encodeURIComponent(
+                  `${comparedBrand} ${comparedProduct}`
+                )}.jpg`}
+                alt={`${comparedBrand} ${comparedProduct}`}
+              />
+            )}
+        </TableHead>
+        <TableBody>
+          {productEntries.map((key, index) => {
+            return (
+              <TableRow key={key}>
+                <TableCell
+                  sx={{
+                    borderBottom:
+                      index != productEntries.length - 1
+                        ? borderBottom
+                        : "none",
+                    borderRight: borderRight,
+                  }}
+                  align={isComparison ? "center" : "left"}
+                >
+                  <Typography variant="S16W500C050505">
+                    {textContainer[key]}:
+                  </Typography>
+                </TableCell>
+                {/* main product details */}
+                <TableCell
+                  sx={{
+                    borderBottom:
+                      index != productEntries.length - 1
+                        ? borderBottom
+                        : "none",
+                    borderRight: borderRight,
+                  }}
+                  align="center"
+                >
+                  <Button
+                    variant="text"
+                    disabled={key != "manufacturingCompany"}
                   >
-                    <Typography variant="S16W500C050505">
-                      {textContainer.productName}:
+                    <Typography
+                      dir="ltr"
+                      variant={
+                        key === "manufacturingCompany"
+                          ? "S16W900C050505"
+                          : "S16W400C050505"
+                      }
+                      style={{
+                        textDecoration:
+                          key === "manufacturingCompany" ? "underline" : "none",
+                      }}
+                    >
+                      {rows[key]}
                     </Typography>
-                  </TableCell>
-                  {/* main product details */}
+                  </Button>
+                </TableCell>
+                {/* compared product details */}
+                {isComparison && (
                   <TableCell
                     sx={{
-                      borderBottom: borderBottom,
-                      borderRight: borderRight,
+                      borderBottom:
+                        index != productEntries.length - 1
+                          ? borderBottom
+                          : "none",
                     }}
                     align="center"
                   >
-                    <Typography dir="ltr" variant="S20W500C050505">
-                      {product}
-                    </Typography>
-                  </TableCell>
-                  {/* compared product details */}
-                  {isComparison && (
-                    <TableCell
-                      sx={{
-                        borderBottom: borderBottom,
-                      }}
-                      align="center"
+                    <Button
+                      variant="text"
+                      disabled={key != "manufacturingCompany"}
                     >
-                      <Typography dir="ltr" variant="S20W500C050505">
-                        {comparedProduct}
-                      </Typography>
-                    </TableCell>
-                  )}
-                </TableRow>
-              )}
-              {isComparison &&
-                tableRow(
-                  textContainer.productImage,
-                  <img
-                    loading="auto"
-                    src={`https://d3tygoy974vfbk.cloudfront.net/images/phones/${encodeURIComponent(
-                      `${brand} ${product}`
-                    )}.jpg`}
-                    alt={`${brand} ${product}`}
-                  />,
-                  <img
-                    loading="auto"
-                    src={`https://d3tygoy974vfbk.cloudfront.net/images/phones/${encodeURIComponent(
-                      `${comparedBrand} ${comparedProduct}`
-                    )}.jpg`}
-                    alt={`${comparedBrand} ${comparedProduct}`}
-                  />
-                )}
-            </TableHead>
-            <TableBody>
-              {productEntries.map((key, index) => {
-                return (
-                  <TableRow key={key}>
-                    <TableCell
-                      sx={{
-                        borderBottom:
-                          index != productEntries.length - 1
-                            ? borderBottom
-                            : "none",
-                        borderRight: borderRight,
-                      }}
-                      align={isComparison ? "center" : "left"}
-                    >
-                      <Typography variant="S16W500C050505">
-                        {textContainer[key]}:
-                      </Typography>
-                    </TableCell>
-                    {/* main product details */}
-                    <TableCell
-                      sx={{
-                        borderBottom:
-                          index != productEntries.length - 1
-                            ? borderBottom
-                            : "none",
-                        borderRight: borderRight,
-                      }}
-                      align="center"
-                    >
-                      <Button
-                        variant="text"
-                        disabled={key != "manufacturingCompany"}
-                      >
-                        <Typography
-                          dir="ltr"
-                          variant={
+                      <Typography
+                        dir="ltr"
+                        variant={
+                          key === "manufacturingCompany"
+                            ? "S16W900C050505"
+                            : "S16W400C050505"
+                        }
+                        style={{
+                          textDecoration:
                             key === "manufacturingCompany"
-                              ? "S16W900C050505"
-                              : "S16W400C050505"
-                          }
-                          style={{
-                            textDecoration:
-                              key === "manufacturingCompany"
-                                ? "underline"
-                                : "none",
-                          }}
-                        >
-                          {rows[key]}
-                        </Typography>
-                      </Button>
-                    </TableCell>
-                    {/* compared product details */}
-                    {isComparison && (
-                      <TableCell
-                        sx={{
-                          borderBottom:
-                            index != productEntries.length - 1
-                              ? borderBottom
+                              ? "underline"
                               : "none",
                         }}
-                        align="center"
                       >
-                        <Button
-                          variant="text"
-                          disabled={key != "manufacturingCompany"}
-                        >
-                          <Typography
-                            dir="ltr"
-                            variant={
-                              key === "manufacturingCompany"
-                                ? "S16W900C050505"
-                                : "S16W400C050505"
-                            }
-                            style={{
-                              textDecoration:
-                                key === "manufacturingCompany"
-                                  ? "underline"
-                                  : "none",
-                            }}
-                          >
-                            {comparedRows[key]}
-                          </Typography>
-                        </Button>
-                      </TableCell>
-                    )}
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </Paper>
-      </div>
-    </div>
+                        {comparedRows[key]}
+                      </Typography>
+                    </Button>
+                  </TableCell>
+                )}
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </Paper>
   );
 };
 
