@@ -62,7 +62,7 @@ export default function Layout(props) {
   };
 
   return (
-    <Box sx={{  }}>
+    <Box sx={{}}>
       <MyAppBar
         drawerWidth={drawerWidth}
         open={open}
@@ -91,7 +91,7 @@ export default function Layout(props) {
           <animated.div
             style={{
               ...logoAnimationStyles,
-              margin: "5px 0px 0px 0px",
+              margin: "5px 12px 0px 12px",
             }}
           >
             <img

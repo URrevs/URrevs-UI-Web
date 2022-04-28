@@ -59,7 +59,7 @@ const ComponentsTest = (props) => {
       <br />
       <br />
 
-      <CompanyHorizontalList></CompanyHorizontalList>
+      {/* <CompanyHorizontalList></CompanyHorizontalList> */}
 
       <br />
       <CompetitionPrompt button="أضف المسابقة" imgSrc={xiaomiImg} />
