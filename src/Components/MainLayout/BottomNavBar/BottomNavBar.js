@@ -139,7 +139,7 @@ export default function BottomNavBar() {
             padding: 0,
             margin: 0,
             bottom: 0,
-            minWidth: window.innerWidth / 5 - 10,
+            minWidth: 40,
             marginBottom: item.itemValue === currentPage ? 6 : 0,
 
             // border:'5px solid #000'

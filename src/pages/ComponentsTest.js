@@ -47,16 +47,9 @@ const testComments = {
 
 const xiaomiImg = "";
 
-const LargeContainer = styled(
-  Container,
-  {}
-)(({ theme }) => ({
-  position: theme.isMobile ? "absolute" : "relative",
-}));
-
 const ComponentsTest = (props) => {
   return (
-    <LargeContainer>
+    <div>
       <br />
       <br />
       {/* <ProductRateCard viewers="100"></ProductRateCard> */}
@@ -209,7 +202,7 @@ const ComponentsTest = (props) => {
       <div>dasdna </div>
       <div>dasdna </div>
       <div>dasdna </div>
-    </LargeContainer>
+    </div>
   );
 };
 
