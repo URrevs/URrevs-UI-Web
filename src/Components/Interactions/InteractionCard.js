@@ -41,7 +41,6 @@ export const InteractionCard = ({
   subtitle,
   renderIcon,
 }) => {
-  console.log(useConvertNumberToHumanLanguage(likes));
   return (
     <div>
       <InteractionCardStyle>

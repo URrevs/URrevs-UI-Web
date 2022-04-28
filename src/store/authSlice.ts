@@ -33,6 +33,7 @@ const authSlice = createSlice({
       state.refreshToken = action.payload.refreshToken;
       state.email = action.payload.email;
       state.uid = action.payload.uid;
+      // console.log(state.accessToken);
     },
     logout: (state) => {
       state.isLoggedIn = false;
