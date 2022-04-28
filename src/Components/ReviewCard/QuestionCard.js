@@ -97,7 +97,11 @@ export default function QuestionCard({
   };
 
   return (
-    <Cardm key={ukey} reviewIcon={false}>
+    <Cardm
+      key={ukey}
+      reviewIcon={false}
+      tooltipTitle={textContainer.askedQuestion}
+    >
       <CardHeader
         userAvatar={reviewDetails.user_avatar}
         userName={userName}

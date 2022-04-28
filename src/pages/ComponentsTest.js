@@ -126,7 +126,7 @@ const ComponentsTest = (props) => {
           brand_rating: 1,
           brand_pros: "sa dnsajkdn jkasnd naskndk asnkj",
           brand_cons: "ask kdnsajkd asnd kasnjk dnasknd sj",
-          date_rev: "22/8/2022",
+          date_rev: "2018/2/2",
           isExpanded: false,
           user_avatar: "",
         }}
@@ -136,6 +136,7 @@ const ComponentsTest = (props) => {
       />
       <br />
       <ReviewCard
+        firstStarTitle={textContainer.generalProductRating}
         isReview={true}
         reviewDetails={{
           _id: "Review1",
@@ -150,7 +151,7 @@ const ComponentsTest = (props) => {
           brand_rating: 1,
           brand_pros: "sa dnsajkdn jkasnd naskndk asnkj",
           brand_cons: "ask kdnsajkd asnd kasnjk dnasknd sj",
-          date_buy: "22/8/2020",
+          date_buy: "شهر",
           date_rev: "22/8/2022",
           isExpanded: false,
           user_avatar: "",
@@ -174,8 +175,7 @@ const ComponentsTest = (props) => {
           brand_rating: 1,
           brand_pros: "sa dnsajkdn jkasnd naskndk asnkj",
           brand_cons: "ask kdnsajkd asnd kasnjk dnasknd sj",
-          date_buy: "22/8/2020",
-          date_rev: "22/8/2022",
+          date_rev: "2022/8/2",
           isExpanded: false,
           user_avatar: "",
         }}

@@ -1,6 +1,7 @@
 import { useTheme } from "@emotion/react";
 import { Avatar, Card, styled, Typography } from "@mui/material";
 import useFitText from "use-fit-text";
+import { useConvertNumberToHumanLanguage } from "../../hooks/useMillify";
 import Star from "../Icons/star";
 
 const LeaderboardEntryCard = styled(
@@ -75,7 +76,9 @@ const LeaderboardEntry = (props) => {
 
       <div style={{ display: "flex", alignItems: "center" }}>
         <Star color={theme.palette.reviewCard.filledStarColor} size="38" />
-        <Typography variant="S20W400C050505">400000</Typography>
+        <Typography variant="S20W400C050505">
+          {useConvertNumberToHumanLanguage(40000)}
+        </Typography>
       </div>
     </LeaderboardEntryCard>
   );

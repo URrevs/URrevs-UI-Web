@@ -10,6 +10,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
+import classes from "./list.module.css";
 
 const CompanyButton = styled(Button, {
   shouldForwardProp: (prop) => prop !== "backgroundColor",
@@ -85,12 +86,10 @@ export const CompanyHorizontalList = () => {
 
   return (
     <List
+      className={classes.list}
       sx={{
         bgcolor: "background.paper",
         overflowX: "scroll",
-        msOverflowStyle: "none" /* IE and Edge */,
-        scrollbarWidth: "none" /* Firefox */,
-
         display: "flex",
         margin: "0px",
         padding: "0px",
