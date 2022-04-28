@@ -1,4 +1,6 @@
+import { useTheme } from "@emotion/react";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
   Card,
@@ -8,12 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import OrangeGradientButton from "../Buttons/OrangeGradientButton";
-import { useTheme } from "@emotion/react";
 import {
   TEXT_FIELD_BORDER_RADIUS,
   TEXT_FIELD_BORDER_THICKNESS,
 } from "../../constants";
+import OrangeGradientButton from "../Buttons/OrangeGradientButton";
 
 const PromptStyled = styled(
   Card,
@@ -71,6 +72,7 @@ export const CompetitionPrompt = ({ text, button, imgSrc }) => {
     );
   };
   const array = [
+    { q: text.q1, l: text.l1 },
     { q: text.q2, l: text.l2 },
     { q: text.q3, l: text.l3 },
     { q: text.q4, l: text.l4 },
@@ -85,17 +87,25 @@ export const CompetitionPrompt = ({ text, button, imgSrc }) => {
             flexDirection: "column",
           }}
         >
-          {/* <IconButton sx={{ alignSelf: "end" }}>
-            <CancelIcon
+          <Box
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="S16W700C050505"> اضافة مسابقة</Typography>
+            <IconButton
               sx={{
-                fill: "#E8E8E8",
-                // filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25))",
+                border: "1px solid #000",
+                padding: 0,
+                margin: 0,
+                backgroundColor: "#E8E8E8",
               }}
-              fontSize="large"
-            />
-          </IconButton> */}
-
-          <Typography variant="S16W700C050505"> اضافة مسابقة</Typography>
+            >
+              <CloseIcon htmlColor="#000" fontSize="large" />
+            </IconButton>
+          </Box>
 
           {array.map((field) => {
             return renderFields(field.q, field.l);
