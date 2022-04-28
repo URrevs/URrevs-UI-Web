@@ -106,9 +106,18 @@ export const CompetitionPrompt = ({ text, button, imgSrc }) => {
               <CloseIcon htmlColor="#000" fontSize="medium" />
             </IconButton>
           </Box>
-
           {array.map((field) => {
-            return renderFields(field.q, field.l);
+            return (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  padding: "12px 12px",
+                }}
+              >
+                {renderFields(field.q, field.l)}
+              </div>
+            );
           })}
 
           <img
