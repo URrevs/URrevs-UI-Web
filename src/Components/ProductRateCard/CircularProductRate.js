@@ -22,11 +22,9 @@ export const CircularProductRate = ({
       />
       <CircularProgress
         size="56px"
-        sx={
-          {
-            // color: barPrimaryColor,
-          }
-        }
+        sx={{
+          color: barPrimaryColor,
+        }}
         variant="determinate"
         value={(value * 100) / 5}
       />
