@@ -100,7 +100,7 @@ function App() {
         <CssBaseline enableColorScheme />
         <RTL direction={theme.direction}>
           <BrowserRouter>
-            {/* <Layout> */}
+            <Layout>
             <Grid
               container
               style={{
@@ -120,7 +120,7 @@ function App() {
               </Grid>
               <Grid item md={2} sm={0}></Grid>
             </Grid>
-            {/* </Layout> */}
+            </Layout>
           </BrowserRouter>
         </RTL>
       </div>

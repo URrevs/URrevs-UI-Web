@@ -114,11 +114,7 @@ export const MyDrawer = (props) => {
   };
 
   return (
-    <PerDrawer
-      variant={isMobile ? "temporary" : "permanent"}
-      open={open}
-      onClose={handleDrawerClose}
-    >
+    <PerDrawer variant={"temporary"} open={open} onClose={handleDrawerClose}>
       <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {language !== "ar" ? <ChevronLeftIcon /> : <ChevronRightIcon />}

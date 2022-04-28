@@ -54,8 +54,7 @@ const ComponentsTest = (props) => {
 
   return (
     <div style={{ margin: "12px" }}>
-      <br />
-      <br />
+     
       {/* <ProductRateCard viewer="100"></ProductRateCard> */}
       <br />
       <br />

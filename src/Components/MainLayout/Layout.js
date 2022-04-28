@@ -62,7 +62,7 @@ export default function Layout(props) {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{  }}>
       <MyAppBar
         drawerWidth={drawerWidth}
         open={open}

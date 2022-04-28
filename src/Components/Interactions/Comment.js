@@ -3,13 +3,16 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { InteractionBody } from "./InteractionBody";
 import { useTheme } from "@emotion/react";
 import { InteractionFooter } from "./InteractionFooter";
+import { useAppSelector } from "../../store/hooks";
 
 export const Comment = (props) => {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   const [like, setLike] = useState(false);
   const onClickHandler = () => {
     setLike(!like);
   };
-  const buttonName = like ? "أعجبني" : "اعجاب";
+  const buttonName = like ? textContainer.liked :textContainer.like;
   const theme = useTheme();
   const renderIcon = () => {
     return (

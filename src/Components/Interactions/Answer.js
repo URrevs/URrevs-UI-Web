@@ -5,15 +5,20 @@ import { useTheme } from "@emotion/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpLong } from "@fortawesome/free-solid-svg-icons";
 import { InteractionFooter } from "./InteractionFooter";
+import { useAppSelector } from "../../store/hooks";
 
 export const Answer = (props) => {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   const theme = useTheme();
   const [accepted, setAccepted] = useState(false);
   const onClickHandler = () => {
     setAccepted(!accepted);
   };
-  const buttonName1 = accepted ? "اجابة مقبولة" : "أقبل الاجابة";
-  const buttonName2 = "تصويت";
+  const buttonName1 = accepted
+    ? textContainer.acceptedAnswer
+    : textContainer.acceptAnswer;
+  const buttonName2 = textContainer.vote;
   const buttonName = props.admin ? buttonName1 : buttonName2;
   const renderIcon = () => {
     return (

@@ -1,5 +1,6 @@
 import React from "react";
 import { styled, Button, Typography, ButtonBase } from "@mui/material";
+import { useAppSelector } from "../../store/hooks";
 const CommentButton = styled(
   ButtonBase,
   {}
@@ -19,6 +20,8 @@ export const InteractionFooter = ({
   condition,
   reply,
 }) => {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   return (
     <React.Fragment>
       <CommentButton onClick={onClickHandler}>
@@ -28,7 +31,9 @@ export const InteractionFooter = ({
       </CommentButton>
       {!reply ? (
         <CommentButton>
-          <Typography variant={"S13W700C050505"}>رد</Typography>
+          <Typography variant={"S13W700C050505"}>
+            {textContainer.reply}
+          </Typography>
         </CommentButton>
       ) : null}
       <Typography variant="S13W400C65676B">{date}</Typography>
