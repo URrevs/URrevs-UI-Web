@@ -81,6 +81,7 @@ function App() {
       },
       textField: {
         inputFieldBackground: isDark ? "#18191A" : COLORS.cE3E3E3,
+        inputFieldText: isDark ? "#18191A" : COLORS.c050505,
         borderColor: isDark ? "#18191A" : COLORS.c606266,
       },
       divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,

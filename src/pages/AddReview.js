@@ -7,8 +7,8 @@ import MobileDatePicker from "@mui/lab/MobileDatePicker";
 
 import { SearchBar } from "../Components/MainLayout/Search/SearchBar";
 import { useSelector } from "react-redux";
-import ReviewTextField from "../Components/AddReview/ReviewTextField";
-import StarRating from "../Components/AddReview/StarRating";
+import ReviewTextField from "../Components/Form/ReviewTextField";
+import StarRating from "../Components/Form/StarRating";
 
 const db_labels = {
   db_review_title_userName: "user_name",

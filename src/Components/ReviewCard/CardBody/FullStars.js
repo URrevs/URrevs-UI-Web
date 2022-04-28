@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
 import * as React from "react";
-import StarRating from "../../AddReview/StarRating";
+import StarRating from "../../Form/StarRating";
 import ExpansionArrow from "./ExpansionArrow";
 
 const FullStars = ({

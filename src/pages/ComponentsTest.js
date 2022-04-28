@@ -13,10 +13,12 @@ import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import ProductDetailsTable from "../Components/ProductDetailsTable";
 import { StarCounter } from "../Components/StarCounter/StarCounter";
 import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
+
 import { useSelector } from "react-redux";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
 import { Container } from "@mui/material";
 import styled from "@emotion/styled";
+import { ProductRateCard } from "../Components/ProductRateCard/ProductRateCard";
 
 const testComments = {
   a1: {
@@ -43,8 +45,7 @@ const testComments = {
   },
 };
 
-const xiaomiImg =
-  "https://m.media-amazon.com/images/I/41o9nGF3rPL._AC_SY580_.jpg";
+const xiaomiImg = "";
 
 const LargeContainer = styled(
   Container,
@@ -57,12 +58,14 @@ const ComponentsTest = (props) => {
   return (
     <LargeContainer>
       <br />
+      <br />
+      {/* <ProductRateCard viewers="100"></ProductRateCard> */}
+      <br />
+      <br />
+
       <CompanyHorizontalList></CompanyHorizontalList>
 
-      <CompetitionPrompt
-        button="أضف المسابقة"
-        imgSrc={xiaomiImg}
-      />
+      <CompetitionPrompt button="أضف المسابقة" imgSrc={xiaomiImg} />
       <br />
       <CompetitionBanner
         daysLeft="12"

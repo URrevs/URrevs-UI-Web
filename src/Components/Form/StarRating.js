@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import React from "react";
 import Star from "../Icons/star";
-import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import { RTLProvider } from "../RTLProvider";
 import { GlobalStyles } from "../GlobalStyles";
 import { useTheme } from "@emotion/react";
@@ -50,9 +49,7 @@ const StarRating = ({
                 readOnly={readOnly}
                 value={starValue}
                 emptyIcon={
-                 <Star
-                    color={globalTheme.palette.reviewCard.emptyStarColor}
-                  />
+                  <Star color={globalTheme.palette.reviewCard.emptyStarColor} />
                 }
                 icon={
                   <Star
