@@ -19,7 +19,7 @@ export const InteractionFooter = ({
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   return (
-    <div>
+    <React.Fragment>
       <CommentButton onClick={onClickHandler}>
         <Typography variant={condition ? "S13W700C2196F3" : "S13W700C050505"}>
           {buttonName}
@@ -31,6 +31,6 @@ export const InteractionFooter = ({
         </CommentButton>
       ) : null}
       <Typography variant="S13W400C65676B">{date}</Typography>
-    </div>
+    </React.Fragment>
   );
 };

@@ -6,20 +6,20 @@ import { Box, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import { SearchBar } from "../Components/MainLayout/Search/SearchBar";
-import FormikDatePicker from "../Components/AddReview/FormikDatePicker";
-import FormikTextField from "../Components/AddReview/FormikTextField";
-import FormikStar from "../Components/AddReview/FormikStar";
+import FormikDatePicker from "../Components/Form/FormikDatePicker";
+import FormikTextField from "../Components/Form/FormikTextField";
+import FormikStar from "../Components/Form/FormikStar";
 
 const BasicValidationSchema = Yup.object().shape({
   purchaseDate: Yup.date().required("Select a Date"),
   productBuildRating: Yup.number().integer().min(1, "Select Stars"),
   productUIRating: Yup.number().integer().min(1, "Select Stars"),
-  productPriceRating: Yup.number().integer().min(1, "Select Stars"),
-  productCameraRating: Yup.number().integer().min(1, "Select Stars"),
-  productCallQualityRating: Yup.number().integer().min(1, "Select Stars"),
-  productBatteryRating: Yup.number().integer().min(1, "Select Stars"),
-  productGeneralRating: Yup.number().integer().min(1, "Select Stars"),
-  productManufacturerRating: Yup.number().integer().min(1, "Select Stars"),
+  priceQuality: Yup.number().integer().min(1, "Select Stars"),
+  camera: Yup.number().integer().min(1, "Select Stars"),
+  callsQuality: Yup.number().integer().min(1, "Select Stars"),
+  battery: Yup.number().integer().min(1, "Select Stars"),
+  generalProductRating: Yup.number().integer().min(1, "Select Stars"),
+  manufacturingQuality: Yup.number().integer().min(1, "Select Stars"),
   productPros: Yup.string().required("Required"),
   productCons: Yup.string().required("Required"),
   companyPros: Yup.string().required("Required"),
@@ -31,25 +31,34 @@ const handleInitialValues = (fieldName, empty = "") => {
     ? sessionStorage.getItem(fieldName)
     : empty;
 };
-const listOfRatings = [
-  "productBuildRating",
-  "productUIRating",
-  "productPriceRating",
-  "productCameraRating",
-  "productCallQualityRating",
-  "productBatteryRating",
-];
-const listOfReviewFields = [
-  "productPros",
-  "productCons",
-  "companyPros",
-  "companyCons",
-  "invitationCode",
-];
 const Basic = ({ ...props }) => {
   const textContainer = useSelector((state) => {
-    return state.language.textContainer.addRevLabels;
+    return state.language.textContainer;
   });
+  const listOfRatings = [
+    { fieldName: "productBuildRating", text: textContainer.productBuildRating },
+    { fieldName: "productUIRating", text: textContainer.productUIRating },
+    { fieldName: "productPriceRating", text: textContainer.productPriceRating },
+    {
+      fieldName: "productCameraRating",
+      text: textContainer.productCameraRating,
+    },
+    {
+      fieldName: "productCallQualityRating",
+      text: textContainer.productCallQualityRating,
+    },
+    {
+      fieldName: "productBatteryRating",
+      text: textContainer.productBatteryRating,
+    },
+  ];
+  const listOfReviewFields = [
+    { fieldName: "productPros", text: textContainer.productPros },
+    { fieldName: "productCons", text: textContainer.productCons },
+    { fieldName: "companyPros", text: textContainer.companyPros },
+    { fieldName: "companyCons", text: textContainer.companyCons },
+    { fieldName: "invitationCode", text: textContainer.invitationCode },
+  ];
   return (
     <>
       <Typography variant="h2" component="h2">
@@ -70,12 +79,12 @@ const Basic = ({ ...props }) => {
           text={textContainer.productGeneralRating}
           textSize="h5"
         />
-        {listOfRatings.map((fieldName) => {
+        {listOfRatings.map((comp) => {
           return (
-            <div key={fieldName}>
+            <div key={comp.fieldName}>
               <FormikStar
-                fieldName={fieldName}
-                text={textContainer.Ratings[fieldName]}
+                fieldName={comp.fieldName}
+                text={comp.text}
                 isVertical={false}
                 starDimension="25px"
                 starSpacing="2px"
@@ -83,18 +92,18 @@ const Basic = ({ ...props }) => {
             </div>
           );
         })}
-        {listOfReviewFields.map((fieldName, i) => {
+        {listOfReviewFields.map((comp, i) => {
           return (
-            <div key={fieldName}>
+            <div key={comp.fieldName}>
               <FormikTextField
-                fieldName={fieldName}
-                text={textContainer[fieldName].text}
-                label={textContainer[fieldName].label}
+                fieldName={comp.fieldName}
+                text={comp.text}
+                label={comp.text}
               />
               {i === 1 ? (
                 <FormikStar
-                  fieldName={"productManufacturerRating"}
-                  text={textContainer.productManufacturerRating}
+                  fieldName={"manufacturingQuality"}
+                  text={textContainer.manufacturingQuality}
                   textSize="h5"
                 />
               ) : null}

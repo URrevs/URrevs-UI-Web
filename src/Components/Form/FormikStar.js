@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { Field } from "formik";
 import React from "react";
-import StarRatings from "react-star-ratings";
 import StarRating from "./StarRating";
 
 const FormikStar = ({
@@ -15,6 +14,7 @@ const FormikStar = ({
   starDimension = "35px",
   starSpacing = "5px",
 }) => {
+  console.log(text);
   return (
     <>
       <Field name={fieldName}>
@@ -36,7 +36,7 @@ const FormikStar = ({
               </Typography>
 
               <div>
-              <StarRating
+                <StarRating
                   textSize="S14W500C050505"
                   starDimension={starDimension}
                   starValue={value}

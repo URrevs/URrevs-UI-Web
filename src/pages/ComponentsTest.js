@@ -13,10 +13,12 @@ import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import ProductDetailsTable from "../Components/ProductDetailsTable";
 import { StarCounter } from "../Components/StarCounter/StarCounter";
 import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
+
 import { useSelector } from "react-redux";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
 import { Container } from "@mui/material";
 import styled from "@emotion/styled";
+import { ProductRateCard } from "../Components/ProductRateCard/ProductRateCard";
 import { useAppSelector } from "../store/hooks";
 
 const testComments = {
@@ -44,8 +46,7 @@ const testComments = {
   },
 };
 
-const xiaomiImg =
-  "https://m.media-amazon.com/images/I/41o9nGF3rPL._AC_SY580_.jpg";
+const xiaomiImg = "";
 
 const ComponentsTest = (props) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
@@ -53,6 +54,11 @@ const ComponentsTest = (props) => {
   return (
     <div style={{ margin: "12px" }}>
       <br />
+      <br />
+      <ProductRateCard viewer="100"></ProductRateCard>
+      <br />
+      <br />
+
       <CompanyHorizontalList></CompanyHorizontalList>
 
       <br />

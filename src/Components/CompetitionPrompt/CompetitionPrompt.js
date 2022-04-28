@@ -1,7 +1,12 @@
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import CancelIcon from "@mui/icons-material/Cancel";
-import IconButton from "@mui/material/IconButton";
-import { Box, Card, styled, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  IconButton,
+  styled,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
 import { useTheme } from "@emotion/react";
@@ -47,14 +52,18 @@ export const CompetitionPrompt = ({ text, button, imgSrc }) => {
             style: {
               fontWeight: 300,
               fontSize: 16,
-              color: "#050505",
+              color: theme.palette.textField.inputFieldText,
               background: theme.palette.textField.inputFieldBackground,
               borderRadius: TEXT_FIELD_BORDER_RADIUS,
               border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,
             },
           }}
           InputLabelProps={{
-            style: { fontWeight: 300, fontSize: 16, color: "#050505" }, //Doesn't look any different
+            style: {
+              fontWeight: 300,
+              fontSize: 16,
+              color: theme.palette.textField.inputFieldText,
+            }, //Doesn't look any different
           }}
           label={label}
         />
@@ -76,7 +85,7 @@ export const CompetitionPrompt = ({ text, button, imgSrc }) => {
             flexDirection: "column",
           }}
         >
-          <IconButton sx={{ alignSelf: "end" }}>
+          {/* <IconButton sx={{ alignSelf: "end" }}>
             <CancelIcon
               sx={{
                 fill: "#E8E8E8",
@@ -84,7 +93,7 @@ export const CompetitionPrompt = ({ text, button, imgSrc }) => {
               }}
               fontSize="large"
             />
-          </IconButton>
+          </IconButton> */}
 
           <Typography variant="S16W700C050505"> اضافة مسابقة</Typography>
 

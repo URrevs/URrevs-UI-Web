@@ -9,7 +9,7 @@ import {
 import { cropText } from "../../functions/cropText";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
-import StarRating from "../AddReview/StarRating";
+import StarRating from "../Form/StarRating";
 import Card from "../Card";
 import CardActionButtons from "./CardActions/CardActionButtons";
 import FullStars from "./CardBody/FullStars";
