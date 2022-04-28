@@ -3,6 +3,7 @@ import { Box, Button, Card, Grid, styled, Typography } from "@mui/material";
 import React from "react";
 
 import { CARD_BORDER_RADIUS } from "../../constants";
+import { useConvertNumberToHumanLanguage } from "../../hooks/useMillify";
 import StarRating from "../Form/StarRating";
 import { CircularProductRate } from "./CircularProductRate";
 const CardStyled = styled(
@@ -11,6 +12,17 @@ const CardStyled = styled(
 )((theme) => ({
   borderRadius: `${CARD_BORDER_RADIUS}px`,
 }));
+const textContainer = {
+  addProduct: "تعين كمنتج ممتلك",
+  generalProductReview: "التقيم العام للمنتج",
+  generalBrandReview: "التقيم العام للشركة",
+  ui: "واجهة المستخدم",
+  manufactureQuality: "جودة التصنيع",
+  price: "القيمة للسعر",
+  camera: "الكاميرا",
+  callQuality: "جودة المكالمة",
+  battery: "البطارية",
+};
 export const ProductRateCard = ({ viewer, phone, type }) => {
   return (
     <React.Fragment>
@@ -51,31 +63,35 @@ export const ProductRateCard = ({ viewer, phone, type }) => {
               }}
             >
               <RemoveRedEyeRoundedIcon />
-              <Typography variant="S14W400C050505">{viewer}</Typography>
+              <Typography variant="S14W400C050505">
+                {useConvertNumberToHumanLanguage(viewer)}
+              </Typography>
             </Box>
           </Grid>
         </Grid>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Button variant="outlined">{textContainer.addProduct}</Button>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <CircularProductRate></CircularProductRate>
+          <CircularProductRate></CircularProductRate>
+        </Box>
+        <Box>
+          <StarRating text="asdasd" isVertical={false}></StarRating>
+          <StarRating text="asdasd" isVertical={false}></StarRating>
+          <StarRating text="asdasd" isVertical={false}></StarRating>
+          <StarRating text="asdasd" isVertical={false}></StarRating>
+          <StarRating text="asdasd" isVertical={false}></StarRating>
+          <StarRating text="asdasd" isVertical={false}></StarRating>
+          <StarRating text="asdasd" isVertical={false}></StarRating>
+        </Box>
       </CardStyled>
     </React.Fragment>
   );
 };
-// <Button variant="outlined">AAAAAAAAAAAAAAAAAAa</Button>
-// <Box
-//   sx={{
-//     display: "flex",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//   }}
-// >
-//   <CircularProductRate></CircularProductRate>
-//   <CircularProductRate></CircularProductRate>
-// </Box>
-// <Box>
-//   <StarRating text="asdasd" isVertical={false}></StarRating>
-//   <StarRating text="asdasd" isVertical={false}></StarRating>
-//   <StarRating text="asdasd" isVertical={false}></StarRating>
-//   <StarRating text="asdasd" isVertical={false}></StarRating>
-//   <StarRating text="asdasd" isVertical={false}></StarRating>
-//   <StarRating text="asdasd" isVertical={false}></StarRating>
-//   <StarRating text="asdasd" isVertical={false}></StarRating>
-// </Box>
