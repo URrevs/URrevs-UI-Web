@@ -15,7 +15,7 @@ const StyledCard = styled(
   backgroundColor: theme.palette.reviewCard.reviewCardColor,
 }));
 
-const Card = ({ children, reviewIcon }) => {
+const Card = ({ children, reviewIcon, tooltipTitle }) => {
   const theme = useTheme();
   const indicatorIconRadius = 20;
 
@@ -108,7 +108,7 @@ const Card = ({ children, reviewIcon }) => {
           }
         >
           {reviewIcon ? (
-            <Tooltip title="Review">
+            <Tooltip title={tooltipTitle}>
               <RateReviewOutlinedIcon
                 style={{
                   color: theme.palette.reviewCard.indicatorColor,
@@ -122,7 +122,7 @@ const Card = ({ children, reviewIcon }) => {
               />
             </Tooltip>
           ) : (
-            <Tooltip title="Question">
+            <Tooltip title={tooltipTitle}>
               <HelpOutlineOutlinedIcon
                 style={{
                   color: theme.palette.reviewCard.indicatorColor,

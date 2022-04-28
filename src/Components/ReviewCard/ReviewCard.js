@@ -23,6 +23,7 @@ export default function ReviewCard({
   index,
   reviewDetails,
   isPhoneReview,
+  firstStarTitle
 }) {
   const isReview = true;
   const theme = useTheme();
@@ -111,7 +112,15 @@ export default function ReviewCard({
   };
 
   return (
-    <Card key={ukey} reviewIcon={true}>
+    <Card
+      key={ukey}
+      reviewIcon={true}
+      tooltipTitle={
+        isPhoneReview
+          ? textContainer.productReview
+          : textContainer.companyReview
+      }
+    >
       <CardHeader
         userAvatar={reviewDetails.user_avatar}
         userName={userName}
@@ -124,7 +133,7 @@ export default function ReviewCard({
       <CardContent style={{ paddingBottom: 0, paddingTop: 0 }}>
         {/* General stars rating */}
         <StarRating
-          text={starsRatingTextContainer[0]}
+          text={firstStarTitle}
           textSize="S14W500C050505"
           starValue={2}
           isVertical={false}
