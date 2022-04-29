@@ -62,10 +62,13 @@ const ComponentsTest = (props) => {
 
   return (
     <div style={{ margin: "12px" }}>
+      {/* 2 16 18 20 27 */}
       <CustomAppBar showLogo={true} showProfile={true} showSearch={true} />
       <br />
+      {/* 3 17 */}
       <CustomAppBar showProfile={true} showSearch={true} showBackBtn={true} />
       <br />
+      {/*  4 28 5 6 7 8 9 11 21 22 23 24 25 26 29 */}
       <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true} />
       <br />
       <CustomAppBar
