@@ -20,6 +20,8 @@ import { Container } from "@mui/material";
 import styled from "@emotion/styled";
 import { ProductRateCard } from "../Components/ProductRateCard/ProductRateCard";
 import { useAppSelector } from "../store/hooks";
+import { useConvertDateToString } from "../hooks/useConvertDateToString";
+import { useSubstituteDate } from "../hooks/useSubstituteDate";
 
 const testComments = {
   a1: {
@@ -51,6 +53,8 @@ const xiaomiImg =
 
 const ComponentsTest = (props) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const date1 = useConvertDateToString(new Date(2020, 1, 1));
+  const date2 = useSubstituteDate(new Date(2022, 3, 29));
 
   return (
     <div style={{ margin: "12px" }}>
@@ -90,7 +94,7 @@ const ComponentsTest = (props) => {
       <br /> */}
 
       <Comment
-        date="8 ساعات"
+        date={date2}
         likes={testComments.a2.likes}
         text={testComments.a2.text}
         user="Fady Ahmed"
@@ -98,14 +102,14 @@ const ComponentsTest = (props) => {
       <br />
 
       <CommentReply
-        date="يوم"
+        date={date2}
         likes={testComments.a3.likes}
         text={testComments.a3.text}
         user={testComments.a3.user}
       ></CommentReply>
       <br />
       <Answer
-        date="شهر"
+        date={date2}
         subtitle="امتلك هذا المنتج لمدة 3 أشهر"
         likes={testComments.a3.likes}
         text={testComments.a3.text}
@@ -113,7 +117,7 @@ const ComponentsTest = (props) => {
       ></Answer>
       <br />
       <Answer
-        date="شهر"
+        date={date2}
         subtitle="امتلك هذا المنتج لمدة 3 أشهر"
         likes={testComments.a3.likes}
         text={testComments.a3.text}
@@ -122,7 +126,7 @@ const ComponentsTest = (props) => {
       ></Answer>
       <br />
       <Comment
-        date="4 ساعات"
+        date={date2}
         likes="20000"
         text="يعم أحلى ريفيو."
         user="Fady Ahmed"
@@ -142,7 +146,7 @@ const ComponentsTest = (props) => {
           brand_rating: 1,
           brand_pros: "sa dnsajkdn jkasnd naskndk asnkj",
           brand_cons: "ask kdnsajkd asnd kasnjk dnasknd sj",
-          date_rev: "2018/2/2",
+          date_rev: date1,
           isExpanded: false,
           user_avatar: "",
         }}
@@ -167,8 +171,8 @@ const ComponentsTest = (props) => {
           brand_rating: 1,
           brand_pros: "sa dnsajkdn jkasnd naskndk asnkj",
           brand_cons: "ask kdnsajkd asnd kasnjk dnasknd sj",
-          date_buy: "شهر",
-          date_rev: "22/8/2022",
+          date_buy: date2,
+          date_rev: date1,
           isExpanded: false,
           user_avatar: "",
         }}
@@ -191,7 +195,7 @@ const ComponentsTest = (props) => {
           brand_rating: 1,
           brand_pros: "sa dnsajkdn jkasnd naskndk asnkj",
           brand_cons: "ask kdnsajkd asnd kasnjk dnasknd sj",
-          date_rev: "2022/8/2",
+          date_rev: date1,
           isExpanded: false,
           user_avatar: "",
         }}
