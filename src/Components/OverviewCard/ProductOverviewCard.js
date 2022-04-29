@@ -9,6 +9,7 @@ import { useConvertNumberToHumanLanguage } from "../../hooks/useMillify";
 import StarRating from "../Form/StarRating";
 import { CircularProductRate } from "./CircularProductRate";
 import { useTheme } from "@emotion/react";
+import { OverviewCard } from "./OverviewCard";
 const CardStyled = styled(
   Card,
   {}
@@ -23,7 +24,7 @@ const ButtonStyled = styled(
   padding: "6px 3px 6px 6px",
   background: "#2196F359",
 }));
-export const ProductRateCard = ({
+export const ProductOverviewCard = ({
   viewer,
   phone,
   type,
@@ -48,49 +49,7 @@ export const ProductRateCard = ({
   );
   return (
     <React.Fragment>
-      <CardStyled>
-        <Grid container spacing={2}>
-          <Grid item xs={2}></Grid>
-          <Grid
-            item
-            xs={8}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="S18W700C050505">{phone}</Typography>
-              <Typography variant="S14W400C65676B">{type}</Typography>
-            </Box>
-          </Grid>
-          <Grid
-            item
-            xs={2}
-            sx={{
-              display: "flex",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                alignSelf: "center",
-              }}
-            >
-              <RemoveRedEyeRoundedIcon />
-              <Typography variant="S14W400C050505">
-                {useConvertNumberToHumanLanguage(viewer)}
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
+      <OverviewCard viewer={viewer} title={phone} subtitle={type}>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <ButtonStyled elevation="3" variant="contained">
             <PlaylistAddOutlinedIcon
@@ -107,7 +66,7 @@ export const ProductRateCard = ({
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            padding: "5px 19px 19px 21px",
+            padding: "0px 3px 19px 0px",
           }}
         >
           <Box
@@ -140,7 +99,7 @@ export const ProductRateCard = ({
               barSecondaryColor={
                 theme.palette.productRateCard.barSecondaryColor
               }
-              value={productRating}
+              value={companyRating}
             />
             <Typography variant="S14W500C050505">
               {textContainer.generalCompanyRating}
@@ -149,7 +108,7 @@ export const ProductRateCard = ({
         </Box>
         <Box
           sx={{
-            padding: "0px 67px 19px 67px",
+            padding: "0px 46px 0px 46px",
           }}
         >
           {renderStarReview(textContainer.userInterface, 4)}
@@ -159,7 +118,7 @@ export const ProductRateCard = ({
           {renderStarReview(textContainer.callsQuality, 1)}
           {renderStarReview(textContainer.battery, 5)}
         </Box>
-      </CardStyled>
+      </OverviewCard>
     </React.Fragment>
   );
 };

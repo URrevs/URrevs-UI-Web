@@ -54,7 +54,7 @@ export const fonts = {
     color: "#050505",
   },
   // review card date
-  S14W400C65676b: {
+  S14W400C65676B: {
     fontWeight: 400,
     fontSize: 14,
     color: "#65676B",

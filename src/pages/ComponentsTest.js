@@ -18,7 +18,8 @@ import { useSelector } from "react-redux";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
 import { AppBar, Container, Toolbar } from "@mui/material";
 import styled from "@emotion/styled";
-import { ProductRateCard } from "../Components/ProductRateCard/ProductRateCard";
+import { ProductRateCard } from "../Components/OverviewCard/ProductRateCard";
+import { ProductOverviewCard } from "../Components/OverviewCard/ProductOverviewCard";
 import { useAppSelector } from "../store/hooks";
 import { useConvertDateToString } from "../hooks/useConvertDateToString";
 import { useSubstituteDate } from "../hooks/useSubstituteDate";
@@ -26,6 +27,7 @@ import { MyAppBar } from "../Components/MainLayout/AppBar/AppBar";
 import { AppBarActions } from "../Components/MainLayout/AppBar/AppBarActions";
 import { Box } from "@mui/system";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import { CompanyOverviewCard } from "../Components/OverviewCard/CompanyOverviewCard";
 
 const testComments = {
   a1: {
@@ -62,6 +64,29 @@ const ComponentsTest = (props) => {
 
   return (
     <div style={{ margin: "12px" }}>
+      <CompanyOverviewCard
+        viewer="100"
+        companyName="Nokia"
+        type="شركة"
+        companyRating={3}
+      />
+      <br />
+      <ProductOverviewCard
+        productRating="3"
+        companyRating="3"
+        viewer="100"
+        phone="Nokia 7 Plus"
+        type="هاتف ذكي"
+      />
+      <br />
+      {/* <ProductRateCard
+      productRating="3"
+      companyRating="3"
+      viewer="100"
+      phone="Nokia 7 Plus"
+      type="هاتف ذكي"
+    /> */}
+      <br />
       {/* 2 16 18 20 27 */}
       <CustomAppBar showLogo={true} showProfile={true} showSearch={true} />
       <br />
@@ -98,13 +123,7 @@ const ComponentsTest = (props) => {
       <br />
       <StarCounter value={85}></StarCounter>
       <br></br>
-      <ProductRateCard
-        productRating="3"
-        companyRating="3"
-        viewer="100"
-        phone="Nokia 7 Plus"
-        type="هاتف ذكي"
-      ></ProductRateCard>
+
       <br />
       <br />
       <CompanyHorizontalList></CompanyHorizontalList>
