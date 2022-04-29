@@ -26,7 +26,12 @@ export const CompetitionBanner = (props) => {
             {props.daysLeft + ` يوم و تنتهي المسابقة `}
           </Typography>
           <Typography variant="S22W800Cffffff">{"الجائزة هي"}</Typography>
-          <Typography variant="S22W800Cffffff">{props.prize}</Typography>
+          <Typography
+            variant="S22W800Cffffff"
+            style={{ textDecoration: "underline" }}
+          >
+            {props.prize}
+          </Typography>
         </Box>
         <Box
           sx={{

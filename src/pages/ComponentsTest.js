@@ -16,10 +16,16 @@ import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPr
 
 import { useSelector } from "react-redux";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
-import { Container } from "@mui/material";
+import { AppBar, Container, Toolbar } from "@mui/material";
 import styled from "@emotion/styled";
 import { ProductRateCard } from "../Components/ProductRateCard/ProductRateCard";
 import { useAppSelector } from "../store/hooks";
+import { useConvertDateToString } from "../hooks/useConvertDateToString";
+import { useSubstituteDate } from "../hooks/useSubstituteDate";
+import { MyAppBar } from "../Components/MainLayout/AppBar/AppBar";
+import { AppBarActions } from "../Components/MainLayout/AppBar/AppBarActions";
+import { Box } from "@mui/system";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 
 const testComments = {
   a1: {
@@ -51,11 +57,46 @@ const xiaomiImg =
 
 const ComponentsTest = (props) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const date1 = useConvertDateToString(new Date(2020, 1, 1));
+  const date2 = useSubstituteDate(new Date(2022, 3, 29));
 
   return (
     <div style={{ margin: "12px" }}>
-      <br></br>
-      <StarCounter value="10"></StarCounter>
+      {/* 2 16 18 20 27 */}
+      <CustomAppBar showLogo={true} showProfile={true} showSearch={true} />
+      <br />
+      {/* 3 17 */}
+      <CustomAppBar showProfile={true} showSearch={true} showBackBtn={true} />
+      <br />
+      {/*  4 28 5 6 7 8 9 11 21 22 23 24 25 26 29 */}
+      <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true} />
+      <br />
+      <CustomAppBar
+        left={true}
+        revert={true}
+        showLabel={true}
+        label="Nokia"
+        showBackBtn={true}
+      />
+      <br />
+      <CustomAppBar
+        left={true}
+        showProfile={true}
+        showSearch={true}
+        revert={true}
+        showLabel={true}
+        label="Nokia"
+        showBackBtn={true}
+      />
+      {/* full logo */}
+      <br />
+      <img width="100%" height="auto" src="./images/full_logo.png" />
+      <br />
+      <GoogleButton />
+      <br />
+      <FacebookButton />
+      <br />
+      <StarCounter value={85}></StarCounter>
       <br></br>
       <ProductRateCard
         productRating="3"
@@ -66,9 +107,7 @@ const ComponentsTest = (props) => {
       ></ProductRateCard>
       <br />
       <br />
-
-      {/* <CompanyHorizontalList></CompanyHorizontalList> */}
-
+      <CompanyHorizontalList></CompanyHorizontalList>
       <br />
       <CompetitionPrompt button="أضف المسابقة" imgSrc={xiaomiImg} />
       <br />
@@ -77,35 +116,30 @@ const ComponentsTest = (props) => {
         prize="Xiaomi Mi Band 5"
       ></CompetitionBanner>
       <br />
-      <ProductList
-        title={`${textContainer.menuOfRecentlyAddedProducts} (20)`}
-      ></ProductList>
+      <ProductList title={`المنتجات المضافة حديثا(20)`}></ProductList>
       <br />
       <ProductList
         title={`${textContainer.menuOfRecentlyAddedCompanies} (0)`}
       ></ProductList>
       <br />
-
       {/* <StarCounter value={20}></StarCounter>
       <br /> */}
-
       <Comment
-        date="8 ساعات"
+        date={date2}
         likes={testComments.a2.likes}
         text={testComments.a2.text}
         user="Fady Ahmed"
       ></Comment>
       <br />
-
       <CommentReply
-        date="يوم"
+        date={date2}
         likes={testComments.a3.likes}
         text={testComments.a3.text}
         user={testComments.a3.user}
       ></CommentReply>
       <br />
       <Answer
-        date="شهر"
+        date={date2}
         subtitle="امتلك هذا المنتج لمدة 3 أشهر"
         likes={testComments.a3.likes}
         text={testComments.a3.text}
@@ -113,7 +147,7 @@ const ComponentsTest = (props) => {
       ></Answer>
       <br />
       <Answer
-        date="شهر"
+        date={date2}
         subtitle="امتلك هذا المنتج لمدة 3 أشهر"
         likes={testComments.a3.likes}
         text={testComments.a3.text}
@@ -122,7 +156,7 @@ const ComponentsTest = (props) => {
       ></Answer>
       <br />
       <Comment
-        date="4 ساعات"
+        date={date2}
         likes="20000"
         text="يعم أحلى ريفيو."
         user="Fady Ahmed"
@@ -142,7 +176,7 @@ const ComponentsTest = (props) => {
           brand_rating: 1,
           brand_pros: "sa dnsajkdn jkasnd naskndk asnkj",
           brand_cons: "ask kdnsajkd asnd kasnjk dnasknd sj",
-          date_rev: "2018/2/2",
+          date_rev: date1,
           isExpanded: false,
           user_avatar: "",
         }}
@@ -167,8 +201,8 @@ const ComponentsTest = (props) => {
           brand_rating: 1,
           brand_pros: "sa dnsajkdn jkasnd naskndk asnkj",
           brand_cons: "ask kdnsajkd asnd kasnjk dnasknd sj",
-          date_buy: "شهر",
-          date_rev: "22/8/2022",
+          date_buy: date2,
+          date_rev: date1,
           isExpanded: false,
           user_avatar: "",
         }}
@@ -191,7 +225,7 @@ const ComponentsTest = (props) => {
           brand_rating: 1,
           brand_pros: "sa dnsajkdn jkasnd naskndk asnkj",
           brand_cons: "ask kdnsajkd asnd kasnjk dnasknd sj",
-          date_rev: "2022/8/2",
+          date_rev: date1,
           isExpanded: false,
           user_avatar: "",
         }}
@@ -206,9 +240,6 @@ const ComponentsTest = (props) => {
       <br />
       <br />
       <br />
-      <GoogleButton />
-      <br />
-      <FacebookButton />
       <br />
       <LeaderboardEntry />
       <br />

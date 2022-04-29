@@ -68,7 +68,7 @@ export const CompanyHorizontalList = () => {
             }}
           >
             <img
-              objectFit="cover"
+              objectfit="cover"
               width="45px"
               height="45px"
               src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Acer_Logo.svg"

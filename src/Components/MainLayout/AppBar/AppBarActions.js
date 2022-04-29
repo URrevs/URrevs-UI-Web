@@ -30,7 +30,13 @@ const CircleBtn = styled(
   height: circleHeight,
 }));
 
-export const AppBarActions = (props) => {
+export const AppBarActions = ({
+  handleRegestrationOpen,
+  showSearch = false,
+  showLanguage = false,
+  showDark = false,
+  showProfile = false,
+}) => {
   const dispatch = useAppDispatch();
 
   const language = useAppSelector((state) => state.language.language);
@@ -45,42 +51,48 @@ export const AppBarActions = (props) => {
   return (
     <Fragment>
       {/* // search icon */}
-      {theme.isMobile && (
+      {showSearch && (
         <CircleBtn>
           <SearchIcon />
         </CircleBtn>
       )}
       {/* // user account */}
-      <CircleBtn onClick={props.handleOpen}>
-        {!isLoggedIn ? (
-          <AccountCircle />
-        ) : (
-          <Avatar
-            sx={{ width: circleWidth, height: circleHeight }}
-            src={photo}
-          />
-        )}
-      </CircleBtn>
+      {showProfile && (
+        <CircleBtn onClick={handleRegestrationOpen}>
+          {!isLoggedIn ? (
+            <AccountCircle />
+          ) : (
+            <Avatar
+              sx={{ width: circleWidth, height: circleHeight }}
+              src={photo}
+            />
+          )}
+        </CircleBtn>
+      )}
       {/* // language */}
-      <CircleBtn
-        onClick={() => {
-          dispatch(
-            languageActions.switchLanguage({
-              language: language === "en" ? "ar" : "en",
-            })
-          );
-        }}
-      >
-        {language !== "en" ? "En" : "ع"}
-      </CircleBtn>
+      {showLanguage && (
+        <CircleBtn
+          onClick={() => {
+            dispatch(
+              languageActions.switchLanguage({
+                language: language === "en" ? "ar" : "en",
+              })
+            );
+          }}
+        >
+          {language !== "en" ? "En" : "ع"}
+        </CircleBtn>
+      )}
       {/* // darkMode */}
-      <CircleBtn
-        onClick={() => {
-          dispatch(isDarkActions.switchMode());
-        }}
-      >
-        {isDark ? <DarkModeIcon /> : <LightModeIcon />}
-      </CircleBtn>
+      {showDark && (
+        <CircleBtn
+          onClick={() => {
+            dispatch(isDarkActions.switchMode());
+          }}
+        >
+          {isDark ? <DarkModeIcon /> : <LightModeIcon />}
+        </CircleBtn>
+      )}
     </Fragment>
   );
 };

@@ -10,15 +10,13 @@ const CardSubheader = ({ reviewDate, buyDate, showViewsCounter }) => {
   return (
     <React.Fragment>
       <div>
-        <Typography variant="S14W400C65676b">
-          {reviewDate.split(" ")[0]}
-        </Typography>
+        <Typography variant="S14W400C65676b">{reviewDate}</Typography>
         {buyDate && (
           <Typography variant="S14W700C050505">
             {" "}
             •{" "}
             <Typography variant="S14W400C65676b">
-              {textContainer.usedThisFor + buyDate.split(" ")[0]}
+              {textContainer.usedThisFor + " " + buyDate.split(" ")[0]}
             </Typography>
           </Typography>
         )}
