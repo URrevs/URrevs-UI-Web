@@ -73,7 +73,7 @@ const ComponentsTest = (props) => {
       <br />
       <CustomAppBar
         left={true}
-        revert={true}
+        englishName={true}
         showLabel={true}
         label="Nokia"
         showBackBtn={true}
@@ -116,7 +116,7 @@ const ComponentsTest = (props) => {
         prize="Xiaomi Mi Band 5"
       ></CompetitionBanner>
       <br />
-      <ProductList title={`المنتجات المضافة حديثا(20)`}></ProductList>
+      <ProductList title={`المنتجات المضافة حديثا (20)`}></ProductList>
       <br />
       <ProductList
         title={`${textContainer.menuOfRecentlyAddedCompanies} (0)`}

@@ -2,13 +2,16 @@ import { Typography } from "@mui/material";
 
 const BodyCardText = ({ text, title }) => {
   const prosConsTitle = (title) => (
-    <div>
+    <div
+      style={{
+        padding: "12px 0 0px 0",
+      }}
+    >
       <Typography
         variant="S18W500C050505"
         style={{
           padding: 0,
-          paddingTop: 10,
-          padding: "12px 0 6px 0",
+          paddingTop: "16px",
           margin: "0",
         }}
       >

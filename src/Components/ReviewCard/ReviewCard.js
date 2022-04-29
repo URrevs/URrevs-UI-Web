@@ -23,7 +23,7 @@ export default function ReviewCard({
   index,
   reviewDetails,
   isPhoneReview,
-  firstStarTitle
+  firstStarTitle,
 }) {
   const isReview = true;
   const theme = useTheme();
@@ -133,7 +133,7 @@ export default function ReviewCard({
       <CardContent style={{ paddingBottom: 0, paddingTop: 0 }}>
         {/* General stars rating */}
         <StarRating
-          text={firstStarTitle}
+          text={firstStarTitle ?? textContainer.generalProductRating}
           textSize="S14W500C050505"
           starValue={2}
           isVertical={false}

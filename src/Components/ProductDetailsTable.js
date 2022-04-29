@@ -102,6 +102,60 @@ const ProductDetailsTable = ({
       </TableRow>
     );
   };
+
+  const titleCell = (index, key) => {
+    return (
+      <TableCell
+        sx={{
+          borderBottom:
+            index != productEntries.length - 1 ? borderBottom : "none",
+          borderRight: borderRight,
+        }}
+        align={isComparison ? "center" : "left"}
+      >
+        <Typography variant="S16W500C050505">{textContainer[key]}:</Typography>
+      </TableCell>
+    );
+  };
+
+  const dataCell = (index, key) => {
+    return (
+      <TableCell
+        sx={{
+          borderBottom:
+            index != productEntries.length - 1 ? borderBottom : "none",
+          borderRight: borderRight,
+        }}
+        align="center"
+      >
+        <Button
+          variant="text"
+          disabled={key != "manufacturingCompany"}
+          sx={{
+            textTransform: "none",
+          }}
+        >
+          <Typography
+            dir={key === "price" && theme.direction === "rtl" ? "rtl" : "ltr"}
+            variant={
+              key === "manufacturingCompany"
+                ? "S16W900C050505"
+                : "S16W400C050505"
+            }
+            style={{
+              textDecoration:
+                key === "manufacturingCompany" ? "underline" : "none",
+            }}
+          >
+            {key === "price"
+              ? rows[key] + " " + textContainer.egyptianPound
+              : rows[key]}
+          </Typography>
+        </Button>
+      </TableCell>
+    );
+  };
+
   comparedRows = rows;
   return (
     <Paper
@@ -177,91 +231,12 @@ const ProductDetailsTable = ({
           {productEntries.map((key, index) => {
             return (
               <TableRow key={key}>
-                <TableCell
-                  sx={{
-                    borderBottom:
-                      index != productEntries.length - 1
-                        ? borderBottom
-                        : "none",
-                    borderRight: borderRight,
-                  }}
-                  align={isComparison ? "center" : "left"}
-                >
-                  <Typography variant="S16W500C050505">
-                    {textContainer[key]}:
-                  </Typography>
-                </TableCell>
+                {/* title */}
+                {titleCell(index, key)}
                 {/* main product details */}
-                <TableCell
-                  sx={{
-                    borderBottom:
-                      index != productEntries.length - 1
-                        ? borderBottom
-                        : "none",
-                    borderRight: borderRight,
-                  }}
-                  align="center"
-                >
-                  <Button
-                    variant="text"
-                    disabled={key != "manufacturingCompany"}
-                    sx={{
-                      textTransform: "none",
-                    }}
-                  >
-                    <Typography
-                      dir="ltr"
-                      variant={
-                        key === "manufacturingCompany"
-                          ? "S16W900C050505"
-                          : "S16W400C050505"
-                      }
-                      style={{
-                        textDecoration:
-                          key === "manufacturingCompany" ? "underline" : "none",
-                      }}
-                    >
-                      {rows[key]}
-                    </Typography>
-                  </Button>
-                </TableCell>
+                {dataCell(index, key)}
                 {/* compared product details */}
-                {isComparison && (
-                  <TableCell
-                    sx={{
-                      borderBottom:
-                        index != productEntries.length - 1
-                          ? borderBottom
-                          : "none",
-                    }}
-                    align="center"
-                  >
-                    <Button
-                      variant="text"
-                      disabled={key != "manufacturingCompany"}
-                      sx={{
-                        textTransform: "none",
-                      }}
-                    >
-                      <Typography
-                        dir="ltr"
-                        variant={
-                          key === "manufacturingCompany"
-                            ? "S16W900C050505"
-                            : "S16W400C050505"
-                        }
-                        style={{
-                          textDecoration:
-                            key === "manufacturingCompany"
-                              ? "underline"
-                              : "none",
-                        }}
-                      >
-                        {comparedRows[key]}
-                      </Typography>
-                    </Button>
-                  </TableCell>
-                )}
+                {isComparison && dataCell(index, key)}
               </TableRow>
             );
           })}

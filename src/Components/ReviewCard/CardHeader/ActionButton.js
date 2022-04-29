@@ -7,12 +7,14 @@ import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Stack from "@mui/material/Stack";
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { MoreVertOutlined } from "@mui/icons-material";
+import { useAppSelector } from "../../../store/hooks";
 
 export default function MenuListComposition() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -73,15 +75,27 @@ export default function MenuListComposition() {
                   placement === "bottom-start" ? "left top" : "left bottom",
               }}
             >
-              <Paper>
+              <Paper
+                sx={{
+                  borderRadius: "15px",
+                }}
+              >
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList
+                    sx={{ padding: "0" }}
                     autoFocusItem={open}
                     id="composition-menu"
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem onClick={handleClose}>لا يعجبني هذا</MenuItem>
+                    <MenuItem
+                      sx={{ padding: "10px 28px", minHeight: 0 }}
+                      onClick={handleClose}
+                    >
+                      <Typography variant="S16W700C050505">
+                        {textContainer.iDontLikeThis}
+                      </Typography>
+                    </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

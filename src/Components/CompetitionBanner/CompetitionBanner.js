@@ -22,10 +22,10 @@ export const CompetitionBanner = (props) => {
             pt: "21px",
           }}
         >
-          <Typography variant="S22W800Cffffff">
+          <Typography variant="S22W500Cffffff">
             {props.daysLeft + ` يوم و تنتهي المسابقة `}
           </Typography>
-          <Typography variant="S22W800Cffffff">{"الجائزة هي"}</Typography>
+          <Typography variant="S22W500Cffffff">{"الجائزة هي"}</Typography>
           <Typography
             variant="S22W800Cffffff"
             style={{ textDecoration: "underline" }}

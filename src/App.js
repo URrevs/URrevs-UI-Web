@@ -93,6 +93,7 @@ function App() {
       },
       allProductsScreen: {
         selectedItemBackground: isDark ? "#18191A" : COLORS.c2196f3,
+        brandHover: isDark ? "#18191A" : COLORS.c2196f3,
       },
       divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
 
