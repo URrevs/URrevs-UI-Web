@@ -31,7 +31,7 @@ export const CustomAppBar = ({
   showBackBtn,
   showLabel,
   label,
-  left,
+  englishName,
 }) => {
   const theme = useTheme();
   const backButtonDirection = theme.direction === "rtl" ? -1 : 1;
@@ -70,7 +70,7 @@ export const CustomAppBar = ({
                 />
               )}
             </Fragment>
-            {left ? (
+            {englishName ? (
               <AppBarActions
                 showSearch={showSearch}
                 showLanguage={showLanguage}
@@ -84,7 +84,7 @@ export const CustomAppBar = ({
             )}
           </div>
           <div>
-            {!left ? (
+            {!englishName ? (
               <AppBarActions
                 showSearch={showSearch}
                 showLanguage={showLanguage}
