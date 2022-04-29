@@ -3,7 +3,7 @@ import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import { Box, styled, Typography } from "@mui/material";
-import Star from "../Icons/star";
+import { RoundedStar } from "../Icons/star";
 import { useTheme } from "@emotion/react";
 import ProgressBar from "@ramonak/react-progress-bar";
 
@@ -27,7 +27,10 @@ export const StarCounter = ({ value }) => {
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <Star size="25" color={theme.palette.progressBar.barColor}></Star>
+        <RoundedStar
+          size="25"
+          color={theme.palette.progressBar.barColor}
+        ></RoundedStar>
         <Typography variant="S18W400C050505" sx={{ ml: "1.5px", mr: "1.5px" }}>
           {value}
         </Typography>

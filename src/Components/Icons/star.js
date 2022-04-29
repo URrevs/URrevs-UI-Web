@@ -1,6 +1,7 @@
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
+import StarOutlineRoundedIcon from "@mui/icons-material/StarOutlineRounded";
 
-const Star = ({ color, size }) => {
+export const RoundedStar = ({ color, size }) => {
   return (
     <StarRoundedIcon
       htmlColor={color}
@@ -11,5 +12,14 @@ const Star = ({ color, size }) => {
     />
   );
 };
-
-export default Star;
+export const RoundedOutlinedStar = ({ color, size }) => {
+  return (
+    <StarOutlineRoundedIcon
+      htmlColor={color}
+      style={{
+        width: size,
+        height: size,
+      }}
+    />
+  );
+};

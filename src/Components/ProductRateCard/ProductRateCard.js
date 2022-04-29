@@ -34,6 +34,18 @@ export const ProductRateCard = ({
     return state.language.textContainer;
   });
   const theme = useTheme();
+  const renderStarReview = (text, value) => (
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+    >
+      <Typography variant="S14W500C050505">{`${text}:`}</Typography>
+      <StarRating readOnly={true} starValue={value}></StarRating>
+    </Box>
+  );
   return (
     <React.Fragment>
       <CardStyled>
@@ -89,32 +101,63 @@ export const ProductRateCard = ({
             </Typography>
           </ButtonStyled>
         </Box>
+
         <Box
           sx={{
             display: "flex",
+            flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "center",
+            padding: "5px 19px 19px 21px",
           }}
         >
-          <CircularProductRate
-            barPrimaryColor={theme.palette.productRateCard.barPrimaryColor}
-            barSecondaryColor={theme.palette.productRateCard.barSecondaryColor}
-            value={productRating}
-          ></CircularProductRate>
-          <CircularProductRate
-            barPrimaryColor={theme.palette.productRateCard.barPrimaryColor}
-            barSecondaryColor={theme.palette.productRateCard.barSecondaryColor}
-            value={companyRating}
-          ></CircularProductRate>
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <CircularProductRate
+              barPrimaryColor={theme.palette.productRateCard.barPrimaryColor}
+              barSecondaryColor={
+                theme.palette.productRateCard.barSecondaryColor
+              }
+              value={productRating}
+            />
+            <Typography variant="S14W500C050505">
+              {textContainer.generalProductRating}
+            </Typography>
+          </Box>
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <CircularProductRate
+              barPrimaryColor={theme.palette.productRateCard.barPrimaryColor}
+              barSecondaryColor={
+                theme.palette.productRateCard.barSecondaryColor
+              }
+              value={productRating}
+            />
+            <Typography variant="S14W500C050505">
+              {textContainer.generalCompanyRating}
+            </Typography>
+          </Box>
         </Box>
-        <Box>
-          <StarRating text="asdasd" isVertical={false}></StarRating>
-          <StarRating text="asdasd" isVertical={false}></StarRating>
-          <StarRating text="asdasd" isVertical={false}></StarRating>
-          <StarRating text="asdasd" isVertical={false}></StarRating>
-          <StarRating text="asdasd" isVertical={false}></StarRating>
-          <StarRating text="asdasd" isVertical={false}></StarRating>
-          <StarRating text="asdasd" isVertical={false}></StarRating>
+        <Box
+          sx={{
+            padding: "0px 67px 19px 67px",
+          }}
+        >
+          {renderStarReview(textContainer.userInterface, 4)}
+          {renderStarReview(textContainer.manufacturingQuality, 5)}
+          {renderStarReview(textContainer.priceQuality, 4)}
+          {renderStarReview(textContainer.camera, 3)}
+          {renderStarReview(textContainer.callsQuality, 1)}
+          {renderStarReview(textContainer.battery, 5)}
         </Box>
       </CardStyled>
     </React.Fragment>

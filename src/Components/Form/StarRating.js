@@ -7,14 +7,12 @@ import {
   CssBaseline,
 } from "@mui/material";
 import React from "react";
-import Star from "../Icons/star";
+import { RoundedStar, RoundedOutlinedStar } from "../Icons/star";
 import { RTLProvider } from "../RTLProvider";
 import { GlobalStyles } from "../GlobalStyles";
 import { useTheme } from "@emotion/react";
 
 const StarRating = ({
-  text,
-  textSize = "S14W500C050505",
   starValue,
   onRatingChange = () => {},
   isVertical = true,
@@ -26,48 +24,39 @@ const StarRating = ({
 
   return (
     <>
-      <Box
-        sx={{
-          display: isVertical ? "block" : "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <Box>
-          <Typography variant={textSize}>{text}</Typography>
-        </Box>
-        <GlobalStyles />
-        <CssBaseline />
-        <RTLProvider>
-          <ThemeProvider theme={theme}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Rating
-                readOnly={readOnly}
-                value={starValue}
-                emptyIcon={
-                  <Star color={globalTheme.palette.reviewCard.emptyStarColor} />
-                }
-                icon={
-                  <Star
-                    color={globalTheme.palette.reviewCard.filledStarColor}
-                  />
-                }
-                onChange={
-                  readOnly
-                    ? null
-                    : (rating) => {
-                        onRatingChange(rating);
-                      }
-                }
+      <GlobalStyles />
+      <CssBaseline />
+      <RTLProvider>
+        <ThemeProvider theme={theme}>
+          <Rating
+            readOnly={readOnly}
+            value={starValue}
+            emptyIcon={
+              readOnly ? (
+                <RoundedStar
+                  color={globalTheme.palette.reviewCard.emptyStarColor}
+                />
+              ) : (
+                <RoundedOutlinedStar
+                  color={globalTheme.palette.reviewCard.outlinedStarColor}
+                />
+              )
+            }
+            icon={
+              <RoundedStar
+                color={globalTheme.palette.reviewCard.filledStarColor}
               />
-            </Box>
-          </ThemeProvider>
-        </RTLProvider>
-      </Box>
+            }
+            onChange={
+              readOnly
+                ? null
+                : (rating) => {
+                    onRatingChange(rating);
+                  }
+            }
+          />
+        </ThemeProvider>
+      </RTLProvider>
     </>
   );
 };

@@ -39,6 +39,7 @@ function App() {
         actionBtnBG: isDark ? COLORS.c000000 : COLORS.c000000,
         expandIcon: isDark ? "#4ED5F6" : COLORS.c4ed5f6,
         filledStarColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
+        outlinedStarColor: isDark ? COLORS.c65676b : COLORS.c050505,
         emptyStarColor: isDark ? COLORS.c65676b : COLORS.c65676b,
         reviewArrow: isDark ? COLORS.c65676b : COLORS.c65676b,
         indicatorColor: isDark ? COLORS.c65676b : COLORS.c2196f3,
@@ -88,7 +89,7 @@ function App() {
       productRateCard: {
         addPlaylistIconColor: isDark ? "#18191A" : COLORS.c050505,
         barPrimaryColor: isDark ? "#18191A" : COLORS.c2196f3,
-        barSecondaryColor: isDark ? "#18191A" : COLORS.c2196F314,
+        barSecondaryColor: isDark ? "#18191A" : COLORS.cBADEFB,
       },
       allProductsScreen: {
         selectedItemBackground: isDark ? "#18191A" : COLORS.c2196f3,
