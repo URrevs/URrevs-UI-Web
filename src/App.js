@@ -29,6 +29,7 @@ function App() {
         appBarColor: isDark ? "#242526" : COLORS.cffffff,
         appBarIconBackgroundColor: isDark ? "#E5E5E7" : COLORS.ce5e5e7,
         appBarIcon: isDark ? "#000" : COLORS.c050505,
+        backButton: isDark ? COLORS.cffffff : COLORS.c050505,
       },
       reviewCard: {
         reviewCardColor: isDark ? "#18191A" : COLORS.cffffff,
@@ -93,6 +94,7 @@ function App() {
         selectedItemBackground: isDark ? "#18191A" : COLORS.c2196f3,
       },
       divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
+
       background: {
         default: isDark ? "#18191A" : COLORS.cf0f2f5,
       },

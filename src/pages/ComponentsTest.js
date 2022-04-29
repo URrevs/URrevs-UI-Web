@@ -16,13 +16,16 @@ import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPr
 
 import { useSelector } from "react-redux";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
-import { Container } from "@mui/material";
+import { AppBar, Container, Toolbar } from "@mui/material";
 import styled from "@emotion/styled";
 import { ProductRateCard } from "../Components/ProductRateCard/ProductRateCard";
 import { useAppSelector } from "../store/hooks";
 import { useConvertDateToString } from "../hooks/useConvertDateToString";
 import { useSubstituteDate } from "../hooks/useSubstituteDate";
-import ProgressBar from "@ramonak/react-progress-bar";
+import { MyAppBar } from "../Components/MainLayout/AppBar/AppBar";
+import { AppBarActions } from "../Components/MainLayout/AppBar/AppBarActions";
+import { Box } from "@mui/system";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 
 const testComments = {
   a1: {
@@ -59,15 +62,38 @@ const ComponentsTest = (props) => {
 
   return (
     <div style={{ margin: "12px" }}>
-      {/* full logo */}
-      <img width="100%" height="auto" src="./images/full_logo.png" />
+      <CustomAppBar showLogo={true} showProfile={true} showSearch={true} />
       <br />
+      <CustomAppBar showProfile={true} showSearch={true} showBackBtn={true} />
+      <br />
+      <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true} />
+      <br />
+      <CustomAppBar
+        left={true}
+        revert={true}
+        showLabel={true}
+        label="Nokia"
+        showBackBtn={true}
+      />
+      <br />
+      <CustomAppBar
+        left={true}
+        showProfile={true}
+        showSearch={true}
+        revert={true}
+        showLabel={true}
+        label="Nokia"
+        showBackBtn={true}
+      />
+      {/* full logo */}
+      <br />
+      <img width="100%" height="auto" src="./images/full_logo.png" />
       <br />
       <GoogleButton />
       <br />
       <FacebookButton />
       <br />
-      <StarCounter value="85"></StarCounter>
+      <StarCounter value={85}></StarCounter>
       <br></br>
       <ProductRateCard
         productRating="3"

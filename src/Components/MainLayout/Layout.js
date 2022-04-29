@@ -109,7 +109,13 @@ export default function Layout(props) {
             isSearchBarFocused={searchBarFocused}
           />
 
-          <AppBarActions handleOpen={handleRegOpen} />
+          <AppBarActions
+            handleOpen={handleRegOpen}
+            showSearch={true}
+            showLanguage={true}
+            showDark={true}
+            showProfile={true}
+          />
         </Toolbar>
       </MyAppBar>
       {theme.isMobile ? <></> : <MyDrawer open={open} setOpen={setOpen} />}
