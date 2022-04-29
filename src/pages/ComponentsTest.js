@@ -22,6 +22,7 @@ import { ProductRateCard } from "../Components/ProductRateCard/ProductRateCard";
 import { useAppSelector } from "../store/hooks";
 import { useConvertDateToString } from "../hooks/useConvertDateToString";
 import { useSubstituteDate } from "../hooks/useSubstituteDate";
+import ProgressBar from "@ramonak/react-progress-bar";
 
 const testComments = {
   a1: {
@@ -58,8 +59,15 @@ const ComponentsTest = (props) => {
 
   return (
     <div style={{ margin: "12px" }}>
-      <br></br>
-      <StarCounter value="10"></StarCounter>
+      {/* full logo */}
+      <img width="100%" height="auto" src="./images/full_logo.png" />
+      <br />
+      <br />
+      <GoogleButton />
+      <br />
+      <FacebookButton />
+      <br />
+      <StarCounter value="85"></StarCounter>
       <br></br>
       <ProductRateCard
         productRating="3"
@@ -70,9 +78,7 @@ const ComponentsTest = (props) => {
       ></ProductRateCard>
       <br />
       <br />
-
-      {/* <CompanyHorizontalList></CompanyHorizontalList> */}
-
+      <CompanyHorizontalList></CompanyHorizontalList>
       <br />
       <CompetitionPrompt button="أضف المسابقة" imgSrc={xiaomiImg} />
       <br />
@@ -81,18 +87,14 @@ const ComponentsTest = (props) => {
         prize="Xiaomi Mi Band 5"
       ></CompetitionBanner>
       <br />
-      <ProductList
-        title={`${textContainer.menuOfRecentlyAddedProducts} (20)`}
-      ></ProductList>
+      <ProductList title={`المنتجات المضافة حديثا(20)`}></ProductList>
       <br />
       <ProductList
         title={`${textContainer.menuOfRecentlyAddedCompanies} (0)`}
       ></ProductList>
       <br />
-
       {/* <StarCounter value={20}></StarCounter>
       <br /> */}
-
       <Comment
         date={date2}
         likes={testComments.a2.likes}
@@ -100,7 +102,6 @@ const ComponentsTest = (props) => {
         user="Fady Ahmed"
       ></Comment>
       <br />
-
       <CommentReply
         date={date2}
         likes={testComments.a3.likes}
@@ -210,9 +211,6 @@ const ComponentsTest = (props) => {
       <br />
       <br />
       <br />
-      <GoogleButton />
-      <br />
-      <FacebookButton />
       <br />
       <LeaderboardEntry />
       <br />
