@@ -124,7 +124,7 @@ function Reviews() {
                 index={index}
                 clearIndexCache={clearCache}
                 reviewDetails={reviewsList[index]}
-                isPhoneReview={true}
+                isPhoneReview={true}  
               />
             </div>
           </CellMeasurer>

@@ -28,9 +28,9 @@ export const StarCounter = ({ value }) => {
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <div style={{ display: "flex", alignItems: "center" }}>
         <Star size="25" color={theme.palette.progressBar.barColor}></Star>
-        <Typography variant="S18W400C050505" sx={{ ml: "1.5px", mr: "1.5px" }}>
+        {/* <Typography variant="S18W400C050505" sx={{ ml: "1.5px", mr: "1.5px" }}>
           {value}
-        </Typography>
+        </Typography> */}
       </div>
       <div style={{ width: 6 }}></div>
       <Box sx={{ width: "100%" }}>
@@ -41,6 +41,7 @@ export const StarCounter = ({ value }) => {
           borderRadius="30px"
           height="14px"
           bgColor={theme.palette.progressBar.barColor}
+          baseBgColor={theme.palette.progressBar.backgroundColor}
         />
       </Box>
     </Box>

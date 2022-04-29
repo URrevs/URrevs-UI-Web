@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import ImageIcon from "@mui/icons-material/Image";
 import WorkIcon from "@mui/icons-material/Work";
-import { Button, Container } from "@mui/material";
+import { alpha, Button, Container } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -18,17 +18,18 @@ const CompanyButton = styled(Button, {
   textTransform: "none",
   variant: "contained",
   padding: 0,
-  display: "flex",
+  // display: "flex",
   alignItems: "center",
   flexWrap: "wrap",
-  margin: "4px 2px",
+  // margin: "4px 2px",
   padding: "4px 2px",
-  borderRadius: 3,
+  borderRadius: 10,
   backgroundColor: backgroundColor,
+
   "&:hover": {
     backgroundColor:
       backgroundColor === "white"
-        ? "#d9d9d9"
+        ? theme.palette.allProductsScreen.brandHover
         : theme.palette.allProductsScreen.selectedItemBackground,
     boxShadow: "none",
   },
@@ -51,7 +52,7 @@ export const CompanyHorizontalList = () => {
         onClick={selectCompanyHandler.bind(this, index)}
         backgroundColor={
           selectedCompany === index
-            ? theme.palette.allProductsScreen.selectedItemBackground
+            ? alpha(theme.palette.allProductsScreen.selectedItemBackground, 0.8)
             : "white"
         }
       >
