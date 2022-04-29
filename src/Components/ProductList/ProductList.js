@@ -1,7 +1,7 @@
 import { useTheme } from "@emotion/react";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
-import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
+import SmartphoneRoundedIcon from "@mui/icons-material/SmartphoneRounded";
 import { Card, ListItem, ListItemAvatar } from "@mui/material";
 import Collapse from "@mui/material/Collapse";
 import Divider from "@mui/material/Divider";
@@ -69,26 +69,36 @@ export default function ProductList({ list, title }) {
       >
         <ListItemButton onClick={handleClick}>
           <ListItemText
-            primaryTypographyProps={{ ...theme.typography.S20W500C050505 }}
+            primaryTypographyProps={{
+              ...theme.typography.S20W500C050505,
+              lineHeight: 1,
+            }}
             primary={title}
           />
           {open ? <ArrowDropUpRoundedIcon /> : <ArrowDropDownRoundedIcon />}
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
+          <List
+            component="div"
+            disablePadding
+            sx={{
+              padding: "0px 1px 44px 3px",
+            }}
+          >
             {list.map((item, index) => (
               <React.Fragment key={index}>
                 <ListItem sx={{ padding: 0 }}>
-                  <PhoneAndroidIcon
+                  <SmartphoneRoundedIcon
                     sx={{
                       marginRight: "17px",
-                      fontSize: "45px",
+                      fontSize: "40px",
                       color: theme.palette.productList.mobileColor,
                     }}
                   />
                   <ListItemText
                     primaryTypographyProps={{
                       ...theme.typography.S20W700C050505,
+                      lineHeight: 1,
                     }}
                     primary="Nokia 606"
                     secondaryTypographyProps={{
