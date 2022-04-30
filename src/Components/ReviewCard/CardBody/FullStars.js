@@ -1,6 +1,7 @@
 import { useTheme } from "@emotion/react";
 import * as React from "react";
 import StarRating from "../../Form/StarRating";
+import { StarLine } from "../../StarLine";
 import ExpansionArrow from "./ExpansionArrow";
 
 const FullStars = ({
@@ -36,12 +37,9 @@ const FullStars = ({
                 {index === 0 ? (
                   <></>
                 ) : (
-                  <StarRating
-                    text={starsRatingTextContainer[index]}
-                    starValue={index}
-                    isVertical={false}
-                    readOnly
-                    rtl={theme.direction === "rtl" ? true : false}
+                  <StarLine
+                    label={starsRatingTextContainer[index]}
+                    value={index}
                   />
                 )}
               </React.Fragment>
