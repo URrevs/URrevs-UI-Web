@@ -65,6 +65,8 @@ export default function ReviewCard({
     endOfText: false,
   });
 
+  React.useEffect(() => {}, []);
+
   React.useEffect(() => {
     setCroppedText(
       cropText(

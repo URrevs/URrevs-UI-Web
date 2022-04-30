@@ -14,8 +14,8 @@ export const store = configureStore({
     [isDarkSlice.name]: isDarkSlice.reducer,
     [authSlice.name]: authSlice.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(reviewsApi.middleware),
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware().concat(reviewsApi.middleware),
 });
 
 setupListeners(store.dispatch);

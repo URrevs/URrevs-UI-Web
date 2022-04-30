@@ -32,7 +32,7 @@ const FullStars = ({
         <div>
           {starsRatingTextContainer.map((text, index) => {
             return (
-              <React.Fragment>
+              <React.Fragment key={index}>
                 {index === 0 ? (
                   <></>
                 ) : (

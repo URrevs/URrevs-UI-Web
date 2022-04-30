@@ -1,9 +1,8 @@
-import { addYears, formatDistance, subDays } from "date-fns";
 import { formatWithOptions } from "date-fns/fp";
-import { ar, en, enCA } from "date-fns/locale";
+import { ar, enCA } from "date-fns/locale";
 import { useAppSelector } from "../store/hooks";
 
-export const useConvertDateToString = (isoString) => {
+export const useConvertDateToString = (isoString: any) => {
   const language = useAppSelector((state) => state.language.language);
 
   const locale = language === "ar" ? ar : enCA;
@@ -11,7 +10,7 @@ export const useConvertDateToString = (isoString) => {
 
   // transform date to string
   const dateToString = formatWithOptions({ locale: locale }, "d MMMM yyyy");
-  const stringDate = dateToString(date);
+  const stringDate: string = dateToString(date);
 
   return stringDate;
 };

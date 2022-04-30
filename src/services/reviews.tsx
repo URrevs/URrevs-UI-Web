@@ -1,15 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Review } from "../models/Review.model";
+import { APIReview } from "../models/APIReview.model";
+import Review from "../models/Review";
 
 export const reviewsApi = createApi({
   reducerPath: "reviewsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_PATH}/urrevs`,
+    baseUrl: `${process.env.REACT_APP_API_PATH}/reviews`,
   }),
 
-  endpoints: (builder) => ({
+  endpoints: (builder) => ({  
     getAllReviews: builder.query<Review[], number>({
-      query: (page = 0) => `/reviews?page=${page}`,
+      query: (page = 0) => `/?page=${page}`,
+      transformResponse: (response: APIReview[]) => {
+        return response.map((review) => new Review(review));
+      },
     }),
     // postReview: builder.mutation({
     //   query: ({ review }) => {
