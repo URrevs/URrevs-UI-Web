@@ -12,7 +12,6 @@ const PromptStyled = styled(
 }));
 
 export const DialogTemplate = ({ title, children }) => {
-  const theme = useTheme();
   return (
     <React.Fragment>
       <PromptStyled elevation={3}>

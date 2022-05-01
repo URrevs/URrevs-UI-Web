@@ -31,6 +31,7 @@ import { CompanyOverviewCard } from "../Components/OverviewCard/CompanyOverviewC
 import BottomTabBar from "../Components/MainLayout/AppBar/BottomTabBar";
 import { DialogTemplate } from "../Components/Dialogs/DialogTemplate";
 import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
+import { DialogText } from "../Components/Dialogs/DialogText";
 
 const testComments = {
   a1: {
@@ -67,6 +68,9 @@ const ComponentsTest = (props) => {
 
   return (
     <div style={{ margin: "12px" }}>
+      <br />
+      <DialogText text="كلما كانت مراجعتك مميزة ومليئة بالتفاصيل سوف تحصل علي نقاط مساعدة أكبر." />
+      <br />
       <InvitationDialog />
       <br />
       <CompanyOverviewCard
