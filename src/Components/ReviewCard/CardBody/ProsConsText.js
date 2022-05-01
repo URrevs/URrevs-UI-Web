@@ -18,22 +18,6 @@ const ProsConsText = ({
   maxLetters,
   maxOfMaxLetters,
 }) => {
-  const handleExpandClick = () => {
-    clearIndexCache(index);
-    if (croppedText.endOfText) {
-      // shrink
-      setExpanded(false);
-      setCroppedText(cropText(pros, cons, maxLetters, maxOfMaxLetters));
-    } else if (expanded) {
-      // expand to infinity
-      setExpanded(true);
-      setCroppedText(cropText(pros, cons, 10000, 10000));
-    } else {
-      setExpanded(true);
-      // expand to limit
-      setCroppedText(cropText(pros, cons, maxOfMaxLetters, maxOfMaxLetters));
-    }
-  };
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
   return (
@@ -50,7 +34,7 @@ const ProsConsText = ({
           style={{
             cursor: "pointer",
           }}
-          onClick={() => handleExpandClick()}
+          onClick={() => console.log("see more button")}
         >
           <Typography
             sx={{ textDecoration: "underline" }}

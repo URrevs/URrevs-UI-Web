@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { APIReview } from "../models/APIReview.model";
 import Review from "../models/Review";
 
 interface InitialState {

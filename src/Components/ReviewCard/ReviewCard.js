@@ -81,11 +81,11 @@ export default function ReviewCard({
     clearIndexCache(index);
   }, []);
 
-  const arrowExpansion = () => {
-    if (expanded) {
+  const handleExpandClick = () => {
+    clearIndexCache(index);
+    if (croppedText.endOfText) {
       // shrink
       setExpanded(false);
-      // shrink to limit
       setCroppedText(
         cropText(
           pros,
@@ -94,8 +94,11 @@ export default function ReviewCard({
           MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND
         )
       );
+    } else if (expanded) {
+      // expand to infinity
+      setExpanded(true);
+      setCroppedText(cropText(pros, cons, 10000, 10000));
     } else {
-      // expand
       setExpanded(true);
       // expand to limit
       setCroppedText(
@@ -107,12 +110,6 @@ export default function ReviewCard({
         )
       );
     }
-    dispatch(
-      reviewsActions.setIsExpanded({
-        index: index,
-        isExpanded: !expanded,
-      })
-    );
   };
 
   return (
@@ -135,35 +132,45 @@ export default function ReviewCard({
         showViewsCounter={true}
       />
       <CardContent style={{ paddingBottom: 0, paddingTop: 0 }}>
-        {/* General stars rating */}
-        <StarLine label={textContainer.generalProductRating} value={2} />
+        <div
+          style={{
+            cursor: "pointer",
+            "&:hover": { background: "#000" },
+          }}
+          onClick={() => {
+            handleExpandClick();
+          }}
+        >
+          {/* General stars rating */}
+          <StarLine label={textContainer.generalProductRating} value={2} />
+          {isPhoneReview && (
+            <div>
+              <FullStars
+                starsRatingTextContainer={starsRatingTextContainer}
+                expanded={expanded}
+                clearIndexCache={clearIndexCache}
+                index={index}
+                setExpanded={setExpanded}
+                arrowExpansion={handleExpandClick}
+              />
+            </div>
+          )}
+          <ProsConsText
+            index={index}
+            pros={pros}
+            cons={cons}
+            expanded={expanded}
+            prosTitle={`${textContainer.pros}:`}
+            consTitle={`${textContainer.cons}:`}
+            clearIndexCache={clearIndexCache}
+            croppedText={croppedText}
+            setExpanded={setExpanded}
+            setCroppedText={setCroppedText}
+            maxLetters={MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND}
+            maxOfMaxLetters={MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND}
+          />
+        </div>
 
-        {isPhoneReview && (
-          <div>
-            <FullStars
-              starsRatingTextContainer={starsRatingTextContainer}
-              expanded={expanded}
-              clearIndexCache={clearIndexCache}
-              index={index}
-              setExpanded={setExpanded}
-              arrowExpansion={arrowExpansion}
-            />
-          </div>
-        )}
-        <ProsConsText
-          index={index}
-          pros={pros}
-          cons={cons}
-          expanded={expanded}
-          prosTitle={`${textContainer.pros}:`}
-          consTitle={`${textContainer.cons}:`}
-          clearIndexCache={clearIndexCache}
-          croppedText={croppedText}
-          setExpanded={setExpanded}
-          setCroppedText={setCroppedText}
-          maxLetters={MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND}
-          maxOfMaxLetters={MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND}
-        />
         <CardFooter isReview={isReview} />
         {/* divider */}
         <hr

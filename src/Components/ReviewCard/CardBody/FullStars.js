@@ -9,7 +9,6 @@ const FullStars = ({
   starsRatingTextContainer,
   // to know if card is expanded or not
   expanded,
-  clearIndexCache,
   index,
   setExpanded,
   arrowExpansion,
@@ -21,7 +20,6 @@ const FullStars = ({
       {/* Expansion arrow */}
       {!expanded && (
         <ExpansionArrow
-          clearIndexCache={clearIndexCache}
           index={index}
           expanded={expanded}
           setExpanded={setExpanded}
@@ -50,7 +48,6 @@ const FullStars = ({
       {/* Shrinking Arrow */}
       {expanded && (
         <ExpansionArrow
-          clearIndexCache={clearIndexCache}
           index={index}
           expanded={expanded}
           setExpanded={setExpanded}

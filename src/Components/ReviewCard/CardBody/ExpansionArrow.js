@@ -6,7 +6,6 @@ import Avatar from "@mui/material/Avatar";
 import * as React from "react";
 
 const ExpansionArrow = ({
-  clearIndexCache,
   index,
   expanded,
   setExpanded,
@@ -36,7 +35,6 @@ const ExpansionArrow = ({
             onClick={() => {
               setExpanded(false);
               handleExpandClick();
-              clearIndexCache(index);
             }}
           />
         ) : (
@@ -44,7 +42,6 @@ const ExpansionArrow = ({
             sx={{ fontSize: "30px" }}
             onClick={() => {
               handleExpandClick();
-              clearIndexCache(index);
             }}
           />
         )}
