@@ -33,6 +33,7 @@ import { DialogTemplate } from "../Components/Dialogs/DialogTemplate";
 import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
 import { DialogText } from "../Components/Dialogs/DialogText";
 import { PrizeDialog } from "../Components/Dialogs/PrizeDialog";
+import { CompareDialog } from "../Components/Dialogs/CompareDialog";
 
 const testComments = {
   a1: {
@@ -69,6 +70,8 @@ const ComponentsTest = (props) => {
 
   return (
     <div style={{ margin: "12px" }}>
+      <br />
+      <CompareDialog item="Nokia 7 Plus" />
       <br />
       <PrizeDialog prize="Xiaomi Mi Band 5" prizeImgSrc={xiaomiImg} />
       <br />
@@ -118,7 +121,6 @@ const ComponentsTest = (props) => {
         showBackBtn={true}
       />
       <BottomTabBar />
-
       <br />
       <CustomAppBar
         englishName={true}
@@ -131,7 +133,6 @@ const ComponentsTest = (props) => {
         showTabBar={true}
       />
       <BottomTabBar />
-
       <br />
       <CustomAppBar
         showLabel={true}
@@ -149,7 +150,6 @@ const ComponentsTest = (props) => {
       <br />
       <StarCounter value={85}></StarCounter>
       <br></br>
-
       <br />
       <br />
       <CompanyHorizontalList></CompanyHorizontalList>
