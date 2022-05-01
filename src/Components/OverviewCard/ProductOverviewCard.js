@@ -50,7 +50,9 @@ export const ProductOverviewCard = ({
   return (
     <React.Fragment>
       <OverviewCard viewer={viewer} title={phone} subtitle={type}>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box
+          sx={{ display: "flex", justifyContent: "center", padding: "5px 0px" }}
+        >
           <ButtonStyled elevation="3" variant="contained">
             <PlaylistAddOutlinedIcon
               sx={{ color: theme.palette.productRateCard.addPlaylistIconColor }}

@@ -61,6 +61,7 @@ export default function ProductList({ list, title }) {
         borderRadius: "15px",
         backgroundColor: theme.palette.productList.backgroundColor,
       }}
+      elevation={3}
     >
       <List
         sx={{ padding: 0 }}

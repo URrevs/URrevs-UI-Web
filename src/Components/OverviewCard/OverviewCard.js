@@ -27,7 +27,7 @@ export const OverviewCard = ({
             sx={{
               display: "flex",
               justifyContent: "center",
-              lineHeight: 0.9,
+              lineHeight: 1,
             }}
           >
             <Box
@@ -50,7 +50,7 @@ export const OverviewCard = ({
               alignSelf: "center",
             }}
           >
-            <RemoveRedEyeRoundedIcon sx={{ margin: "0px 0.79px" }} />
+            <RemoveRedEyeRoundedIcon sx={{ margin: "0px 3px 0px 0px" }} />
             <Typography variant="S14W400C050505">
               {useConvertNumberToHumanLanguage(viewer)}
             </Typography>
