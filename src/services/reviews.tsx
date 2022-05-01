@@ -8,7 +8,7 @@ export const reviewsApi = createApi({
     baseUrl: `${process.env.REACT_APP_API_PATH}/reviews`,
   }),
 
-  endpoints: (builder) => ({  
+  endpoints: (builder) => ({
     getAllReviews: builder.query<Review[], number>({
       query: (page = 0) => `/?page=${page}`,
       transformResponse: (response: APIReview[]) => {

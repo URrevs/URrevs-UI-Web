@@ -19,7 +19,7 @@ const circleHeight = 35;
 const CircleBtn = styled(
   IconButton,
   {}
-)(({ theme, onClickHandler }) => ({
+)(({ theme }) => ({
   "&:hover, &.Mui-focusVisible": {
     backgroundColor: theme.palette.appBar.appBarIconBackgroundColor,
   },

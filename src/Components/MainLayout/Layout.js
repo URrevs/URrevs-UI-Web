@@ -110,7 +110,7 @@ export default function Layout(props) {
           />
 
           <AppBarActions
-            handleOpen={handleRegOpen}
+            handleRegestrationOpen={handleRegOpen}
             showSearch={true}
             showLanguage={true}
             showDark={true}
