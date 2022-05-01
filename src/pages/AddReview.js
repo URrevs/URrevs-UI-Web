@@ -123,7 +123,6 @@ const AddReview = () => {
       [db_labels.db_review_views]: 0,
     };
     localStorage.removeItem("formValues");
-    console.log(formValues);
     //addReview(formValues);
   };
 

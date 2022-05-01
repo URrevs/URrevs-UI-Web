@@ -29,6 +29,8 @@ import { Box } from "@mui/system";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { CompanyOverviewCard } from "../Components/OverviewCard/CompanyOverviewCard";
 import BottomTabBar from "../Components/MainLayout/AppBar/BottomTabBar";
+import { DialogTemplate } from "../Components/Dialogs/DialogTemplate";
+import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
 
 const testComments = {
   a1: {
@@ -65,6 +67,8 @@ const ComponentsTest = (props) => {
 
   return (
     <div style={{ margin: "12px" }}>
+      <InvitationDialog />
+      <br />
       <CompanyOverviewCard
         viewer="100"
         companyName="Nokia"
@@ -73,8 +77,8 @@ const ComponentsTest = (props) => {
       />
       <br />
       <ProductOverviewCard
-        productRating="3"
-        companyRating="3"
+        productRating={3}
+        companyRating={3}
         viewer="100"
         phone="Nokia 7 Plus"
         type="هاتف ذكي"

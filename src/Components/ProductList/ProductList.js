@@ -46,8 +46,6 @@ export default function ProductList({ list, title }) {
       type: "smart_phone",
     },
   ];
-  // list = new Array(5);
-  console.log(list);
   const handleClick = () => {
     setOpen(!open);
   };

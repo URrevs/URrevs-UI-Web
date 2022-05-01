@@ -14,7 +14,6 @@ const FormikStar = ({
   starDimension = "35px",
   starSpacing = "5px",
 }) => {
-  console.log(text);
   return (
     <>
       <Field name={fieldName}>

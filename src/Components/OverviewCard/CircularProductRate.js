@@ -3,7 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
 
 export const CircularProductRate = ({
-  value,
+  value = 0,
   barPrimaryColor,
   barSecondaryColor,
   thickness = 2.5,
@@ -19,7 +19,7 @@ export const CircularProductRate = ({
             left: 0,
           }}
           variant="determinate"
-          value="100"
+          value={100}
           size="56px"
           thickness={2.5}
         />

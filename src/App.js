@@ -95,6 +95,10 @@ function App() {
         selectedItemBackground: isDark ? "#18191A" : COLORS.c2196f3,
         brandHover: isDark ? "#18191A" : COLORS.c2196f3,
       },
+      dialogs:
+      {
+        textFieldInput: isDark ? "#18191A" : COLORS.c050505,
+      },
       divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
 
       background: {
