@@ -1,4 +1,5 @@
 import { useTheme } from "@emotion/react";
+import { Box, ButtonBase } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import * as React from "react";
 import {
@@ -105,9 +106,12 @@ export default function QuestionCard({
         reviewDate={reviewDetails.date_rev}
         showViewsCounter={false}
       />
-      <CardContent style={{ paddingBottom: 0, paddingTop: 0 }}>
-        <div
+      <CardContent style={{ padding: 0 }}>
+        <ButtonBase
+          component="div"
           style={{
+            display: "block",
+            padding: "0px 16px",
             cursor: "pointer",
             "&:hover": { background: "#000" },
           }}
@@ -129,26 +133,31 @@ export default function QuestionCard({
             maxLetters={MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND}
             maxOfMaxLetters={MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND}
           />
-        </div>
-
-        <CardFooter isReview={isReview} />
-        {/* divider */}
-        <hr
+        </ButtonBase>
+        <Box
           style={{
-            background: "white",
-            margin: "0",
-            padding: "0",
-            border: "double white 10",
+            padding: "0px 16px",
           }}
-        />
-        <CardActionButtons
-          isReview={isReview}
-          textContainer={textContainer}
-          setIsLiked={setIsLiked}
-          isLiked={isLiked}
-          firstButtonNonPressedText={textContainer.vote}
-          firstButtonPressedText={textContainer.vote}
-        />
+        >
+          <CardFooter isReview={isReview} />
+          {/* divider */}
+          <hr
+            style={{
+              background: "white",
+              margin: "0",
+              padding: "0",
+              border: "double white 10",
+            }}
+          />
+          <CardActionButtons
+            isReview={isReview}
+            textContainer={textContainer}
+            setIsLiked={setIsLiked}
+            isLiked={isLiked}
+            firstButtonNonPressedText={textContainer.vote}
+            firstButtonPressedText={textContainer.vote}
+          />
+        </Box>
       </CardContent>
     </Cardm>
   );

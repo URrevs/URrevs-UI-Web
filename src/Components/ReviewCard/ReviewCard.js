@@ -16,7 +16,7 @@ import FullStars from "./CardBody/FullStars";
 import ProsConsText from "./CardBody/ProsConsText";
 import CardFooter from "./CardFooter/CardFooter";
 import CardHeader from "./CardHeader/CardHeader";
-import { Grid, Typography } from "@mui/material";
+import { Box, ButtonBase, Grid, Typography } from "@mui/material";
 import { StarLine } from "../StarLine";
 
 export default function ReviewCard({
@@ -131,9 +131,12 @@ export default function ReviewCard({
         buyDate={reviewDetails.date_buy}
         showViewsCounter={true}
       />
-      <CardContent style={{ paddingBottom: 0, paddingTop: 0 }}>
-        <div
+      <CardContent style={{ padding: 0 }}>
+        <ButtonBase
+          component="div"
           style={{
+            display: "block",
+            padding: "0px 16px",
             cursor: "pointer",
             "&:hover": { background: "#000" },
           }}
@@ -142,7 +145,14 @@ export default function ReviewCard({
           }}
         >
           {/* General stars rating */}
-          <StarLine label={textContainer.generalProductRating} value={2} />
+          <StarLine
+            label={
+              isPhoneReview
+                ? textContainer.generalProductRating
+                : textContainer.generalCompanyRating
+            }
+            value={2}
+          />
           {isPhoneReview && (
             <div>
               <FullStars
@@ -169,26 +179,32 @@ export default function ReviewCard({
             maxLetters={MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND}
             maxOfMaxLetters={MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND}
           />
-        </div>
+        </ButtonBase>
 
-        <CardFooter isReview={isReview} />
-        {/* divider */}
-        <hr
+        <Box
           style={{
-            background: "white",
-            margin: "0",
-            padding: "0",
-            border: "double white 10",
+            padding: "0px 16px",
           }}
-        />
-        <CardActionButtons
-          isReview={isReview}
-          textContainer={textContainer}
-          setIsLiked={setIsLiked}
-          isLiked={isLiked}
-          firstButtonNonPressedText={textContainer.like}
-          firstButtonPressedText={textContainer.liked}
-        />
+        >
+          <CardFooter isReview={isReview} />
+          {/* divider */}
+          <hr
+            style={{
+              background: "white",
+              margin: "0",
+              padding: "0",
+              border: "double white 10",
+            }}
+          />
+          <CardActionButtons
+            isReview={isReview}
+            textContainer={textContainer}
+            setIsLiked={setIsLiked}
+            isLiked={isLiked}
+            firstButtonNonPressedText={textContainer.like}
+            firstButtonPressedText={textContainer.liked}
+          />
+        </Box>
       </CardContent>
     </Card>
   );

@@ -5,18 +5,10 @@ import { cropText } from "../../../functions/cropText";
 import BodyCardText from "./BodyCardText";
 
 const ProsConsText = ({
-  index,
-  clearIndexCache,
   expanded,
   croppedText,
-  setExpanded,
-  setCroppedText,
   prosTitle,
   consTitle,
-  pros,
-  cons,
-  maxLetters,
-  maxOfMaxLetters,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
