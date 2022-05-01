@@ -1,4 +1,4 @@
-export interface Review {
+export interface APIReview {
   _id: string;
   user_name: string;
   brand: string;
@@ -13,6 +13,6 @@ export interface Review {
   brand_cons: string;
   date_buy: string;
   date_rev: string;
-  isExpanded: boolean;
   user_avatar: string;
+  isExpanded: boolean;
 }

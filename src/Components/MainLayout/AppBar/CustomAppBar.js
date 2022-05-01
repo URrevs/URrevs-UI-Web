@@ -1,17 +1,17 @@
+import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
+import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
+import { Box, IconButton, Toolbar, Typography } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import React, { Fragment } from "react";
-import { AppBarActions } from "./AppBarActions";
-import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
-import { useTheme } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
+import { AppBarActions } from "./AppBarActions";
+import BottomTabBar from "./BottomTabBar";
 
 const CustomAppBarStyled = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "direction",
 })(({ theme, direction }) => ({
   direction: direction,
-  boxShadow: "0px -2px 6px 0px #000",
   background: theme.palette.appBar.appBarColor,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -20,7 +20,7 @@ const CustomAppBarStyled = styled(MuiAppBar, {
 }));
 
 const logoWidth = 94;
-const logoHeight = 35;
+const logoHeight = "auto";
 
 export const CustomAppBar = ({
   showLogo,
@@ -32,11 +32,13 @@ export const CustomAppBar = ({
   showLabel,
   label,
   englishName,
+  showTabBar,
 }) => {
   const theme = useTheme();
   const backButtonDirection = theme.direction === "rtl" ? -1 : 1;
 
   const navigate = useNavigate();
+
   const backBtnHandler = () => {
     console.log("backButtonHandler");
     navigate(-1);
@@ -44,10 +46,17 @@ export const CustomAppBar = ({
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <CustomAppBarStyled position="static">
+      <CustomAppBarStyled
+        position="static"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Toolbar
           sx={{
             justifyContent: "space-between",
+            boxShadow: 3,
           }}
         >
           <div style={{ display: "flex" }}>
@@ -66,6 +75,7 @@ export const CustomAppBar = ({
                 <img
                   width={logoWidth}
                   height={logoHeight}
+                  alr="URrevs"
                   src="./images/logo.png"
                 />
               )}
@@ -98,6 +108,7 @@ export const CustomAppBar = ({
             )}
           </div>
         </Toolbar>
+        {/* <Toolbar>{showTabBar && <BottomTabBar />}</Toolbar> */}
       </CustomAppBarStyled>
     </Box>
   );

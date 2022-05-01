@@ -16,6 +16,8 @@ import FullStars from "./CardBody/FullStars";
 import ProsConsText from "./CardBody/ProsConsText";
 import CardFooter from "./CardFooter/CardFooter";
 import CardHeader from "./CardHeader/CardHeader";
+import { Grid, Typography } from "@mui/material";
+import { StarLine } from "../StarLine";
 
 export default function ReviewCard({
   ukey,
@@ -64,6 +66,8 @@ export default function ReviewCard({
     cons: "",
     endOfText: false,
   });
+
+  React.useEffect(() => {}, []);
 
   React.useEffect(() => {
     setCroppedText(
@@ -132,14 +136,7 @@ export default function ReviewCard({
       />
       <CardContent style={{ paddingBottom: 0, paddingTop: 0 }}>
         {/* General stars rating */}
-        <StarRating
-          text={firstStarTitle ?? textContainer.generalProductRating}
-          textSize="S14W500C050505"
-          starValue={2}
-          isVertical={false}
-          readOnly
-          rtl={theme.direction === "rtl" ? true : false}
-        />
+        <StarLine label={textContainer.generalProductRating} value={2} />
 
         {isPhoneReview && (
           <div>

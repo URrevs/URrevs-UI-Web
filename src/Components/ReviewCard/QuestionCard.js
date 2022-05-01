@@ -4,15 +4,13 @@ import * as React from "react";
 import {
   MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND,
   MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND,
-  USER_CIRCLE_AVATAR_LARGE,
+  USER_CIRCLE_AVATAR_LARGE
 } from "../../constants";
 import { cropText } from "../../functions/cropText";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
-import StarRating from "../Form/StarRating";
 import Cardm from "../Card";
 import CardActionButtons from "./CardActions/CardActionButtons";
-import FullStars from "./CardBody/FullStars";
 import ProsConsText from "./CardBody/ProsConsText";
 import CardFooter from "./CardFooter/CardFooter";
 import CardHeader from "./CardHeader/CardHeader";
@@ -86,12 +84,12 @@ export default function QuestionCard({
         )
       );
     }
-    dispatch(
-      reviewsActions.setIsExpanded({
-        index: index,
-        isExpanded: !expanded,
-      })
-    );
+    // dispatch(
+    //   reviewsActions.setIsExpanded({
+    //     index: index,
+    //     isExpanded: !expanded,
+    //   })
+    // );
   };
 
   return (

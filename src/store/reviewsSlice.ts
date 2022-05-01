@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Review } from "../models/Review.model";
+import { APIReview } from "../models/APIReview.model";
+import Review from "../models/Review";
 
 interface InitialState {
   newReviews: Review[];
@@ -28,10 +29,8 @@ const reviewsSlice = createSlice({
         isExpanded: boolean;
       }>
     ) {
-      state.newReviews[action.payload.index] = {
-        ...state.newReviews[action.payload.index],
-        isExpanded: action.payload.isExpanded,
-      };
+      state.newReviews[action.payload.index].isExpanded =
+        action.payload.isExpanded;
     },
     increasePage(state) {
       state.page = state.page + 1;
@@ -44,4 +43,4 @@ const reviewsSlice = createSlice({
 
 export const reviewsActions = reviewsSlice.actions;
 export const reviewsSliceName = reviewsSlice.name;
-export default reviewsSlice;
+export default reviewsSlice;  

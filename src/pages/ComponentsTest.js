@@ -28,6 +28,7 @@ import { AppBarActions } from "../Components/MainLayout/AppBar/AppBarActions";
 import { Box } from "@mui/system";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { CompanyOverviewCard } from "../Components/OverviewCard/CompanyOverviewCard";
+import BottomTabBar from "../Components/MainLayout/AppBar/BottomTabBar";
 
 const testComments = {
   a1: {
@@ -100,20 +101,34 @@ const ComponentsTest = (props) => {
         left={true}
         englishName={true}
         showLabel={true}
-        label="Nokia"
+        showSearch={true}
+        showProfile={true}
+        label="Nokia 7 plus"
         showBackBtn={true}
       />
+      <BottomTabBar />
+
       <br />
       <CustomAppBar
-        left={true}
+        englishName={true}
         showProfile={true}
         showSearch={true}
         revert={true}
         showLabel={true}
         label="Nokia"
         showBackBtn={true}
+        showTabBar={true}
       />
-      {/* full logo */}
+      <BottomTabBar />
+
+      <br />
+      <CustomAppBar
+        showLabel={true}
+        label="الاسئلة المطروحة"
+        showBackBtn={true}
+        showTabBar={true}
+      />
+      <BottomTabBar />
       <br />
       <img width="100%" height="auto" src="./images/full_logo.png" />
       <br />
