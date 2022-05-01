@@ -221,6 +221,12 @@ export const fonts = {
     fontSize: 22,
     color: "#050505",
   },
+  S22W800C050505:{
+    fontWeight: 800,
+    fontSize: 22,
+    color: "#050505",
+
+  },
   S24W500C050505: {
     fontWeight: 500,
     fontSize: 24,

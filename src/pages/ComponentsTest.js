@@ -32,6 +32,7 @@ import BottomTabBar from "../Components/MainLayout/AppBar/BottomTabBar";
 import { DialogTemplate } from "../Components/Dialogs/DialogTemplate";
 import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
 import { DialogText } from "../Components/Dialogs/DialogText";
+import { PrizeDialog } from "../Components/Dialogs/PrizeDialog";
 
 const testComments = {
   a1: {
@@ -68,6 +69,8 @@ const ComponentsTest = (props) => {
 
   return (
     <div style={{ margin: "12px" }}>
+      <br />
+      <PrizeDialog prize="Xiaomi Mi Band 5" prizeImgSrc={xiaomiImg} />
       <br />
       <DialogText text="كلما كانت مراجعتك مميزة ومليئة بالتفاصيل سوف تحصل علي نقاط مساعدة أكبر." />
       <br />
