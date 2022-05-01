@@ -15,7 +15,7 @@ export const DialogTemplate = ({ title, children }) => {
   const theme = useTheme();
   return (
     <React.Fragment>
-      <PromptStyled>
+      <PromptStyled elevation={3}>
         <Box
           sx={{
             // padding: "28px 40px",
