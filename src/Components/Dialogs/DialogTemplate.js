@@ -17,16 +17,17 @@ export const DialogTemplate = ({ title, children }) => {
       <PromptStyled elevation={3}>
         <Box
           sx={{
-            // padding: "28px 40px",
             display: "flex",
             flexDirection: "column",
           }}
         >
+          {/* title and icon */}
           <Box
             style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              paddingBottom: "16px",
             }}
           >
             <Typography variant="S16W700C050505">{title}</Typography>

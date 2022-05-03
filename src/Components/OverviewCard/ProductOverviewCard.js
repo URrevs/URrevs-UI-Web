@@ -10,6 +10,7 @@ import StarRating from "../Form/StarRating";
 import { CircularProductRate } from "./CircularProductRate";
 import { useTheme } from "@emotion/react";
 import { OverviewCard } from "./OverviewCard";
+import { StarLine } from "../StarLine";
 const CardStyled = styled(
   Card,
   {}
@@ -36,16 +37,7 @@ export const ProductOverviewCard = ({
   });
   const theme = useTheme();
   const renderStarReview = (text, value) => (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
-      <Typography variant="S14W500C050505">{`${text}:`}</Typography>
-      <StarRating readOnly={true} starValue={value}></StarRating>
-    </Box>
+    <StarLine label={text} value={value} />
   );
   return (
     <React.Fragment>
@@ -108,11 +100,7 @@ export const ProductOverviewCard = ({
             </Typography>
           </Box>
         </Box>
-        <Box
-          sx={{
-            padding: "0px 46px 0px 46px",
-          }}
-        >
+        <Box>
           {renderStarReview(textContainer.userInterface, 4)}
           {renderStarReview(textContainer.manufacturingQuality, 5)}
           {renderStarReview(textContainer.priceQuality, 4)}

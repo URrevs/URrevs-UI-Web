@@ -22,6 +22,14 @@ function App() {
     isMobile: isMobile,
     direction: `${direction}`,
     typography: fonts,
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 400,
+        md: 800,
+        lg: 1200,
+      },
+    },
     palette: {
       mode: isDark ? "dark" : "light",
       modalColor: isDark ? "#18191A" : COLORS.cffffff,
@@ -95,8 +103,7 @@ function App() {
         selectedItemBackground: isDark ? "#18191A" : COLORS.c2196f3,
         brandHover: isDark ? "#18191A" : COLORS.c2196f3,
       },
-      dialogs:
-      {
+      dialogs: {
         textFieldInput: isDark ? "#18191A" : COLORS.c050505,
       },
       divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
