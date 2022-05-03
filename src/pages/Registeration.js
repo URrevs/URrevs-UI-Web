@@ -8,30 +8,36 @@ import {
   List,
   ListItem,
   Modal,
+  styled,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import {
-  FacebookLoginButton,
-  GoogleLoginButton,
-} from "react-social-login-buttons";
 import { logout, signIn } from "../Authentication/auth";
-import { authActions } from "../store/authSlice";
+import { FacebookButton } from "../Components/Authentication/FacebookButton";
+import { GoogleButton } from "../Components/Authentication/GoogleButton";
 import {
   useAuthenticateMutation,
   useGetCurrentUserProfileMutation,
 } from "../services/users";
+import { authActions } from "../store/authSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
-const modalStyle = {
+const ModalBox = styled(
+  Box,
+  {}
+)(({ theme }) => ({
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 300,
+  width: "80%",
+  [theme.breakpoints.down("md")]: {
+    width: "calc(100% - 32px)",
+  },
   boxShadow: 24,
-  p: 4,
-  borderRadius: 3,
-};
+  padding: 16,
+  borderRadius: 15,
+  background: theme.palette.modalColor,
+}));
 
 const Registeration = ({
   handleRegistrationClose,
@@ -132,33 +138,21 @@ const Registeration = ({
       }}
     >
       <Fade in={openRegistration}>
-        <Box sx={{ ...modalStyle, bgcolor: theme.palette.modalColor }}>
+        <ModalBox>
           <div style={{ display: "flex", justifyContent: "center" }}>
             {!isLoggedIn && (
               <List>
                 <ListItem>
-                  <FacebookLoginButton
-                    variant="contained"
-                    style={{ width: "240px" }}
-                    onClick={() => signInHandler("Facebook")}
-                  >
-                    Facebook
-                  </FacebookLoginButton>
+                  <GoogleButton onClick={() => signInHandler("Google")} />
                 </ListItem>
                 <ListItem>
-                  <GoogleLoginButton
-                    variant="contained"
-                    style={{ width: "240px" }}
-                    onClick={() => signInHandler("Google")}
-                  >
-                    Google
-                  </GoogleLoginButton>
+                  <FacebookButton onClick={() => signInHandler("Facebook")} />
                 </ListItem>
               </List>
             )}
             {isLoggedIn && <Button onClick={() => signout()}>Logout</Button>}
           </div>
-        </Box>
+        </ModalBox>
       </Fade>
     </Modal>
   );

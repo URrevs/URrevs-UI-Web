@@ -3,25 +3,17 @@ import { styled } from "@mui/styles";
 import React from "react";
 import { useTheme } from "@emotion/react";
 import GoogleIcon from "../Icons/GoogleIcon";
+import { useAppSelector } from "../../store/hooks";
 
-// To be added to text.ts file
-const authenticationPage = {
-  ar: {
-    GoogleButton: "أكمل بإستخدام جوجل",
-    FacebookButton: "أكمل بإستخدام فيسبوك",
-  },
-  en: {
-    GoogleButton: "Continue with Google",
-    FacebookButton: "Continue with Facebook",
-  },
-};
-export const GoogleButton = () => {
+export const GoogleButton = ({ onClick }) => {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
   const theme = useTheme();
   return (
     <AuthenticationButton
       alt="google logo"
+      onClick={onClick}
       color={theme.palette.authenticationButtons.googleButtonColor}
-      text={authenticationPage.ar.GoogleButton}
+      text={textContainer.googleAuth}
       textColor="65676B"
       image={<GoogleIcon />}
     ></AuthenticationButton>

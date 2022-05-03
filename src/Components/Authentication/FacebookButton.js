@@ -2,6 +2,7 @@ import { AuthenticationButton } from "./AuthenticationButton";
 import React from "react";
 import { useTheme } from "@emotion/react";
 import FacebookIcon from "../Icons/FacebookIcon";
+import { useAppSelector } from "../../store/hooks";
 
 // To be added to text.ts file
 const authenticationPage = {
@@ -14,13 +15,16 @@ const authenticationPage = {
     FacebookButton: "Continue with Facebook",
   },
 };
-export const FacebookButton = () => {
+export const FacebookButton = ({onClick}) => {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   const theme = useTheme();
   return (
     <AuthenticationButton
       alt="facebook logo"
+      onClick={onClick}
       color={theme.palette.authenticationButtons.facebookButtonColor}
-      text={authenticationPage.ar.FacebookButton}
+      text={textContainer.facebookAuth}
       textColor="2196F3"
       image={<FacebookIcon />}
     ></AuthenticationButton>
