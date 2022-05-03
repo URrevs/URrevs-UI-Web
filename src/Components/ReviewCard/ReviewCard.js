@@ -187,15 +187,7 @@ export default function ReviewCard({
           }}
         >
           <CardFooter isReview={isReview} />
-          {/* divider */}
-          <hr
-            style={{
-              background: "white",
-              margin: "0",
-              padding: "0",
-              border: "double white 10",
-            }}
-          />
+          
           <CardActionButtons
             isReview={isReview}
             textContainer={textContainer}

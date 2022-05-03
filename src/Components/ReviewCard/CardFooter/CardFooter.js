@@ -7,6 +7,7 @@ import { useTheme } from "@emotion/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpLong } from "@fortawesome/free-solid-svg-icons";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { Divider } from "@mui/material";
 
 const CardFooter = ({ isReview }) => {
   const theme = useTheme();
@@ -31,32 +32,43 @@ const CardFooter = ({ isReview }) => {
     />
   );
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        margin: "8px 0px 6px 0px",
-      }}
-    >
-      <FooterButton icon={firstIcon} number={100} isClickable={false} />
+    <div>
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
+          margin: "8px 0px 6px 0px",
         }}
       >
-        <FooterButton
-          icon={<ChatBubbleOutlineOutlinedIcon style={iconStyle} />}
-          number={100}
-          isClickable={true}
-        />
-        <div style={{ width: "10px" }}></div>
-        <FooterButton
-          icon={<ShareOutlinedIcon style={iconStyle} />}
-          number={100}
-          isClickable={false}
-        />
+        <FooterButton icon={firstIcon} number={100} isClickable={false} />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <FooterButton
+            icon={<ChatBubbleOutlineOutlinedIcon style={iconStyle} />}
+            number={100}
+            isClickable={true}
+          />
+          <div style={{ width: "10px" }}></div>
+          <FooterButton
+            icon={<ShareOutlinedIcon style={iconStyle} />}
+            number={100}
+            isClickable={false}
+          />
+        </div>
       </div>
+      {/* divider */}
+      <Divider
+        variant="fullWidth"
+        sx={{
+          padding: 0,
+          margin: 0,
+          backgroundColor: theme.palette.divider,
+        }}
+      />
     </div>
   );
 };

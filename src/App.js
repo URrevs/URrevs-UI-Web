@@ -30,6 +30,7 @@ function App() {
         lg: 1200,
       },
     },
+  
     palette: {
       mode: isDark ? "dark" : "light",
       modalColor: isDark ? "#18191A" : COLORS.cffffff,

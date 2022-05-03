@@ -1,7 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Typography } from "@mui/material";
 
-
 export const FooterButton = ({ number, icon, isClickable }) => {
   const theme = useTheme();
   return (
