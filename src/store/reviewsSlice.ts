@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import Review from "../models/Review";
+import Review from "../models/classes/Review";
 
 interface InitialState {
   newReviews: Review[];
@@ -19,6 +19,7 @@ const reviewsSlice = createSlice({
   reducers: {
     addToLoaddedReviews(state, action: PayloadAction<InitialState>) {
       const loadedReviews = action.payload.newReviews;
+      console.log(loadedReviews[0].user_name);
       state.newReviews.push(...loadedReviews);
     },
     setIsExpanded(
@@ -35,6 +36,7 @@ const reviewsSlice = createSlice({
       state.page = state.page + 1;
     },
     setIndex(state, action) {
+      console.log(action.payload.currentIndex);
       state.currentIndex = action.payload.currentIndex;
     },
   },
@@ -42,4 +44,4 @@ const reviewsSlice = createSlice({
 
 export const reviewsActions = reviewsSlice.actions;
 export const reviewsSliceName = reviewsSlice.name;
-export default reviewsSlice;  
+export default reviewsSlice;

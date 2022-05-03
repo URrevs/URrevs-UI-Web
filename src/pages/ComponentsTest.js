@@ -34,6 +34,7 @@ import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
 import { DialogText } from "../Components/Dialogs/DialogText";
 import { PrizeDialog } from "../Components/Dialogs/PrizeDialog";
 import { CompareDialog } from "../Components/Dialogs/CompareDialog";
+import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
 
 const testComments = {
   a1: {
@@ -68,8 +69,36 @@ const ComponentsTest = (props) => {
   const date1 = useConvertDateToString(new Date(2020, 1, 1));
   const date2 = useSubstituteDate(new Date(2022, 3, 29));
 
+  let url = "sada";
   return (
     <div style={{ margin: "12px" }}>
+      <br />
+      <br />
+      <br />
+      <form
+        style={{ width: "100%" }}
+        onSubmit={(event) => {
+          event.preventDefault();
+          console.log("url:", event.currentTarget.url.value);
+          fetch(event.currentTarget.url.value).then((response) =>
+            console.log(response)
+          );
+        }}
+      >
+        <input
+          style={{
+            width: "100%",
+            height: "auto",
+            direction: "ltr",
+            maxLines: "40",
+          }}
+          id="url"
+        />
+      </form>
+      <br />
+      <br />
+      <br />
+      <LoadingReviewSkeleton />
       <br />
       <CompareDialog item="Nokia 7 Plus" />
       <br />

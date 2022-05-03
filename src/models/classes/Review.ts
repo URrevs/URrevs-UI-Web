@@ -1,4 +1,4 @@
-import { APIReview } from "./APIReview.model";
+import { APIReview } from "../interfaces/APIReview.model";
 
 export default class Review {
   _id: string;

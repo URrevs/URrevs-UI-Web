@@ -17,6 +17,10 @@ import {
 } from "react-social-login-buttons";
 import { logout, signIn } from "../Authentication/auth";
 import { authActions } from "../store/authSlice";
+import {
+  useAuthenticateMutation,
+  useGetCurrentUserProfileMutation,
+} from "../services/users";
 
 const modalStyle = {
   position: "absolute",
@@ -34,29 +38,47 @@ const Registeration = ({
   openRegistration = false,
 }) => {
   const dispatch = useAppDispatch();
+
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+
+  const us = useAppSelector((state) => state.auth);
+  console.log(us);
+
   const [signingError, setSigningError] = useState(null);
+
+  const [getApiToken] = useAuthenticateMutation();
+  const [getProfile] = useGetCurrentUserProfileMutation();
 
   const theme = useTheme();
 
   const signInHandler = async (provider) => {
+    // firebase sign-in
     const { user, error } = await signIn(provider);
     setSigningError(error);
 
-    if (!error) {
-      handleRegistrationClose();
+    // auth api user
+    try {
+      const { token: apiToken } = await getApiToken(user.accessToken).unwrap();
+      const userProfile = await getProfile(apiToken).unwrap();
 
       dispatch(
         authActions.login({
           isLoggedIn: true,
-          photo: user.photoURL,
+          uid: userProfile.uid,
+          refCode: userProfile.refCode,
+          photo: userProfile.photo,
+          apiToken: apiToken,
+          name: userProfile.name,
           accessToken: user.accessToken,
-          name: user.displayName,
           refreshToken: user.refreshToken,
           email: user.email,
-          uid: user.uid,
+          points: userProfile.points,
         })
       );
+
+      handleRegistrationClose();
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -66,19 +88,33 @@ const Registeration = ({
   };
 
   useEffect(() => {
+    async function signIn(user) {
+      const { token: apiToken } = await getApiToken(user.accessToken).unwrap();
+      const userProfile = await getProfile(apiToken).unwrap();
+
+      dispatch(
+        authActions.login({
+          isLoggedIn: true,
+          uid: userProfile.uid,
+          refCode: userProfile.refCode,
+          photo: userProfile.photo,
+          apiToken: apiToken,
+          name: userProfile.name,
+          accessToken: user.accessToken,
+          refreshToken: user.refreshToken,
+          email: user.email,
+          points: userProfile.points,
+        })
+      );
+    }
+
     getAuth().onAuthStateChanged((user) => {
       if (user) {
-        dispatch(
-          authActions.login({
-            isLoggedIn: true,
-            photo: user.photoURL,
-            accessToken: user.accessToken,
-            name: user.displayName,
-            refreshToken: user.refreshToken,
-            email: user.email,
-            uid: user.uid,
-          })
-        );
+        signIn(user);
+        try {
+        } catch (error) {
+          console.log(error);
+        }
       }
     });
   }, []);
