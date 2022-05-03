@@ -12,7 +12,7 @@ const CustomAppBarStyled = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "direction",
 })(({ theme, direction }) => ({
   direction: direction,
-  height: 45,
+  minHeight: 45,
   background: theme.palette.appBar.appBarColor,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -55,10 +55,11 @@ export const CustomAppBar = ({
         }}
       >
         <Toolbar
+          variant="dense"
           sx={{
             justifyContent: "space-between",
             boxShadow: 3,
-            height: 45,
+            minHeight: 45,
           }}
         >
           <div style={{ display: "flex" }}>

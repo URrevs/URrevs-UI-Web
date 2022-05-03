@@ -69,7 +69,7 @@ export default function Layout(props) {
         setOpen={setOpen}
         appBarHeight={appBarHeight}
       >
-        <Toolbar sx={{ minHeight: appBarHeight }}>
+        <Toolbar variant="dense" sx={{ minHeight: appBarHeight }}>
           {/* drawer button */}
           {theme.isMobile ? (
             <></>
