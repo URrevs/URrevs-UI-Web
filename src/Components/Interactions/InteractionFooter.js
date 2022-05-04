@@ -30,13 +30,13 @@ export const InteractionFooter = ({
         </Typography>
       </CommentButton>
       {!reply ? (
-        <CommentButton>
+        <CommentButton sx={{ marginLeft:"8px"}}>
           <Typography variant={"S13W700C050505"}>
             {textContainer.reply}
           </Typography>
         </CommentButton>
       ) : null}
-      <Typography sx={{ marginLeft: "8px" }} variant="S13W400C65676B">
+      <Typography sx={{ marginLeft: "16px" }} variant="S13W400C65676B">
         {date}
       </Typography>
     </React.Fragment>
