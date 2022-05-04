@@ -10,16 +10,12 @@ const BottomCardActionBtn = ({ icon, title, onClickAction, isHighlighted }) => {
       onClick={onClickAction}
       startIcon={icon}
       style={{
-        // display: "flex",
-        // justifyContent: "start",
+        display: "flex",
+        alignItems: "center",
         width: "100%",
         color: isHighlighted
           ? theme.palette.reviewCard.actionBtnIconHighlight
           : theme.palette.reviewCard.actionBtnIcon,
-        "&:hover": { backgroundColor: "#000" },
-        "&:active": {
-          backgroundColor: "#fff",
-        },
       }}
       size="large"
     >

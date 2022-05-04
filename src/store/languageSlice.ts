@@ -9,7 +9,7 @@ interface LanguageState {
 
 const initialLanguageState: LanguageState = {
   language: localStorage.getItem("language") ?? "ar",
-  textContainer: localStorage.getItem("language") === "ar" ? text.ar : text.en,
+  textContainer: localStorage.getItem("language") === "en" ? text.en : text.ar,
 };
 
 const languageSlice = createSlice({

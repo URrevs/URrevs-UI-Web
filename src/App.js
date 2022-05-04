@@ -28,6 +28,13 @@ function App() {
     isMobile: isMobile,
     direction: `${direction}`,
     typography: fonts,
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          lineHeight: 0,
+        },
+      },
+    },
     breakpoints: {
       values: {
         xs: 0,
