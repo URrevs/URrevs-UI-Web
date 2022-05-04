@@ -14,7 +14,7 @@ const InteractionCardStyle = styled(
   minWidth: "20vw",
   flexDirection: "column",
   overflow: "unset",
-  padding: "12px 12px",
+  padding: "5px 12px 15px 12px",
   borderRadius: "12px",
   backgroundColor: theme.palette.interactionCard.backgroundColor,
 }));
@@ -24,14 +24,14 @@ const LikeCounterStyle = styled(
 )(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
-  padding: "0px 3px",
+  padding: "0px 3px 0px 3px",
   minHeight: "15px",
   minWidth: "33px",
   borderRadius: "50px",
   position: "absolute",
   alignItems: "center",
-  bottom: "-4px",
-  right: "-15px",
+  bottom: "-3px",
+  right: "-10px",
 }));
 
 export const InteractionCard = ({

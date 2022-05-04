@@ -34,6 +34,7 @@ export const InteractionBody = ({
             sx={{
               display: "flex",
               marginLeft: "8px",
+              paddingTop: "2px",
               alignItems: "center",
             }}
           >
