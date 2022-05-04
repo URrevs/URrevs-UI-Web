@@ -34,6 +34,7 @@ export const CustomAppBar = ({
   label,
   englishName,
   showTabBar,
+  children,
 }) => {
   const theme = useTheme();
   const backButtonDirection = theme.direction === "rtl" ? -1 : 1;
@@ -56,10 +57,11 @@ export const CustomAppBar = ({
       >
         <Toolbar
           variant="dense"
-          sx={{
+          style={{
             justifyContent: "space-between",
             boxShadow: 3,
             minHeight: 45,
+            padding: "0 16px",
           }}
         >
           <div style={{ display: "flex" }}>
@@ -113,6 +115,7 @@ export const CustomAppBar = ({
         </Toolbar>
         {/* <Toolbar>{showTabBar && <BottomTabBar />}</Toolbar> */}
       </CustomAppBarStyled>
+      {children}
     </Box>
   );
 };

@@ -123,7 +123,6 @@ export default function Layout(props) {
       <Registeration
         handleRegistrationClose={handleRegClose}
         openRegistration={openReg}
-        handleOnClick={handleRegOpen}
       />
       {theme.isMobile ? <BottomNavBar /> : <></>}
       <Box component="main" sx={{ flexGrow: 1, p: 3, padding: 0 }}>

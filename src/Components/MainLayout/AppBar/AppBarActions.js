@@ -12,6 +12,7 @@ import { isDarkActions } from "../../../store/darkModeSlice";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { languageActions } from "../../../store/languageSlice";
 import { Avatar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const circleWidth = 35;
 const circleHeight = 35;
@@ -38,6 +39,7 @@ export const AppBarActions = ({
   showProfile = false,
 }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const language = useAppSelector((state) => state.language.language);
   const isDark = useAppSelector((state) => state.darkMode.isDark);
@@ -47,6 +49,10 @@ export const AppBarActions = ({
   const photo = useAppSelector((state) => state.auth.photo);
   const name = useAppSelector((state) => state.auth.name);
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+
+  const navigateToProfilePage = () => {
+    navigate("/user-profile");
+  };
 
   return (
     <Fragment>
@@ -58,7 +64,9 @@ export const AppBarActions = ({
       )}
       {/* // user account */}
       {showProfile && (
-        <CircleBtn onClick={handleRegestrationOpen}>
+        <CircleBtn
+          onClick={!isLoggedIn ? handleRegestrationOpen : navigateToProfilePage}
+        >
           {!isLoggedIn ? (
             <AccountCircle />
           ) : (

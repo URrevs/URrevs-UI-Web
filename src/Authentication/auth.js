@@ -7,7 +7,7 @@ import {
   signOut,
 } from "firebase/auth";
 
-export const signIn = async (providerName: string) => {
+export const signIn = async (providerName) => {
   let user = null;
   let error = null;
 

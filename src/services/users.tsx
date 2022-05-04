@@ -11,6 +11,7 @@ export const usersApi = createApi({
     prepareHeaders: (headers, { getState }) => {
       const state = getState();
       const token = (state as RootState).auth.apiToken;
+
       if (token) {
         headers.set("authorization", `bearer ${token}`);
       }
@@ -44,8 +45,19 @@ export const usersApi = createApi({
         return new User(response.user);
       },
     }),
+    logoutFromAllDevices: builder.mutation({
+      query: () => {
+        return {
+          url: "/logout",
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 //auto-generated hooks
-export const { useAuthenticateMutation, useGetCurrentUserProfileMutation } =
-  usersApi;
+export const {
+  useAuthenticateMutation,
+  useGetCurrentUserProfileMutation,
+  useLogoutFromAllDevicesMutation,
+} = usersApi;

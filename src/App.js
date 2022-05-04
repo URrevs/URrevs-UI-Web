@@ -1,5 +1,11 @@
 import { ThemeProvider } from "@emotion/react";
-import { createTheme, CssBaseline, Grid, useMediaQuery } from "@mui/material";
+import {
+  alpha,
+  createTheme,
+  CssBaseline,
+  Grid,
+  useMediaQuery,
+} from "@mui/material";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
@@ -30,7 +36,7 @@ function App() {
         lg: 1200,
       },
     },
-  
+
     palette: {
       mode: isDark ? "dark" : "light",
       modalColor: isDark ? "#18191A" : COLORS.cffffff,
@@ -108,7 +114,7 @@ function App() {
         textFieldInput: isDark ? "#18191A" : COLORS.c050505,
       },
       divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
-
+      hover: isDark ? COLORS.cCED0D4 : alpha(COLORS.c65676b, 0.2),
       background: {
         default: isDark ? "#18191A" : COLORS.cf0f2f5,
       },

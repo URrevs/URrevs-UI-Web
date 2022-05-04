@@ -17,6 +17,7 @@ import { GoogleButton } from "../Components/Authentication/GoogleButton";
 import {
   useAuthenticateMutation,
   useGetCurrentUserProfileMutation,
+  useLogoutFromAllDevicesMutation,
 } from "../services/users";
 import { authActions } from "../store/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -51,9 +52,11 @@ const Registeration = ({
   console.log(us);
 
   const [signingError, setSigningError] = useState(null);
+  const [signOutError, setSignOutError] = useState(null);
 
   const [getApiToken] = useAuthenticateMutation();
   const [getProfile] = useGetCurrentUserProfileMutation();
+  const [logoutFromAllDevices] = useLogoutFromAllDevicesMutation();
 
   const theme = useTheme();
 
@@ -89,8 +92,18 @@ const Registeration = ({
   };
 
   const signout = () => {
-    logout();
+    setSignOutError(logout());
     dispatch(authActions.logout());
+  };
+
+  const logOutFromAllDevices = async () => {
+    try {
+      await logoutFromAllDevices();
+      await setSignOutError(logout());
+      dispatch(authActions.logout());
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -127,8 +140,8 @@ const Registeration = ({
 
   return (
     <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
+      aria-labelledby="register"
+      aria-describedby="urrevs registeration"
       open={openRegistration}
       onClose={handleRegistrationClose}
       closeAfterTransition
@@ -136,6 +149,7 @@ const Registeration = ({
       BackdropProps={{
         timeout: 500,
       }}
+      dir={theme.direction}
     >
       <Fade in={openRegistration}>
         <ModalBox>
@@ -151,6 +165,11 @@ const Registeration = ({
               </List>
             )}
             {isLoggedIn && <Button onClick={() => signout()}>Logout</Button>}
+            {isLoggedIn && (
+              <Button onClick={() => logOutFromAllDevices()}>
+                Logout from all
+              </Button>
+            )}
           </div>
         </ModalBox>
       </Fade>
