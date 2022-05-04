@@ -35,10 +35,11 @@ import { DialogText } from "../Components/Dialogs/DialogText";
 import { PrizeDialog } from "../Components/Dialogs/PrizeDialog";
 import { CompareDialog } from "../Components/Dialogs/CompareDialog";
 import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
+import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
 
 const testComments = {
   a1: {
-    likes: 200,
+    likes: 20000000,
     user: "Fady Ahmed",
     text: "يعم أحلى ريفيو.",
   },
@@ -55,7 +56,7 @@ const testComments = {
     Doo-doo-doo-doo-doo, la-la-laa`,
   },
   a3: {
-    likes: 1,
+    likes: 20000000,
     user: "زياد المقمر",
     text: "شكرا يا محترم.",
   },
@@ -73,6 +74,7 @@ const ComponentsTest = (props) => {
   return (
     <div style={{ margin: "12px" }}>
       <br />
+      <SignoutDialog />
       <br />
       <br />
       <form

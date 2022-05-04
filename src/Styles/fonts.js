@@ -74,6 +74,11 @@ export const fonts = {
     fontSize: 16,
     color: "#050505",
   },
+  S16W800CE41D1D: {
+    fontWeight: 800,
+    fontSize: 16,
+    color: "#E41D1D",
+  },
   S16W300C050505: {
     fontWeight: 300,
     fontSize: 16,
@@ -221,11 +226,10 @@ export const fonts = {
     fontSize: 22,
     color: "#050505",
   },
-  S22W800C050505:{
+  S22W800C050505: {
     fontWeight: 800,
     fontSize: 22,
     color: "#050505",
-
   },
   S24W500C050505: {
     fontWeight: 500,

@@ -1,5 +1,9 @@
 {
   "urrevs": "URrevs",
+  "signoutMessage": "Are you you sure you want to sign out?",
+  "signoutAllDevices": "Sign out from all devices",
+  "signout": "Sign out",
+  "cancel": "Cancel",
   "battery": "Battery",
   "callsQuality": "Calls Quality",
   "camera": "Camera",

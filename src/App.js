@@ -108,6 +108,9 @@ function App() {
         inputFieldText: isDark ? "#18191A" : COLORS.c050505,
         borderColor: isDark ? "#18191A" : COLORS.c606266,
       },
+      checkbox: {
+        borderColor: isDark ? "#18191A" : COLORS.c050505,
+      },
       productRateCard: {
         addPlaylistIconColor: isDark ? "#18191A" : COLORS.c050505,
         barPrimaryColor: isDark ? "#18191A" : COLORS.c2196f3,

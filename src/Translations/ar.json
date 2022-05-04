@@ -1,5 +1,9 @@
 {
   "urrevs": "URrevs",
+  "signoutMessage": "هل متأكد من رغبتك بتسجيل الخروج؟",
+  "signoutAllDevices": "تسجيل الخروج من جميع الاجهزة المسجلة بهذا الحساب",
+  "signout": "تسجيل الخروج",
+  "cancel": "الغاء",
   "generalProductRating": "التقييم العام للمنتج",
   "userInterface": "واجهة المستخدم",
   "manufacturingQuality": "جودة التصنيع",
