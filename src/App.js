@@ -167,10 +167,11 @@ function App() {
       );
     };
 
-    getAuth().onAuthStateChanged(async (user) => {
-      setTimeout(() => {}, 10000);
+    // this may be checked if token still valid 
+    // to reduce authenticate requests
+    getAuth().onIdTokenChanged((user) => {
       if (user) {
-        await signIn(user);
+        signIn(user);
         try {
         } catch (error) {
           console.log(error);
