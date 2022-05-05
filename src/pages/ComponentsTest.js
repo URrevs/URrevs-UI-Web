@@ -39,6 +39,7 @@ import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
 import { Tabbar } from "../Components/Tabbar/Tabbar";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import React from "react";
+import { HowToWinDialog } from "../Components/Dialogs/HowToWinDialog";
 const testComments = {
   a1: {
     likes: 20000000,
@@ -76,6 +77,9 @@ const ComponentsTest = (props) => {
   return (
     <React.Fragment>
       <br />
+      <HowToWinDialog />
+      <br />
+
       <FilterTabbar />
       <br />
       <Tabbar

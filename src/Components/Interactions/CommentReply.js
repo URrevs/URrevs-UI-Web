@@ -33,14 +33,14 @@ export const CommentReply = ({ date, likes, text, user }) => {
         text={text}
         avatar="32px"
         buttonName={buttonName}
-        reply={true}
+        reply={false}
         renderIcon={renderIcon}
       >
         <InteractionFooter
           date={date}
           condition={like}
           onClickHandler={onClickHandler}
-          reply={true}
+          reply={false}
           buttonName={buttonName}
         ></InteractionFooter>
       </InteractionBody>

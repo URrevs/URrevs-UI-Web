@@ -135,6 +135,11 @@ function App() {
       dialogs: {
         textFieldInput: isDark ? "#18191A" : COLORS.c050505,
       },
+      filterTabbar: {
+        buttonBgActive: isDark ? "#FFFFFF" : COLORS.c65676b,
+        buttonBg: isDark ? "#FFFFFF" : COLORS.cffffff,
+        borderColor: isDark ? "#FFFFFF" : COLORS.c606266,
+      },
       divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
       hover: isDark ? COLORS.cCED0D4 : alpha(COLORS.c65676b, 0.2),
       background: {
