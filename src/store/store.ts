@@ -1,12 +1,12 @@
-import { configureStore, Action } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { reviewsApi } from "../services/reviews";
 import { usersApi } from "../services/users";
-
+import authSlice from "./authSlice";
+import isDarkSlice from "./darkModeSlice";
 import languageSlice from "./languageSlice";
 import reviewsSlice from "./reviewsSlice";
-import isDarkSlice from "./darkModeSlice";
-import authSlice from "./authSlice";
+import uiSlice from "./uiSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +16,7 @@ export const store = configureStore({
     [languageSlice.name]: languageSlice.reducer,
     [isDarkSlice.name]: isDarkSlice.reducer,
     [authSlice.name]: authSlice.reducer,
+    [uiSlice.name]: uiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()

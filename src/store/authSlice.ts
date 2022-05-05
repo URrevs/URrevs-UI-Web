@@ -6,7 +6,7 @@ const initialAuthState: User = {
   isLoggedIn: false,
   photo: "",
   accessToken: "",
-  apiToken: "",
+  apiToken: localStorage.getItem("token") ?? "",
   name: "",
   refreshToken: "",
   email: "",
@@ -23,8 +23,10 @@ const authSlice = createSlice({
       state.isLoggedIn = true;
       state.photo = action.payload.photo;
       state.accessToken = action.payload.accessToken;
-      // localStorage.setItem("token", state.accessToken);
+
       state.apiToken = action.payload.apiToken;
+      localStorage.setItem("token", action.payload.apiToken);
+
       state.name = action.payload.name;
       state.refreshToken = action.payload.refreshToken;
       state.email = action.payload.email;
@@ -36,8 +38,10 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.photo = "";
       state.accessToken = "";
-      // localStorage.removeItem("token");
+
       state.apiToken = "";
+      localStorage.removeItem("token");
+      
       state.name = "";
       state.refreshToken = "";
       state.email = "";

@@ -37,9 +37,7 @@ export default function Layout(props) {
   const dictionary = useAppSelector((state) => state.language.textContainer);
 
   // modal
-  const [openReg, setOpenReg] = React.useState(false);
-  const handleRegOpen = () => setOpenReg(true);
-  const handleRegClose = () => setOpenReg(false);
+  const openReg = useAppSelector((state) => state.ui.registration);
 
   const [open, setOpen] = React.useState(false);
   const [searchBarFocused, setSearchBarFocused] = React.useState(false);
@@ -111,7 +109,6 @@ export default function Layout(props) {
           />
 
           <AppBarActions
-            handleRegestrationOpen={handleRegOpen}
             showSearch={true}
             showLanguage={true}
             showDark={true}
@@ -134,10 +131,7 @@ export default function Layout(props) {
       {customAppBar()}
       {/* {theme.isMobile ? <></> : <MyDrawer open={open} setOpen={setOpen} />} */}
 
-      <Registeration
-        handleRegistrationClose={handleRegClose}
-        openRegistration={openReg}
-      />
+      <Registeration />
       {theme.isMobile ? <BottomNavBar /> : <></>}
       <Box component="main" sx={{ flexGrow: 1, p: 3, padding: 0 }}>
         {/* <DrawerHeader /> */}

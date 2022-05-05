@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { languageActions } from "../../../store/languageSlice";
 import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { uiActions } from "../../../store/uiSlice";
 
 const circleWidth = 35;
 const circleHeight = 35;
@@ -32,7 +33,6 @@ const CircleBtn = styled(
 }));
 
 export const AppBarActions = ({
-  handleRegestrationOpen,
   showSearch = false,
   showLanguage = false,
   showDark = false,
@@ -54,6 +54,9 @@ export const AppBarActions = ({
 
   const navigateToProfilePage = () => {
     navigate(`/user-profile?uid=${user.uid}`);
+  };
+  const handleRegestrationOpen = () => {
+    dispatch(uiActions.toggleRegistration());
   };
 
   return (

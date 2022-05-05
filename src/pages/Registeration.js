@@ -21,6 +21,7 @@ import {
 } from "../services/users";
 import { authActions } from "../store/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { uiActions } from "../store/uiSlice";
 
 const ModalBox = styled(
   Box,
@@ -40,16 +41,11 @@ const ModalBox = styled(
   background: theme.palette.modalColor,
 }));
 
-const Registeration = ({
-  handleRegistrationClose,
-  openRegistration = false,
-}) => {
+const Registeration = ({}) => {
   const dispatch = useAppDispatch();
 
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
-
-  const us = useAppSelector((state) => state.auth);
-  console.log(us);
+  const openRegistration = useAppSelector((state) => state.ui.registration);
 
   const [signingError, setSigningError] = useState(null);
   const [signOutError, setSignOutError] = useState(null);
@@ -104,6 +100,10 @@ const Registeration = ({
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleRegistrationClose = () => {
+    dispatch(uiActions.toggleRegistration());
   };
 
   // useEffect(() => {

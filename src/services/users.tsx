@@ -9,11 +9,11 @@ export const usersApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_API_PATH}/users`,
     // add token to all endpoints headers
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: (headers, { getState, endpoint }) => {
       const state = getState();
       const token = (state as RootState).auth.apiToken;
-
-      if (token) {
+      console.log(token);
+      if (token && endpoint !== "authenticate") {
         headers.set("authorization", `bearer ${token}`);
       }
       return headers;
@@ -26,6 +26,7 @@ export const usersApi = createApi({
         return {
           url: "/authenticate",
           method: "GET",
+
           headers: {
             Authorization: `Bearer ${token}`,
           },
