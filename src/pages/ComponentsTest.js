@@ -36,6 +36,7 @@ import { PrizeDialog } from "../Components/Dialogs/PrizeDialog";
 import { CompareDialog } from "../Components/Dialogs/CompareDialog";
 import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
 import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
+import { Tabbar } from "../Components/Tabbar/Tabbar";
 
 const testComments = {
   a1: {
@@ -73,6 +74,24 @@ const ComponentsTest = (props) => {
   let url = "sada";
   return (
     <div style={{ margin: "12px" }}>
+      <br />
+      <br />
+      <Tabbar
+        arrayOfTabs={[
+          textContainer.tabBarReviews,
+          textContainer.tabBarQuestionsAndAnswers,
+        ]}
+      />
+      <br />
+      <Tabbar
+        arrayOfTabs={[
+          textContainer.tabBarReviews,
+          textContainer.tabBarSpecs,
+          textContainer.tabBarQuestionsAndAnswers,
+        ]}
+      />
+      <br />
+      <br />
       <br />
       <SignoutDialog />
       <br />
