@@ -5,7 +5,7 @@ import { useTheme } from "@emotion/react";
 import { InteractionFooter } from "./InteractionFooter";
 import { useAppSelector } from "../../store/hooks";
 
-export const CommentReply = (props) => {
+export const CommentReply = ({ date, likes, text, user }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const [like, setLike] = useState(false);
@@ -27,14 +27,17 @@ export const CommentReply = (props) => {
   return (
     <div style={{ marginRight: "56px" }}>
       <InteractionBody
-        {...props}
+        user={user}
+        likes={likes}
+        date={date}
+        text={text}
         avatar="32px"
         buttonName={buttonName}
         reply={true}
         renderIcon={renderIcon}
       >
         <InteractionFooter
-          date={props.date}
+          date={date}
           condition={like}
           onClickHandler={onClickHandler}
           reply={true}
