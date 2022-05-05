@@ -46,11 +46,11 @@ export const InteractionCard = ({
       <InteractionCardStyle>
         <Typography variant="S14W700C050505">{user}</Typography>
         {subtitle ? (
-          <Typography variant="S14W400C65676b">{subtitle}</Typography>
+          <Typography variant="S12W400C65676b">{subtitle}</Typography>
         ) : (
           <React.Fragment></React.Fragment>
         )}
-        <Typography variant="S14W400C000000">{text}</Typography>
+        <Typography variant="S14W400C050505">{text}</Typography>
         <LikeCounterStyle>
           {renderIcon()}
           <div style={{ width: "3px" }}></div>

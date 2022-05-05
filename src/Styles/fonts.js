@@ -1,6 +1,11 @@
 export const fonts = {
   fontFamily: "Tajawal",
 
+  S12W400C65676b: {
+    fontWeight: 400,
+    fontSize: 12,
+    color: "#65676b",
+  },
   S13W700C2196F3: {
     fontWeight: 700,
     fontSize: 13,
@@ -68,11 +73,6 @@ export const fonts = {
     fontWeight: 400,
     fontSize: 14,
     color: "#050505",
-  },
-  S14W400C000000: {
-    fontWeight: 400,
-    fontSize: 14,
-    color: "#000000",
   },
   S16W800C050505: {
     fontWeight: 800,
