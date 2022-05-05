@@ -16,6 +16,7 @@ import { drawerWidth } from "./Drawer/Drawer";
 import { useAppSelector } from "../../store/hooks";
 import Registeration from "../../pages/Registeration";
 import BottomNavBar from "./BottomNavBar/BottomNavBar";
+import { CustomAppBar } from "./AppBar/CustomAppBar";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -61,8 +62,8 @@ export default function Layout(props) {
     setOpen(true);
   };
 
-  return (
-    <Box sx={{}}>
+  const appBar = () => {
+    return (
       <MyAppBar
         drawerWidth={drawerWidth}
         open={open}
@@ -118,7 +119,20 @@ export default function Layout(props) {
           />
         </Toolbar>
       </MyAppBar>
-      {theme.isMobile ? <></> : <MyDrawer open={open} setOpen={setOpen} />}
+    );
+  };
+
+  const customAppBar = () => {
+    return (
+      <CustomAppBar showLabel={false} showLogo={true} showProfile showSearch />
+    );
+  };
+
+  return (
+    <Box sx={{}}>
+      {/* {appBar()} */}
+      {customAppBar()}
+      {/* {theme.isMobile ? <></> : <MyDrawer open={open} setOpen={setOpen} />} */}
 
       <Registeration
         handleRegistrationClose={handleRegClose}
@@ -126,7 +140,7 @@ export default function Layout(props) {
       />
       {theme.isMobile ? <BottomNavBar /> : <></>}
       <Box component="main" sx={{ flexGrow: 1, p: 3, padding: 0 }}>
-        <DrawerHeader />
+        {/* <DrawerHeader /> */}
         {props.children}
       </Box>
     </Box>

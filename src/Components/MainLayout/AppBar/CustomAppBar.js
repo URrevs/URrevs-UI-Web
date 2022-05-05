@@ -13,6 +13,7 @@ const CustomAppBarStyled = styled(MuiAppBar, {
 })(({ theme, direction }) => ({
   direction: direction,
   minHeight: 45,
+  boxShadow: "0 1px 6px 0px #b5b5b5",
   background: theme.palette.appBar.appBarColor,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -47,9 +48,9 @@ export const CustomAppBar = ({
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <div sx={{ flexGrow: 1 }}>
       <CustomAppBarStyled
-        position="static"
+        position="fixed"
         style={{
           display: "flex",
           flexDirection: "column",
@@ -59,7 +60,7 @@ export const CustomAppBar = ({
           variant="dense"
           style={{
             justifyContent: "space-between",
-            boxShadow: 3,
+            boxShadow: "none",
             minHeight: 45,
             padding: "0 16px",
           }}
@@ -115,7 +116,13 @@ export const CustomAppBar = ({
         </Toolbar>
         {/* <Toolbar>{showTabBar && <BottomTabBar />}</Toolbar> */}
       </CustomAppBarStyled>
-      {children}
-    </Box>
+      <Box
+        style={{
+          marginTop: 45,
+        }}
+      >
+        {children}
+      </Box>
+    </div>
   );
 };

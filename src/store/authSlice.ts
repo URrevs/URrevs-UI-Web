@@ -23,6 +23,7 @@ const authSlice = createSlice({
       state.isLoggedIn = true;
       state.photo = action.payload.photo;
       state.accessToken = action.payload.accessToken;
+      // localStorage.setItem("token", state.accessToken);
       state.apiToken = action.payload.apiToken;
       state.name = action.payload.name;
       state.refreshToken = action.payload.refreshToken;
@@ -35,6 +36,7 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.photo = "";
       state.accessToken = "";
+      // localStorage.removeItem("token");
       state.apiToken = "";
       state.name = "";
       state.refreshToken = "";

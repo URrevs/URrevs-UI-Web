@@ -2,8 +2,6 @@ import { useMediaQuery } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
-import UserProfilePage from "../../../pages/s_4_UserProfile";
-import { Routes, Route } from "react-router-dom";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -44,9 +42,6 @@ export const MyAppBar = (props) => {
       }}
     >
       {props.children}
-      <Routes>
-        <Route exact path="/user-profile" element={<UserProfilePage />} />
-      </Routes>
     </AppBar>
   );
 };

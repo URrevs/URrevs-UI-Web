@@ -17,8 +17,20 @@ import Reviews from "./pages/Reviews";
 import { COLORS } from "./Styles/main_light_colors";
 import { fonts } from "./Styles/fonts";
 import ComponentsTest from "./pages/ComponentsTest";
+import UserProfilePage from "./pages/UserProfile";
+import OwnedPhonesPage from "./pages/OwnedPhones";
+import { useEffect } from "react";
+import { useAppDispatch } from "./store/hooks";
+import { authActions } from "./store/authSlice";
+import {
+  useAuthenticateMutation,
+  useGetCurrentUserProfileMutation,
+} from "../src/services/users";
+import { getAuth } from "firebase/auth";
 
 function App() {
+  console.log("app");
+
   const language = useSelector((state) => state.language.language);
   const direction = language === "ar" ? "rtl" : "ltr";
   const isDark = useSelector((state) => state.darkMode.isDark);
@@ -130,6 +142,42 @@ function App() {
       },
     },
   });
+  const dispatch = useAppDispatch();
+  const [getApiToken] = useAuthenticateMutation();
+  const [getProfile] = useGetCurrentUserProfileMutation();
+
+  useEffect(() => {
+    const signIn = async (user) => {
+      const { token: apiToken } = await getApiToken(user.accessToken).unwrap();
+      const userProfile = await getProfile(apiToken).unwrap();
+
+      dispatch(
+        authActions.login({
+          isLoggedIn: true,
+          uid: userProfile.uid,
+          refCode: userProfile.refCode,
+          photo: userProfile.photo,
+          apiToken: apiToken,
+          name: userProfile.name,
+          accessToken: user.accessToken,
+          refreshToken: user.refreshToken,
+          email: user.email,
+          points: userProfile.points,
+        })
+      );
+    };
+
+    getAuth().onAuthStateChanged(async (user) => {
+      setTimeout(() => {}, 10000);
+      if (user) {
+        await signIn(user);
+        try {
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -155,6 +203,14 @@ function App() {
                     <Route
                       path="/Components-test"
                       element={<ComponentsTest />}
+                    />
+                    <Route
+                      path="/user-profile"
+                      element={<UserProfilePage />}
+                    ></Route>
+                    <Route
+                      path="/user-profile/owned-phones"
+                      element={<OwnedPhonesPage />}
                     />
                   </Routes>
                 </Grid>

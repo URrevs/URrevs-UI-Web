@@ -137,12 +137,12 @@ const ComponentsTest = (props) => {
       <CustomAppBar showLogo={true} showProfile={true} showSearch={true} />
       <br />
       {/* 3 17 */}
-      <CustomAppBar showProfile={true} showSearch={true} showBackBtn={true} />
+      {/* <CustomAppBar showProfile={true} showSearch={true} showBackBtn={true} /> */}
       <br />
       {/*  4 28 5 6 7 8 9 11 21 22 23 24 25 26 29 */}
-      <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true} />
+      {/* <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true} /> */}
       <br />
-      <CustomAppBar
+      {/* <CustomAppBar
         left={true}
         englishName={true}
         showLabel={true}
@@ -150,10 +150,10 @@ const ComponentsTest = (props) => {
         showProfile={true}
         label="Nokia 7 plus"
         showBackBtn={true}
-      />
-      <BottomTabBar />
+      /> */}
+      {/* <BottomTabBar /> */}
       <br />
-      <CustomAppBar
+      {/* <CustomAppBar
         englishName={true}
         showProfile={true}
         showSearch={true}
@@ -162,16 +162,16 @@ const ComponentsTest = (props) => {
         label="Nokia"
         showBackBtn={true}
         showTabBar={true}
-      />
-      <BottomTabBar />
+      /> */}
+      {/* <BottomTabBar /> */}
       <br />
-      <CustomAppBar
+      {/* <CustomAppBar
         showLabel={true}
         label="الاسئلة المطروحة"
         showBackBtn={true}
         showTabBar={true}
       />
-      <BottomTabBar />
+      <BottomTabBar /> */}
       <br />
       <img width="100%" height="auto" src="./images/full_logo.png" />
       <br />

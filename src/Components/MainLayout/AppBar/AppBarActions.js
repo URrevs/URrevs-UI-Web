@@ -48,10 +48,12 @@ export const AppBarActions = ({
 
   const photo = useAppSelector((state) => state.auth.photo);
   const name = useAppSelector((state) => state.auth.name);
-  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+
+  const user = useAppSelector((state) => state.auth);
+  const isLoggedIn = user.isLoggedIn;
 
   const navigateToProfilePage = () => {
-    navigate("/user-profile");
+    navigate(`/user-profile?uid=${user.uid}`);
   };
 
   return (
