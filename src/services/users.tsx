@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import User from "../models/classes/User";
+import APIOwnedPhone from "../models/interfaces/APIOwnedPhone.model";
 import APIUser from "../models/interfaces/APIUser.model";
 import { RootState } from "../store/store";
 
@@ -53,6 +54,9 @@ export const usersApi = createApi({
         };
       },
     }),
+    getMyOwnedPhones: builder.query<APIOwnedPhone, number>({
+      query: (round) => `/phones?round=${round}`,
+    }),
   }),
 });
 //auto-generated hooks
@@ -60,4 +64,5 @@ export const {
   useAuthenticateMutation,
   useGetCurrentUserProfileMutation,
   useLogoutFromAllDevicesMutation,
+  useGetMyOwnedPhonesQuery,
 } = usersApi;

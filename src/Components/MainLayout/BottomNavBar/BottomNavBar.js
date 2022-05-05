@@ -120,7 +120,7 @@ export default function BottomNavBar() {
         right: 0,
         padding: 0,
         minHeight: 60,
-        zIndex: 1000,
+        zIndex: 100000,
         backgroundColor: backgroundColor,
         borderRadius: "10px 10px 0px 0px",
         boxShadow: "0px 2px 6px 0px",
