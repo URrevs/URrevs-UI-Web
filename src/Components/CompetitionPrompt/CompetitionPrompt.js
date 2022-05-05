@@ -64,13 +64,17 @@ export const CompetitionPrompt = ({ button }) => {
         }
   );
   // const theme = useTheme();
-  const renderFields = (text, fieldName, label) => {
+  const renderFields = (text, fieldName, label, controlled = false) => {
     return (
       <React.Fragment>
         <Typography sx={{}} variant="S18W500C050505">
           {text}
         </Typography>
-        <FormikTextField fieldName={fieldName} label={label} />
+        <FormikTextField
+          fieldName={fieldName}
+          label={label}
+          isControlled={controlled}
+        />
       </React.Fragment>
     );
   };
@@ -186,7 +190,8 @@ export const CompetitionPrompt = ({ button }) => {
                   {renderFields(
                     textContainer.enterPrizeImageLink,
                     "imgLink",
-                    textContainer.prizeImageLink
+                    textContainer.prizeImageLink,
+                    true
                   )}
                 </div>
                 <img
