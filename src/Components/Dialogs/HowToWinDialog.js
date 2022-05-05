@@ -17,7 +17,7 @@ export const HowToWinDialog = () => {
           {textContainer.howToWinPrompt}
         </Typography>
         <Link
-          href="https://stackoverflow.com/questions/57914368/how-can-i-remove-the-underline-of-textfield-from-material-ui"
+          href="https://www.youtube.com/watch?v=atQOxz9a1zo"
           underline="always"
         >
           <Typography variant="S16W700C050505">
