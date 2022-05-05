@@ -29,7 +29,7 @@ export const MyAppBar = (props) => {
 
   return (
     <AppBar
-      position="fixed"
+      position="static"
       elevation={0}
       open={open}
       style={{
