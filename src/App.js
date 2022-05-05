@@ -149,6 +149,11 @@ function App() {
   useEffect(() => {
     const signIn = async (user) => {
       const { token: apiToken } = await getApiToken(user.accessToken).unwrap();
+      dispatch(
+        authActions.login({
+          apiToken: apiToken,
+        })
+      );
       const userProfile = await getProfile(apiToken).unwrap();
 
       dispatch(
@@ -167,7 +172,7 @@ function App() {
       );
     };
 
-    // this may be checked if token still valid 
+    // this may be checked if token still valid
     // to reduce authenticate requests
     getAuth().onIdTokenChanged((user) => {
       if (user) {
@@ -196,8 +201,17 @@ function App() {
                 <Grid item md={2} sm={0}></Grid>
                 <Grid item md={8} sm={12}>
                   <Routes>
-                    <Route path="/" element={<Reviews />} />
-                    <Route path="/add-review" element={<AddReviewFormik />} />
+                    <Route path="/">
+                      <Route index element={<Reviews />} />
+                      <Route path="user-profile">
+                        <Route index element={<UserProfilePage />} />
+                        <Route
+                          path="owned-phones"
+                          element={<OwnedPhonesPage />}
+                        />
+                      </Route>
+                    </Route>
+                    {/* <Route path="/add-review" element={<AddReviewFormik />} />
                     <Route path="/blog" element={<div>blog</div>} />
                     <Route path="/about" element={<div>about</div>} />
                     <Route path="/test" element={<AddReview />} />
@@ -205,14 +219,12 @@ function App() {
                       path="/Components-test"
                       element={<ComponentsTest />}
                     />
-                    <Route
-                      path="/user-profile"
-                      element={<UserProfilePage />}
-                    ></Route>
-                    <Route
-                      path="/user-profile/owned-phones"
-                      element={<OwnedPhonesPage />}
-                    />
+                    <Route path="/user-profile" element={<UserProfilePage />}>
+                      <Route
+                        path="owned-phones"
+                        element={<OwnedPhonesPage />}
+                      />
+                    </Route> */}
                   </Routes>
                 </Grid>
                 <Grid item md={2} sm={0}></Grid>

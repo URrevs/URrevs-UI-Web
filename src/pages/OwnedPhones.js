@@ -9,7 +9,7 @@ export default function OwnedPhonesPage() {
     useGetMyOwnedPhonesQuery(round);
 
   return (
-    <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true}>
+    <CustomAppBar showLabel={true} label="منتجاتي" showBackBtn={true}>
       {/* {data} */}
     </CustomAppBar>
   );

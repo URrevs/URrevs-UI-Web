@@ -50,7 +50,7 @@ export default function UserProfilePage({}) {
     {
       title: pageDictionry.ownedProducts,
       icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `/user-profile?uid=${profileData.uid}/owned-phones`,
+      to: `owned-phones?uid=${profileData.uid}`,
     },
     {
       title: pageDictionry.referalCode,
