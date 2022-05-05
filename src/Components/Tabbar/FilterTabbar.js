@@ -1,6 +1,7 @@
 import { useTheme } from "@emotion/react";
 import { Button, Card, Typography } from "@mui/material";
 import React from "react";
+import { FILTER_BUTTON_BORDER_RADIUS } from "../../constants";
 
 export const FilterTabbar = () => {
   const [value, setValue] = React.useState(0);
@@ -16,54 +17,83 @@ export const FilterTabbar = () => {
         }}
       >
         <Button
-          variant="outlined"
           sx={{
+            border: `0.5px solid ${theme.palette.filterTabbar.borderColor}`,
+            backgroundColor:
+              value === 0
+                ? theme.palette.filterTabbar.borderColor
+                : theme.palette.filterTabbar.buttonBg,
+            borderRadius: FILTER_BUTTON_BORDER_RADIUS,
             padding: "3px 0px",
             mr: "20px",
-            fontSize: "14px",
-            fontWeight: "700",
-            borderRadius: "26px",
-            borderColor: "#65676B",
-            color: "#65676B",
-            backgroundColor: "#FFF",
+            "&:active": {
+              backgroundColor:
+                value === 0
+                  ? theme.palette.filterTabbar.buttonBgActive
+                  : theme.palette.filterTabbar.buttonBg,
+            },
             "&:hover": {
-              borderColor: "#65676B",
+              backgroundColor:
+                value === 0
+                  ? theme.palette.filterTabbar.buttonBgActive
+                  : theme.palette.filterTabbar.buttonBg,
             },
             "&:focus": {
-              backgroundColor: "#65676B",
-              borderColor: "#65676B",
-              color: "#FFF",
+              backgroundColor:
+                value === 0
+                  ? theme.palette.filterTabbar.buttonBgActive
+                  : theme.palette.filterTabbar.buttonBg,
             },
           }}
           onClick={() => {
             setValue(0);
           }}
         >
-          الهواتف
+          <Typography
+            variant={value === 0 ? "S14W700CFFFFFF" : "S14W700C65676B"}
+          >
+            الهاتف
+          </Typography>
         </Button>
 
         <Button
-          variant="outlined"
           sx={{
+            border: "0.5px solid #606266",
+            backgroundColor:
+              value === 1
+                ? theme.palette.filterTabbar.buttonBgActive
+                : theme.palette.filterTabbar.buttonBg,
+            borderRadius: "26px",
             padding: "3px 0px",
             mr: "20px",
-            fontSize: "14px",
-            fontWeight: "700",
-            borderRadius: "26px",
-            borderColor: "#65676B",
-            color: "#65676B",
-            backgroundColor: "#FFF",
+            "&:active": {
+              backgroundColor:
+                value === 1
+                  ? theme.palette.filterTabbar.buttonBgActive
+                  : theme.palette.filterTabbar.buttonBg,
+            },
             "&:hover": {
-              borderColor: "#65676B",
+              backgroundColor:
+                value === 1
+                  ? theme.palette.filterTabbar.buttonBgActive
+                  : theme.palette.filterTabbar.buttonBg,
             },
             "&:focus": {
-              backgroundColor: "#65676B",
-              borderColor: "#65676B",
-              color: "#FFF",
+              backgroundColor:
+                value === 1
+                  ? theme.palette.filterTabbar.buttonBgActive
+                  : theme.palette.filterTabbar.buttonBg,
             },
           }}
+          onClick={() => {
+            setValue(1);
+          }}
         >
-          الشركات
+          <Typography
+            variant={value === 1 ? "S14W700CFFFFFF" : "S14W700C65676B"}
+          >
+            الشركات
+          </Typography>
         </Button>
       </Card>
     </React.Fragment>

@@ -42,7 +42,7 @@ export const fonts = {
     fontSize: 14,
     color: "#FFFFFF",
   },
-  S14W70065676B: {
+  S14W700C65676B: {
     fontWeight: 700,
     fontSize: 14,
     color: "#65676B",
