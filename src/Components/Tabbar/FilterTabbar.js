@@ -22,17 +22,14 @@ export const FilterTabbar = () => {
             borderColor: "#65676B",
             color: "#65676B",
             backgroundColor: "#FFF",
-            // "&:active": {
-            //   backgroundColor: "#65676B",
-            //   borderColor: "#65676B",
-            // },
+            "&:hover": {
+              borderColor: "#65676B",
+            },
             "&:focus": {
               backgroundColor: "#65676B",
               borderColor: "#65676B",
               color: "#FFF",
             },
-
-            // borderColor: "#65676B",
           }}
         >
           الهواتف
@@ -49,10 +46,9 @@ export const FilterTabbar = () => {
             borderColor: "#65676B",
             color: "#65676B",
             backgroundColor: "#FFF",
-            // "&:active": {
-            //   backgroundColor: "#65676B",
-            //   borderColor: "#65676B",
-            // },
+            "&:hover": {
+              borderColor: "#65676B",
+            },
             "&:focus": {
               backgroundColor: "#65676B",
               borderColor: "#65676B",

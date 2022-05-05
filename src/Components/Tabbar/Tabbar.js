@@ -29,6 +29,8 @@ export const Tabbar = ({ arrayOfTabs = [] }) => {
                   display: "flex",
                   justifyContent: "center",
                   borderBottom: value === id ? "3px solid #22CBF4" : null,
+                  verticalAlign: "middle",
+                  textAlign: "center",
                 }}
               >
                 <Typography
