@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import SmartphoneRoundedIcon from "@mui/icons-material/SmartphoneRounded";
+import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import { ListItem } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
@@ -7,7 +7,7 @@ import * as React from "react";
 import { useAppSelector } from "../../store/hooks";
 import { GenericList } from "./GenericList";
 
-export default function ProductList({ list }) {
+export default function CompanyList({ list }) {
   list = [
     {
       brand: "Xiaomi",
@@ -45,12 +45,12 @@ export default function ProductList({ list }) {
 
   return (
     <GenericList
-      title={textContainer.listOfNewlyAddedProducts + ` (${list.length})`}
+      title={textContainer.listOfNewlyAddedCompanies + ` (${list.length})`}
     >
       {list.map((item, index) => (
         <React.Fragment key={index}>
           <ListItem sx={{ padding: 0 }}>
-            <SmartphoneRoundedIcon
+            <BusinessOutlinedIcon
               sx={{
                 marginRight: "17px",
                 fontSize: "40px",

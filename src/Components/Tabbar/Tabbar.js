@@ -20,7 +20,7 @@ export const Tabbar = ({ arrayOfTabs = [] }) => {
       >
         <Grid container spacing={0}>
           {arrayOfTabs.map((tab, id) => (
-            <React.Fragment>
+            <React.Fragment key={tab}>
               <Grid
                 item
                 onClick={() => {

@@ -40,6 +40,7 @@ import { Tabbar } from "../Components/Tabbar/Tabbar";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import React from "react";
 import { HowToWinDialog } from "../Components/Dialogs/HowToWinDialog";
+import CompanyList from "../Components/ProductList/CompanyList";
 const testComments = {
   a1: {
     likes: 20000000,
@@ -79,7 +80,10 @@ const ComponentsTest = (props) => {
       <br />
       <HowToWinDialog />
       <br />
-
+      <ProductList></ProductList>
+      <br />
+      <CompanyList />
+      <br />
       <FilterTabbar />
       <br />
       <Tabbar
