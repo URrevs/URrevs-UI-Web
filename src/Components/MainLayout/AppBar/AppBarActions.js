@@ -14,6 +14,7 @@ import { languageActions } from "../../../store/languageSlice";
 import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { uiActions } from "../../../store/uiSlice";
+import ROUTES_NAMES from "../../../RoutesNames";
 
 const circleWidth = 35;
 const circleHeight = 35;
@@ -53,7 +54,7 @@ export const AppBarActions = ({
   const isLoggedIn = user.isLoggedIn;
 
   const navigateToProfilePage = () => {
-    navigate(`/user-profile?uid=${user.uid}`);
+    navigate(`/${ROUTES_NAMES.USER_PROFILE}?uid=${user.uid}`);
   };
   const handleRegestrationOpen = () => {
     dispatch(uiActions.toggleRegistration());

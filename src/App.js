@@ -27,6 +27,7 @@ import {
   useGetCurrentUserProfileMutation,
 } from "../src/services/users";
 import { getAuth } from "firebase/auth";
+import ROUTES_NAMES from "./RoutesNames";
 
 function App() {
   console.log("app");
@@ -147,6 +148,7 @@ function App() {
       },
     },
   });
+
   const dispatch = useAppDispatch();
   const [getApiToken] = useAuthenticateMutation();
   const [getProfile] = useGetCurrentUserProfileMutation();
@@ -206,9 +208,9 @@ function App() {
                 <Grid item md={2} sm={0}></Grid>
                 <Grid item md={8} sm={12}>
                   <Routes>
-                    <Route path="/">
+                    <Route path={ROUTES_NAMES.HOME}>
                       <Route index element={<Reviews />} />
-                      <Route path="user-profile">
+                      <Route path={ROUTES_NAMES.USER_PROFILE}>
                         <Route index element={<UserProfilePage />} />
                         <Route
                           path="owned-phones"
@@ -216,20 +218,28 @@ function App() {
                         />
                       </Route>
                     </Route>
-                    {/* <Route path="/add-review" element={<AddReviewFormik />} />
-                    <Route path="/blog" element={<div>blog</div>} />
-                    <Route path="/about" element={<div>about</div>} />
+                    <Route path={ROUTES_NAMES.HOME}>
+                      <Route
+                        path={ROUTES_NAMES.ADD_REVIEW}
+                        element={<AddReviewFormik />}
+                      />
+                    </Route>
+                    <Route
+                      path={ROUTES_NAMES.LEADERBOARD}
+                      element={<div>leaderboard</div>}
+                    />
+                    <Route path={ROUTES_NAMES.MENU} element={<div>menu</div>} />
+                    <Route path={ROUTES_NAMES.MENU} element={<div>menu</div>} />
+                    <Route
+                      path={ROUTES_NAMES.PRODUCTS}
+                      element={<div>products</div>}
+                    />
+                    {/* testing routes */}
                     <Route path="/test" element={<AddReview />} />
                     <Route
                       path="/Components-test"
                       element={<ComponentsTest />}
                     />
-                    <Route path="/user-profile" element={<UserProfilePage />}>
-                      <Route
-                        path="owned-phones"
-                        element={<OwnedPhonesPage />}
-                      />
-                    </Route> */}
                   </Routes>
                 </Grid>
                 <Grid item md={2} sm={0}></Grid>

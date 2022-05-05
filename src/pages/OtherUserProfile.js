@@ -17,6 +17,7 @@ import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
 import { Link, Outlet } from "react-router-dom";
+import ROUTES_NAMES from "../RoutesNames";
 
 export default function OtherUserProfilePage({ uid }) {
   const theme = useTheme();
@@ -35,7 +36,7 @@ export default function OtherUserProfilePage({ uid }) {
   const listItem = (title, subTitle, icon) => {
     return (
       <Link
-        to={`/user-profile/${uid}/owned-phones`}
+        to={`/${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}/${uid}`}
         style={{ textDecoration: "none" }}
       >
         <ListItem disablePadding dense key={title}>

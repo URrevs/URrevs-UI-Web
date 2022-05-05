@@ -11,15 +11,16 @@ import * as React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../../store/hooks";
 import { MdHome } from "react-icons/md";
+import ROUTES_NAMES from "../../../RoutesNames";
 
 //TODO: when width is so low make height larger
 
 const map = {
-  "/products": 0,
-  "/add-review": 1,
-  "/": 2,
-  "/about": 3,
-  "/menu": 4,
+  [ROUTES_NAMES.PRODUCTS]: 0,
+  [ROUTES_NAMES.ADD_REVIEW]: 1,
+  [ROUTES_NAMES.HOME]: 2,
+  [ROUTES_NAMES.LEADERBOARD]: 3,
+  [ROUTES_NAMES.MENU]: 4,
 };
 
 export default function BottomNavBar() {
@@ -52,7 +53,7 @@ export default function BottomNavBar() {
       ),
       label: dictionary.categoryNavBarItem,
       itemValue: 0,
-      path: "/products",
+      path: ROUTES_NAMES.PRODUCTS,
     },
     {
       itemValue: 1,
@@ -65,7 +66,7 @@ export default function BottomNavBar() {
         />
       ),
       label: dictionary.AddNavBarItem,
-      path: "/add-review",
+      path: ROUTES_NAMES.ADD_REVIEW,
     },
     {
       icon: (
@@ -78,7 +79,7 @@ export default function BottomNavBar() {
       ),
       label: dictionary.homeNavBarItem,
       itemValue: 2,
-      path: "/",
+      path: ROUTES_NAMES.HOME,
     },
     {
       icon: (
@@ -91,7 +92,7 @@ export default function BottomNavBar() {
       ),
       label: dictionary.leaderboardNavBarItem,
       itemValue: 3,
-      path: "/about",
+      path: ROUTES_NAMES.LEADERBOARD,
     },
     {
       icon: (
@@ -104,7 +105,7 @@ export default function BottomNavBar() {
       ),
       label: dictionary.menuNavBarItem,
       itemValue: 4,
-      path: "/menu",
+      path: ROUTES_NAMES.MENU,
     },
   ];
 
