@@ -1,8 +1,10 @@
+import { useTheme } from "@emotion/react";
 import { Card, Divider, Grid, Typography } from "@mui/material";
 import React from "react";
 import { TABCARD_BORDER_RADIUS } from "../../constants";
 
 export const Tabbar = ({ arrayOfTabs = [] }) => {
+  const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const space = 12 / arrayOfTabs.length;
   return (
@@ -13,7 +15,7 @@ export const Tabbar = ({ arrayOfTabs = [] }) => {
           flexDirection: "row",
           backgroundColor: "#FFF", //Add theme
           borderRadius: `${TABCARD_BORDER_RADIUS}px`,
-          width: "100%",
+          minHeight: "35px",
         }}
       >
         <Grid container spacing={0}>
@@ -28,9 +30,8 @@ export const Tabbar = ({ arrayOfTabs = [] }) => {
                 sx={{
                   display: "flex",
                   justifyContent: "center",
+                  alignItems: "center",
                   borderBottom: value === id ? "3px solid #22CBF4" : null,
-                  verticalAlign: "middle",
-                  textAlign: "center",
                 }}
               >
                 <Typography
