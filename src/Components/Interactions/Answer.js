@@ -7,7 +7,14 @@ import { faUpLong } from "@fortawesome/free-solid-svg-icons";
 import { InteractionFooter } from "./InteractionFooter";
 import { useAppSelector } from "../../store/hooks";
 
-export const Answer = (props) => {
+export const Answer = ({
+  date,
+  likes,
+  text,
+  user,
+  subtitle,
+  admin = false,
+}) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const theme = useTheme();
@@ -19,7 +26,7 @@ export const Answer = (props) => {
     ? textContainer.acceptedAnswer
     : textContainer.acceptAnswer;
   const buttonName2 = textContainer.vote;
-  const buttonName = props.admin ? buttonName1 : buttonName2;
+  const buttonName = admin ? buttonName1 : buttonName2;
   const renderIcon = () => {
     return (
       <FontAwesomeIcon
@@ -31,7 +38,7 @@ export const Answer = (props) => {
   };
   return (
     <div style={{ display: "flex" }}>
-      {accepted && props.admin ? (
+      {accepted && admin ? (
         <CheckIcon
           sx={{
             fontSize: "40px",
@@ -42,14 +49,17 @@ export const Answer = (props) => {
       ) : null}
       <div>
         <InteractionBody
-          {...props}
+          user={user}
+          likes={likes}
+          date={date}
+          text={text}
           condition={accepted}
           onClickHandler={onClickHandler}
           buttonName={buttonName}
           renderIcon={renderIcon}
         >
           <InteractionFooter
-            date={props.date}
+            date={date}
             condition={accepted}
             onClickHandler={onClickHandler}
             reply={false}
