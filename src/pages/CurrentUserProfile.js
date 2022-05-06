@@ -1,23 +1,17 @@
+import { useTheme } from "@emotion/react";
+import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
+import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
+import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
+import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import { Avatar, Box, Typography } from "@mui/material";
+import List from "@mui/material/List";
 import React from "react";
 import StarWithCount from "../Components/Leaderboard/StarWithCount";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import { useAppSelector } from "../store/hooks";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-import InboxIcon from "@mui/icons-material/Inbox";
-import { useTheme } from "@emotion/react";
-import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
-import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
-import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
-import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
-import { Link, Outlet } from "react-router-dom";
+import ListItemNavigator from "../Components/Shared/ListItemNavigator";
 import ROUTES_NAMES from "../RoutesNames";
+import { useAppSelector } from "../store/hooks";
 
 export default function CurrentUserProfilePage({}) {
   const theme = useTheme();
@@ -65,35 +59,16 @@ export default function CurrentUserProfilePage({}) {
       subtitle: pageDictionry.helpOthers,
       to: "",
     },
-    {
-      title: pageDictionry.askedQuestions,
-      icon: <HelpCenterOutlinedIcon sx={{ fontSize: 40 }} />,
-      subtitle: pageDictionry.helpOthers,
-      to: "",
-    },
   ];
 
   const listItem = (title, subTitle, icon, to) => {
     return (
-      <Link to={to} style={{ textDecoration: "none" }}>
-        <ListItem disablePadding dense key={title}>
-          <ListItemButton
-            sx={{
-              "&:hover": {
-                backgroundColor: theme.palette.hover,
-              },
-            }}
-          >
-            <ListItemIcon>{icon}</ListItemIcon>
-            <ListItemText
-              primaryTypographyProps={{ ...theme.typography.S20W700C050505 }}
-              primary={title}
-              secondaryTypographyProps={{ ...theme.typography.S16W400C65676B }}
-              secondary={subTitle}
-            />
-          </ListItemButton>
-        </ListItem>
-      </Link>
+      <ListItemNavigator
+        title={title}
+        subTitle={subTitle}
+        icon={icon}
+        to={to}
+      />
     );
   };
 
@@ -139,7 +114,7 @@ export default function CurrentUserProfilePage({}) {
               </Typography>
               <div style={{ width: "12px" }}></div>
               <StarWithCount
-                value={40000}
+                value={profileData.points}
                 starSize={34}
                 textStyle="S20W400C65676B"
               />

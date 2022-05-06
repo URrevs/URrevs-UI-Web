@@ -19,6 +19,7 @@ import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
 import { Link, Outlet } from "react-router-dom";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetOtherUserProfileQuery } from "../services/users";
+import ListItemNavigator from "../Components/Shared/ListItemNavigator";
 
 export default function OtherUserProfilePage({ uid }) {
   const theme = useTheme();
@@ -59,25 +60,12 @@ export default function OtherUserProfilePage({ uid }) {
 
   const listItem = (title, subTitle, icon, to) => {
     return (
-      <Link to={to} style={{ textDecoration: "none" }}>
-        <ListItem disablePadding dense key={title}>
-          <ListItemButton
-            sx={{
-              "&:hover": {
-                backgroundColor: theme.palette.hover,
-              },
-            }}
-          >
-            <ListItemIcon>{icon}</ListItemIcon>
-            <ListItemText
-              primaryTypographyProps={{ ...theme.typography.S20W700C050505 }}
-              primary={title}
-              secondaryTypographyProps={{ ...theme.typography.S16W400C65676B }}
-              secondary={subTitle}
-            />
-          </ListItemButton>
-        </ListItem>
-      </Link>
+      <ListItemNavigator
+        title={title}
+        subTitle={subTitle}
+        icon={icon}
+        to={to}
+      />
     );
   };
 
@@ -123,7 +111,7 @@ export default function OtherUserProfilePage({ uid }) {
               </Typography>
               <div style={{ width: "12px" }}></div>
               <StarWithCount
-                value={40000}
+                value={profileData.points}
                 starSize={34}
                 textStyle="S20W400C65676B"
               />
