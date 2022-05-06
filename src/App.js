@@ -29,6 +29,7 @@ import { authActions } from "./store/authSlice";
 import { useAppDispatch } from "./store/hooks";
 import { fonts } from "./Styles/fonts";
 import { COLORS } from "./Styles/main_light_colors";
+import { AdminPanel } from "./pages/26_AdminPanel";
 
 function App() {
   console.log("app");
@@ -214,7 +215,7 @@ function App() {
                       <Route path={ROUTES_NAMES.MENU}>
                         <Route index element={<Menu />} />
                         <Route path={ROUTES_NAMES.ADMIN_PANEL}>
-                          <Route index element={<div>admin-panel</div>} />
+                          <Route index element={<AdminPanel />} />
                           <Route path={ROUTES_NAMES.UPDATE}>
                             <Route index element={<div>UPDATE</div>} />
                           </Route>
