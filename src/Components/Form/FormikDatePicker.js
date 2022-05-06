@@ -33,7 +33,7 @@ const FormikDatePicker = ({ label, fieldName, isRequired = true }) => {
                 if (newValue) sessionStorage.setItem(fieldName, newValue);
               }}
               open={openDate}
-              // onOpen={() => setOpenDate(true)}
+              onOpen={() => setOpenDate(true)}
               onClose={() => setOpenDate(false)}
               renderInput={(params) => {
                 params.InputProps = {
@@ -55,6 +55,13 @@ const FormikDatePicker = ({ label, fieldName, isRequired = true }) => {
                 };
                 return (
                   <TextField
+                    sx={{
+                      input: {
+                        "&::placeholder": {
+                          opacity: 1,
+                        },
+                      },
+                    }}
                     placeholder={label}
                     {...params}
                     error={meta.touched && meta.error && true}

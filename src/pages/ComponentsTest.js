@@ -33,7 +33,7 @@ import { DialogTemplate } from "../Components/Dialogs/DialogTemplate";
 import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
 import { DialogText } from "../Components/Dialogs/DialogText";
 import { PrizeDialog } from "../Components/Dialogs/PrizeDialog";
-import { CompareDialog } from "../Components/Dialogs/CompareDialog";
+import { CompareDialog } from "../Components/Dialogs/CompareDialog/CompareDialog";
 import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
 import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
 import { Tabbar } from "../Components/Tabbar/Tabbar";

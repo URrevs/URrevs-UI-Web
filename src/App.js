@@ -4,7 +4,7 @@ import {
   createTheme,
   CssBaseline,
   Grid,
-  useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   useAuthenticateMutation,
-  useGetCurrentUserProfileMutation
+  useGetCurrentUserProfileMutation,
 } from "../src/services/users";
 import "./App.css";
 import Layout from "./Components/MainLayout/Layout";
@@ -87,7 +87,7 @@ function App() {
       },
       searchBar: {
         searchBarColor: isDark ? "#3A3B3C" : COLORS.ce5e5e7,
-        searchIcon: isDark ? "#B0B3B8" : COLORS.c65676B,
+        searchIcon: isDark ? "#B0B3B8" : COLORS.c050505,
       },
       interactionCard: {
         backgroundColor: COLORS.cffffff,

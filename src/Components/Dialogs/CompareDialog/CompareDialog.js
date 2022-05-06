@@ -1,22 +1,12 @@
+import CompareIcon from "@mui/icons-material/Compare";
 import { Box, Typography } from "@mui/material";
 import React, { Fragment } from "react";
-import CompareIcon from "@mui/icons-material/Compare";
 import { useSelector } from "react-redux";
-import OrangeGradientButton from "../Buttons/OrangeGradientButton";
-import { SearchBar } from "../MainLayout/Search/SearchBar";
-import { MobileSearchBar } from "../MobileSearchBar";
-import { DialogTemplate } from "./DialogTemplate";
+import OrangeGradientButton from "../../Buttons/OrangeGradientButton";
+import { DialogTemplate } from "../DialogTemplate";
+import SearchComponent from "./SearchComponent";
 
 export const CompareDialog = ({ item }) => {
-  const [searchBarFocused, setSearchBarFocused] = React.useState(false);
-
-  const onSearchBarFocus = () => {
-    setSearchBarFocused(true);
-  };
-
-  const onSearchBarBlur = () => {
-    setSearchBarFocused(false);
-  };
   const textContainer = useSelector((state) => {
     return state.language.textContainer;
   });
@@ -30,9 +20,9 @@ export const CompareDialog = ({ item }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="S18W500C050505">{`قارن ${item} مع`}</Typography>
+          <Typography variant="S18W500C050505">{`${textContainer.compare} ${item} ${textContainer.withWord}`}</Typography>
           {/* PLACEHOLDER FOR ACTUAL SEARCHBAR  */}
-          <MobileSearchBar />
+          <SearchComponent label={textContainer.writeProductName} />
         </Box>
         <OrangeGradientButton color="red">
           <CompareIcon />

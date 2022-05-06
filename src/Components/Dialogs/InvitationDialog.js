@@ -19,7 +19,14 @@ export const InvitationDialog = ({ invitationCode = "UR1029" }) => {
   return (
     <React.Fragment>
       <DialogTemplate title={title}>
-        <Typography variant="S16W400C050505">{paragraph}</Typography>
+        <Typography
+          sx={{
+            whiteSpace: "pre-line",
+          }}
+          variant="S16W400C050505"
+        >
+          {paragraph}
+        </Typography>
         <Grid
           container
           spacing={2}

@@ -31,6 +31,7 @@ export const Tabbar = ({ arrayOfTabs = [] }) => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  textAlign: "center",
                   borderBottom: value === id ? "3px solid #22CBF4" : null,
                 }}
               >

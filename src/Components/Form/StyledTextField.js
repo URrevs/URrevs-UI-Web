@@ -13,6 +13,13 @@ export const StyledTextField = (props) => {
       <TextField
         variant="outlined"
         {...props}
+        sx={{
+          input: {
+            "&::placeholder": {
+              opacity: 1,
+            },
+          },
+        }}
         inputProps={{
           style: {
             fontWeight: 300,

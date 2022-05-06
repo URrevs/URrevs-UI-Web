@@ -7,7 +7,14 @@ export const HowToWinDialog = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
   return (
     <React.Fragment>
-      <DialogTemplate title={textContainer.howToWinPromptTitle}>
+      <DialogTemplate
+        title={textContainer.howToWinPromptTitle}
+        sx={
+          {
+            // paddingBottom:"16"
+          }
+        }
+      >
         <Typography
           variant="S16W500C050505"
           sx={{

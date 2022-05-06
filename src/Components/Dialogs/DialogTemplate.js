@@ -7,14 +7,14 @@ const PromptStyled = styled(
   Box,
   {}
 )(({ theme }) => ({
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "80%",
-  [theme.breakpoints.down("md")]: {
-    width: "calc(100% - 32px)",
-  },
+  // position: "absolute",
+  // top: "50%",
+  // left: "50%",
+  // transform: "translate(-50%, -50%)",
+  // width: "80%",
+  // [theme.breakpoints.down("md")]: {
+  //   width: "calc(100% - 32px)",
+  // },
   boxShadow: 24,
   padding: 16,
   borderRadius: 15,
@@ -37,7 +37,7 @@ export const DialogTemplate = ({ title, children, handleClose }) => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              paddingBottom: "16px",
+              paddingBottom: title === undefined ? 0 : "16px",
             }}
           >
             <Typography variant="S16W700C050505">{title}</Typography>

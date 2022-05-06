@@ -37,10 +37,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export const SearchBar = (props) => {
   const theme = useTheme();
 
-  return theme.isMobile ? (
-    <div style={{ width: "100%" }}>
-      {/* <SearchIcon /> */}
-    </div>
+  return false ? (
+    <div style={{ width: "100%" }}>{/* <SearchIcon /> */}</div>
   ) : (
     <div
       style={{

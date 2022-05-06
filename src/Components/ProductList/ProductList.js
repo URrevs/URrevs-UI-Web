@@ -5,6 +5,7 @@ import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import { useAppSelector } from "../../store/hooks";
+import ListItemNavigator from "../Shared/ListItemNavigator";
 import { GenericList } from "./GenericList";
 
 export default function ProductList({ list }) {
@@ -49,14 +50,22 @@ export default function ProductList({ list }) {
     >
       {list.map((item, index) => (
         <React.Fragment key={index}>
-          <ListItem sx={{ padding: 0 }}>
-            <SmartphoneRoundedIcon
-              sx={{
-                marginRight: "17px",
-                fontSize: "40px",
-                color: theme.palette.productList.mobileColor,
-              }}
-            />
+          <ListItemNavigator
+            title="Nokia 606"
+            subTitle={textContainer.smartphone}
+            icon={
+              <SmartphoneRoundedIcon
+                sx={{
+                  marginRight: "17px",
+                  fontSize: "40px",
+                  color: theme.palette.productList.mobileColor,
+                }}
+              />
+            }
+            to=""
+          />
+          {/* <ListItem sx={{ padding: 0 }}>
+           
             <ListItemText
               primaryTypographyProps={{
                 ...theme.typography.S20W700C050505,
@@ -68,7 +77,7 @@ export default function ProductList({ list }) {
               }}
               secondary={textContainer.smartphone}
             />
-          </ListItem>
+          </ListItem> */}
           <Divider></Divider>
         </React.Fragment>
       ))}

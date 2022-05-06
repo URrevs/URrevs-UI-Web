@@ -1,10 +1,12 @@
 import { useTheme } from "@emotion/react";
 import { Button, Card, Typography } from "@mui/material";
 import React from "react";
+import { useSelector } from "react-redux";
 import { FILTER_BUTTON_BORDER_RADIUS } from "../../constants";
 
 export const FilterTabbar = () => {
   const [value, setValue] = React.useState(0);
+  const textContainer = useSelector((state) => state.language.textContainer);
   const theme = useTheme();
   return (
     <React.Fragment>
@@ -52,7 +54,7 @@ export const FilterTabbar = () => {
           <Typography
             variant={value === 0 ? "S14W700CFFFFFF" : "S14W700C65676B"}
           >
-            الهاتف
+            {textContainer.phones}
           </Typography>
         </Button>
 
@@ -92,7 +94,7 @@ export const FilterTabbar = () => {
           <Typography
             variant={value === 1 ? "S14W700CFFFFFF" : "S14W700C65676B"}
           >
-            الشركات
+            {textContainer.companies}
           </Typography>
         </Button>
       </Card>
