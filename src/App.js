@@ -20,6 +20,7 @@ import RTL from "./Components/RTL";
 import AddReview from "./pages/AddReview";
 import AddReviewFormik from "./pages/AddReviewFormik";
 import ComponentsTest from "./pages/ComponentsTest";
+import Menu from "./pages/20_Menu";
 import OwnedPhonesPage from "./pages/OwnedPhones";
 import Profile from "./pages/Profile";
 import Reviews from "./pages/Reviews";
@@ -210,10 +211,19 @@ function App() {
                   <Routes>
                     <Route path={ROUTES_NAMES.HOME}>
                       <Route index element={<Reviews />} />
+                      <Route path={ROUTES_NAMES.MENU}>
+                        <Route index element={<Menu />} />
+                        <Route path={ROUTES_NAMES.ADMIN_PANEL}>
+                          <Route index element={<div>admin-panel</div>} />
+                          <Route path={ROUTES_NAMES.UPDATE}>
+                            <Route index element={<div>UPDATE</div>} />
+                          </Route>
+                        </Route>
+                      </Route>
                       <Route path={ROUTES_NAMES.USER_PROFILE}>
                         <Route index element={<Profile />} />
                         <Route
-                          path="owned-phones"
+                          path={ROUTES_NAMES.OWNED_PHONES}
                           element={<OwnedPhonesPage />}
                         />
                       </Route>
@@ -228,8 +238,7 @@ function App() {
                       path={ROUTES_NAMES.LEADERBOARD}
                       element={<div>leaderboard</div>}
                     />
-                    <Route path={ROUTES_NAMES.MENU} element={<div>menu</div>} />
-                    <Route path={ROUTES_NAMES.MENU} element={<div>menu</div>} />
+
                     <Route
                       path={ROUTES_NAMES.PRODUCTS}
                       element={<div>products</div>}
