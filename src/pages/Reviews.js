@@ -43,7 +43,7 @@ function Reviews() {
   };
 
   useEffect(() => {
-    fetch('')
+    fetch("");
     const scrollIndex = currentIndex === 0 ? 0 : currentIndex + 64;
 
     setTimeout(() => window.scrollTo(0, scrollIndex), 500);

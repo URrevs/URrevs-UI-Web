@@ -241,4 +241,9 @@ export const fonts = {
     fontSize: 24,
     color: "#050505",
   },
+  S28W800C050505: {
+    fontWeight: 800,
+    fontSize: 28,
+    color: "#050505",
+  },
 };

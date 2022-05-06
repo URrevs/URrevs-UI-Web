@@ -18,12 +18,17 @@ import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
 import { Link, Outlet } from "react-router-dom";
 import ROUTES_NAMES from "../RoutesNames";
+import { useGetOtherUserProfileQuery } from "../services/users";
 
 export default function OtherUserProfilePage({ uid }) {
   const theme = useTheme();
 
-  const currentUserProfile = useAppSelector((state) => state.auth);
-  const profileData = currentUserProfile;
+  const {
+    isLoading,
+    isError,
+    isFetching,
+    data: profileData,
+  } = useGetOtherUserProfileQuery(uid);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionry = {
@@ -33,12 +38,28 @@ export default function OtherUserProfilePage({ uid }) {
     askedQuestions: textContainer.askedQuestions,
   };
 
-  const listItem = (title, subTitle, icon) => {
+  const listItems = [
+    {
+      title: pageDictionry.myReviews,
+      icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
+      to: "",
+    },
+    {
+      title: pageDictionry.ownedProducts,
+      icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
+      to: `${ROUTES_NAMES.OWNED_PHONES}?uid=${uid}`,
+    },
+    {
+      title: pageDictionry.askedQuestions,
+      icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
+      subtitle: pageDictionry.helpOthers,
+      to: "",
+    },
+  ];
+
+  const listItem = (title, subTitle, icon, to) => {
     return (
-      <Link
-        to={`/${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}/${uid}`}
-        style={{ textDecoration: "none" }}
-      >
+      <Link to={to} style={{ textDecoration: "none" }}>
         <ListItem disablePadding dense key={title}>
           <ListItemButton
             sx={{
@@ -60,42 +81,6 @@ export default function OtherUserProfilePage({ uid }) {
     );
   };
 
-  const listItems = [
-    {
-      title: pageDictionry.myReviews,
-      icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: "",
-    },
-    {
-      title: pageDictionry.myQuestions,
-      icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: "",
-    },
-    {
-      title: pageDictionry.ownedProducts,
-      icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: "/owned-phones",
-    },
-    {
-      title: pageDictionry.referalCode,
-      icon: <GroupsOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: "",
-      subtitle: pageDictionry.inviteFriends,
-    },
-    {
-      title: pageDictionry.askedQuestions,
-      icon: <HelpCenterOutlinedIcon sx={{ fontSize: 40 }} />,
-      subtitle: pageDictionry.helpOthers,
-      to: "",
-    },
-    {
-      title: pageDictionry.askedQuestions,
-      icon: <HelpCenterOutlinedIcon sx={{ fontSize: 40 }} />,
-      subtitle: pageDictionry.helpOthers,
-      to: "",
-    },
-  ];
-
   const userPhoto = () => {
     return (
       <Avatar
@@ -111,8 +96,8 @@ export default function OtherUserProfilePage({ uid }) {
   };
 
   return (
-    <div>
-      <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true}>
+    <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true}>
+      {!isLoading && (
         <div
           style={{
             paddingTop: 15,
@@ -148,12 +133,12 @@ export default function OtherUserProfilePage({ uid }) {
           <div>
             <List style={{ padding: "0 18px" }}>
               {listItems.map((item, index) => {
-                return listItem(item.title, item.subtitle, item.icon);
+                return listItem(item.title, item.subtitle, item.icon, item.to);
               })}
             </List>
           </div>
         </div>
-      </CustomAppBar>
-    </div>
+      )}
+    </CustomAppBar>
   );
 }

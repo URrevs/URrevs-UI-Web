@@ -4,11 +4,13 @@ import {
   Backdrop,
   Box,
   Button,
+  CircularProgress,
   Fade,
   List,
   ListItem,
   Modal,
   styled,
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { logout, signIn } from "../Authentication/auth";
@@ -22,6 +24,7 @@ import {
 import { authActions } from "../store/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { uiActions } from "../store/uiSlice";
+import { DialogTemplate } from "../Components/Dialogs/DialogTemplate";
 
 const ModalBox = styled(
   Box,
@@ -46,6 +49,7 @@ const Registeration = ({}) => {
 
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   const openRegistration = useAppSelector((state) => state.ui.registration);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [signingError, setSigningError] = useState(null);
   const [signOutError, setSignOutError] = useState(null);
@@ -63,6 +67,8 @@ const Registeration = ({}) => {
 
     // auth api user
     try {
+      setIsLoading(true);
+
       const { token: apiToken } = await getApiToken(user.accessToken).unwrap();
       const userProfile = await getProfile(apiToken).unwrap();
 
@@ -80,9 +86,10 @@ const Registeration = ({}) => {
           points: userProfile.points,
         })
       );
-
+      setIsLoading(false);
       handleRegistrationClose();
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -142,7 +149,7 @@ const Registeration = ({}) => {
     <Modal
       aria-labelledby="register"
       aria-describedby="urrevs registeration"
-      open={openRegistration}
+      open={isLoading ? true : openRegistration}
       onClose={handleRegistrationClose}
       closeAfterTransition
       BackdropComponent={Backdrop}
@@ -151,27 +158,40 @@ const Registeration = ({}) => {
       }}
       dir={theme.direction}
     >
-      <Fade in={openRegistration}>
-        <ModalBox>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            {!isLoggedIn && (
-              <List>
-                <ListItem>
-                  <GoogleButton onClick={() => signInHandler("Google")} />
-                </ListItem>
-                <ListItem>
-                  <FacebookButton onClick={() => signInHandler("Facebook")} />
-                </ListItem>
-              </List>
-            )}
-            {isLoggedIn && <Button onClick={() => signout()}>Logout</Button>}
-            {isLoggedIn && (
-              <Button onClick={() => logOutFromAllDevices()}>
-                Logout from all
-              </Button>
-            )}
-          </div>
-        </ModalBox>
+      <Fade in={isLoading ? true : openRegistration}>
+        <div>
+          <DialogTemplate handleClose={() => handleRegistrationClose()}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              {isLoading && <CircularProgress />}
+              {!isLoggedIn && !isLoading && (
+                <div>
+                  <Typography
+                    style={{ display: "flex", justifyContent: "center" }}
+                    variant="S20W700C050505"
+                  >
+                    انضم الى يورفز
+                  </Typography>
+                  <List>
+                    <ListItem>
+                      <GoogleButton onClick={() => signInHandler("Google")} />
+                    </ListItem>
+                    <ListItem>
+                      <FacebookButton
+                        onClick={() => signInHandler("Facebook")}
+                      />
+                    </ListItem>
+                  </List>
+                </div>
+              )}
+              {isLoggedIn && <Button onClick={() => signout()}>Logout</Button>}
+              {isLoggedIn && (
+                <Button onClick={() => logOutFromAllDevices()}>
+                  Logout from all
+                </Button>
+              )}
+            </div>
+          </DialogTemplate>
+        </div>
       </Fade>
     </Modal>
   );

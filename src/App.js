@@ -4,30 +4,30 @@ import {
   createTheme,
   CssBaseline,
   Grid,
-  useMediaQuery,
+  useMediaQuery
 } from "@mui/material";
+import { getAuth } from "firebase/auth";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  useAuthenticateMutation,
+  useGetCurrentUserProfileMutation
+} from "../src/services/users";
 import "./App.css";
 import Layout from "./Components/MainLayout/Layout";
 import RTL from "./Components/RTL";
 import AddReview from "./pages/AddReview";
 import AddReviewFormik from "./pages/AddReviewFormik";
-import Reviews from "./pages/Reviews";
-import { COLORS } from "./Styles/main_light_colors";
-import { fonts } from "./Styles/fonts";
 import ComponentsTest from "./pages/ComponentsTest";
-import UserProfilePage from "./pages/UserProfile";
 import OwnedPhonesPage from "./pages/OwnedPhones";
-import { useEffect } from "react";
-import { useAppDispatch } from "./store/hooks";
-import { authActions } from "./store/authSlice";
-import {
-  useAuthenticateMutation,
-  useGetCurrentUserProfileMutation,
-} from "../src/services/users";
-import { getAuth } from "firebase/auth";
+import Profile from "./pages/Profile";
+import Reviews from "./pages/Reviews";
 import ROUTES_NAMES from "./RoutesNames";
+import { authActions } from "./store/authSlice";
+import { useAppDispatch } from "./store/hooks";
+import { fonts } from "./Styles/fonts";
+import { COLORS } from "./Styles/main_light_colors";
 
 function App() {
   console.log("app");
@@ -211,7 +211,7 @@ function App() {
                     <Route path={ROUTES_NAMES.HOME}>
                       <Route index element={<Reviews />} />
                       <Route path={ROUTES_NAMES.USER_PROFILE}>
-                        <Route index element={<UserProfilePage />} />
+                        <Route index element={<Profile />} />
                         <Route
                           path="owned-phones"
                           element={<OwnedPhonesPage />}

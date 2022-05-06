@@ -17,8 +17,9 @@ import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
 import { Link, Outlet } from "react-router-dom";
+import ROUTES_NAMES from "../RoutesNames";
 
-export default function UserProfilePage({}) {
+export default function CurrentUserProfilePage({}) {
   const theme = useTheme();
 
   const currentUserProfile = useAppSelector((state) => state.auth);
@@ -50,7 +51,7 @@ export default function UserProfilePage({}) {
     {
       title: pageDictionry.ownedProducts,
       icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `owned-phones?uid=${profileData.uid}`,
+      to: `${ROUTES_NAMES.OWNED_PHONES}?uid=${profileData.uid}`,
     },
     {
       title: pageDictionry.referalCode,

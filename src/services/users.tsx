@@ -38,11 +38,14 @@ export const usersApi = createApi({
         return {
           url: "/profile",
           method: "GET",
-          headers: {
-            Authorization: `bearer ${token}`,
-          },
         };
       },
+      transformResponse: (response: { user: APIUser }) => {
+        return new User(response.user);
+      },
+    }),
+    getOtherUserProfile: builder.query<User, { uid: string }>({
+      query: (uid) => `/${uid}/profile`,
       transformResponse: (response: { user: APIUser }) => {
         return new User(response.user);
       },
@@ -55,8 +58,25 @@ export const usersApi = createApi({
         };
       },
     }),
-    getMyOwnedPhones: builder.query<APIOwnedPhone, number>({
-      query: (round) => `/phones?round=${round}`,
+    getMyOwnedPhones: builder.mutation<APIOwnedPhone, number>({
+      query: (round) => {
+        return {
+          url: `/phones?round=${round}`,
+          method: "GET",
+        };
+      },
+    }),
+    getOthersOwnedPhones: builder.mutation<
+      APIOwnedPhone,
+      { round: number; uid: string }
+    >({
+      query: (arg) => {
+        const { round, uid } = arg;
+        return {
+          url: `/${uid}/phones?round=${round}`,
+          method: "GET",
+        };
+      },
     }),
   }),
 });
@@ -65,5 +85,7 @@ export const {
   useAuthenticateMutation,
   useGetCurrentUserProfileMutation,
   useLogoutFromAllDevicesMutation,
-  useGetMyOwnedPhonesQuery,
+  useGetMyOwnedPhonesMutation,
+  useGetOthersOwnedPhonesMutation,
+  useGetOtherUserProfileQuery,
 } = usersApi;

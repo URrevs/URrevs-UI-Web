@@ -4,14 +4,24 @@ import { Box, Card, IconButton, styled, Typography } from "@mui/material";
 import React from "react";
 
 const PromptStyled = styled(
-  Card,
+  Box,
   {}
-)((theme) => ({
-  borderRadius: "12px",
-  padding: "20px 20px",
+)(({ theme }) => ({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "80%",
+  [theme.breakpoints.down("md")]: {
+    width: "calc(100% - 32px)",
+  },
+  boxShadow: 24,
+  padding: 16,
+  borderRadius: 15,
+  background: theme.palette.modalColor,
 }));
 
-export const DialogTemplate = ({ title, children }) => {
+export const DialogTemplate = ({ title, children, handleClose }) => {
   return (
     <React.Fragment>
       <PromptStyled elevation={3}>
@@ -39,6 +49,7 @@ export const DialogTemplate = ({ title, children }) => {
                 margin: 0,
                 backgroundColor: "#E8E8E8",
               }}
+              onClick={handleClose}
             >
               <CloseIcon htmlColor="#000" fontSize="medium" />
             </IconButton>
