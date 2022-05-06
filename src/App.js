@@ -30,6 +30,7 @@ import { useAppDispatch } from "./store/hooks";
 import { fonts } from "./Styles/fonts";
 import { COLORS } from "./Styles/main_light_colors";
 import { AdminPanel } from "./pages/26_AdminPanel";
+import { UpdateProducts } from "./pages/29_UpdateProducts";
 
 function App() {
   console.log("app");
@@ -217,7 +218,7 @@ function App() {
                         <Route path={ROUTES_NAMES.ADMIN_PANEL}>
                           <Route index element={<AdminPanel />} />
                           <Route path={ROUTES_NAMES.UPDATE}>
-                            <Route index element={<div>UPDATE</div>} />
+                            <Route index element={<UpdateProducts />} />
                           </Route>
                         </Route>
                       </Route>

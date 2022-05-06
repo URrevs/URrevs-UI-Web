@@ -13,7 +13,7 @@ import { CARD_BORDER_RADIUS } from "../../constants";
 
 export const GenericList = ({ title, children }) => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const handleClick = () => {
     setOpen(!open);
   };
@@ -40,7 +40,11 @@ export const GenericList = ({ title, children }) => {
               }}
               primary={title}
             />
-            {open ? <ArrowDropUpRoundedIcon /> : <ArrowDropDownRoundedIcon />}
+            {open ? (
+              <ArrowDropUpRoundedIcon sx={{ fontSize: "32px" }} />
+            ) : (
+              <ArrowDropDownRoundedIcon sx={{ fontSize: "32px" }} />
+            )}
           </ListItemButton>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <List
