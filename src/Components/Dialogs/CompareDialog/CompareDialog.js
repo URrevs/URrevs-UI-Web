@@ -18,6 +18,7 @@ export const CompareDialog = ({ item }) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            marginBottom: "94px",
           }}
         >
           <Typography variant="S18W500C050505">{`${textContainer.compare} ${item} ${textContainer.withWord}`}</Typography>

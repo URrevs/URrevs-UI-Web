@@ -81,7 +81,7 @@ export const CustomAppBar = ({
                 <img
                   width={logoWidth}
                   height={logoHeight}
-                  alr="URrevs"
+                  alt="URrevs"
                   src="./images/logo.png"
                 />
               )}

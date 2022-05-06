@@ -153,6 +153,11 @@ export const fonts = {
     fontSize: 18,
     color: "#FFFFFF",
   },
+  S18W700C000000: {
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#000",
+  },
   S18W800C050505: {
     fontWeight: 800,
     fontSize: 18,

@@ -20,6 +20,7 @@ import RTL from "./Components/RTL";
 import AddReview from "./pages/AddReview";
 import AddReviewFormik from "./pages/AddReviewFormik";
 import ComponentsTest from "./pages/ComponentsTest";
+import Menu from "./pages/20_Menu";
 import OwnedPhonesPage from "./pages/OwnedPhones";
 import Profile from "./pages/Profile";
 import Reviews from "./pages/2_HomePageScrolling";
@@ -28,6 +29,8 @@ import { authActions } from "./store/authSlice";
 import { useAppDispatch } from "./store/hooks";
 import { fonts } from "./Styles/fonts";
 import { COLORS } from "./Styles/main_light_colors";
+import { AdminPanel } from "./pages/26_AdminPanel";
+import { UpdateProducts } from "./pages/29_UpdateProducts";
 
 function App() {
   console.log("app");
@@ -117,7 +120,7 @@ function App() {
         unselectedTap: isDark ? "#606266" : COLORS.c606266,
       },
       textField: {
-        inputFieldBackground: isDark ? "#18191A" : COLORS.cE3E3E3,
+        inputFieldBackground: isDark ? "#18191A" : COLORS.cf9f9f9,
         inputFieldText: isDark ? "#18191A" : COLORS.c050505,
         borderColor: isDark ? "#18191A" : COLORS.c606266,
       },
@@ -154,29 +157,42 @@ function App() {
   const [getProfile] = useGetCurrentUserProfileMutation();
 
   useEffect(() => {
+    let userData, apiToken, isAdmin;
     const signIn = async (user) => {
-      const { token: apiToken } = await getApiToken(user.accessToken).unwrap();
-      dispatch(
-        authActions.login({
-          apiToken: apiToken,
-        })
-      );
-      const userProfile = await getProfile(apiToken).unwrap();
+      try {
+        userData = await getApiToken(user.accessToken).unwrap();
+        apiToken = userData.token;
+        isAdmin = userData.admin;
+        dispatch(
+          authActions.login({
+            apiToken: apiToken,
+            isAdmin: isAdmin,
+          })
+        );
+      } catch (e) {
+        console.log(e);
+      }
 
-      dispatch(
-        authActions.login({
-          isLoggedIn: true,
-          uid: userProfile.uid,
-          refCode: userProfile.refCode,
-          photo: userProfile.photo,
-          apiToken: apiToken,
-          name: userProfile.name,
-          accessToken: user.accessToken,
-          refreshToken: user.refreshToken,
-          email: user.email,
-          points: userProfile.points,
-        })
-      );
+      try {
+        const userProfile = await getProfile(apiToken).unwrap();
+
+        dispatch(
+          authActions.login({
+            isLoggedIn: true,
+            uid: userProfile.uid,
+            refCode: userProfile.refCode,
+            photo: userProfile.photo,
+            apiToken: apiToken,
+            name: userProfile.name,
+            accessToken: user.accessToken,
+            refreshToken: user.refreshToken,
+            email: user.email,
+            points: userProfile.points,
+          })
+        );
+      } catch (e) {
+        console.log(e);
+      }
     };
 
     // this may be checked if token still valid
@@ -210,6 +226,15 @@ function App() {
                   <Routes>
                     <Route path={ROUTES_NAMES.HOME}>
                       <Route index element={<Reviews />} />
+                      <Route path={ROUTES_NAMES.MENU}>
+                        <Route index element={<Menu />} />
+                        <Route path={ROUTES_NAMES.ADMIN_PANEL}>
+                          <Route index element={<AdminPanel />} />
+                          <Route path={ROUTES_NAMES.UPDATE}>
+                            <Route index element={<UpdateProducts />} />
+                          </Route>
+                        </Route>
+                      </Route>
                       <Route path={ROUTES_NAMES.USER_PROFILE}>
                         <Route index element={<Profile />} />
                         <Route
@@ -229,15 +254,15 @@ function App() {
                       element={<div>leaderboard</div>}
                     />
                     <Route path={ROUTES_NAMES.MENU}>
-                      <Route index element={<div>menu</div>} />
-                      <Route path={ROUTES_NAMES.ADMIN_PANEL}>
-                        <Route index element={<div>admin panel</div>} />
-                        <Route
-                          path={ROUTES_NAMES.UPDATE}
-                          element={<div>update</div>}
-                        />
+                      <Route index element={<Menu />} />
+                    </Route>
+                    <Route path={ROUTES_NAMES.ADMIN_PANEL}>
+                      <Route index element={<AdminPanel />} />
+                      <Route path={ROUTES_NAMES.UPDATE}>
+                        <Route index element={<UpdateProducts />} />
                       </Route>
                     </Route>
+
                     <Route
                       path={ROUTES_NAMES.PRODUCTS}
                       element={<div>products</div>}

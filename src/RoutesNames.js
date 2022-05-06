@@ -9,7 +9,8 @@ const ROUTES_NAMES = {
   USER_PROFILE: "user-profile",
   OWNED_PHONES: "owned-phones",
   ADMIN_PANEL: "admin-panel",
-  // level 3
+  //level 3
+  // ADD_COMPETITION: "add-competition",
   UPDATE: "update",
 };
 

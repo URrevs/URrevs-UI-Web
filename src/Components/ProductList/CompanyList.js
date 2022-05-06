@@ -1,46 +1,12 @@
 import { useTheme } from "@emotion/react";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
-import { ListItem } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import { useAppSelector } from "../../store/hooks";
 import ListItemNavigator from "../Shared/ListItemNavigator";
 import { GenericList } from "./GenericList";
 
-export default function CompanyList({ list }) {
-  list = [
-    {
-      brand: "Xiaomi",
-      product: "",
-      type: "smart_phone",
-    },
-    {
-      brand: "Xiaomi",
-      product: "",
-      type: "smart_phone",
-    },
-    {
-      brand: "Xiaomi",
-      product: "",
-      type: "smart_phone",
-    },
-    {
-      brand: "Xiaomi",
-      product: "",
-      type: "smart_phone",
-    },
-    {
-      brand: "Xiaomi",
-      product: "",
-      type: "smart_phone",
-    },
-    {
-      brand: "Xiaomi",
-      product: "",
-      type: "smart_phone",
-    },
-  ];
+export default function CompanyList({ list = [] }) {
   const theme = useTheme();
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -51,8 +17,8 @@ export default function CompanyList({ list }) {
       {list.map((item, index) => (
         <React.Fragment key={index}>
           <ListItemNavigator
-            title="Nokia 606"
-            subTitle={textContainer.smartphone}
+            title={item}
+            subTitle={textContainer.company}
             icon={
               <BusinessOutlinedIcon
                 sx={{

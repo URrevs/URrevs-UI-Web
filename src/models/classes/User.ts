@@ -11,6 +11,7 @@ export default class User {
   refreshToken: string = "";
   email: string = "";
   points: number = 0;
+  isAdmin: boolean = false;
 
   constructor(data: APIUser) {
     this.uid = data._id;

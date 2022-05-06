@@ -26,7 +26,8 @@ export const FilterTabbar = () => {
                 ? theme.palette.filterTabbar.borderColor
                 : theme.palette.filterTabbar.buttonBg,
             borderRadius: FILTER_BUTTON_BORDER_RADIUS,
-            padding: "3px 0px",
+            textTransform: "none",
+            padding: "3px 3px",
             mr: "20px",
             "&:active": {
               backgroundColor:
@@ -61,12 +62,13 @@ export const FilterTabbar = () => {
         <Button
           sx={{
             border: "0.5px solid #606266",
+            textTransform: "none",
             backgroundColor:
               value === 1
                 ? theme.palette.filterTabbar.buttonBgActive
                 : theme.palette.filterTabbar.buttonBg,
             borderRadius: "26px",
-            padding: "3px 0px",
+            padding: "3px 3px",
             mr: "20px",
             "&:active": {
               backgroundColor:

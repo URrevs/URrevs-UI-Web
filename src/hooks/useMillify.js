@@ -1,7 +1,7 @@
 import { useAppSelector } from "../store/hooks";
 import millify from "millify";
 
-export const useConvertNumberToHumanLanguage = (number) => {
+export const useConvertNumberToHumanLanguage = (number = 0) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const units = [
