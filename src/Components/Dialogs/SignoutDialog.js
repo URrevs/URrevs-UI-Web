@@ -54,6 +54,7 @@ export const SignoutDialog = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "flex-end",
+            paddingBottom: "12px",
           }}
         >
           <BasicButton>
@@ -67,20 +68,6 @@ export const SignoutDialog = () => {
             </Typography>
           </BasicButton>
         </Box>
-        {/* <Grid container>
-          <Grid item xs={6}></Grid>
-          <Grid
-            item
-            xs={6}
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-            }}
-          >
-            <Button>{textContainer.cancel}</Button>
-            <Button>{textContainer.signout}</Button>
-          </Grid>
-        </Grid> */}
       </DialogTemplate>
     </React.Fragment>
   );

@@ -120,7 +120,7 @@ function App() {
         unselectedTap: isDark ? "#606266" : COLORS.c606266,
       },
       textField: {
-        inputFieldBackground: isDark ? "#18191A" : COLORS.cE3E3E3,
+        inputFieldBackground: isDark ? "#18191A" : COLORS.cf9f9f9,
         inputFieldText: isDark ? "#18191A" : COLORS.c050505,
         borderColor: isDark ? "#18191A" : COLORS.c606266,
       },

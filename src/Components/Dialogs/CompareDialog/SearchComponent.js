@@ -50,7 +50,7 @@ export default function SearchComponent({ label }) {
         id="free-solo-demo"
         freeSolo
         sx={{
-          height: "46px",
+          filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.1))",
         }}
         disableClearable
         options={top100Films.map((option) => option.title)}
@@ -58,7 +58,6 @@ export default function SearchComponent({ label }) {
           <TextField
             {...params}
             sx={{
-              height: "46px",
               input: {
                 "&::placeholder": {
                   opacity: 1,
@@ -81,13 +80,15 @@ export default function SearchComponent({ label }) {
                 </InputAdornment>
               ),
               style: {
+                height: "50px",
                 fontWeight: 500,
                 fontSize: 18,
-
+                alignContent: "center",
                 color: theme.palette.textField.inputFieldText,
                 background: theme.palette.textField.inputFieldBackground,
                 borderRadius: 90,
-                filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.1))",
+                border: `0.8px solid ${theme.palette.textField.borderColor} `,
+                //
                 // borderRadius: TEXT_FIELD_BORDER_RADIUS,
                 // border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,
               },
