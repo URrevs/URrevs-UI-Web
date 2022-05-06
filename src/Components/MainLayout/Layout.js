@@ -14,7 +14,7 @@ import { SearchBar } from "./Search/SearchBar";
 
 import { drawerWidth } from "./Drawer/Drawer";
 import { useAppSelector } from "../../store/hooks";
-import Registeration from "../../pages/Registeration";
+import Registeration from "../../pages/1_Authentication";
 import BottomNavBar from "./BottomNavBar/BottomNavBar";
 import { CustomAppBar } from "./AppBar/CustomAppBar";
 

@@ -22,7 +22,7 @@ import AddReviewFormik from "./pages/AddReviewFormik";
 import ComponentsTest from "./pages/ComponentsTest";
 import OwnedPhonesPage from "./pages/OwnedPhones";
 import Profile from "./pages/Profile";
-import Reviews from "./pages/Reviews";
+import Reviews from "./pages/2_HomePageScrolling";
 import ROUTES_NAMES from "./RoutesNames";
 import { authActions } from "./store/authSlice";
 import { useAppDispatch } from "./store/hooks";
@@ -213,7 +213,7 @@ function App() {
                       <Route path={ROUTES_NAMES.USER_PROFILE}>
                         <Route index element={<Profile />} />
                         <Route
-                          path="owned-phones"
+                          path={ROUTES_NAMES.OWNED_PHONES}
                           element={<OwnedPhonesPage />}
                         />
                       </Route>
@@ -228,8 +228,16 @@ function App() {
                       path={ROUTES_NAMES.LEADERBOARD}
                       element={<div>leaderboard</div>}
                     />
-                    <Route path={ROUTES_NAMES.MENU} element={<div>menu</div>} />
-                    <Route path={ROUTES_NAMES.MENU} element={<div>menu</div>} />
+                    <Route path={ROUTES_NAMES.MENU}>
+                      <Route index element={<div>menu</div>} />
+                      <Route path={ROUTES_NAMES.ADMIN_PANEL}>
+                        <Route index element={<div>admin panel</div>} />
+                        <Route
+                          path={ROUTES_NAMES.UPDATE}
+                          element={<div>update</div>}
+                        />
+                      </Route>
+                    </Route>
                     <Route
                       path={ROUTES_NAMES.PRODUCTS}
                       element={<div>products</div>}
