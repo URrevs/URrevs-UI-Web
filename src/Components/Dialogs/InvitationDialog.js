@@ -3,6 +3,7 @@ import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import { Box, Grid, TextField, Typography } from "@mui/material";
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   TEXT_FIELD_BORDER_RADIUS,
   TEXT_FIELD_BORDER_THICKNESS,
@@ -11,10 +12,10 @@ import OrangeGradientButton from "../Buttons/OrangeGradientButton";
 import { DialogTemplate } from "./DialogTemplate";
 
 export const InvitationDialog = ({ invitationCode = "UR1029" }) => {
-  const paragraph =
-    "عند قيام صديقك بنشر مراجعات علي منتجاته،\n سوف تحصل انت وصديقك علي نقاط المساعدة.";
-  const title = "كود الدعوة الخاص بك:";
-  const shareCode = "مشاركة رابط الدعوة";
+  const textContainer = useSelector((state) => state.language.textContainer);
+  const paragraph = textContainer.reviewEncouragement;
+  const title = `${textContainer.yourInvitationCode}:`;
+  const shareCode = textContainer.shareInvitationLink;
   const theme = useTheme();
   return (
     <React.Fragment>

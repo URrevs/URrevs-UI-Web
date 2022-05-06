@@ -49,15 +49,21 @@ export default function SearchComponent({ label }) {
       <Autocomplete
         id="free-solo-demo"
         freeSolo
+        sx={{
+          height: "46px",
+        }}
         disableClearable
         options={top100Films.map((option) => option.title)}
         renderInput={(params) => (
           <TextField
             {...params}
             sx={{
+              height: "46px",
               input: {
                 "&::placeholder": {
                   opacity: 1,
+                  fontWeight: 300,
+                  fontSize: 16,
                 },
               },
             }}
@@ -75,8 +81,9 @@ export default function SearchComponent({ label }) {
                 </InputAdornment>
               ),
               style: {
-                fontWeight: 300,
-                fontSize: 16,
+                fontWeight: 500,
+                fontSize: 18,
+
                 color: theme.palette.textField.inputFieldText,
                 background: theme.palette.textField.inputFieldBackground,
                 borderRadius: 90,
