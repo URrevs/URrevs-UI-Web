@@ -20,14 +20,16 @@ import { Link, Outlet } from "react-router-dom";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetOtherUserProfileQuery } from "../services/users";
 import ListItemNavigator from "../Components/Shared/ListItemNavigator";
+import ErrorScreen from "./ErrorScreen";
 
 export default function OtherUserProfilePage({ uid }) {
   const theme = useTheme();
 
   const {
     isLoading,
-    isError,
     isFetching,
+    isError,
+    error,
     data: profileData,
   } = useGetOtherUserProfileQuery(uid);
 
@@ -85,7 +87,9 @@ export default function OtherUserProfilePage({ uid }) {
 
   return (
     <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true}>
-      {!isLoading && (
+      {isError ? (
+        <ErrorScreen>error</ErrorScreen>
+      ) : !isLoading ? (
         <div
           style={{
             paddingTop: 15,
@@ -119,13 +123,15 @@ export default function OtherUserProfilePage({ uid }) {
             <div style={{ height: 20 }}></div>
           </div>
           <div>
-            <List style={{ padding: "0 18px" }}>
+            <List>
               {listItems.map((item, index) => {
                 return listItem(item.title, item.subtitle, item.icon, item.to);
               })}
             </List>
           </div>
         </div>
+      ) : (
+        <div>Loading...</div>
       )}
     </CustomAppBar>
   );

@@ -122,7 +122,7 @@ export default function CurrentUserProfilePage({}) {
             <div style={{ height: 20 }}></div>
           </div>
           <div>
-            <List style={{ padding: "0 18px" }}>
+            <List>
               {listItems.map((item, index) => {
                 return listItem(item.title, item.subtitle, item.icon, item.to);
               })}
