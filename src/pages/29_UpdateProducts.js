@@ -9,8 +9,9 @@ export const UpdateProducts = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const pageDictionry = {
     updateProductsList: textContainer.updateProductsList,
-    lastUpdate: "اخر تحديث تم يدوياً في 20 فبراير 2022",
+    lastUpdate: "اخر تحديث تم يدوياً/ذاتياً في (تاريخ)",
     completeSuccess: "اكتمل بنجاح",
+    updateFailed: "فشل التحديث",
   };
   return (
     <CustomAppBar
