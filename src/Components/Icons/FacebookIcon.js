@@ -1,5 +1,5 @@
 const FacebookIcon = () => {
-  return <img src="./images/facebook.svg" />;
+  return <img alt="facebook logo" src="./images/facebook.svg" />;
 };
 
 export default FacebookIcon;

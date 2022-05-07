@@ -1,7 +1,5 @@
 {
   "urrevs": "URrevs",
-  "phone": "الهاتف",
-
   "generalProductRating": "التقييم العام للمنتج",
   "userInterface": "واجهة المستخدم",
   "manufacturingQuality": "جودة التصنيع",
@@ -182,5 +180,20 @@
   "cancel": "الغاء",
   "logOutFromAllDevices": "تسجيل الخروج من جميع الاجهزة المسجلة بهذا الحساب",
   "withWord": "مع",
-  "writeProductName": "اكتب اسم المنتج"
+  "writeProductName": "اكتب اسم المنتج",
+  "specifications": "المواصفات",
+  "similarPhones": "الهواتف المماثلة",
+  "comparison": "المقارنة",
+  "chooseProduct": "اختر المنتج",
+  "howLongHaveYouOwnedThisProduct": "منذ متي وانت تمتلك هذا المنتج؟",
+  "rateOverallExpericence": "قيم تجربتك العامة مع المنتج",
+  "purchaseDate": "تاريخ الشراء",
+  "whatDoYouLikeAboutThisProduct": "ما الذي أعجبك بشأن هذا المنتج؟",
+  "whatDoYouHateAboutThisProduct": "ما الذي تكرهه بشأن هذا المنتج؟",
+  "howDoYouRateTheManufacturer": "كيف تقيم الشركة المصنعة؟",
+  "WhatDoYouLikeAbout": "ماذا يعجبك بشأن",
+  "whatDoYouHateAbout": "ما الذي تكرهه بشأن",
+  "invitationCode": "كود الدعوة",
+  "enterInvitationCode": "قم بادخال كود الدعوة",
+  "internalServerError": "حدث خطأ في الخادم"
 }

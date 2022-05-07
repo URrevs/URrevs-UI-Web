@@ -2,9 +2,13 @@ import { useTheme } from "@emotion/react";
 import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import ContactMailOutlinedIcon from "@mui/icons-material/ContactMailOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   Avatar,
@@ -21,6 +25,7 @@ import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ListItemNavigator from "../Components/Shared/ListItemNavigator";
 import { useAppSelector } from "../store/hooks";
 import { Link } from "react-router-dom";
+import FacebookIcon from "../Components/Icons/FacebookIcon";
 
 export default function Menu() {
   const theme = useTheme();
@@ -39,6 +44,13 @@ export default function Menu() {
     inviteFriends: textContainer.inviteYourFriendsToWriteTheirReviews,
     helpOthers: textContainer.helpOthersAndGetPoints,
     adminPanel: textContainer.adminPanel,
+    settings: "الاعدادات",
+    aboutUs: "عنا",
+    contactUs: "تواصل معنا",
+    followUs: "تابعنا",
+    logOut: textContainer.logOut,
+    termsAndAgreements: "شروط الاستخدام",
+    privacyPolicy: "سياسة الخصوصية",
   };
 
   const listItems = [
@@ -72,6 +84,30 @@ export default function Menu() {
     {
       title: pageDictionry.adminPanel,
       icon: <AdminPanelSettingsOutlinedIcon sx={{ fontSize: 40 }} />,
+      subtitle: "",
+      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+    },
+    {
+      title: pageDictionry.settings,
+      icon: <SettingsOutlinedIcon sx={{ fontSize: 40 }} />,
+      subtitle: "",
+      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+    },
+    {
+      title: pageDictionry.aboutUs,
+      icon: <ErrorOutlineOutlinedIcon sx={{ fontSize: 40 }} />,
+      subtitle: "",
+      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+    },
+    {
+      title: pageDictionry.contactUs,
+      icon: <ContactMailOutlinedIcon sx={{ fontSize: 40 }} />,
+      subtitle: "",
+      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+    },
+    {
+      title: pageDictionry.logOut,
+      icon: <LogoutOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
       to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
     },
@@ -158,6 +194,34 @@ export default function Menu() {
           return listItem(item.title, item.subtitle, item.icon, item.to);
         })}
       </List>
+      <Box sx={{ paddingTop: "122px" }}>
+        <Typography variant="S22W500C050505">{`${pageDictionry.followUs}:`}</Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "baseline",
+          }}
+        >
+          <Box sx={{ display: "flex" }}>
+            <FacebookIcon />
+            <FacebookIcon />
+          </Box>
+          <Box sx={{ display: "flex" }}>
+            <Link to="/">
+              <Typography underline="always">
+                {pageDictionry.termsAndAgreements}
+              </Typography>
+            </Link>
+            <Typography variant="S16W400C050505">•</Typography>
+            <Link to="/">
+              <Typography underline="always">
+                {pageDictionry.privacyPolicy}
+              </Typography>
+            </Link>
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 }
