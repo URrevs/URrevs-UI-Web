@@ -22,7 +22,7 @@ import { ProductRateCard } from "../Components/OverviewCard/ProductRateCard";
 import { ProductOverviewCard } from "../Components/OverviewCard/ProductOverviewCard";
 import { useAppSelector } from "../store/hooks";
 import { convertDateToString } from "../functions/convertDateToString";
-import { useSubstituteDate } from "../hooks/useSubstituteDate";
+import { substituteDate } from "../functions/substituteDate";
 import { MyAppBar } from "../Components/MainLayout/AppBar/AppBar";
 import { AppBarActions } from "../Components/MainLayout/AppBar/AppBarActions";
 import { Box } from "@mui/system";
@@ -72,9 +72,9 @@ const xiaomiImg =
 const ComponentsTest = (props) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const language = useAppSelector((state) => state.language.language);
-  
-  const date1 = convertDateToString(new Date(2020, 1, 1),language);
-  const date2 = useSubstituteDate(new Date(2022, 3, 29));
+
+  const date1 = convertDateToString(new Date(2020, 1, 1), language);
+  const date2 = substituteDate(new Date(2022, 3, 29));
 
   let url = "sada";
   return (

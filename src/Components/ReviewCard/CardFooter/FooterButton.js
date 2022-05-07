@@ -1,7 +1,7 @@
 import { useTheme } from "@emotion/react";
 import { Typography } from "@mui/material";
 
-export const FooterButton = ({ number, icon, isClickable }) => {
+export const FooterButton = ({ number, icon, isClickable, onClickHandler }) => {
   const theme = useTheme();
   return (
     <div
@@ -10,6 +10,7 @@ export const FooterButton = ({ number, icon, isClickable }) => {
         verticalAlign: "middle",
         cursor: isClickable ? "pointer" : "default",
       }}
+      onClick={onClickHandler}
     >
       {icon}
       {/* spaceing between icon and number */}

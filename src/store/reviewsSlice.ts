@@ -19,7 +19,7 @@ const reviewsSlice = createSlice({
   reducers: {
     addToLoaddedReviews(state, action: PayloadAction<InitialState>) {
       const loadedReviews = action.payload.newReviews;
-      console.log(loadedReviews[0].user_name);
+      console.log(loadedReviews[0].userName);
       state.newReviews.push(...loadedReviews);
     },
     setIsExpanded(

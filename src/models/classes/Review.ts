@@ -1,32 +1,54 @@
 import { APIReview } from "../interfaces/APIReview.model";
 
 export default class Review {
-  _id: string;
-  user_name: string;
-  product: string;
-  brand: string;
+  id: string;
+  type: string;
+  targetId: string;
+  targetName: string;
+  userId: string;
+  userName: string;
+  photo: string;
+  createdAt: string;
+  views: number;
+  likes: number;
+  commentsCount: number;
+  shares: number;
+  ownedAt: string;
+  generalRating: number;
+  uiRating: number;
+  manufacturingQuality: number;
+  valueForMoney: number;
+  camera: number;
+  callQuality: number;
+  battery: number;
   pros: string;
   cons: string;
-  approved: boolean;
-  brand_rating: number = 0;
-  date_buy: string;
-  date_rev: string;
-  user_avatar: string;
+  liked: boolean;
   isExpanded: boolean = false;
-  isLiked: boolean = false;
 
   constructor(data: APIReview) {
-    this._id = data._id;
-    this.user_name = data.user_name;
-    this.product = data.product;
-    this.brand = data.brand;
+    this.id = data._id;
+    this.type = data.type;
+    this.targetId = data.targetId;
+    this.targetName = data.targetName;
+    this.userId = data.userId;
+    this.userName = data.userName;
+    this.photo = data.photo;
+    this.createdAt = data.createdAt;
+    this.views = data.views;
+    this.likes = data.likes;
+    this.commentsCount = data.commentsCount;
+    this.shares = data.shares;
+    this.ownedAt = data.ownedAt;
+    this.generalRating = data.generalRating;
+    this.uiRating = data.uiRating;
+    this.manufacturingQuality = data.manufacturingQuality;
+    this.valueForMoney = data.valueForMoney;
+    this.camera = data.camera;
+    this.callQuality = data.callQuality;
+    this.battery = data.battery;
     this.pros = data.pros;
     this.cons = data.cons;
-    this.approved = data.approved ?? true;
-    this.brand_rating = data.brand_rating ?? 0;
-    this.date_buy = data.date_buy;
-    this.date_rev = data.date_rev;
-    this.user_avatar = data.user_avatar;
-    this.isExpanded = data.isExpanded ?? false;
+    this.liked = data.liked;
   }
 }

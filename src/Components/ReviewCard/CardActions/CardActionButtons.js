@@ -17,6 +17,7 @@ const CardActionButtons = ({
   firstButtonNonPressedText,
   setIsLiked,
   isReview,
+  navigateToFullScreen: commentButtonOnClick,
 }) => {
   const activeFirstIcon = isReview ? (
     <ThumbUpIcon fontSize="medium" />
@@ -54,6 +55,7 @@ const CardActionButtons = ({
         />
 
         <BottomCardActionBtn
+          onClickAction={commentButtonOnClick}
           title={textContainer.comment}
           icon={<ChatBubbleOutlineOutlinedIcon fontSize="medium" />}
         />

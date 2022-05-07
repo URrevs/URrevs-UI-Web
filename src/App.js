@@ -31,6 +31,7 @@ import { fonts } from "./Styles/fonts";
 import { COLORS } from "./Styles/main_light_colors";
 import { AdminPanel } from "./pages/26_AdminPanel";
 import { UpdateProducts } from "./pages/29_UpdateProducts";
+import InteractionWithReview from "./pages/3_InteractionWithReview";
 
 function App() {
   console.log("app");
@@ -224,6 +225,10 @@ function App() {
                 <Grid item md={2} sm={0}></Grid>
                 <Grid item md={8} sm={12}>
                   <Routes>
+                    <Route
+                      path={ROUTES_NAMES.EXACT_REVIEW}
+                      element={<InteractionWithReview />}
+                    />
                     <Route path={ROUTES_NAMES.HOME}>
                       <Route index element={<Reviews />} />
                       <Route path={ROUTES_NAMES.MENU}>

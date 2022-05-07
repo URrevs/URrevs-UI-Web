@@ -12,9 +12,10 @@ const FullStars = ({
   index,
   setExpanded,
   arrowExpansion,
+  ratings,
 }) => {
   const theme = useTheme();
-
+  console.log(ratings);
   return (
     <div>
       {/* Expansion arrow */}
@@ -37,7 +38,7 @@ const FullStars = ({
                 ) : (
                   <StarLine
                     label={starsRatingTextContainer[index]}
-                    value={index}
+                    value={ratings[index]}
                   />
                 )}
               </React.Fragment>

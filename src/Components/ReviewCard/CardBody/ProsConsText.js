@@ -9,6 +9,7 @@ const ProsConsText = ({
   croppedText,
   prosTitle,
   consTitle,
+  seeMoreButtonHandler,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -18,29 +19,6 @@ const ProsConsText = ({
 
       {croppedText.cons.length != 0 && (
         <BodyCardText title={consTitle} text={croppedText.cons} />
-      )}
-
-      {/* see more button */}
-      {croppedText.endOfText === false || expanded ? (
-        <div
-          style={{
-            cursor: "pointer",
-          }}
-          onClick={() => console.log("see more button")}
-        >
-          <Typography
-            sx={{ textDecoration: "underline" }}
-            variant="S18W800C050505"
-          >
-            {croppedText.endOfText
-              ? textContainer.seeLess
-              : expanded
-              ? textContainer.seeMore
-              : textContainer.seeMore}
-          </Typography>
-        </div>
-      ) : (
-        <></>
       )}
     </div>
   );

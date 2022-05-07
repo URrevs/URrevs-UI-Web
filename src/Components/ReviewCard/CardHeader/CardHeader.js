@@ -13,6 +13,7 @@ const CardHeader = ({
   reviewDate,
   buyDate,
   showViewsCounter,
+  views
 }) => {
   const theme = useTheme();
 
@@ -31,6 +32,7 @@ const CardHeader = ({
           reviewDate={reviewDate}
           buyDate={buyDate}
           showViewsCounter={showViewsCounter}
+          views={views}
         />
       }
     />

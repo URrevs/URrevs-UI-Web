@@ -8,8 +8,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpLong } from "@fortawesome/free-solid-svg-icons";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { Divider } from "@mui/material";
+import { useConvertNumberToHumanLanguage } from "../../../hooks/useMillify";
 
-const CardFooter = ({ isReview }) => {
+const CardFooter = ({
+  isReview,
+  navigateToFullScreen: commentOnClickHandler,
+  shareCounter,
+  likesCounter,
+  commentsCounter,
+}) => {
   const theme = useTheme();
   const iconStyle = {
     color: theme.palette.reviewCard.actionBtnIcon,
@@ -40,7 +47,11 @@ const CardFooter = ({ isReview }) => {
           margin: "8px 0px 6px 0px",
         }}
       >
-        <FooterButton icon={firstIcon} number={100} isClickable={false} />
+        <FooterButton
+          icon={firstIcon}
+          number={useConvertNumberToHumanLanguage(likesCounter)}
+          isClickable={false}
+        />
         <div
           style={{
             display: "flex",
@@ -49,13 +60,14 @@ const CardFooter = ({ isReview }) => {
         >
           <FooterButton
             icon={<ChatBubbleOutlineOutlinedIcon style={iconStyle} />}
-            number={100}
+            number={useConvertNumberToHumanLanguage(commentsCounter)}
             isClickable={true}
+            onClickHandler={commentOnClickHandler}
           />
           <div style={{ width: "10px" }}></div>
           <FooterButton
             icon={<ShareOutlinedIcon style={iconStyle} />}
-            number={100}
+            number={useConvertNumberToHumanLanguage(shareCounter)}
             isClickable={false}
           />
         </div>

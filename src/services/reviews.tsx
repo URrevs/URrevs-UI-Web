@@ -16,25 +16,12 @@ export const reviewsApi = createApi({
         return response.map((review) => new Review(review));
       },
     }),
-    // postReview: builder.mutation({
-    //   query: ({ review }) => {
-    //     return {
-    //       url: "/review",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "Content-Length": "<calculated when request is sent>",
-    //         Host: "<calculated when request is sent>",
-    //         "User-Agent": "PostmanRuntime/7.28.4",
-    //         Accept: "*/*",
-    //         "Accept-Encoding": "gzip, deflate, br",
-    //         Connection: "keep-alive",
-    //       },
-    //       method: "POST",
-    //       body: JSON.stringify({ ...review }),
-    //     };
-    //   },
-    // }),
+    getReview: builder.query<Review, number>({
+      query: (id: number) => `/phone/${id}`,
+      transformResponse: (response: { review: APIReview }) =>
+        new Review(response.review),
+    }),
   }),
 });
 //auto-generated hooks
-export const { useGetAllReviewsQuery } = reviewsApi;
+export const { useGetAllReviewsQuery, useGetReviewQuery } = reviewsApi;

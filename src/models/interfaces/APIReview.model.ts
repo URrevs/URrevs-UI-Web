@@ -1,18 +1,25 @@
 export interface APIReview {
   _id: string;
-  user_name: string;
-  brand: string;
-  product: string;
-  rating: 1;
+  type: string;
+  targetId: string;
+  targetName: string;
+  userId: string;
+  userName: string;
+  photo: string;
+  views: number;
+  likes: number;
+  commentsCount: number;
+  shares: number;
+  createdAt: string;
+  ownedAt: string;
+  generalRating: number;
+  uiRating: number;
+  manufacturingQuality: number;
+  valueForMoney: number;
+  camera: number;
+  callQuality: number;
+  battery: number;
   pros: string;
   cons: string;
-  ratings: {};
-  approved: boolean;
-  brand_rating: number;
-  brand_pros: string;
-  brand_cons: string;
-  date_buy: string;
-  date_rev: string;
-  user_avatar: string;
-  isExpanded: boolean;
+  liked: boolean;
 }

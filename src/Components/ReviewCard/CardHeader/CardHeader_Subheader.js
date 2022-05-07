@@ -3,14 +3,10 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useConvertNumberToHumanLanguage } from "../../../hooks/useMillify";
 import { useAppSelector } from "../../../store/hooks";
-import { useConvertDateToString } from "../../../functions/convertDateToString";
-import { useSubstituteDate } from "../../../hooks/useSubstituteDate";
 
-const CardSubheader = ({ reviewDate, buyDate, showViewsCounter }) => {
+const CardSubheader = ({ reviewDate, buyDate, showViewsCounter, views }) => {
   const convert = useConvertNumberToHumanLanguage;
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  // buyDate = useConvertDateToString(buyDate);
-  // reviewDate = useSubstituteDate(reviewDate);
 
   return (
     <React.Fragment>
@@ -37,7 +33,7 @@ const CardSubheader = ({ reviewDate, buyDate, showViewsCounter }) => {
                 marginTop: "-3px",
               }}
             />
-            {convert(1000)}
+            {convert(views)}
           </Typography>
         )}
       </div>
