@@ -32,6 +32,7 @@ import { COLORS } from "./Styles/main_light_colors";
 import { AdminPanel } from "./pages/26_AdminPanel";
 import { UpdateProducts } from "./pages/29_UpdateProducts";
 import InteractionWithReview from "./pages/3_InteractionWithReview";
+import { SearchScreen } from "./pages/8_SearchScreen";
 
 function App() {
   const language = useSelector((state) => state.language.language);
@@ -143,6 +144,7 @@ function App() {
         buttonBg: isDark ? "#FFFFFF" : COLORS.cffffff,
         borderColor: isDark ? "#FFFFFF" : COLORS.c606266,
       },
+      cancel: isDark ? COLORS.cCED0D4 : COLORS.c050505,
       divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
       hover: isDark ? COLORS.cCED0D4 : alpha(COLORS.c65676b, 0.2),
       background: {
@@ -249,6 +251,10 @@ function App() {
                         element={<AddReviewFormik />}
                       />
                     </Route>
+                    <Route
+                      path={ROUTES_NAMES.SEARCH}
+                      element={<SearchScreen />}
+                    />
                     <Route
                       path={ROUTES_NAMES.LEADERBOARD}
                       element={<div>leaderboard</div>}
