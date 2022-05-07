@@ -7,14 +7,14 @@ const PromptStyled = styled(
   Box,
   {}
 )(({ theme }) => ({
-  // position: "absolute",
-  // top: "50%",
-  // left: "50%",
-  // transform: "translate(-50%, -50%)",
-  // width: "80%",
-  // [theme.breakpoints.down("md")]: {
-  //   width: "calc(100% - 32px)",
-  // },
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "80%",
+  [theme.breakpoints.down("md")]: {
+    width: "calc(100% - 32px)",
+  },
   boxShadow: 24,
   padding: 16,
   borderRadius: 15,

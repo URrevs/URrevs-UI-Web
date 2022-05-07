@@ -71,7 +71,7 @@ export const AppBarActions = ({
       {/* user account */}
       {showProfile && (
         <CircleBtn
-          onClick={!isLoggedIn ? handleRegestrationOpen : navigateToProfilePage}
+          onClick={!isLoggedIn ? handleRegestrationOpen : handleRegestrationOpen}
         >
           {!isLoggedIn ? (
             <AccountCircle />
