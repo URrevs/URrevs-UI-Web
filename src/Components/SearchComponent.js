@@ -69,7 +69,7 @@ export default function SearchComponent({ label }) {
             placeholder={label}
             InputProps={{
               ...params.InputProps,
-              //   type: "search",
+              type: "search",
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton onClick={() => {}}>

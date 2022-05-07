@@ -33,6 +33,7 @@ import { AdminPanel } from "./pages/26_AdminPanel";
 import { UpdateProducts } from "./pages/29_UpdateProducts";
 import InteractionWithReview from "./pages/3_InteractionWithReview";
 import { SearchScreen } from "./pages/8_SearchScreen";
+import { SuggestedResultsScreen } from "./pages/9_SuggestedResultsScreen";
 
 function App() {
   console.log("app");
@@ -259,6 +260,10 @@ function App() {
                     <Route
                       path={ROUTES_NAMES.SEARCH}
                       element={<SearchScreen />}
+                    />
+                    <Route
+                      path={ROUTES_NAMES.SUGGESTED_RESULTS}
+                      element={<SuggestedResultsScreen />}
                     />
                     <Route
                       path={ROUTES_NAMES.LEADERBOARD}

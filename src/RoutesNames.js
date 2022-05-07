@@ -6,6 +6,7 @@ const ROUTES_NAMES = {
   ADD_REVIEW: "add-review",
   MENU: "menu",
   SEARCH: "search",
+  SUGGESTED_RESULTS: "suggested-results",
   // level 2
   USER_PROFILE: "user-profile",
   OWNED_PHONES: "owned-phones",
