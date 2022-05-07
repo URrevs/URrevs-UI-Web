@@ -129,14 +129,17 @@ export const SearchScreen = () => {
             }
           />
         </ListItemButton>
-        <Divider sx={{ padding: 0, color: theme.palette.divider }} />
       </ListItem>
+      <Divider sx={{ padding: 0, color: theme.palette.divider }} />
     </React.Fragment>
   );
   const renderRecentItems = (title, type, id) => (
     <React.Fragment key={id}>
       <ListItem sx={{ padding: 0, margin: 0, lineHeight: 0 }}>
         <ListItemButton
+          sx={{
+            padding: 0,
+          }}
           onClick={() => {
             //Navigate to that phone
             navigate(`/phone?pid=${id}`);
@@ -150,7 +153,10 @@ export const SearchScreen = () => {
             )}
           </ListItemIcon>
           <ListItemText
-            primaryTypographyProps={{ ...theme.typography.S20W700C050505 }}
+            primaryTypographyProps={{
+              ...theme.typography.S20W700C050505,
+              lineHeight: 1,
+            }}
             primary={title}
             secondaryTypographyProps={{ ...theme.typography.S18W400C65676B }}
             secondary={
@@ -174,8 +180,8 @@ export const SearchScreen = () => {
             sx={{ fontSize: "20px", color: theme.palette.cancel }}
           />
         </IconButton>
-        <Divider sx={{ padding: 0, color: theme.palette.divider }} />
       </ListItem>
+      <Divider sx={{ padding: 0, color: theme.palette.divider }} />
     </React.Fragment>
   );
 

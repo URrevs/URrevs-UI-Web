@@ -43,7 +43,11 @@ export default function ListItemNavigator({
         },
       }}
     >
-      <ListItemButton>
+      <ListItemButton
+        sx={{
+          padding: 0,
+        }}
+      >
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText
           primaryTypographyProps={{
