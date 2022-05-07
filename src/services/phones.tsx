@@ -30,6 +30,18 @@ export const phoneApi = createApi({
       },
     }),
 
+    getSimilarPhones: builder.query({
+      query: (pid) => {
+        return {
+          url: `${pid}/similar`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: any) => {
+        return response.phones;
+      },
+    }),
+
     // addToMyRecentSearches: builder.mutation({
     //   query: ({ id: productId, type }) => {
     //     return {
@@ -60,4 +72,4 @@ export const phoneApi = createApi({
 });
 
 //auto-generated hooks
-export const { useGetPhoneSpecsQuery } = phoneApi;
+export const { useGetPhoneSpecsQuery, useGetSimilarPhonesQuery } = phoneApi;

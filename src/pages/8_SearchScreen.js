@@ -105,7 +105,7 @@ export const SearchScreen = () => {
           onClick={() => {
             // add recent search locally
             setResults([...results, { name: title, type, _id: id }]);
-            // setResults(oldResults);
+
             // add recent search to server
             addRecentSearch({ type, id });
             navigate(`/phone?pid=${id}`);

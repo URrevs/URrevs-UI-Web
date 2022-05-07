@@ -2,11 +2,20 @@ import { Box } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { Tabbar } from "../Components/Tabbar/Tabbar";
+import {
+  useGetPhoneSpecsQuery,
+  useGetSimilarPhonesQuery,
+} from "../services/phones";
 import { SpecsTabbar } from "./ProductProfileTabs/SpecsTabbar";
 
 export const ProductProfile = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramId = searchParams.get("pid");
+
+  const { isLoading, error, isFetching, data } = useGetPhoneSpecsQuery(paramId);
   const textContainer = useSelector((state) => state.language.textContainer);
   const [value, setValue] = React.useState(0);
   const pageDictionary = {
@@ -14,6 +23,7 @@ export const ProductProfile = () => {
     specs: textContainer.tabBarSpecs,
     QnA: textContainer.tabBarQuestionsAndAnswers,
   };
+
   const tabBarArray = [
     pageDictionary.reviews,
     pageDictionary.specs,
@@ -22,23 +32,33 @@ export const ProductProfile = () => {
 
   return (
     <React.Fragment>
-      <CustomAppBar
-        showBackBtn
-        englishName
-        showLabel
-        label="Nokia 7 Plus"
-        showSearch
-        showProfile
-      >
-        <Box
-          sx={{
-            padding: "0px 6px",
-          }}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <CustomAppBar
+          showBackBtn
+          englishName
+          showLabel
+          label={data.name}
+          showSearch
+          showProfile
         >
-          <Tabbar arrayOfTabs={tabBarArray} value={value} setValue={setValue} />
-          {value === 1 ? <SpecsTabbar></SpecsTabbar> : null}
-        </Box>
-      </CustomAppBar>
+          <Box
+            sx={{
+              padding: "0px 6px",
+            }}
+          >
+            <Tabbar
+              arrayOfTabs={tabBarArray}
+              value={value}
+              setValue={setValue}
+            />
+            {value === 1 ? (
+              <SpecsTabbar data={data} pid={paramId}></SpecsTabbar>
+            ) : null}
+          </Box>
+        </CustomAppBar>
+      )}
     </React.Fragment>
   );
 };

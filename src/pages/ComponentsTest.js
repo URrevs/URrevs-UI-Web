@@ -41,6 +41,7 @@ import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import React from "react";
 import { HowToWinDialog } from "../Components/Dialogs/HowToWinDialog";
 import CompanyList from "../Components/ProductList/CompanyList";
+import { HorizontalPhoneList } from "../Components/HorizontalPhoneList/HorizontalPhoneList";
 const testComments = {
   a1: {
     likes: 20000000,
@@ -139,6 +140,8 @@ const ComponentsTest = (props) => {
         <DialogText text="كلما كانت مراجعتك مميزة ومليئة بالتفاصيل سوف تحصل علي نقاط مساعدة أكبر." />
         <br />
         <InvitationDialog />
+        <br />
+        <HorizontalPhoneList />
         <br />
         <CompanyOverviewCard
           viewer="100"
@@ -268,7 +271,7 @@ const ComponentsTest = (props) => {
           user="Fady Ahmed"
         ></Comment>
         <br />
-        <CompanyReview
+        {/* <CompanyReview
           isReview={true}
           reviewDetails={{
             _id: "Review1",
@@ -337,7 +340,7 @@ const ComponentsTest = (props) => {
           }}
           index={0}
           clearIndexCache={() => {}}
-        />
+        /> */}
         <br />
         <ProductDetailsTable />
         <br />
