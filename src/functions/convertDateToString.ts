@@ -1,10 +1,7 @@
 import { formatWithOptions } from "date-fns/fp";
 import { ar, enCA } from "date-fns/locale";
-import { useAppSelector } from "../store/hooks";
 
-export const useConvertDateToString = (isoString: any) => {
-  const language = useAppSelector((state) => state.language.language);
-
+export const convertDateToString = (isoString: any, language: string) => {
   const locale = language === "ar" ? ar : enCA;
   const date = new Date(isoString);
 

@@ -16,7 +16,7 @@ export default function ProductList({ list = [] }) {
       {list.map((item, index) => (
         <React.Fragment key={index}>
           <ListItemNavigator
-            title={item}
+            title={item.name}
             subTitle={textContainer.smartphone}
             icon={
               <SmartphoneRoundedIcon

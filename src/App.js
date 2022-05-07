@@ -23,7 +23,7 @@ import ComponentsTest from "./pages/ComponentsTest";
 import Menu from "./pages/20_Menu";
 import OwnedPhonesPage from "./pages/OwnedPhones";
 import Profile from "./pages/Profile";
-import Reviews from "./pages/Reviews";
+import Reviews from "./pages/2_HomePageScrolling";
 import ROUTES_NAMES from "./RoutesNames";
 import { authActions } from "./store/authSlice";
 import { useAppDispatch } from "./store/hooks";
@@ -157,29 +157,42 @@ function App() {
   const [getProfile] = useGetCurrentUserProfileMutation();
 
   useEffect(() => {
+    let userData, apiToken, isAdmin;
     const signIn = async (user) => {
-      const { token: apiToken } = await getApiToken(user.accessToken).unwrap();
-      dispatch(
-        authActions.login({
-          apiToken: apiToken,
-        })
-      );
-      const userProfile = await getProfile(apiToken).unwrap();
+      try {
+        userData = await getApiToken(user.accessToken).unwrap();
+        apiToken = userData.token;
+        isAdmin = userData.admin;
+        dispatch(
+          authActions.login({
+            apiToken: apiToken,
+            isAdmin: isAdmin,
+          })
+        );
+      } catch (e) {
+        console.log(e);
+      }
 
-      dispatch(
-        authActions.login({
-          isLoggedIn: true,
-          uid: userProfile.uid,
-          refCode: userProfile.refCode,
-          photo: userProfile.photo,
-          apiToken: apiToken,
-          name: userProfile.name,
-          accessToken: user.accessToken,
-          refreshToken: user.refreshToken,
-          email: user.email,
-          points: userProfile.points,
-        })
-      );
+      try {
+        const userProfile = await getProfile(apiToken).unwrap();
+
+        dispatch(
+          authActions.login({
+            isLoggedIn: true,
+            uid: userProfile.uid,
+            refCode: userProfile.refCode,
+            photo: userProfile.photo,
+            apiToken: apiToken,
+            name: userProfile.name,
+            accessToken: user.accessToken,
+            refreshToken: user.refreshToken,
+            email: user.email,
+            points: userProfile.points,
+          })
+        );
+      } catch (e) {
+        console.log(e);
+      }
     };
 
     // this may be checked if token still valid
@@ -240,6 +253,15 @@ function App() {
                       path={ROUTES_NAMES.LEADERBOARD}
                       element={<div>leaderboard</div>}
                     />
+                    <Route path={ROUTES_NAMES.MENU}>
+                      <Route index element={<Menu />} />
+                    </Route>
+                    <Route path={ROUTES_NAMES.ADMIN_PANEL}>
+                      <Route index element={<AdminPanel />} />
+                      <Route path={ROUTES_NAMES.UPDATE}>
+                        <Route index element={<UpdateProducts />} />
+                      </Route>
+                    </Route>
 
                     <Route
                       path={ROUTES_NAMES.PRODUCTS}

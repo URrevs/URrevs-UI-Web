@@ -7,9 +7,11 @@ import isDarkSlice from "./darkModeSlice";
 import languageSlice from "./languageSlice";
 import reviewsSlice from "./reviewsSlice";
 import uiSlice from "./uiSlice";
+import { updateApi } from "../services/update";
 
 export const store = configureStore({
   reducer: {
+    [updateApi.reducerPath]: updateApi.reducer,
     [reviewsApi.reducerPath]: reviewsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [reviewsSlice.name]: reviewsSlice.reducer,

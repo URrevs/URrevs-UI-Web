@@ -62,13 +62,13 @@ export const AppBarActions = ({
 
   return (
     <Fragment>
-      {/* // search icon */}
+      {/* search icon */}
       {showSearch && (
         <CircleBtn>
           <SearchIcon />
         </CircleBtn>
       )}
-      {/* // user account */}
+      {/* user account */}
       {showProfile && (
         <CircleBtn
           onClick={!isLoggedIn ? handleRegestrationOpen : navigateToProfilePage}

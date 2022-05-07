@@ -26,7 +26,9 @@ const map = {
 export default function BottomNavBar() {
   const location = useLocation();
 
-  const [currentPage, setValue] = React.useState(map[location.pathname]);
+  const [currentPage, setValue] = React.useState(
+    map[location.pathname.substring(1, location.pathname.length)]
+  );
   const theme = useTheme();
   const backgroundColor = theme.palette.bottomNavigationBar.backgroundColor;
   const focusedColor = theme.palette.bottomNavigationBar.selectedTap;
@@ -109,59 +111,67 @@ export default function BottomNavBar() {
     },
   ];
 
-  return (
-    <BottomNavigation
-      sx={{
-        height: "auto",
-        display: "flex",
-        flexWrap: "wrap",
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        padding: 0,
-        minHeight: 60,
-        zIndex: 100000,
-        backgroundColor: backgroundColor,
-        borderRadius: "10px 10px 0px 0px",
-        boxShadow: "0px 2px 6px 0px",
-      }}
-      showLabels
-      currentPage={currentPage}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-        navigate(navBarItems[newValue].path);
-      }}
-    >
-      {navBarItems.map((item) => (
-        <BottomNavigationAction
-          key={item.itemValue}
-          style={{
-            padding: 0,
-            margin: 0,
-            bottom: 0,
-            minWidth: 40,
-            marginBottom: item.itemValue === currentPage ? 6 : 0,
+  // this condition is to show bottom nav bar or not
+  if (
+    location.pathname === "/" ||
+    map[location.pathname.substring(1, location.pathname.length)] !== undefined
+  ) {
+    return (
+      <BottomNavigation
+        sx={{
+          height: "auto",
+          display: "flex",
+          flexWrap: "wrap",
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          padding: 0,
+          minHeight: 60,
+          zIndex: 100000,
+          backgroundColor: backgroundColor,
+          borderRadius: "10px 10px 0px 0px",
+          boxShadow: "0px 2px 6px 0px",
+        }}
+        showLabels
+        currentPage={currentPage}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+          navigate(navBarItems[newValue].path);
+        }}
+      >
+        {navBarItems.map((item) => (
+          <BottomNavigationAction
+            key={item.itemValue}
+            style={{
+              padding: 0,
+              margin: 0,
+              bottom: 0,
+              minWidth: 40,
+              marginBottom: item.itemValue === currentPage ? 6 : 0,
 
-            // border:'5px solid #000'
-          }}
-          label={
-            <Typography
-              variant={
-                item.itemValue === currentPage
-                  ? "S14W700C2196f3"
-                  : "S14W400C606266"
-              }
-              style={{
-                lineHeight: 1,
-              }}
-            >
-              {item.label}
-            </Typography>
-          }
-          icon={item.icon}
-        />
-      ))}
-    </BottomNavigation>
-  );
+              // border:'5px solid #000'
+            }}
+            label={
+              <Typography
+                variant={
+                  item.itemValue === currentPage
+                    ? "S14W700C2196f3"
+                    : "S14W400C606266"
+                }
+                style={{
+                  lineHeight: 1,
+                }}
+              >
+                {item.label}
+              </Typography>
+            }
+            icon={item.icon}
+          />
+        ))}
+      </BottomNavigation>
+    );
+  } else {
+    return <></>;
+  }
 }

@@ -13,6 +13,7 @@ const initialAuthState: User = {
   uid: "",
   refCode: "",
   points: 0,
+  isAdmin: false,
 };
 
 const authSlice = createSlice({
@@ -33,6 +34,7 @@ const authSlice = createSlice({
       state.uid = action.payload.uid;
       state.refCode = action.payload.refCode;
       state.points = action.payload.points;
+      state.isAdmin = action.payload.isAdmin;
     },
     logout: (state) => {
       state.isLoggedIn = false;
@@ -41,13 +43,14 @@ const authSlice = createSlice({
 
       state.apiToken = "";
       localStorage.removeItem("token");
-      
+
       state.name = "";
       state.refreshToken = "";
       state.email = "";
       state.uid = "";
       state.refCode = "";
       state.points = 0;
+      state.isAdmin = false;
     },
   },
 });

@@ -22,7 +22,7 @@ const CustomAppBarStyled = styled(MuiAppBar, {
 }));
 
 const logoWidth = 94;
-const logoHeight = "auto";
+const logoHeight = 30;
 
 export const CustomAppBar = ({
   showLogo,

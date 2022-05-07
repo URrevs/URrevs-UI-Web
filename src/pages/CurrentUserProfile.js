@@ -87,49 +87,43 @@ export default function CurrentUserProfilePage({}) {
   };
 
   return (
-    <div>
-      <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true}>
+    <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true}>
+      <div>
         <div
           style={{
-            paddingTop: 15,
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-            }}
-          >
-            {/* User photo */}
-            {userPhoto()}
+          {/* User photo */}
+          {userPhoto()}
 
-            {/* User name */}
-            {userName()}
+          {/* User name */}
+          {userName()}
 
-            {/* Collected stars */}
-            <Box style={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="S20W400C65676B">
-                {pageDictionry.collectedStars}
-              </Typography>
-              <div style={{ width: "12px" }}></div>
-              <StarWithCount
-                value={profileData.points}
-                starSize={34}
-                textStyle="S20W400C65676B"
-              />
-            </Box>
-            <div style={{ height: 20 }}></div>
-          </div>
-          <div>
-            <List>
-              {listItems.map((item, index) => {
-                return listItem(item.title, item.subtitle, item.icon, item.to);
-              })}
-            </List>
-          </div>
+          {/* Collected stars */}
+          <Box style={{ display: "flex", alignItems: "center" }}>
+            <Typography variant="S20W400C65676B">
+              {pageDictionry.collectedStars}
+            </Typography>
+            <div style={{ width: "12px" }}></div>
+            <StarWithCount
+              value={profileData.points}
+              starSize={34}
+              textStyle="S20W400C65676B"
+            />
+          </Box>
+          <div style={{ height: 20 }}></div>
         </div>
-      </CustomAppBar>
-    </div>
+        <div>
+          <List>
+            {listItems.map((item, index) => {
+              return listItem(item.title, item.subtitle, item.icon, item.to);
+            })}
+          </List>
+        </div>
+      </div>
+    </CustomAppBar>
   );
 }

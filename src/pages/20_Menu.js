@@ -55,7 +55,7 @@ export default function Menu() {
     {
       title: pageDictionry.ownedProducts,
       icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `${ROUTES_NAMES.OWNED_PHONES}?uid=${profileData.uid}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?uid=${profileData.uid}`,
     },
     {
       title: pageDictionry.askedQuestions,
@@ -73,7 +73,7 @@ export default function Menu() {
       title: pageDictionry.adminPanel,
       icon: <AdminPanelSettingsOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: ROUTES_NAMES.ADMIN_PANEL,
+      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
     },
   ];
   const userProfile = () => (
@@ -85,7 +85,7 @@ export default function Menu() {
   );
   const useProfileButton = () => (
     <Link
-      to={ROUTES_NAMES.USER_PROFILE}
+      to={`../../${ROUTES_NAMES.USER_PROFILE}?uid=${profileData.uid}`}
       style={{
         background: "none",
         textDecoration: "none",
@@ -120,7 +120,7 @@ export default function Menu() {
           {userProfile()}
           <ListItemText
             primaryTypographyProps={{ ...theme.typography.S20W700C050505 }}
-            primary={"Omar Gamal"}
+            primary={profileData.name}
             secondaryTypographyProps={{
               ...theme.typography.S16W400C65676B,
             }}
@@ -145,14 +145,19 @@ export default function Menu() {
       />
     );
   };
+
   return (
-    <React.Fragment>
+    <Box
+      style={{
+        marginBottom: 70,
+      }}
+    >
       <List>
         {useProfileButton()}
         {listItems.map((item, index) => {
           return listItem(item.title, item.subtitle, item.icon, item.to);
         })}
       </List>
-    </React.Fragment>
+    </Box>
   );
 }

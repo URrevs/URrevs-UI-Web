@@ -10,7 +10,7 @@ export default function Profile() {
   const [searchParams, setSearchParams] = useSearchParams();
   const paramId = searchParams.get("uid");
 
-  if (paramId === currentUserId) {
+  if (paramId === currentUserId || paramId === null) {
     return <CurrentUserProfilePage />;
   } else {
     return <OtherUserProfilePage uid={paramId} />;
