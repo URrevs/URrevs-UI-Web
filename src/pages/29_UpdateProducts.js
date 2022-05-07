@@ -22,7 +22,7 @@ export const UpdateProducts = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const language = useSelector((state) => state.language.language);
 
-  const pageDictionry = {
+  const pageDictionary = {
     updateProductsList: textContainer.updateProductsList,
     lastUpdateDone: "اخر تحديث تم",
     in: "في",
@@ -30,6 +30,8 @@ export const UpdateProducts = () => {
     manual: "يدوي",
     completeSuccess: "اكتمل بنجاح",
     updateFailed: "فشل التحديث",
+    updateProducts: textContainer.updateProducts,
+    updating: textContainer.updating,
   };
 
   const handleUpdateProducts = async () => {
@@ -47,7 +49,7 @@ export const UpdateProducts = () => {
     <CustomAppBar
       showBackBtn
       showLabel
-      label={pageDictionry.updateProductsList}
+      label={pageDictionary.updateProductsList}
     >
       {isLoading ? (
         <LoadingSpinner />
@@ -65,17 +67,17 @@ export const UpdateProducts = () => {
             }}
           >
             <Typography variant="S18W700C000000">
-              {`${pageDictionry.lastUpdateDone} ${
-                data.automatic ? pageDictionry.auto : pageDictionry.manual
-              } ${pageDictionry.in} ${convertDateToString(
+              {`${pageDictionary.lastUpdateDone} ${
+                data.automatic ? pageDictionary.auto : pageDictionary.manual
+              } ${pageDictionary.in} ${convertDateToString(
                 data.date,
                 language
               )}`}
             </Typography>
             <Typography variant="S16W400C65676b">
               {data.failed
-                ? pageDictionry.updateFailed
-                : pageDictionry.completeSuccess}
+                ? pageDictionary.updateFailed
+                : pageDictionary.completeSuccess}
             </Typography>
           </Box>
           <ProductList list={data.phones} />
