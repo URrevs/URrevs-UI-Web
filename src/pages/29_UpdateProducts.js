@@ -5,6 +5,7 @@ import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import CompanyList from "../Components/ProductList/CompanyList";
 import ProductList from "../Components/ProductList/ProductList";
+import UpdateOutlinedIcon from "@mui/icons-material/UpdateOutlined";
 import {
   useGetLastUpdateInfoQuery,
   useUpdateMutation,
@@ -80,13 +81,23 @@ export const UpdateProducts = () => {
                 : pageDictionary.completeSuccess}
             </Typography>
           </Box>
-          <ProductList list={data.phones} />
-          <br></br>
-          <CompanyList list={data.companies} />
+          <Box sx={{ paddingBottom: "350px" }}>
+            <ProductList list={data.phones} />
+            <br></br>
+            <CompanyList list={data.companies} />
+          </Box>
           <OrangeGradientButton
             color="red"
+            sx={{
+              width: "100%",
+            }}
             onClick={() => handleUpdateProducts()}
-          />
+          >
+            <UpdateOutlinedIcon sx={{ fontSize: "28", marginRight: "5px" }} />
+            <Typography variant="S18W700Cffffff">
+              {pageDictionary.updateProducts}
+            </Typography>
+          </OrangeGradientButton>
         </div>
       )}
     </CustomAppBar>
