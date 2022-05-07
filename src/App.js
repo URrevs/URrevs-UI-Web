@@ -233,11 +233,11 @@ function App() {
                       <Route index element={<Reviews />} />
                       <Route path={ROUTES_NAMES.MENU}>
                         <Route index element={<Menu />} />
-                        <Route path={ROUTES_NAMES.ADMIN_PANEL}>
-                          <Route index element={<AdminPanel />} />
-                          <Route path={ROUTES_NAMES.UPDATE}>
-                            <Route index element={<UpdateProducts />} />
-                          </Route>
+                      </Route>
+                      <Route path={ROUTES_NAMES.ADMIN_PANEL}>
+                        <Route index element={<AdminPanel />} />
+                        <Route path={ROUTES_NAMES.UPDATE}>
+                          <Route index element={<UpdateProducts />} />
                         </Route>
                       </Route>
                       <Route path={ROUTES_NAMES.USER_PROFILE}>

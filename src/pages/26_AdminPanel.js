@@ -6,6 +6,7 @@ import ListItemNavigator from "../Components/Shared/ListItemNavigator";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetLastUpdateInfoQuery } from "../services/update";
 import { convertDateToString } from "../functions/convertDateToString";
+import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 
 export const AdminPanel = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
@@ -34,18 +35,24 @@ export const AdminPanel = () => {
   ];
   return (
     <CustomAppBar showBackBtn showLabel label={pageDictionry.adminPanel}>
-      {listItems.map((item, index) => {
-        return (
-          <ListItemNavigator
-            title={item.title}
-            subTitle={
-              item.subtitle + " " + convertDateToString(data.date, language)
-            }
-            icon={item.icon}
-            to={item.to}
-          />
-        );
-      })}
+      {error ? (
+        <div>{error.data.status}</div>
+      ) : isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        listItems.map((item, index) => {
+          return (
+            <ListItemNavigator
+              title={item.title}
+              subTitle={
+                item.subtitle + " " + convertDateToString(data.date, language)
+              }
+              icon={item.icon}
+              to={item.to}
+            />
+          );
+        })
+      )}
     </CustomAppBar>
   );
 };
