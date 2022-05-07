@@ -12,9 +12,11 @@ const ROUTES_NAMES = {
   OWNED_PHONES: "owned-phones",
   ADMIN_PANEL: "admin-panel",
   EXACT_REVIEW: "review",
+  PHONE_PROFILE: "phone",
   //level 3
   // ADD_COMPETITION: "add-competition",
   UPDATE: "update",
+  //level 4
 };
 
 export default ROUTES_NAMES;

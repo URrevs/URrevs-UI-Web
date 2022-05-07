@@ -39,7 +39,15 @@ export const searchApi = createApi({
         };
       },
     }),
-
+    deleteRecentSearches: builder.mutation({
+      query: ({ id: productId }) => {
+        return {
+          url: `/recent`,
+          method: "DELETE",
+          body: { _id: productId },
+        };
+      },
+    }),
     getMyRecentSearches: builder.query({
       query: () => `/recent`,
       transformResponse: (response: any) => {
@@ -54,4 +62,5 @@ export const {
   useSearchAllMutation,
   useGetMyRecentSearchesQuery,
   useAddToMyRecentSearchesMutation,
+  useDeleteRecentSearchesMutation,
 } = searchApi;

@@ -33,7 +33,7 @@ import { AdminPanel } from "./pages/26_AdminPanel";
 import { UpdateProducts } from "./pages/29_UpdateProducts";
 import InteractionWithReview from "./pages/3_InteractionWithReview";
 import { SearchScreen } from "./pages/8_SearchScreen";
-import { SuggestedResultsScreen } from "./pages/9_SuggestedResultsScreen";
+import { ProductProfile } from "./pages/10_ProductProfile";
 
 function App() {
   const language = useSelector((state) => state.language.language);
@@ -245,6 +245,9 @@ function App() {
                           element={<OwnedPhonesPage />}
                         />
                       </Route>
+                      <Route path={ROUTES_NAMES.PHONE_PROFILE}>
+                        <Route index element={<ProductProfile />} />
+                      </Route>
                     </Route>
                     <Route path={ROUTES_NAMES.HOME}>
                       <Route
@@ -255,10 +258,6 @@ function App() {
                     <Route
                       path={ROUTES_NAMES.SEARCH}
                       element={<SearchScreen />}
-                    />
-                    <Route
-                      path={ROUTES_NAMES.SUGGESTED_RESULTS}
-                      element={<SuggestedResultsScreen />}
                     />
                     <Route
                       path={ROUTES_NAMES.LEADERBOARD}
