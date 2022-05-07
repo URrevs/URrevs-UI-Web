@@ -113,38 +113,6 @@ const Registeration = ({}) => {
     dispatch(uiActions.toggleRegistration());
   };
 
-  // useEffect(() => {
-  //   const signIn = async (user) => {
-  //     const { token: apiToken } = await getApiToken(user.accessToken).unwrap();
-  //     const userProfile = await getProfile(apiToken).unwrap();
-
-  //     dispatch(
-  //       authActions.login({
-  //         isLoggedIn: true,
-  //         uid: userProfile.uid,
-  //         refCode: userProfile.refCode,
-  //         photo: userProfile.photo,
-  //         apiToken: apiToken,
-  //         name: userProfile.name,
-  //         accessToken: user.accessToken,
-  //         refreshToken: user.refreshToken,
-  //         email: user.email,
-  //         points: userProfile.points,
-  //       })
-  //     );
-  //   };
-
-  //   getAuth().onAuthStateChanged(async (user) => {
-  //     if (user) {
-  //       await signIn(user);
-  //       try {
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     }
-  //   });
-  // }, []);
-
   return (
     <Modal
       aria-labelledby="register"

@@ -15,7 +15,6 @@ const FullStars = ({
   ratings,
 }) => {
   const theme = useTheme();
-  console.log(ratings);
   return (
     <div>
       {/* Expansion arrow */}

@@ -3,8 +3,11 @@ import ArrowLeftRoundedIcon from "@mui/icons-material/ArrowLeftRounded";
 import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+import { replace } from "stylis";
 
-const CardHeaderTitle = ({ userName, productName }) => {
+const CardHeaderTitle = ({ userName, productName, userId }) => {
+  const navigate = useNavigate();
   const theme = useTheme();
 
   return (
@@ -25,8 +28,13 @@ const CardHeaderTitle = ({ userName, productName }) => {
             textAlign: "center",
             direction: "rtl",
             maxWidth: "50%",
+            "&:hover": {
+              cursor: "pointer",
+              textDecoration: "underline",
+            },
           }}
           variant="S16W700C050505"
+          onClick={() => navigate(`/user-profile?uid=${userId}`, replace)}
         >
           {userName}
         </Typography>
@@ -61,7 +69,12 @@ const CardHeaderTitle = ({ userName, productName }) => {
             textAlign: "center",
             direction: "rtl",
             maxWidth: "50%",
+            "&:hover": {
+              cursor: "pointer",
+              textDecoration: "underline",
+            },
           }}
+          onClick={() => console.log("target name clicked")}
         >
           {productName}
         </Typography>
