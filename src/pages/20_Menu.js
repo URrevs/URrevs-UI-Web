@@ -26,6 +26,7 @@ import ListItemNavigator from "../Components/Shared/ListItemNavigator";
 import { useAppSelector } from "../store/hooks";
 import { Link } from "react-router-dom";
 import FacebookIcon from "../Components/Icons/FacebookIcon";
+import LinkedIn from "../Components/Icons/LinkedIn";
 
 export default function Menu() {
   const theme = useTheme();
@@ -205,7 +206,7 @@ export default function Menu() {
         >
           <Box sx={{ display: "flex" }}>
             <FacebookIcon />
-            <FacebookIcon />
+            <LinkedIn />
           </Box>
           <Box sx={{ display: "flex" }}>
             <Link to="/">

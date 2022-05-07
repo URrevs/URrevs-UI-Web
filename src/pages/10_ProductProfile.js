@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { Tabbar } from "../Components/Tabbar/Tabbar";
+
 import {
   useGetPhoneSpecsQuery,
   useGetSimilarPhonesQuery,

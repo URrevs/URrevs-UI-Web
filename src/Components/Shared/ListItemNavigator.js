@@ -46,7 +46,10 @@ export default function ListItemNavigator({
       <ListItemButton>
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText
-          primaryTypographyProps={{ ...theme.typography.S20W700C050505 }}
+          primaryTypographyProps={{
+            ...theme.typography.S20W700C050505,
+            lineHeight: 1,
+          }}
           primary={title}
           secondaryTypographyProps={{ ...theme.typography.S16W400C65676B }}
           secondary={subTitle}

@@ -17,23 +17,24 @@ import {
 import "./App.css";
 import Layout from "./Components/MainLayout/Layout";
 import RTL from "./Components/RTL";
-import AddReview from "./pages/AddReview";
-import AddReviewFormik from "./pages/AddReviewFormik";
-import ComponentsTest from "./pages/ComponentsTest";
+import { ProductProfile } from "./pages/10_ProductProfile";
+import { AllProductsScreen } from "./pages/16_AllProductsScreen";
+import ReviewPostingScreen from "./pages/18_ReviewPostingScreen";
 import Menu from "./pages/20_Menu";
+import { AdminPanel } from "./pages/26_AdminPanel";
+import { UpdateProducts } from "./pages/29_UpdateProducts";
+import Reviews from "./pages/2_HomePageScrolling";
+import InteractionWithReview from "./pages/3_InteractionWithReview";
+import { SearchScreen } from "./pages/8_SearchScreen";
+import AddReview from "./pages/AddReview";
+import ComponentsTest from "./pages/ComponentsTest";
 import OwnedPhonesPage from "./pages/OwnedPhones";
 import Profile from "./pages/Profile";
-import Reviews from "./pages/2_HomePageScrolling";
 import ROUTES_NAMES from "./RoutesNames";
 import { authActions } from "./store/authSlice";
 import { useAppDispatch } from "./store/hooks";
 import { fonts } from "./Styles/fonts";
 import { COLORS } from "./Styles/main_light_colors";
-import { AdminPanel } from "./pages/26_AdminPanel";
-import { UpdateProducts } from "./pages/29_UpdateProducts";
-import InteractionWithReview from "./pages/3_InteractionWithReview";
-import { SearchScreen } from "./pages/8_SearchScreen";
-import { ProductProfile } from "./pages/10_ProductProfile";
 
 function App() {
   const language = useSelector((state) => state.language.language);
@@ -145,7 +146,7 @@ function App() {
         buttonBg: isDark ? "#FFFFFF" : COLORS.cffffff,
         borderColor: isDark ? "#FFFFFF" : COLORS.c606266,
       },
-
+      defaultRedBtnIconColor: isDark ? COLORS.cCED0D4 : COLORS.cffffff,
       defaultIconColor: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
       cancel: isDark ? COLORS.cCED0D4 : COLORS.c050505,
       divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
@@ -235,6 +236,9 @@ function App() {
                       <Route path={ROUTES_NAMES.MENU}>
                         <Route index element={<Menu />} />
                       </Route>
+                      <Route path={ROUTES_NAMES.ALL_PRODUCTS}>
+                        <Route index element={<AllProductsScreen />} />
+                      </Route>
                       <Route path={ROUTES_NAMES.ADMIN_PANEL}>
                         <Route index element={<AdminPanel />} />
                         <Route path={ROUTES_NAMES.UPDATE}>
@@ -255,7 +259,7 @@ function App() {
                     <Route path={ROUTES_NAMES.HOME}>
                       <Route
                         path={ROUTES_NAMES.ADD_REVIEW}
-                        element={<AddReviewFormik />}
+                        element={<ReviewPostingScreen />}
                       />
                     </Route>
                     <Route

@@ -21,7 +21,7 @@ const FormikDatePicker = ({ label, fieldName, isRequired = true }) => {
   return (
     <Field name={fieldName}>
       {({ field: { value }, form: { setFieldValue }, meta }) => (
-        <>
+        <React.Fragment>
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
             locale={localeDate}
@@ -47,6 +47,7 @@ const FormikDatePicker = ({ label, fieldName, isRequired = true }) => {
                   style: {
                     fontWeight: 300,
                     fontSize: 16,
+
                     color: theme.palette.textField.inputFieldText,
                     background: theme.palette.textField.inputFieldBackground,
                     borderRadius: TEXT_FIELD_BORDER_RADIUS,
@@ -88,7 +89,7 @@ const FormikDatePicker = ({ label, fieldName, isRequired = true }) => {
               </p>
             )}
           </LocalizationProvider>
-        </>
+        </React.Fragment>
       )}
     </Field>
   );

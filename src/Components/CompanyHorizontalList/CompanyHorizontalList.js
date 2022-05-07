@@ -69,6 +69,7 @@ export const CompanyHorizontalList = () => {
             }}
           >
             <img
+              alt=""
               objectfit="cover"
               width="45px"
               height="45px"
