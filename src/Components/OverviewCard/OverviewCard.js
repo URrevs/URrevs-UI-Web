@@ -9,6 +9,8 @@ const CardStyled = styled(
   {}
 )((theme) => ({
   borderRadius: `${CARD_BORDER_RADIUS}px`,
+  padding: "6px 12px 19px 21px",
+  marginBottom: "15px",
 }));
 export const OverviewCard = ({
   viewer = "0",
@@ -18,7 +20,7 @@ export const OverviewCard = ({
 }) => {
   return (
     <React.Fragment>
-      <CardStyled elevation={3} sx={{ padding: "6px 12px 19px 21px" }}>
+      <CardStyled elevation={3}>
         <Grid container spacing={2} sx={{ padding: "0px 0px 7px 0px" }}>
           <Grid item xs={2}></Grid>
           <Grid

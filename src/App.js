@@ -145,6 +145,7 @@ function App() {
         buttonBg: isDark ? "#FFFFFF" : COLORS.cffffff,
         borderColor: isDark ? "#FFFFFF" : COLORS.c606266,
       },
+      defaultIconColor: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
       cancel: isDark ? COLORS.cCED0D4 : COLORS.c050505,
       divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
       hover: isDark ? COLORS.cCED0D4 : alpha(COLORS.c65676b, 0.2),

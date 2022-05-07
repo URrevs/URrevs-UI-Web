@@ -3,9 +3,9 @@ import { Card, Divider, Grid, Typography } from "@mui/material";
 import React from "react";
 import { TABCARD_BORDER_RADIUS } from "../../constants";
 
-export const Tabbar = ({ arrayOfTabs = [] }) => {
+export const Tabbar = ({ arrayOfTabs = [], setValue, value }) => {
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+
   const space = 12 / arrayOfTabs.length;
   return (
     <React.Fragment>
