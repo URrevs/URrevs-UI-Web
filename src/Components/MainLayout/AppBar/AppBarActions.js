@@ -56,6 +56,9 @@ export const AppBarActions = ({
   const navigateToProfilePage = () => {
     navigate(`/${ROUTES_NAMES.USER_PROFILE}?uid=${user.uid}`);
   };
+  const navigateToSearchPage = () => {
+    navigate(`/${ROUTES_NAMES.SEARCH}`);
+  };
   const handleRegestrationOpen = () => {
     dispatch(uiActions.toggleRegistration());
   };
@@ -64,14 +67,16 @@ export const AppBarActions = ({
     <Fragment>
       {/* search icon */}
       {showSearch && (
-        <CircleBtn>
+        <CircleBtn onClick={navigateToSearchPage}>
           <SearchIcon />
         </CircleBtn>
       )}
       {/* user account */}
       {showProfile && (
         <CircleBtn
-          onClick={!isLoggedIn ? handleRegestrationOpen : handleRegestrationOpen}
+          onClick={
+            !isLoggedIn ? handleRegestrationOpen : handleRegestrationOpen
+          }
         >
           {!isLoggedIn ? (
             <AccountCircle />

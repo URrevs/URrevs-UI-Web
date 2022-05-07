@@ -12,7 +12,10 @@ import LoadingSpinner from "../../Components/Loaders/LoadingSpinner";
 import { ProductOverviewCard } from "../../Components/OverviewCard/ProductOverviewCard";
 import ProductDetailsTable from "../../Components/ProductDetailsTable";
 import { CARD_BORDER_RADIUS } from "../../constants";
-import { useGetSimilarPhonesQuery } from "../../services/phones";
+import {
+  useGetSimilarPhonesQuery,
+  useGetStatisticalInfoQuery,
+} from "../../services/phones";
 
 const CardStyled = styled(
   Card,
@@ -24,7 +27,7 @@ const CardStyled = styled(
   display: "flex",
   justifyContent: "center",
 }));
-export const SpecsTabbar = ({ data, pid }) => {
+export const ProductSpecsScreen = ({ data }) => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const componentDictionary = {
     productImage: textContainer.productImage,
@@ -34,24 +37,43 @@ export const SpecsTabbar = ({ data, pid }) => {
   };
   const [open, setOpen] = React.useState(false);
   const {
+    data: statistical,
+    isLoading: statisticalLoading,
+    error: statisticalError,
+  } = useGetStatisticalInfoQuery(data._id);
+  const {
     data: similarPhones,
-    isLoading,
-    error,
-    isFetching,
-  } = useGetSimilarPhonesQuery(pid);
+    isLoading: similarPhoneLoading,
+    error: similarPhoneError,
+  } = useGetSimilarPhonesQuery(data._id);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const theme = useTheme();
+  console.log(data);
   return (
     <React.Fragment>
       <Box sx={{ padding: "10px 12px" }}>
-        <ProductOverviewCard
-          productRating={3}
-          companyRating={3}
-          viewer="100"
-          phone={data.name}
-          type="هاتف ذكي"
-        />
+        {statisticalLoading ? (
+          <LoadingSpinner />
+        ) : statisticalError ? (
+          <div>{statisticalError.data.status}</div>
+        ) : (
+          <ProductOverviewCard
+            productRating={statistical.generalRating}
+            companyRating={statistical.companyRating}
+            viewer={statistical.views}
+            ratings={[
+              statistical.uiRating,
+              statistical.manufacturingQuality,
+              statistical.valueForMoney,
+              statistical.camera,
+              statistical.callQuality,
+              statistical.battery,
+            ]}
+            phone={data.name}
+            type="هاتف ذكي"
+          />
+        )}
         <Typography variant="S18W700C050505">
           {componentDictionary.productImage + ":"}
         </Typography>
@@ -82,7 +104,14 @@ export const SpecsTabbar = ({ data, pid }) => {
         <Typography variant="S18W700C050505">
           {componentDictionary.similarPhones + ":"}
         </Typography>
-        <HorizontalPhoneList items={similarPhones} />
+        {similarPhoneLoading ? (
+          <LoadingSpinner />
+        ) : similarPhoneError ? (
+          <div>{similarPhoneError.data.status}</div>
+        ) : (
+          <HorizontalPhoneList items={similarPhones} />
+        )}
+
         <Box
           sx={{
             display: "flex",

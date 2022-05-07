@@ -31,6 +31,7 @@ export const ProductOverviewCard = ({
   type,
   productRating,
   companyRating,
+  ratings,
 }) => {
   const textContainer = useSelector((state) => {
     return state.language.textContainer;
@@ -75,7 +76,7 @@ export const ProductOverviewCard = ({
               barSecondaryColor={
                 theme.palette.productRateCard.barSecondaryColor
               }
-              value={productRating}
+              value={productRating.toPrecision(2)}
             />
             <Typography variant="S14W500C050505">
               {textContainer.generalProductRating}
@@ -93,7 +94,7 @@ export const ProductOverviewCard = ({
               barSecondaryColor={
                 theme.palette.productRateCard.barSecondaryColor
               }
-              value={companyRating}
+              value={companyRating.toPrecision(2)}
             />
             <Typography variant="S14W500C050505">
               {textContainer.generalCompanyRating}
@@ -101,12 +102,12 @@ export const ProductOverviewCard = ({
           </Box>
         </Box>
         <Box>
-          {renderStarReview(textContainer.userInterface, 4)}
-          {renderStarReview(textContainer.manufacturingQuality, 5)}
-          {renderStarReview(textContainer.priceQuality, 4)}
-          {renderStarReview(textContainer.camera, 3)}
-          {renderStarReview(textContainer.callsQuality, 1)}
-          {renderStarReview(textContainer.battery, 5)}
+          {renderStarReview(textContainer.userInterface, ratings[0])}
+          {renderStarReview(textContainer.manufacturingQuality, ratings[1])}
+          {renderStarReview(textContainer.priceQuality, ratings[2])}
+          {renderStarReview(textContainer.camera, ratings[3])}
+          {renderStarReview(textContainer.callsQuality, ratings[4])}
+          {renderStarReview(textContainer.battery, ratings[5])}
         </Box>
       </OverviewCard>
     </React.Fragment>

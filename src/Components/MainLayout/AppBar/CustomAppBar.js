@@ -117,11 +117,9 @@ export const CustomAppBar = ({
         {/* <Toolbar>{showTabBar && <BottomTabBar />}</Toolbar> */}
       </CustomAppBarStyled>
       <Box
-        style={
-          {
-            // marginTop: 45,
-          }
-        }
+        style={{
+          marginTop: 45,
+        }}
       >
         {children}
       </Box>

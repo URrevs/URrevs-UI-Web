@@ -98,6 +98,7 @@ export const SearchScreen = () => {
   const filterResult = (results, id) => {
     return { ...results.filter((result) => result.id !== id) };
   };
+  console.log(results);
   const renderSearchItems = (title, type, id) => (
     <React.Fragment key={id}>
       <ListItem sx={{ padding: 0, margin: 0, lineHeight: 0 }}>

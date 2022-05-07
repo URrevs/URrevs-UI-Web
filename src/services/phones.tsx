@@ -41,8 +41,23 @@ export const phoneApi = createApi({
         return response.phones;
       },
     }),
+    getStatisticalInfo: builder.query({
+      query: (pid) => {
+        return {
+          url: `${pid}/stats`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: any) => {
+        return response.stats;
+      },
+    }),
   }),
 });
 
 //auto-generated hooks
-export const { useGetPhoneSpecsQuery, useGetSimilarPhonesQuery } = phoneApi;
+export const {
+  useGetPhoneSpecsQuery,
+  useGetSimilarPhonesQuery,
+  useGetStatisticalInfoQuery,
+} = phoneApi;

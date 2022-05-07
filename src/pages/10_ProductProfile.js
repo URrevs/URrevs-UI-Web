@@ -10,7 +10,7 @@ import {
   useGetPhoneSpecsQuery,
   useGetSimilarPhonesQuery,
 } from "../services/phones";
-import { SpecsTabbar } from "./ProductProfileTabs/SpecsTabbar";
+import { ProductSpecsScreen } from "./ProductProfileTabs/10_ProductSpecs";
 
 export const ProductProfile = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -55,7 +55,7 @@ export const ProductProfile = () => {
               setValue={setValue}
             />
             {value === 1 ? (
-              <SpecsTabbar data={data} pid={paramId}></SpecsTabbar>
+              <ProductSpecsScreen data={data}></ProductSpecsScreen>
             ) : null}
           </Box>
         </CustomAppBar>
