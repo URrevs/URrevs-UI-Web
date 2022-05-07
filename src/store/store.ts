@@ -8,9 +8,11 @@ import languageSlice from "./languageSlice";
 import reviewsSlice from "./reviewsSlice";
 import uiSlice from "./uiSlice";
 import { updateApi } from "../services/update";
+import { searchApi } from "../services/search";
 
 export const store = configureStore({
   reducer: {
+    [searchApi.reducerPath]: searchApi.reducer,
     [updateApi.reducerPath]: updateApi.reducer,
     [reviewsApi.reducerPath]: reviewsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,

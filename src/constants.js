@@ -7,3 +7,4 @@ export const FILTER_BUTTON_BORDER_RADIUS = 26;
 export const USER_CIRCLE_AVATAR_LARGE = 40;
 export const TEXT_FIELD_BORDER_RADIUS = 5;
 export const TEXT_FIELD_BORDER_THICKNESS = 0.5;
+export const SEARCH_INPUT_DELAY = 500; // ms
