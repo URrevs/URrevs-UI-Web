@@ -4,7 +4,7 @@ import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import OrangeGradientButton from "../../Buttons/OrangeGradientButton";
 import { DialogTemplate } from "../DialogTemplate";
-import SearchComponent from "./SearchComponent";
+import SearchComponent from "../../SearchComponent";
 
 export const CompareDialog = ({ item }) => {
   const textContainer = useSelector((state) => {

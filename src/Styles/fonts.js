@@ -99,6 +99,11 @@ export const fonts = {
     fontSize: 16,
     color: "#050505",
   },
+  S16W500C65676b: {
+    fontWeight: 500,
+    fontSize: 16,
+    color: "#65676B",
+  },
   // review card names
   S16W700C050505: {
     fontWeight: 700,
