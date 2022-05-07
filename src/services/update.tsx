@@ -23,18 +23,15 @@ export const updateApi = createApi({
       query: () => "/update/latest",
     }),
 
-    // update: builder.mutation<any>({
-    //   query: () => {
-    //     return {
-    //       url: "/profile",
-    //       method: "GET",
-    //     };
-    //   },
-    //   transformResponse: (response: { user: APIUser }) => {
-    //     return new User(response.user);
-    //   },
-    // }),
+    update: builder.mutation({
+      query: () => {
+        return {
+          url: "/updat",
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 //auto-generated hooks
-export const { useGetLastUpdateInfoQuery } = updateApi;
+export const { useGetLastUpdateInfoQuery, useUpdateMutation } = updateApi;

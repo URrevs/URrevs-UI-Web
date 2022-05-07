@@ -3,7 +3,7 @@ export default interface APIUpdate {
   numCompanies: number;
   phones: [_id: string, name: string, type: string];
   companies: [_id: string, name: string, type: string];
-  date: string;
+  date: any;
   isUpdating: boolean;
   failed: boolean;
   automatic: boolean;

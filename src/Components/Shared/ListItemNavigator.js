@@ -7,18 +7,33 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function ListItemNavigator({ title, subTitle, icon, to }) {
+export default function ListItemNavigator({
+  title,
+  subTitle,
+  icon,
+  to,
+  onClick,
+}) {
+  const navigate = useNavigate();
   const theme = useTheme();
+
   return (
-    <Link
-      to={to}
+    <ListItem
+      onClick={
+        onClick
+          ? onClick
+          : () => {
+              navigate(to);
+            }
+      }
+      disablePadding
+      dense
+      key={title}
       style={{
-        background: "none",
-        textDecoration: "none",
         "&:hover": {
           backgroundColor: theme.palette.hover,
-          color: "black",
         },
         "&:active": {
           backgroundColor: theme.palette.hover,
@@ -28,32 +43,15 @@ export default function ListItemNavigator({ title, subTitle, icon, to }) {
         },
       }}
     >
-      <ListItem
-        disablePadding
-        dense
-        key={title}
-        style={{
-          "&:hover": {
-            backgroundColor: theme.palette.hover,
-          },
-          "&:active": {
-            backgroundColor: theme.palette.hover,
-          },
-          "&:focus": {
-            backgroundColor: theme.palette.hover,
-          },
-        }}
-      >
-        <ListItemButton>
-          <ListItemIcon>{icon}</ListItemIcon>
-          <ListItemText
-            primaryTypographyProps={{ ...theme.typography.S20W700C050505 }}
-            primary={title}
-            secondaryTypographyProps={{ ...theme.typography.S16W400C65676B }}
-            secondary={subTitle}
-          />
-        </ListItemButton>
-      </ListItem>
-    </Link>
+      <ListItemButton>
+        <ListItemIcon>{icon}</ListItemIcon>
+        <ListItemText
+          primaryTypographyProps={{ ...theme.typography.S20W700C050505 }}
+          primary={title}
+          secondaryTypographyProps={{ ...theme.typography.S16W400C65676B }}
+          secondary={subTitle}
+        />
+      </ListItemButton>
+    </ListItem>
   );
 }

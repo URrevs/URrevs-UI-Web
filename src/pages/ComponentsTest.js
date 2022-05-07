@@ -21,7 +21,7 @@ import styled from "@emotion/styled";
 import { ProductRateCard } from "../Components/OverviewCard/ProductRateCard";
 import { ProductOverviewCard } from "../Components/OverviewCard/ProductOverviewCard";
 import { useAppSelector } from "../store/hooks";
-import { useConvertDateToString } from "../hooks/useConvertDateToString";
+import { convertDateToString } from "../functions/convertDateToString";
 import { useSubstituteDate } from "../hooks/useSubstituteDate";
 import { MyAppBar } from "../Components/MainLayout/AppBar/AppBar";
 import { AppBarActions } from "../Components/MainLayout/AppBar/AppBarActions";
@@ -71,7 +71,9 @@ const xiaomiImg =
 
 const ComponentsTest = (props) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  const date1 = useConvertDateToString(new Date(2020, 1, 1));
+  const language = useAppSelector((state) => state.language.language);
+  
+  const date1 = convertDateToString(new Date(2020, 1, 1),language);
   const date2 = useSubstituteDate(new Date(2022, 3, 29));
 
   let url = "sada";

@@ -1,27 +1,47 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import CompanyList from "../Components/ProductList/CompanyList";
 import ProductList from "../Components/ProductList/ProductList";
-import { useGetLastUpdateInfoQuery } from "../services/update";
-import {useConvertDateToString} from '../hooks/useConvertDateToString'
+import {
+  useGetLastUpdateInfoQuery,
+  useUpdateMutation,
+} from "../services/update";
+import { convertDateToString } from "../functions/convertDateToString";
+import OrangeGradientButton from "../Components/Buttons/OrangeGradientButton";
 
 export const UpdateProducts = () => {
+  const { data, error, isLoading } = useGetLastUpdateInfoQuery();
+
+  const [updateProductsList] = useUpdateMutation();
+  const [buttonLoading, setButtonLoading] = useState(false);
+  const [updateError, setUpdateError] = useState(null);
+
   const textContainer = useSelector((state) => state.language.textContainer);
+  const language = useSelector((state) => state.language.language);
+
   const pageDictionry = {
     updateProductsList: textContainer.updateProductsList,
-    lastUpdate: "اخر تحديث تم يدوياً/ذاتياً في (تاريخ)",
+    lastUpdateDone: "اخر تحديث تم",
+    in: "في",
+    auto: "تلقائي",
+    manual: "يدوي",
     completeSuccess: "اكتمل بنجاح",
     updateFailed: "فشل التحديث",
   };
 
-  const { isLoading, isFetching, isError, error, data } =
-    useGetLastUpdateInfoQuery();
-
-  const isAutomatic = data.automatic;
-  const updateDate = useConvertDateToString(data.date);
+  const handleUpdateProducts = async () => {
+    try {
+      setButtonLoading(true);
+      await updateProductsList();
+    } catch (e) {
+      setButtonLoading(false);
+      setUpdateError(e.data.status);
+      console.log(e);
+    }
+  };
 
   return (
     <CustomAppBar
@@ -31,8 +51,10 @@ export const UpdateProducts = () => {
     >
       {isLoading ? (
         <LoadingSpinner />
-      ) : isError ? (
-        <div>{error.data.status}</div>
+      ) : error || updateError ? (
+        <div>{error.data.status + "\n" + updateError.data.status}</div>
+      ) : data.isUpdating ? (
+        <div>Update is currently working...</div>
       ) : (
         <div style={{ margin: "0px 14.6px" }}>
           <Box
@@ -43,15 +65,26 @@ export const UpdateProducts = () => {
             }}
           >
             <Typography variant="S18W700C000000">
-              {pageDictionry.lastUpdate}
+              {`${pageDictionry.lastUpdateDone} ${
+                data.automatic ? pageDictionry.auto : pageDictionry.manual
+              } ${pageDictionry.in} ${convertDateToString(
+                data.date,
+                language
+              )}`}
             </Typography>
             <Typography variant="S16W400C65676b">
-              {pageDictionry.completeSuccess}
+              {data.failed
+                ? pageDictionry.updateFailed
+                : pageDictionry.completeSuccess}
             </Typography>
           </Box>
-          <ProductList />
+          <ProductList list={data.phones} />
           <br></br>
-          <CompanyList />
+          <CompanyList list={data.companies} />
+          <OrangeGradientButton
+            color="red"
+            onClick={() => handleUpdateProducts()}
+          />
         </div>
       )}
     </CustomAppBar>

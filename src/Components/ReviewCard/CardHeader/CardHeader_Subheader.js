@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useConvertNumberToHumanLanguage } from "../../../hooks/useMillify";
 import { useAppSelector } from "../../../store/hooks";
-import { useConvertDateToString } from "../../../hooks/useConvertDateToString";
+import { useConvertDateToString } from "../../../functions/convertDateToString";
 import { useSubstituteDate } from "../../../hooks/useSubstituteDate";
 
 const CardSubheader = ({ reviewDate, buyDate, showViewsCounter }) => {
