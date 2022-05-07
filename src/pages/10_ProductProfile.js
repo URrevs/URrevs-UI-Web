@@ -7,8 +7,6 @@ import { Tabbar } from "../Components/Tabbar/Tabbar";
 import { SpecsTabbar } from "./ProductProfileTabs/SpecsTabbar";
 
 export const ProductProfile = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const paramId = searchParams.get("pid");
   const textContainer = useSelector((state) => state.language.textContainer);
   const [value, setValue] = React.useState(0);
   const pageDictionary = {

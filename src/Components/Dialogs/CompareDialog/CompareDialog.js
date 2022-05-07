@@ -6,13 +6,13 @@ import OrangeGradientButton from "../../Buttons/OrangeGradientButton";
 import { DialogTemplate } from "../DialogTemplate";
 import SearchComponent from "../../SearchComponent";
 
-export const CompareDialog = ({ item }) => {
+export const CompareDialog = ({ item, handleClose }) => {
   const textContainer = useSelector((state) => {
     return state.language.textContainer;
   });
   return (
     <Fragment>
-      <DialogTemplate>
+      <DialogTemplate handleClose={handleClose}>
         <Box
           sx={{
             display: "flex",

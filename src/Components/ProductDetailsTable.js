@@ -44,6 +44,7 @@ const rows = {
 };
 
 const ProductDetailsTable = ({
+  // rows = {},
   isComparison,
   comparedRows,
   comparedBrand = "Oppo",
