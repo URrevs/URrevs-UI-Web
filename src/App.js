@@ -36,8 +36,6 @@ import { SearchScreen } from "./pages/8_SearchScreen";
 import { SuggestedResultsScreen } from "./pages/9_SuggestedResultsScreen";
 
 function App() {
-  console.log("app");
-
   const language = useSelector((state) => state.language.language);
   const direction = language === "ar" ? "rtl" : "ltr";
   const isDark = useSelector((state) => state.darkMode.isDark);
@@ -161,25 +159,21 @@ function App() {
   const [getProfile] = useGetCurrentUserProfileMutation();
 
   useEffect(() => {
-    let userData, apiToken, isAdmin;
     const signIn = async (user) => {
       try {
-        userData = await getApiToken(user.accessToken).unwrap();
-        apiToken = userData.token;
-        isAdmin = userData.admin;
+        console.log("hey");
+        const { token: apiToken, admin: isAdmin } = await getApiToken(
+          user.accessToken
+        ).unwrap();
+
         dispatch(
           authActions.login({
             apiToken: apiToken,
             isAdmin: isAdmin,
           })
         );
-      } catch (e) {
-        console.log(e);
-      }
 
-      try {
         const userProfile = await getProfile(apiToken).unwrap();
-
         dispatch(
           authActions.login({
             isLoggedIn: true,
@@ -201,16 +195,17 @@ function App() {
 
     // this may be checked if token still valid
     // to reduce authenticate requests
-    getAuth().onIdTokenChanged((user) => {
+    getAuth().onIdTokenChanged(async (user) => {
       if (user) {
-        signIn(user);
+        console.log("eee");
+        await signIn(user);
         try {
         } catch (error) {
           console.log(error);
         }
       }
     });
-  }, []);
+  }, [0]);
 
   return (
     <ThemeProvider theme={theme}>

@@ -13,7 +13,8 @@ const CardHeader = ({
   reviewDate,
   buyDate,
   showViewsCounter,
-  views
+  views,
+  userId,
 }) => {
   const theme = useTheme();
 
@@ -26,7 +27,13 @@ const CardHeader = ({
         <CircleAvatar userAvatar={userAvatar} avatarRadius={avatarRadius} />
       }
       action={<ActionButton />}
-      title={<CardHeaderTitle userName={userName} productName={productName} />}
+      title={
+        <CardHeaderTitle
+          userName={userName}
+          productName={productName}
+          userId={userId}
+        />
+      }
       subheader={
         <CardSubheader
           reviewDate={reviewDate}

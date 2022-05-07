@@ -70,20 +70,23 @@ export default function ReviewCard({
   });
 
   React.useEffect(() => {
-    setCroppedText(
-      cropText(
-        pros,
-        cons,
-        MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND,
-        MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND
-      )
-    );
-    clearIndexCache(index);
+    if (!fullScreen) {
+      setCroppedText(
+        cropText(
+          pros,
+          cons,
+          MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND,
+          MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND
+        )
+      );
+      clearIndexCache(index);
+    } else {
+      setCroppedText({ pros: pros, cons: cons, endOfText: true });
+    }
   }, []);
 
   const navigateToFullScreen = () => {
-    console.log("aaaa");
-    navigate(`review?id=${reviewDetails.id}`);
+    if (!fullScreen) navigate(`review?id=${reviewDetails.id}`);
   };
 
   const handleSeeMoreExpansion = () => {
@@ -162,6 +165,7 @@ export default function ReviewCard({
         productName={productName}
         reviewDate={reviewDetails.date_rev}
         buyDate={reviewDetails.date_buy}
+        userId={reviewDetails.user_id}
         showViewsCounter={true}
         views={views}
       />
@@ -199,7 +203,7 @@ export default function ReviewCard({
                 expanded={expanded}
                 clearIndexCache={clearIndexCache}
                 index={index}
-                ratings={ratings.slice(1)}
+                ratings={ratings}
               />
             </div>
           )}

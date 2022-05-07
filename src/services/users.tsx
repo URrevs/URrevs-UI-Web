@@ -26,9 +26,8 @@ export const usersApi = createApi({
         return {
           url: "/authenticate",
           method: "GET",
-
           headers: {
-            Authorization: `Bearer ${token}`,
+            authorization: `Bearer ${token}`,
           },
         };
       },
