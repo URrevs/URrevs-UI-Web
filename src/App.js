@@ -18,6 +18,7 @@ import "./App.css";
 import Layout from "./Components/MainLayout/Layout";
 import RTL from "./Components/RTL";
 import { ProductProfile } from "./pages/10_ProductProfile";
+import { ComparisonScreen } from "./pages/11_ComparisonScreen";
 import { AllProductsScreen } from "./pages/16_AllProductsScreen";
 import ReviewPostingScreen from "./pages/18_ReviewPostingScreen";
 import Menu from "./pages/20_Menu";
@@ -252,8 +253,13 @@ function App() {
                           element={<OwnedPhonesPage />}
                         />
                       </Route>
+
                       <Route path={ROUTES_NAMES.PHONE_PROFILE}>
                         <Route index element={<ProductProfile />} />
+                        <Route
+                          path={ROUTES_NAMES.COMPARISON}
+                          element={<ComparisonScreen />}
+                        />
                       </Route>
                     </Route>
                     <Route path={ROUTES_NAMES.HOME}>

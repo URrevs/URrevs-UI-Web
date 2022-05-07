@@ -16,6 +16,7 @@ const ROUTES_NAMES = {
   PHONE_PROFILE: "phone",
   //level 3
   // ADD_COMPETITION: "add-competition",
+  COMPARISON: "compare",
   UPDATE: "update",
   //level 4
 };
