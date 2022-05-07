@@ -41,33 +41,6 @@ export const phoneApi = createApi({
         return response.phones;
       },
     }),
-
-    // addToMyRecentSearches: builder.mutation({
-    //   query: ({ id: productId, type }) => {
-    //     return {
-    //       url: `/recent`,
-    //       method: "PUT",
-    //       body: { _id: productId, type: type },
-    //     };
-    //   },
-    // }),
-
-    // deleteRecentSearches: builder.mutation({
-    //   query: ({ id: productId }) => {
-    //     return {
-    //       url: `/recent`,
-    //       method: "DELETE",
-    //       body: { _id: productId },
-    //     };
-    //   },
-    // }),
-
-    // getMyRecentSearches: builder.query({
-    //   query: () => `/recent`,
-    //   transformResponse: (response: any) => {
-    //     return response.recent;
-    //   },
-    // }),
   }),
 });
 

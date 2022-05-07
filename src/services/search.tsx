@@ -48,6 +48,17 @@ export const searchApi = createApi({
         };
       },
     }),
+    searchPhonesOnly: builder.mutation({
+      query: (searchWord: string) => {
+        return {
+          url: `/products/phones?q=${searchWord}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: any) => {
+        return response.phones;
+      },
+    }),
     getMyRecentSearches: builder.query({
       query: () => `/recent`,
       transformResponse: (response: any) => {
@@ -61,6 +72,7 @@ export const searchApi = createApi({
 export const {
   useSearchAllMutation,
   useGetMyRecentSearchesQuery,
+  useSearchPhonesOnlyMutation,
   useAddToMyRecentSearchesMutation,
   useDeleteRecentSearchesMutation,
 } = searchApi;

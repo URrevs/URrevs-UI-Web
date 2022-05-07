@@ -6,7 +6,7 @@ import OrangeGradientButton from "../../Buttons/OrangeGradientButton";
 import { DialogTemplate } from "../DialogTemplate";
 import SearchComponent from "../../SearchComponent";
 
-export const CompareDialog = ({ item, handleClose }) => {
+export const CompareDialog = ({ item, handleClose, phones }) => {
   const textContainer = useSelector((state) => {
     return state.language.textContainer;
   });
