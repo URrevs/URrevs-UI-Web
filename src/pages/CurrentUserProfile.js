@@ -88,11 +88,7 @@ export default function CurrentUserProfilePage({}) {
 
   return (
     <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true}>
-      <div
-        style={{
-          paddingTop: 15,
-        }}
-      >
+      <div>
         <div
           style={{
             display: "flex",

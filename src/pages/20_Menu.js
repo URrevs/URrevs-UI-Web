@@ -85,7 +85,7 @@ export default function Menu() {
   );
   const useProfileButton = () => (
     <Link
-      to={ROUTES_NAMES.USER_PROFILE}
+      to={`../../${ROUTES_NAMES.USER_PROFILE}?uid=${profileData.uid}`}
       style={{
         background: "none",
         textDecoration: "none",
@@ -120,7 +120,7 @@ export default function Menu() {
           {userProfile()}
           <ListItemText
             primaryTypographyProps={{ ...theme.typography.S20W700C050505 }}
-            primary={"Omar Gamal"}
+            primary={profileData.name}
             secondaryTypographyProps={{
               ...theme.typography.S16W400C65676B,
             }}
