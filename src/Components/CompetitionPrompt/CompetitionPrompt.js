@@ -39,7 +39,7 @@ const PromptStyled = styled(
   padding: "20px 20px",
 }));
 
-export const CompetitionPrompt = ({ button }) => {
+export const CompetitionPrompt = ({ button, handleClose }) => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const handleInitialValues = (fieldName, empty = "") => {
     return sessionStorage.getItem(fieldName)
@@ -126,6 +126,7 @@ export const CompetitionPrompt = ({ button }) => {
                     {textContainer.addingCompetition}
                   </Typography>
                   <IconButton
+                    onClick={handleClose}
                     sx={{
                       border: "1px solid #050505",
                       padding: 0,

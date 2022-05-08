@@ -1,6 +1,5 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, ListItemButton, Stack, List, Typography } from "@mui/material";
 import React from "react";
-import { Grid } from "react-virtualized";
 import CardStyled from "../CardStyled";
 
 export const HorizontalPhoneList = ({ items = [] }) => {
@@ -26,9 +25,24 @@ export const HorizontalPhoneList = ({ items = [] }) => {
   //       imgSrc: "https://m.media-amazon.com/images/I/41o9nGF3rPL._AC_SY580_.jpg",
   //     },
   //   ];
+  const listItem = (name, imgSrc, id) => {
+    return (
+      <ListItemButton>
+        <img
+          alt="band"
+          style={{
+            maxWidth: "94px",
+          }}
+          src={imgSrc}
+        ></img>
+        <Typography variant="S18W500C050505">{name}</Typography>
+      </ListItemButton>
+    );
+  };
+
   const renderItem = (name, imgSrc, id) => {
     return (
-      <Box
+      <ListItemButton
         key={id}
         sx={{
           display: "flex",
@@ -46,24 +60,21 @@ export const HorizontalPhoneList = ({ items = [] }) => {
           src={imgSrc}
         ></img>
         <Typography variant="S18W500C050505">{name}</Typography>
-      </Box>
+      </ListItemButton>
     );
   };
   return (
     <React.Fragment>
       <CardStyled>
-        <Box
+        <List
           sx={{
-            overflow: "auto",
+            overflowX: "scroll",
             display: "flex",
-            width: "100%",
             flexDirection: "row",
-            justifyContent: "center",
           }}
-          direction="row"
         >
           {items.map((item) => renderItem(item.name, item.picture, item._id))}
-        </Box>
+        </List>
       </CardStyled>
     </React.Fragment>
   );
