@@ -83,7 +83,7 @@ export default function Menu() {
     {
       title: pageDictionry.referalCode,
       icon: <GroupsOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: "",
+      onClick: () => navigator.clipboard.writeText(profileData.refCode),
       subtitle: pageDictionry.inviteFriends,
     },
     {
@@ -159,7 +159,7 @@ export default function Menu() {
           },
         }}
       >
-        <ListItemButton>
+        <ListItemButton sx={{ padding: 0 }}>
           {userProfile()}
           <ListItemText
             primaryTypographyProps={{ ...theme.typography.S20W700C050505 }}
@@ -196,13 +196,14 @@ export default function Menu() {
         marginBottom: 70,
       }}
     >
-      <Modal open={open} onClose={handleClose}>
+      <Modal open={open} onClose={handleClose} dir={theme.direction}>
         <Box>
           <SignoutDialog handleClose={handleClose} />
         </Box>
       </Modal>
       <List>
         {useProfileButton()}
+        <Box style={{ height: 12 }}></Box>
         {listItems.map((item, index) => {
           return (
             <div key={item.title + index}>
@@ -217,7 +218,7 @@ export default function Menu() {
           );
         })}
       </List>
-      <Box sx={{ paddingTop: "122px" }}>
+      <Box sx={{ paddingTop: "20px" }}>
         <Typography variant="S22W500C050505">{`${pageDictionry.followUs}:`}</Typography>
         <Box
           sx={{

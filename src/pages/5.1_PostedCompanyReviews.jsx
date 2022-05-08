@@ -120,9 +120,13 @@ function PostedCompanyReviews({ query }) {
   };
 
   return (
-    <CustomAppBar showLabel label="مراجعاتي" showBackBtn>
-      <FilterTabbar />
-      <div style={{ height: "calc(100vh)", margin: "0 12px" }}>
+    <CustomAppBar
+      showLabel
+      label="مراجعاتي"
+      showBackBtn
+      tabBar={<FilterTabbar />}
+    >
+      <div style={{ height: "calc(100vh)", margin: "0 0" }}>
         <AutoSizer>
           {({ height, width }) => {
             return (

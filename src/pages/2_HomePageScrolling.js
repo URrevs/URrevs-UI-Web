@@ -124,7 +124,7 @@ function Reviews() {
 
   return (
     <Fragment>
-      <div style={{ height: "calc(100vh)", margin: "0 12px" }}>
+      <div style={{ height: "calc(100vh)", margin: "0" }}>
         <AutoSizer>
           {({ height, width }) => {
             return (

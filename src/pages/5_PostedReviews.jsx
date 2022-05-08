@@ -29,7 +29,8 @@ function PostedReviews({ query }) {
   const [reviewsList, setReviewsList] = useState([]);
   const [page, setPage] = useState(1);
 
-  const { data, isLoading, isFetching, error } = useGetUserPhoneReviewsQuery(page);
+  const { data, isLoading, isFetching, error } =
+    useGetUserPhoneReviewsQuery(page);
 
   const theme = useTheme();
   const listRef = useRef();
@@ -117,9 +118,13 @@ function PostedReviews({ query }) {
   };
 
   return (
-    <CustomAppBar showLabel label="مراجعاتي" showBackBtn>
-      <FilterTabbar />
-      <div style={{ height: "calc(100vh)", margin: "0 12px" }}>
+    <CustomAppBar
+      showLabel
+      label="مراجعاتي"
+      showBackBtn
+      tabBar={<FilterTabbar />}
+    >
+      <div style={{ height: "calc(100vh)", margin: "0 0" }}>
         <AutoSizer>
           {({ height, width }) => {
             return (

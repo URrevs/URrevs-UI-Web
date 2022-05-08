@@ -84,19 +84,20 @@ export const SignoutDialog = ({ handleClose }) => {
           sx={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "flex-start",
+            justifyContent: "flex-end",
             paddingBottom: "12px",
           }}
         >
+          <BasicButton
+            onClick={() => (checked ? logOutFromAllDevices() : signout())}
+            sx={{ marginLeft: "22px" }}
+          >
+            <Typography variant="S16W800CE41D1D">
+              {textContainer.logOut}
+            </Typography>
+          </BasicButton>
+          <Box sx={{ width: 12 }}></Box>
           <BasicButton>
-            <BasicButton
-              onClick={() => (checked ? logOutFromAllDevices() : signout())}
-              sx={{ marginLeft: "22px" }}
-            >
-              <Typography variant="S16W800CE41D1D">
-                {textContainer.logOut}
-              </Typography>
-            </BasicButton>
             <Typography onClick={handleClose} variant="S16W800C050505">
               {textContainer.cancel}
             </Typography>
