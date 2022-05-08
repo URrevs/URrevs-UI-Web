@@ -42,6 +42,7 @@ import React from "react";
 import { HowToWinDialog } from "../Components/Dialogs/HowToWinDialog";
 import CompanyList from "../Components/ProductList/CompanyList";
 import { HorizontalPhoneList } from "../Components/HorizontalPhoneList/HorizontalPhoneList";
+import StarRating from "../Components/Form/StarRating";
 const testComments = {
   a1: {
     likes: 20000000,
@@ -73,7 +74,7 @@ const xiaomiImg =
 const ComponentsTest = (props) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const language = useAppSelector((state) => state.language.language);
-
+  const [value, setValue] = React.useState(0);
   const date1 = convertDateToString(new Date(2020, 1, 1), language);
   const date2 = substituteDate(new Date(2022, 3, 29), language);
 
@@ -95,6 +96,13 @@ const ComponentsTest = (props) => {
           textContainer.tabBarSpecs,
           textContainer.tabBarQuestionsAndAnswers,
         ]}
+      />
+      <br />
+      <StarRating
+        starValue={value}
+        onRatingChange={(rating) => {
+          setValue(rating);
+        }}
       />
       <br />
       <Tabbar

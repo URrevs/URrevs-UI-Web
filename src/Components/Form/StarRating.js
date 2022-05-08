@@ -50,8 +50,8 @@ const StarRating = ({
             onChange={
               readOnly
                 ? null
-                : (rating) => {
-                    onRatingChange(rating);
+                : (event) => {
+                    onRatingChange(event.target.value);
                   }
             }
           />
