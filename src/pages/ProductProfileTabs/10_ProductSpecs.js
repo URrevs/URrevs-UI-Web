@@ -49,7 +49,6 @@ export const ProductSpecsScreen = ({ data }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const theme = useTheme();
-  console.log(data);
   return (
     <React.Fragment>
       <Box sx={{ padding: "10px 12px" }}>
@@ -100,7 +99,7 @@ export const ProductSpecsScreen = ({ data }) => {
             />
           </IconButton>
         </Typography>
-        <ProductDetailsTable />
+        <ProductDetailsTable phoneData={data} />
         <Typography variant="S18W700C050505">
           {componentDictionary.similarPhones + ":"}
         </Typography>
