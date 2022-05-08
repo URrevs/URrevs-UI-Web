@@ -221,14 +221,9 @@ function App() {
         <RTL direction={theme.direction}>
           <BrowserRouter>
             <Layout>
-              <Grid
-                container
-                style={{
-                  display: theme.isMobile ? "block" : "flex",
-                }}
-              >
-                <Grid item md={2} sm={0}></Grid>
-                <Grid item md={8} sm={12}>
+              <Grid container style={{}}>
+                <Grid item md={2} sm={0.5} xs={0}></Grid>
+                <Grid item md={8} sm={11} xs={12}>
                   <Routes>
                     <Route
                       path={ROUTES_NAMES.EXACT_REVIEW}
@@ -300,8 +295,9 @@ function App() {
 
                     <Route
                       path={ROUTES_NAMES.PRODUCTS}
-                      element={<div>products</div>}
+                      element={<AllProductsScreen />}
                     />
+
                     {/* testing routes */}
                     <Route path="/test" element={<AddReview />} />
                     <Route
@@ -310,7 +306,7 @@ function App() {
                     />
                   </Routes>
                 </Grid>
-                <Grid item md={2} sm={0}></Grid>
+                <Grid item md={2} sm={0.5} xs={0}></Grid>
               </Grid>
             </Layout>
           </BrowserRouter>

@@ -23,6 +23,7 @@ export const FilterTabbar = () => {
           padding: "6px 0px 5px 17px",
           minHeight: "45px",
           borderRadius: "0px 0px 10px 10px",
+          margin: "0",
         }}
       >
         <Button
