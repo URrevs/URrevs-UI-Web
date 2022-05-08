@@ -58,7 +58,7 @@ export default function Menu() {
     {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: "",
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.MY_REVIEWS}`,
     },
     {
       title: pageDictionry.myQuestions,
