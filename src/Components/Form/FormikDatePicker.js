@@ -28,6 +28,7 @@ const FormikDatePicker = ({ label, fieldName, isRequired = true }) => {
           >
             <MobileDatePicker
               value={value}
+              views={["year", "month"]}
               onChange={(newValue) => {
                 setFieldValue(fieldName, newValue);
                 if (newValue) sessionStorage.setItem(fieldName, newValue);

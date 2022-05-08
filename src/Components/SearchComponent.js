@@ -44,7 +44,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     width: "100%",
   },
 }));
-export default function SearchComponent({ label, setCompareItem }) {
+export default function SearchComponent({
+  label,
+  setCompareItem,
+  isFormik = false,
+  error = false,
+  helperText = "",
+}) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [results, setResults] = React.useState([]);
 
@@ -54,9 +60,8 @@ export default function SearchComponent({ label, setCompareItem }) {
     <Stack spacing={2} sx={{ width: "100%" }}>
       <Autocomplete
         onChange={(e, value) => {
-          setCompareItem(value.id);
+          setCompareItem(value);
         }}
-        id="free-solo-demo"
         freeSolo
         sx={{
           filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.1))",
@@ -64,7 +69,9 @@ export default function SearchComponent({ label, setCompareItem }) {
         disableClearable
         options={results.map((option) => ({
           label: option.name,
-          id: option._id,
+          pid: option._id,
+          cid: "", //TODO
+          //GET MANUFACTURING COMPANY
         }))}
         renderInput={(params) => (
           <TextField
@@ -84,7 +91,6 @@ export default function SearchComponent({ label, setCompareItem }) {
                 setTimeout(async () => {
                   if (e.target.value.trim() !== "") {
                     const phones = await search(e.target.value.trim()).unwrap();
-                    console.log(phones);
                     setResults(phones);
                   }
                 }, SEARCH_INPUT_DELAY);
@@ -92,10 +98,12 @@ export default function SearchComponent({ label, setCompareItem }) {
                 console.log(e);
               }
             }}
+            error={error}
+            helperText={helperText}
             placeholder={label}
             InputProps={{
               ...params.InputProps,
-              type: "search",
+              // type: "search",
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton onClick={() => {}}>

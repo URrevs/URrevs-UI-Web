@@ -10,11 +10,18 @@ import FormikDatePicker from "../Components/Form/FormikDatePicker";
 import AddIcon from "@mui/icons-material/Add";
 import FormikTextField from "../Components/Form/FormikTextField";
 import FormikStar from "../Components/Form/FormikStar";
-import SearchComponent from "../Components/SearchComponent";
 import OrangeGradientButton from "../Components/Buttons/OrangeGradientButton";
 import { useTheme } from "@emotion/react";
+import FormikSearchComponent from "../Components/Form/FormikSearchComponent";
+import { useGetManufacturingCompanyMutation } from "../services/phones";
 
+/* Form Validation */
 const BasicValidationSchema = Yup.object().shape({
+  chooseProduct: Yup.string().required("Select a phone"),
+
+  // cid: Yup.string().required("Select a phone"),
+  // name: Yup.string().required("Select a phone"),
+
   purchaseDate: Yup.date().required("Select a Date"),
   manufacturingQuality: Yup.number().integer().min(1, "Select Stars"),
   userInterface: Yup.number().integer().min(1, "Select Stars"),
@@ -86,6 +93,7 @@ const Basic = ({ ...props }) => {
       text: pageDictionary.battery,
     },
   ];
+
   const renderFields = (text, fieldName, label, controlled = false) => {
     return (
       <Stack spacing={2} sx={{ width: "100%" }}>
@@ -100,14 +108,36 @@ const Basic = ({ ...props }) => {
       </Stack>
     );
   };
+
+  // const renderCompanyFields = async () => {
+  //   // const companyId = await getManufacturingCompany(props.values.chooseProduct);
+  //   // const companyId = props.values.chooseProduct;
+  //   console.log(props.values.chooseProduct);
+  //   // props.setFieldValue("companyId", companyId);
+  //   return (
+
+  //   );
+  // };
   return (
     <React.Fragment>
       <form onSubmit={props.handleSubmit}>
+        {/* Searchbar */}
+
+        {/* 
+          TODO
+          strange error occurs when you hit submit button before writing in any field
+         */}
         <Typography variant="h6">
           {pageDictionary.chooseProduct + ":"}
         </Typography>
-        <SearchComponent label={pageDictionary.writeProductName} />
+        <FormikSearchComponent
+          fieldName="chooseProduct"
+          label={textContainer.writeProductName}
+        />
+
         <br />
+
+        {/* Datepicker*/}
         <Typography variant="S18W500C050505">
           {pageDictionary.howLong}
         </Typography>
@@ -124,6 +154,7 @@ const Basic = ({ ...props }) => {
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <FormikStar fieldName="overAllExp" />
         </Box>
+        {/* Star Ratings  */}
         {listOfRatings.map((comp) => {
           return (
             <div
@@ -138,37 +169,45 @@ const Basic = ({ ...props }) => {
             </div>
           );
         })}
-
+        {/* TextFields */}
         {renderFields(
           pageDictionary.likeAboutProduct,
           "likeAboutProduct",
           pageDictionary.pros
         )}
-
         {renderFields(
           pageDictionary.hateAboutProduct,
           "hateAboutProduct",
           pageDictionary.cons
         )}
 
-        <Typography variant="S18W500C050505">
-          {pageDictionary.rateManufacturer + ":"}
-        </Typography>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <FormikStar fieldName="rateManufacturer" />
-        </Box>
-        {renderFields(
-          pageDictionary.likeAbout,
-          "likeAbout",
-          pageDictionary.pros
-        )}
-        {renderFields(
-          `${pageDictionary.hateAbout}`,
-          "hateAbout",
-          pageDictionary.cons
-        )}
+        {/* RENDER COMPANY REVIEW FIELDS */}
+        {props.values.companyId ? (
+          <React.Fragment>
+            <Typography variant="S18W500C050505">
+              {pageDictionary.rateManufacturer}
+            </Typography>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <FormikStar fieldName="rateManufacturer" />
+            </Box>
+            {renderFields(
+              `${pageDictionary.likeAbout} ${props.values.companyId.name}`,
+              "likeAbout",
+              pageDictionary.pros
+            )}
+            {renderFields(
+              `${pageDictionary.hateAbout} ${props.values.companyId.name}`,
+              "hateAbout",
+              pageDictionary.cons
+            )}
+          </React.Fragment>
+        ) : null}
         <Typography
-          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
           variant="S18W500C050505"
         >
           {pageDictionary.enterInvitationCode + ":"}
@@ -188,11 +227,14 @@ const Basic = ({ ...props }) => {
           </IconButton>
         </Typography>
         <br />
+        {/* Invitation Code*/}
         <FormikTextField
-          fieldName={"enterInvitationCode"}
+          fieldName={"invitationCode"}
           label={pageDictionary.invitationCode}
           isControlled={false}
         />
+
+        {/* Submit Button */}
 
         <OrangeGradientButton
           type="submit"
@@ -228,7 +270,9 @@ const ReviewPostingScreen = () => {
     <div style={{ marginBottom: "85px" }}>
       <Formik
         initialValues={{
-          overAllExp: 0,
+          companyId: "",
+          chooseProduct: "",
+          overAllExp: parseInt(handleInitialValues("overAllExp", 0)),
           manufacturingQuality: parseInt(
             handleInitialValues("manufacturingQuality", 0)
           ),
@@ -250,6 +294,7 @@ const ReviewPostingScreen = () => {
         validationSchema={BasicValidationSchema}
         onSubmit={(values, { setSubmitting }) => {
           sessionStorage.clear();
+
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
             navigate("../");
