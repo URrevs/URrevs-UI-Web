@@ -196,7 +196,7 @@ const Basic = ({ ...props }) => {
 
         <OrangeGradientButton
           color="red"
-          sx={{ width: "100%", textAlign: "center" }}
+          sx={{ width: "100%", textAlign: "center", marginTop: "20px" }}
         >
           <Box
             sx={{
@@ -224,7 +224,7 @@ const Basic = ({ ...props }) => {
 const ReviewPostingScreen = () => {
   const navigate = useNavigate();
   return (
-    <div>
+    <div style={{ marginBottom: "85px" }}>
       <Formik
         initialValues={{
           productGeneralRating: parseInt(
