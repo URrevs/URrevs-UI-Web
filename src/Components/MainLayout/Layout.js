@@ -128,7 +128,7 @@ export default function Layout(props) {
   return (
     <Box sx={{}}>
       {customAppBar()}
-      {appBar()}
+      {/* {appBar()} */}
       {/* {theme.isMobile ? <></> : <MyDrawer open={open} setOpen={setOpen} />} */}
 
       <Registeration />

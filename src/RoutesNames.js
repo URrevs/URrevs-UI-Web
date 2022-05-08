@@ -10,12 +10,15 @@ const ROUTES_NAMES = {
 
   // level 2
   USER_PROFILE: "user-profile",
-  OWNED_PHONES: "owned-phones",
   ADMIN_PANEL: "admin-panel",
   EXACT_REVIEW: "review",
   PHONE_PROFILE: "phone",
   //level 3
   // ADD_COMPETITION: "add-competition",
+  OWNED_PHONES: "owned-phones",
+  MY_REVIEWS: 'my-reviews',
+  MY_PHONE_REVIEWS: 'phones',
+  MY_COMPANY_REVIEWS: 'companies',
   COMPARISON: "compare",
   UPDATE: "update",
   //level 4

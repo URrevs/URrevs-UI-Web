@@ -15,6 +15,7 @@ const CardHeader = ({
   showViewsCounter,
   views,
   userId,
+  targetId,
 }) => {
   const theme = useTheme();
 
@@ -32,6 +33,7 @@ const CardHeader = ({
           userName={userName}
           productName={productName}
           userId={userId}
+          targetId={targetId}
         />
       }
       subheader={

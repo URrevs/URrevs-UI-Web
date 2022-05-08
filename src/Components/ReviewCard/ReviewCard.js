@@ -26,30 +26,37 @@ export default function ReviewCard({
   index,
   reviewDetails,
   isPhoneReview,
-  views,
-  ratings,
   fullScreen,
+  isExpanded,
 }) {
   const isReview = true;
   const theme = useTheme();
   const navigate = useNavigate();
 
+  const ratings = [
+    reviewDetails.generalRating,
+    reviewDetails.uiRating,
+    reviewDetails.manufacturingQuality,
+    reviewDetails.valueForMoney,
+    reviewDetails.camera,
+    reviewDetails.callQuality,
+    reviewDetails.battery,
+  ];
+
   let pros =
     "Xiaomi mi9t or k20  الهاتف باختصار اداك مميزات كثيرة جدا بسعر قليل لو المميزات دي حطتها في شركة تانيه يعدى ال ١٠ الف و هو اعلى نسخة منه ٥٩٩٩ اولا processor Snapdragon 730  الصراحه جربته على كل ال apps التقيلة و مهنجش فاي واحد ده غير التنقل بين ال apps بسرعه جدا و مدة فتح اي واحد من ثانية لي اثنين  Ram 6gb و طبعا مساعدة فالسرعه جدا    اهم جزء camera  بيجي ب٣ كاميرات  ١ . كاميرا ٤٨ ميجا و زاوية واسعة ودي فالتفاصيل خرافة + معالجة الصور في الكام دي حلوة جدا   ٢. Wide angle ودي خالتني اصور بزاوية واسعه جدا ٠.٦ x ومتوقعتش ان الصورة تطلع فيه حلوة وخصوصا فالاضاءة القوية  ٣. كاميرا العزل ودي شايف انها مش اوي الصراحة وشاومي قالت هتظبطها مع الابديت الجديد  تجربة ال hdr فالصور حلوة جدا  .من اكتر الحجات الحلوة night mide و دي بتوزع الاضاءة بشكل ممتاز بالليل وده من اهم السوفتوير فيتشرز اللي اضافتها  بالنسبة للزوم فانت لحد ٢x الصورة حلوة اما بتزود الصورة بتتدمر  الفيديو بيصور لحد 4k او 1080 60 fps ده موجود فاي موبايل انما الجديد ال staplizer اللي شاومي حطته فالموبايل مثبت الكاميرا فالفيديو بشكل رهيب زي كاميرا gopro لو عارفينها +حطو التثبيت ده كمان في الزاوية الواسعه لك ان تتخيل با  في برضو بعض الحجات زي تايم لابس و slow motion بس شايفهم عاديين  ال pop up فيها كل الmodes اللي فوق +٢٠ ميجا وصورها حلوة بس مش واو يعني بس ممكن تغير صوت الكام حاجه روشه متخافش من البوب اب لان احساس الشاشه الكاملة حاجه تانية.   الشاشة amaloed حاجه فخمه جدا وصورة جميلة جدا و خصوصا لما جربت hdr+ على اليوتيوب الشاشة الكاملة حلوة جدا فالفيديوهات  البصمة المدمجه فالشاشة اثبتت نجاحها مش زي a70 سريعه جدا  .برضو قفل الوجه سريع و بيفتح فالاضاءة القليلة   تصميم الموبايل   مريح فالايد والضهر ازاز وشكله جميل و الشاشة gorilla 5plus الموبايل وقع مرتين ومنكسرش   في با بعض الحجات هتلاقوها فالسيتنج لزيزة بس موجودة في موبايلات كتير زي الموبايلين عشان الخصوصية     الموبايل بيشحن في ساعه لحد ٩٠/١٠٠  ";
 
+  // let pros = reviewDetails.pros;
   let cons = reviewDetails.cons;
 
-  const userName = reviewDetails.user_name;
+  const userName = reviewDetails.userName;
 
-  const brand = reviewDetails.brand ?? "";
-  const product = reviewDetails.product ?? "";
-  const productName = brand + " " + product + " ";
+  const productName = reviewDetails.targetName;
 
-  const initialIsExpanded = reviewDetails.isExpanded === true ? true : false;
+  const initialIsExpanded = isExpanded === true ? true : false;
   const [expanded, setExpanded] = React.useState(initialIsExpanded);
 
-  const initialIsLiked = reviewDetails.isExpanded === true ? true : false;
-  const [isLiked, setIsLiked] = React.useState(initialIsLiked);
+  const [isLiked, setIsLiked] = React.useState(reviewDetails.liked);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -86,7 +93,7 @@ export default function ReviewCard({
   }, []);
 
   const navigateToFullScreen = () => {
-    if (!fullScreen) navigate(`review?id=${reviewDetails.id}`);
+    if (!fullScreen) navigate(`/review?id=${reviewDetails._id}`);
   };
 
   const handleSeeMoreExpansion = () => {
@@ -163,11 +170,12 @@ export default function ReviewCard({
         userName={userName}
         avatarRadius={USER_CIRCLE_AVATAR_LARGE}
         productName={productName}
-        reviewDate={reviewDetails.date_rev}
-        buyDate={reviewDetails.date_buy}
-        userId={reviewDetails.user_id}
+        reviewDate={reviewDetails.createdAt}
+        buyDate={reviewDetails.ownedAt}
+        userId={reviewDetails.userId}
+        targetId={reviewDetails.targetId}
         showViewsCounter={true}
-        views={views}
+        views={reviewDetails.views}
       />
       <CardContent style={{ padding: 0 }}>
         <ButtonBase

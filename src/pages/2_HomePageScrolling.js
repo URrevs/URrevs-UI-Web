@@ -43,7 +43,6 @@ function Reviews() {
   };
 
   useEffect(() => {
-    fetch("");
     const scrollIndex = currentIndex === 0 ? 0 : currentIndex + 64;
 
     setTimeout(() => window.scrollTo(0, scrollIndex), 500);
@@ -91,45 +90,34 @@ function Reviews() {
       maxIndex === reviewsList.length
     ) {
       maxIndex = 0;
-      dispatch(reviewsActions.increasePage());
+      // dispatch(reviewsActions.increasePage());
     }
     maxIndex = Math.max(index, maxIndex);
     return (
       <div key={key}>
-        {index >= reviewsList.length ? (
-          <div
-            style={{
-              height: "100%",
-              width: "100%",
-              position: "absolute",
-              display: "flex",
-              alignItems: "flex-end",
-              justifyContent: "center",
-            }}
-          >
-            <div style={{ width: "100%" }}>
-              {[...Array(2)].map((a, index) => (
+        <CellMeasurer
+          cache={cache}
+          parent={parent}
+          columnIndex={0}
+          rowIndex={index}
+        >
+          <div style={{ ...style, direction: theme.direction }}>
+            {index >= reviewsList.length ? (
+              [...Array(1)].map((a, index) => (
                 <LoadingReviewSkeleton key={index} />
-              ))}
-            </div>
-          </div>
-        ) : (
-          <CellMeasurer
-            cache={cache}
-            parent={parent}
-            columnIndex={0}
-            rowIndex={index}
-          >
-            <div style={{ ...style, direction: theme.direction }}>
+              ))
+            ) : (
               <ReviewCard
                 index={index}
+                fullScreen={false}
+                isExpanded={false}
                 clearIndexCache={clearCache}
                 reviewDetails={reviewsList[index]}
                 isPhoneReview={true}
               />
-            </div>
-          </CellMeasurer>
-        )}
+            )}
+          </div>
+        </CellMeasurer>
       </div>
     );
   };

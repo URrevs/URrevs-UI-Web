@@ -6,7 +6,7 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { replace } from "stylis";
 
-const CardHeaderTitle = ({ userName, productName, userId }) => {
+const CardHeaderTitle = ({ userName, productName, userId, targetId }) => {
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -74,7 +74,7 @@ const CardHeaderTitle = ({ userName, productName, userId }) => {
               textDecoration: "underline",
             },
           }}
-          onClick={() => console.log("target name clicked")}
+          onClick={() => navigate(`/phone?pid=${targetId}`, replace)}
         >
           {productName}
         </Typography>

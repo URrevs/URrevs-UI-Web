@@ -22,7 +22,7 @@ const LoadingReviewSkeleton = () => {
       <Card
         sx={{
           width: "100%",
-          margin: "15px 16px",
+          margin: "15px 0px",
         }}
       >
         <CardHeader

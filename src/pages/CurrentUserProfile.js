@@ -35,7 +35,7 @@ export default function CurrentUserProfilePage({}) {
     {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: "",
+      to: `${ROUTES_NAMES.MY_REVIEWS}`,
     },
     {
       title: pageDictionry.myQuestions,

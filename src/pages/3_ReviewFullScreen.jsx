@@ -29,35 +29,8 @@ export default function InteractionWithReview() {
           <ReviewCard
             isPhoneReview={true}
             fullScreen={true}
-            views={data.views}
-            reviewDetails={{
-              id: data.id,
-              user_id: data.userId,
-              user_name: data.userName,
-              brand: data.targetName,
-              rating: 1,
-              pros: data.pros,
-              cons: data.cons,
-              ratings: {},
-              brand_rating: 1,
-              date_buy: substituteDate(data.ownedAt, language),
-              date_rev: convertDateToString(data.createdAt, language),
-              isExpanded: true,
-              user_avatar: data.photo,
-              likesCounter: data.likes,
-              commentsCounter: data.commentsCount,
-              shareCounter: data.shares,
-              isLiked: data.liked,
-            }}
-            ratings={[
-              data.generalRating,
-              data.uiRating,
-              data.manufacturingQuality,
-              data.valueForMoney,
-              data.camera,
-              data.callQuality,
-              data.battery,
-            ]}
+            isExpanded={true}
+            reviewDetails={data}
             clearIndexCache={() => {}}
             index={0}
           />

@@ -3,10 +3,16 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useConvertNumberToHumanLanguage } from "../../../hooks/useMillify";
 import { useAppSelector } from "../../../store/hooks";
+import { convertDateToString } from "../../../functions/convertDateToString";
+import { substituteDate } from "../../../functions/substituteDate";
 
 const CardSubheader = ({ reviewDate, buyDate, showViewsCounter, views }) => {
   const convert = useConvertNumberToHumanLanguage;
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const language = useAppSelector((state) => state.language.language);
+
+  reviewDate = convertDateToString(reviewDate, language);
+  buyDate = substituteDate(buyDate, language);
 
   return (
     <React.Fragment>
