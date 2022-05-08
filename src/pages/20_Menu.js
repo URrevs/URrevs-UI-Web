@@ -17,6 +17,7 @@ import {
   ListItem,
   ListItemButton,
   Typography,
+  Modal,
 } from "@mui/material";
 import { List } from "@mui/material/";
 import React from "react";
@@ -27,13 +28,16 @@ import { useAppSelector } from "../store/hooks";
 import { Link } from "react-router-dom";
 import FacebookIcon from "../Components/Icons/FacebookIcon";
 import LinkedIn from "../Components/Icons/LinkedIn";
+import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
 
 export default function Menu() {
   const theme = useTheme();
 
   const currentUserProfile = useAppSelector((state) => state.auth);
   const profileData = currentUserProfile;
-
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
@@ -47,8 +51,8 @@ export default function Menu() {
     adminPanel: textContainer.adminPanel,
     settings: textContainer.settings,
     aboutUs: textContainer.aboutUs,
-    contactUs: textContainer.conta,
-    followUs: "تابعنا",
+    contactUs: "تواصل معنا hardcoded",
+    followUs: " hardcoded تابعنا",
     logOut: textContainer.logOut,
     termsAndAgreements: textContainer.termsOfUse,
     privacyPolicy: textContainer.privacyPolicy,
@@ -110,7 +114,9 @@ export default function Menu() {
       title: pageDictionry.logOut,
       icon: <LogoutOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      onClick: () => {
+        handleOpen();
+      },
     },
   ];
   const userProfile = () => (
@@ -172,13 +178,14 @@ export default function Menu() {
       </ListItem>
     </Link>
   );
-  const listItem = (title, subTitle, icon, to) => {
+  const listItem = (title, subTitle, icon, to, onClick) => {
     return (
       <ListItemNavigator
         title={title}
         subTitle={subTitle}
         icon={icon}
         to={to}
+        onClick={onClick}
       />
     );
   };
@@ -189,10 +196,25 @@ export default function Menu() {
         marginBottom: 70,
       }}
     >
+      <Modal open={open} onClose={handleClose}>
+        <Box>
+          <SignoutDialog handleClose={handleClose} />
+        </Box>
+      </Modal>
       <List>
         {useProfileButton()}
         {listItems.map((item, index) => {
-          return listItem(item.title, item.subtitle, item.icon, item.to);
+          return (
+            <div key={item.title + index}>
+              {listItem(
+                item.title,
+                item.subtitle,
+                item.icon,
+                item.to,
+                item.onClick
+              )}
+            </div>
+          );
         })}
       </List>
       <Box sx={{ paddingTop: "122px" }}>

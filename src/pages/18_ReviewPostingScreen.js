@@ -16,18 +16,18 @@ import { useTheme } from "@emotion/react";
 
 const BasicValidationSchema = Yup.object().shape({
   purchaseDate: Yup.date().required("Select a Date"),
-  productBuildRating: Yup.number().integer().min(1, "Select Stars"),
-  productUIRating: Yup.number().integer().min(1, "Select Stars"),
+  manufacturingQuality: Yup.number().integer().min(1, "Select Stars"),
+  userInterface: Yup.number().integer().min(1, "Select Stars"),
   priceQuality: Yup.number().integer().min(1, "Select Stars"),
   camera: Yup.number().integer().min(1, "Select Stars"),
   callsQuality: Yup.number().integer().min(1, "Select Stars"),
   battery: Yup.number().integer().min(1, "Select Stars"),
-  generalProductRating: Yup.number().integer().min(1, "Select Stars"),
-  manufacturingQuality: Yup.number().integer().min(1, "Select Stars"),
-  productPros: Yup.string().required("Required"),
-  productCons: Yup.string().required("Required"),
-  companyPros: Yup.string().required("Required"),
-  companyCons: Yup.string().required("Required"),
+  overAllExp: Yup.number().integer().min(1, "Select Stars"),
+  rateManufacturer: Yup.number().integer().min(1, "Select Stars"),
+  likeAboutProduct: Yup.string().required("Required"),
+  hateAboutProduct: Yup.string().required("Required"),
+  likeAbout: Yup.string().required("Required"),
+  hateAbout: Yup.string().required("Required"),
   invitationCode: Yup.string().required("Required"),
 });
 const handleInitialValues = (fieldName, empty = "") => {
@@ -195,6 +195,7 @@ const Basic = ({ ...props }) => {
         />
 
         <OrangeGradientButton
+          type="submit"
           color="red"
           sx={{ width: "100%", textAlign: "center", marginTop: "20px" }}
         >
@@ -227,33 +228,23 @@ const ReviewPostingScreen = () => {
     <div style={{ marginBottom: "85px" }}>
       <Formik
         initialValues={{
-          productGeneralRating: parseInt(
-            handleInitialValues("productGeneralRating", 0)
+          overAllExp: parseInt(handleInitialValues("overAllExp", 0)),
+          manufacturingQuality: parseInt(
+            handleInitialValues("manufacturingQuality", 0)
           ),
-          productBuildRating: parseInt(
-            handleInitialValues("productBuildRating", 0)
-          ),
-          productUIRating: parseInt(handleInitialValues("productUIRating", 0)),
-          productPriceRating: parseInt(
-            handleInitialValues("productPriceRating", 0)
-          ),
-          productCameraRating: parseInt(
-            handleInitialValues("productCameraRating", 0)
-          ),
-          productCallQualityRating: parseInt(
-            handleInitialValues("productCallQualityRating", 0)
-          ),
-          productBatteryRating: parseInt(
-            handleInitialValues("productBatteryRating", 0)
-          ),
-          productManufacturerRating: parseInt(
-            handleInitialValues("productManufacturerRating", 0)
+          userInterface: parseInt(handleInitialValues("userInterface", 0)),
+          priceQuality: parseInt(handleInitialValues("priceQuality", 0)),
+          camera: parseInt(handleInitialValues("camera", 0)),
+          callsQuality: parseInt(handleInitialValues("callsQuality", 0)),
+          battery: parseInt(handleInitialValues("battery", 0)),
+          rateManufacturer: parseInt(
+            handleInitialValues("rateManufacturer", 0)
           ),
           purchaseDate: handleInitialValues("purchaseDate"),
-          productPros: handleInitialValues("productPros"),
-          productCons: handleInitialValues("productCons"),
-          companyPros: handleInitialValues("companyPros"),
-          companyCons: handleInitialValues("companyCons"),
+          likeAboutProduct: handleInitialValues("likeAboutProduct"),
+          hateAboutProduct: handleInitialValues("hateAboutProduct"),
+          likeAbout: handleInitialValues("likeAbout"),
+          hateAbout: handleInitialValues("hateAbout"),
           invitationCode: handleInitialValues("invitationCode"),
         }}
         validationSchema={BasicValidationSchema}

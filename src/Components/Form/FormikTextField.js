@@ -25,8 +25,12 @@ const FormikTextField = ({
     <Field name={fieldName}>
       {({ field: { value }, form: { setFieldValue }, meta }) => (
         <React.Fragment>
-          <StyledTextField
-            defaultValue={sessionStorage.getItem(fieldName)}
+          <TextField
+            defaultValue={
+              sessionStorage.getItem(fieldName)
+                ? sessionStorage.getItem(fieldName)
+                : ""
+            }
             placeholder={label}
             // required={isRequired}
             error={meta.touched && meta.error && true}
