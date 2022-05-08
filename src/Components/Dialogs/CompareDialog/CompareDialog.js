@@ -41,6 +41,7 @@ export const CompareDialog = ({ item, handleClose }) => {
         <OrangeGradientButton
           color="red"
           onClick={() => {
+            // TODO:
             if (compareItem !== 0) {
               dispatch(
                 compareActions.compare({
@@ -48,7 +49,9 @@ export const CompareDialog = ({ item, handleClose }) => {
                   compareId: compareItem,
                 })
               );
-              navigate(ROUTES_NAMES.COMPARISON);
+              navigate(
+                `${ROUTES_NAMES.COMPARISON}?cid=${compareItem}&pid=${item._id}`
+              );
             }
           }}
         >

@@ -5,7 +5,6 @@ import { Box, Card, IconButton, Modal, Typography } from "@mui/material";
 import { styled } from "@mui/styles";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import ButtonPage from "../../Components/Buttons/ButtonPage";
 import { CompareDialog } from "../../Components/Dialogs/CompareDialog/CompareDialog";
 import { HorizontalPhoneList } from "../../Components/HorizontalPhoneList/HorizontalPhoneList";
