@@ -12,7 +12,7 @@ import LoadingReviewSkeleton, {
 } from "../Components/Loaders/LoadingReviewSkeleton";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import { useGetUserReviewsQuery } from "../services/reviews";
+import { useGetUserPhoneReviewsQuery } from "../services/reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
@@ -29,7 +29,7 @@ function PostedReviews({ query }) {
   const [reviewsList, setReviewsList] = useState([]);
   const [page, setPage] = useState(1);
 
-  const { data, isLoading, isFetching, error } = useGetUserReviewsQuery(page);
+  const { data, isLoading, isFetching, error } = useGetUserPhoneReviewsQuery(page);
 
   const theme = useTheme();
   const listRef = useRef();

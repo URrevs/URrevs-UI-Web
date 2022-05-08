@@ -12,12 +12,12 @@ const CardSubheader = ({ reviewDate, buyDate, showViewsCounter, views }) => {
   const language = useAppSelector((state) => state.language.language);
 
   reviewDate = convertDateToString(reviewDate, language);
-  buyDate = substituteDate(buyDate, language);
+  if (buyDate) buyDate = substituteDate(buyDate, language);
 
   return (
     <React.Fragment>
       <div>
-        <Typography variant="S14W400C65676b">{reviewDate}</Typography>
+        {<Typography variant="S14W400C65676b">{reviewDate}</Typography>}
         {buyDate && (
           <Typography variant="S14W700C050505">
             {" "}
