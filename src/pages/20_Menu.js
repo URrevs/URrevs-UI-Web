@@ -47,7 +47,7 @@ export default function Menu() {
     adminPanel: textContainer.adminPanel,
     settings: textContainer.settings,
     aboutUs: textContainer.aboutUs,
-    contactUs: textContainer.conta,
+    contactUs: "تواصل معنا",
     followUs: "تابعنا",
     logOut: textContainer.logOut,
     termsAndAgreements: textContainer.termsOfUse,
@@ -92,25 +92,25 @@ export default function Menu() {
       title: pageDictionry.settings,
       icon: <SettingsOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      to: "",
     },
     {
       title: pageDictionry.aboutUs,
       icon: <ErrorOutlineOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      to: "",
     },
     {
       title: pageDictionry.contactUs,
       icon: <ContactMailOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      to: "",
     },
     {
       title: pageDictionry.logOut,
       icon: <LogoutOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      to: "",
     },
   ];
   const userProfile = () => (
