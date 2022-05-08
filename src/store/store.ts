@@ -10,6 +10,7 @@ import uiSlice from "./uiSlice";
 import { updateApi } from "../services/update";
 import { searchApi } from "../services/search";
 import { phoneApi } from "../services/phones";
+import compareSlice from "./compareSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     [usersApi.reducerPath]: usersApi.reducer,
     [reviewsSlice.name]: reviewsSlice.reducer,
     [languageSlice.name]: languageSlice.reducer,
+    [compareSlice.name]: compareSlice.reducer,
     [isDarkSlice.name]: isDarkSlice.reducer,
     [authSlice.name]: authSlice.reducer,
     [uiSlice.name]: uiSlice.reducer,

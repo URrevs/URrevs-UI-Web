@@ -3,11 +3,16 @@ import { Button, Card, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { FILTER_BUTTON_BORDER_RADIUS } from "../../constants";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const FilterTabbar = () => {
+  const location = useLocation();
   const navigate = useNavigate();
-  const [value, setValue] = React.useState(0);
+
+  const [value, setValue] = React.useState(
+    location.pathname === "/user-profile/my-reviews/companies" ? 1 : 0
+  );
+
   const textContainer = useSelector((state) => state.language.textContainer);
   const theme = useTheme();
   return (

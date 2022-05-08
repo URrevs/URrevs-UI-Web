@@ -32,8 +32,14 @@ export const reviewsApi = createApi({
         new Review(response.review),
     }),
 
-    getUserReviews: builder.query<APIReview[], number>({
+    getUserPhoneReviews: builder.query<APIReview[], number>({
       query: (round = 1) => `/phone/by/me?round=${round}`,
+      transformResponse: (response: { reviews: APIReview[] }) => {
+        return response.reviews;
+      },
+    }),
+    getUserCompanyReviews: builder.query<APIReview[], number>({
+      query: (round = 1) => `/company/by/me?round=${round}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
       },
@@ -44,5 +50,6 @@ export const reviewsApi = createApi({
 export const {
   useGetAllReviewsQuery,
   useGetReviewQuery,
-  useGetUserReviewsQuery,
+  useGetUserPhoneReviewsQuery,
+  useGetUserCompanyReviewsQuery,
 } = reviewsApi;

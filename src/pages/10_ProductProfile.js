@@ -18,7 +18,7 @@ export const ProductProfile = () => {
 
   const { isLoading, error, isFetching, data } = useGetPhoneSpecsQuery(paramId);
   const textContainer = useSelector((state) => state.language.textContainer);
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(1);
   const pageDictionary = {
     reviews: textContainer.tabBarReviews,
     specs: textContainer.tabBarSpecs,
