@@ -12,7 +12,7 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../store/hooks";
 import SmartphoneRoundedIcon from "@mui/icons-material/SmartphoneRounded";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
@@ -29,9 +29,11 @@ import {
 } from "../services/search";
 import { SEARCH_INPUT_DELAY } from "../constants";
 import { useNavigate } from "react-router-dom";
+import ROUTES_NAMES from "../RoutesNames";
 
 export const SearchScreen = () => {
-  const textContainer = useSelector((state) => state.language.textContainer);
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+  const user = useAppSelector((state) => state.auth);
 
   const pageDictionary = {
     search: textContainer.search,
@@ -48,7 +50,14 @@ export const SearchScreen = () => {
     error,
     isFetching,
     data: oldResults,
-  } = useGetMyRecentSearchesQuery();
+  } = useGetMyRecentSearchesQuery(
+    {},
+    {
+      refetchOnMountOrArgChange: true,
+      skip: !user.isLoggedIn,
+    }
+  );
+
   const [search] = useSearchAllMutation();
   const [addRecentSearch] = useAddToMyRecentSearchesMutation();
   const [deleteRecentSearch] = useDeleteRecentSearchesMutation();
@@ -95,21 +104,27 @@ export const SearchScreen = () => {
       },
     },
   };
+
   const filterResult = (results, id) => {
     return { ...results.filter((result) => result.id !== id) };
   };
+
   console.log(results);
+
   const renderSearchItems = (title, type, id) => (
     <React.Fragment key={id}>
       <ListItem sx={{ padding: 0, margin: 0, lineHeight: 0 }}>
         <ListItemButton
+          sx={{
+            padding: 0,
+          }}
           onClick={() => {
             // add recent search locally
             setResults([...results, { name: title, type, _id: id }]);
 
             // add recent search to server
             addRecentSearch({ type, id });
-            navigate(`/phone?pid=${id}`);
+            navigate(`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${id}`);
           }}
         >
           <ListItemIcon>
@@ -120,7 +135,10 @@ export const SearchScreen = () => {
             )}
           </ListItemIcon>
           <ListItemText
-            primaryTypographyProps={{ ...theme.typography.S20W700C050505 }}
+            primaryTypographyProps={{
+              ...theme.typography.S20W700C050505,
+              lineHeight: 1,
+            }}
             primary={title}
             secondaryTypographyProps={{ ...theme.typography.S18W400C65676B }}
             secondary={
@@ -134,6 +152,7 @@ export const SearchScreen = () => {
       <Divider sx={{ padding: 0, color: theme.palette.divider }} />
     </React.Fragment>
   );
+
   const renderRecentItems = (title, type, id) => (
     <React.Fragment key={id}>
       <ListItem sx={{ padding: 0, margin: 0, lineHeight: 0 }}>
@@ -188,7 +207,7 @@ export const SearchScreen = () => {
 
   React.useEffect(() => {
     if (searchQuery === "" && oldResults) setResults(oldResults);
-  }, [searchQuery, oldResults]);
+  }, [searchQuery]);
 
   return (
     <CustomAppBar showLabel label={pageDictionary.search} showBackBtn>
@@ -202,6 +221,10 @@ export const SearchScreen = () => {
         <TextField
           {...params}
           onChange={async (e) => {
+            if (e.target.value === "") {
+              setResults(oldResults);
+            }
+
             setSearchQuery(e.target.value);
             try {
               setTimeout(async () => {
@@ -221,7 +244,7 @@ export const SearchScreen = () => {
         {isLoading ? (
           <LoadingSpinner />
         ) : error ? (
-          <div>{error}</div>
+          <div>{error.data.status}</div>
         ) : searchQuery === "" ? (
           <Box sx={{ margin: "16px 12px" }}>
             <Typography variant="S16W500C65676b">

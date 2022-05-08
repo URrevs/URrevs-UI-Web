@@ -201,8 +201,8 @@ function App() {
     // this may be checked if token still valid
     // to reduce authenticate requests
     getAuth().onIdTokenChanged(async (user) => {
+      console.log("eee");
       if (user) {
-        console.log("eee");
         await signIn(user);
         try {
         } catch (error) {
