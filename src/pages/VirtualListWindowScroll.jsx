@@ -11,7 +11,10 @@ import LoadingReviewSkeleton, {
   loadingSkeletonHeight,
 } from "../Components/Loaders/LoadingReviewSkeleton";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import { useGetUserReviewsQuery } from "../services/reviews";
+import {
+  useGetAllReviewsQuery,
+  useGetUserReviewsQuery,
+} from "../services/reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
 

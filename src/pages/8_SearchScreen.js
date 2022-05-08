@@ -115,7 +115,9 @@ export const SearchScreen = () => {
 
             // add recent search to server
             addRecentSearch({ type, id });
-            navigate(`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${id}`);
+            type === "phone"
+              ? navigate(`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${id}`)
+              : navigate(`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${id}`);
           }}
         >
           <ListItemIcon>
@@ -152,7 +154,9 @@ export const SearchScreen = () => {
           }}
           onClick={() => {
             //Navigate to that phone
-            navigate(`/phone?pid=${id}`);
+            type === "phone"
+              ? navigate(`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${id}`)
+              : navigate(`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${id}`);
           }}
         >
           <ListItemIcon>
