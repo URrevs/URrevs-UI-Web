@@ -45,20 +45,20 @@ export default function Menu() {
     inviteFriends: textContainer.inviteYourFriendsToWriteTheirReviews,
     helpOthers: textContainer.helpOthersAndGetPoints,
     adminPanel: textContainer.adminPanel,
-    settings: "الاعدادات",
-    aboutUs: "عنا",
-    contactUs: "تواصل معنا",
+    settings: textContainer.settings,
+    aboutUs: textContainer.aboutUs,
+    contactUs: textContainer.conta,
     followUs: "تابعنا",
     logOut: textContainer.logOut,
-    termsAndAgreements: "شروط الاستخدام",
-    privacyPolicy: "سياسة الخصوصية",
+    termsAndAgreements: textContainer.termsOfUse,
+    privacyPolicy: textContainer.privacyPolicy,
   };
 
   const listItems = [
     {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.MY_REVIEWS}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.MY_REVIEWS}/${ROUTES_NAMES.MY_PHONE_REVIEWS}`,
     },
     {
       title: pageDictionry.myQuestions,
