@@ -29,4 +29,4 @@ yarn-error.log*
 
 .vscode
 
-src/firebase-config.json
+# src/firebase-config.json
