@@ -228,7 +228,7 @@ const ReviewPostingScreen = () => {
     <div style={{ marginBottom: "85px" }}>
       <Formik
         initialValues={{
-          overAllExp: parseInt(handleInitialValues("overAllExp", 0)),
+          overAllExp: 0,
           manufacturingQuality: parseInt(
             handleInitialValues("manufacturingQuality", 0)
           ),

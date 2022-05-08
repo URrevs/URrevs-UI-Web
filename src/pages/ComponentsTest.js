@@ -42,6 +42,7 @@ import React from "react";
 import { HowToWinDialog } from "../Components/Dialogs/HowToWinDialog";
 import CompanyList from "../Components/ProductList/CompanyList";
 import { HorizontalPhoneList } from "../Components/HorizontalPhoneList/HorizontalPhoneList";
+import StarRating from "../Components/Form/StarRating";
 const testComments = {
   a1: {
     likes: 20000000,
@@ -73,7 +74,7 @@ const xiaomiImg =
 const ComponentsTest = (props) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const language = useAppSelector((state) => state.language.language);
-
+  const [value, setValue] = React.useState(0);
   const date1 = convertDateToString(new Date(2020, 1, 1), language);
   const date2 = substituteDate(new Date(2022, 3, 29));
 
@@ -81,7 +82,7 @@ const ComponentsTest = (props) => {
   return (
     <React.Fragment>
       <br />
-      <HowToWinDialog />
+      {/* <HowToWinDialog /> */}
       <br />
       <ProductList></ProductList>
       <br />
@@ -97,6 +98,13 @@ const ComponentsTest = (props) => {
         ]}
       />
       <br />
+      <StarRating
+        starValue={value}
+        onRatingChange={(rating) => {
+          setValue(rating);
+        }}
+      />
+      <br />
       <Tabbar
         arrayOfTabs={[
           textContainer.tabBarReviews,
@@ -105,7 +113,7 @@ const ComponentsTest = (props) => {
       />
       <br />
       <div style={{ margin: "12px" }}>
-        <SignoutDialog />
+        {/* <SignoutDialog />
         <br />
         <br />
         <form
@@ -117,17 +125,17 @@ const ComponentsTest = (props) => {
               console.log(response)
             );
           }}
-        >
-          <input
-            style={{
-              width: "100%",
-              height: "auto",
-              direction: "ltr",
-              maxLines: "40",
-            }}
-            id="url"
-          />
-        </form>
+        > */}
+        <input
+          style={{
+            width: "100%",
+            height: "auto",
+            direction: "ltr",
+            maxLines: "40",
+          }}
+          id="url"
+        />
+        {/* </form>
         <br />
         <br />
         <br />
@@ -148,15 +156,15 @@ const ComponentsTest = (props) => {
           companyName="Nokia"
           type="شركة"
           companyRating={3}
-        />
+        /> */}
         <br />
-        <ProductOverviewCard
+        {/* <ProductOverviewCard
           productRating={3}
           companyRating={3}
           viewer="100"
           phone="Nokia 7 Plus"
           type="هاتف ذكي"
-        />
+        /> */}
         <br />
         {/* <ProductRateCard
       productRating="3"
@@ -341,10 +349,10 @@ const ComponentsTest = (props) => {
           index={0}
           clearIndexCache={() => {}}
         /> */}
-        <br />
+        {/* <br />
         <ProductDetailsTable />
         <br />
-        <ProductDetailsTable isComparison={true} />
+        <ProductDetailsTable isComparison={true} /> */}
         <br />
         <br />
         <br />
