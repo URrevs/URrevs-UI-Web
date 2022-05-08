@@ -150,13 +150,13 @@ const ProductDetailsTable = ({
     );
   };
 
-  const dataCell = (index, key, dataRow) => {
+  const dataCell = (index, key, dataRow, compData) => {
     return (
       <TableCell
         sx={{
           borderBottom:
             index !== productEntries.length - 1 ? borderBottom : "none",
-          borderRight: borderRight,
+          borderRight: compData ? "none" : borderRight,
         }}
         align="center"
       >
@@ -267,9 +267,9 @@ const ProductDetailsTable = ({
                 {/* title */}
                 {titleCell(index, key)}
                 {/* main product details */}
-                {dataCell(index, key, rows)}
+                {dataCell(index, key, rows, false)}
                 {/* compared product details */}
-                {isComparison && dataCell(index, key, comparedRows)}
+                {isComparison && dataCell(index, key, comparedRows, true)}
               </TableRow>
             );
           })}

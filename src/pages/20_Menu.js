@@ -96,19 +96,19 @@ export default function Menu() {
       title: pageDictionry.settings,
       icon: <SettingsOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      to: "",
     },
     {
       title: pageDictionry.aboutUs,
       icon: <ErrorOutlineOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      to: "",
     },
     {
       title: pageDictionry.contactUs,
       icon: <ContactMailOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      to: "",
     },
     {
       title: pageDictionry.logOut,
