@@ -44,21 +44,28 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     width: "100%",
   },
 }));
-export default function SearchComponent({ label }) {
+export default function SearchComponent({ label, setCompareItem }) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [results, setResults] = React.useState([]);
+
   const [search] = useSearchPhonesOnlyMutation();
   const theme = useTheme();
   return (
     <Stack spacing={2} sx={{ width: "100%" }}>
       <Autocomplete
+        onChange={(e, value) => {
+          setCompareItem(value.id);
+        }}
         id="free-solo-demo"
         freeSolo
         sx={{
           filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.1))",
         }}
         disableClearable
-        options={results.map((option) => option.name)}
+        options={results.map((option) => ({
+          label: option.name,
+          id: option._id,
+        }))}
         renderInput={(params) => (
           <TextField
             {...params}

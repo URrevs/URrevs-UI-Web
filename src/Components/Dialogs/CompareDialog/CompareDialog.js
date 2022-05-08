@@ -5,11 +5,21 @@ import { useSelector } from "react-redux";
 import OrangeGradientButton from "../../Buttons/OrangeGradientButton";
 import { DialogTemplate } from "../DialogTemplate";
 import SearchComponent from "../../SearchComponent";
+import { useAppDispatch } from "../../../store/hooks";
+import { compareActions } from "../../../store/compareSlice";
+import { useNavigate } from "react-router-dom";
+import ROUTES_NAMES from "../../../RoutesNames";
 
-export const CompareDialog = ({ item, handleClose, phones }) => {
+export const CompareDialog = ({ item, handleClose }) => {
+  const [compareItem, setCompareItem] = React.useState(0);
+
   const textContainer = useSelector((state) => {
     return state.language.textContainer;
   });
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
   return (
     <Fragment>
       <DialogTemplate handleClose={handleClose}>
@@ -21,11 +31,27 @@ export const CompareDialog = ({ item, handleClose, phones }) => {
             marginBottom: "94px",
           }}
         >
-          <Typography variant="S18W500C050505">{`${textContainer.compare} ${item} ${textContainer.withWord}`}</Typography>
+          <Typography variant="S18W500C050505">{`${textContainer.compare} ${item.name} ${textContainer.withWord}`}</Typography>
           {/* PLACEHOLDER FOR ACTUAL SEARCHBAR  */}
-          <SearchComponent label={textContainer.writeProductName} />
+          <SearchComponent
+            setCompareItem={setCompareItem}
+            label={textContainer.writeProductName}
+          />
         </Box>
-        <OrangeGradientButton color="red">
+        <OrangeGradientButton
+          color="red"
+          onClick={() => {
+            if (compareItem !== 0) {
+              dispatch(
+                compareActions.compare({
+                  productId: item._id,
+                  compareId: compareItem,
+                })
+              );
+              navigate(ROUTES_NAMES.COMPARISON);
+            }
+          }}
+        >
           <CompareIcon />
           <Typography
             sx={{
@@ -33,7 +59,7 @@ export const CompareDialog = ({ item, handleClose, phones }) => {
             }}
             variant="S18W700Cffffff"
           >
-            قارن
+            {textContainer.compare}
           </Typography>
         </OrangeGradientButton>
       </DialogTemplate>
