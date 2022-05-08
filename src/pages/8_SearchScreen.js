@@ -49,15 +49,13 @@ export const SearchScreen = () => {
     isLoading,
     error,
     isFetching,
-    data: oldResults,
+    data: oldResults = [],
   } = useGetMyRecentSearchesQuery(
     {},
     {
-      refetchOnMountOrArgChange: true,
       skip: !user.isLoggedIn,
     }
   );
-
   const [search] = useSearchAllMutation();
   const [addRecentSearch] = useAddToMyRecentSearchesMutation();
   const [deleteRecentSearch] = useDeleteRecentSearchesMutation();
@@ -152,7 +150,6 @@ export const SearchScreen = () => {
       <Divider sx={{ padding: 0, color: theme.palette.divider }} />
     </React.Fragment>
   );
-
   const renderRecentItems = (title, type, id) => (
     <React.Fragment key={id}>
       <ListItem sx={{ padding: 0, margin: 0, lineHeight: 0 }}>
@@ -207,7 +204,7 @@ export const SearchScreen = () => {
 
   React.useEffect(() => {
     if (searchQuery === "" && oldResults) setResults(oldResults);
-  }, [searchQuery]);
+  }, [searchQuery, oldResults]);
 
   return (
     <CustomAppBar showLabel label={pageDictionary.search} showBackBtn>
@@ -224,7 +221,6 @@ export const SearchScreen = () => {
             if (e.target.value === "") {
               setResults(oldResults);
             }
-
             setSearchQuery(e.target.value);
             try {
               setTimeout(async () => {
