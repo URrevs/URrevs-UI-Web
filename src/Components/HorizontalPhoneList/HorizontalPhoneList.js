@@ -1,5 +1,6 @@
 import { Box, ListItemButton, Stack, List, Typography } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import CardStyled from "../CardStyled";
 
 export const HorizontalPhoneList = ({ items = [] }) => {
@@ -25,24 +26,15 @@ export const HorizontalPhoneList = ({ items = [] }) => {
   //       imgSrc: "https://m.media-amazon.com/images/I/41o9nGF3rPL._AC_SY580_.jpg",
   //     },
   //   ];
-  const listItem = (name, imgSrc, id) => {
-    return (
-      <ListItemButton>
-        <img
-          alt="band"
-          style={{
-            maxWidth: "94px",
-          }}
-          src={imgSrc}
-        ></img>
-        <Typography variant="S18W500C050505">{name}</Typography>
-      </ListItemButton>
-    );
-  };
+  const navigate = useNavigate();
 
   const renderItem = (name, imgSrc, id) => {
     return (
       <ListItemButton
+        onClick={() => {
+          navigate(`/phone?pid=${id}`);
+          window.scrollTo(0, 0);
+        }}
         key={id}
         sx={{
           display: "flex",

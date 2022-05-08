@@ -17,6 +17,7 @@ import {
   ListItem,
   ListItemButton,
   Typography,
+  Modal,
 } from "@mui/material";
 import { List } from "@mui/material/";
 import React from "react";
@@ -27,13 +28,16 @@ import { useAppSelector } from "../store/hooks";
 import { Link } from "react-router-dom";
 import FacebookIcon from "../Components/Icons/FacebookIcon";
 import LinkedIn from "../Components/Icons/LinkedIn";
+import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
 
 export default function Menu() {
   const theme = useTheme();
 
   const currentUserProfile = useAppSelector((state) => state.auth);
   const profileData = currentUserProfile;
-
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
@@ -45,20 +49,20 @@ export default function Menu() {
     inviteFriends: textContainer.inviteYourFriendsToWriteTheirReviews,
     helpOthers: textContainer.helpOthersAndGetPoints,
     adminPanel: textContainer.adminPanel,
-    settings: "الاعدادات",
-    aboutUs: "عنا",
+    settings: textContainer.settings,
+    aboutUs: textContainer.aboutUs,
     contactUs: "تواصل معنا",
     followUs: "تابعنا",
     logOut: textContainer.logOut,
-    termsAndAgreements: "شروط الاستخدام",
-    privacyPolicy: "سياسة الخصوصية",
+    termsAndAgreements: textContainer.termsOfUse,
+    privacyPolicy: textContainer.privacyPolicy,
   };
 
   const listItems = [
     {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.MY_REVIEWS}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.MY_REVIEWS}/${ROUTES_NAMES.MY_PHONE_REVIEWS}`,
     },
     {
       title: pageDictionry.myQuestions,
@@ -92,25 +96,27 @@ export default function Menu() {
       title: pageDictionry.settings,
       icon: <SettingsOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      to: "",
     },
     {
       title: pageDictionry.aboutUs,
       icon: <ErrorOutlineOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      to: "",
     },
     {
       title: pageDictionry.contactUs,
       icon: <ContactMailOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      to: "",
     },
     {
       title: pageDictionry.logOut,
       icon: <LogoutOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      onClick: () => {
+        handleOpen();
+      },
     },
   ];
   const userProfile = () => (
@@ -172,13 +178,14 @@ export default function Menu() {
       </ListItem>
     </Link>
   );
-  const listItem = (title, subTitle, icon, to) => {
+  const listItem = (title, subTitle, icon, to, onClick) => {
     return (
       <ListItemNavigator
         title={title}
         subTitle={subTitle}
         icon={icon}
         to={to}
+        onClick={onClick}
       />
     );
   };
@@ -189,10 +196,25 @@ export default function Menu() {
         marginBottom: 70,
       }}
     >
+      <Modal open={open} onClose={handleClose}>
+        <Box>
+          <SignoutDialog handleClose={handleClose} />
+        </Box>
+      </Modal>
       <List>
         {useProfileButton()}
         {listItems.map((item, index) => {
-          return listItem(item.title, item.subtitle, item.icon, item.to);
+          return (
+            <div key={item.title + index}>
+              {listItem(
+                item.title,
+                item.subtitle,
+                item.icon,
+                item.to,
+                item.onClick
+              )}
+            </div>
+          );
         })}
       </List>
       <Box sx={{ paddingTop: "122px" }}>

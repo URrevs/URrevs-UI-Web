@@ -151,12 +151,12 @@ const Registeration = ({}) => {
                   </List>
                 </div>
               )}
-              {isLoggedIn && <Button onClick={() => signout()}>Logout</Button>}
+              {/* {isLoggedIn && <Button onClick={() => signout()}>Logout</Button>}
               {isLoggedIn && (
                 <Button onClick={() => logOutFromAllDevices()}>
                   Logout from all
                 </Button>
-              )}
+              )} */}
             </div>
           </DialogTemplate>
         </div>

@@ -12,24 +12,20 @@ import Button from "@mui/material/Button";
 const ProductDetailsTable = ({
   // rows = {},
   phoneData = {},
+  comparedPhoneData,
   isComparison,
-  comparedRows,
-  comparedBrand = "Oppo",
-  brand = "Oppo",
-  comparedProduct = "Reno",
-  product = "Reno",
 }) => {
   const rows = {
-    price: phoneData.priceEgp,
+    price: Math.ceil(phoneData.priceEgp),
     manufacturingCompany: phoneData.companyName,
     releaseDate: phoneData.releaseDate,
     productDimensions: phoneData.dimensions,
     networkType: phoneData.network,
-    productWeight: "مجهول",
+    productWeight: phoneData.weight,
     simCard: "مجهول",
-    displayType: "مجهول",
-    displaySize: "مجهول",
-    displayResolution: "مجهول",
+    displayType: phoneData.screenType,
+    displaySize: phoneData.screenSize,
+    displayResolution: phoneData.screenResolution,
     screenProtection: phoneData.screenProtection,
     operatingSystem: phoneData.os,
     chipset: phoneData.chipset,
@@ -51,6 +47,42 @@ const ProductDetailsTable = ({
     battery: phoneData.battery,
     charging: phoneData.charging,
   };
+  let comparedRows = {};
+  if (isComparison) {
+    comparedRows = {
+      price: Math.ceil(comparedPhoneData.priceEgp),
+      manufacturingCompany: comparedPhoneData.companyName,
+      releaseDate: comparedPhoneData.releaseDate,
+      productDimensions: comparedPhoneData.dimensions,
+      networkType: comparedPhoneData.network,
+      productWeight: comparedPhoneData.weight,
+      simCard: "مجهول",
+      displayType: comparedPhoneData.screenType,
+      displaySize: comparedPhoneData.screenSize,
+      displayResolution: comparedPhoneData.screenResolution,
+      screenProtection: comparedPhoneData.screenProtection,
+      operatingSystem: comparedPhoneData.os,
+      chipset: comparedPhoneData.chipset,
+      CPU: comparedPhoneData.cpu,
+      GPU: comparedPhoneData.gpu,
+      externalMemory: comparedPhoneData.externalMem,
+      internalMemory: comparedPhoneData.internalMem,
+      mainCamera: comparedPhoneData.mainCam,
+      frontCamera: comparedPhoneData.selfieCam,
+      loudSpeakers: comparedPhoneData.loudspeaker,
+      jack3_5: comparedPhoneData.slot3p5mm,
+      wlan: comparedPhoneData.wlan,
+      bluetooth: comparedPhoneData.bluetooth,
+      GPS: comparedPhoneData.gps,
+      NFC: comparedPhoneData.nfc,
+      radio: comparedPhoneData.radio,
+      USB: comparedPhoneData.usb,
+      sensors: comparedPhoneData.sensors,
+      battery: comparedPhoneData.battery,
+      charging: comparedPhoneData.charging,
+    };
+  }
+
   const theme = useTheme();
 
   const productEntries = Object.keys(rows);
@@ -118,13 +150,13 @@ const ProductDetailsTable = ({
     );
   };
 
-  const dataCell = (index, key) => {
+  const dataCell = (index, key, dataRow, compData) => {
     return (
       <TableCell
         sx={{
           borderBottom:
-            index != productEntries.length - 1 ? borderBottom : "none",
-          borderRight: borderRight,
+            index !== productEntries.length - 1 ? borderBottom : "none",
+          borderRight: compData ? "none" : borderRight,
         }}
         align="center"
       >
@@ -148,15 +180,14 @@ const ProductDetailsTable = ({
             }}
           >
             {key === "price"
-              ? rows[key] + " " + textContainer.egyptianPound
-              : rows[key]}
+              ? dataRow[key] + " " + textContainer.egyptianPound
+              : dataRow[key]}
           </Typography>
         </Button>
       </TableCell>
     );
   };
 
-  comparedRows = rows;
   return (
     <Paper
       sx={{
@@ -190,7 +221,7 @@ const ProductDetailsTable = ({
                 align="center"
               >
                 <Typography dir="ltr" variant="S20W500C050505">
-                  {product}
+                  {phoneData.name}
                 </Typography>
               </TableCell>
               {/* compared product details */}
@@ -202,7 +233,7 @@ const ProductDetailsTable = ({
                   align="center"
                 >
                   <Typography dir="ltr" variant="S20W500C050505">
-                    {comparedProduct}
+                    {comparedPhoneData.name}
                   </Typography>
                 </TableCell>
               )}
@@ -213,17 +244,19 @@ const ProductDetailsTable = ({
               textContainer.productImage,
               <img
                 loading="auto"
-                width="40px"
-                height="40px"
-                src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Acer_Logo.svg"
-                alt={`${brand} ${product}`}
+                style={{
+                  maxWidth: "94px",
+                }}
+                src={phoneData.picture}
+                alt={`${phoneData.name}`}
               />,
               <img
                 loading="auto"
-                width="40px"
-                height="40px"
-                src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Acer_Logo.svg"
-                alt={`${comparedBrand} ${comparedProduct}`}
+                style={{
+                  maxWidth: "94px",
+                }}
+                src={comparedPhoneData.picture}
+                alt={`${comparedPhoneData.name}`}
               />
             )}
         </TableHead>
@@ -234,9 +267,9 @@ const ProductDetailsTable = ({
                 {/* title */}
                 {titleCell(index, key)}
                 {/* main product details */}
-                {dataCell(index, key)}
+                {dataCell(index, key, rows, false)}
                 {/* compared product details */}
-                {isComparison && dataCell(index, key)}
+                {isComparison && dataCell(index, key, comparedRows, true)}
               </TableRow>
             );
           })}

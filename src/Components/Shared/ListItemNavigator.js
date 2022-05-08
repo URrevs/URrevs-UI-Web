@@ -30,7 +30,7 @@ export default function ListItemNavigator({
       }
       disablePadding
       dense
-      key={title}
+      key={title + subTitle + to}
       style={{
         "&:hover": {
           backgroundColor: theme.palette.hover,

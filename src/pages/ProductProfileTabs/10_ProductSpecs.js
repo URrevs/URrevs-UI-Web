@@ -36,6 +36,7 @@ export const ProductSpecsScreen = ({ data }) => {
     compareWithAnotherProduct: textContainer.compareWithAnotherProduct,
   };
   const [open, setOpen] = React.useState(false);
+
   const {
     data: statistical,
     isLoading: statisticalLoading,
@@ -139,7 +140,7 @@ export const ProductSpecsScreen = ({ data }) => {
             </Box>
           </ButtonPage>
           <Modal open={open} onClose={handleClose}>
-            <CompareDialog item={data.name} handleClose={handleClose} />
+            <CompareDialog item={data} handleClose={handleClose} />
           </Modal>
         </Box>
       </Box>

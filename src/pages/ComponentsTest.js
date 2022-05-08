@@ -75,13 +75,13 @@ const ComponentsTest = (props) => {
   const language = useAppSelector((state) => state.language.language);
 
   const date1 = convertDateToString(new Date(2020, 1, 1), language);
-  const date2 = substituteDate(new Date(2022, 3, 29));
+  const date2 = substituteDate(new Date(2022, 3, 29), language);
 
   let url = "sada";
   return (
     <React.Fragment>
       <br />
-      <HowToWinDialog />
+      {/* <HowToWinDialog /> */}
       <br />
       <ProductList></ProductList>
       <br />
@@ -105,59 +105,37 @@ const ComponentsTest = (props) => {
       />
       <br />
       <div style={{ margin: "12px" }}>
-        <SignoutDialog />
-        <br />
-        <br />
-        <form
-          style={{ width: "100%" }}
-          onSubmit={(event) => {
-            event.preventDefault();
-            console.log("url:", event.currentTarget.url.value);
-            fetch(event.currentTarget.url.value).then((response) =>
-              console.log(response)
-            );
-          }}
-        >
-          <input
-            style={{
-              width: "100%",
-              height: "auto",
-              direction: "ltr",
-              maxLines: "40",
-            }}
-            id="url"
-          />
-        </form>
-        <br />
-        <br />
+        {/* <SignoutDialog /> */}
+
         <br />
         <LoadingReviewSkeleton />
         <br />
-        <CompareDialog item="Nokia 7 Plus" />
+        {/* <CompareDialog item="Nokia 7 Plus" />
         <br />
         <PrizeDialog prize="Xiaomi Mi Band 5" prizeImgSrc={xiaomiImg} />
         <br />
-        <DialogText text="كلما كانت مراجعتك مميزة ومليئة بالتفاصيل سوف تحصل علي نقاط مساعدة أكبر." />
+        <DialogText text="كلما كانت مراجعتك مميزة ومليئة بالتفاصيل سوف تحصل علي نقاط مساعدة أكبر." /> */}
         <br />
-        <InvitationDialog />
-        <br />
-        <HorizontalPhoneList />
-        <br />
+        {/* <InvitationDialog /> */}
+        {/* <br /> */}
+        {/* <HorizontalPhoneList /> */}
+        {/* <br /> */}
         <CompanyOverviewCard
           viewer="100"
           companyName="Nokia"
           type="شركة"
           companyRating={3}
         />
-        <br />
-        <ProductOverviewCard
+        {/* <br /> */}
+        {/* <ProductOverviewCard
+          ratings={[1, 2, 3, 4, 5]}
           productRating={3}
           companyRating={3}
           viewer="100"
           phone="Nokia 7 Plus"
           type="هاتف ذكي"
-        />
-        <br />
+        /> */}
+        {/* <br /> */}
         {/* <ProductRateCard
       productRating="3"
       companyRating="3"
@@ -165,16 +143,13 @@ const ComponentsTest = (props) => {
       phone="Nokia 7 Plus"
       type="هاتف ذكي"
     /> */}
-        <br />
+        {/* <br /> */}
         {/* 2 16 18 20 27 */}
         <CustomAppBar showLogo={true} showProfile={true} showSearch={true} />
-        <br />
         {/* 3 17 */}
         {/* <CustomAppBar showProfile={true} showSearch={true} showBackBtn={true} /> */}
-        <br />
         {/*  4 28 5 6 7 8 9 11 21 22 23 24 25 26 29 */}
         {/* <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true} /> */}
-        <br />
         {/* <CustomAppBar
         left={true}
         englishName={true}
@@ -185,7 +160,6 @@ const ComponentsTest = (props) => {
         showBackBtn={true}
       /> */}
         {/* <BottomTabBar /> */}
-        <br />
         {/* <CustomAppBar
         englishName={true}
         showProfile={true}
@@ -197,7 +171,6 @@ const ComponentsTest = (props) => {
         showTabBar={true}
       /> */}
         {/* <BottomTabBar /> */}
-        <br />
         {/* <CustomAppBar
         showLabel={true}
         label="الاسئلة المطروحة"
@@ -205,25 +178,23 @@ const ComponentsTest = (props) => {
         showTabBar={true}
       />
       <BottomTabBar /> */}
-        <br />
+        {/* <br />
         <img width="100%" height="auto" src="./images/full_logo.png" />
-        <br />
+        <br /> */}
         <GoogleButton />
         <br />
         <FacebookButton />
         <br />
         <StarCounter value={85}></StarCounter>
-        <br></br>
-        <br />
         <br />
         <CompanyHorizontalList></CompanyHorizontalList>
         <br />
-        <CompetitionPrompt button="أضف المسابقة" imgSrc={xiaomiImg} />
+        {/* <CompetitionPrompt button="أضف المسابقة" imgSrc={xiaomiImg} />
         <br />
         <CompetitionBanner
           daysLeft="12"
           prize="Xiaomi Mi Band 5"
-        ></CompetitionBanner>
+        ></CompetitionBanner> */}
         <br />
         <ProductList title={`المنتجات المضافة حديثا (20)`}></ProductList>
         <br />
@@ -341,20 +312,11 @@ const ComponentsTest = (props) => {
           index={0}
           clearIndexCache={() => {}}
         /> */}
+        {/* <ProductDetailsTable /> */}
+        {/* <ProductDetailsTable isComparison={true} /> */}
         <br />
-        <ProductDetailsTable />
-        <br />
-        <ProductDetailsTable isComparison={true} />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+
         <LeaderboardEntry />
-        <br />
-        <br />
-        <br />
-        <br />
         <br />
       </div>
     </React.Fragment>
