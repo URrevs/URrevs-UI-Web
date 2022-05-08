@@ -51,7 +51,7 @@ export const FilterTabbar = () => {
             },
           }}
           onClick={() => {
-            navigate("phones");
+            navigate("../phones");
           }}
         >
           <Typography
@@ -92,7 +92,7 @@ export const FilterTabbar = () => {
             },
           }}
           onClick={() => {
-            navigate("companies", { replace: true });
+            navigate("../companies");
           }}
         >
           <Typography

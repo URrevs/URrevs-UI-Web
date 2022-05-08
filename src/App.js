@@ -26,7 +26,8 @@ import { AdminPanel } from "./pages/26_AdminPanel";
 import { UpdateProducts } from "./pages/29_UpdateProducts";
 import Reviews from "./pages/2_HomePageScrolling";
 import InteractionWithReview from "./pages/3_ReviewFullScreen";
-import PostedReviewsScreen from "./pages/5_PostedReviews";
+import PostedCompanyReviews from "./pages/5.1_PostedCompanyReviews";
+import PostedReviews from "./pages/5_PostedReviews";
 import { SearchScreen } from "./pages/8_SearchScreen";
 import AddReview from "./pages/AddReview";
 import ComponentsTest from "./pages/ComponentsTest";
@@ -254,14 +255,13 @@ function App() {
                           element={<OwnedPhonesPage />}
                         />
                         <Route path={ROUTES_NAMES.MY_REVIEWS}>
-                          <Route index element={<PostedReviewsScreen />} />
                           <Route
                             path={ROUTES_NAMES.MY_PHONE_REVIEWS}
-                            element={<PostedReviewsScreen />}
+                            element={<PostedReviews />}
                           />
                           <Route
                             path={ROUTES_NAMES.MY_COMPANY_REVIEWS}
-                            element={<PostedReviewsScreen />}
+                            element={<PostedCompanyReviews />}
                           />
                         </Route>
                       </Route>
