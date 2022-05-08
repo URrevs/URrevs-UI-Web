@@ -16,7 +16,7 @@ import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPr
 
 import { useSelector } from "react-redux";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
-import { AppBar, Container, Toolbar } from "@mui/material";
+import { AppBar, Button, Container, Toolbar } from "@mui/material";
 import styled from "@emotion/styled";
 import { ProductRateCard } from "../Components/OverviewCard/ProductRateCard";
 import { ProductOverviewCard } from "../Components/OverviewCard/ProductOverviewCard";
@@ -43,6 +43,7 @@ import { HowToWinDialog } from "../Components/Dialogs/HowToWinDialog";
 import CompanyList from "../Components/ProductList/CompanyList";
 import { HorizontalPhoneList } from "../Components/HorizontalPhoneList/HorizontalPhoneList";
 import StarRating from "../Components/Form/StarRating";
+import { StyledSnackbar } from "../Components/Snackbar/StyledSnackbar";
 const testComments = {
   a1: {
     likes: 20000000,
@@ -77,6 +78,9 @@ const ComponentsTest = (props) => {
   const [value, setValue] = React.useState(0);
   const date1 = convertDateToString(new Date(2020, 1, 1), language);
   const date2 = substituteDate(new Date(2022, 3, 29), language);
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true);
 
   let url = "sada";
   return (
@@ -89,6 +93,15 @@ const ComponentsTest = (props) => {
       <CompanyList />
       <br />
       <FilterTabbar />
+      <br />
+      <br />
+      <Button onClick={handleOpen}>Open Snackbar</Button>
+      <StyledSnackbar
+        open={open}
+        text="asdasdasd"
+        btnText="asdasdasd"
+        handleClose={handleClose}
+      ></StyledSnackbar>
       <br />
       <Tabbar
         arrayOfTabs={[

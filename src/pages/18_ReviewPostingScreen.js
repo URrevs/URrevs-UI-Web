@@ -2,7 +2,14 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { useSelector } from "react-redux";
-import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Modal,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import HelpIcon from "@mui/icons-material/Help";
 import { SearchBar } from "../Components/MainLayout/Search/SearchBar";
@@ -14,14 +21,11 @@ import OrangeGradientButton from "../Components/Buttons/OrangeGradientButton";
 import { useTheme } from "@emotion/react";
 import FormikSearchComponent from "../Components/Form/FormikSearchComponent";
 import { useGetManufacturingCompanyMutation } from "../services/phones";
+import { DialogText } from "../Components/Dialogs/DialogText";
 
 /* Form Validation */
 const BasicValidationSchema = Yup.object().shape({
   chooseProduct: Yup.string().required("Select a phone"),
-
-  // cid: Yup.string().required("Select a phone"),
-  // name: Yup.string().required("Select a phone"),
-
   purchaseDate: Yup.date().required("Select a Date"),
   manufacturingQuality: Yup.number().integer().min(1, "Select Stars"),
   userInterface: Yup.number().integer().min(1, "Select Stars"),
@@ -46,8 +50,12 @@ const Basic = ({ ...props }) => {
   const textContainer = useSelector((state) => {
     return state.language.textContainer;
   });
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const theme = useTheme();
   const pageDictionary = {
+    referralCodeHelpPrompt: textContainer.referralCodeHelpPrompt,
     chooseProduct: textContainer.chooseProduct,
     writeProductName: textContainer.writeProductName,
     howLong: textContainer.howLongHaveYouOwnedThisProduct,
@@ -108,18 +116,16 @@ const Basic = ({ ...props }) => {
       </Stack>
     );
   };
-
-  // const renderCompanyFields = async () => {
-  //   // const companyId = await getManufacturingCompany(props.values.chooseProduct);
-  //   // const companyId = props.values.chooseProduct;
-  //   console.log(props.values.chooseProduct);
-  //   // props.setFieldValue("companyId", companyId);
-  //   return (
-
-  //   );
-  // };
   return (
     <React.Fragment>
+      <Modal open={open} onClose={handleClose} dir={theme.direction}>
+        <Box>
+          <DialogText
+            text={pageDictionary.referralCodeHelpPrompt}
+            onClose={handleClose}
+          />
+        </Box>
+      </Modal>
       <form onSubmit={props.handleSubmit}>
         {/* Searchbar */}
 
@@ -212,6 +218,7 @@ const Basic = ({ ...props }) => {
         >
           {pageDictionary.enterInvitationCode + ":"}
           <IconButton
+            onClick={handleOpen}
             sx={{
               padding: 0,
               marginLeft: "4px",
@@ -296,7 +303,25 @@ const ReviewPostingScreen = () => {
           sessionStorage.clear();
 
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+            const reviewPost = {
+              phoneId: values.chooseProduct,
+              companyId: values.companyId._id,
+              ownedDate: values.purchaseDate,
+              generalRating: values.overAllExp,
+              uiRating: values.userInterface,
+              manQuality: values.manufacturingQuality,
+              valFMon: values.priceQuality,
+              camera: values.camera,
+              callQuality: values.callsQuality,
+              battery: values.battery,
+              pros: values.likeAboutProduct,
+              cons: values.hateAboutProduct,
+              refCode: values.invitationCode,
+              companyRating: values.rateManufacturer,
+              compPros: values.likeAbout,
+              compCons: values.hateAbout,
+            };
+            console.log(JSON.stringify(reviewPost, null, 2));
             navigate("../");
             setSubmitting(false);
           }, 400);
