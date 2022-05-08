@@ -9,7 +9,7 @@ interface InitialState {
 
 const initialState: InitialState = {
   newReviews: [],
-  page: 0,
+  page: 1,
   currentIndex: 0,
 };
 

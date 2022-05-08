@@ -1,22 +1,21 @@
 import { useTheme } from "@emotion/react";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AutoSizer,
   CellMeasurer,
   CellMeasurerCache,
   List,
-  WindowScroller
+  WindowScroller,
 } from "react-virtualized";
 import LoadingReviewSkeleton, {
-  loadingSkeletonHeight
+  loadingSkeletonHeight,
 } from "../Components/Loaders/LoadingReviewSkeleton";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
-import { useGetAllReviewsQuery } from "../services/reviews";
+import { useGetUserReviewsQuery } from "../services/reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
-
+import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -26,12 +25,12 @@ const cache = new CellMeasurerCache({
 
 let maxIndex = 0;
 
-export default function PostedReviewsScreen() {
-  const dispatch = useAppDispatch();
-  const reviewsList = useAppSelector((state) => state.reviews.newReviews);
-  const page = useAppSelector((state) => state.reviews.page);
-  const currentIndex = useAppSelector((state) => state.reviews.currentIndex);
-  const { data, isLoading, isFetching, error } = useGetAllReviewsQuery(1);
+function PostedReviews() {
+  const [reviewsList, setReviewsList] = useState([]);
+  const [page, setPage] = useState(1);
+
+  const { data, isLoading, isFetching, error } = useGetUserReviewsQuery(page);
+
   const theme = useTheme();
   const listRef = useRef();
   const [ex, setEx] = useState(false);
@@ -46,22 +45,8 @@ export default function PostedReviewsScreen() {
   };
 
   useEffect(() => {
-    fetch("");
-    const scrollIndex = currentIndex === 0 ? 0 : currentIndex + 64;
-
-    setTimeout(() => window.scrollTo(0, scrollIndex), 500);
-  }, []);
-
-  useEffect(() => {
     if (data) {
-      dispatch(
-        reviewsActions.addToLoaddedReviews({
-          newReviews: data,
-        })
-      );
-      if (page < 2 && !isLoading && !isFetching) {
-        dispatch(reviewsActions.increasePage());
-      }
+      setReviewsList([...data, ...reviewsList]);
     }
   }, [data]);
 
@@ -88,42 +73,34 @@ export default function PostedReviewsScreen() {
   const renderRow = ({ index, key, style, parent }) => {
     if (
       maxIndex !== 0 &&
-      page >= 2 &&
       !isLoading &&
       !isFetching &&
-      maxIndex === reviewsList.length
+      maxIndex === reviewsList.length &&
+      data.length !== 0
     ) {
       maxIndex = 0;
-      dispatch(reviewsActions.increasePage());
+      console.log(page);
+      setPage(page + 1);
     }
     maxIndex = Math.max(index, maxIndex);
     return (
       <div key={key}>
-        {index >= reviewsList.length ? (
-          <div
-            style={{
-              height: "100%",
-              width: "100%",
-              position: "absolute",
-              display: "flex",
-              alignItems: "flex-end",
-              justifyContent: "center",
-            }}
-          >
-            <div style={{ width: "100%" }}>
-              {[...Array(2)].map((a, index) => (
-                <LoadingReviewSkeleton key={index} />
-              ))}
-            </div>
-          </div>
-        ) : (
-          <CellMeasurer
-            cache={cache}
-            parent={parent}
-            columnIndex={0}
-            rowIndex={index}
-          >
-            <div style={{ ...style, direction: theme.direction }}>
+        <CellMeasurer
+          cache={cache}
+          parent={parent}
+          columnIndex={0}
+          rowIndex={index}
+        >
+          <div style={{ ...style, direction: theme.direction }}>
+            {index >= reviewsList.length ? (
+              data.length === 0 ? (
+                <div>No more reviews</div>
+              ) : (
+                [...Array(1)].map((a, index) => (
+                  <LoadingReviewSkeleton key={index} />
+                ))
+              )
+            ) : (
               <ReviewCard
                 index={index}
                 fullScreen={false}
@@ -132,53 +109,45 @@ export default function PostedReviewsScreen() {
                 reviewDetails={reviewsList[index]}
                 isPhoneReview={true}
               />
-            </div>
-          </CellMeasurer>
-        )}
+            )}
+          </div>
+        </CellMeasurer>
       </div>
     );
   };
 
   return (
-    <CustomAppBar showBackBtn={true} showLabel label="مراجعاتي">
+    <CustomAppBar showLabel label="مراجعاتي" showBackBtn>
       <FilterTabbar />
-      <Fragment>
-        <div style={{ height: "calc(100vh)", margin: "0 12px" }}>
-          <AutoSizer>
-            {({ height, width }) => {
-              return (
-                <WindowScroller>
-                  {({ height, isScrolling, registerChild, scrollTop }) => (
-                    <div ref={registerChild}>
-                      <List
-                        ref={listRef}
-                        autoHeight
-                        onScroll={(scrollData) => {
-                          // save current scroll position
-                          dispatch(
-                            reviewsActions.setIndex({
-                              currentIndex: scrollData.scrollTop,
-                            })
-                          );
-                        }}
-                        overscanRowCount={10}
-                        isScrolling={isScrolling}
-                        scrollTop={scrollTop}
-                        width={width}
-                        height={height}
-                        deferredMeasurementCache={cache}
-                        rowHeight={cache.rowHeight}
-                        rowCount={reviewsList.length + 2}
-                        rowRenderer={renderRow}
-                      />
-                    </div>
-                  )}
-                </WindowScroller>
-              );
-            }}
-          </AutoSizer>
-        </div>
-      </Fragment>
+      <div style={{ height: "calc(100vh)", margin: "0 12px" }}>
+        <AutoSizer>
+          {({ height, width }) => {
+            return (
+              <WindowScroller>
+                {({ height, isScrolling, registerChild, scrollTop }) => (
+                  <div ref={registerChild}>
+                    <List
+                      ref={listRef}
+                      autoHeight
+                      overscanRowCount={10}
+                      isScrolling={isScrolling}
+                      scrollTop={scrollTop}
+                      width={width}
+                      height={height}
+                      deferredMeasurementCache={cache}
+                      rowHeight={cache.rowHeight}
+                      rowCount={reviewsList.length + 1}
+                      rowRenderer={renderRow}
+                    />
+                  </div>
+                )}
+              </WindowScroller>
+            );
+          }}
+        </AutoSizer>
+      </div>
     </CustomAppBar>
   );
 }
+
+export default PostedReviews;

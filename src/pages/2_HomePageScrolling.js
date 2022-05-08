@@ -90,7 +90,7 @@ function Reviews() {
       maxIndex === reviewsList.length
     ) {
       maxIndex = 0;
-      // dispatch(reviewsActions.increasePage());
+      dispatch(reviewsActions.increasePage());
     }
     maxIndex = Math.max(index, maxIndex);
     return (
