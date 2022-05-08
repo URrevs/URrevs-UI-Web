@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import {
   AutoSizer,
   CellMeasurer,
@@ -11,9 +11,9 @@ import LoadingReviewSkeleton, {
   loadingSkeletonHeight,
 } from "../Components/Loaders/LoadingReviewSkeleton";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import { useAppSelector } from "../store/hooks";
-import { convertDateToString } from "../functions/convertDateToString";
-import { substituteDate } from "../functions/substituteDate";
+import { useGetUserReviewsQuery } from "../services/reviews";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { reviewsActions } from "../store/reviewsSlice";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -23,15 +23,12 @@ const cache = new CellMeasurerCache({
 
 let maxIndex = 0;
 
-export default function VirtualList({
-  reviews = [],
-  setRound,
-  isLoading,
-  error,
-  round,
-}) {
-  const language = useAppSelector((state) => state.language.language);
-
+function MyReviews() {
+  const dispatch = useAppDispatch();
+  const reviewsList = useAppSelector((state) => state.reviews.newReviews);
+  const page = useAppSelector((state) => state.reviews.page);
+  const currentIndex = useAppSelector((state) => state.reviews.currentIndex);
+  const { data, isLoading, isFetching, error } = useGetAllReviewsQuery(page);
   const theme = useTheme();
   const listRef = useRef();
   const [ex, setEx] = useState(false);
@@ -44,6 +41,25 @@ export default function VirtualList({
       cache.clear(index);
     }
   };
+
+  useEffect(() => {
+    const scrollIndex = currentIndex === 0 ? 0 : currentIndex + 64;
+
+    setTimeout(() => window.scrollTo(0, scrollIndex), 500);
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(
+        reviewsActions.addToLoaddedReviews({
+          newReviews: data,
+        })
+      );
+      if (page < 2 && !isLoading && !isFetching) {
+        dispatch(reviewsActions.increasePage());
+      }
+    }
+  }, [data]);
 
   if (isLoading) {
     return (
@@ -65,45 +81,43 @@ export default function VirtualList({
     );
   }
 
-  console.log(reviews);
-
   const renderRow = ({ index, key, style, parent }) => {
+    if (
+      maxIndex !== 0 &&
+      page >= 2 &&
+      !isLoading &&
+      !isFetching &&
+      maxIndex === reviewsList.length
+    ) {
+      maxIndex = 0;
+      dispatch(reviewsActions.increasePage());
+    }
+    maxIndex = Math.max(index, maxIndex);
     return (
       <div key={key}>
-        {index >= reviews.length ? (
-          <CellMeasurer
-            cache={cache}
-            parent={parent}
-            columnIndex={0}
-            rowIndex={index}
-          >
-            <div style={{ ...style, direction: theme.direction }}>
-              <div style={{ width: "100%" }}>
-                {[...Array(1)].map((a, index) => (
-                  <LoadingReviewSkeleton key={index} />
-                ))}
-              </div>
-            </div>
-          </CellMeasurer>
-        ) : (
-          <CellMeasurer
-            cache={cache}
-            parent={parent}
-            columnIndex={0}
-            rowIndex={index}
-          >
-            <div style={{ ...style, direction: theme.direction }}>
+        <CellMeasurer
+          cache={cache}
+          parent={parent}
+          columnIndex={0}
+          rowIndex={index}
+        >
+          <div style={{ ...style, direction: theme.direction }}>
+            {index >= reviewsList.length ? (
+              [...Array(1)].map((a, index) => (
+                <LoadingReviewSkeleton key={index} />
+              ))
+            ) : (
               <ReviewCard
-                isPhoneReview={true}
+                index={index}
                 fullScreen={false}
                 isExpanded={false}
-                reviewDetails={reviews[index]}
                 clearIndexCache={clearCache}
-                index={index}
+                reviewDetails={reviewsList[index]}
+                isPhoneReview={true}
               />
-            </div>
-          </CellMeasurer>
-        )}
+            )}
+          </div>
+        </CellMeasurer>
       </div>
     );
   };
@@ -120,6 +134,14 @@ export default function VirtualList({
                     <List
                       ref={listRef}
                       autoHeight
+                      onScroll={(scrollData) => {
+                        // save current scroll position
+                        dispatch(
+                          reviewsActions.setIndex({
+                            currentIndex: scrollData.scrollTop,
+                          })
+                        );
+                      }}
                       overscanRowCount={10}
                       isScrolling={isScrolling}
                       scrollTop={scrollTop}
@@ -127,7 +149,7 @@ export default function VirtualList({
                       height={height}
                       deferredMeasurementCache={cache}
                       rowHeight={cache.rowHeight}
-                      rowCount={reviews.length + 2}
+                      rowCount={reviewsList.length + 2}
                       rowRenderer={renderRow}
                     />
                   </div>
@@ -140,3 +162,5 @@ export default function VirtualList({
     </Fragment>
   );
 }
+
+export default MyReviews;
