@@ -5,6 +5,7 @@ import { Box, Card, IconButton, Modal, Typography } from "@mui/material";
 import { styled } from "@mui/styles";
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ButtonPage from "../../Components/Buttons/ButtonPage";
 import { CompareDialog } from "../../Components/Dialogs/CompareDialog/CompareDialog";
 import { HorizontalPhoneList } from "../../Components/HorizontalPhoneList/HorizontalPhoneList";
@@ -36,6 +37,7 @@ export const ProductSpecsScreen = ({ data }) => {
     compareWithAnotherProduct: textContainer.compareWithAnotherProduct,
   };
   const [open, setOpen] = React.useState(false);
+
   const {
     data: statistical,
     isLoading: statisticalLoading,
@@ -139,7 +141,7 @@ export const ProductSpecsScreen = ({ data }) => {
             </Box>
           </ButtonPage>
           <Modal open={open} onClose={handleClose}>
-            <CompareDialog item={data.name} handleClose={handleClose} />
+            <CompareDialog item={data} handleClose={handleClose} />
           </Modal>
         </Box>
       </Box>
