@@ -25,7 +25,7 @@ const cache = new CellMeasurerCache({
 
 let maxIndex = 0;
 
-function PostedReviews() {
+function PostedReviews({ query }) {
   const [reviewsList, setReviewsList] = useState([]);
   const [page, setPage] = useState(1);
 
