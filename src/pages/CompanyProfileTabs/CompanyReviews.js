@@ -115,13 +115,10 @@ export const CompanyReviews = ({
                 ))
               )
             ) : (
-              <ReviewCard
+              <CompanyReview
                 index={index}
-                fullScreen={false}
-                isExpanded={false}
                 clearIndexCache={clearCache}
                 reviewDetails={reviewsList[index]}
-                isPhoneReview={false}
               />
             )}
           </div>

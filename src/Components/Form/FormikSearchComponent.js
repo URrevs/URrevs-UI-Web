@@ -10,7 +10,6 @@ const FormikSearchComponent = ({ fieldName, label }) => {
     <Field name={fieldName}>
       {({ field: { value }, form: { setFieldValue }, meta }) => (
         <React.Fragment>
-          {console.log(meta.errors)}
           <SearchComponent
             isFormik={true}
             error={meta.touched && Boolean(meta.error)}
@@ -18,8 +17,9 @@ const FormikSearchComponent = ({ fieldName, label }) => {
             setCompareItem={async (response) => {
               setFieldValue(fieldName, response.pid);
               const companyId = await getManufacturingCompany(response.pid);
-              console.log(companyId);
+              sessionStorage.setItem(fieldName, response.pid);
               setFieldValue("companyId", companyId.data);
+              sessionStorage.setItem("companyId", companyId.data);
             }}
             label={label}
           />

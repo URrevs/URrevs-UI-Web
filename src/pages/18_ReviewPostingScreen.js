@@ -23,6 +23,9 @@ import FormikSearchComponent from "../Components/Form/FormikSearchComponent";
 import { useGetManufacturingCompanyMutation } from "../services/phones";
 import { DialogText } from "../Components/Dialogs/DialogText";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import { useAddPhoneReviewMutation } from "../services/reviews";
+import { Tabbar } from "../Components/Tabbar/Tabbar";
+import { QuestionsTab } from "./PostingScreen/QuestionsTab";
 
 /* Form Validation */
 const BasicValidationSchema = Yup.object().shape({
@@ -40,7 +43,7 @@ const BasicValidationSchema = Yup.object().shape({
   hateAboutProduct: Yup.string().required("Required"),
   likeAbout: Yup.string().required("Required"),
   hateAbout: Yup.string().required("Required"),
-  invitationCode: Yup.string().required("Required"),
+  // invitationCode: Yup.string().required("Required"),
 });
 const handleInitialValues = (fieldName, empty = "") => {
   return sessionStorage.getItem(fieldName)
@@ -129,12 +132,7 @@ const Basic = ({ ...props }) => {
       </Modal>
       <form onSubmit={props.handleSubmit}>
         {/* Searchbar */}
-
-        {/* 
-          TODO
-          strange error occurs when you hit submit button before writing in any field
-         */}
-        <Typography variant="h6">
+        <Typography variant="S18W500C050505">
           {pageDictionary.chooseProduct + ":"}
         </Typography>
         <FormikSearchComponent
@@ -273,65 +271,87 @@ const Basic = ({ ...props }) => {
   );
 };
 const ReviewPostingScreen = () => {
-  const navigate = useNavigate();
+  const [addReview] = useAddPhoneReviewMutation();
+  const [value, setValue] = React.useState(0);
+  const [error, setError] = React.useState(null);
+  const textContainer = useSelector((state) => state.language.textContainer);
+  const pageDictionary = {
+    tabbar: [textContainer.tabBarReview, textContainer.tabBarQuestion],
+  };
   return (
     <div style={{ marginBottom: "85px" }}>
-      <CustomAppBar showLogo showSearch showProfile />
-
-      <Formik
-        initialValues={{
-          companyId: "",
-          chooseProduct: "",
-          overAllExp: parseInt(handleInitialValues("overAllExp", 0)),
-          manufacturingQuality: parseInt(
-            handleInitialValues("manufacturingQuality", 0)
-          ),
-          userInterface: parseInt(handleInitialValues("userInterface", 0)),
-          priceQuality: parseInt(handleInitialValues("priceQuality", 0)),
-          camera: parseInt(handleInitialValues("camera", 0)),
-          callsQuality: parseInt(handleInitialValues("callsQuality", 0)),
-          battery: parseInt(handleInitialValues("battery", 0)),
-          rateManufacturer: parseInt(
-            handleInitialValues("rateManufacturer", 0)
-          ),
-          purchaseDate: handleInitialValues("purchaseDate"),
-          likeAboutProduct: handleInitialValues("likeAboutProduct"),
-          hateAboutProduct: handleInitialValues("hateAboutProduct"),
-          likeAbout: handleInitialValues("likeAbout"),
-          hateAbout: handleInitialValues("hateAbout"),
-          invitationCode: handleInitialValues("invitationCode"),
-        }}
-        validationSchema={BasicValidationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          sessionStorage.clear();
-
-          setTimeout(() => {
-            const reviewPost = {
-              phoneId: values.chooseProduct,
-              companyId: values.companyId._id,
-              ownedDate: values.purchaseDate,
-              generalRating: values.overAllExp,
-              uiRating: values.userInterface,
-              manQuality: values.manufacturingQuality,
-              valFMon: values.priceQuality,
-              camera: values.camera,
-              callQuality: values.callsQuality,
-              battery: values.battery,
-              pros: values.likeAboutProduct,
-              cons: values.hateAboutProduct,
-              refCode: values.invitationCode,
-              companyRating: values.rateManufacturer,
-              compPros: values.likeAbout,
-              compCons: values.hateAbout,
-            };
-            console.log(JSON.stringify(reviewPost, null, 2));
-            navigate("../");
-            setSubmitting(false);
-          }, 400);
-        }}
+      <CustomAppBar
+        tabBar={
+          <Tabbar
+            arrayOfTabs={pageDictionary.tabbar}
+            setValue={setValue}
+            value={value}
+          />
+        }
+        showLogo
+        showSearch
+        showProfile
       >
-        {(props) => <Basic {...props} />}
-      </Formik>
+        {value === 0 ? (
+          <Formik
+            initialValues={{
+              companyId: "",
+              chooseProduct: "",
+              overAllExp: parseInt(handleInitialValues("overAllExp", 0)),
+              manufacturingQuality: parseInt(
+                handleInitialValues("manufacturingQuality", 0)
+              ),
+              userInterface: parseInt(handleInitialValues("userInterface", 0)),
+              priceQuality: parseInt(handleInitialValues("priceQuality", 0)),
+              camera: parseInt(handleInitialValues("camera", 0)),
+              callsQuality: parseInt(handleInitialValues("callsQuality", 0)),
+              battery: parseInt(handleInitialValues("battery", 0)),
+              rateManufacturer: parseInt(
+                handleInitialValues("rateManufacturer", 0)
+              ),
+              purchaseDate: handleInitialValues("purchaseDate"),
+              likeAboutProduct: handleInitialValues("likeAboutProduct"),
+              hateAboutProduct: handleInitialValues("hateAboutProduct"),
+              likeAbout: handleInitialValues("likeAbout"),
+              hateAbout: handleInitialValues("hateAbout"),
+              invitationCode: handleInitialValues("invitationCode"),
+            }}
+            validationSchema={BasicValidationSchema}
+            onSubmit={async (values, { setSubmitting }) => {
+              sessionStorage.clear();
+              const reviewPost = {
+                phoneId: values.chooseProduct,
+                companyId: values.companyId._id,
+                ownedDate: values.purchaseDate,
+                generalRating: values.overAllExp,
+                uiRating: values.userInterface,
+                manQuality: values.manufacturingQuality,
+                valFMon: values.priceQuality,
+                camera: values.camera,
+                callQuality: values.callsQuality,
+                battery: values.battery,
+                pros: values.likeAboutProduct,
+                cons: values.hateAboutProduct,
+                refCode: values.invitationCode,
+                companyRating: values.rateManufacturer,
+                compPros: values.likeAbout,
+                compCons: values.hateAbout,
+              };
+              console.log(JSON.stringify(reviewPost, null, 2));
+              try {
+                const response = await addReview(reviewPost).unwrap();
+              } catch (e) {
+                setError(e);
+              }
+              setSubmitting(false);
+            }}
+          >
+            {(props) => <Basic {...props} />}
+          </Formik>
+        ) : (
+          <QuestionsTab></QuestionsTab>
+        )}
+      </CustomAppBar>
     </div>
   );
 };

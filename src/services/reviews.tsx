@@ -40,33 +40,34 @@ export const reviewsApi = createApi({
         return response.reviews;
       },
     }),
-    addPhoneReview: builder.query({
+    addPhoneReview: builder.mutation({
       query: (review) => {
         return {
           url: `/phone`,
           method: "POST",
-          body: {
-            phoneId: review.phoneId,
-            companyId: review.companyId,
-            ownedDate: review.ownedDate,
-            generalRating: review.generalRating,
-            uiRating: review.uiRating,
-            manQuality: review.manQuality,
-            valFMon: review.valFMon,
-            camera: review.camera,
-            callQuality: review.callQuality,
-            battery: review.battery,
-            pros: review.pros,
-            cons: review.cons,
-            refCode: review.refCode,
-            companyRating: review.companyRating,
-            compPros: review.compPros,
-            compCons: review.compCons,
-          },
+          body: review,
+          // {
+          //   phoneId: review.phoneId,
+          //   companyId: review.companyId,
+          //   ownedDate: review.ownedDate,
+          //   generalRating: review.generalRating,
+          //   uiRating: review.uiRating,
+          //   manQuality: review.manQuality,
+          //   valFMon: review.valFMon,
+          //   camera: review.camera,
+          //   callQuality: review.callQuality,
+          //   battery: review.battery,
+          //   pros: review.pros,
+          //   cons: review.cons,
+          //   refCode: review.refCode,
+          //   companyRating: review.companyRating,
+          //   compPros: review.compPros,
+          //   compCons: review.compCons,
+          // },
         };
       },
-      transformResponse: (response: { review: APIReview }) =>
-        new Review(response.review),
+      // transformResponse: (response: { review: APIReview }) =>
+      //   new Review(response.review),
     }),
 
     getUserPhoneReviews: builder.query<APIReview[], number>({
@@ -106,6 +107,7 @@ export const {
   useGetAllReviewsQuery,
   useGetReviewQuery,
   useGetCompanyReviewsQuery,
+  useAddPhoneReviewMutation,
   useGetUserPhoneReviewsQuery,
   useGetUserCompanyReviewsQuery,
   useGetOtherUserPhoneReviewsQuery,
