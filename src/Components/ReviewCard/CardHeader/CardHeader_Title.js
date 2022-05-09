@@ -34,7 +34,7 @@ const CardHeaderTitle = ({ userName, productName, userId, targetId }) => {
             },
           }}
           variant="S16W700C050505"
-          onClick={() => navigate(`/user-profile?uid=${userId}`, replace)}
+          onClick={() => navigate(`/user-profile?userId=${userId}`, replace)}
         >
           {userName}
         </Typography>

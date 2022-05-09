@@ -81,6 +81,24 @@ export const reviewsApi = createApi({
         return response.reviews;
       },
     }),
+    getOtherUserPhoneReviews: builder.query<
+      APIReview[],
+      { round: number; uid: string }
+    >({
+      query: ({ round, uid }) => `/phone/by/${uid}?round=${round}`,
+      transformResponse: (response: { reviews: APIReview[] }) => {
+        return response.reviews;
+      },
+    }),
+    getOtherUserCompanyReviews: builder.query<
+      APIReview[],
+      { round: number; uid: string }
+    >({
+      query: ({ round, uid }) => `/company/by/${uid}?round=${round}`,
+      transformResponse: (response: { reviews: APIReview[] }) => {
+        return response.reviews;
+      },
+    }),
   }),
 });
 //auto-generated hooks
@@ -90,4 +108,6 @@ export const {
   useGetCompanyReviewsQuery,
   useGetUserPhoneReviewsQuery,
   useGetUserCompanyReviewsQuery,
+  useGetOtherUserPhoneReviewsQuery,
+  useGetOtherUserCompanyReviewsQuery,
 } = reviewsApi;

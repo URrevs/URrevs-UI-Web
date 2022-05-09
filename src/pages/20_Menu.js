@@ -62,7 +62,7 @@ export default function Menu() {
     {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.MY_REVIEWS}/${ROUTES_NAMES.MY_PHONE_REVIEWS}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${currentUserProfile.uid}`,
     },
     {
       title: pageDictionry.myQuestions,
@@ -72,7 +72,7 @@ export default function Menu() {
     {
       title: pageDictionry.ownedProducts,
       icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?uid=${profileData.uid}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?userId=${profileData.uid}`,
     },
     {
       title: pageDictionry.askedQuestions,
@@ -128,7 +128,7 @@ export default function Menu() {
   );
   const useProfileButton = () => (
     <Link
-      to={`../../${ROUTES_NAMES.USER_PROFILE}?uid=${profileData.uid}`}
+      to={`../../${ROUTES_NAMES.USER_PROFILE}?userId=${profileData.uid}`}
       style={{
         background: "none",
         textDecoration: "none",
@@ -196,6 +196,8 @@ export default function Menu() {
         marginBottom: 70,
       }}
     >
+      <CustomAppBar showLogo showSearch showProfile />
+
       <Modal open={open} onClose={handleClose} dir={theme.direction}>
         <Box>
           <SignoutDialog handleClose={handleClose} />

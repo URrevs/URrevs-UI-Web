@@ -8,7 +8,7 @@ export default function Profile() {
   const currentUserId = useAppSelector((state) => state.auth.uid);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const paramId = searchParams.get("uid");
+  const paramId = searchParams.get("userId");
 
   if (paramId === currentUserId || paramId === null) {
     return <CurrentUserProfilePage />;

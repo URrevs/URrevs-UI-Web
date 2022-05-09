@@ -28,7 +28,7 @@ import { UpdateProducts } from "./pages/29_UpdateProducts";
 import Reviews from "./pages/2_HomePageScrolling";
 import InteractionWithReview from "./pages/3_ReviewFullScreen";
 import PostedCompanyReviews from "./pages/5.1_PostedCompanyReviews";
-import PostedReviews from "./pages/5_PostedReviews";
+import PostedReviews from "./pages/5_PostedPhoneReviews";
 import { SearchScreen } from "./pages/8_SearchScreen";
 import AddReview from "./pages/AddReview";
 import ComponentsTest from "./pages/ComponentsTest";
@@ -250,9 +250,9 @@ function App() {
                           path={ROUTES_NAMES.OWNED_PHONES}
                           element={<OwnedPhonesPage />}
                         />
-                        <Route path={ROUTES_NAMES.MY_REVIEWS}>
+                        <Route path={ROUTES_NAMES.REVIEWS}>
                           <Route
-                            path={ROUTES_NAMES.MY_PHONE_REVIEWS}
+                            path={ROUTES_NAMES.PHONE_REVIEWS}
                             element={<PostedReviews />}
                           />
                           <Route
