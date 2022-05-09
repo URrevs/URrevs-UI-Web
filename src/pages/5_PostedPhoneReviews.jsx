@@ -38,8 +38,6 @@ function PostedReviews({ query }) {
 
   const currentUser = useAppSelector((state) => state.auth);
 
-  console.log(userId, currentUser.uid);
-
   // let queryResult = useGetUserPhoneReviewsQuery(page, {
   //   skip: userId !== currentUser.uid,
   // });

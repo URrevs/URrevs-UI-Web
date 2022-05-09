@@ -13,8 +13,7 @@ export const ComparisonScreen = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const pid = searchParams.get("pid");
   const cid = searchParams.get("cid");
-  console.log(pid);
-  console.log(cid);
+
   const {
     isLoading: compLoading,
     error: compError,

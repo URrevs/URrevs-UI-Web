@@ -26,11 +26,13 @@ export const reviewsApi = createApi({
         return response.reviews;
       },
     }),
-    getReview: builder.query<Review, number>({
-      query: (id: number) => `/phone/${id}`,
+
+    getReview: builder.query<Review, string>({
+      query: (id: string) => `/phone/${id}`,
       transformResponse: (response: { review: APIReview }) =>
         new Review(response.review),
     }),
+
     getCompanyReviews: builder.query<
       APIReview[],
       { round: number; cid: string }
@@ -40,6 +42,7 @@ export const reviewsApi = createApi({
         return response.reviews;
       },
     }),
+
     addPhoneReview: builder.mutation({
       query: (review) => {
         return {
@@ -70,12 +73,69 @@ export const reviewsApi = createApi({
       //   new Review(response.review),
     }),
 
+    likePhoneReview: builder.mutation<
+      void,
+      Pick<APIReview, "_id"> & Partial<APIReview>
+    >({
+      query: (reviewId) => {
+        return {
+          url: `/phone/${reviewId}/like`,
+          method: "POST",
+        };
+      },
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          reviewsApi.util.updateQueryData(
+            "getReview",
+            "6274051f8cc1cefd58621d57",
+            (draft) => {
+              return Object.assign(draft, { liked: true });
+            }
+          )
+        );
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          patchResult.undo();
+        }
+      },
+    }),
+
+    unLikePhoneReview: builder.mutation<
+      void,
+      Pick<APIReview, "_id"> & Partial<APIReview>
+    >({
+      query: (reviewId) => {
+        return {
+          url: `/phone/${reviewId}/unlike`,
+          method: "POST",
+        };
+      },
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          reviewsApi.util.updateQueryData(
+            "getReview",
+            "6274051f8cc1cefd58621d57",
+            (draft) => {
+              return Object.assign(draft, { liked: false });
+            }
+          )
+        );
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          patchResult.undo();
+        }
+      },
+    }),
+
     getUserPhoneReviews: builder.query<APIReview[], number>({
       query: (round = 1) => `/phone/by/me?round=${round}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
       },
     }),
+
     getUserCompanyReviews: builder.query<APIReview[], number>({
       query: (round = 1) => `/company/by/me?round=${round}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
@@ -91,6 +151,7 @@ export const reviewsApi = createApi({
         return response.reviews;
       },
     }),
+
     getOtherUserCompanyReviews: builder.query<
       APIReview[],
       { round: number; uid: string }
@@ -108,6 +169,8 @@ export const {
   useGetReviewQuery,
   useGetCompanyReviewsQuery,
   useAddPhoneReviewMutation,
+  useLikePhoneReviewMutation,
+  useUnLikePhoneReviewMutation,
   useGetUserPhoneReviewsQuery,
   useGetUserCompanyReviewsQuery,
   useGetOtherUserPhoneReviewsQuery,
