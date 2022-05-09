@@ -23,10 +23,11 @@ const CardStyled = styled(
 )((theme) => ({
   borderRadius: `${CARD_BORDER_RADIUS}px`,
   marginBottom: "15px",
-  padding: "10px 12px 19px 21px",
+  padding: "16px",
   display: "flex",
   justifyContent: "center",
 }));
+
 export const ProductSpecsScreen = ({ data }) => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const componentDictionary = {
@@ -35,6 +36,7 @@ export const ProductSpecsScreen = ({ data }) => {
     similarPhones: textContainer.similarPhones,
     compareWithAnotherProduct: textContainer.compareWithAnotherProduct,
   };
+
   const [open, setOpen] = React.useState(false);
 
   const {
@@ -42,17 +44,21 @@ export const ProductSpecsScreen = ({ data }) => {
     isLoading: statisticalLoading,
     error: statisticalError,
   } = useGetStatisticalInfoQuery(data._id);
+
   const {
     data: similarPhones,
     isLoading: similarPhoneLoading,
     error: similarPhoneError,
   } = useGetSimilarPhonesQuery(data._id);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   const theme = useTheme();
+
   return (
     <React.Fragment>
-      <Box sx={{ padding: "10px 12px" }}>
+      <Box sx={{ padding: "10px 0px" }}>
         {statisticalLoading ? (
           <LoadingSpinner />
         ) : statisticalError ? (
