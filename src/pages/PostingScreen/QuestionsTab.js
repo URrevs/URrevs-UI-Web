@@ -36,6 +36,9 @@ export const QuestionsTab = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const pageDictionary = {
     chooseProduct: textContainer.chooseProduct,
+    writeProductName: textContainer.writeProductName,
+    writeQuestion: textContainer.writeQuestion,
+    question: textContainer.question,
   };
   const theme = useTheme();
   return (
@@ -43,6 +46,7 @@ export const QuestionsTab = () => {
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit}>
           {/* Searchbar */}
+
           <Typography variant="S18W500C050505">
             {pageDictionary.chooseProduct + ":"}
           </Typography>
@@ -51,10 +55,11 @@ export const QuestionsTab = () => {
             label={pageDictionary.writeProductName}
           />
           {renderFields(
-            pageDictionary.likeAboutProduct,
+            pageDictionary.writeQuestion,
             "content",
-            pageDictionary.pros
+            pageDictionary.question
           )}
+
           {console.log(formik.values)}
           {/* Submit Button */}
 

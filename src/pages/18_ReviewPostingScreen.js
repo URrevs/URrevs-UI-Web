@@ -1,30 +1,20 @@
-import React from "react";
-import * as Yup from "yup";
-import { Formik } from "formik";
-import { useSelector } from "react-redux";
-import {
-  Box,
-  Button,
-  IconButton,
-  Modal,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import HelpIcon from "@mui/icons-material/Help";
-import { SearchBar } from "../Components/MainLayout/Search/SearchBar";
-import FormikDatePicker from "../Components/Form/FormikDatePicker";
-import AddIcon from "@mui/icons-material/Add";
-import FormikTextField from "../Components/Form/FormikTextField";
-import FormikStar from "../Components/Form/FormikStar";
-import OrangeGradientButton from "../Components/Buttons/OrangeGradientButton";
 import { useTheme } from "@emotion/react";
-import FormikSearchComponent from "../Components/Form/FormikSearchComponent";
-import { useGetManufacturingCompanyMutation } from "../services/phones";
+import AddIcon from "@mui/icons-material/Add";
+import HelpIcon from "@mui/icons-material/Help";
+import { Box, IconButton, Modal, Stack, Typography } from "@mui/material";
+import { Formik } from "formik";
+import React from "react";
+import { useSelector } from "react-redux";
+import * as Yup from "yup";
+import OrangeGradientButton from "../Components/Buttons/OrangeGradientButton";
 import { DialogText } from "../Components/Dialogs/DialogText";
+import FormikDatePicker from "../Components/Form/FormikDatePicker";
+import FormikSearchComponent from "../Components/Form/FormikSearchComponent";
+import FormikStar from "../Components/Form/FormikStar";
+import FormikTextField from "../Components/Form/FormikTextField";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import { useAddPhoneReviewMutation } from "../services/reviews";
 import { Tabbar } from "../Components/Tabbar/Tabbar";
+import { useAddPhoneReviewMutation } from "../services/reviews";
 import { QuestionsTab } from "./PostingScreen/QuestionsTab";
 
 /* Form Validation */
@@ -132,6 +122,12 @@ const Basic = ({ ...props }) => {
       </Modal>
       <form onSubmit={props.handleSubmit}>
         {/* Searchbar */}
+        {/* Todo:
+        ERROR: When you overwrite a correct search result with a wrong one it passes validation
+        Walkaround: display snackbar with the error
+        Fix: add validation to companyId probably
+
+        */}
         <Typography variant="S18W500C050505">
           {pageDictionary.chooseProduct + ":"}
         </Typography>
@@ -295,8 +291,8 @@ const ReviewPostingScreen = () => {
         {value === 0 ? (
           <Formik
             initialValues={{
-              companyId: "",
-              chooseProduct: "",
+              companyId: JSON.parse(handleInitialValues("companyId", "")),
+              chooseProduct: handleInitialValues("chooseProduct", ""),
               overAllExp: parseInt(handleInitialValues("overAllExp", 0)),
               manufacturingQuality: parseInt(
                 handleInitialValues("manufacturingQuality", 0)
@@ -349,7 +345,7 @@ const ReviewPostingScreen = () => {
             {(props) => <Basic {...props} />}
           </Formik>
         ) : (
-          <QuestionsTab></QuestionsTab>
+          <QuestionsTab />
         )}
       </CustomAppBar>
     </div>

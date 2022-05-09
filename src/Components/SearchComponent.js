@@ -61,11 +61,13 @@ export default function SearchComponent({
       <Autocomplete
         onChange={(e, value) => {
           setCompareItem(value);
+          sessionStorage.setItem("search field", value.label);
         }}
         freeSolo
         sx={{
           filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.1))",
         }}
+        defaultValue={sessionStorage.getItem("search field")}
         disableClearable
         options={results.map((option) => ({
           label: option.name,
@@ -87,6 +89,7 @@ export default function SearchComponent({
             }}
             onChange={async (e) => {
               setSearchQuery(e.target.value);
+
               try {
                 setTimeout(async () => {
                   if (e.target.value.trim() !== "") {

@@ -19,7 +19,10 @@ const FormikSearchComponent = ({ fieldName, label }) => {
               const companyId = await getManufacturingCompany(response.pid);
               sessionStorage.setItem(fieldName, response.pid);
               setFieldValue("companyId", companyId.data);
-              sessionStorage.setItem("companyId", companyId.data);
+              sessionStorage.setItem(
+                "companyId",
+                JSON.stringify(companyId.data)
+              );
             }}
             label={label}
           />
