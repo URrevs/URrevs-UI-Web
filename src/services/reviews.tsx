@@ -42,7 +42,14 @@ export const reviewsApi = createApi({
         return response.reviews;
       },
     }),
-
+    getPhoneReviews: builder.query<APIReview[], { round: number; pid: string }>(
+      {
+        query: ({ round, pid }) => `/phone/on/${pid}?round=${round}`,
+        transformResponse: (response: { reviews: APIReview[] }) => {
+          return response.reviews;
+        },
+      }
+    ),
     addPhoneReview: builder.mutation({
       query: (review) => {
         return {
@@ -168,6 +175,7 @@ export const {
   useGetAllReviewsQuery,
   useGetReviewQuery,
   useGetCompanyReviewsQuery,
+  useGetPhoneReviewsQuery,
   useAddPhoneReviewMutation,
   useLikePhoneReviewMutation,
   useUnLikePhoneReviewMutation,

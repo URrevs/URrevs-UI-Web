@@ -16,11 +16,11 @@ const FormikStar = ({
       <Field name={fieldName}>
         {({ field: { value }, form: { setFieldValue }, meta }) => (
           <>
-            <div>
+            <div style={{ textAlign: "center" }}>
               <StarRating
                 textSize="S14W500C050505"
                 starDimension={starDimension}
-                starValue={value}
+                starValue={parseInt(value)}
                 onRatingChange={(rating) => {
                   setFieldValue(fieldName, rating);
                   sessionStorage.setItem(fieldName, rating);
@@ -33,11 +33,13 @@ const FormikStar = ({
                     fontFamily: "Tajawal",
                     fontWeight: 400,
                     fontSize: "0.75rem",
-                    lineHeight: 1.66,
-                    marginTop: "3px",
-                    marginRight: "14px",
-                    marginBottom: 0,
-                    marginLeft: "14px",
+                    lineHeight: 1,
+                    padding: 0,
+                    margin: 0,
+                    // marginTop: "3px",
+                    // marginRight: "14px",
+                    // marginBottom: 0,
+                    // marginLeft: "14px",
                   }}
                 >
                   {meta.error}

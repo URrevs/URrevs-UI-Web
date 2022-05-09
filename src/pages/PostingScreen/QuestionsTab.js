@@ -14,7 +14,7 @@ export const QuestionsTab = () => {
       id: "",
       content: "",
     },
-    validationSchema: {},
+    // validationSchema: {},
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
@@ -47,7 +47,10 @@ export const QuestionsTab = () => {
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit}>
           {/* Searchbar */}
-
+          {/* TODO:
+            Need a new searchbar that searches company OR phone and returns that companyId/phoneId
+            and type:phone/company
+        */}
           <Typography variant="S18W500C050505">
             {pageDictionary.chooseProduct + ":"}
           </Typography>

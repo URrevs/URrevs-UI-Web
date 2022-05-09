@@ -51,7 +51,7 @@ const StarRating = ({
               readOnly
                 ? null
                 : (event) => {
-                    onRatingChange(event.target.value);
+                    onRatingChange(parseInt(event.target.value));
                   }
             }
           />
