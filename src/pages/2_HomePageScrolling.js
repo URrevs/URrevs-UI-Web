@@ -14,6 +14,7 @@ import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import { useGetAllReviewsQuery } from "../services/reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -124,6 +125,7 @@ function Reviews() {
 
   return (
     <Fragment>
+      <CustomAppBar showLogo showSearch showProfile />
       <div style={{ height: "calc(100vh)", margin: "0" }}>
         <AutoSizer>
           {({ height, width }) => {

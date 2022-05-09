@@ -11,6 +11,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ListItemNavigator from "../Components/Shared/ListItemNavigator";
 
 export const AllProductsScreen = () => {
@@ -111,6 +112,8 @@ export const AllProductsScreen = () => {
   const pageDictionary = {};
   return (
     <React.Fragment>
+      <CustomAppBar showLogo showSearch showProfile />
+
       <CompanyHorizontalList />
       <List>
         {arrayOfAllProducts.map((item) => (

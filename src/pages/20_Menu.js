@@ -196,6 +196,8 @@ export default function Menu() {
         marginBottom: 70,
       }}
     >
+      <CustomAppBar showLogo showSearch showProfile />
+
       <Modal open={open} onClose={handleClose} dir={theme.direction}>
         <Box>
           <SignoutDialog handleClose={handleClose} />

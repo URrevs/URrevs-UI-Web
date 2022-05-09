@@ -22,6 +22,7 @@ import { useTheme } from "@emotion/react";
 import FormikSearchComponent from "../Components/Form/FormikSearchComponent";
 import { useGetManufacturingCompanyMutation } from "../services/phones";
 import { DialogText } from "../Components/Dialogs/DialogText";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 
 /* Form Validation */
 const BasicValidationSchema = Yup.object().shape({
@@ -275,6 +276,8 @@ const ReviewPostingScreen = () => {
   const navigate = useNavigate();
   return (
     <div style={{ marginBottom: "85px" }}>
+      <CustomAppBar showLogo showSearch showProfile />
+
       <Formik
         initialValues={{
           companyId: "",
