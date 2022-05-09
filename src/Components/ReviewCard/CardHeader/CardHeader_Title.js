@@ -3,11 +3,20 @@ import ArrowLeftRoundedIcon from "@mui/icons-material/ArrowLeftRounded";
 import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
-import { replace } from "stylis";
+import { useLocation, useNavigate } from "react-router-dom";
+import ROUTES_NAMES from "../../../RoutesNames";
 
-const CardHeaderTitle = ({ userName, productName, userId, targetId }) => {
+const CardHeaderTitle = ({
+  userName,
+  productName,
+  userId,
+  targetId,
+  userProfilePath,
+  targetProfilePath,
+}) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const theme = useTheme();
 
   return (
@@ -34,7 +43,7 @@ const CardHeaderTitle = ({ userName, productName, userId, targetId }) => {
             },
           }}
           variant="S16W700C050505"
-          onClick={() => navigate(`/user-profile?userId=${userId}`, replace)}
+          onClick={() => navigate(userProfilePath)}
         >
           {userName}
         </Typography>
@@ -74,7 +83,7 @@ const CardHeaderTitle = ({ userName, productName, userId, targetId }) => {
               textDecoration: "underline",
             },
           }}
-          onClick={() => navigate(`/phone?pid=${targetId}`, replace)}
+          onClick={() => navigate(targetProfilePath)}
         >
           {productName}
         </Typography>

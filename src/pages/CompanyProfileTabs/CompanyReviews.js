@@ -17,6 +17,8 @@ import ReviewCard from "../../Components/ReviewCard/ReviewCard";
 import CompanyReview from "../../Components/ReviewCard/CompanyReview";
 import { useTheme } from "@emotion/react";
 import { useSearchParams } from "react-router-dom";
+import ROUTES_NAMES from "../../RoutesNames";
+
 const cache = new CellMeasurerCache({
   fixedWidth: true,
   fixedHeight: false,
@@ -119,6 +121,8 @@ export const CompanyReviews = ({
                 index={index}
                 clearIndexCache={clearCache}
                 reviewDetails={reviewsList[index]}
+                targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+                userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].targetId}`}
               />
             )}
           </div>

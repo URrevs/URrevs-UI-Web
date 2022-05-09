@@ -1,7 +1,13 @@
 import { useAppSelector } from "../../store/hooks";
 import ReviewCard from "./ReviewCard";
 
-const CompanyReview = ({ reviewDetails, index, clearIndexCache }) => {
+const CompanyReview = ({
+  reviewDetails,
+  index,
+  clearIndexCache,
+  targetProfilePath,
+  userProfilePath,
+}) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
   return (
@@ -12,6 +18,8 @@ const CompanyReview = ({ reviewDetails, index, clearIndexCache }) => {
       clearIndexCache={clearIndexCache}
       reviewDetails={reviewDetails}
       isPhoneReview={false}
+      targetProfilePath={targetProfilePath}
+      userProfilePath={userProfilePath}
     />
   );
 };

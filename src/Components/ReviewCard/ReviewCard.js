@@ -19,6 +19,7 @@ import CardHeader from "./CardHeader/CardHeader";
 import { Box, ButtonBase, Grid, Typography } from "@mui/material";
 import { StarLine } from "../StarLine";
 import { useNavigate } from "react-router-dom";
+import ROUTES_NAMES from "../../RoutesNames";
 
 export default function ReviewCard({
   ukey,
@@ -28,6 +29,8 @@ export default function ReviewCard({
   isPhoneReview,
   fullScreen,
   isExpanded,
+  targetProfilePath,
+  userProfilePath,
 }) {
   const isReview = true;
   const theme = useTheme();
@@ -176,6 +179,8 @@ export default function ReviewCard({
         targetId={reviewDetails.targetId}
         showViewsCounter={true}
         views={reviewDetails.views}
+        targetProfilePath={targetProfilePath}
+        userProfilePath={userProfilePath}
       />
       <CardContent style={{ padding: 0 }}>
         <ButtonBase

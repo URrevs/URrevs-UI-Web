@@ -14,6 +14,7 @@ import LoadingReviewSkeleton, {
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
+import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetUserPhoneReviewsQuery,
   useGetOtherUserPhoneReviewsQuery,
@@ -125,6 +126,8 @@ function PostedReviews({ query }) {
                 clearIndexCache={clearCache}
                 reviewDetails={reviewsList[index]}
                 isPhoneReview={true}
+                targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
+                userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
               />
             )}
           </div>
