@@ -15,6 +15,7 @@ import { useGetAllReviewsQuery } from "../services/reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import ROUTES_NAMES from "../RoutesNames";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -115,6 +116,8 @@ function Reviews() {
                 clearIndexCache={clearCache}
                 reviewDetails={reviewsList[index]}
                 isPhoneReview={true}
+                targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
+                userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
               />
             )}
           </div>

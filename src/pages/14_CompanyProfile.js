@@ -6,6 +6,7 @@ import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { CompanyOverviewCard } from "../Components/OverviewCard/CompanyOverviewCard";
 import { Tabbar } from "../Components/Tabbar/Tabbar";
+import ROUTES_NAMES from "../RoutesNames";
 import { useGetCompanyStatsInfoQuery } from "../services/companies";
 import { CompanyReviews } from "./CompanyProfileTabs/CompanyReviews";
 export const CompanyProfile = () => {

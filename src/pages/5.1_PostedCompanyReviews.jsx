@@ -21,6 +21,7 @@ import { reviewsActions } from "../store/reviewsSlice";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import { useSearchParams } from "react-router-dom";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
+import ROUTES_NAMES from "../RoutesNames";
 
 // TODO: this may be component with 5_PostedReviews.jsx
 
@@ -124,6 +125,8 @@ function PostedCompanyReviews() {
                 index={index}
                 clearIndexCache={clearCache}
                 reviewDetails={reviewsList[index]}
+                targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+                userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}
               />
             )}
           </div>
