@@ -27,6 +27,7 @@ const FormikDatePicker = ({ label, fieldName, isRequired = true }) => {
             locale={localeDate}
           >
             <MobileDatePicker
+              maxDate={new Date()}
               value={value}
               views={["year", "month"]}
               onChange={(newValue) => {
@@ -67,28 +68,11 @@ const FormikDatePicker = ({ label, fieldName, isRequired = true }) => {
                     placeholder={label}
                     {...params}
                     error={meta.touched && meta.error && true}
+                    helperText={meta.touched && meta.error}
                   />
                 );
               }}
             />
-            {meta.touched && meta.error && (
-              <p
-                style={{
-                  color: "#d32f2f",
-                  fontFamily: "Tajawal",
-                  fontWeight: 400,
-                  fontSize: "0.75rem",
-                  lineHeight: 1.66,
-                  textAlign: "left",
-                  marginTop: "3px",
-                  marginRight: "14px",
-                  marginBottom: 0,
-                  marginLeft: "14px",
-                }}
-              >
-                {meta.error}
-              </p>
-            )}
           </LocalizationProvider>
         </React.Fragment>
       )}

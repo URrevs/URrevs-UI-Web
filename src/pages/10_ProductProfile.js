@@ -11,6 +11,7 @@ import {
   useGetSimilarPhonesQuery,
 } from "../services/phones";
 import { ProductSpecsScreen } from "./ProductProfileTabs/10_ProductSpecs";
+import { ProductReviews } from "./ProductProfileTabs/12_ProductReviews";
 
 export const ProductProfile = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -54,9 +55,13 @@ export const ProductProfile = () => {
               value={value}
               setValue={setValue}
             />
-            {value === 1 ? (
+            {value === 0 ? (
+              <ProductReviews />
+            ) : value === 1 ? (
               <ProductSpecsScreen data={data}></ProductSpecsScreen>
-            ) : null}
+            ) : (
+              <div>QuestionAndAnswer</div>
+            )}
           </Box>
         </CustomAppBar>
       )}

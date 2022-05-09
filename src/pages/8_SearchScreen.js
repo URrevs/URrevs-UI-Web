@@ -209,7 +209,7 @@ export const SearchScreen = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          margin: "0px 13px",
+          margin: "60px 13px",
         }}
       >
         <TextField
