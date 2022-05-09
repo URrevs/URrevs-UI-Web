@@ -11,7 +11,7 @@ export default function OwnedPhonesPage() {
   const currentUserId = useAppSelector((state) => state.auth.uid);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const paramId = searchParams.get("uid");
+  const paramId = searchParams.get("userId");
 
   const [round, setRound] = React.useState(1);
   const [getPhones, {}] = useGetMyOwnedPhonesMutation();

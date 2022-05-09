@@ -3,14 +3,17 @@ import { Button, Card, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { FILTER_BUTTON_BORDER_RADIUS } from "../../constants";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 
 export const FilterTabbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const userId = searchParams.get("userId");
+
   const [value, setValue] = React.useState(
-    location.pathname === "/user-profile/my-reviews/companies" ? 1 : 0
+    location.pathname === `/user-profile/reviews/companies` ? 1 : 0
   );
 
   const textContainer = useSelector((state) => state.language.textContainer);
@@ -57,7 +60,7 @@ export const FilterTabbar = () => {
             },
           }}
           onClick={() => {
-            navigate("../phones");
+            navigate(`../phones?userId=${userId}`);
           }}
         >
           <Typography
@@ -98,7 +101,7 @@ export const FilterTabbar = () => {
             },
           }}
           onClick={() => {
-            navigate("../companies");
+            navigate(`../companies?userId=${userId}`);
           }}
         >
           <Typography
