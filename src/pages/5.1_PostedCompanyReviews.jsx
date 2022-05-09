@@ -20,6 +20,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import { useSearchParams } from "react-router-dom";
+import CompanyReview from "../Components/ReviewCard/CompanyReview";
 
 // TODO: this may be component with 5_PostedReviews.jsx
 
@@ -119,13 +120,10 @@ function PostedCompanyReviews() {
                 ))
               )
             ) : (
-              <ReviewCard
+              <CompanyReview
                 index={index}
-                fullScreen={false}
-                isExpanded={false}
                 clearIndexCache={clearCache}
                 reviewDetails={reviewsList[index]}
-                isPhoneReview={false}
               />
             )}
           </div>
