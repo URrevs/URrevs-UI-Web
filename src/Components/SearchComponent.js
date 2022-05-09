@@ -61,7 +61,10 @@ export default function SearchComponent({
       <Autocomplete
         onChange={(e, value) => {
           setCompareItem(value);
-          sessionStorage.setItem("search field", value.label);
+          if (isFormik) {
+            sessionStorage.setItem("chooseProduct", value.pid);
+            sessionStorage.setItem("search field", value.label);
+          }
         }}
         freeSolo
         sx={{

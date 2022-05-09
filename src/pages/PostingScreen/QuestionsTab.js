@@ -37,8 +37,9 @@ export const QuestionsTab = () => {
   const pageDictionary = {
     chooseProduct: textContainer.chooseProduct,
     writeProductName: textContainer.writeProductName,
-    writeQuestion: textContainer.writeQuestion,
+    writeYourQuestion: textContainer.writeYourQuestion,
     question: textContainer.question,
+    postQuestion: textContainer.postQuestion,
   };
   const theme = useTheme();
   return (
@@ -55,7 +56,7 @@ export const QuestionsTab = () => {
             label={pageDictionary.writeProductName}
           />
           {renderFields(
-            pageDictionary.writeQuestion,
+            pageDictionary.writeYourQuestion,
             "content",
             pageDictionary.question
           )}
@@ -83,7 +84,7 @@ export const QuestionsTab = () => {
                 }}
               />
               <Typography variant="S18W700Cffffff">
-                {pageDictionary.postReview}
+                {pageDictionary.postQuestion}
               </Typography>
             </Box>
           </OrangeGradientButton>

@@ -17,7 +17,7 @@ const FormikSearchComponent = ({ fieldName, label }) => {
             setCompareItem={async (response) => {
               setFieldValue(fieldName, response.pid);
               const companyId = await getManufacturingCompany(response.pid);
-              sessionStorage.setItem(fieldName, response.pid);
+
               setFieldValue("companyId", companyId.data);
               sessionStorage.setItem(
                 "companyId",

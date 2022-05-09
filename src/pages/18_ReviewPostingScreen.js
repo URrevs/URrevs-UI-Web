@@ -123,6 +123,8 @@ const Basic = ({ ...props }) => {
       <form onSubmit={props.handleSubmit}>
         {/* Searchbar */}
         {/* Todo:
+        Put X icon instead of SearchIcon and lock SearchBar with previous result
+        When X is hit delete PID and CompanyId entries from state
         ERROR: When you overwrite a correct search result with a wrong one it passes validation
         Walkaround: display snackbar with the error
         Fix: add validation to companyId probably
@@ -183,7 +185,7 @@ const Basic = ({ ...props }) => {
         )}
 
         {/* RENDER COMPANY REVIEW FIELDS */}
-        {props.values.companyId ? (
+        {props.values.companyId._id ? (
           <React.Fragment>
             <Typography variant="S18W500C050505">
               {pageDictionary.rateManufacturer}
@@ -237,7 +239,7 @@ const Basic = ({ ...props }) => {
         />
 
         {/* Submit Button */}
-
+        {console.log(props.values)}
         <OrangeGradientButton
           type="submit"
           color="red"
@@ -266,6 +268,7 @@ const Basic = ({ ...props }) => {
     </React.Fragment>
   );
 };
+
 const ReviewPostingScreen = () => {
   const [addReview] = useAddPhoneReviewMutation();
   const [value, setValue] = React.useState(0);
@@ -291,7 +294,7 @@ const ReviewPostingScreen = () => {
         {value === 0 ? (
           <Formik
             initialValues={{
-              companyId: JSON.parse(handleInitialValues("companyId", "")),
+              companyId: JSON.parse(handleInitialValues("companyId", "{}")),
               chooseProduct: handleInitialValues("chooseProduct", ""),
               overAllExp: parseInt(handleInitialValues("overAllExp", 0)),
               manufacturingQuality: parseInt(
