@@ -25,21 +25,22 @@ const cache = new CellMeasurerCache({
 
 let maxIndex = 0;
 
-function Virtual() {
+function Virtual({
+  reviewsList,
+  page,
+  data,
+  error,
+  isLoading,
+  isFetching,
+  stateLike,
+  stateUnLike,
+  addToReviewsList,
+  increasePage,
+}) {
   const dispatch = useAppDispatch();
-  const reviewsList = useAppSelector((state) => state.reviews.newReviews);
-  const page = useAppSelector((state) => state.reviews.page);
-  const currentIndex = useAppSelector((state) => state.reviews.currentIndex);
-  const { data, isLoading, isFetching, error } = useGetAllReviewsQuery(page);
   const theme = useTheme();
   const listRef = useRef();
   const [ex, setEx] = useState(false);
-
-  const stateLike = () =>
-    dispatch(reviewsSlice.actions.setIsLiked({ index: 0, isLiked: true }));
-
-  const stateUnLike = () =>
-    dispatch(reviewsSlice.actions.setIsLiked({ index: 0, isLiked: false }));
 
   const clearCache = (index) => {
     setEx(!ex);
@@ -51,20 +52,10 @@ function Virtual() {
   };
 
   useEffect(() => {
-    const scrollIndex = currentIndex === 0 ? 0 : currentIndex + 64;
-
-    setTimeout(() => window.scrollTo(0, scrollIndex), 500);
-  }, []);
-
-  useEffect(() => {
     if (data) {
-      dispatch(
-        reviewsActions.addToLoaddedReviews({
-          newReviews: data,
-        })
-      );
+      addToReviewsList();
       if (page < 2 && !isLoading && !isFetching) {
-        dispatch(reviewsActions.increasePage());
+        increasePage();
       }
     }
   }, [data]);
@@ -111,9 +102,13 @@ function Virtual() {
         >
           <div style={{ ...style, direction: theme.direction }}>
             {index >= reviewsList.length ? (
-              [...Array(1)].map((a, index) => (
-                <LoadingReviewSkeleton key={index} />
-              ))
+              data.length === 0 ? (
+                <div>No more reviews</div>
+              ) : (
+                [...Array(1)].map((a, index) => (
+                  <LoadingReviewSkeleton key={index} />
+                ))
+              )
             ) : (
               <ReviewCard
                 index={index}
@@ -124,8 +119,8 @@ function Virtual() {
                 isPhoneReview={true}
                 targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
                 userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
-                stateLikeFn={stateLike}
-                stateUnlikeFn={stateUnLike}
+                stateLikeFn={stateLike.bind(null, index)}
+                stateUnlikeFn={stateUnLike.bind(null, index)}
               />
             )}
           </div>
@@ -136,7 +131,6 @@ function Virtual() {
 
   return (
     <Fragment>
-      <CustomAppBar showLogo showSearch showProfile />
       <div style={{ height: "calc(100vh)", margin: "0" }}>
         <AutoSizer>
           {({ height, width }) => {
@@ -147,14 +141,6 @@ function Virtual() {
                     <List
                       ref={listRef}
                       autoHeight
-                      onScroll={(scrollData) => {
-                        // save current scroll position
-                        dispatch(
-                          reviewsActions.setIndex({
-                            currentIndex: scrollData.scrollTop,
-                          })
-                        );
-                      }}
                       overscanRowCount={10}
                       isScrolling={isScrolling}
                       scrollTop={scrollTop}
@@ -162,7 +148,7 @@ function Virtual() {
                       height={height}
                       deferredMeasurementCache={cache}
                       rowHeight={cache.rowHeight}
-                      rowCount={reviewsList.length + 2}
+                      rowCount={reviewsList.length + 1}
                       rowRenderer={renderRow}
                     />
                   </div>

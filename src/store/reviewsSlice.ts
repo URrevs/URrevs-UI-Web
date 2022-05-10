@@ -54,5 +54,6 @@ const reviewsSlice = createSlice({
 });
 
 export const reviewsActions = reviewsSlice.actions;
+export const reviewsPostedScreenActions = reviewsSlice.actions;
 export const reviewsSliceName = reviewsSlice.name;
 export default reviewsSlice;
