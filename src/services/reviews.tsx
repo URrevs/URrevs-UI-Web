@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { APIReview } from "../models/interfaces/APIReview.model";
 import Review from "../models/classes/Review";
+import { APIReview } from "../models/interfaces/APIReview.model";
 import { RootState } from "../store/store";
 
 export const reviewsApi = createApi({
@@ -21,16 +21,17 @@ export const reviewsApi = createApi({
 
   endpoints: (builder) => ({
     getAllReviews: builder.query<APIReview[], number>({
-      query: (round = 1) => `/phone/by/me?round=${1}`,
+      query: (round = 1) => `/phone/by/626b28707fe7587a42e3dfeb?round=${1}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
       },
     }),
 
-    getReview: builder.query<Review, string>({
+    getReview: builder.query<APIReview, string>({
       query: (id: string) => `/phone/${id}`,
-      transformResponse: (response: { review: APIReview }) =>
-        new Review(response.review),
+      transformResponse: (response: { review: APIReview }) => {
+        return response.review;
+      },
     }),
 
     getCompanyReviews: builder.query<
@@ -80,58 +81,39 @@ export const reviewsApi = createApi({
       //   new Review(response.review),
     }),
 
-    likePhoneReview: builder.mutation<
-      void,
-      Pick<APIReview, "_id"> & Partial<APIReview>
-    >({
-      query: (reviewId) => {
+    likePhoneReview: builder.mutation({
+      query: ({ reviewId }) => {
         return {
           url: `/phone/${reviewId}/like`,
           method: "POST",
         };
       },
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          reviewsApi.util.updateQueryData(
-            "getReview",
-            "6274051f8cc1cefd58621d57",
-            (draft) => {
-              return Object.assign(draft, { liked: true });
-            }
-          )
-        );
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        payload.doFn();
+
         try {
           await queryFulfilled;
         } catch (e) {
-          patchResult.undo();
+          payload.unDoFn();
         }
       },
     }),
 
-    unLikePhoneReview: builder.mutation<
-      void,
-      Pick<APIReview, "_id"> & Partial<APIReview>
-    >({
-      query: (reviewId) => {
+    unLikePhoneReview: builder.mutation({
+      query: ({ reviewId }) => {
         return {
           url: `/phone/${reviewId}/unlike`,
           method: "POST",
         };
       },
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          reviewsApi.util.updateQueryData(
-            "getReview",
-            "6274051f8cc1cefd58621d57",
-            (draft) => {
-              return Object.assign(draft, { liked: false });
-            }
-          )
-        );
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        payload.doFn();
+        console.log("a");
+
         try {
           await queryFulfilled;
         } catch (e) {
-          patchResult.undo();
+          payload.unDoFn();
         }
       },
     }),
@@ -149,6 +131,7 @@ export const reviewsApi = createApi({
         return response.reviews;
       },
     }),
+
     getOtherUserPhoneReviews: builder.query<
       APIReview[],
       { round: number; uid: string }

@@ -38,6 +38,18 @@ const reviewsSlice = createSlice({
       console.log(action.payload.currentIndex);
       state.currentIndex = action.payload.currentIndex;
     },
+    setIsLiked(
+      state,
+      action: PayloadAction<{
+        index: number;
+        isLiked: boolean;
+      }>
+    ) {
+      state.newReviews[action.payload.index].liked = action.payload.isLiked;
+      action.payload.isLiked
+        ? state.newReviews[action.payload.index].likes++
+        : state.newReviews[action.payload.index].likes--;
+    },
   },
 });
 

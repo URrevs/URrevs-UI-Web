@@ -10,13 +10,12 @@ import {
 import LoadingReviewSkeleton, {
   loadingSkeletonHeight,
 } from "../Components/Loaders/LoadingReviewSkeleton";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import {
-  useGetAllReviewsQuery,
-  useGetUserReviewsQuery,
-} from "../services/reviews";
+import ROUTES_NAMES from "../RoutesNames";
+import { useGetAllReviewsQuery } from "../services/reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { reviewsActions } from "../store/reviewsSlice";
+import reviewsSlice, { reviewsActions } from "../store/reviewsSlice";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -26,7 +25,7 @@ const cache = new CellMeasurerCache({
 
 let maxIndex = 0;
 
-function MyReviews() {
+function Virtual() {
   const dispatch = useAppDispatch();
   const reviewsList = useAppSelector((state) => state.reviews.newReviews);
   const page = useAppSelector((state) => state.reviews.page);
@@ -35,6 +34,12 @@ function MyReviews() {
   const theme = useTheme();
   const listRef = useRef();
   const [ex, setEx] = useState(false);
+
+  const stateLike = () =>
+    dispatch(reviewsSlice.actions.setIsLiked({ index: 0, isLiked: true }));
+
+  const stateUnLike = () =>
+    dispatch(reviewsSlice.actions.setIsLiked({ index: 0, isLiked: false }));
 
   const clearCache = (index) => {
     setEx(!ex);
@@ -117,6 +122,10 @@ function MyReviews() {
                 clearIndexCache={clearCache}
                 reviewDetails={reviewsList[index]}
                 isPhoneReview={true}
+                targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
+                userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+                stateLikeFn={stateLike}
+                stateUnlikeFn={stateUnLike}
               />
             )}
           </div>
@@ -127,7 +136,8 @@ function MyReviews() {
 
   return (
     <Fragment>
-      <div style={{ height: "calc(100vh)", margin: "0 12px" }}>
+      <CustomAppBar showLogo showSearch showProfile />
+      <div style={{ height: "calc(100vh)", margin: "0" }}>
         <AutoSizer>
           {({ height, width }) => {
             return (
@@ -166,4 +176,4 @@ function MyReviews() {
   );
 }
 
-export default MyReviews;
+export default Virtual;

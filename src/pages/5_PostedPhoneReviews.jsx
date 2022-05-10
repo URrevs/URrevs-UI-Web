@@ -19,7 +19,12 @@ import {
   useGetUserPhoneReviewsQuery,
   useGetOtherUserPhoneReviewsQuery,
 } from "../services/reviews";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import {
+  useLikePhoneReviewMutation,
+  useUnLikePhoneReviewMutation,
+} from "../services/reviews";
+import reviewsSlice from "../store/reviewsSlice";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -30,11 +35,19 @@ const cache = new CellMeasurerCache({
 let maxIndex = 0;
 
 function PostedReviews({ query }) {
+  const dispatch = useAppDispatch();
+
   const [reviewsList, setReviewsList] = useState([]);
   const [page, setPage] = useState(1);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const userId = searchParams.get("userId");
+
+  const stateLike = () =>
+    dispatch(reviewsSlice.actions.setIsLiked({ index: 0, isLiked: true }));
+
+  const stateUnLike = () =>
+    dispatch(reviewsSlice.actions.setIsLiked({ index: 0, isLiked: false }));
 
   const currentUser = useAppSelector((state) => state.auth);
 
@@ -126,6 +139,8 @@ function PostedReviews({ query }) {
                 isPhoneReview={true}
                 targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
                 userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+                stateLikeFn={stateLike}
+                stateUnlikeFn={stateUnLike}
               />
             )}
           </div>

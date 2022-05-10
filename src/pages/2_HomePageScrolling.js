@@ -10,12 +10,12 @@ import {
 import LoadingReviewSkeleton, {
   loadingSkeletonHeight,
 } from "../Components/Loaders/LoadingReviewSkeleton";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
+import ROUTES_NAMES from "../RoutesNames";
 import { useGetAllReviewsQuery } from "../services/reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { reviewsActions } from "../store/reviewsSlice";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import ROUTES_NAMES from "../RoutesNames";
+import reviewsSlice, { reviewsActions } from "../store/reviewsSlice";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -34,6 +34,12 @@ function Reviews() {
   const theme = useTheme();
   const listRef = useRef();
   const [ex, setEx] = useState(false);
+
+  const stateLike = () =>
+    dispatch(reviewsSlice.actions.setIsLiked({ index: 0, isLiked: true }));
+
+  const stateUnLike = () =>
+    dispatch(reviewsSlice.actions.setIsLiked({ index: 0, isLiked: false }));
 
   const clearCache = (index) => {
     setEx(!ex);
@@ -118,6 +124,8 @@ function Reviews() {
                 isPhoneReview={true}
                 targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
                 userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+                stateLikeFn={stateLike}
+                stateUnlikeFn={stateUnLike}
               />
             )}
           </div>

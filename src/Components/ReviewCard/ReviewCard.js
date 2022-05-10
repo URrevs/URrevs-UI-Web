@@ -1,7 +1,7 @@
-import { useTheme } from "@emotion/react";
 import { Box, ButtonBase, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import * as React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND,
@@ -13,7 +13,8 @@ import {
   useLikePhoneReviewMutation,
   useUnLikePhoneReviewMutation,
 } from "../../services/reviews";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import reviewsSlice from "../../store/reviewsSlice";
 import Card from "../Card";
 import { StarLine } from "../StarLine";
 import CardActionButtons from "./CardActions/CardActionButtons";
@@ -32,12 +33,31 @@ export default function ReviewCard({
   isExpanded,
   targetProfilePath,
   userProfilePath,
+  stateLikeFn,
+  stateUnlikeFn,
 }) {
   const isReview = true;
-  const theme = useTheme();
   const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+
   const [likePhoneReview] = useLikePhoneReviewMutation();
   const [unLikePhoneReview] = useUnLikePhoneReviewMutation();
+
+  const isLiked = reviewDetails.liked;
+  const likeBtnHandler = async () => {
+    reviewDetails.liked
+      ? unLikePhoneReview({
+          reviewId: reviewDetails._id,
+          doFn: stateUnlikeFn,
+          unDoFn: stateLikeFn,
+        })
+      : likePhoneReview({
+          reviewId: reviewDetails._id,
+          doFn: stateLikeFn,
+          unDoFn: stateUnlikeFn,
+        });
+  };
 
   const ratings = [
     reviewDetails.generalRating,
@@ -61,15 +81,6 @@ export default function ReviewCard({
 
   const initialIsExpanded = isExpanded === true ? true : false;
   const [expanded, setExpanded] = React.useState(initialIsExpanded);
-
-  const [isLiked, setIsLiked] = React.useState(reviewDetails.liked);
-
-  const likeBtnHandler = async () => {
-    reviewDetails.liked
-      ? unLikePhoneReview(reviewDetails.id)
-      : likePhoneReview(reviewDetails.id);
-    setIsLiked(reviewDetails.liked);
-  };
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -275,9 +286,9 @@ export default function ReviewCard({
           <CardFooter
             isReview={isReview}
             navigateToFullScreen={navigateToFullScreen}
-            shareCounter={reviewDetails.shareCounter}
-            likesCounter={reviewDetails.likesCounter}
-            commentsCounter={reviewDetails.commentsCounter}
+            shareCounter={reviewDetails.comments}
+            likesCounter={reviewDetails.likes}
+            commentsCounter={reviewDetails.commentsCount}
           />
 
           <CardActionButtons
