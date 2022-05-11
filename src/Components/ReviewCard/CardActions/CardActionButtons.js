@@ -15,7 +15,7 @@ const CardActionButtons = ({
   firstButtonPressedText,
   // text shown on first button (Liked or Upvote)
   firstButtonNonPressedText,
-  setIsLiked,
+  toggleLike,
   isReview,
   navigateToFullScreen: commentButtonOnClick,
 }) => {
@@ -40,7 +40,7 @@ const CardActionButtons = ({
         }}
       >
         <BottomCardActionBtn
-          onClickAction={() => setIsLiked(!isLiked)}
+          onClickAction={toggleLike}
           isHighlighted={isLiked}
           title={
             isReview

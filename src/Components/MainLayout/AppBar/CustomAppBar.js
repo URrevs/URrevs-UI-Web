@@ -5,6 +5,7 @@ import { Box, IconButton, Toolbar, Typography } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
+import { FilterTabbar } from "../../Tabbar/FilterTabbar";
 import { AppBarActions } from "./AppBarActions";
 import BottomTabBar from "./BottomTabBar";
 
@@ -13,7 +14,7 @@ const CustomAppBarStyled = styled(MuiAppBar, {
 })(({ theme, direction }) => ({
   direction: direction,
   minHeight: 45,
-  boxShadow: "0 1px 6px 0px #b5b5b5",
+  boxShadow: "0 1px 6px 0px #0000029",
   background: theme.palette.appBar.appBarColor,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -36,6 +37,7 @@ export const CustomAppBar = ({
   englishName,
   showTabBar,
   children,
+  tabBar,
 }) => {
   const theme = useTheme();
   const backButtonDirection = theme.direction === "rtl" ? -1 : 1;
@@ -114,13 +116,13 @@ export const CustomAppBar = ({
             )}
           </div>
         </Toolbar>
-        {/* <Toolbar>{showTabBar && <BottomTabBar />}</Toolbar> */}
       </CustomAppBarStyled>
       <Box
         style={{
           marginTop: 45,
         }}
       >
+        {tabBar}
         {children}
       </Box>
     </div>

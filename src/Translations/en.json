@@ -194,7 +194,7 @@
   "WhatDoYouLikeAbout": "What do you like about",
   "whatDoYouHateAbout": "What do you hate about",
   "invitationCode": "Invitation code",
-  "enterInvitationCode": "Enter invitation code",
+  "enterInvitationCode": "Enter invitation code (optional)",
   "internalServerError": "Internal server error",
   "enterNumberOfWinnersErrorMsg": "The number of winners must be entered.",
   "AddPrizeNameErrorMsg": "The prize name must be entered.",
@@ -211,5 +211,12 @@
   "aboutUs": "About us",
   "termsOfUse": "Terms of use",
   "privacyPolicy": "Privacy policy",
-  "postedQuestions": "Posted questions"
+  "postedQuestions": "Posted questions",
+  "posting": "Posting",
+  "yourQuestionRegarding": "Your question regarding:",
+  "writeTheNameOfProductOrCompany": "Enter name of the product or company",
+  "writeYourQuestion": "Write your question",
+  "question": "Question",
+  "productNameOrCompanyNameErrorMsg": "Product's name or company's name myst be entered.",
+  "enterYourQuestionErrorMsg": "Your question must be entered."
 }

@@ -65,16 +65,13 @@ export const usersApi = createApi({
         };
       },
     }),
-    getOthersOwnedPhones: builder.mutation<
-      APIOwnedPhone,
+    getOthersOwnedPhones: builder.query<
+      APIOwnedPhone[],
       { round: number; uid: string }
     >({
-      query: (arg) => {
-        const { round, uid } = arg;
-        return {
-          url: `/${uid}/phones?round=${round}`,
-          method: "GET",
-        };
+      query: ({ round, uid }) => `/${uid}/phones?round=${round}`,
+      transformResponse: (response: { phones: APIOwnedPhone[] }) => {
+        return response.phones;
       },
     }),
   }),
@@ -85,6 +82,6 @@ export const {
   useGetCurrentUserProfileMutation,
   useLogoutFromAllDevicesMutation,
   useGetMyOwnedPhonesMutation,
-  useGetOthersOwnedPhonesMutation,
+  useGetOthersOwnedPhonesQuery,
   useGetOtherUserProfileQuery,
 } = usersApi;

@@ -54,7 +54,7 @@ export const AppBarActions = ({
   const isLoggedIn = user.isLoggedIn;
 
   const navigateToProfilePage = () => {
-    navigate(`/${ROUTES_NAMES.USER_PROFILE}?uid=${user.uid}`);
+    navigate(`/${ROUTES_NAMES.USER_PROFILE}?userId=${user.uid}`);
   };
   const navigateToSearchPage = () => {
     navigate(`/${ROUTES_NAMES.SEARCH}`);

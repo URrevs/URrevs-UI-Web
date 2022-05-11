@@ -1,5 +1,6 @@
-import { useTheme } from "@emotion/react";
-import React, { useEffect, useRef, useState } from "react";
+import { Box, Typography } from "@mui/material";
+import React from "react";
+import { useSelector } from "react-redux";
 import {
   AutoSizer,
   CellMeasurer,
@@ -9,13 +10,14 @@ import {
 } from "react-virtualized";
 import LoadingReviewSkeleton, {
   loadingSkeletonHeight,
-} from "../Components/Loaders/LoadingReviewSkeleton";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import { useGetUserPhoneReviewsQuery } from "../services/reviews";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { reviewsActions } from "../store/reviewsSlice";
-import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
+} from "../../Components/Loaders/LoadingReviewSkeleton";
+import { CompanyOverviewCard } from "../../Components/OverviewCard/CompanyOverviewCard";
+import { useGetCompanyReviewsQuery } from "../../services/reviews";
+import ReviewCard from "../../Components/ReviewCard/ReviewCard";
+import CompanyReview from "../../Components/ReviewCard/CompanyReview";
+import { useTheme } from "@emotion/react";
+import { useSearchParams } from "react-router-dom";
+import ROUTES_NAMES from "../../RoutesNames";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -24,16 +26,30 @@ const cache = new CellMeasurerCache({
 });
 
 let maxIndex = 0;
+export const CompanyReviews = ({
+  viewer,
+  companyRating,
+  companyName,
+  type,
+}) => {
+  const textContainer = useSelector((state) => state.language.textContainer);
+  const pageDictionary = {
+    tabBarReviews: textContainer.tabBarReviews,
+    company: textContainer.company,
+  };
+  const [searchParams, setSearchParams] = useSearchParams();
+  const companyId = searchParams.get("cid");
+  const [reviewsList, setReviewsList] = React.useState([]);
+  const [page, setPage] = React.useState(1);
 
-function PostedReviews({ query }) {
-  const [reviewsList, setReviewsList] = useState([]);
-  const [page, setPage] = useState(1);
-
-  const { data, isLoading, isFetching, error } = useGetUserPhoneReviewsQuery(page);
+  const { data, isLoading, isFetching, error } = useGetCompanyReviewsQuery({
+    round: page,
+    cid: companyId,
+  });
 
   const theme = useTheme();
-  const listRef = useRef();
-  const [ex, setEx] = useState(false);
+  const listRef = React.useRef();
+  const [ex, setEx] = React.useState(false);
 
   const clearCache = (index) => {
     setEx(!ex);
@@ -44,7 +60,7 @@ function PostedReviews({ query }) {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (data) {
       setReviewsList([...data, ...reviewsList]);
     }
@@ -101,13 +117,12 @@ function PostedReviews({ query }) {
                 ))
               )
             ) : (
-              <ReviewCard
+              <CompanyReview
                 index={index}
-                fullScreen={false}
-                isExpanded={false}
                 clearIndexCache={clearCache}
                 reviewDetails={reviewsList[index]}
-                isPhoneReview={true}
+                targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+                userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].targetId}`}
               />
             )}
           </div>
@@ -117,9 +132,19 @@ function PostedReviews({ query }) {
   };
 
   return (
-    <CustomAppBar showLabel label="مراجعاتي" showBackBtn>
-      <FilterTabbar />
-      <div style={{ height: "calc(100vh)", margin: "0 12px" }}>
+    //TODO VIRTUAL SCROLLING + CompanyReviewCard
+    <Box sx={{ marginTop: "7px" }}>
+      <CompanyOverviewCard
+        viewer={viewer}
+        companyRating={companyRating}
+        companyName={companyName}
+        type={type}
+      />
+      <Typography variant="S18W700C000000">
+        {pageDictionary.tabBarReviews + ":"}
+      </Typography>
+      {/* Infinite Scroller I hope */}
+      <div style={{ height: "calc(100vh)", margin: "0 0" }}>
         <AutoSizer>
           {({ height, width }) => {
             return (
@@ -146,8 +171,6 @@ function PostedReviews({ query }) {
           }}
         </AutoSizer>
       </div>
-    </CustomAppBar>
+    </Box>
   );
-}
-
-export default PostedReviews;
+};

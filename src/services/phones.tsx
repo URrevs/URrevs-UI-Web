@@ -52,6 +52,17 @@ export const phoneApi = createApi({
         return response.stats;
       },
     }),
+    getManufacturingCompany: builder.mutation({
+      query: (pid) => {
+        return {
+          url: `${pid}/company`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: any) => {
+        return response.company;
+      },
+    }),
   }),
 });
 
@@ -59,5 +70,6 @@ export const phoneApi = createApi({
 export const {
   useGetPhoneSpecsQuery,
   useGetSimilarPhonesQuery,
+  useGetManufacturingCompanyMutation,
   useGetStatisticalInfoQuery,
 } = phoneApi;

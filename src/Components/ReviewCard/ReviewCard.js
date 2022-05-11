@@ -1,24 +1,27 @@
-import { useTheme } from "@emotion/react";
+import { Box, ButtonBase, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import * as React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND,
   MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND,
   USER_CIRCLE_AVATAR_LARGE,
 } from "../../constants";
 import { cropText } from "../../functions/cropText";
+import {
+  useLikePhoneReviewMutation,
+  useUnLikePhoneReviewMutation,
+} from "../../services/reviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { reviewsActions } from "../../store/reviewsSlice";
-import StarRating from "../Form/StarRating";
+import reviewsSlice from "../../store/reviewsSlice";
 import Card from "../Card";
+import { StarLine } from "../StarLine";
 import CardActionButtons from "./CardActions/CardActionButtons";
 import FullStars from "./CardBody/FullStars";
 import ProsConsText from "./CardBody/ProsConsText";
 import CardFooter from "./CardFooter/CardFooter";
 import CardHeader from "./CardHeader/CardHeader";
-import { Box, ButtonBase, Grid, Typography } from "@mui/material";
-import { StarLine } from "../StarLine";
-import { useNavigate } from "react-router-dom";
 
 export default function ReviewCard({
   ukey,
@@ -28,10 +31,33 @@ export default function ReviewCard({
   isPhoneReview,
   fullScreen,
   isExpanded,
+  targetProfilePath,
+  userProfilePath,
+  stateLikeFn,
+  stateUnlikeFn,
 }) {
   const isReview = true;
-  const theme = useTheme();
   const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+
+  const [likePhoneReview] = useLikePhoneReviewMutation();
+  const [unLikePhoneReview] = useUnLikePhoneReviewMutation();
+
+  const isLiked = reviewDetails.liked;
+  const likeBtnHandler = async () => {
+    reviewDetails.liked
+      ? unLikePhoneReview({
+          reviewId: reviewDetails._id,
+          doFn: stateUnlikeFn,
+          unDoFn: stateLikeFn,
+        })
+      : likePhoneReview({
+          reviewId: reviewDetails._id,
+          doFn: stateLikeFn,
+          unDoFn: stateUnlikeFn,
+        });
+  };
 
   const ratings = [
     reviewDetails.generalRating,
@@ -55,8 +81,6 @@ export default function ReviewCard({
 
   const initialIsExpanded = isExpanded === true ? true : false;
   const [expanded, setExpanded] = React.useState(initialIsExpanded);
-
-  const [isLiked, setIsLiked] = React.useState(reviewDetails.liked);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -176,6 +200,8 @@ export default function ReviewCard({
         targetId={reviewDetails.targetId}
         showViewsCounter={true}
         views={reviewDetails.views}
+        targetProfilePath={targetProfilePath}
+        userProfilePath={userProfilePath}
       />
       <CardContent style={{ padding: 0 }}>
         <ButtonBase
@@ -260,16 +286,16 @@ export default function ReviewCard({
           <CardFooter
             isReview={isReview}
             navigateToFullScreen={navigateToFullScreen}
-            shareCounter={reviewDetails.shareCounter}
-            likesCounter={reviewDetails.likesCounter}
-            commentsCounter={reviewDetails.commentsCounter}
+            shareCounter={reviewDetails.comments}
+            likesCounter={reviewDetails.likes}
+            commentsCounter={reviewDetails.commentsCount}
           />
 
           <CardActionButtons
             isReview={isReview}
             textContainer={textContainer}
-            setIsLiked={setIsLiked}
-            isLiked={reviewDetails.isLiked}
+            toggleLike={likeBtnHandler}
+            isLiked={isLiked}
             firstButtonNonPressedText={textContainer.like}
             firstButtonPressedText={textContainer.liked}
             navigateToFullScreen={navigateToFullScreen}

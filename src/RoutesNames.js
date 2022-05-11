@@ -13,12 +13,13 @@ const ROUTES_NAMES = {
   ADMIN_PANEL: "admin-panel",
   EXACT_REVIEW: "review",
   PHONE_PROFILE: "phone",
+  COMPANY_PROFILE: "company",
   //level 3
   // ADD_COMPETITION: "add-competition",
   OWNED_PHONES: "owned-phones",
-  MY_REVIEWS: 'my-reviews',
-  MY_PHONE_REVIEWS: 'phones',
-  MY_COMPANY_REVIEWS: 'companies',
+  REVIEWS: "reviews",
+  PHONE_REVIEWS: "phones",
+  MY_COMPANY_REVIEWS: "companies",
   COMPARISON: "compare",
   UPDATE: "update",
   //level 4

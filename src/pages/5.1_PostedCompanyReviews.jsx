@@ -12,10 +12,16 @@ import LoadingReviewSkeleton, {
 } from "../Components/Loaders/LoadingReviewSkeleton";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import { useGetUserCompanyReviewsQuery } from "../services/reviews";
+import {
+  useGetUserCompanyReviewsQuery,
+  useGetOtherUserCompanyReviewsQuery,
+} from "../services/reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
+import { useSearchParams } from "react-router-dom";
+import CompanyReview from "../Components/ReviewCard/CompanyReview";
+import ROUTES_NAMES from "../RoutesNames";
 
 // TODO: this may be component with 5_PostedReviews.jsx
 
@@ -27,12 +33,23 @@ const cache = new CellMeasurerCache({
 
 let maxIndex = 0;
 
-function PostedCompanyReviews({ query }) {
+function PostedCompanyReviews() {
   const [reviewsList, setReviewsList] = useState([]);
   const [page, setPage] = useState(1);
 
-  const { data, isLoading, isFetching, error } =
-    useGetUserCompanyReviewsQuery(page);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const userId = searchParams.get("userId");
+
+  const currentUser = useAppSelector((state) => state.auth);
+
+  // let queryResult = useGetUserCompanyReviewsQuery(page, {
+  //   skip: userId !== currentUser.uid,
+  // });
+
+  let queryResult = useGetOtherUserCompanyReviewsQuery(
+    { round: page, uid: userId }
+    // { skip: userId === currentUser.uid }
+  );
 
   const theme = useTheme();
   const listRef = useRef();
@@ -48,12 +65,12 @@ function PostedCompanyReviews({ query }) {
   };
 
   useEffect(() => {
-    if (data) {
-      setReviewsList([...data, ...reviewsList]);
+    if (queryResult.data) {
+      setReviewsList([...queryResult.data, ...reviewsList]);
     }
-  }, [data]);
+  }, [queryResult.data]);
 
-  if (isLoading) {
+  if (queryResult.isLoading) {
     return (
       <div>
         {[...Array(2)].map((a, index) => (
@@ -63,12 +80,12 @@ function PostedCompanyReviews({ query }) {
     );
   }
 
-  if (error) {
+  if (queryResult.error) {
     return (
       <div>
-        {error.status}
-        {error.code}
-        {error.message}
+        {queryResult.error.status}
+        {queryResult.error.code}
+        {queryResult.error.message}
       </div>
     );
   }
@@ -76,10 +93,10 @@ function PostedCompanyReviews({ query }) {
   const renderRow = ({ index, key, style, parent }) => {
     if (
       maxIndex !== 0 &&
-      !isLoading &&
-      !isFetching &&
+      !queryResult.isLoading &&
+      !queryResult.isFetching &&
       maxIndex === reviewsList.length &&
-      data.length !== 0
+      queryResult.data.length !== 0
     ) {
       maxIndex = 0;
       console.log(page);
@@ -96,7 +113,7 @@ function PostedCompanyReviews({ query }) {
         >
           <div style={{ ...style, direction: theme.direction }}>
             {index >= reviewsList.length ? (
-              data.length === 0 ? (
+              queryResult.data.length === 0 ? (
                 <div>No more reviews</div>
               ) : (
                 [...Array(1)].map((a, index) => (
@@ -104,13 +121,12 @@ function PostedCompanyReviews({ query }) {
                 ))
               )
             ) : (
-              <ReviewCard
+              <CompanyReview
                 index={index}
-                fullScreen={false}
-                isExpanded={false}
                 clearIndexCache={clearCache}
                 reviewDetails={reviewsList[index]}
-                isPhoneReview={false}
+                targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+                userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}
               />
             )}
           </div>
@@ -120,9 +136,13 @@ function PostedCompanyReviews({ query }) {
   };
 
   return (
-    <CustomAppBar showLabel label="مراجعاتي" showBackBtn>
-      <FilterTabbar />
-      <div style={{ height: "calc(100vh)", margin: "0 12px" }}>
+    <CustomAppBar
+      showLabel
+      label="مراجعاتي"
+      showBackBtn
+      tabBar={<FilterTabbar />}
+    >
+      <div style={{ height: "calc(100vh)", margin: "0 0" }}>
         <AutoSizer>
           {({ height, width }) => {
             return (

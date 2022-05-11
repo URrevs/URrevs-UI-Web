@@ -10,10 +10,12 @@ import {
 import LoadingReviewSkeleton, {
   loadingSkeletonHeight,
 } from "../Components/Loaders/LoadingReviewSkeleton";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import { useGetUserReviewsQuery } from "../services/reviews";
+import ROUTES_NAMES from "../RoutesNames";
+import { useGetAllReviewsQuery } from "../services/reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { reviewsActions } from "../store/reviewsSlice";
+import reviewsSlice, { reviewsActions } from "../store/reviewsSlice";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -23,12 +25,19 @@ const cache = new CellMeasurerCache({
 
 let maxIndex = 0;
 
-function MyReviews() {
+export default function VirtualReviewList({
+  reviewsList,
+  page,
+  data,
+  error,
+  isLoading,
+  isFetching,
+  stateLike,
+  stateUnLike,
+  addToReviewsList,
+  increasePage,
+}) {
   const dispatch = useAppDispatch();
-  const reviewsList = useAppSelector((state) => state.reviews.newReviews);
-  const page = useAppSelector((state) => state.reviews.page);
-  const currentIndex = useAppSelector((state) => state.reviews.currentIndex);
-  const { data, isLoading, isFetching, error } = useGetAllReviewsQuery(page);
   const theme = useTheme();
   const listRef = useRef();
   const [ex, setEx] = useState(false);
@@ -43,20 +52,10 @@ function MyReviews() {
   };
 
   useEffect(() => {
-    const scrollIndex = currentIndex === 0 ? 0 : currentIndex + 64;
-
-    setTimeout(() => window.scrollTo(0, scrollIndex), 500);
-  }, []);
-
-  useEffect(() => {
     if (data) {
-      dispatch(
-        reviewsActions.addToLoaddedReviews({
-          newReviews: data,
-        })
-      );
+      addToReviewsList();
       if (page < 2 && !isLoading && !isFetching) {
-        dispatch(reviewsActions.increasePage());
+        increasePage();
       }
     }
   }, [data]);
@@ -87,7 +86,8 @@ function MyReviews() {
       page >= 2 &&
       !isLoading &&
       !isFetching &&
-      maxIndex === reviewsList.length
+      maxIndex === reviewsList.length &&
+      data.length !== 0
     ) {
       maxIndex = 0;
       dispatch(reviewsActions.increasePage());
@@ -103,9 +103,13 @@ function MyReviews() {
         >
           <div style={{ ...style, direction: theme.direction }}>
             {index >= reviewsList.length ? (
-              [...Array(1)].map((a, index) => (
-                <LoadingReviewSkeleton key={index} />
-              ))
+              data.length === 0 ? (
+                <div>No more reviews</div>
+              ) : (
+                [...Array(1)].map((a, index) => (
+                  <LoadingReviewSkeleton key={index} />
+                ))
+              )
             ) : (
               <ReviewCard
                 index={index}
@@ -114,6 +118,10 @@ function MyReviews() {
                 clearIndexCache={clearCache}
                 reviewDetails={reviewsList[index]}
                 isPhoneReview={true}
+                targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
+                userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+                stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
+                stateUnlikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
               />
             )}
           </div>
@@ -124,7 +132,7 @@ function MyReviews() {
 
   return (
     <Fragment>
-      <div style={{ height: "calc(100vh)", margin: "0 12px" }}>
+      <div style={{ height: "calc(100vh)", margin: "0" }}>
         <AutoSizer>
           {({ height, width }) => {
             return (
@@ -134,14 +142,6 @@ function MyReviews() {
                     <List
                       ref={listRef}
                       autoHeight
-                      onScroll={(scrollData) => {
-                        // save current scroll position
-                        dispatch(
-                          reviewsActions.setIndex({
-                            currentIndex: scrollData.scrollTop,
-                          })
-                        );
-                      }}
                       overscanRowCount={10}
                       isScrolling={isScrolling}
                       scrollTop={scrollTop}
@@ -149,7 +149,7 @@ function MyReviews() {
                       height={height}
                       deferredMeasurementCache={cache}
                       rowHeight={cache.rowHeight}
-                      rowCount={reviewsList.length + 2}
+                      rowCount={reviewsList.length + 1}
                       rowRenderer={renderRow}
                     />
                   </div>
@@ -162,5 +162,3 @@ function MyReviews() {
     </Fragment>
   );
 }
-
-export default MyReviews;
