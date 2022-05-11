@@ -1,138 +1,44 @@
-import { useTheme } from "@emotion/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import {
-  AutoSizer,
-  CellMeasurer,
-  CellMeasurerCache,
-  List,
-  WindowScroller,
-} from "react-virtualized";
-import LoadingReviewSkeleton, {
-  loadingSkeletonHeight,
-} from "../Components/Loaders/LoadingReviewSkeleton";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
-import ROUTES_NAMES from "../RoutesNames";
-import {
-  useGetUserPhoneReviewsQuery,
-  useGetOtherUserPhoneReviewsQuery,
-} from "../services/reviews";
-import { useAppSelector } from "../store/hooks";
+import { useGetOtherUserPhoneReviewsQuery } from "../services/reviews";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { reviewsActions } from "../store/reviewsSlice";
+import VirtualReviewList from "./VirtualListWindowScroll";
 
-const cache = new CellMeasurerCache({
-  fixedWidth: true,
-  fixedHeight: false,
-  defaultHeight: loadingSkeletonHeight,
-});
+export default function PostedReviews() {
+  const dispatch = useAppDispatch();
 
-let maxIndex = 0;
+  useEffect(() => {
+    console.log("clear reviews");
 
-function PostedReviews({ query }) {
-  const [reviewsList, setReviewsList] = useState([]);
+    dispatch(reviewsActions.clearReviews());
+  }, []);
+
+  const reviewsList = useAppSelector((state) => state.reviews.newReviews);
   const [page, setPage] = useState(1);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const userId = searchParams.get("userId");
 
-  const currentUser = useAppSelector((state) => state.auth);
+  const { data, isLoading, isFetching, error } =
+    useGetOtherUserPhoneReviewsQuery({ round: page, uid: userId });
 
-  // let queryResult = useGetUserPhoneReviewsQuery(page, {
-  //   skip: userId !== currentUser.uid,
-  // });
+  const stateLike = (id) =>
+    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
 
-  let queryResult = useGetOtherUserPhoneReviewsQuery(
-    { round: page, uid: userId }
-    // { skip: userId === currentUser.uid }
-  );
+  const stateUnLike = (id) =>
+    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: false }));
 
-  const theme = useTheme();
-  const listRef = useRef();
-  const [ex, setEx] = useState(false);
-
-  const clearCache = (index) => {
-    setEx(!ex);
-    if (index === 0) {
-      cache.clear(0);
-    } else {
-      cache.clear(index);
-    }
-  };
-
-  useEffect(() => {
-    if (queryResult.data) {
-      setReviewsList([...queryResult.data, ...reviewsList]);
-    }
-  }, [queryResult.data]);
-
-  if (queryResult.isLoading) {
-    return (
-      <div>
-        {[...Array(2)].map((a, index) => (
-          <LoadingReviewSkeleton key={index} />
-        ))}
-      </div>
+  const addToReviewsList = () =>
+    dispatch(
+      reviewsActions.addToLoaddedReviews({
+        newReviews: data,
+      })
     );
-  }
 
-  if (queryResult.error) {
-    return (
-      <div>
-        {queryResult.error.status}
-        {queryResult.error.code}
-        {queryResult.error.message}
-      </div>
-    );
-  }
-
-  const renderRow = ({ index, key, style, parent }) => {
-    if (
-      maxIndex !== 0 &&
-      !queryResult.isLoading &&
-      !queryResult.isFetching &&
-      maxIndex === reviewsList.length &&
-      queryResult.data.length !== 0
-    ) {
-      maxIndex = 0;
-      console.log(page);
-      setPage(page + 1);
-    }
-    maxIndex = Math.max(index, maxIndex);
-    return (
-      <div key={key}>
-        <CellMeasurer
-          cache={cache}
-          parent={parent}
-          columnIndex={0}
-          rowIndex={index}
-        >
-          <div style={{ ...style, direction: theme.direction }}>
-            {index >= reviewsList.length ? (
-              queryResult.data.length === 0 ? (
-                <div>No more reviews</div>
-              ) : (
-                [...Array(1)].map((a, index) => (
-                  <LoadingReviewSkeleton key={index} />
-                ))
-              )
-            ) : (
-              <ReviewCard
-                index={index}
-                fullScreen={false}
-                isExpanded={false}
-                clearIndexCache={clearCache}
-                reviewDetails={reviewsList[index]}
-                isPhoneReview={true}
-                targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
-                userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
-              />
-            )}
-          </div>
-        </CellMeasurer>
-      </div>
-    );
-  };
+  const increasePage = () => setPage(page + 1);
 
   return (
     <CustomAppBar
@@ -141,35 +47,18 @@ function PostedReviews({ query }) {
       showBackBtn
       tabBar={<FilterTabbar />}
     >
-      <div style={{ height: "calc(100vh)", margin: "0 0" }}>
-        <AutoSizer>
-          {({ height, width }) => {
-            return (
-              <WindowScroller>
-                {({ height, isScrolling, registerChild, scrollTop }) => (
-                  <div ref={registerChild}>
-                    <List
-                      ref={listRef}
-                      autoHeight
-                      overscanRowCount={10}
-                      isScrolling={isScrolling}
-                      scrollTop={scrollTop}
-                      width={width}
-                      height={height}
-                      deferredMeasurementCache={cache}
-                      rowHeight={cache.rowHeight}
-                      rowCount={reviewsList.length + 1}
-                      rowRenderer={renderRow}
-                    />
-                  </div>
-                )}
-              </WindowScroller>
-            );
-          }}
-        </AutoSizer>
-      </div>
+      <VirtualReviewList
+        reviewsList={reviewsList}
+        page={page}
+        data={data}
+        error={error}
+        isLoading={isLoading}
+        isFetching={isFetching}
+        stateLike={stateLike}
+        stateUnLike={stateUnLike}
+        addToReviewsList={addToReviewsList}
+        increasePage={increasePage}
+      />
     </CustomAppBar>
   );
 }
-
-export default PostedReviews;

@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { APIReview } from "../models/interfaces/APIReview.model";
-import Review from "../models/classes/Review";
 import { RootState } from "../store/store";
 
 export const reviewsApi = createApi({
@@ -21,22 +20,26 @@ export const reviewsApi = createApi({
 
   endpoints: (builder) => ({
     getAllReviews: builder.query<APIReview[], number>({
-      query: (round = 1) => `/phone/by/me?round=${1}`,
+      keepUnusedDataFor: 0,
+      query: (round = 1) => `/phone/by/626b28707fe7587a42e3dfeb?round=${1}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
       },
     }),
 
-    getReview: builder.query<Review, string>({
+    getReview: builder.query<APIReview, string>({
+      keepUnusedDataFor: 0,
       query: (id: string) => `/phone/${id}`,
-      transformResponse: (response: { review: APIReview }) =>
-        new Review(response.review),
+      transformResponse: (response: { review: APIReview }) => {
+        return response.review;
+      },
     }),
 
     getCompanyReviews: builder.query<
       APIReview[],
       { round: number; cid: string }
     >({
+      keepUnusedDataFor: 0,
       query: ({ round, cid }) => `/company/on/${cid}?round=${round}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
@@ -44,12 +47,14 @@ export const reviewsApi = createApi({
     }),
     getPhoneReviews: builder.query<APIReview[], { round: number; pid: string }>(
       {
+        keepUnusedDataFor: 0,
         query: ({ round, pid }) => `/phone/on/${pid}?round=${round}`,
         transformResponse: (response: { reviews: APIReview[] }) => {
           return response.reviews;
         },
       }
     ),
+
     addPhoneReview: builder.mutation({
       query: (review) => {
         return {
@@ -80,63 +85,45 @@ export const reviewsApi = createApi({
       //   new Review(response.review),
     }),
 
-    likePhoneReview: builder.mutation<
-      void,
-      Pick<APIReview, "_id"> & Partial<APIReview>
-    >({
-      query: (reviewId) => {
+    likePhoneReview: builder.mutation({
+      query: ({ reviewId }) => {
         return {
           url: `/phone/${reviewId}/like`,
           method: "POST",
         };
       },
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          reviewsApi.util.updateQueryData(
-            "getReview",
-            "6274051f8cc1cefd58621d57",
-            (draft) => {
-              return Object.assign(draft, { liked: true });
-            }
-          )
-        );
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        payload.doFn();
+
         try {
           await queryFulfilled;
         } catch (e) {
-          patchResult.undo();
+          payload.unDoFn();
         }
       },
     }),
 
-    unLikePhoneReview: builder.mutation<
-      void,
-      Pick<APIReview, "_id"> & Partial<APIReview>
-    >({
-      query: (reviewId) => {
+    unLikePhoneReview: builder.mutation({
+      query: ({ reviewId }) => {
         return {
           url: `/phone/${reviewId}/unlike`,
           method: "POST",
         };
       },
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          reviewsApi.util.updateQueryData(
-            "getReview",
-            "6274051f8cc1cefd58621d57",
-            (draft) => {
-              return Object.assign(draft, { liked: false });
-            }
-          )
-        );
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        payload.doFn();
+        console.log("a");
+
         try {
           await queryFulfilled;
         } catch (e) {
-          patchResult.undo();
+          payload.unDoFn();
         }
       },
     }),
 
     getUserPhoneReviews: builder.query<APIReview[], number>({
+      keepUnusedDataFor: 0,
       query: (round = 1) => `/phone/by/me?round=${round}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
@@ -144,15 +131,18 @@ export const reviewsApi = createApi({
     }),
 
     getUserCompanyReviews: builder.query<APIReview[], number>({
+      keepUnusedDataFor: 0,
       query: (round = 1) => `/company/by/me?round=${round}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
       },
     }),
+
     getOtherUserPhoneReviews: builder.query<
       APIReview[],
       { round: number; uid: string }
     >({
+      keepUnusedDataFor: 0,
       query: ({ round, uid }) => `/phone/by/${uid}?round=${round}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
@@ -163,6 +153,7 @@ export const reviewsApi = createApi({
       APIReview[],
       { round: number; uid: string }
     >({
+      keepUnusedDataFor: 0,
       query: ({ round, uid }) => `/company/by/${uid}?round=${round}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
