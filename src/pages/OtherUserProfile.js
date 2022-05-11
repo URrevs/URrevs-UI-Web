@@ -45,12 +45,12 @@ export default function OtherUserProfilePage({ uid }) {
     {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: "",
+      to: `${ROUTES_NAMES.REVIEWS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${uid}`,
     },
     {
       title: pageDictionry.ownedProducts,
       icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `${ROUTES_NAMES.OWNED_PHONES}?uid=${uid}`,
+      to: `${ROUTES_NAMES.OWNED_PHONES}?userId=${uid}`,
     },
     {
       title: pageDictionry.askedQuestions,
@@ -86,15 +86,11 @@ export default function OtherUserProfilePage({ uid }) {
   };
 
   return (
-    <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true}>
+    <CustomAppBar showLabel={true} label='الحساب' showBackBtn={true}>
       {isError ? (
         <ErrorScreen>error</ErrorScreen>
       ) : !isLoading ? (
-        <div
-          style={{
-            paddingTop: 15,
-          }}
-        >
+        <div>
           <div
             style={{
               display: "flex",

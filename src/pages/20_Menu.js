@@ -62,7 +62,7 @@ export default function Menu() {
     {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.MY_REVIEWS}/${ROUTES_NAMES.MY_PHONE_REVIEWS}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${currentUserProfile.uid}`,
     },
     {
       title: pageDictionry.myQuestions,
@@ -72,7 +72,7 @@ export default function Menu() {
     {
       title: pageDictionry.ownedProducts,
       icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?uid=${profileData.uid}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?userId=${profileData.uid}`,
     },
     {
       title: pageDictionry.askedQuestions,
@@ -83,7 +83,7 @@ export default function Menu() {
     {
       title: pageDictionry.referalCode,
       icon: <GroupsOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: "",
+      onClick: () => navigator.clipboard.writeText(profileData.refCode),
       subtitle: pageDictionry.inviteFriends,
     },
     {
@@ -128,7 +128,7 @@ export default function Menu() {
   );
   const useProfileButton = () => (
     <Link
-      to={`../../${ROUTES_NAMES.USER_PROFILE}?uid=${profileData.uid}`}
+      to={`../../${ROUTES_NAMES.USER_PROFILE}?userId=${profileData.uid}`}
       style={{
         background: "none",
         textDecoration: "none",
@@ -159,7 +159,7 @@ export default function Menu() {
           },
         }}
       >
-        <ListItemButton>
+        <ListItemButton sx={{ padding: 0 }}>
           {userProfile()}
           <ListItemText
             primaryTypographyProps={{ ...theme.typography.S20W700C050505 }}
@@ -196,13 +196,16 @@ export default function Menu() {
         marginBottom: 70,
       }}
     >
-      <Modal open={open} onClose={handleClose}>
+      <CustomAppBar showLogo showSearch showProfile />
+
+      <Modal open={open} onClose={handleClose} dir={theme.direction}>
         <Box>
           <SignoutDialog handleClose={handleClose} />
         </Box>
       </Modal>
       <List>
         {useProfileButton()}
+        <Box style={{ height: 12 }}></Box>
         {listItems.map((item, index) => {
           return (
             <div key={item.title + index}>
@@ -217,7 +220,7 @@ export default function Menu() {
           );
         })}
       </List>
-      <Box sx={{ paddingTop: "122px" }}>
+      <Box sx={{ paddingTop: "20px" }}>
         <Typography variant="S22W500C050505">{`${pageDictionry.followUs}:`}</Typography>
         <Box
           sx={{

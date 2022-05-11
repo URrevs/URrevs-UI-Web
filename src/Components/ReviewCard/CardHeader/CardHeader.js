@@ -16,6 +16,8 @@ const CardHeader = ({
   views,
   userId,
   targetId,
+  userProfilePath,
+  targetProfilePath,
 }) => {
   const theme = useTheme();
 
@@ -30,6 +32,8 @@ const CardHeader = ({
       action={<ActionButton />}
       title={
         <CardHeaderTitle
+          userProfilePath={userProfilePath}
+          targetProfilePath={targetProfilePath}
           userName={userName}
           productName={productName}
           userId={userId}

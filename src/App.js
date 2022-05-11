@@ -19,6 +19,7 @@ import Layout from "./Components/MainLayout/Layout";
 import RTL from "./Components/RTL";
 import { ProductProfile } from "./pages/10_ProductProfile";
 import { ComparisonScreen } from "./pages/11_ComparisonScreen";
+import { CompanyProfile } from "./pages/14_CompanyProfile";
 import { AllProductsScreen } from "./pages/16_AllProductsScreen";
 import ReviewPostingScreen from "./pages/18_ReviewPostingScreen";
 import Menu from "./pages/20_Menu";
@@ -27,7 +28,7 @@ import { UpdateProducts } from "./pages/29_UpdateProducts";
 import Reviews from "./pages/2_HomePageScrolling";
 import InteractionWithReview from "./pages/3_ReviewFullScreen";
 import PostedCompanyReviews from "./pages/5.1_PostedCompanyReviews";
-import PostedReviews from "./pages/5_PostedReviews";
+import PostedReviews from "./pages/5_PostedPhoneReviews";
 import { SearchScreen } from "./pages/8_SearchScreen";
 import AddReview from "./pages/AddReview";
 import ComponentsTest from "./pages/ComponentsTest";
@@ -221,14 +222,9 @@ function App() {
         <RTL direction={theme.direction}>
           <BrowserRouter>
             <Layout>
-              <Grid
-                container
-                style={{
-                  display: theme.isMobile ? "block" : "flex",
-                }}
-              >
-                <Grid item md={2} sm={0}></Grid>
-                <Grid item md={8} sm={12}>
+              <Grid container style={{}}>
+                <Grid item md={2} sm={0.5} xs={0}></Grid>
+                <Grid item md={8} sm={11} xs={12}>
                   <Routes>
                     <Route
                       path={ROUTES_NAMES.EXACT_REVIEW}
@@ -254,9 +250,9 @@ function App() {
                           path={ROUTES_NAMES.OWNED_PHONES}
                           element={<OwnedPhonesPage />}
                         />
-                        <Route path={ROUTES_NAMES.MY_REVIEWS}>
+                        <Route path={ROUTES_NAMES.REVIEWS}>
                           <Route
-                            path={ROUTES_NAMES.MY_PHONE_REVIEWS}
+                            path={ROUTES_NAMES.PHONE_REVIEWS}
                             element={<PostedReviews />}
                           />
                           <Route
@@ -265,7 +261,13 @@ function App() {
                           />
                         </Route>
                       </Route>
-
+                      <Route path={ROUTES_NAMES.COMPANY_PROFILE}>
+                        <Route index element={<CompanyProfile />} />
+                        <Route
+                          path={ROUTES_NAMES.COMPARISON}
+                          element={<ComparisonScreen />}
+                        />
+                      </Route>
                       <Route path={ROUTES_NAMES.PHONE_PROFILE}>
                         <Route index element={<ProductProfile />} />
                         <Route
@@ -300,8 +302,9 @@ function App() {
 
                     <Route
                       path={ROUTES_NAMES.PRODUCTS}
-                      element={<div>products</div>}
+                      element={<AllProductsScreen />}
                     />
+
                     {/* testing routes */}
                     <Route path="/test" element={<AddReview />} />
                     <Route
@@ -310,7 +313,7 @@ function App() {
                     />
                   </Routes>
                 </Grid>
-                <Grid item md={2} sm={0}></Grid>
+                <Grid item md={2} sm={0.5} xs={0}></Grid>
               </Grid>
             </Layout>
           </BrowserRouter>

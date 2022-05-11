@@ -1,18 +1,25 @@
 import { useAppSelector } from "../../store/hooks";
 import ReviewCard from "./ReviewCard";
 
-const CompanyReview = ({ reviewDetails, isReview, index, clearIndexCache }) => {
+const CompanyReview = ({
+  reviewDetails,
+  index,
+  clearIndexCache,
+  targetProfilePath,
+  userProfilePath,
+}) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
   return (
     <ReviewCard
-      isReview={isReview}
-      reviewDetails={reviewDetails}
       index={index}
-      clearIndexCache={() => {}}
+      fullScreen={false}
+      isExpanded={false}
+      clearIndexCache={clearIndexCache}
+      reviewDetails={reviewDetails}
       isPhoneReview={false}
-      reviewIcon={true}
-      firstStarTitle={textContainer.companyRating}
+      targetProfilePath={targetProfilePath}
+      userProfilePath={userProfilePath}
     />
   );
 };

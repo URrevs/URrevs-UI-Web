@@ -9,8 +9,10 @@ import {
   TEXT_FIELD_BORDER_THICKNESS,
 } from "../constants";
 import SearchIcon from "@mui/icons-material/Search";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import InputBase from "@mui/material/InputBase";
 import { alpha, styled } from "@mui/material/styles";
+
 import { IconButton, InputAdornment } from "@mui/material";
 import { useSearchPhonesOnlyMutation } from "../services/search";
 
@@ -44,27 +46,42 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     width: "100%",
   },
 }));
-export default function SearchComponent({ label, setCompareItem }) {
+export default function SearchComponent({
+  label,
+  setCompareItem,
+  isFormik = false,
+  error = false,
+  helperText = "",
+}) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [results, setResults] = React.useState([]);
-
+  const [lock, setLock] = React.useState(false);
   const [search] = useSearchPhonesOnlyMutation();
   const theme = useTheme();
   return (
     <Stack spacing={2} sx={{ width: "100%" }}>
       <Autocomplete
+        disabled={lock}
+        value={searchQuery}
         onChange={(e, value) => {
-          setCompareItem(value.id);
+          setLock(true);
+          setCompareItem(value);
+          if (isFormik) {
+            sessionStorage.setItem("chooseProduct", value.pid);
+            sessionStorage.setItem("search field", value.label);
+          }
         }}
-        id="free-solo-demo"
         freeSolo
         sx={{
           filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.1))",
         }}
+        defaultValue={isFormik ? sessionStorage.getItem("search field") : ""}
         disableClearable
         options={results.map((option) => ({
           label: option.name,
-          id: option._id,
+          pid: option._id,
+          cid: "", //TODO
+          //GET MANUFACTURING COMPANY
         }))}
         renderInput={(params) => (
           <TextField
@@ -78,13 +95,12 @@ export default function SearchComponent({ label, setCompareItem }) {
                 },
               },
             }}
-            onChange={async (e) => {
-              setSearchQuery(e.target.value);
+            onBlur={(e) => {
               try {
                 setTimeout(async () => {
                   if (e.target.value.trim() !== "") {
                     const phones = await search(e.target.value.trim()).unwrap();
-                    console.log(phones);
+
                     setResults(phones);
                   }
                 }, SEARCH_INPUT_DELAY);
@@ -92,16 +108,49 @@ export default function SearchComponent({ label, setCompareItem }) {
                 console.log(e);
               }
             }}
+            onChange={async (e) => {
+              setSearchQuery(e.target.value);
+
+              try {
+                setTimeout(async () => {
+                  if (e.target.value.trim() !== "") {
+                    const phones = await search(e.target.value.trim()).unwrap();
+
+                    setResults(phones);
+                  }
+                }, SEARCH_INPUT_DELAY);
+              } catch (e) {
+                console.log(e);
+              }
+            }}
+            error={error}
+            helperText={helperText}
             placeholder={label}
             InputProps={{
               ...params.InputProps,
-              type: "search",
+              // type: "search",
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={() => {}}>
-                    <SearchIcon
-                      htmlColor={theme.palette.searchBar.searchIcon}
-                    />
+                  <IconButton
+                    onClick={() => {
+                      setSearchQuery("");
+                      setLock(false);
+                      setCompareItem({
+                        pid: "",
+                        cid: "",
+                        label: "",
+                      });
+                    }}
+                  >
+                    {lock ? (
+                      <CloseOutlinedIcon
+                        htmlColor={theme.palette.searchBar.searchIcon}
+                      />
+                    ) : (
+                      <SearchIcon
+                        htmlColor={theme.palette.searchBar.searchIcon}
+                      />
+                    )}
                   </IconButton>
                 </InputAdornment>
               ),

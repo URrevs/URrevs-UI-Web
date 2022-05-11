@@ -11,10 +11,12 @@ import { updateApi } from "../services/update";
 import { searchApi } from "../services/search";
 import { phoneApi } from "../services/phones";
 import compareSlice from "./compareSlice";
+import { companyApi } from "../services/companies";
 
 export const store = configureStore({
   reducer: {
     [phoneApi.reducerPath]: phoneApi.reducer,
+    [companyApi.reducerPath]: companyApi.reducer,
     [searchApi.reducerPath]: searchApi.reducer,
     [updateApi.reducerPath]: updateApi.reducer,
     [reviewsApi.reducerPath]: reviewsApi.reducer,

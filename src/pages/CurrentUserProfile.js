@@ -35,7 +35,7 @@ export default function CurrentUserProfilePage({}) {
     {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `${ROUTES_NAMES.MY_REVIEWS}/${ROUTES_NAMES.MY_PHONE_REVIEWS}`,
+      to: `${ROUTES_NAMES.REVIEWS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${profileData.uid}`,
     },
     {
       title: pageDictionry.myQuestions,
@@ -45,7 +45,7 @@ export default function CurrentUserProfilePage({}) {
     {
       title: pageDictionry.ownedProducts,
       icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `${ROUTES_NAMES.OWNED_PHONES}?uid=${profileData.uid}`,
+      to: `${ROUTES_NAMES.OWNED_PHONES}?userId=${profileData.uid}`,
     },
     {
       title: pageDictionry.referalCode,

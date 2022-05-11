@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import ROUTES_NAMES from "../../../RoutesNames";
 
 export const CompareDialog = ({ item, handleClose }) => {
-  const [compareItem, setCompareItem] = React.useState(0);
+  const [compareItem, setCompareItem] = React.useState({});
 
   const textContainer = useSelector((state) => {
     return state.language.textContainer;
@@ -50,7 +50,7 @@ export const CompareDialog = ({ item, handleClose }) => {
                 })
               );
               navigate(
-                `${ROUTES_NAMES.COMPARISON}?cid=${compareItem}&pid=${item._id}`
+                `${ROUTES_NAMES.COMPARISON}?cid=${compareItem.pid}&pid=${item._id}`
               );
             }
           }}
