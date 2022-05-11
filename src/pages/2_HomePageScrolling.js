@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { useGetAllReviewsQuery } from "../services/reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
-import Virtual from "./VirtualListWindowScroll";
+import VirtualReviewList from "./VirtualListWindowScroll";
 
 function Reviews() {
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    console.log("clear reviews");
+
+    dispatch(reviewsActions.clearReviews());
+  }, []);
+
   const reviewsList = useAppSelector((state) => state.reviews.newReviews);
-  const page = useAppSelector((state) => state.reviews.page);
+  const [page, setPage] = useState(1);
   const { data, isLoading, isFetching, error } = useGetAllReviewsQuery(page);
 
-  const stateLike = (index) =>
-    dispatch(reviewsActions.setIsLiked({ index: index, isLiked: true }));
+  const stateLike = (id) =>
+    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
 
-  const stateUnLike = (index) =>
-    dispatch(reviewsActions.setIsLiked({ index: index, isLiked: false }));
+  const stateUnLike = (id) =>
+    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: false }));
 
   const addToReviewsList = () =>
     dispatch(
@@ -24,11 +30,11 @@ function Reviews() {
       })
     );
 
-  const increasePage = () => dispatch(reviewsActions.increasePage());
+  const increasePage = () => setPage(page + 1);
 
   return (
     <CustomAppBar showLogo showSearch showProfile>
-      <Virtual
+      <VirtualReviewList
         reviewsList={reviewsList}
         page={page}
         data={data}

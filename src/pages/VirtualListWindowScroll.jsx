@@ -25,7 +25,7 @@ const cache = new CellMeasurerCache({
 
 let maxIndex = 0;
 
-function Virtual({
+export default function VirtualReviewList({
   reviewsList,
   page,
   data,
@@ -86,7 +86,8 @@ function Virtual({
       page >= 2 &&
       !isLoading &&
       !isFetching &&
-      maxIndex === reviewsList.length
+      maxIndex === reviewsList.length &&
+      data.length !== 0
     ) {
       maxIndex = 0;
       dispatch(reviewsActions.increasePage());
@@ -119,8 +120,8 @@ function Virtual({
                 isPhoneReview={true}
                 targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
                 userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
-                stateLikeFn={stateLike.bind(null, index)}
-                stateUnlikeFn={stateUnLike.bind(null, index)}
+                stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
+                stateUnlikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
               />
             )}
           </div>
@@ -161,5 +162,3 @@ function Virtual({
     </Fragment>
   );
 }
-
-export default Virtual;
