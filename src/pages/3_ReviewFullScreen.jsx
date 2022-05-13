@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import { useGetAllReviewsQuery } from "../services/reviews";
+import {
+  useGetPhoneReviewCommentsQuery,
+  useAddCommentOnPhoneReviewMutation,
+} from "../services/reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { reviewsActions } from "../store/reviewsSlice";
+import { commentsListActions } from "../store/commentsListSlice";
 import CommentsList from "./CommentsList";
 import { useSearchParams } from "react-router-dom";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
@@ -14,16 +17,28 @@ export default function InteractionWithReview() {
   useEffect(() => {
     console.log("clear comments");
 
-    dispatch(reviewsActions.clearReviews());
+    dispatch(commentsListActions.clearComments());
   }, []);
 
-  const reviewsList = useAppSelector((state) => state.reviews.newReviews);
+  const currentUser = useAppSelector((state) => state.auth);
+
+  const commentsList = useAppSelector(
+    (state) => state.commentsList.newComments
+  );
 
   const [searchParams, setSearchParams] = useSearchParams();
   const reviewId = searchParams.get("id");
 
   const [page, setPage] = useState(1);
-  const { data, isLoading, isFetching, error } = useGetAllReviewsQuery(page);
+
+  const { data, isLoading, isFetching, error } = useGetPhoneReviewCommentsQuery(
+    { reviewId, round: page }
+  );
+
+  const [addCommentLoading, setAddCommentLoading] = useState(false);
+  const [addCommentError, setAddCommentError] = useState(null);
+
+  const [addCommentOnPhoneReview] = useAddCommentOnPhoneReviewMutation();
 
   // get this review from store
   const currentReview = useAppSelector(
@@ -33,45 +48,92 @@ export default function InteractionWithReview() {
   });
 
   const stateLike = (id) =>
-    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
+    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: true }));
 
   const stateUnLike = (id) =>
-    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: false }));
+    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: false }));
 
-  const addToReviewsList = () =>
+  const addToLoadedComments = () =>
     dispatch(
-      reviewsActions.addToLoaddedReviews({
-        newReviews: data,
+      commentsListActions.addToLoaddedComments({
+        newComments: data,
+      })
+    );
+
+  const addOneCommentToLoadedComments = (comment) =>
+    dispatch(
+      commentsListActions.addNewCommentLocally({
+        newComment: comment,
       })
     );
 
   const increasePage = () => setPage(page + 1);
 
-  const reviewCard = () => {
-    return (
-      <div>
-        <ReviewCard
-          isPhoneReview={true}
-          fullScreen={true}
-          isExpanded={true}
-          reviewDetails={currentReview}
-          clearIndexCache={() => {}}
-          index={0}
-          targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${currentReview.targetId}`}
-          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReview.userId}`}
-          stateLikeFn={stateLike.bind(null, currentReview._id)}
-          stateUnlikeFn={stateUnLike.bind(null, currentReview._id)}
-        />
-      </div>
-    );
+  const submitCommentHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      // scroll to top
+      window.scrollTo(0, 0);
+
+      setAddCommentLoading(true);
+
+      const response = await addCommentOnPhoneReview({
+        reviewId: reviewId,
+        comment: e.target.comment.value,
+      });
+
+      setAddCommentLoading(false);
+
+      // add comment to store
+      const comment = {
+        _id: response.comment,
+        userId: currentUser.uid,
+        userName: currentUser.name,
+        userPicture: currentUser.photo,
+        content: e.target.comment.value,
+        createdAt: new Date(),
+        likes: 0,
+        liked: false,
+      };
+
+      addOneCommentToLoadedComments(comment);
+    } catch (e) {
+      setAddCommentLoading(false);
+      setAddCommentError(e);
+      console.log(e);
+    }
+
+    // reload after adding comment
+    // dispatch(commentsListActions.clearComments());
+    // setPage(1);
   };
+
+  // const reviewCard = () => {
+  //   return (
+  //     <div>
+  //       <ReviewCard
+  //         isPhoneReview={true}
+  //         fullScreen={true}
+  //         isExpanded={true}
+  //         reviewDetails={currentReview}
+  //         clearIndexCache={() => {}}
+  //         index={0}
+  //         targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${currentReview.targetId}`}
+  //         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReview.userId}`}
+  //         stateLikeFn={stateLike.bind(null, currentReview._id)}
+  //         stateUnlikeFn={stateUnLike.bind(null, currentReview._id)}
+  //       />
+  //     </div>
+  //   );
+  // };
 
   return (
     <Box>
       <CustomAppBar showLogo showSearch showProfile />
       <CommentsList
-        reviewCard={reviewCard}
-        reviewsList={reviewsList}
+        // reviewCard={reviewCard}
+        commentsList={commentsList}
         page={page}
         data={data}
         error={error}
@@ -79,11 +141,19 @@ export default function InteractionWithReview() {
         isFetching={isFetching}
         stateLike={stateLike}
         stateUnLike={stateUnLike}
-        addToReviewsList={addToReviewsList}
+        addToReviewsList={addToLoadedComments}
         increasePage={increasePage}
       />
-      <div style={{ display: "fixed", zIndex: 1000, bottom: 0 }}>
-        <input />
+      <div
+        style={{
+          position: "fixed",
+          zIndex: 1000,
+          bottom: 0,
+        }}
+      >
+        <form onSubmit={submitCommentHandler}>
+          <input id="comment" />
+        </form>
       </div>
     </Box>
   );

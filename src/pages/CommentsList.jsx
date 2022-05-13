@@ -24,7 +24,7 @@ const cache = new CellMeasurerCache({
 let maxIndex = 0;
 
 export default function CommentsList({
-  reviewsList,
+  commentsList,
   page,
   data,
   error,
@@ -78,7 +78,7 @@ export default function CommentsList({
       page >= 2 &&
       !isLoading &&
       !isFetching &&
-      maxIndex === reviewsList.length &&
+      maxIndex === commentsList.length &&
       data.length !== 0
     ) {
       maxIndex = 0;
@@ -87,11 +87,7 @@ export default function CommentsList({
     maxIndex = Math.max(index, maxIndex);
     return (
       <div key={key}>
-        {data.length === 0 ? (
-          <div>No more reviews</div>
-        ) : index >= reviewsList.length ? (
-          <div>Loading...</div>
-        ) : (
+        {
           <CellMeasurer
             cache={cache}
             parent={parent}
@@ -101,14 +97,24 @@ export default function CommentsList({
             <div
               style={{
                 ...style,
-                position: "sticky",
                 direction: theme.direction,
               }}
             >
-              <Comment date="aa" user="Fady" likes={50} text="aasd" />{" "}
+              {index >= commentsList.length && data.length === 0 ? (
+                <div>No comments</div>
+              ) : index >= commentsList.length && data.length !== 0 ? (
+                <div>Loading...</div>
+              ) : (
+                <Comment
+                  date={commentsList[index].createdAt}
+                  user={commentsList[index].userName}
+                  likes={commentsList[index].likes}
+                  text={commentsList[index].content}
+                />
+              )}
             </div>
           </CellMeasurer>
-        )}
+        }
       </div>
     );
   };
@@ -125,14 +131,14 @@ export default function CommentsList({
                     <List
                       ref={listRef}
                       autoHeight
-                      overscanRowCount={10}
+                      overscanRowCount={5}
                       isScrolling={isScrolling}
                       scrollTop={scrollTop}
                       width={width}
                       height={height}
                       deferredMeasurementCache={cache}
                       rowHeight={cache.rowHeight}
-                      rowCount={reviewsList.length + 1}
+                      rowCount={commentsList.length + 1}
                       rowRenderer={renderRow}
                     />
                   </div>
@@ -141,7 +147,6 @@ export default function CommentsList({
             );
           }}
         </AutoSizer>
-        
       </div>
     </Fragment>
   );

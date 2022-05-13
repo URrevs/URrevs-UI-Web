@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import APIComment from "../models/interfaces/APIComment.model";
 import { APIReview } from "../models/interfaces/APIReview.model";
 import { RootState } from "../store/store";
 
@@ -159,6 +160,27 @@ export const reviewsApi = createApi({
         return response.reviews;
       },
     }),
+
+    addCommentOnPhoneReview: builder.mutation({
+      query: ({ reviewId, comment }) => {
+        return {
+          url: `/phone/${reviewId}/comments`,
+          method: "POST",
+          body: { content: comment },
+        };
+      },
+    }),
+    getPhoneReviewComments: builder.query<
+      APIComment[],
+      { reviewId: string; round: number }
+    >({
+      keepUnusedDataFor: 0,
+      query: ({ reviewId, round = 1 }) =>
+        `/phone/${reviewId}/comments?round=${round}`,
+      transformResponse: (response: { comments: APIComment[] }) => {
+        return response.comments;
+      },
+    }),
   }),
 });
 //auto-generated hooks
@@ -174,4 +196,6 @@ export const {
   useGetUserCompanyReviewsQuery,
   useGetOtherUserPhoneReviewsQuery,
   useGetOtherUserCompanyReviewsQuery,
+  useAddCommentOnPhoneReviewMutation,
+  useGetPhoneReviewCommentsQuery,
 } = reviewsApi;

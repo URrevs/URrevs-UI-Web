@@ -6,6 +6,7 @@ import authSlice from "./authSlice";
 import isDarkSlice from "./darkModeSlice";
 import languageSlice from "./languageSlice";
 import reviewsSlice from "./reviewsSlice";
+import commentsListSlice from "./commentsListSlice";
 import uiSlice from "./uiSlice";
 import { updateApi } from "../services/update";
 import { searchApi } from "../services/search";
@@ -22,6 +23,7 @@ export const store = configureStore({
     [reviewsApi.reducerPath]: reviewsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [reviewsSlice.name]: reviewsSlice.reducer,
+    [commentsListSlice.name]: commentsListSlice.reducer,
     [languageSlice.name]: languageSlice.reducer,
     [compareSlice.name]: compareSlice.reducer,
     [isDarkSlice.name]: isDarkSlice.reducer,
