@@ -21,7 +21,7 @@ export const reviewsApi = createApi({
   endpoints: (builder) => ({
     getAllReviews: builder.query<APIReview[], number>({
       keepUnusedDataFor: 0,
-      query: (round = 1) => `/phone/by/626b28707fe7587a42e3dfeb?round=${1}`,
+      query: (round = 1) => `/phone/by/me?round=${1}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
       },

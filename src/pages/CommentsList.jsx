@@ -5,14 +5,15 @@ import {
   CellMeasurer,
   CellMeasurerCache,
   List,
-  WindowScroller
+  WindowScroller,
 } from "react-virtualized";
 import LoadingReviewSkeleton, {
-  loadingSkeletonHeight
+  loadingSkeletonHeight,
 } from "../Components/Loaders/LoadingReviewSkeleton";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import ROUTES_NAMES from "../RoutesNames";
 import { useAppDispatch } from "../store/hooks";
+import { Comment } from "../Components/Interactions/Comment";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -22,7 +23,7 @@ const cache = new CellMeasurerCache({
 
 let maxIndex = 0;
 
-export default function VirtualReviewList({
+export default function CommentsList({
   reviewsList,
   page,
   data,
@@ -58,13 +59,7 @@ export default function VirtualReviewList({
   }, [data]);
 
   if (isLoading) {
-    return (
-      <div>
-        {[...Array(2)].map((a, index) => (
-          <LoadingReviewSkeleton key={index} />
-        ))}
-      </div>
-    );
+    return <div>Loading...</div>;
   }
 
   if (error) {
@@ -92,37 +87,28 @@ export default function VirtualReviewList({
     maxIndex = Math.max(index, maxIndex);
     return (
       <div key={key}>
-        <CellMeasurer
-          cache={cache}
-          parent={parent}
-          columnIndex={0}
-          rowIndex={index}
-        >
-          <div style={{ ...style, direction: theme.direction }}>
-            {index >= reviewsList.length ? (
-              data.length === 0 ? (
-                <div>No more reviews</div>
-              ) : (
-                [...Array(1)].map((a, index) => (
-                  <LoadingReviewSkeleton key={index} />
-                ))
-              )
-            ) : (
-              <ReviewCard
-                index={index}
-                fullScreen={false}
-                isExpanded={false}
-                clearIndexCache={clearCache}
-                reviewDetails={reviewsList[index]}
-                isPhoneReview={true}
-                targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
-                userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
-                stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
-                stateUnlikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
-              />
-            )}
-          </div>
-        </CellMeasurer>
+        {data.length === 0 ? (
+          <div>No more reviews</div>
+        ) : index >= reviewsList.length ? (
+          <div>Loading...</div>
+        ) : (
+          <CellMeasurer
+            cache={cache}
+            parent={parent}
+            columnIndex={0}
+            rowIndex={index}
+          >
+            <div
+              style={{
+                ...style,
+                position: "sticky",
+                direction: theme.direction,
+              }}
+            >
+              <Comment date="aa" user="Fady" likes={50} text="aasd" />{" "}
+            </div>
+          </CellMeasurer>
+        )}
       </div>
     );
   };
@@ -155,6 +141,7 @@ export default function VirtualReviewList({
             );
           }}
         </AutoSizer>
+        
       </div>
     </Fragment>
   );

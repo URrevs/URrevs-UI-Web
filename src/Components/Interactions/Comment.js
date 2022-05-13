@@ -25,23 +25,25 @@ export const Comment = ({ date, likes, text, user }) => {
     );
   };
   return (
-    <div style={{ maxWidth: "calc(100% - 20px)" }}>
-      <InteractionBody
-        user={user}
-        likes={likes}
-        date={date}
-        text={text}
-        buttonName={buttonName}
-        renderIcon={renderIcon}
-      >
-        <InteractionFooter
+    <div style={{ maxWidth: "100%" }}>
+      <div style={{}}>
+        <InteractionBody
+          user={user}
+          likes={likes}
           date={date}
-          condition={like}
-          onClickHandler={onClickHandler}
-          reply={false}
+          text={text}
           buttonName={buttonName}
-        ></InteractionFooter>
-      </InteractionBody>
+          renderIcon={renderIcon}
+        >
+          <InteractionFooter
+            date={date}
+            condition={like}
+            onClickHandler={onClickHandler}
+            reply={false}
+            buttonName={buttonName}
+          ></InteractionFooter>
+        </InteractionBody>
+      </div>
     </div>
   );
 };
