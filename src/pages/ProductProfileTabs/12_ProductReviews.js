@@ -43,7 +43,10 @@ export function ProductReviews() {
       })
     );
 
-  const increasePage = () => setPage(page + 1);
+  const increasePage = () => {
+    console.log(page);
+    return setPage(page + 1);
+  };
 
   return (
     <VirtualReviewList

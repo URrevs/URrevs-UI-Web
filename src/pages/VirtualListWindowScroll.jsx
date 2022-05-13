@@ -90,7 +90,7 @@ export default function VirtualReviewList({
       data.length !== 0
     ) {
       maxIndex = 0;
-      dispatch(reviewsActions.increasePage());
+      increasePage();
     }
     maxIndex = Math.max(index, maxIndex);
     return (
