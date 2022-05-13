@@ -11,6 +11,14 @@ import { useSearchParams } from "react-router-dom";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import ROUTES_NAMES from "../RoutesNames";
 import { Box } from "@mui/material";
+import { CellMeasurerCache } from "react-virtualized";
+import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
+
+const cache = new CellMeasurerCache({
+  fixedWidth: true,
+  fixedHeight: false,
+  defaultHeight: loadingSkeletonHeight,
+});
 
 export default function InteractionWithReview() {
   const dispatch = useAppDispatch();
@@ -37,8 +45,17 @@ export default function InteractionWithReview() {
 
   const [addCommentLoading, setAddCommentLoading] = useState(false);
   const [addCommentError, setAddCommentError] = useState(null);
-
   const [addCommentOnPhoneReview] = useAddCommentOnPhoneReviewMutation();
+
+  const [ex, setEx] = useState(false);
+  const clearCache = (index) => {
+    setEx(!ex);
+    if (index === 0) {
+      cache.clear(0);
+    } else {
+      cache.clear(index);
+    }
+  };
 
   // get this review from store
   const currentReview = useAppSelector(
@@ -60,12 +77,15 @@ export default function InteractionWithReview() {
       })
     );
 
-  const addOneCommentToLoadedComments = (comment) =>
+  const addOneCommentToLoadedComments = (comment) => {
     dispatch(
       commentsListActions.addNewCommentLocally({
         newComment: comment,
       })
     );
+    // clear 0 cache
+    cache.clearAll();
+  };
 
   const increasePage = () => setPage(page + 1);
 
@@ -143,6 +163,8 @@ export default function InteractionWithReview() {
         stateUnLike={stateUnLike}
         addToReviewsList={addToLoadedComments}
         increasePage={increasePage}
+        cache={cache}
+        clearCache={clearCache}
       />
       <div
         style={{

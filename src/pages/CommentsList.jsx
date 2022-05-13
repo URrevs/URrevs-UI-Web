@@ -15,12 +15,6 @@ import ROUTES_NAMES from "../RoutesNames";
 import { useAppDispatch } from "../store/hooks";
 import { Comment } from "../Components/Interactions/Comment";
 
-const cache = new CellMeasurerCache({
-  fixedWidth: true,
-  fixedHeight: false,
-  defaultHeight: loadingSkeletonHeight,
-});
-
 let maxIndex = 0;
 
 export default function CommentsList({
@@ -34,20 +28,12 @@ export default function CommentsList({
   stateUnLike,
   addToReviewsList,
   increasePage,
+  cache,
+  clearCache,
 }) {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const listRef = useRef();
-  const [ex, setEx] = useState(false);
-
-  const clearCache = (index) => {
-    setEx(!ex);
-    if (index === 0) {
-      cache.clear(0);
-    } else {
-      cache.clear(index);
-    }
-  };
 
   useEffect(() => {
     if (data) {
