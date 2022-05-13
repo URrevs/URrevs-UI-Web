@@ -5,14 +5,19 @@ import { useTheme } from "@emotion/react";
 import { InteractionFooter } from "./InteractionFooter";
 import { useAppSelector } from "../../store/hooks";
 
-export const Comment = ({ date, likes, text, user }) => {
+export const Comment = ({
+  commentId,
+  date,
+  likes,
+  text,
+  user,
+  liked,
+  commentLike,
+  commentUnlike,
+}) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
-  const [like, setLike] = useState(false);
-  const onClickHandler = () => {
-    setLike(!like);
-  };
-  const buttonName = like ? textContainer.liked : textContainer.like;
+  const buttonName = liked ? textContainer.liked : textContainer.like;
   const theme = useTheme();
   const renderIcon = () => {
     return (
@@ -34,11 +39,13 @@ export const Comment = ({ date, likes, text, user }) => {
         renderIcon={renderIcon}
       >
         <InteractionFooter
+          commentId={commentId}
           date={date}
-          condition={like}
-          onClickHandler={onClickHandler}
+          condition={liked}
           reply={false}
           buttonName={buttonName}
+          commentLike={commentLike}
+          commentUnlike={commentUnlike}
         ></InteractionFooter>
       </InteractionBody>
     </div>

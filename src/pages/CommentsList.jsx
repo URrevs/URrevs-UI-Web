@@ -24,8 +24,8 @@ export default function CommentsList({
   error,
   isLoading,
   isFetching,
-  stateLike,
-  stateUnLike,
+  commentLike,
+  commentUnlike,
   addToReviewsList,
   increasePage,
   cache,
@@ -72,35 +72,40 @@ export default function CommentsList({
     }
     maxIndex = Math.max(index, maxIndex);
     return (
-      <div key={key}>
-        {
+      <div
+        key={key}
+        style={{
+          ...style,
+          direction: theme.direction,
+        }}
+      >
+        {index >= commentsList.length && data.length === 0 ? (
+          <div>No comments</div>
+        ) : index >= commentsList.length && data.length !== 0 ? (
+          <div>Loading...</div>
+        ) : (
           <CellMeasurer
             cache={cache}
             parent={parent}
             columnIndex={0}
             rowIndex={index}
           >
-            <div
-              style={{
-                ...style,
-                direction: theme.direction,
-              }}
-            >
-              {index >= commentsList.length && data.length === 0 ? (
-                <div>No comments</div>
-              ) : index >= commentsList.length && data.length !== 0 ? (
-                <div>Loading...</div>
-              ) : (
+            <div>
+              {
                 <Comment
+                  commentId={commentsList[index]._id}
                   date={commentsList[index].createdAt}
                   user={commentsList[index].userName}
                   likes={commentsList[index].likes}
                   text={commentsList[index].content}
+                  liked={commentsList[index].liked}
+                  commentLike={commentLike}
+                  commentUnlike={commentUnlike}
                 />
-              )}
+              }
             </div>
           </CellMeasurer>
-        }
+        )}
       </div>
     );
   };

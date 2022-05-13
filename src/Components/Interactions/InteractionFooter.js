@@ -15,20 +15,29 @@ const CommentButton = styled(
 }));
 
 export const InteractionFooter = ({
+  commentId,
   date,
   buttonName,
   onClickHandler,
   condition,
   reply,
+  commentLike,
+  commentUnlike,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  
+
   const lang = useAppSelector((state) => state.language.language);
   const transDate = convertDateToString(date, lang);
 
   return (
     <React.Fragment>
-      <CommentButton onClick={onClickHandler}>
+      <CommentButton
+        onClick={
+          condition
+            ? commentUnlike.bind(null, commentId)
+            : commentLike.bind(null, commentId)
+        }
+      >
         <Typography variant={condition ? "S13W700C2196F3" : "S13W700C050505"}>
           {buttonName}
         </Typography>

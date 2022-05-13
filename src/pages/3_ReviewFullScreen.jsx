@@ -3,6 +3,9 @@ import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import {
   useGetPhoneReviewCommentsQuery,
   useAddCommentOnPhoneReviewMutation,
+  useAddReplyOnPhoneReviewMutation,
+  useLikePhoneReviewCommentMutation,
+  useUnLikePhoneReviewCommentMutation,
 } from "../services/reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { commentsListActions } from "../store/commentsListSlice";
@@ -13,6 +16,7 @@ import ROUTES_NAMES from "../RoutesNames";
 import { Box } from "@mui/material";
 import { CellMeasurerCache } from "react-virtualized";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
+import { reviewsActions } from "../store/reviewsSlice";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -43,9 +47,21 @@ export default function InteractionWithReview() {
     { reviewId, round: page }
   );
 
+  // add comment
   const [addCommentLoading, setAddCommentLoading] = useState(false);
   const [addCommentError, setAddCommentError] = useState(null);
   const [addCommentOnPhoneReview] = useAddCommentOnPhoneReviewMutation();
+
+  // add reply
+  const [addReplyLoading, setAddReplyLoading] = useState(false);
+  const [addReplyError, setAddReplyError] = useState(null);
+  const [addReplyOnPhoneReview] = useAddReplyOnPhoneReviewMutation();
+
+  // like comment
+  const [likeComment] = useLikePhoneReviewCommentMutation();
+
+  // unlike comment
+  const [unLikeComment] = useUnLikePhoneReviewCommentMutation();
 
   const [ex, setEx] = useState(false);
   const clearCache = (index) => {
@@ -64,11 +80,33 @@ export default function InteractionWithReview() {
     return element._id === reviewId;
   });
 
-  const stateLike = (id) =>
+  const stateLikePhoneReview = (id) =>
+    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
+
+  const stateUnLikePhoneReview = (id) =>
+    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: false }));
+
+  const stateLikePhoneComment = (id) =>
     dispatch(commentsListActions.setIsLiked({ id: id, isLiked: true }));
 
-  const stateUnLike = (id) =>
+  const stateUnLikePhoneComment = (id) =>
     dispatch(commentsListActions.setIsLiked({ id: id, isLiked: false }));
+
+  const likeCommentRequest = (id) => {
+    likeComment({
+      commentId: id,
+      doFn: stateLikePhoneComment,
+      unDoFn: stateUnLikePhoneComment,
+    });
+  };
+
+  const unLikeCommentRequest = (id) => {
+    unLikeComment({
+      commentId: id,
+      doFn: stateUnLikePhoneComment,
+      unDoFn: stateLikePhoneComment,
+    });
+  };
 
   const addToLoadedComments = () =>
     dispatch(
@@ -159,8 +197,8 @@ export default function InteractionWithReview() {
         error={error}
         isLoading={isLoading}
         isFetching={isFetching}
-        stateLike={stateLike}
-        stateUnLike={stateUnLike}
+        commentLike={likeCommentRequest}
+        commentUnlike={unLikeCommentRequest}
         addToReviewsList={addToLoadedComments}
         increasePage={increasePage}
         cache={cache}
@@ -173,9 +211,11 @@ export default function InteractionWithReview() {
           bottom: 0,
         }}
       >
-        <form onSubmit={submitCommentHandler}>
-          <input id="comment" />
-        </form>
+        <div>
+          <form onSubmit={submitCommentHandler}>
+            <input id="comment" />
+          </form>
+        </div>
       </div>
     </Box>
   );

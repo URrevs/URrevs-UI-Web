@@ -170,6 +170,7 @@ export const reviewsApi = createApi({
         };
       },
     }),
+
     getPhoneReviewComments: builder.query<
       APIComment[],
       { reviewId: string; round: number }
@@ -179,6 +180,53 @@ export const reviewsApi = createApi({
         `/phone/${reviewId}/comments?round=${round}`,
       transformResponse: (response: { comments: APIComment[] }) => {
         return response.comments;
+      },
+    }),
+
+    addReplyOnPhoneReview: builder.mutation({
+      query: ({ commentId, reply }) => {
+        return {
+          url: `/phone/comments/${commentId}/replies`,
+          method: "POST",
+          body: { content: reply },
+        };
+      },
+    }),
+
+    // comments likes
+    likePhoneReviewComment: builder.mutation({
+      query: ({ commentId }) => {
+        return {
+          url: `/phone/comments/${commentId}/like`,
+          method: "POST",
+        };
+      },
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        payload.doFn(payload.commentId);
+
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          payload.unDoFn(payload.commentId);
+        }
+      },
+    }),
+
+    unLikePhoneReviewComment: builder.mutation({
+      query: ({ commentId }) => {
+        return {
+          url: `/phone/comments/${commentId}/unlike`,
+          method: "POST",
+        };
+      },
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        payload.doFn(payload.commentId);
+
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          payload.unDoFn(payload.commentId);
+        }
       },
     }),
   }),
@@ -198,4 +246,7 @@ export const {
   useGetOtherUserCompanyReviewsQuery,
   useAddCommentOnPhoneReviewMutation,
   useGetPhoneReviewCommentsQuery,
+  useAddReplyOnPhoneReviewMutation,
+  useLikePhoneReviewCommentMutation,
+  useUnLikePhoneReviewCommentMutation,
 } = reviewsApi;
