@@ -14,8 +14,19 @@ const commentsList = createSlice({
   initialState,
   reducers: {
     addToLoaddedComments(state, action: PayloadAction<InitialState>) {
+      // make list of comments and replies
+      let newList: APIComment[] = [];
       const loadedComments = action.payload.newComments;
-      state.newComments.push(...loadedComments);
+      loadedComments.forEach((comment) => {
+        newList.push({ ...comment, isReply: false });
+        if (comment.replies) {
+          comment.replies.forEach((reply) => {
+            newList.push({ ...reply, commentId: comment._id, isReply: true });
+          });
+        }
+      });
+
+      state.newComments.push(...newList);
     },
     addNewCommentLocally(
       state,

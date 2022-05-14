@@ -17,6 +17,10 @@ export const Comment = ({
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
+  const onLikeClickHandler = liked
+    ? commentUnlike.bind(null, commentId)
+    : commentLike.bind(null, commentId);
+
   const buttonName = liked ? textContainer.liked : textContainer.like;
   const theme = useTheme();
   const renderIcon = () => {
@@ -29,6 +33,7 @@ export const Comment = ({
       />
     );
   };
+
   return (
     <div style={{ maxWidth: "calc(100% - 20px)" }}>
       <InteractionBody
@@ -44,8 +49,7 @@ export const Comment = ({
           condition={liked}
           reply={false}
           buttonName={buttonName}
-          commentLike={commentLike}
-          commentUnlike={commentUnlike}
+          onClickHandler={onLikeClickHandler}
         ></InteractionFooter>
       </InteractionBody>
     </div>

@@ -21,8 +21,6 @@ export const InteractionFooter = ({
   onClickHandler,
   condition,
   reply,
-  commentLike,
-  commentUnlike,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -31,13 +29,7 @@ export const InteractionFooter = ({
 
   return (
     <React.Fragment>
-      <CommentButton
-        onClick={
-          condition
-            ? commentUnlike.bind(null, commentId)
-            : commentLike.bind(null, commentId)
-        }
-      >
+      <CommentButton onClick={onClickHandler}>
         <Typography variant={condition ? "S13W700C2196F3" : "S13W700C050505"}>
           {buttonName}
         </Typography>

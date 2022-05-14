@@ -7,5 +7,7 @@ export default interface APIComment {
   createdAt: string;
   likes: number;
   liked: boolean;
+  commentId: string;
+  isReply: boolean;
   replies: APIComment[];
 }

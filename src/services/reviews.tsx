@@ -193,6 +193,42 @@ export const reviewsApi = createApi({
       },
     }),
 
+    likePhoneReviewReply: builder.mutation({
+      query: ({ commentId, replyId }) => {
+        return {
+          url: `/phone/comments/${commentId}/replies/${replyId}/like`,
+          method: "POST",
+        };
+      },
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        payload.doFn(payload.replyId);
+
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          payload.unDoFn(payload.replyId);
+        }
+      },
+    }),
+
+    unLikePhoneReviewReply: builder.mutation({
+      query: ({ commentId, replyId }) => {
+        return {
+          url: `/phone/comments/${commentId}/replies/${replyId}/unlike`,
+          method: "POST",
+        };
+      },
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        payload.doFn(payload.replyId);
+
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          payload.unDoFn(payload.replyId);
+        }
+      },
+    }),
+
     // comments likes
     likePhoneReviewComment: builder.mutation({
       query: ({ commentId }) => {
@@ -249,4 +285,6 @@ export const {
   useAddReplyOnPhoneReviewMutation,
   useLikePhoneReviewCommentMutation,
   useUnLikePhoneReviewCommentMutation,
+  useLikePhoneReviewReplyMutation,
+  useUnLikePhoneReviewReplyMutation,
 } = reviewsApi;

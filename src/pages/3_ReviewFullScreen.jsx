@@ -6,6 +6,8 @@ import {
   useAddReplyOnPhoneReviewMutation,
   useLikePhoneReviewCommentMutation,
   useUnLikePhoneReviewCommentMutation,
+  useLikePhoneReviewReplyMutation,
+  useUnLikePhoneReviewReplyMutation,
 } from "../services/reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { commentsListActions } from "../store/commentsListSlice";
@@ -63,6 +65,11 @@ export default function InteractionWithReview() {
   // unlike comment
   const [unLikeComment] = useUnLikePhoneReviewCommentMutation();
 
+  // like reply
+  const [likeReply] = useLikePhoneReviewReplyMutation();
+  // unlike reply
+  const [unLikeReply] = useUnLikePhoneReviewReplyMutation();
+
   const [ex, setEx] = useState(false);
   const clearCache = (index) => {
     setEx(!ex);
@@ -86,6 +93,7 @@ export default function InteractionWithReview() {
   const stateUnLikePhoneReview = (id) =>
     dispatch(reviewsActions.setIsLiked({ id: id, isLiked: false }));
 
+  // comment like and unlike
   const stateLikePhoneComment = (id) =>
     dispatch(commentsListActions.setIsLiked({ id: id, isLiked: true }));
 
@@ -105,6 +113,31 @@ export default function InteractionWithReview() {
       commentId: id,
       doFn: stateUnLikePhoneComment,
       unDoFn: stateLikePhoneComment,
+    });
+  };
+
+  // reply like and unlike
+  const stateLikePhoneReply = (id) =>
+    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: true }));
+
+  const stateUnLikePhoneReply = (id) =>
+    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: false }));
+
+  const likeReplyRequest = (commentId, replyId) => {
+    likeReply({
+      commentId: commentId,
+      replyId: replyId,
+      doFn: stateLikePhoneReply,
+      unDoFn: stateUnLikePhoneReply,
+    });
+  };
+
+  const unLikeReplyRequest = (commentId, replyId) => {
+    unLikeReply({
+      commentId: commentId,
+      replyId: replyId,
+      doFn: stateUnLikePhoneReply,
+      unDoFn: stateLikePhoneReply,
     });
   };
 
@@ -156,6 +189,12 @@ export default function InteractionWithReview() {
       };
 
       addOneCommentToLoadedComments(comment);
+
+      // for testing add reply
+      await addReplyOnPhoneReview({
+        commentId: "627eb2014d03a5294c16897e",
+        reply: e.target.comment.value,
+      });
     } catch (e) {
       setAddCommentLoading(false);
       setAddCommentError(e);
@@ -199,6 +238,8 @@ export default function InteractionWithReview() {
         isFetching={isFetching}
         commentLike={likeCommentRequest}
         commentUnlike={unLikeCommentRequest}
+        replyLike={likeReplyRequest}
+        replyUnlike={unLikeReplyRequest}
         addToReviewsList={addToLoadedComments}
         increasePage={increasePage}
         cache={cache}

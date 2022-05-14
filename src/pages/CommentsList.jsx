@@ -14,6 +14,7 @@ import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import ROUTES_NAMES from "../RoutesNames";
 import { useAppDispatch } from "../store/hooks";
 import { Comment } from "../Components/Interactions/Comment";
+import { CommentReply } from "../Components/Interactions/CommentReply";
 
 let maxIndex = 0;
 
@@ -26,6 +27,8 @@ export default function CommentsList({
   isFetching,
   commentLike,
   commentUnlike,
+  replyLike,
+  replyUnlike,
   addToReviewsList,
   increasePage,
   cache,
@@ -71,6 +74,7 @@ export default function CommentsList({
       increasePage();
     }
     maxIndex = Math.max(index, maxIndex);
+    const currentComment = commentsList[index];
     return (
       <div
         key={key}
@@ -91,18 +95,30 @@ export default function CommentsList({
             rowIndex={index}
           >
             <div>
-              {
+              {currentComment.isReply ? (
+                <CommentReply
+                  replyId={currentComment._id}
+                  date={currentComment.createdAt}
+                  user={currentComment.userName}
+                  likes={currentComment.likes}
+                  text={currentComment.content}
+                  liked={currentComment.liked}
+                  replyLike={replyLike}
+                  replyUnlike={replyUnlike}
+                  commentId={currentComment.commentId}
+                />
+              ) : (
                 <Comment
-                  commentId={commentsList[index]._id}
-                  date={commentsList[index].createdAt}
-                  user={commentsList[index].userName}
-                  likes={commentsList[index].likes}
-                  text={commentsList[index].content}
-                  liked={commentsList[index].liked}
+                  commentId={currentComment._id}
+                  date={currentComment.createdAt}
+                  user={currentComment.userName}
+                  likes={currentComment.likes}
+                  text={currentComment.content}
+                  liked={currentComment.liked}
                   commentLike={commentLike}
                   commentUnlike={commentUnlike}
                 />
-              }
+              )}
             </div>
           </CellMeasurer>
         )}
