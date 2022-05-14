@@ -33,6 +33,7 @@ export default function CommentsList({
   increasePage,
   cache,
   clearCache,
+  submitReplyHandler,
 }) {
   const dispatch = useAppDispatch();
   const theme = useTheme();
@@ -117,6 +118,7 @@ export default function CommentsList({
                   liked={currentComment.liked}
                   commentLike={commentLike}
                   commentUnlike={commentUnlike}
+                  submitReplyHandler={submitReplyHandler}
                 />
               )}
             </div>

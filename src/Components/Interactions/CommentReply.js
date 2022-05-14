@@ -35,7 +35,7 @@ export const CommentReply = ({
     );
   };
   return (
-    <div style={{ marginRight: "56px" }}>
+    <div style={{ marginRight: "56px", padding: "4px 0px" }}>
       <InteractionBody
         user={user}
         likes={likes}
@@ -50,7 +50,7 @@ export const CommentReply = ({
           date={date}
           condition={liked}
           onClickHandler={onLikeClickHandler}
-          reply={false}
+          reply={true}
           buttonName={buttonName}
           commentLike={replyLike}
           commentUnlike={replyUnlike}

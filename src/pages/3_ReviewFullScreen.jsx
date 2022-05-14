@@ -28,11 +28,12 @@ const cache = new CellMeasurerCache({
 
 export default function InteractionWithReview() {
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    console.log("clear comments");
 
-    dispatch(commentsListActions.clearComments());
-  }, []);
+  // useEffect(() => {
+  //   console.log("clear comments");
+
+  //   dispatch(commentsListActions.clearComments());
+  // }, []);
 
   const currentUser = useAppSelector((state) => state.auth);
 
@@ -148,9 +149,18 @@ export default function InteractionWithReview() {
       })
     );
 
-  const addOneCommentToLoadedComments = (comment) => {
+  const addOneCommentToLoadedComments = (comment, index) => {
     dispatch(
       commentsListActions.addNewCommentLocally({
+        newComment: comment,
+      })
+    );
+    // clear 0 cache
+    cache.clearAll();
+  };
+  const addOneReplyToLoadedComments = (comment) => {
+    dispatch(
+      commentsListActions.addNewReplyLocally({
         newComment: comment,
       })
     );
@@ -189,23 +199,39 @@ export default function InteractionWithReview() {
       };
 
       addOneCommentToLoadedComments(comment);
-
-      // for testing add reply
-      await addReplyOnPhoneReview({
-        commentId: "627eb2014d03a5294c16897e",
-        reply: e.target.comment.value,
-      });
     } catch (e) {
       setAddCommentLoading(false);
       setAddCommentError(e);
       console.log(e);
     }
-
-    // reload after adding comment
-    // dispatch(commentsListActions.clearComments());
-    // setPage(1);
   };
 
+  const submitReplyHandler = async (e, commentId) => {
+    e.preventDefault();
+
+    try {
+      const response = await addReplyOnPhoneReview({
+        commentId: commentId,
+        reply: e.target.comment.value,
+      });
+
+      // add reply to store
+      const reply = {
+        _id: response.reply,
+        userId: currentUser.uid,
+        userName: currentUser.name,
+        userPicture: currentUser.photo,
+        content: e.target.comment.value,
+        createdAt: new Date(),
+        likes: 0,
+        liked: false,
+      };
+
+      addOneReplyToLoadedComments(reply);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   // const reviewCard = () => {
   //   return (
   //     <div>
@@ -244,6 +270,7 @@ export default function InteractionWithReview() {
         increasePage={increasePage}
         cache={cache}
         clearCache={clearCache}
+        submitReplyHandler={submitReplyHandler}
       />
       <div
         style={{

@@ -4,6 +4,7 @@ import { InteractionBody } from "./InteractionBody";
 import { useTheme } from "@emotion/react";
 import { InteractionFooter } from "./InteractionFooter";
 import { useAppSelector } from "../../store/hooks";
+import { comment } from "stylis";
 
 export const Comment = ({
   commentId,
@@ -14,6 +15,7 @@ export const Comment = ({
   liked,
   commentLike,
   commentUnlike,
+  submitReplyHandler,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -35,7 +37,7 @@ export const Comment = ({
   };
 
   return (
-    <div style={{ maxWidth: "calc(100% - 20px)" }}>
+    <div style={{ maxWidth: "calc(100% - 20px)", padding: "4px 0px" }}>
       <InteractionBody
         user={user}
         likes={likes}
@@ -52,6 +54,15 @@ export const Comment = ({
           onClickHandler={onLikeClickHandler}
         ></InteractionFooter>
       </InteractionBody>
+      <div>
+        <form
+          onSubmit={(e) => {
+            submitReplyHandler(e, commentId);
+          }}
+        >
+          <input id="comment" />
+        </form>
+      </div>
     </div>
   );
 };

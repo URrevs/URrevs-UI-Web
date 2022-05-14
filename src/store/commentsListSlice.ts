@@ -25,9 +25,9 @@ const commentsList = createSlice({
           });
         }
       });
-
       state.newComments.push(...newList);
     },
+
     addNewCommentLocally(
       state,
       action: { payload: { newComment: APIComment } }
@@ -35,6 +35,19 @@ const commentsList = createSlice({
       const comment = action.payload.newComment;
       state.newComments = [comment, ...state.newComments];
     },
+
+    addNewReplyLocally(state, action: { payload: { newComment: APIComment } }) {
+      const index = state.newComments.findIndex((element) => {
+        return (
+          element.commentId.toString() ===
+          action.payload.newComment._id.toString()
+        );
+      });
+
+      const comment = action.payload.newComment;
+      state.newComments.splice(index + 1, 0, comment);
+    },
+
     clearComments(state) {
       state.newComments = [];
     },

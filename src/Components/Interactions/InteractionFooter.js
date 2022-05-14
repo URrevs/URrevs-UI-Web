@@ -21,6 +21,7 @@ export const InteractionFooter = ({
   onClickHandler,
   condition,
   reply,
+
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
