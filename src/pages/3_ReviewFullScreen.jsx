@@ -217,7 +217,7 @@ export default function InteractionWithReview() {
 
       // add reply to store
       const reply = {
-        _id: response.reply,
+        _id: response.data.reply,
         userId: currentUser.uid,
         userName: currentUser.name,
         userPicture: currentUser.photo,
@@ -225,6 +225,8 @@ export default function InteractionWithReview() {
         createdAt: new Date(),
         likes: 0,
         liked: false,
+        commentId: commentId,
+        isReply: true,
       };
 
       addOneReplyToLoadedComments(reply);

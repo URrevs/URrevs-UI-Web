@@ -39,8 +39,8 @@ const commentsList = createSlice({
     addNewReplyLocally(state, action: { payload: { newComment: APIComment } }) {
       const index = state.newComments.findIndex((element) => {
         return (
-          element.commentId.toString() ===
-          action.payload.newComment._id.toString()
+          element._id.toString() ===
+          action.payload.newComment.commentId.toString()
         );
       });
 
