@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CustomAppBar } from "../../Components/MainLayout/AppBar/CustomAppBar";
+import ReviewCard from "../../Components/ReviewCard/ReviewCard";
+import ROUTES_NAMES from "../../RoutesNames";
 import {
   useGetAllReviewsQuery,
   useGetPhoneReviewsQuery,
@@ -48,8 +50,27 @@ export function ProductReviews() {
     return setPage(page + 1);
   };
 
+  const reviewCard = (index, clearCache) => {
+    return (
+      <ReviewCard
+        index={index}
+        fullScreen={false}
+        isExpanded={false}
+        clearIndexCache={clearCache}
+        reviewDetails={reviewsList[index]}
+        isPhoneReview={true}
+        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
+        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+        stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
+        stateUnlikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
+        fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewsList[index]._id}`}
+      />
+    );
+  };
+
   return (
     <VirtualReviewList
+      reviewCard={reviewCard}
       reviewsList={reviewsList}
       page={page}
       data={data}

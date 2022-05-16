@@ -116,7 +116,7 @@ export default function VirtualReviewList({
 
   return (
     <Fragment>
-      <div style={{ height: "calc(100vh)", margin: "0" }}>
+      <div style={{ height: "calc(100vh)", margin: "0 12px" }}>
         <AutoSizer>
           {({ height, width }) => {
             return (
