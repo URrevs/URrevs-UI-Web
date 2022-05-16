@@ -3,8 +3,8 @@ import APIComment from "../models/interfaces/APIComment.model";
 import { APIReview } from "../models/interfaces/APIReview.model";
 import { RootState } from "../store/store";
 
-export const reviewsApi = createApi({
-  reducerPath: "reviewsApi",
+export const companyReviewsApi = createApi({
+  reducerPath: "companyReviewsApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_API_PATH}/reviews`,
     // add token to all endpoints headers
@@ -20,17 +20,9 @@ export const reviewsApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getAllReviews: builder.query<APIReview[], number>({
+    getCertainCompanyReview: builder.query<APIReview, string>({
       keepUnusedDataFor: 0,
-      query: (round = 1) => `/phone/by/me?round=${1}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
-        return response.reviews;
-      },
-    }),
-
-    getReview: builder.query<APIReview, string>({
-      keepUnusedDataFor: 0,
-      query: (id: string) => `/phone/${id}`,
+      query: (id: string) => `/company/${id}`,
       transformResponse: (response: { review: APIReview }) => {
         return response.review;
       },
@@ -46,50 +38,22 @@ export const reviewsApi = createApi({
         return response.reviews;
       },
     }),
-    getPhoneReviews: builder.query<APIReview[], { round: number; pid: string }>(
-      {
-        keepUnusedDataFor: 0,
-        query: ({ round, pid }) => `/phone/on/${pid}?round=${round}`,
-        transformResponse: (response: { reviews: APIReview[] }) => {
-          return response.reviews;
-        },
-      }
-    ),
 
-    addPhoneReview: builder.mutation({
-      query: (review) => {
-        return {
-          url: `/phone`,
-          method: "POST",
-          body: review,
-          // {
-          //   phoneId: review.phoneId,
-          //   companyId: review.companyId,
-          //   ownedDate: review.ownedDate,
-          //   generalRating: review.generalRating,
-          //   uiRating: review.uiRating,
-          //   manQuality: review.manQuality,
-          //   valFMon: review.valFMon,
-          //   camera: review.camera,
-          //   callQuality: review.callQuality,
-          //   battery: review.battery,
-          //   pros: review.pros,
-          //   cons: review.cons,
-          //   refCode: review.refCode,
-          //   companyRating: review.companyRating,
-          //   compPros: review.compPros,
-          //   compCons: review.compCons,
-          // },
-        };
+    getComoanyReviews: builder.query<
+      APIReview[],
+      { round: number; pid: string }
+    >({
+      keepUnusedDataFor: 0,
+      query: ({ round, pid }) => `/company/on/${pid}?round=${round}`,
+      transformResponse: (response: { reviews: APIReview[] }) => {
+        return response.reviews;
       },
-      // transformResponse: (response: { review: APIReview }) =>
-      //   new Review(response.review),
     }),
 
-    likePhoneReview: builder.mutation({
+    likeCompanyReview: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/like`,
+          url: `/company/${reviewId}/like`,
           method: "POST",
         };
       },
@@ -104,10 +68,10 @@ export const reviewsApi = createApi({
       },
     }),
 
-    unLikePhoneReview: builder.mutation({
+    unLikeCompanyReview: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/unlike`,
+          url: `/company/${reviewId}/unlike`,
           method: "POST",
         };
       },
@@ -123,28 +87,9 @@ export const reviewsApi = createApi({
       },
     }),
 
-    getUserPhoneReviews: builder.query<APIReview[], number>({
-      keepUnusedDataFor: 0,
-      query: (round = 1) => `/phone/by/me?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
-        return response.reviews;
-      },
-    }),
-
     getUserCompanyReviews: builder.query<APIReview[], number>({
       keepUnusedDataFor: 0,
       query: (round = 1) => `/company/by/me?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
-        return response.reviews;
-      },
-    }),
-
-    getOtherUserPhoneReviews: builder.query<
-      APIReview[],
-      { round: number; uid: string }
-    >({
-      keepUnusedDataFor: 0,
-      query: ({ round, uid }) => `/phone/by/${uid}?round=${round}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
       },
@@ -161,42 +106,42 @@ export const reviewsApi = createApi({
       },
     }),
 
-    addCommentOnPhoneReview: builder.mutation({
+    addCommentOnCompanyReview: builder.mutation({
       query: ({ reviewId, comment }) => {
         return {
-          url: `/phone/${reviewId}/comments`,
+          url: `/company/${reviewId}/comments`,
           method: "POST",
           body: { content: comment },
         };
       },
     }),
 
-    getPhoneReviewComments: builder.query<
+    getCompanyReviewComments: builder.query<
       APIComment[],
       { reviewId: string; round: number }
     >({
       keepUnusedDataFor: 0,
       query: ({ reviewId, round = 1 }) =>
-        `/phone/${reviewId}/comments?round=${round}`,
+        `/company/${reviewId}/comments?round=${round}`,
       transformResponse: (response: { comments: APIComment[] }) => {
         return response.comments;
       },
     }),
 
-    addReplyOnPhoneReview: builder.mutation({
+    addReplyOnCompanyReview: builder.mutation({
       query: ({ commentId, reply }) => {
         return {
-          url: `/phone/comments/${commentId}/replies`,
+          url: `/company/comments/${commentId}/replies`,
           method: "POST",
           body: { content: reply },
         };
       },
     }),
 
-    likePhoneReviewReply: builder.mutation({
+    likeCompanyReviewReply: builder.mutation({
       query: ({ commentId, replyId }) => {
         return {
-          url: `/phone/comments/${commentId}/replies/${replyId}/like`,
+          url: `/company/comments/${commentId}/replies/${replyId}/like`,
           method: "POST",
         };
       },
@@ -211,10 +156,10 @@ export const reviewsApi = createApi({
       },
     }),
 
-    unLikePhoneReviewReply: builder.mutation({
+    unLikeCompanyReviewReply: builder.mutation({
       query: ({ commentId, replyId }) => {
         return {
-          url: `/phone/comments/${commentId}/replies/${replyId}/unlike`,
+          url: `/company/comments/${commentId}/replies/${replyId}/unlike`,
           method: "POST",
         };
       },
@@ -230,10 +175,10 @@ export const reviewsApi = createApi({
     }),
 
     // comments likes
-    likePhoneReviewComment: builder.mutation({
+    likeCompanyReviewComment: builder.mutation({
       query: ({ commentId }) => {
         return {
-          url: `/phone/comments/${commentId}/like`,
+          url: `/company/comments/${commentId}/like`,
           method: "POST",
         };
       },
@@ -248,10 +193,10 @@ export const reviewsApi = createApi({
       },
     }),
 
-    unLikePhoneReviewComment: builder.mutation({
+    unLikeCompanyReviewComment: builder.mutation({
       query: ({ commentId }) => {
         return {
-          url: `/phone/comments/${commentId}/unlike`,
+          url: `/company/comments/${commentId}/unlike`,
           method: "POST",
         };
       },
@@ -269,22 +214,17 @@ export const reviewsApi = createApi({
 });
 //auto-generated hooks
 export const {
-  useGetAllReviewsQuery,
-  useGetReviewQuery,
+  useGetCertainCompanyReviewQuery,
   useGetCompanyReviewsQuery,
-  useGetPhoneReviewsQuery,
-  useAddPhoneReviewMutation,
-  useLikePhoneReviewMutation,
-  useUnLikePhoneReviewMutation,
-  useGetUserPhoneReviewsQuery,
+  useLikeCompanyReviewMutation,
+  useUnLikeCompanyReviewMutation,
   useGetUserCompanyReviewsQuery,
-  useGetOtherUserPhoneReviewsQuery,
   useGetOtherUserCompanyReviewsQuery,
-  useAddCommentOnPhoneReviewMutation,
-  useGetPhoneReviewCommentsQuery,
-  useAddReplyOnPhoneReviewMutation,
-  useLikePhoneReviewCommentMutation,
-  useUnLikePhoneReviewCommentMutation,
-  useLikePhoneReviewReplyMutation,
-  useUnLikePhoneReviewReplyMutation,
-} = reviewsApi;
+  useAddCommentOnCompanyReviewMutation,
+  useGetCompanyReviewCommentsQuery,
+  useAddReplyOnCompanyReviewMutation,
+  useLikeCompanyReviewCommentMutation,
+  useUnLikeCompanyReviewCommentMutation,
+  useLikeCompanyReviewReplyMutation,
+  useUnLikeCompanyReviewReplyMutation,
+} = companyReviewsApi;

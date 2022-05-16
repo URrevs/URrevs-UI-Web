@@ -1,3 +1,4 @@
+import ROUTES_NAMES from "../../RoutesNames";
 import { useAppSelector } from "../../store/hooks";
 import ReviewCard from "./ReviewCard";
 
@@ -7,6 +8,8 @@ const CompanyReview = ({
   clearIndexCache,
   targetProfilePath,
   userProfilePath,
+  stateLikeFn,
+  stateUnLikeFn,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -20,6 +23,9 @@ const CompanyReview = ({
       isPhoneReview={false}
       targetProfilePath={targetProfilePath}
       userProfilePath={userProfilePath}
+      stateLikeFn={stateLikeFn.bind(null, reviewDetails._id)}
+      stateUnlikeFn={stateUnLikeFn.bind(null, reviewDetails._id)}
+      fullScreenRoute={`/${ROUTES_NAMES.EXACT_COMPANY_REVIEW}?id=${reviewDetails._id}`}
     />
   );
 };

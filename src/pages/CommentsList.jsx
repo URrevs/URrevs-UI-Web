@@ -15,6 +15,7 @@ import ROUTES_NAMES from "../RoutesNames";
 import { useAppDispatch } from "../store/hooks";
 import { Comment } from "../Components/Interactions/Comment";
 import { CommentReply } from "../Components/Interactions/CommentReply";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 
 let maxIndex = 0;
 
@@ -31,6 +32,7 @@ export default function CommentsList({
   replyUnlike,
   addToReviewsList,
   increasePage,
+  reviewCard,
   cache,
   clearCache,
   submitReplyHandler,
@@ -75,8 +77,7 @@ export default function CommentsList({
       increasePage();
     }
     maxIndex = Math.max(index, maxIndex);
-    const currentComment = commentsList[index];
-    return (
+    return index < commentsList.length ? (
       <div
         key={key}
         style={{
@@ -84,11 +85,7 @@ export default function CommentsList({
           direction: theme.direction,
         }}
       >
-        {index >= commentsList.length && data.length === 0 ? (
-          <div>No comments</div>
-        ) : index >= commentsList.length && data.length !== 0 ? (
-          <div>Loading...</div>
-        ) : (
+        {
           <CellMeasurer
             cache={cache}
             parent={parent}
@@ -96,26 +93,26 @@ export default function CommentsList({
             rowIndex={index}
           >
             <div>
-              {currentComment.isReply ? (
+              {commentsList[index].isReply ? (
                 <CommentReply
-                  replyId={currentComment._id}
-                  date={currentComment.createdAt}
-                  user={currentComment.userName}
-                  likes={currentComment.likes}
-                  text={currentComment.content}
-                  liked={currentComment.liked}
+                  replyId={commentsList[index]._id}
+                  date={commentsList[index].createdAt}
+                  user={commentsList[index].userName}
+                  likes={commentsList[index].likes}
+                  text={commentsList[index].content}
+                  liked={commentsList[index].liked}
                   replyLike={replyLike}
                   replyUnlike={replyUnlike}
-                  commentId={currentComment.commentId}
+                  commentId={commentsList[index].commentId}
                 />
               ) : (
                 <Comment
-                  commentId={currentComment._id}
-                  date={currentComment.createdAt}
-                  user={currentComment.userName}
-                  likes={currentComment.likes}
-                  text={currentComment.content}
-                  liked={currentComment.liked}
+                  commentId={commentsList[index]._id}
+                  date={commentsList[index].createdAt}
+                  user={commentsList[index].userName}
+                  likes={commentsList[index].likes}
+                  text={commentsList[index].content}
+                  liked={commentsList[index].liked}
                   commentLike={commentLike}
                   commentUnlike={commentUnlike}
                   submitReplyHandler={submitReplyHandler}
@@ -123,40 +120,43 @@ export default function CommentsList({
               )}
             </div>
           </CellMeasurer>
-        )}
+        }
       </div>
-    );
+    ) : null;
   };
 
   return (
     <Fragment>
-      <div style={{ height: "calc(100vh)", margin: "0" }}>
-        <AutoSizer>
-          {({ height, width }) => {
-            return (
-              <WindowScroller>
-                {({ height, isScrolling, registerChild, scrollTop }) => (
-                  <div ref={registerChild}>
-                    <List
-                      ref={listRef}
-                      autoHeight
-                      overscanRowCount={5}
-                      isScrolling={isScrolling}
-                      scrollTop={scrollTop}
-                      width={width}
-                      height={height}
-                      deferredMeasurementCache={cache}
-                      rowHeight={cache.rowHeight}
-                      rowCount={commentsList.length + 1}
-                      rowRenderer={renderRow}
-                    />
-                  </div>
-                )}
-              </WindowScroller>
-            );
-          }}
-        </AutoSizer>
-      </div>
+      <CustomAppBar showBackBtn showSearch showProfile>
+        <div style={{ height: "calc(100vh)", margin: "55px 12px" }}>
+          {reviewCard()}
+          <AutoSizer>
+            {({ height, width }) => {
+              return (
+                <WindowScroller>
+                  {({ height, isScrolling, registerChild, scrollTop }) => (
+                    <div ref={registerChild}>
+                      <List
+                        ref={listRef}
+                        autoHeight
+                        overscanRowCount={10}
+                        isScrolling={isScrolling}
+                        scrollTop={scrollTop}
+                        width={width}
+                        height={height}
+                        deferredMeasurementCache={cache}
+                        rowHeight={cache.rowHeight}
+                        rowCount={commentsList.length + 1}
+                        rowRenderer={renderRow}
+                      />
+                    </div>
+                  )}
+                </WindowScroller>
+              );
+            }}
+          </AutoSizer>
+        </div>
+      </CustomAppBar>
     </Fragment>
   );
 }

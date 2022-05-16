@@ -59,6 +59,8 @@ const commentsList = createSlice({
         isLiked: boolean;
       }>
     ) {
+      console.log(action.payload.id);
+
       const targetReview = state.newComments.findIndex((element) => {
         return element._id.toString() === action.payload.id.toString();
       });

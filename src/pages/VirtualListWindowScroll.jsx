@@ -5,13 +5,12 @@ import {
   CellMeasurer,
   CellMeasurerCache,
   List,
-  WindowScroller
+  WindowScroller,
 } from "react-virtualized";
 import LoadingReviewSkeleton, {
-  loadingSkeletonHeight
+  loadingSkeletonHeight,
 } from "../Components/Loaders/LoadingReviewSkeleton";
-import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import ROUTES_NAMES from "../RoutesNames";
+
 import { useAppDispatch } from "../store/hooks";
 
 const cache = new CellMeasurerCache({
@@ -29,10 +28,9 @@ export default function VirtualReviewList({
   error,
   isLoading,
   isFetching,
-  stateLike,
-  stateUnLike,
   addToReviewsList,
   increasePage,
+  reviewCard,
 }) {
   const dispatch = useAppDispatch();
   const theme = useTheme();
@@ -108,18 +106,7 @@ export default function VirtualReviewList({
                 ))
               )
             ) : (
-              <ReviewCard
-                index={index}
-                fullScreen={false}
-                isExpanded={false}
-                clearIndexCache={clearCache}
-                reviewDetails={reviewsList[index]}
-                isPhoneReview={true}
-                targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
-                userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
-                stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
-                stateUnlikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
-              />
+              reviewCard(index, clearCache)
             )}
           </div>
         </CellMeasurer>

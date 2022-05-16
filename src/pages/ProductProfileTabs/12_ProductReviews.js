@@ -4,7 +4,7 @@ import { CustomAppBar } from "../../Components/MainLayout/AppBar/CustomAppBar";
 import {
   useGetAllReviewsQuery,
   useGetPhoneReviewsQuery,
-} from "../../services/reviews";
+} from "../../services/phone_reviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
