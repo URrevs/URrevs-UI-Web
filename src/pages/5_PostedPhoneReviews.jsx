@@ -8,6 +8,7 @@ import { reviewsActions } from "../store/reviewsSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import ROUTES_NAMES from "../RoutesNames";
+import PhoneReview from "../Components/ReviewCard/PhoneReview";
 
 export default function PostedReviews() {
   const dispatch = useAppDispatch();
@@ -42,9 +43,21 @@ export default function PostedReviews() {
 
   const increasePage = () => setPage(page + 1);
 
+  const deleteReviewFromStore = (id) => {
+    dispatch(reviewsActions.clearReviews());
+    const n = reviewsList.filter((review) => review._id !== id);
+
+    dispatch(
+      reviewsActions.addToLoaddedReviews({
+        newReviews: n,
+      })
+    );
+  };
+
   const reviewCard = (index, clearCache) => {
     return (
-      <ReviewCard
+      <PhoneReview
+        key={reviewsList[index]._id}
         index={index}
         fullScreen={false}
         isExpanded={false}
@@ -53,9 +66,11 @@ export default function PostedReviews() {
         isPhoneReview={true}
         targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
-        stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
-        stateUnlikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
+        stateLikeFn={stateLike}
+        stateUnLikeFn={stateUnLike}
         fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewsList[index]._id}`}
+        showActionBtn={true}
+        deleteReviewFromStore={deleteReviewFromStore}
       />
     );
   };

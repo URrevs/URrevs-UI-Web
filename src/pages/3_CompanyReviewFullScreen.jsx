@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import {
-  useGetCertainCompanyReviewQuery,
-  useGetCompanyReviewCommentsQuery,
-  useAddCommentOnCompanyReviewMutation,
-  useAddReplyOnCompanyReviewMutation,
-  useLikeCompanyReviewCommentMutation,
-  useUnLikeCompanyReviewCommentMutation,
-  useLikeCompanyReviewReplyMutation,
-  useUnLikeCompanyReviewReplyMutation,
-} from "../services/company_reviews";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { commentsListActions } from "../store/commentsListSlice";
-import CommentsList from "./CommentsList";
-import { useSearchParams } from "react-router-dom";
-import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import ROUTES_NAMES from "../RoutesNames";
 import { Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import CompanyReview from "../Components/ReviewCard/CompanyReview";
+import ROUTES_NAMES from "../RoutesNames";
+import {
+  useAddCommentOnCompanyReviewMutation,
+  useAddReplyOnCompanyReviewMutation, useGetCertainCompanyReviewQuery,
+  useGetCompanyReviewCommentsQuery, useLikeCompanyReviewCommentMutation, useLikeCompanyReviewReplyMutation, useUnLikeCompanyReviewCommentMutation, useUnLikeCompanyReviewReplyMutation
+} from "../services/company_reviews";
+import { commentsListActions } from "../store/commentsListSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
+import CommentsList from "./CommentsList";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -29,6 +24,8 @@ const cache = new CellMeasurerCache({
 
 export default function CompanyReviewFullScreen() {
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     return () => {
@@ -259,6 +256,10 @@ export default function CompanyReviewFullScreen() {
     }
   };
 
+  const deleteReviewFromStore = (id) => {
+    navigate(-1);
+  };
+
   const reviewCard = () => {
     return (
       <div>
@@ -268,23 +269,20 @@ export default function CompanyReviewFullScreen() {
           <div>Error</div>
         ) : (
           currentReviewData && (
-            <ReviewCard
-              isPhoneReview={true}
-              fullScreen={true}
-              isExpanded={true}
-              reviewDetails={currentReviewData}
-              clearIndexCache={() => {}}
+            <CompanyReview
+              key={currentReviewData._id}
               index={0}
-              targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${currentReviewData.targetId}`}
+              fullScreen={false}
+              isExpanded={false}
+              clearIndexCache={clearCache}
+              reviewDetails={currentReviewData}
+              isPhoneReview={true}
+              targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${currentReviewData.targetId}`}
               userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
-              stateLikeFn={stateLikePhoneReview.bind(
-                null,
-                currentReviewData._id
-              )}
-              stateUnlikeFn={stateUnLikePhoneReview.bind(
-                null,
-                currentReviewData._id
-              )}
+              stateLikeFn={stateLikePhoneReview}
+              stateUnLikeFn={stateUnLikePhoneReview}
+              showActionBtn={currentUser.uid !== currentReviewData._id}
+              deleteReviewFromStore={deleteReviewFromStore}
             />
           )
         )}

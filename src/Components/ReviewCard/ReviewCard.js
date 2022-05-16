@@ -34,32 +34,16 @@ export default function ReviewCard({
   isExpanded,
   targetProfilePath,
   userProfilePath,
-  stateLikeFn,
-  stateUnlikeFn,
   fullScreenRoute,
+  actionBtnFunction,
+  likeBtnHandler,
 }) {
   const isReview = true;
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
-  const [likePhoneReview] = useLikePhoneReviewMutation();
-  const [unLikePhoneReview] = useUnLikePhoneReviewMutation();
-
   const isLiked = reviewDetails.liked;
-  const likeBtnHandler = async () => {
-    reviewDetails.liked
-      ? unLikePhoneReview({
-          reviewId: reviewDetails._id,
-          doFn: stateUnlikeFn,
-          unDoFn: stateLikeFn,
-        })
-      : likePhoneReview({
-          reviewId: reviewDetails._id,
-          doFn: stateLikeFn,
-          unDoFn: stateUnlikeFn,
-        });
-  };
 
   const ratings = [
     reviewDetails.generalRating,
@@ -204,6 +188,7 @@ export default function ReviewCard({
         views={reviewDetails.views}
         targetProfilePath={targetProfilePath}
         userProfilePath={userProfilePath}
+        actionBtnFunction={actionBtnFunction}
       />
       <CardContent style={{ padding: 0 }}>
         <ButtonBase

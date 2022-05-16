@@ -14,7 +14,7 @@ const CustomAppBarStyled = styled(MuiAppBar, {
 })(({ theme, direction }) => ({
   direction: direction,
   minHeight: 45,
-  boxShadow: "0 1px 6px 0px #0000029",
+  boxShadow: "0 1px 1px 0px #dbdbdb",
   background: theme.palette.appBar.appBarColor,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
