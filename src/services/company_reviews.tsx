@@ -210,6 +210,15 @@ export const companyReviewsApi = createApi({
         }
       },
     }),
+
+    idontLikeThisCompanyReview: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/company/${reviewId}/hate`,
+          method: "POST",
+        };
+      },
+    }),
   }),
 });
 //auto-generated hooks
@@ -227,4 +236,5 @@ export const {
   useUnLikeCompanyReviewCommentMutation,
   useLikeCompanyReviewReplyMutation,
   useUnLikeCompanyReviewReplyMutation,
+  useIdontLikeThisCompanyReviewMutation,
 } = companyReviewsApi;

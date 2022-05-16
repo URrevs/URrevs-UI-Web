@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { CustomAppBar } from "../../Components/MainLayout/AppBar/CustomAppBar";
-import { FilterTabbar } from "../../Components/Tabbar/FilterTabbar";
+import CompanyReview from "../../Components/ReviewCard/CompanyReview";
+import ROUTES_NAMES from "../../RoutesNames";
 import { useGetCompanyReviewsQuery } from "../../services/company_reviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
-import ROUTES_NAMES from "../../RoutesNames";
-import CompanyReview from "../../Components/ReviewCard/CompanyReview";
 
 export function CompanyReviews() {
   const dispatch = useAppDispatch();
@@ -18,7 +16,7 @@ export function CompanyReviews() {
     dispatch(reviewsActions.clearReviews());
   }, []);
 
-  const reviewsList = useAppSelector((state) => state.reviews.newReviews);
+  let reviewsList = useAppSelector((state) => state.reviews.newReviews);
   const [page, setPage] = useState(1);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,9 +42,22 @@ export function CompanyReviews() {
 
   const increasePage = () => setPage(page + 1);
 
+  const deleteReviewFromStore = (id) => {
+    dispatch(reviewsActions.clearReviews());
+    const n = reviewsList.filter((review) => review._id !== id);
+    console.log(n);
+
+    dispatch(
+      reviewsActions.addToLoaddedReviews({
+        newReviews: n,
+      })
+    );
+  };
+
   const reviewCard = (index, clearCache) => {
     return (
       <CompanyReview
+        key={reviewsList[index]._id}
         index={index}
         fullScreen={false}
         isExpanded={false}
@@ -57,6 +68,8 @@ export function CompanyReviews() {
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
         stateUnLikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
+        showActionBtn={true}
+        deleteReviewFromStore={deleteReviewFromStore}
       />
     );
   };

@@ -36,24 +36,6 @@ export const phoneReviewsApi = createApi({
       },
     }),
 
-    getCertainCompanyReview: builder.query<APIReview, string>({
-      keepUnusedDataFor: 0,
-      query: (id: string) => `/company/${id}`,
-      transformResponse: (response: { review: APIReview }) => {
-        return response.review;
-      },
-    }),
-
-    getCompanyReviews: builder.query<
-      APIReview[],
-      { round: number; cid: string }
-    >({
-      keepUnusedDataFor: 0,
-      query: ({ round, cid }) => `/company/on/${cid}?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
-        return response.reviews;
-      },
-    }),
     getPhoneReviews: builder.query<APIReview[], { round: number; pid: string }>(
       {
         keepUnusedDataFor: 0,
@@ -139,31 +121,12 @@ export const phoneReviewsApi = createApi({
       },
     }),
 
-    getUserCompanyReviews: builder.query<APIReview[], number>({
-      keepUnusedDataFor: 0,
-      query: (round = 1) => `/company/by/me?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
-        return response.reviews;
-      },
-    }),
-
     getOtherUserPhoneReviews: builder.query<
       APIReview[],
       { round: number; uid: string }
     >({
       keepUnusedDataFor: 0,
       query: ({ round, uid }) => `/phone/by/${uid}?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
-        return response.reviews;
-      },
-    }),
-
-    getOtherUserCompanyReviews: builder.query<
-      APIReview[],
-      { round: number; uid: string }
-    >({
-      keepUnusedDataFor: 0,
-      query: ({ round, uid }) => `/company/by/${uid}?round=${round}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
       },
@@ -186,18 +149,6 @@ export const phoneReviewsApi = createApi({
       keepUnusedDataFor: 0,
       query: ({ reviewId, round = 1 }) =>
         `/phone/${reviewId}/comments?round=${round}`,
-      transformResponse: (response: { comments: APIComment[] }) => {
-        return response.comments;
-      },
-    }),
-
-    getCompanyReviewComments: builder.query<
-      APIComment[],
-      { reviewId: string; round: number }
-    >({
-      keepUnusedDataFor: 0,
-      query: ({ reviewId, round = 1 }) =>
-        `/company/${reviewId}/comments?round=${round}`,
       transformResponse: (response: { comments: APIComment[] }) => {
         return response.comments;
       },
@@ -285,28 +236,33 @@ export const phoneReviewsApi = createApi({
         }
       },
     }),
+
+    idontLikeThisPhoneReview: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/phone/${reviewId}/hate`,
+          method: "POST",
+        };
+      },
+    }),
   }),
 });
 //auto-generated hooks
 export const {
   useGetAllReviewsQuery,
   useGetCertainPhoneReviewQuery,
-  useGetCertainCompanyReviewQuery,
-  useGetCompanyReviewsQuery,
   useGetPhoneReviewsQuery,
   useAddPhoneReviewMutation,
   useLikePhoneReviewMutation,
   useUnLikePhoneReviewMutation,
   useGetUserPhoneReviewsQuery,
-  useGetUserCompanyReviewsQuery,
   useGetOtherUserPhoneReviewsQuery,
-  useGetOtherUserCompanyReviewsQuery,
   useAddCommentOnPhoneReviewMutation,
   useGetPhoneReviewCommentsQuery,
-  useGetCompanyReviewCommentsQuery,
   useAddReplyOnPhoneReviewMutation,
   useLikePhoneReviewCommentMutation,
   useUnLikePhoneReviewCommentMutation,
   useLikePhoneReviewReplyMutation,
   useUnLikePhoneReviewReplyMutation,
+  useIdontLikeThisPhoneReviewMutation,
 } = phoneReviewsApi;

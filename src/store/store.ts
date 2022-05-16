@@ -33,7 +33,9 @@ export const store = configureStore({
     [uiSlice.name]: uiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
+    getDefaultMiddleware({
+      serializableCheck: false,
+    })
       .concat(phoneReviewsApi.middleware)
       .concat(companyReviewsApi.middleware)
       .concat(usersApi.middleware),
