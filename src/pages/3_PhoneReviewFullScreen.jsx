@@ -13,13 +13,14 @@ import {
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { commentsListActions } from "../store/commentsListSlice";
 import CommentsList from "./CommentsList";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import ROUTES_NAMES from "../RoutesNames";
 import { Box } from "@mui/material";
 import { CellMeasurerCache } from "react-virtualized";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
 import { reviewsActions } from "../store/reviewsSlice";
+import PhoneReview from "../Components/ReviewCard/PhoneReview";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -29,6 +30,8 @@ const cache = new CellMeasurerCache({
 
 export default function PhoneReviewFullScreen() {
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     return () => {
@@ -260,6 +263,8 @@ export default function PhoneReviewFullScreen() {
     }
   };
 
+  const deleteReviewFromStore = (id) => {};
+
   const reviewCard = () => {
     console.log(currentReviewData);
     return (
@@ -270,23 +275,20 @@ export default function PhoneReviewFullScreen() {
           <div>Error</div>
         ) : (
           currentReviewData && (
-            <ReviewCard
-              isPhoneReview={true}
-              fullScreen={true}
-              isExpanded={true}
-              reviewDetails={currentReviewData}
-              clearIndexCache={() => {}}
+            <PhoneReview
+              key={currentReviewData._id}
               index={0}
+              fullScreen={false}
+              isExpanded={false}
+              clearIndexCache={clearCache}
+              reviewDetails={currentReviewData}
+              isPhoneReview={true}
               targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${currentReviewData.targetId}`}
               userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
-              stateLikeFn={stateLikePhoneReview.bind(
-                null,
-                currentReviewData._id
-              )}
-              stateUnlikeFn={stateUnLikePhoneReview.bind(
-                null,
-                currentReviewData._id
-              )}
+              stateLikeFn={stateLikePhoneReview}
+              stateUnLikeFn={stateUnLikePhoneReview}
+              showActionBtn={true}
+              deleteReviewFromStore={deleteReviewFromStore}
             />
           )
         )}

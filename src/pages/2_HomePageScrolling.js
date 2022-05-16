@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import ReviewCard from "../Components/ReviewCard/ReviewCard";
+import PhoneReview from "../Components/ReviewCard/PhoneReview";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetAllReviewsQuery,
@@ -41,9 +41,22 @@ function Reviews() {
 
   const increasePage = () => setPage(page + 1);
 
+  const deleteReviewFromStore = (id) => {
+    dispatch(reviewsActions.clearReviews());
+    const n = reviewsList.filter((review) => review._id !== id);
+    console.log(n);
+
+    dispatch(
+      reviewsActions.addToLoaddedReviews({
+        newReviews: n,
+      })
+    );
+  };
+
   const reviewCard = (index, clearCache) => {
     return (
-      <ReviewCard
+      <PhoneReview
+        key={reviewsList[index]._id}
         index={index}
         fullScreen={false}
         isExpanded={false}
@@ -52,9 +65,11 @@ function Reviews() {
         isPhoneReview={true}
         targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
-        stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
-        stateUnlikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
+        stateLikeFn={stateLike}
+        stateUnLikeFn={stateUnLike}
         fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewsList[index]._id}`}
+        showActionBtn={true}
+        deleteReviewFromStore={deleteReviewFromStore}
       />
     );
   };

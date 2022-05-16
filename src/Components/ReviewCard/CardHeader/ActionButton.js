@@ -11,7 +11,7 @@ import { IconButton, Typography } from "@mui/material";
 import { MoreVertOutlined } from "@mui/icons-material";
 import { useAppSelector } from "../../../store/hooks";
 
-export default function MenuListComposition() {
+export default function ActionButton({ actionBtnFunction }) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const textContainer = useAppSelector((state) => state.language.textContainer);
@@ -21,6 +21,7 @@ export default function MenuListComposition() {
   };
 
   const handleClose = (event) => {
+    actionBtnFunction();
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }

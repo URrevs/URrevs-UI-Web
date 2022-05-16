@@ -18,6 +18,7 @@ const CardHeader = ({
   targetId,
   userProfilePath,
   targetProfilePath,
+  actionBtnFunction,
 }) => {
   const theme = useTheme();
 
@@ -29,7 +30,11 @@ const CardHeader = ({
       avatar={
         <CircleAvatar userAvatar={userAvatar} avatarRadius={avatarRadius} />
       }
-      action={<ActionButton />}
+      action={
+        actionBtnFunction && (
+          <ActionButton actionBtnFunction={actionBtnFunction} />
+        )
+      }
       title={
         <CardHeaderTitle
           userProfilePath={userProfilePath}
