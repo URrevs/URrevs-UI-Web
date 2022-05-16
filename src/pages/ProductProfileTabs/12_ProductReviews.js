@@ -4,7 +4,7 @@ import { CustomAppBar } from "../../Components/MainLayout/AppBar/CustomAppBar";
 import {
   useGetAllReviewsQuery,
   useGetPhoneReviewsQuery,
-} from "../../services/reviews";
+} from "../../services/phone_reviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
@@ -43,7 +43,10 @@ export function ProductReviews() {
       })
     );
 
-  const increasePage = () => setPage(page + 1);
+  const increasePage = () => {
+    console.log(page);
+    return setPage(page + 1);
+  };
 
   return (
     <VirtualReviewList

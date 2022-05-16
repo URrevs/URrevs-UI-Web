@@ -114,12 +114,12 @@ export const MyDrawer = (props) => {
   };
 
   return (
-    <PerDrawer variant={"temporary"} open={open} onClose={handleDrawerClose}>
-      <DrawerHeader>
+    <PerDrawer variant='permanent' open={open} onClose={handleDrawerClose}>
+      {/* <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {language !== "ar" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
-      </DrawerHeader>
+      </DrawerHeader> */}
       <Divider />
       <List>
         {drawerTiles.map((item) => (

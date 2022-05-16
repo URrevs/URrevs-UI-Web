@@ -10,12 +10,8 @@ import {
 import LoadingReviewSkeleton, {
   loadingSkeletonHeight,
 } from "../Components/Loaders/LoadingReviewSkeleton";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import ROUTES_NAMES from "../RoutesNames";
-import { useGetAllReviewsQuery } from "../services/reviews";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import reviewsSlice, { reviewsActions } from "../store/reviewsSlice";
+
+import { useAppDispatch } from "../store/hooks";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -32,10 +28,9 @@ export default function VirtualReviewList({
   error,
   isLoading,
   isFetching,
-  stateLike,
-  stateUnLike,
   addToReviewsList,
   increasePage,
+  reviewCard,
 }) {
   const dispatch = useAppDispatch();
   const theme = useTheme();
@@ -90,7 +85,7 @@ export default function VirtualReviewList({
       data.length !== 0
     ) {
       maxIndex = 0;
-      dispatch(reviewsActions.increasePage());
+      increasePage();
     }
     maxIndex = Math.max(index, maxIndex);
     return (
@@ -111,18 +106,7 @@ export default function VirtualReviewList({
                 ))
               )
             ) : (
-              <ReviewCard
-                index={index}
-                fullScreen={false}
-                isExpanded={false}
-                clearIndexCache={clearCache}
-                reviewDetails={reviewsList[index]}
-                isPhoneReview={true}
-                targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
-                userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
-                stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
-                stateUnlikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
-              />
+              reviewCard(index, clearCache)
             )}
           </div>
         </CellMeasurer>

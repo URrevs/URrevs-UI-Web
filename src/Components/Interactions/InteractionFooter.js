@@ -1,6 +1,7 @@
 import React from "react";
 import { styled, Button, Typography, ButtonBase } from "@mui/material";
 import { useAppSelector } from "../../store/hooks";
+import { convertDateToString } from "../../functions/convertDateToString";
 const CommentButton = styled(
   ButtonBase,
   {}
@@ -14,13 +15,18 @@ const CommentButton = styled(
 }));
 
 export const InteractionFooter = ({
+  commentId,
   date,
   buttonName,
   onClickHandler,
   condition,
   reply,
+
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
+
+  const lang = useAppSelector((state) => state.language.language);
+  const transDate = convertDateToString(date, lang);
 
   return (
     <React.Fragment>
@@ -30,14 +36,14 @@ export const InteractionFooter = ({
         </Typography>
       </CommentButton>
       {!reply ? (
-        <CommentButton sx={{ marginLeft:"8px"}}>
+        <CommentButton sx={{ marginLeft: "8px" }}>
           <Typography variant={"S13W700C050505"}>
             {textContainer.reply}
           </Typography>
         </CommentButton>
       ) : null}
       <Typography sx={{ marginLeft: "16px" }} variant="S13W400C65676B">
-        {date}
+        {transDate}
       </Typography>
     </React.Fragment>
   );

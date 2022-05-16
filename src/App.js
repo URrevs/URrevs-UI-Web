@@ -26,8 +26,9 @@ import Menu from "./pages/20_Menu";
 import { AdminPanel } from "./pages/26_AdminPanel";
 import { UpdateProducts } from "./pages/29_UpdateProducts";
 import Reviews from "./pages/2_HomePageScrolling";
-import InteractionWithReview from "./pages/3_ReviewFullScreen";
-import PostedCompanyReviews from "./pages/5.1_PostedCompanyReviews";
+import CompanyReviewFullScreen from "./pages/3_CompanyReviewFullScreen";
+import PhoneReviewFullScreen from "./pages/3_PhoneReviewFullScreen";
+import PostedCompanyReviews from "./pages/5_PostedCompanyReviews";
 import PostedReviews from "./pages/5_PostedPhoneReviews";
 import { SearchScreen } from "./pages/8_SearchScreen";
 import AddReview from "./pages/AddReview";
@@ -227,8 +228,12 @@ function App() {
                 <Grid item md={8} sm={11} xs={12}>
                   <Routes>
                     <Route
-                      path={ROUTES_NAMES.EXACT_REVIEW}
-                      element={<InteractionWithReview />}
+                      path={ROUTES_NAMES.EXACT_PHONE_REVIEW}
+                      element={<PhoneReviewFullScreen />}
+                    />
+                    <Route
+                      path={ROUTES_NAMES.EXACT_COMPANY_REVIEW}
+                      element={<CompanyReviewFullScreen />}
                     />
                     <Route path={ROUTES_NAMES.HOME}>
                       <Route index element={<Reviews />} />

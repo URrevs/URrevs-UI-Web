@@ -4,15 +4,26 @@ import { InteractionBody } from "./InteractionBody";
 import { useTheme } from "@emotion/react";
 import { InteractionFooter } from "./InteractionFooter";
 import { useAppSelector } from "../../store/hooks";
+import { comment } from "stylis";
 
-export const Comment = ({ date, likes, text, user }) => {
+export const Comment = ({
+  commentId,
+  date,
+  likes,
+  text,
+  user,
+  liked,
+  commentLike,
+  commentUnlike,
+  submitReplyHandler,
+}) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
-  const [like, setLike] = useState(false);
-  const onClickHandler = () => {
-    setLike(!like);
-  };
-  const buttonName = like ? textContainer.liked : textContainer.like;
+  const onLikeClickHandler = liked
+    ? commentUnlike.bind(null, commentId)
+    : commentLike.bind(null, commentId);
+
+  const buttonName = liked ? textContainer.liked : textContainer.like;
   const theme = useTheme();
   const renderIcon = () => {
     return (
@@ -24,24 +35,34 @@ export const Comment = ({ date, likes, text, user }) => {
       />
     );
   };
+
   return (
-    <div style={{ maxWidth: "calc(100% - 20px)" }}>
+    <div style={{ maxWidth: "calc(100% - 20px)", padding: "4px 0px" }}>
       <InteractionBody
         user={user}
         likes={likes}
-        date={date}
         text={text}
         buttonName={buttonName}
         renderIcon={renderIcon}
       >
         <InteractionFooter
+          commentId={commentId}
           date={date}
-          condition={like}
-          onClickHandler={onClickHandler}
+          condition={liked}
           reply={false}
           buttonName={buttonName}
+          onClickHandler={onLikeClickHandler}
         ></InteractionFooter>
       </InteractionBody>
+      <div>
+        <form
+          onSubmit={(e) => {
+            submitReplyHandler(e, commentId);
+          }}
+        >
+          <input id="comment" />
+        </form>
+      </div>
     </div>
   );
 };
