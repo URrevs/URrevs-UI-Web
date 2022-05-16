@@ -11,7 +11,8 @@ const ROUTES_NAMES = {
   // level 2
   USER_PROFILE: "user-profile",
   ADMIN_PANEL: "admin-panel",
-  EXACT_REVIEW: "review",
+  EXACT_PHONE_REVIEW: "phone-review",
+  EXACT_COMPANY_REVIEW: "company-review",
   PHONE_PROFILE: "phone",
   COMPANY_PROFILE: "company",
   //level 3

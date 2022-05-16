@@ -5,14 +5,9 @@ import { InteractionCard } from "./InteractionCard";
 export const InteractionBody = ({
   user,
   text,
-  buttonName,
   subtitle,
   likes,
-  date,
-  condition,
   children,
-  reply,
-  onClickHandler,
   renderIcon,
   avatar = "44px",
 }) => {

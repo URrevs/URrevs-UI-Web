@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import { reviewsApi } from "../services/reviews";
+import { phoneReviewsApi } from "../services/phone_reviews";
+import { companyReviewsApi } from "../services/company_reviews";
 import { usersApi } from "../services/users";
 import authSlice from "./authSlice";
 import isDarkSlice from "./darkModeSlice";
 import languageSlice from "./languageSlice";
 import reviewsSlice from "./reviewsSlice";
+import commentsListSlice from "./commentsListSlice";
 import uiSlice from "./uiSlice";
 import { updateApi } from "../services/update";
 import { searchApi } from "../services/search";
@@ -19,9 +21,11 @@ export const store = configureStore({
     [companyApi.reducerPath]: companyApi.reducer,
     [searchApi.reducerPath]: searchApi.reducer,
     [updateApi.reducerPath]: updateApi.reducer,
-    [reviewsApi.reducerPath]: reviewsApi.reducer,
+    [phoneReviewsApi.reducerPath]: phoneReviewsApi.reducer,
+    [companyReviewsApi.reducerPath]: companyReviewsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [reviewsSlice.name]: reviewsSlice.reducer,
+    [commentsListSlice.name]: commentsListSlice.reducer,
     [languageSlice.name]: languageSlice.reducer,
     [compareSlice.name]: compareSlice.reducer,
     [isDarkSlice.name]: isDarkSlice.reducer,
@@ -30,7 +34,8 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .concat(reviewsApi.middleware)
+      .concat(phoneReviewsApi.middleware)
+      .concat(companyReviewsApi.middleware)
       .concat(usersApi.middleware),
 });
 

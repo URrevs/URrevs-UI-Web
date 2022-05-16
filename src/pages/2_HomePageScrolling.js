@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import { useGetAllReviewsQuery } from "../services/reviews";
+import { useGetAllReviewsQuery } from "../services/phone_reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";

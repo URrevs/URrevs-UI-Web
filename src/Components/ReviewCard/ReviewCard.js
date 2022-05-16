@@ -9,10 +9,11 @@ import {
   USER_CIRCLE_AVATAR_LARGE,
 } from "../../constants";
 import { cropText } from "../../functions/cropText";
+import ROUTES_NAMES from "../../RoutesNames";
 import {
   useLikePhoneReviewMutation,
   useUnLikePhoneReviewMutation,
-} from "../../services/reviews";
+} from "../../services/phone_reviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import reviewsSlice from "../../store/reviewsSlice";
 import Card from "../Card";
@@ -35,6 +36,7 @@ export default function ReviewCard({
   userProfilePath,
   stateLikeFn,
   stateUnlikeFn,
+  fullScreenRoute,
 }) {
   const isReview = true;
   const navigate = useNavigate();
@@ -117,7 +119,7 @@ export default function ReviewCard({
   }, []);
 
   const navigateToFullScreen = () => {
-    if (!fullScreen) navigate(`/review?id=${reviewDetails._id}`);
+    if (!fullScreen) navigate(fullScreenRoute);
   };
 
   const handleSeeMoreExpansion = () => {

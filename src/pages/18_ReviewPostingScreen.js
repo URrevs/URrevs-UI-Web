@@ -14,7 +14,7 @@ import FormikStar from "../Components/Form/FormikStar";
 import FormikTextField from "../Components/Form/FormikTextField";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { Tabbar } from "../Components/Tabbar/Tabbar";
-import { useAddPhoneReviewMutation } from "../services/reviews";
+import { useAddPhoneReviewMutation } from "../services/phone_reviews";
 import { QuestionsTab } from "./PostingScreen/QuestionsTab";
 
 const handleInitialValues = (fieldName, empty = "") => {
