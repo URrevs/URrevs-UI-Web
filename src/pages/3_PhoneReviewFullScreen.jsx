@@ -278,8 +278,8 @@ export default function PhoneReviewFullScreen() {
             <PhoneReview
               key={currentReviewData._id}
               index={0}
-              fullScreen={false}
-              isExpanded={false}
+              fullScreen={true}
+              isExpanded={true}
               clearIndexCache={clearCache}
               reviewDetails={currentReviewData}
               isPhoneReview={true}

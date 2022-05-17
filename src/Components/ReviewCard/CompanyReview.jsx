@@ -17,6 +17,8 @@ const CompanyReview = ({
   stateUnLikeFn,
   showActionBtn = false,
   deleteReviewFromStore,
+  fullScreen,
+  isExpanded,
 }) => {
   const [dontLikeThisRequest] = useIdontLikeThisCompanyReviewMutation();
 
@@ -50,8 +52,8 @@ const CompanyReview = ({
   return (
     <ReviewCard
       index={index}
-      fullScreen={false}
-      isExpanded={false}
+      fullScreen={fullScreen}
+      isExpanded={isExpanded}
       clearIndexCache={clearIndexCache}
       reviewDetails={reviewDetails}
       isPhoneReview={false}

@@ -16,6 +16,7 @@ export const Comment = ({
   commentLike,
   commentUnlike,
   submitReplyHandler,
+  avatar,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -39,6 +40,7 @@ export const Comment = ({
   return (
     <div style={{ maxWidth: "calc(100% - 20px)", padding: "4px 0px" }}>
       <InteractionBody
+        avatar={avatar}
         user={user}
         likes={likes}
         text={text}
