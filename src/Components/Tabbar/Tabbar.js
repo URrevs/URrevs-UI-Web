@@ -16,6 +16,7 @@ export const Tabbar = ({ arrayOfTabs = [], setValue, value }) => {
           backgroundColor: "#FFF", //Add theme
           borderRadius: `${TABCARD_BORDER_RADIUS}px`,
           minHeight: "35px",
+          marginBottom: "12px",
         }}
       >
         <Grid container spacing={0}>

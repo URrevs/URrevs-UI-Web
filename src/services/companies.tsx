@@ -19,6 +19,7 @@ export const companyApi = createApi({
 
   endpoints: (builder) => ({
     getCompanyStatsInfo: builder.query({
+      keepUnusedDataFor: 0,
       query: (cid) => {
         return {
           url: `${cid}/stats`,

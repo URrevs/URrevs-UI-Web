@@ -14,8 +14,13 @@ export const CompanyProfile = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const companyId = searchParams.get("cid");
-  const { isLoading, error, isFetching, data } =
-    useGetCompanyStatsInfoQuery(companyId);
+  const { isLoading, error, isFetching, data } = useGetCompanyStatsInfoQuery(
+    companyId,
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
+
   const textContainer = useSelector((state) => state.language.textContainer);
   const pageDictionary = {
     tabBarReviews: textContainer.tabBarReviews,
