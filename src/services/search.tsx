@@ -60,6 +60,7 @@ export const searchApi = createApi({
       },
     }),
     getMyRecentSearches: builder.query({
+      keepUnusedDataFor: 0,
       query: () => `/recent`,
       transformResponse: (response: any) => {
         return response.recent;

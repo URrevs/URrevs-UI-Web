@@ -8,6 +8,7 @@ import { keyframes, useTheme } from "@emotion/react";
 import { Typography } from "@mui/material";
 import { useAppSelector } from "../store/hooks";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 const ProductDetailsTable = ({
   // rows = {},
@@ -16,6 +17,7 @@ const ProductDetailsTable = ({
   isComparison,
 }) => {
   const rows = {
+    id: phoneData.companyId,
     price: Math.ceil(phoneData.priceEgp),
     manufacturingCompany: phoneData.companyName,
     releaseDate: phoneData.releaseDate,
@@ -50,6 +52,7 @@ const ProductDetailsTable = ({
   let comparedRows = {};
   if (isComparison) {
     comparedRows = {
+      id: comparedPhoneData.companyId,
       price: Math.ceil(comparedPhoneData.priceEgp),
       manufacturingCompany: comparedPhoneData.companyName,
       releaseDate: comparedPhoneData.releaseDate,
@@ -84,6 +87,7 @@ const ProductDetailsTable = ({
   }
 
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const productEntries = Object.keys(rows);
 
@@ -137,54 +141,63 @@ const ProductDetailsTable = ({
 
   const titleCell = (index, key) => {
     return (
-      <TableCell
-        sx={{
-          borderBottom:
-            index != productEntries.length - 1 ? borderBottom : "none",
-          borderRight: borderRight,
-        }}
-        align={isComparison ? "center" : "left"}
-      >
-        <Typography variant="S16W500C050505">{textContainer[key]}:</Typography>
-      </TableCell>
+      key != "id" && (
+        <TableCell
+          sx={{
+            borderBottom:
+              index != productEntries.length - 1 ? borderBottom : "none",
+            borderRight: borderRight,
+          }}
+          align={isComparison ? "center" : "left"}
+        >
+          <Typography variant="S16W500C050505">
+            {textContainer[key]}:
+          </Typography>
+        </TableCell>
+      )
     );
   };
 
   const dataCell = (index, key, dataRow, compData) => {
     return (
-      <TableCell
-        sx={{
-          borderBottom:
-            index !== productEntries.length - 1 ? borderBottom : "none",
-          borderRight: compData ? "none" : borderRight,
-        }}
-        align="center"
-      >
-        <Button
-          variant="text"
-          disabled={key != "manufacturingCompany"}
+      key != "id" && (
+        <TableCell
           sx={{
-            textTransform: "none",
+            borderBottom:
+              index !== productEntries.length - 1 ? borderBottom : "none",
+            borderRight: compData ? "none" : borderRight,
           }}
+          align="center"
         >
-          <Typography
-            dir={key === "price" && theme.direction === "rtl" ? "rtl" : "ltr"}
-            variant={
-              key === "manufacturingCompany"
-                ? "S16W900C050505"
-                : "S16W400C050505"
-            }
-            style={{
-              textDecoration:
-                key === "manufacturingCompany" ? "underline" : "none",
+          <Button
+            variant="text"
+            disabled={key != "manufacturingCompany"}
+            sx={{
+              textTransform: "none",
+            }}
+            onClick={() => {
+              navigate(`/company?cid=${dataRow.id}`);
             }}
           >
-            {key === "price"
-              ? dataRow[key] + " " + textContainer.egyptianPound
-              : dataRow[key]}
-          </Typography>
-        </Button>
-      </TableCell>
+            <Typography
+              dir={key === "price" && theme.direction === "rtl" ? "rtl" : "ltr"}
+              variant={
+                key === "manufacturingCompany"
+                  ? "S16W900C050505"
+                  : "S16W400C050505"
+              }
+              style={{
+                textDecoration:
+                  key === "manufacturingCompany" ? "underline" : "none",
+              }}
+            >
+              {key === "price"
+                ? dataRow[key] + " " + textContainer.egyptianPound
+                : dataRow[key]}
+            </Typography>
+          </Button>
+        </TableCell>
+      )
     );
   };
 

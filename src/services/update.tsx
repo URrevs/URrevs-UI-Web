@@ -18,16 +18,14 @@ export const updateApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["latest"],
   endpoints: (builder) => ({
     getLastUpdateInfo: builder.query<APIUpdate, any>({
-      providesTags: ["latest"],
+      keepUnusedDataFor: 0,
       query: () => "/update/latest",
     }),
 
     update: builder.mutation({
-      invalidatesTags: ["latest"],
-      query: () => {
+      query: (refetch) => {
         return {
           url: "/update",
           method: "GET",

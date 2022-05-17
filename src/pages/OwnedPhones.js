@@ -103,11 +103,9 @@ function OwnedPhonesPage({ query }) {
           <div style={{ ...style, direction: theme.direction }}>
             {index >= phonesList.length ? (
               queryResult.data.length === 0 ? (
-                <div>No more phones</div>
+                <div></div>
               ) : (
-                [...Array(1)].map((a, index) => (
-                  <LoadingReviewSkeleton key={index} />
-                ))
+                [...Array(1)].map((a, index) => <div>Loading</div>)
               )
             ) : (
               <PhoneListItem

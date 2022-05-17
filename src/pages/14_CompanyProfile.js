@@ -14,8 +14,13 @@ export const CompanyProfile = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const companyId = searchParams.get("cid");
-  const { isLoading, error, isFetching, data } =
-    useGetCompanyStatsInfoQuery(companyId);
+  const { isLoading, error, isFetching, data } = useGetCompanyStatsInfoQuery(
+    companyId,
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
+
   const textContainer = useSelector((state) => state.language.textContainer);
   const pageDictionary = {
     tabBarReviews: textContainer.tabBarReviews,
@@ -34,15 +39,17 @@ export const CompanyProfile = () => {
           showProfile
           englishName
           showSearch
+          tabBar={
+            <Tabbar
+              arrayOfTabs={[
+                pageDictionary.tabBarReviews,
+                pageDictionary.tabBarQuestionsAndAnswers,
+              ]}
+              value={value}
+              setValue={setValue}
+            />
+          }
         >
-          <Tabbar
-            arrayOfTabs={[
-              pageDictionary.tabBarReviews,
-              pageDictionary.tabBarQuestionsAndAnswers,
-            ]}
-            value={value}
-            setValue={setValue}
-          />
           {value === 0 ? (
             <CompanyReviews
               viewer={data.views}

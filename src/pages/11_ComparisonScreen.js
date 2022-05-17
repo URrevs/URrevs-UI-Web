@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ProductDetailsTable from "../Components/ProductDetailsTable";
-import { useGetPhoneSpecsQuery } from "../services/phones";
+import {
+  useGetPhoneSpecsQuery,
+  useIndicateUserComparingMutation,
+} from "../services/phones";
 
 export const ComparisonScreen = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
@@ -24,6 +27,16 @@ export const ComparisonScreen = () => {
     error: productError,
     data: productData,
   } = useGetPhoneSpecsQuery(pid);
+
+  const [indicateComparison] = useIndicateUserComparingMutation();
+
+  useEffect(() => {
+    try {
+      indicateComparison({ pid1: pid, pid2: cid });
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
 
   return (
     <CustomAppBar showBackBtn showLabel label={textContainer.comparison}>

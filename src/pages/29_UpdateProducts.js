@@ -1,20 +1,24 @@
+import UpdateOutlinedIcon from "@mui/icons-material/UpdateOutlined";
 import { Box, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import OrangeGradientButton from "../Components/Buttons/OrangeGradientButton";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import CompanyList from "../Components/ProductList/CompanyList";
 import ProductList from "../Components/ProductList/ProductList";
-import UpdateOutlinedIcon from "@mui/icons-material/UpdateOutlined";
+import { convertDateToString } from "../functions/convertDateToString";
 import {
   useGetLastUpdateInfoQuery,
   useUpdateMutation,
 } from "../services/update";
-import { convertDateToString } from "../functions/convertDateToString";
-import OrangeGradientButton from "../Components/Buttons/OrangeGradientButton";
 
 export const UpdateProducts = () => {
-  const { data, error, isLoading } = useGetLastUpdateInfoQuery();
+  const [refetch, setRefetch] = useState(false);
+
+  const { data, error, isLoading } = useGetLastUpdateInfoQuery(refetch, {
+    refetchOnMountOrArgChange: true,
+  });
 
   const [updateProductsList] = useUpdateMutation();
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -39,7 +43,10 @@ export const UpdateProducts = () => {
     try {
       setButtonLoading(true);
       await updateProductsList();
-      setButtonLoading(false);
+      await setTimeout(() => {
+        setButtonLoading(false);
+        setRefetch(!refetch);
+      }, 1000);
     } catch (e) {
       setButtonLoading(false);
       setUpdateError(e.data.status);
@@ -75,7 +82,9 @@ export const UpdateProducts = () => {
               )}`}
             </Typography>
             <Typography variant="S16W400C65676b">
-              {data.failed
+              {data.isUpdating
+                ? "جاري التحديث"
+                : data.failed
                 ? pageDictionary.updateFailed
                 : pageDictionary.completeSuccess}
             </Typography>

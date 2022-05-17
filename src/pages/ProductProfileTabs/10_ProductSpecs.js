@@ -43,7 +43,9 @@ export const ProductSpecsScreen = ({ data }) => {
     data: statistical,
     isLoading: statisticalLoading,
     error: statisticalError,
-  } = useGetStatisticalInfoQuery(data._id);
+  } = useGetStatisticalInfoQuery(data._id, {
+    refetchOnMountOrArgChange: true,
+  });
 
   const {
     data: similarPhones,
