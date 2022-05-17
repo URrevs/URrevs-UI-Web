@@ -63,52 +63,61 @@ export default function Menu() {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${currentUserProfile.uid}`,
+      authenticate: currentUserProfile.uid,
     },
     {
       title: pageDictionry.myQuestions,
       icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
       to: "",
+      authenticate: currentUserProfile.uid,
     },
     {
       title: pageDictionry.ownedProducts,
       icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?userId=${profileData.uid}`,
+      authenticate: currentUserProfile.uid,
     },
     {
       title: pageDictionry.askedQuestions,
       icon: <HelpCenterOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: pageDictionry.helpOthers,
       to: "",
+      authenticate: currentUserProfile.uid,
     },
     {
       title: pageDictionry.referalCode,
       icon: <GroupsOutlinedIcon sx={{ fontSize: 40 }} />,
       onClick: () => navigator.clipboard.writeText(profileData.refCode),
       subtitle: pageDictionry.inviteFriends,
+      authenticate: true,
     },
     {
       title: pageDictionry.adminPanel,
       icon: <AdminPanelSettingsOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
       to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      authenticate: currentUserProfile.isAdmin,
     },
     {
       title: pageDictionry.settings,
       icon: <SettingsOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
       to: "",
+      authenticate: true,
     },
     {
       title: pageDictionry.aboutUs,
       icon: <ErrorOutlineOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
       to: "",
+      authenticate: true,
     },
     {
       title: pageDictionry.contactUs,
       icon: <ContactMailOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
       to: "",
+      authenticate: true,
     },
     {
       title: pageDictionry.logOut,
@@ -117,6 +126,7 @@ export default function Menu() {
       onClick: () => {
         handleOpen();
       },
+      authenticate: currentUserProfile.uid,
     },
   ];
   const userProfile = () => (
@@ -193,11 +203,11 @@ export default function Menu() {
   return (
     <Box
       style={{
+        //Margin from top appbar
         marginBottom: 70,
       }}
     >
       <CustomAppBar showLogo showSearch showProfile />
-
       <Modal open={open} onClose={handleClose} dir={theme.direction}>
         <Box>
           <SignoutDialog handleClose={handleClose} />
@@ -207,20 +217,30 @@ export default function Menu() {
         {useProfileButton()}
         <Box style={{ height: 12 }}></Box>
         {listItems.map((item, index) => {
-          return (
-            <div key={item.title + index}>
-              {listItem(
-                item.title,
-                item.subtitle,
-                item.icon,
-                item.to,
-                item.onClick
-              )}
-            </div>
-          );
+          if (item.authenticate)
+            return (
+              <div key={item.title + index}>
+                {listItem(
+                  item.title,
+                  item.subtitle,
+                  item.icon,
+                  item.to,
+                  item.onClick
+                )}
+              </div>
+            );
+          else return null;
         })}
       </List>
-      <Box sx={{ paddingTop: "20px" }}>
+      <Box
+        sx={{
+          // Footer just above the foot appbar
+          position: "absolute",
+          bottom: "0",
+          width: "95%",
+          paddingBottom: "70px",
+        }}
+      >
         <Typography variant="S22W500C050505">{`${pageDictionry.followUs}:`}</Typography>
         <Box
           sx={{
