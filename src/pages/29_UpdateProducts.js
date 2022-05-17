@@ -43,8 +43,8 @@ export const UpdateProducts = () => {
     try {
       setButtonLoading(true);
       await updateProductsList();
-      setButtonLoading(false);
       await setTimeout(() => {
+        setButtonLoading(false);
         setRefetch(!refetch);
       }, 1000);
     } catch (e) {
