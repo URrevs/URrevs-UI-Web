@@ -27,7 +27,7 @@ export default function ProductList({ list = [] }) {
                 }}
               />
             }
-            to=""
+            to={`/phone?pid=${item._id}`}
           />
 
           <Divider></Divider>
