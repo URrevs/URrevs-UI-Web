@@ -105,7 +105,6 @@ export default function CommentsList({
                   replyUnlike={replyUnlike}
                   commentId={commentsList[index].commentId}
                   avatar={commentsList[index].userPicture}
-
                 />
               ) : (
                 <Comment
