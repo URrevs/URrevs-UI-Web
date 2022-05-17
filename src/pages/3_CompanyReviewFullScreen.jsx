@@ -8,8 +8,13 @@ import CompanyReview from "../Components/ReviewCard/CompanyReview";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useAddCommentOnCompanyReviewMutation,
-  useAddReplyOnCompanyReviewMutation, useGetCertainCompanyReviewQuery,
-  useGetCompanyReviewCommentsQuery, useLikeCompanyReviewCommentMutation, useLikeCompanyReviewReplyMutation, useUnLikeCompanyReviewCommentMutation, useUnLikeCompanyReviewReplyMutation
+  useAddReplyOnCompanyReviewMutation,
+  useGetCertainCompanyReviewQuery,
+  useGetCompanyReviewCommentsQuery,
+  useLikeCompanyReviewCommentMutation,
+  useLikeCompanyReviewReplyMutation,
+  useUnLikeCompanyReviewCommentMutation,
+  useUnLikeCompanyReviewReplyMutation,
 } from "../services/company_reviews";
 import { commentsListActions } from "../store/commentsListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -271,12 +276,11 @@ export default function CompanyReviewFullScreen() {
           currentReviewData && (
             <CompanyReview
               key={currentReviewData._id}
-              index={0}
-              fullScreen={false}
-              isExpanded={false}
-              clearIndexCache={clearCache}
               reviewDetails={currentReviewData}
-              isPhoneReview={true}
+              index={0}
+              clearIndexCache={clearCache}
+              fullScreen={true}
+              isExpanded={true}
               targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${currentReviewData.targetId}`}
               userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
               stateLikeFn={stateLikePhoneReview}

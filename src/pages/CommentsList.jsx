@@ -104,6 +104,8 @@ export default function CommentsList({
                   replyLike={replyLike}
                   replyUnlike={replyUnlike}
                   commentId={commentsList[index].commentId}
+                  avatar={commentsList[index].userPicture}
+
                 />
               ) : (
                 <Comment
@@ -116,6 +118,7 @@ export default function CommentsList({
                   commentLike={commentLike}
                   commentUnlike={commentUnlike}
                   submitReplyHandler={submitReplyHandler}
+                  avatar={commentsList[index].userPicture}
                 />
               )}
             </div>

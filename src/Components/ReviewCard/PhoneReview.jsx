@@ -16,6 +16,8 @@ export default function PhoneReview({
   stateUnLikeFn,
   showActionBtn = false,
   deleteReviewFromStore,
+  fullScreen,
+  isExpanded,
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisPhoneReviewMutation();
 
@@ -49,8 +51,8 @@ export default function PhoneReview({
   return (
     <ReviewCard
       index={index}
-      fullScreen={false}
-      isExpanded={false}
+      fullScreen={fullScreen}
+      isExpanded={isExpanded}
       clearIndexCache={clearIndexCache}
       reviewDetails={reviewDetails}
       isPhoneReview={true}

@@ -176,7 +176,7 @@ export default function ReviewCard({
       }
     >
       <CardHeader
-        userAvatar={reviewDetails.user_avatar}
+        userAvatar={reviewDetails.picture}
         userName={userName}
         avatarRadius={USER_CIRCLE_AVATAR_LARGE}
         productName={productName}
