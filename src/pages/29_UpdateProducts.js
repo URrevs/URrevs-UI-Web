@@ -39,6 +39,7 @@ export const UpdateProducts = () => {
     try {
       setButtonLoading(true);
       await updateProductsList();
+      setButtonLoading(false);
     } catch (e) {
       setButtonLoading(false);
       setUpdateError(e.data.status);
@@ -56,12 +57,10 @@ export const UpdateProducts = () => {
         <LoadingSpinner />
       ) : error || updateError ? (
         <div>{error.data.status + "\n" + updateError.data.status}</div>
-      ) : data.isUpdating ? (
-        <div>Update is currently working...</div>
       ) : (
         <div style={{ margin: "0px 14.6px" }}>
           <Box
-            sx={{
+            style={{
               display: "flex",
               flexDirection: "column",
               paddingBottom: "5px",
@@ -81,23 +80,36 @@ export const UpdateProducts = () => {
                 : pageDictionary.completeSuccess}
             </Typography>
           </Box>
-          <Box sx={{ paddingBottom: "350px" }}>
+          <Box>
             <ProductList list={data.phones} />
             <br></br>
             <CompanyList list={data.companies} />
           </Box>
-          <OrangeGradientButton
-            color="red"
-            sx={{
-              width: "100%",
-            }}
-            onClick={() => handleUpdateProducts()}
-          >
-            <UpdateOutlinedIcon sx={{ fontSize: "28", marginRight: "5px" }} />
-            <Typography variant="S18W700Cffffff">
-              {pageDictionary.updateProducts}
-            </Typography>
-          </OrangeGradientButton>
+          {data.isUpdating || buttonLoading ? (
+            <div>Update is currently working...</div>
+          ) : (
+            <Box
+              style={{
+                bottom: 0,
+                marginTop: 16,
+              }}
+            >
+              <OrangeGradientButton
+                color="red"
+                style={{
+                  width: "100%",
+                }}
+                onClick={() => handleUpdateProducts()}
+              >
+                <UpdateOutlinedIcon
+                  sx={{ fontSize: "28", marginRight: "5px" }}
+                />
+                <Typography variant="S18W700Cffffff">
+                  {pageDictionary.updateProducts}
+                </Typography>
+              </OrangeGradientButton>
+            </Box>
+          )}
         </div>
       )}
     </CustomAppBar>
