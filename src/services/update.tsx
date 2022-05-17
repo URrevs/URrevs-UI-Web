@@ -4,6 +4,7 @@ import { RootState } from "../store/store";
 
 export const updateApi = createApi({
   reducerPath: "updateApi",
+
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_API_PATH}/targets`,
     // add token to all endpoints headers
@@ -17,16 +18,18 @@ export const updateApi = createApi({
       return headers;
     },
   }),
-
+  tagTypes: ["latest"],
   endpoints: (builder) => ({
     getLastUpdateInfo: builder.query<APIUpdate, any>({
+      providesTags: ["latest"],
       query: () => "/update/latest",
     }),
 
     update: builder.mutation({
+      invalidatesTags: ["latest"],
       query: () => {
         return {
-          url: "/updat",
+          url: "/update",
           method: "GET",
         };
       },
