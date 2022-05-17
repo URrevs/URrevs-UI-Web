@@ -63,33 +63,33 @@ export default function Menu() {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${currentUserProfile.uid}`,
-      authenticate: currentUserProfile.uid,
+      authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.myQuestions,
       icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
       to: "",
-      authenticate: currentUserProfile.uid,
+      authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.ownedProducts,
       icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?userId=${profileData.uid}`,
-      authenticate: currentUserProfile.uid,
+      authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.askedQuestions,
       icon: <HelpCenterOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: pageDictionry.helpOthers,
       to: "",
-      authenticate: currentUserProfile.uid,
+      authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.referalCode,
       icon: <GroupsOutlinedIcon sx={{ fontSize: 40 }} />,
       onClick: () => navigator.clipboard.writeText(profileData.refCode),
       subtitle: pageDictionry.inviteFriends,
-      authenticate: true,
+      authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.adminPanel,
@@ -126,7 +126,7 @@ export default function Menu() {
       onClick: () => {
         handleOpen();
       },
-      authenticate: currentUserProfile.uid,
+      authenticate: currentUserProfile.isLoggedIn,
     },
   ];
   const userProfile = () => (
@@ -136,7 +136,7 @@ export default function Menu() {
       sx={{ mr: "8px" }}
     ></Avatar>
   );
-  const useProfileButton = () => (
+  const userProfileButton = () => (
     <Link
       to={`../../${ROUTES_NAMES.USER_PROFILE}?userId=${profileData.uid}`}
       style={{
@@ -205,6 +205,7 @@ export default function Menu() {
       style={{
         //Margin from top appbar
         marginBottom: 70,
+        padding: "0px 14px",
       }}
     >
       <CustomAppBar showLogo showSearch showProfile />
@@ -214,7 +215,7 @@ export default function Menu() {
         </Box>
       </Modal>
       <List>
-        {useProfileButton()}
+        {currentUserProfile.isLoggedIn ? userProfileButton() : null}
         <Box style={{ height: 12 }}></Box>
         {listItems.map((item, index) => {
           if (item.authenticate)
@@ -253,19 +254,26 @@ export default function Menu() {
             <FacebookIcon />
             <LinkedIn />
           </Box>
-          <Box sx={{ display: "flex" }}>
-            <Link to="/">
-              <Typography underline="always">
-                {pageDictionry.termsAndAgreements}
-              </Typography>
-            </Link>
-            <Typography variant="S16W400C050505">•</Typography>
-            <Link to="/">
-              <Typography underline="always">
-                {pageDictionry.privacyPolicy}
-              </Typography>
-            </Link>
-          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Link to="/">
+            <Typography underline="always">
+              {pageDictionry.termsAndAgreements}
+            </Typography>
+          </Link>
+          <Typography sx={{ padding: "0px 3px" }} variant="S16W400C050505">
+            |
+          </Typography>
+          <Link to="/">
+            <Typography underline="always">
+              {pageDictionry.privacyPolicy}
+            </Typography>
+          </Link>
         </Box>
       </Box>
     </Box>
