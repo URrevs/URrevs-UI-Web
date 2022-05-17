@@ -45,17 +45,19 @@ export const ProductProfile = () => {
           label={data.name}
           showSearch
           showProfile
+          tabBar={
+            <Tabbar
+              arrayOfTabs={tabBarArray}
+              value={value}
+              setValue={setValue}
+            />
+          }
         >
           <Box
             sx={{
               padding: "0px 6px",
             }}
           >
-            <Tabbar
-              arrayOfTabs={tabBarArray}
-              value={value}
-              setValue={setValue}
-            />
             {value === 0 ? (
               <ProductReviews />
             ) : value === 1 ? (

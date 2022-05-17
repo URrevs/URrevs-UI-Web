@@ -39,15 +39,17 @@ export const CompanyProfile = () => {
           showProfile
           englishName
           showSearch
+          tabBar={
+            <Tabbar
+              arrayOfTabs={[
+                pageDictionary.tabBarReviews,
+                pageDictionary.tabBarQuestionsAndAnswers,
+              ]}
+              value={value}
+              setValue={setValue}
+            />
+          }
         >
-          <Tabbar
-            arrayOfTabs={[
-              pageDictionary.tabBarReviews,
-              pageDictionary.tabBarQuestionsAndAnswers,
-            ]}
-            value={value}
-            setValue={setValue}
-          />
           {value === 0 ? (
             <CompanyReviews
               viewer={data.views}
