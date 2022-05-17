@@ -1,5 +1,7 @@
+import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { CompanyOverviewCard } from "../../Components/OverviewCard/CompanyOverviewCard";
 import CompanyReview from "../../Components/ReviewCard/CompanyReview";
 import ROUTES_NAMES from "../../RoutesNames";
 import { useGetCompanyReviewsQuery } from "../../services/company_reviews";
@@ -7,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
 
-export function CompanyReviews() {
+export function CompanyReviews({ viewer, companyRating, companyName, type }) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -75,16 +77,24 @@ export function CompanyReviews() {
   };
 
   return (
-    <VirtualReviewList
-      reviewCard={reviewCard}
-      reviewsList={reviewsList}
-      page={page}
-      data={data}
-      error={error}
-      isLoading={isLoading}
-      isFetching={isFetching}
-      addToReviewsList={addToReviewsList}
-      increasePage={increasePage}
-    />
+    <Box>
+      <CompanyOverviewCard
+        companyName={companyName}
+        companyRating={companyRating}
+        type="شركة"
+        viewer={viewer}
+      />
+      <VirtualReviewList
+        reviewCard={reviewCard}
+        reviewsList={reviewsList}
+        page={page}
+        data={data}
+        error={error}
+        isLoading={isLoading}
+        isFetching={isFetching}
+        addToReviewsList={addToReviewsList}
+        increasePage={increasePage}
+      />
+    </Box>
   );
 }

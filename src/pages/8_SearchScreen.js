@@ -53,8 +53,10 @@ export const SearchScreen = () => {
     {},
     {
       skip: !user.isLoggedIn,
+      refetchOnMountOrArgChange: true,
     }
   );
+
   const [search] = useSearchAllMutation();
   const [addRecentSearch] = useAddToMyRecentSearchesMutation();
   const [deleteRecentSearch] = useDeleteRecentSearchesMutation();

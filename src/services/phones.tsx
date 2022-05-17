@@ -19,6 +19,7 @@ export const phoneApi = createApi({
 
   endpoints: (builder) => ({
     getPhoneSpecs: builder.query({
+      keepUnusedDataFor: 0,
       query: (pid) => {
         return {
           url: `${pid}/specs`,
@@ -31,6 +32,8 @@ export const phoneApi = createApi({
     }),
 
     getSimilarPhones: builder.query({
+      keepUnusedDataFor: 0,
+
       query: (pid) => {
         return {
           url: `${pid}/similar`,
@@ -42,6 +45,7 @@ export const phoneApi = createApi({
       },
     }),
     getStatisticalInfo: builder.query({
+      keepUnusedDataFor: 0,
       query: (pid) => {
         return {
           url: `${pid}/stats`,
@@ -63,6 +67,18 @@ export const phoneApi = createApi({
         return response.company;
       },
     }),
+
+    indicateUserComparing: builder.mutation({
+      query: ({ pid1, pid2 }) => {
+        return {
+          url: `/${pid1}/compare/${pid2}`,
+          method: "PUT",
+        };
+      },
+      transformResponse: (response: any) => {
+        return response.company;
+      },
+    }),
   }),
 });
 
@@ -72,4 +88,5 @@ export const {
   useGetSimilarPhonesQuery,
   useGetManufacturingCompanyMutation,
   useGetStatisticalInfoQuery,
+  useIndicateUserComparingMutation,
 } = phoneApi;

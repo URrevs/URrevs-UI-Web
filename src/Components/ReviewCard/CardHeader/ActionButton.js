@@ -49,7 +49,7 @@ export default function ActionButton({ actionBtnFunction }) {
   }, [open]);
 
   return (
-    <Stack direction="row" spacing={2}>
+    <Stack direction="row" spacing={1}>
       <div>
         <IconButton
           ref={anchorRef}
@@ -58,6 +58,7 @@ export default function ActionButton({ actionBtnFunction }) {
           aria-expanded={open ? "true" : undefined}
           aria-haspopup="true"
           onClick={handleToggle}
+          sx={{}}
         >
           <MoreVertOutlined />
         </IconButton>

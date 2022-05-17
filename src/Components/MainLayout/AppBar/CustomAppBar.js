@@ -5,9 +5,7 @@ import { Box, IconButton, Toolbar, Typography } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { FilterTabbar } from "../../Tabbar/FilterTabbar";
 import { AppBarActions } from "./AppBarActions";
-import BottomTabBar from "./BottomTabBar";
 
 const CustomAppBarStyled = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "direction",
@@ -16,10 +14,6 @@ const CustomAppBarStyled = styled(MuiAppBar, {
   minHeight: 45,
   boxShadow: "0 1px 1px 0px #dbdbdb",
   background: theme.palette.appBar.appBarColor,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
 }));
 
 const logoWidth = 94;
@@ -50,79 +44,86 @@ export const CustomAppBar = ({
   };
 
   return (
-    <div sx={{ flexGrow: 1 }}>
-      <CustomAppBarStyled
-        position="fixed"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <Toolbar
-          variant="dense"
+    <div>
+      <Box>
+        <CustomAppBarStyled
           style={{
-            justifyContent: "space-between",
-            boxShadow: "none",
-            minHeight: 45,
-            padding: "0 16px",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
-          <div style={{ display: "flex" }}>
-            <Fragment>
-              {showBackBtn && (
-                <IconButton onClick={backBtnHandler}>
-                  <KeyboardBackspaceRoundedIcon
-                    htmlColor={theme.palette.appBar.backButton}
-                    sx={{
-                      transform: `scale(${backButtonDirection})`,
-                    }}
+          <Toolbar
+            variant="dense"
+            style={{
+              justifyContent: "space-between",
+              boxShadow: "none",
+              minHeight: 45,
+              padding: "0 16px",
+            }}
+          >
+            <div style={{ display: "flex" }}>
+              <Fragment>
+                {showBackBtn && (
+                  <IconButton onClick={backBtnHandler}>
+                    <KeyboardBackspaceRoundedIcon
+                      htmlColor={theme.palette.appBar.backButton}
+                      sx={{
+                        transform: `scale(${backButtonDirection})`,
+                      }}
+                    />
+                  </IconButton>
+                )}
+                {showLogo && (
+                  <img
+                    width={logoWidth}
+                    height={logoHeight}
+                    alt="URrevs"
+                    src="./images/logo.png"
                   />
-                </IconButton>
-              )}
-              {showLogo && (
-                <img
-                  width={logoWidth}
-                  height={logoHeight}
-                  alt="URrevs"
-                  src="./images/logo.png"
+                )}
+              </Fragment>
+              {englishName ? (
+                <AppBarActions
+                  showSearch={showSearch}
+                  showLanguage={showLanguage}
+                  showDark={showDark}
+                  showProfile={showProfile}
                 />
+              ) : (
+                showLabel && (
+                  <Typography variant="S20W700C050505">{label}</Typography>
+                )
               )}
-            </Fragment>
-            {englishName ? (
-              <AppBarActions
-                showSearch={showSearch}
-                showLanguage={showLanguage}
-                showDark={showDark}
-                showProfile={showProfile}
-              />
-            ) : (
-              showLabel && (
-                <Typography variant="S20W700C050505">{label}</Typography>
-              )
-            )}
-          </div>
-          <div>
-            {!englishName ? (
-              <AppBarActions
-                showSearch={showSearch}
-                showLanguage={showLanguage}
-                showDark={showDark}
-                showProfile={showProfile}
-              />
-            ) : (
-              showLabel && (
-                <Typography variant="S20W700C050505">{label}</Typography>
-              )
-            )}
-          </div>
-        </Toolbar>
-      </CustomAppBarStyled>
+            </div>
+            <div>
+              {!englishName ? (
+                <AppBarActions
+                  showSearch={showSearch}
+                  showLanguage={showLanguage}
+                  showDark={showDark}
+                  showProfile={showProfile}
+                />
+              ) : (
+                showLabel && (
+                  <Typography variant="S20W700C050505">{label}</Typography>
+                )
+              )}
+            </div>
+          </Toolbar>
+        </CustomAppBarStyled>
+        <Box
+          style={{
+            marginTop: "45px",
+          }}
+        >
+          {tabBar}
+        </Box>
+      </Box>
       <Box
         style={{
-          marginTop: 45,
+          marginTop: "16px",
         }}
       >
-        {tabBar}
         {children}
       </Box>
     </div>

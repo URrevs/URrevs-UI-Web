@@ -69,6 +69,7 @@ export const usersApi = createApi({
       APIOwnedPhone[],
       { round: number; uid: string }
     >({
+      keepUnusedDataFor: 0,
       query: ({ round, uid }) => `/${uid}/phones?round=${round}`,
       transformResponse: (response: { phones: APIOwnedPhone[] }) => {
         return response.phones;
