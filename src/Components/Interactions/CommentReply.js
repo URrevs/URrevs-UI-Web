@@ -15,6 +15,7 @@ export const CommentReply = ({
   liked,
   replyId,
   commentId,
+  avatar,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -41,10 +42,11 @@ export const CommentReply = ({
         likes={likes}
         date={date}
         text={text}
-        avatar="32px"
+        avatarSize="32px"
         buttonName={buttonName}
         reply={false}
         renderIcon={renderIcon}
+        avatar={avatar}
       >
         <InteractionFooter
           date={date}

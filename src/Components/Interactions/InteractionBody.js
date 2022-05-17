@@ -9,13 +9,15 @@ export const InteractionBody = ({
   likes,
   children,
   renderIcon,
-  avatar = "44px",
+  avatar,
+  avatarSize = "44px",
 }) => {
   return (
     <div>
       <Box sx={{ display: "flex" }}>
         <Avatar
-          sx={{ marginRight: "6px", height: avatar, width: avatar }}
+          src={avatar}
+          sx={{ marginRight: "6px", height: avatarSize, width: avatarSize }}
         ></Avatar>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <InteractionCard
