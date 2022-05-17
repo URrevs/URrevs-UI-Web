@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
@@ -17,7 +17,8 @@ export const ProductProfile = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const paramId = searchParams.get("pid");
 
-  const { isLoading, error, isFetching, data } = useGetPhoneSpecsQuery(paramId);
+  let { isLoading, error, isFetching, data } = useGetPhoneSpecsQuery(paramId);
+
   const textContainer = useSelector((state) => state.language.textContainer);
   const [value, setValue] = React.useState(1);
   const pageDictionary = {
