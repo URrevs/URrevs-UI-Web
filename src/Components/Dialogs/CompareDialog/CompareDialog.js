@@ -9,6 +9,8 @@ import { useAppDispatch } from "../../../store/hooks";
 import { compareActions } from "../../../store/compareSlice";
 import { useNavigate } from "react-router-dom";
 import ROUTES_NAMES from "../../../RoutesNames";
+import { useSearchPhonesOnlyMutation } from "../../../services/search";
+import { useIndicateUserComparingMutation } from "../../../services/phones";
 
 export const CompareDialog = ({ item, handleClose }) => {
   const [compareItem, setCompareItem] = React.useState({});
@@ -19,6 +21,9 @@ export const CompareDialog = ({ item, handleClose }) => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
+
+  const [searchFn] = useSearchPhonesOnlyMutation();
+  const [indicateComparison] = useIndicateUserComparingMutation();
 
   return (
     <Fragment>
@@ -36,11 +41,12 @@ export const CompareDialog = ({ item, handleClose }) => {
           <SearchComponent
             setCompareItem={setCompareItem}
             label={textContainer.writeProductName}
+            searchFn={searchFn}
           />
         </Box>
         <OrangeGradientButton
           color="red"
-          onClick={() => {
+          onClick={async () => {
             // TODO:
             if (compareItem !== 0) {
               dispatch(
@@ -49,6 +55,13 @@ export const CompareDialog = ({ item, handleClose }) => {
                   compareId: compareItem,
                 })
               );
+              console.log(compareItem);
+              try {
+                indicateComparison({ pid1: item._id, pid2: compareItem.pid });
+              } catch (e) {
+                console.log(e);
+              }
+
               navigate(
                 `${ROUTES_NAMES.COMPARISON}?cid=${compareItem.pid}&pid=${item._id}`
               );

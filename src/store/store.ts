@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { phoneReviewsApi } from "../services/phone_reviews";
 import { companyReviewsApi } from "../services/company_reviews";
+import { phoneQuestionsApi } from "../services/phone_questions";
+import { companyQuestionsApi } from "../services/company_questions";
 import { usersApi } from "../services/users";
 import authSlice from "./authSlice";
 import isDarkSlice from "./darkModeSlice";
@@ -23,6 +25,8 @@ export const store = configureStore({
     [updateApi.reducerPath]: updateApi.reducer,
     [phoneReviewsApi.reducerPath]: phoneReviewsApi.reducer,
     [companyReviewsApi.reducerPath]: companyReviewsApi.reducer,
+    [phoneQuestionsApi.reducerPath]: phoneQuestionsApi.reducer,
+    [companyQuestionsApi.reducerPath]: companyQuestionsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [reviewsSlice.name]: reviewsSlice.reducer,
     [commentsListSlice.name]: commentsListSlice.reducer,
@@ -38,6 +42,8 @@ export const store = configureStore({
     })
       .concat(phoneReviewsApi.middleware)
       .concat(companyReviewsApi.middleware)
+      .concat(phoneQuestionsApi.middleware)
+      .concat(companyQuestionsApi.middleware)
       .concat(usersApi.middleware),
 });
 
