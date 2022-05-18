@@ -1,12 +1,13 @@
 import { useTheme } from "@emotion/react";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import MenuIcon from "@mui/icons-material/Menu";
 import ErrorTwoToneIcon from "@mui/icons-material/ErrorTwoTone";
 import ForumTwoToneIcon from "@mui/icons-material/ForumTwoTone";
 import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
 import AddBoxTwoToneIcon from "@mui/icons-material/AddBoxTwoTone";
 import RateReviewTwoToneIcon from "@mui/icons-material/RateReviewTwoTone";
-import { Typography, useMediaQuery } from "@mui/material";
+import { Paper, Typography, useMediaQuery } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -18,6 +19,7 @@ import { styled } from "@mui/material/styles";
 import * as React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../../store/hooks";
+import Menu from "../../../pages/20_Menu";
 
 export const drawerWidth = 240;
 
@@ -57,6 +59,7 @@ const PerDrawer = styled(
   MuiDrawer,
   {}
 )(({ theme, open }) => ({
+  zIndex: 1,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
   ...(open && {
@@ -71,6 +74,8 @@ const PerDrawer = styled(
 }));
 
 export const MyDrawer = (props) => {
+  const [menu, setMenu] = React.useState(false);
+  const drawerRef = React.useRef(null);
   const language = useAppSelector((state) => state.language.language);
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -114,44 +119,77 @@ export const MyDrawer = (props) => {
   };
 
   return (
-    <PerDrawer variant='permanent' open={open} onClose={handleDrawerClose}>
-      {/* <DrawerHeader>
+    <React.Fragment>
+      {menu ? (
+        <Paper
+          sx={{
+            position: "fixed",
+            top: "45px",
+            left: drawerRef.current.clientWidth,
+            width: "400px",
+            height: "93vh",
+            zIndex: 1,
+          }}
+        >
+          <Menu />
+        </Paper>
+      ) : null}
+
+      <PerDrawer
+        ref={drawerRef}
+        variant="permanent"
+        open={open}
+        onClose={handleDrawerClose}
+      >
+        {/* <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {language !== "ar" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
       </DrawerHeader> */}
-      <Divider />
-      <List>
-        {drawerTiles.map((item) => (
-          <NavLink
-            style={{
-              textDecoration: "none",
-              color: `${theme.palette.drawer.tileText}`,
-            }}
-            end
-            to={item.path}
-            key={item.path}
-          >
-            <ListItem
+        <Divider />
+        <div style={{ ...theme.mixins.toolbar }}></div>
+        <List>
+          {drawerTiles.map((item) => (
+            <NavLink
               style={{
-                backgroundColor:
-                  location.pathname === item.path
-                    ? theme.palette.drawer.activePage
-                    : "",
+                textDecoration: "none",
+                color: `${theme.palette.drawer.tileText}`,
               }}
-              button
-              key={item.title}
+              end
+              to={item.path}
+              key={item.path}
             >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText
-                style={{ textAlign: language === "ar" ? "right" : "left" }}
+              <ListItem
+                style={{
+                  backgroundColor:
+                    location.pathname === item.path
+                      ? theme.palette.drawer.activePage
+                      : "",
+                }}
+                button
+                key={item.title}
               >
-                <Typography>{item.title}</Typography>
-              </ListItemText>
-            </ListItem>
-          </NavLink>
-        ))}
-      </List>
-    </PerDrawer>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText
+                  style={{ textAlign: language === "ar" ? "right" : "left" }}
+                >
+                  <Typography>{item.title}</Typography>
+                </ListItemText>
+              </ListItem>
+            </NavLink>
+          ))}
+          <ListItem
+            button
+            onClick={() => {
+              setMenu(!menu);
+            }}
+          >
+            <ListItemIcon>
+              <MenuIcon />
+            </ListItemIcon>
+          </ListItem>
+        </List>
+      </PerDrawer>
+    </React.Fragment>
   );
 };
