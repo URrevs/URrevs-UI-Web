@@ -85,24 +85,24 @@ export const MyDrawer = (props) => {
   const language = useAppSelector((state) => state.language.language);
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const location = useLocation();
+  // <page_path> : <number>
   const map = {
     [ROUTES_NAMES.HOME]: 0,
     [ROUTES_NAMES.PRODUCTS]: 1,
     [ROUTES_NAMES.LEADERBOARD]: 2,
   };
+  // change current page onClick
   const [currentPage, setValue] = React.useState(
     map[location.pathname.substring(1, location.pathname.length)]
   );
-  React.useEffect(() => {
-    console.log(location.pathname.substring(1, location.pathname.length));
-  }, [location.pathname]);
+  // Change Icon Color based on pathname
   const iconColor = (val) =>
     currentPage === val && !menu ? focusedColor : unFocusedColor;
   const theme = useTheme();
-  const backgroundColor = theme.palette.bottomNavigationBar.backgroundColor;
+  // const backgroundColor = theme.palette.bottomNavigationBar.backgroundColor;
   const focusedColor = theme.palette.bottomNavigationBar.selectedTap;
   const unFocusedColor = theme.palette.drawer.drawerIcon;
-  const focusedIconSize = 45; //45
+  const focusedIconSize = 39; //45
   const unfocusedIconSize = 39; //39
 
   const open = props.open;
@@ -110,6 +110,7 @@ export const MyDrawer = (props) => {
   // const isMobile = useMediaQuery("(max-width:700px)");
 
   const drawerTiles = [
+    //Home
     {
       icon: (
         <HomeIcon
@@ -122,11 +123,14 @@ export const MyDrawer = (props) => {
         />
       ),
       title: textContainer.homeNavBarItem,
-      itemValue: 0,
+      onClick: () => {
+        setValue(0);
+      },
       path: ROUTES_NAMES.HOME,
     },
+
+    //Addreview
     {
-      itemValue: 5,
       icon: (
         <AddIcon
           sx={{
@@ -136,8 +140,11 @@ export const MyDrawer = (props) => {
         />
       ),
       title: textContainer.AddNavBarItem,
+      onClick: () => {},
       path: ROUTES_NAMES.ADD_REVIEW,
     },
+
+    //ProductList
     {
       icon: (
         <CategoryOutlinedIcon
@@ -148,9 +155,13 @@ export const MyDrawer = (props) => {
         />
       ),
       title: textContainer.categoryNavBarItem,
-      itemValue: 1,
+      onClick: () => {
+        setValue(1);
+      },
       path: ROUTES_NAMES.PRODUCTS,
     },
+
+    //Leaderboard
     {
       icon: (
         <StarsIcon
@@ -161,7 +172,9 @@ export const MyDrawer = (props) => {
         />
       ),
       title: textContainer.leaderboardNavBarItem,
-      itemValue: 2,
+      onClick: () => {
+        setValue(2);
+      },
       path: ROUTES_NAMES.LEADERBOARD,
     },
   ];
@@ -197,13 +210,7 @@ export const MyDrawer = (props) => {
               to={item.path}
               key={item.path}
             >
-              <ListItem
-                onClick={() => {
-                  setValue(item.itemValue);
-                }}
-                button
-                key={item.title}
-              >
+              <ListItem onClick={item.onClick} button key={item.title}>
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText
                   style={{ textAlign: language === "ar" ? "right" : "left" }}

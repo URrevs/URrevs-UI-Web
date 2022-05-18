@@ -7,10 +7,11 @@ const ROUTES_NAMES = {
   MENU: "menu",
   SEARCH: "search",
   ALL_PRODUCTS: "all-products",
+  ADMIN_PANEL: "admin-panel",
+  SETTINGS: "settings",
 
   // level 2
   USER_PROFILE: "user-profile",
-  ADMIN_PANEL: "admin-panel",
   EXACT_PHONE_REVIEW: "phone-review",
   EXACT_COMPANY_REVIEW: "company-review",
   PHONE_PROFILE: "phone",

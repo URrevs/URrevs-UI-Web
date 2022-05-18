@@ -93,6 +93,7 @@ export default function Menu() {
       subtitle: pageDictionry.inviteFriends,
       authenticate: currentUserProfile.isLoggedIn,
     },
+    //Admin panel
     {
       title: pageDictionry.adminPanel,
       icon: <AdminPanelSettingsOutlinedIcon sx={{ fontSize: 40 }} />,
@@ -100,13 +101,15 @@ export default function Menu() {
       to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
       authenticate: currentUserProfile.isAdmin,
     },
+    //Settings
     {
       title: pageDictionry.settings,
       icon: <SettingsOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: "",
+      to: `../../${ROUTES_NAMES.SETTINGS}`,
       authenticate: true,
     },
+    //Aboutus
     {
       title: pageDictionry.aboutUs,
       icon: <ErrorOutlineOutlinedIcon sx={{ fontSize: 40 }} />,
