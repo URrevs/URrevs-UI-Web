@@ -91,7 +91,7 @@ function App() {
       },
       drawer: {
         drawerColor: isDark ? "#242526" : COLORS.cffffff,
-        drawerIcon: isDark ? COLORS.cffffff : COLORS.c1e1e1e,
+        drawerIcon: isDark ? COLORS.cffffff : COLORS.c050505,
         activePage: isDark ? "#383838" : COLORS.cdbdbdb,
         tileText: isDark ? COLORS.cffffff : COLORS.c000000,
       },

@@ -18,6 +18,7 @@ import {
   ListItemButton,
   Typography,
   Modal,
+  useMediaQuery,
 } from "@mui/material";
 import { List } from "@mui/material/";
 import React from "react";
@@ -38,6 +39,7 @@ export default function Menu() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const isMobile = useMediaQuery("(max-width:700px)");
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
@@ -201,45 +203,53 @@ export default function Menu() {
   };
 
   return (
-    <Box
-      style={{
-        //Margin from top appbar
-        marginBottom: 70,
-        padding: "0px 14px",
-      }}
-    >
-      <CustomAppBar showLogo showSearch showProfile />
-      <Modal open={open} onClose={handleClose} dir={theme.direction}>
-        <Box>
-          <SignoutDialog handleClose={handleClose} />
-        </Box>
-      </Modal>
-      <List>
-        {currentUserProfile.isLoggedIn ? userProfileButton() : null}
-        <Box style={{ height: 12 }}></Box>
-        {listItems.map((item, index) => {
-          if (item.authenticate)
-            return (
-              <div key={item.title + index}>
-                {listItem(
-                  item.title,
-                  item.subtitle,
-                  item.icon,
-                  item.to,
-                  item.onClick
-                )}
-              </div>
-            );
-          else return null;
-        })}
-      </List>
+    <React.Fragment>
+      <Box
+        style={{
+          //Margin from top appbar
+          display: "flex",
+          flexDirection: "column",
+          // height: "83vh",
+          marginBottom: 70,
+          padding: "0px 14px",
+        }}
+      >
+        {isMobile ? <CustomAppBar showLogo showSearch showProfile /> : null}
+
+        <Modal open={open} onClose={handleClose} dir={theme.direction}>
+          <Box>
+            <SignoutDialog handleClose={handleClose} />
+          </Box>
+        </Modal>
+        <List>
+          {currentUserProfile.isLoggedIn ? userProfileButton() : null}
+          <Box style={{ height: 12 }}></Box>
+          {listItems.map((item, index) => {
+            if (item.authenticate)
+              return (
+                <div key={item.title + index}>
+                  {listItem(
+                    item.title,
+                    item.subtitle,
+                    item.icon,
+                    item.to,
+                    item.onClick
+                  )}
+                </div>
+              );
+            else return null;
+          })}
+        </List>
+      </Box>
       <Box
         sx={{
-          // Footer just above the foot appbar
-          position: "absolute",
-          bottom: "0",
-          width: "95%",
-          paddingBottom: "70px",
+          marginTop: "auto",
+          // // Footer just above the foot appbar
+          // position: "absolute",
+          // bottom: "0",
+          paddingBottom: isMobile ? "75px" : "20px",
+          // // margin: "-90px 0px -90px 0px",
+          // width: "95%",
         }}
       >
         <Typography variant="S22W500C050505">{`${pageDictionry.followUs}:`}</Typography>
@@ -276,6 +286,6 @@ export default function Menu() {
           </Link>
         </Box>
       </Box>
-    </Box>
+    </React.Fragment>
   );
 }

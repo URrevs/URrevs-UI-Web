@@ -2,7 +2,7 @@ const ROUTES_NAMES = {
   // level 1
   PRODUCTS: "products",
   LEADERBOARD: "leaderboard",
-  HOME: "/",
+  HOME: "",
   ADD_REVIEW: "add-review",
   MENU: "menu",
   SEARCH: "search",

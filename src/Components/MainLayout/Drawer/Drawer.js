@@ -1,13 +1,17 @@
 import { useTheme } from "@emotion/react";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import AddIcon from "@mui/icons-material/Add";
+import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
+import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
+import StarsIcon from "@mui/icons-material/Stars";
 import ErrorTwoToneIcon from "@mui/icons-material/ErrorTwoTone";
 import ForumTwoToneIcon from "@mui/icons-material/ForumTwoTone";
 import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
 import AddBoxTwoToneIcon from "@mui/icons-material/AddBoxTwoTone";
 import RateReviewTwoToneIcon from "@mui/icons-material/RateReviewTwoTone";
-import { Paper, Typography, useMediaQuery } from "@mui/material";
+import { Paper, Slide, Typography, useMediaQuery } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -20,6 +24,8 @@ import * as React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../../store/hooks";
 import Menu from "../../../pages/20_Menu";
+import { MenuSideBar } from "./Sidebar/MenuSideBar";
+import ROUTES_NAMES from "../../../RoutesNames";
 
 export const drawerWidth = 240;
 
@@ -75,42 +81,92 @@ const PerDrawer = styled(
 
 export const MyDrawer = (props) => {
   const [menu, setMenu] = React.useState(false);
-  const drawerRef = React.useRef(null);
+  const drawerRef = React.useRef("10px");
   const language = useAppSelector((state) => state.language.language);
   const textContainer = useAppSelector((state) => state.language.textContainer);
-
+  const location = useLocation();
+  const map = {
+    [ROUTES_NAMES.HOME]: 0,
+    [ROUTES_NAMES.PRODUCTS]: 1,
+    [ROUTES_NAMES.LEADERBOARD]: 2,
+  };
+  const [currentPage, setValue] = React.useState(
+    map[location.pathname.substring(1, location.pathname.length)]
+  );
+  React.useEffect(() => {
+    console.log(location.pathname.substring(1, location.pathname.length));
+  }, [location.pathname]);
+  const iconColor = (val) =>
+    currentPage === val && !menu ? focusedColor : unFocusedColor;
   const theme = useTheme();
+  const backgroundColor = theme.palette.bottomNavigationBar.backgroundColor;
+  const focusedColor = theme.palette.bottomNavigationBar.selectedTap;
+  const unFocusedColor = theme.palette.drawer.drawerIcon;
+  const focusedIconSize = 45; //45
+  const unfocusedIconSize = 39; //39
 
   const open = props.open;
 
-  const location = useLocation();
-  const isMobile = useMediaQuery("(max-width:700px)");
+  // const isMobile = useMediaQuery("(max-width:700px)");
 
   const drawerTiles = [
     {
+      icon: (
+        <HomeIcon
+          sx={{
+            // color: theme.palette.drawer.drawerIcon,
+
+            fontSize: currentPage === 0 ? focusedIconSize : unfocusedIconSize,
+          }}
+          htmlColor={iconColor(0)}
+        />
+      ),
       title: textContainer.homeNavBarItem,
-      icon: <HomeTwoToneIcon />,
-      path: "/",
+      itemValue: 0,
+      path: ROUTES_NAMES.HOME,
     },
     {
-      title: textContainer.homeNavBarItem,
-      icon: <RateReviewTwoToneIcon />,
-      path: "/reviews",
-    },
-    {
+      itemValue: 5,
+      icon: (
+        <AddIcon
+          sx={{
+            color: theme.palette.drawer.drawerIcon,
+
+            fontSize: currentPage === 5 ? focusedIconSize : unfocusedIconSize,
+          }}
+        />
+      ),
       title: textContainer.AddNavBarItem,
-      icon: <AddBoxTwoToneIcon />,
-      path: "/add-review",
+      path: ROUTES_NAMES.ADD_REVIEW,
     },
     {
-      title: textContainer.homeNavBarItem,
-      icon: <ForumTwoToneIcon />,
-      path: "/blog",
-    },
-    {
+      icon: (
+        <CategoryOutlinedIcon
+          sx={{
+            color: theme.palette.drawer.drawerIcon,
+            fontSize: currentPage === 1 ? focusedIconSize : unfocusedIconSize,
+          }}
+          htmlColor={iconColor(1)}
+        />
+      ),
       title: textContainer.categoryNavBarItem,
-      icon: <ErrorTwoToneIcon />,
-      path: "/about",
+      itemValue: 1,
+      path: ROUTES_NAMES.PRODUCTS,
+    },
+    {
+      icon: (
+        <StarsIcon
+          sx={{
+            color: theme.palette.drawer.drawerIcon,
+
+            fontSize: currentPage === 2 ? focusedIconSize : unfocusedIconSize,
+          }}
+          htmlColor={iconColor(2)}
+        />
+      ),
+      title: textContainer.leaderboardNavBarItem,
+      itemValue: 2,
+      path: ROUTES_NAMES.LEADERBOARD,
     },
   ];
 
@@ -120,21 +176,7 @@ export const MyDrawer = (props) => {
 
   return (
     <React.Fragment>
-      {menu ? (
-        <Paper
-          sx={{
-            position: "fixed",
-            top: "45px",
-            left: drawerRef.current.clientWidth,
-            width: "400px",
-            height: "93vh",
-            zIndex: 1,
-          }}
-        >
-          <Menu />
-        </Paper>
-      ) : null}
-
+      <MenuSideBar open={menu} drawer={drawerRef.current.clientWidth} />
       <PerDrawer
         ref={drawerRef}
         variant="permanent"
@@ -160,11 +202,8 @@ export const MyDrawer = (props) => {
               key={item.path}
             >
               <ListItem
-                style={{
-                  backgroundColor:
-                    location.pathname === item.path
-                      ? theme.palette.drawer.activePage
-                      : "",
+                onClick={() => {
+                  setValue(item.itemValue);
                 }}
                 button
                 key={item.title}
@@ -185,7 +224,12 @@ export const MyDrawer = (props) => {
             }}
           >
             <ListItemIcon>
-              <MenuIcon />
+              <MenuIcon
+                sx={{
+                  fontSize: menu ? focusedIconSize : unfocusedIconSize,
+                }}
+                htmlColor={menu ? focusedColor : unFocusedColor}
+              />
             </ListItemIcon>
           </ListItem>
         </List>
