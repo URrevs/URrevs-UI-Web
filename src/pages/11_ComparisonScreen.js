@@ -28,16 +28,6 @@ export const ComparisonScreen = () => {
     data: productData,
   } = useGetPhoneSpecsQuery(pid);
 
-  const [indicateComparison] = useIndicateUserComparingMutation();
-
-  useEffect(() => {
-    try {
-      indicateComparison({ pid1: pid, pid2: cid });
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
-
   return (
     <CustomAppBar showBackBtn showLabel label={textContainer.comparison}>
       {productLoading || compLoading ? (

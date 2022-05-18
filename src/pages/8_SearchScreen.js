@@ -224,10 +224,8 @@ export const SearchScreen = () => {
             try {
               setTimeout(async () => {
                 if (e.target.value.trim() !== "") {
-                  const { phones, companies } = await search(
-                    e.target.value.trim()
-                  ).unwrap();
-                  setResults([...phones, ...companies]);
+                  const results = await search(e.target.value.trim()).unwrap();
+                  setResults(results);
                 }
               }, SEARCH_INPUT_DELAY);
             } catch (e) {

@@ -1,22 +1,45 @@
 import { useTheme } from "@emotion/react";
+import AddIcon from "@mui/icons-material/Add";
 import { Box, Stack, Typography } from "@mui/material";
 import { FormikProvider, useFormik } from "formik";
 import React from "react";
 import { useSelector } from "react-redux";
-import AddIcon from "@mui/icons-material/Add";
 import OrangeGradientButton from "../../Components/Buttons/OrangeGradientButton";
 import FormikSearchComponent from "../../Components/Form/FormikSearchComponent";
 import FormikTextField from "../../Components/Form/FormikTextField";
-
+import { useSearchAllMutation } from "../../services/search";
+import { useAddPhoneQuestionMutation } from "../../services/phone_questions";
+import { useAddCompanyQuestionMutation } from "../../services/company_questions";
 export const QuestionsTab = () => {
+  const [addPhoneQuestion] = useAddPhoneQuestionMutation();
+  const [addCompanyQuestion] = useAddCompanyQuestionMutation();
+
+  const [addQuestionError, setAddQuestionError] = React.useState(null);
+
   const formik = useFormik({
     initialValues: {
       id: "",
       content: "",
     },
     // validationSchema: {},
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      console.log(values.id.type);
+      try {
+        if (values.id.type === "company") {
+          await addCompanyQuestion({
+            content: values.content,
+            company: values.id.pid,
+          });
+        } else {
+          await addPhoneQuestion({
+            content: values.content,
+            phone: values.id.pid,
+          });
+        }
+      } catch (e) {
+        setAddQuestionError(e);
+        console.log(e);
+      }
     },
   });
   const renderFields = (text, fieldName, label, controlled = false) => {
@@ -42,6 +65,9 @@ export const QuestionsTab = () => {
     postQuestion: textContainer.postQuestion,
   };
   const theme = useTheme();
+
+  const [searchFn] = useSearchAllMutation();
+
   return (
     <React.Fragment>
       <FormikProvider value={formik}>
@@ -57,6 +83,8 @@ export const QuestionsTab = () => {
           <FormikSearchComponent
             fieldName="id"
             label={pageDictionary.writeProductName}
+            searchFn={searchFn}
+            toGetManufacturingCompany={false}
           />
           {renderFields(
             pageDictionary.writeYourQuestion,
@@ -64,9 +92,7 @@ export const QuestionsTab = () => {
             pageDictionary.question
           )}
 
-          {console.log(formik.values)}
           {/* Submit Button */}
-
           <OrangeGradientButton
             type="submit"
             color="red"
