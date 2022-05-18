@@ -8,8 +8,8 @@ const initialState: initialState = {
   registration: false,
 };
 
-const uiSlice = createSlice({
-  name: "ui",
+const regDialogSlice = createSlice({
+  name: "regDialog",
   initialState: initialState,
   reducers: {
     toggleRegistration(state) {
@@ -18,6 +18,6 @@ const uiSlice = createSlice({
   },
 });
 
-export const uiActions = uiSlice.actions;
-export const uiSliceName = uiSlice.name;
-export default uiSlice;
+export const uiActions = regDialogSlice.actions;
+export const uiSliceName = regDialogSlice.name;
+export default regDialogSlice;

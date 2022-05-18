@@ -10,7 +10,8 @@ import isDarkSlice from "./darkModeSlice";
 import languageSlice from "./languageSlice";
 import reviewsSlice from "./reviewsSlice";
 import commentsListSlice from "./commentsListSlice";
-import uiSlice from "./uiSlice";
+import regDialogSlice from "./uiRegisterDialogSlice";
+import snackbarSlice from "./uiSnackbarSlice";
 import { updateApi } from "../services/update";
 import { searchApi } from "../services/search";
 import { phoneApi } from "../services/phones";
@@ -34,7 +35,8 @@ export const store = configureStore({
     [compareSlice.name]: compareSlice.reducer,
     [isDarkSlice.name]: isDarkSlice.reducer,
     [authSlice.name]: authSlice.reducer,
-    [uiSlice.name]: uiSlice.reducer,
+    [regDialogSlice.name]: regDialogSlice.reducer,
+    [snackbarSlice.name]: snackbarSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

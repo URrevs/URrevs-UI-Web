@@ -129,7 +129,7 @@ export default function CommentsList({
 
   return (
     <Fragment>
-      <CustomAppBar showBackBtn showSearch showProfile>
+      <CustomAppBar showBackBtn>
         <div style={{ height: "calc(100vh)", margin: "55px 12px" }}>
           {reviewCard()}
           <AutoSizer>

@@ -298,7 +298,6 @@ export default function PhoneReviewFullScreen() {
 
   return (
     <Box>
-      <CustomAppBar showLogo showSearch showProfile />
       {reviewLoading ? (
         <div>Loading review...</div>
       ) : reviewError ? (

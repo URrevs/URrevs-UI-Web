@@ -17,6 +17,7 @@ import { useAppSelector } from "../../store/hooks";
 import Registeration from "../../pages/1_Authentication";
 import BottomNavBar from "./BottomNavBar/BottomNavBar";
 import { CustomAppBar } from "./AppBar/CustomAppBar";
+import CustomizedSnackbar from "../Snackbar";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -37,7 +38,7 @@ export default function Layout(props) {
   const dictionary = useAppSelector((state) => state.language.textContainer);
 
   // modal
-  const openReg = useAppSelector((state) => state.ui.registration);
+  const openReg = useAppSelector((state) => state.regDialog.registration);
 
   const [open, setOpen] = React.useState(false);
   const [searchBarFocused, setSearchBarFocused] = React.useState(false);
@@ -130,8 +131,8 @@ export default function Layout(props) {
       {/* {customAppBar()} */}
       {/* {appBar()} */}
       {theme.isMobile ? <></> : <MyDrawer open={open} setOpen={setOpen} />}
-
       <Registeration />
+      <CustomizedSnackbar />
       {theme.isMobile ? <BottomNavBar /> : <></>}
       <Box component="main" sx={{ flexGrow: 1, p: 3, padding: 0 }}>
         {/* <DrawerHeader /> */}
