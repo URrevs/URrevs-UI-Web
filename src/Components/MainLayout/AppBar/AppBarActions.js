@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { languageActions } from "../../../store/languageSlice";
 import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { uiActions } from "../../../store/uiSlice";
+import { uiActions } from "../../../store/uiRegisterDialogSlice";
 import ROUTES_NAMES from "../../../RoutesNames";
 
 const circleWidth = 35;
