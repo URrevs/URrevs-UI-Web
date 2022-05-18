@@ -130,10 +130,9 @@ export const MyDrawer = (props) => {
       icon: (
         <AddIcon
           sx={{
-            color: theme.palette.drawer.drawerIcon,
-
             fontSize: currentPage === 5 ? focusedIconSize : unfocusedIconSize,
           }}
+          htmlColor={unFocusedColor}
         />
       ),
       title: textContainer.AddNavBarItem,
@@ -143,7 +142,6 @@ export const MyDrawer = (props) => {
       icon: (
         <CategoryOutlinedIcon
           sx={{
-            color: theme.palette.drawer.drawerIcon,
             fontSize: currentPage === 1 ? focusedIconSize : unfocusedIconSize,
           }}
           htmlColor={iconColor(1)}
@@ -157,8 +155,6 @@ export const MyDrawer = (props) => {
       icon: (
         <StarsIcon
           sx={{
-            color: theme.palette.drawer.drawerIcon,
-
             fontSize: currentPage === 2 ? focusedIconSize : unfocusedIconSize,
           }}
           htmlColor={iconColor(2)}
