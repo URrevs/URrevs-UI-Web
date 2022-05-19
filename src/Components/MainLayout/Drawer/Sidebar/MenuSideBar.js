@@ -2,7 +2,7 @@ import { Paper, Slide } from "@mui/material";
 import React from "react";
 import Menu from "../../../../pages/20_Menu";
 
-export const MenuSideBar = ({ drawer, open }) => {
+export const MenuSideBar = ({ drawerRef, open }) => {
   return (
     <React.Fragment>
       <Slide direction="left" in={open} mountOnEnter unmountOnExit>
@@ -10,14 +10,16 @@ export const MenuSideBar = ({ drawer, open }) => {
           sx={{
             position: "fixed",
             top: "45px",
-            left: drawer ? drawer : "10px",
+            left: drawerRef.current?.clientWidth
+              ? drawerRef.current.clientWidth
+              : "10px",
             width: "400px",
             height: "93vh",
             zIndex: 1,
             overflow: "auto",
           }}
         >
-          <Menu />
+          <Menu isDesktop={true} drawerRef={drawerRef} />
         </Paper>
       </Slide>
     </React.Fragment>

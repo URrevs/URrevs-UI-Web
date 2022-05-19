@@ -7,7 +7,7 @@ import ListItemNavigator from "../Components/Shared/ListItemNavigator";
 import { useSelector } from "react-redux";
 import { Box, List } from "@mui/material";
 
-export const SettingsScreen = () => {
+export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const language = useSelector((state) => state.language.language);
 
@@ -18,7 +18,7 @@ export const SettingsScreen = () => {
     languageSub: language === "ar" ? "العربية" : "English",
     theme: "الابيض",
   };
-  console.log(language);
+
   const listItems = [
     {
       title: pageDictionary.language,
@@ -45,8 +45,12 @@ export const SettingsScreen = () => {
       />
     );
   };
+
   return (
-    <CustomAppBar showBackBtn showLabel label="الاعدادات">
+    <React.Fragment>
+      {isDesktop ? null : (
+        <CustomAppBar showBackBtn showLabel label="الاعدادات" />
+      )}
       <List>
         <Box>
           {listItems.map((item, index) => (
@@ -62,6 +66,6 @@ export const SettingsScreen = () => {
           ))}
         </Box>
       </List>
-    </CustomAppBar>
+    </React.Fragment>
   );
 };

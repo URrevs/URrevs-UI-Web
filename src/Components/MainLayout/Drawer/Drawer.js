@@ -185,7 +185,7 @@ export const MyDrawer = (props) => {
 
   return (
     <React.Fragment>
-      <MenuSideBar open={menu} drawer={drawerRef.current.clientWidth} />
+      <MenuSideBar open={menu} drawerRef={drawerRef} />
       <PerDrawer
         ref={drawerRef}
         variant="permanent"
