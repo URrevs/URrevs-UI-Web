@@ -67,6 +67,9 @@ function App() {
         lg: 1200,
       },
     },
+    sideBar: {
+      height: "59px",
+    },
 
     palette: {
       mode: isDark ? "dark" : "light",

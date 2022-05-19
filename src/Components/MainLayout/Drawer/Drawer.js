@@ -11,6 +11,7 @@ import ForumTwoToneIcon from "@mui/icons-material/ForumTwoTone";
 import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
 import AddBoxTwoToneIcon from "@mui/icons-material/AddBoxTwoTone";
 import RateReviewTwoToneIcon from "@mui/icons-material/RateReviewTwoTone";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { Paper, Slide, Typography, useMediaQuery } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
@@ -182,61 +183,73 @@ export const MyDrawer = (props) => {
   const handleDrawerClose = () => {
     props.setOpen(false);
   };
-
+  const handleClickAway = () => {
+    setMenu(false);
+  };
   return (
     <React.Fragment>
-      <MenuSideBar open={menu} drawerRef={drawerRef} />
-      <PerDrawer
-        ref={drawerRef}
-        variant="permanent"
-        open={open}
-        onClose={handleDrawerClose}
+      <ClickAwayListener
+        mouseEvent="onMouseDown"
+        touchEvent="onTouchStart"
+        onClickAway={handleClickAway}
       >
-        {/* <DrawerHeader>
+        <div>
+          <MenuSideBar open={menu} drawerRef={drawerRef} />
+          <PerDrawer
+            ref={drawerRef}
+            variant="permanent"
+            open={open}
+            onClose={handleDrawerClose}
+          >
+            {/* <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {language !== "ar" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
       </DrawerHeader> */}
-        <Divider />
-        <div style={{ ...theme.mixins.toolbar }}></div>
-        <List>
-          {drawerTiles.map((item) => (
-            <NavLink
-              style={{
-                textDecoration: "none",
-                color: `${theme.palette.drawer.tileText}`,
-              }}
-              end
-              to={item.path}
-              key={item.path}
-            >
-              <ListItem onClick={item.onClick} button key={item.title}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText
-                  style={{ textAlign: language === "ar" ? "right" : "left" }}
+            <Divider />
+            <div style={{ ...theme.mixins.toolbar }}></div>
+            <List>
+              {drawerTiles.map((item) => (
+                <NavLink
+                  style={{
+                    textDecoration: "none",
+                    color: `${theme.palette.drawer.tileText}`,
+                  }}
+                  end
+                  to={item.path}
+                  key={item.path}
                 >
-                  <Typography>{item.title}</Typography>
-                </ListItemText>
-              </ListItem>
-            </NavLink>
-          ))}
-          <ListItem
-            button
-            onClick={() => {
-              setMenu(!menu);
-            }}
-          >
-            <ListItemIcon>
-              <MenuIcon
-                sx={{
-                  fontSize: menu ? focusedIconSize : unfocusedIconSize,
+                  <ListItem onClick={item.onClick} button key={item.title}>
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText
+                      style={{
+                        textAlign: language === "ar" ? "right" : "left",
+                      }}
+                    >
+                      <Typography>{item.title}</Typography>
+                    </ListItemText>
+                  </ListItem>
+                </NavLink>
+              ))}
+              <ListItem
+                button
+                onClick={() => {
+                  setMenu(!menu);
                 }}
-                htmlColor={menu ? focusedColor : unFocusedColor}
-              />
-            </ListItemIcon>
-          </ListItem>
-        </List>
-      </PerDrawer>
+              >
+                <ListItemIcon>
+                  <MenuIcon
+                    sx={{
+                      fontSize: menu ? focusedIconSize : unfocusedIconSize,
+                    }}
+                    htmlColor={menu ? focusedColor : unFocusedColor}
+                  />
+                </ListItemIcon>
+              </ListItem>
+            </List>
+          </PerDrawer>
+        </div>
+      </ClickAwayListener>
     </React.Fragment>
   );
 };

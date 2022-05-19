@@ -19,7 +19,7 @@ export const SettingsSideBar = ({
         <Paper
           sx={{
             position: "fixed",
-            top: "45px",
+            top: theme.sideBar.height,
             left: drawerRef.current?.clientWidth
               ? drawerRef.current.clientWidth
               : "10px",
