@@ -112,15 +112,18 @@ export const AppBarActions = ({
     <Fragment>
       <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
         {/* search icon */}
-        {isMobile ? (
-          showSearch && (
-            <CircleBtn onClick={navigateToSearchPage}>
-              <SearchIcon />
-            </CircleBtn>
-          )
-        ) : (
-          <TextField {...params} sx={{ padding: "0px 15px", width: "100%" }} />
-        )}
+        {isMobile
+          ? showSearch && (
+              <CircleBtn onClick={navigateToSearchPage}>
+                <SearchIcon />
+              </CircleBtn>
+            )
+          : showSearch && (
+              <TextField
+                {...params}
+                sx={{ padding: "0px 15px", width: "100%" }}
+              />
+            )}
         {/* user account */}
         {showProfile && (
           <CircleBtn
