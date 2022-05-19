@@ -116,7 +116,9 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       },
       endIcon: isDesktop ? (
         <KeyboardArrowLeftOutlinedIcon sx={{ fontSize: 40 }} />
-      ) : null,
+      ) : (
+        ""
+      ),
     },
     //Aboutus
     {
@@ -217,11 +219,14 @@ export default function Menu({ isDesktop = false, drawerRef }) {
 
   return (
     <React.Fragment>
-      <SettingsSideBar
-        settingsSlide={settingsSlide}
-        setSettingsSlide={setSettingsSlide}
-        drawerRef={drawerRef}
-      />
+      {isDesktop ? (
+        <SettingsSideBar
+          settingsSlide={settingsSlide}
+          setSettingsSlide={setSettingsSlide}
+          drawerRef={drawerRef}
+        />
+      ) : null}
+
       <Box
         style={{
           //Margin from top appbar
