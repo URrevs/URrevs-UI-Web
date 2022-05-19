@@ -47,6 +47,7 @@ export const AppBarActions = ({
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [searchSuggestion, setSearchSuggestion] = React.useState(false);
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const language = useAppSelector((state) => state.language.language);
   const isDark = useAppSelector((state) => state.darkMode.isDark);
@@ -122,6 +123,14 @@ export const AppBarActions = ({
               <TextField
                 {...params}
                 sx={{ padding: "0px 15px", width: "100%" }}
+                onFocus={() => {
+                  console.log("focus");
+                  setSearchSuggestion(true);
+                }}
+                onBlur={() => {
+                  console.log("blur");
+                  setSearchSuggestion(false);
+                }}
               />
             )}
         {/* user account */}
