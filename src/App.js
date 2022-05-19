@@ -23,6 +23,7 @@ import { CompanyProfile } from "./pages/14_CompanyProfile";
 import { AllProductsScreen } from "./pages/16_AllProductsScreen";
 import ReviewPostingScreen from "./pages/18_ReviewPostingScreen";
 import Menu from "./pages/20_Menu";
+import { SettingsScreen } from "./pages/21_SettingsScreen";
 import { AdminPanel } from "./pages/26_AdminPanel";
 import { UpdateProducts } from "./pages/29_UpdateProducts";
 import Reviews from "./pages/2_HomePageScrolling";
@@ -298,6 +299,10 @@ function App() {
                     <Route path={ROUTES_NAMES.MENU}>
                       <Route index element={<Menu />} />
                     </Route>
+                    <Route
+                      path={ROUTES_NAMES.SETTINGS}
+                      element={<SettingsScreen />}
+                    />
                     <Route path={ROUTES_NAMES.ADMIN_PANEL}>
                       <Route index element={<AdminPanel />} />
                       <Route path={ROUTES_NAMES.UPDATE}>
