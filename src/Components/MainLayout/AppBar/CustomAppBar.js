@@ -18,7 +18,6 @@ const CustomAppBarStyled = styled(MuiAppBar, {
 })(({ theme, direction }) => ({
   direction: direction,
   minHeight: 45,
-  padding: "7px",
   boxShadow: "0 1px 1px 0px #dbdbdb",
   background: theme.palette.appBar.appBarColor,
 }));
@@ -42,7 +41,6 @@ export const CustomAppBar = ({
 }) => {
   const theme = useTheme();
   const backButtonDirection = theme.direction === "rtl" ? -1 : 1;
-  const isMobile = useMediaQuery("(max-width:700px)");
   const navigate = useNavigate();
 
   const backBtnHandler = () => {
@@ -52,83 +50,85 @@ export const CustomAppBar = ({
 
   return (
     <div>
-      <Box>
-        <CustomAppBarStyled
-          style={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <Toolbar
-            variant="dense"
+      {theme.isMobile && (
+        <Box>
+          <CustomAppBarStyled
             style={{
-              justifyContent: "space-between",
-              boxShadow: "none",
-              minHeight: 45,
-              padding: "0 16px",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            <div style={{ display: "flex" }}>
-              <Fragment>
-                {showBackBtn && (
-                  <IconButton onClick={backBtnHandler}>
-                    <KeyboardBackspaceRoundedIcon
-                      htmlColor={theme.palette.appBar.backButton}
-                      sx={{
-                        transform: `scale(${backButtonDirection})`,
-                      }}
+            <Toolbar
+              variant="dense"
+              style={{
+                justifyContent: "space-between",
+                boxShadow: "none",
+                minHeight: 45,
+                padding: "0 16px",
+              }}
+            >
+              <div style={{ display: "flex" }}>
+                <Fragment>
+                  {showBackBtn && (
+                    <IconButton onClick={backBtnHandler}>
+                      <KeyboardBackspaceRoundedIcon
+                        htmlColor={theme.palette.appBar.backButton}
+                        sx={{
+                          transform: `scale(${backButtonDirection})`,
+                        }}
+                      />
+                    </IconButton>
+                  )}
+                  {showLogo && (
+                    <img
+                      width={logoWidth}
+                      height={logoHeight}
+                      alt="URrevs"
+                      src="./images/logo.png"
                     />
-                  </IconButton>
-                )}
-                {showLogo && (
-                  <img
-                    width={logoWidth}
-                    height={logoHeight}
-                    alt="URrevs"
-                    src="./images/logo.png"
+                  )}
+                </Fragment>
+                {englishName ? (
+                  <AppBarActions
+                    showSearch={showSearch}
+                    showLanguage={showLanguage}
+                    showDark={showDark}
+                    showProfile={showProfile}
                   />
+                ) : (
+                  showLabel && (
+                    <Typography variant="S20W700C050505">{label}</Typography>
+                  )
                 )}
-              </Fragment>
-              {englishName ? (
-                <AppBarActions
-                  showSearch={showSearch}
-                  showLanguage={showLanguage}
-                  showDark={showDark}
-                  showProfile={showProfile}
-                />
-              ) : (
-                showLabel && (
-                  <Typography variant="S20W700C050505">{label}</Typography>
-                )
-              )}
-            </div>
-            <div style={{ width: isMobile ? "" : "100%" }}>
-              {!englishName ? (
-                <AppBarActions
-                  showSearch={showSearch}
-                  showLanguage={showLanguage}
-                  showDark={showDark}
-                  showProfile={showProfile}
-                />
-              ) : (
-                showLabel && (
-                  <Typography variant="S20W700C050505">{label}</Typography>
-                )
-              )}
-            </div>
-          </Toolbar>
-        </CustomAppBarStyled>
-        <Box
-          style={{
-            marginTop: "64px",
-          }}
-        >
-          {tabBar}
+              </div>
+              <div style={{ width: theme.isMobile ? "" : "100%" }}>
+                {!englishName ? (
+                  <AppBarActions
+                    showSearch={showSearch}
+                    showLanguage={showLanguage}
+                    showDark={showDark}
+                    showProfile={showProfile}
+                  />
+                ) : (
+                  showLabel && (
+                    <Typography variant="S20W700C050505">{label}</Typography>
+                  )
+                )}
+              </div>
+            </Toolbar>
+          </CustomAppBarStyled>
+          <Box
+            style={{
+              marginTop: "64px",
+            }}
+          >
+            {tabBar}
+          </Box>
         </Box>
-      </Box>
+      )}
       <Box
         style={{
-          marginTop: "16px",
+          // marginTop: "16px",
         }}
       >
         {children}

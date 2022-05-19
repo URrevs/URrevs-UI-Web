@@ -33,7 +33,7 @@ export default function Layout(props) {
 
   const logoWidth = 94;
   const logoHeight = 30;
-  const appBarHeight = theme.isMobile ? 45 : null;
+  const appBarHeight = theme.isMobile ? 45 : 64;
 
   const dictionary = useAppSelector((state) => state.language.textContainer);
 
@@ -42,7 +42,6 @@ export default function Layout(props) {
 
   const [open, setOpen] = React.useState(false);
   const [searchBarFocused, setSearchBarFocused] = React.useState(false);
-  const isMobile = useMediaQuery("(max-width:700px)");
 
   const onSearchBarFocus = () => {
     setSearchBarFocused(true);
@@ -70,23 +69,6 @@ export default function Layout(props) {
         appBarHeight={appBarHeight}
       >
         <Toolbar variant="dense" sx={{ minHeight: appBarHeight }}>
-          {/* drawer button */}
-          {theme.isMobile ? (
-            <></>
-          ) : (
-            <IconButton
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={{
-                margin: 0,
-                padding: 0,
-                ...(open && !isMobile && { display: "none" }),
-              }}
-            >
-              <MenuIcon htmlColor={theme.palette.drawer.drawerIcon} />
-            </IconButton>
-          )}
           {/* logo */}
           <animated.div
             style={{
@@ -102,12 +84,12 @@ export default function Layout(props) {
             />
           </animated.div>
 
-          <SearchBar
+          {/* <SearchBar
             searchTitle={dictionary.search}
             onSearchBarFocus={onSearchBarFocus}
             onSearchBarBlur={onSearchBarBlur}
             isSearchBarFocused={searchBarFocused}
-          />
+          /> */}
 
           <AppBarActions
             showSearch={true}
@@ -128,8 +110,7 @@ export default function Layout(props) {
 
   return (
     <Box sx={{}}>
-      {/* {customAppBar()} */}
-      {/* {appBar()} */}
+      {!theme.isMobile && appBar()}
       {theme.isMobile ? <></> : <MyDrawer open={open} setOpen={setOpen} />}
       <Registeration />
       <CustomizedSnackbar />
