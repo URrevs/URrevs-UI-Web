@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { languageActions } from "../../../store/languageSlice";
 import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { uiActions } from "../../../store/uiRegisterDialogSlice";
+import { regDialogActions } from "../../../store/uiRegisterDialogSlice";
 import ROUTES_NAMES from "../../../RoutesNames";
 
 const circleWidth = 35;
@@ -60,7 +60,7 @@ export const AppBarActions = ({
     navigate(`/${ROUTES_NAMES.SEARCH}`);
   };
   const handleRegestrationOpen = () => {
-    dispatch(uiActions.toggleRegistration());
+    dispatch(regDialogActions.toggleRegistration());
   };
 
   return (

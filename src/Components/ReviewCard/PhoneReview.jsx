@@ -21,7 +21,6 @@ export default function PhoneReview({
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisPhoneReviewMutation();
 
-  console.log(reviewDetails);
   const actionBtnFunction = async () => {
     try {
       deleteReviewFromStore(reviewDetails._id);

@@ -24,9 +24,11 @@ export default function CustomizedSnackbar() {
 
   const action = (
     <React.Fragment>
-      <Button color="secondary" size="small" onClick={actionFn}>
-        {actionText}
-      </Button>
+      {showActionBtn && (
+        <Button color="secondary" size="small" onClick={actionFn}>
+          {actionText}
+        </Button>
+      )}
       <IconButton
         size="small"
         aria-label="close"
@@ -46,7 +48,7 @@ export default function CustomizedSnackbar() {
         autoHideDuration={6000}
         onClose={handleClose}
         message={message}
-        action={showActionBtn && action}
+        action={action}
       />
     </div>
   );

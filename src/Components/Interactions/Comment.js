@@ -17,6 +17,7 @@ export const Comment = ({
   commentUnlike,
   submitReplyHandler,
   avatar,
+  userId,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -54,6 +55,7 @@ export const Comment = ({
           reply={false}
           buttonName={buttonName}
           onClickHandler={onLikeClickHandler}
+          ownerId={userId}
         ></InteractionFooter>
       </InteractionBody>
       <div>

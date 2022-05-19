@@ -9,10 +9,10 @@ interface initialState {
 }
 
 const initialState: initialState = {
-  show: true,
-  message: "aaa",
-  showActionBtn: true,
-  actionBtnText: "aaa",
+  show: false,
+  message: "",
+  showActionBtn: false,
+  actionBtnText: "",
   actionBtnFunction: () => {},
 };
 

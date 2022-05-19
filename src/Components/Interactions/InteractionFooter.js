@@ -1,7 +1,9 @@
+import { ButtonBase, styled, Typography } from "@mui/material";
 import React from "react";
-import { styled, Button, Typography, ButtonBase } from "@mui/material";
-import { useAppSelector } from "../../store/hooks";
 import { convertDateToString } from "../../functions/convertDateToString";
+import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+
 const CommentButton = styled(
   ButtonBase,
   {}
@@ -21,16 +23,26 @@ export const InteractionFooter = ({
   onClickHandler,
   condition,
   reply,
-
+  ownerId,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const lang = useAppSelector((state) => state.language.language);
   const transDate = convertDateToString(date, lang);
 
+  // get current user to chech if there's a user or not
+  const currentUser = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  const checkSignedIn = useCheckSignedIn;
+
+  const handler = () => {
+    onClickHandler();
+  };
+  
   return (
     <React.Fragment>
-      <CommentButton onClick={onClickHandler}>
+      <CommentButton onClick={handler}>
         <Typography variant={condition ? "S13W700C2196F3" : "S13W700C050505"}>
           {buttonName}
         </Typography>
