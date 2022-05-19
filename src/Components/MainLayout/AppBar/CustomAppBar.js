@@ -1,7 +1,13 @@
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
-import { Box, IconButton, Toolbar, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +18,7 @@ const CustomAppBarStyled = styled(MuiAppBar, {
 })(({ theme, direction }) => ({
   direction: direction,
   minHeight: 45,
+  padding: "7px",
   boxShadow: "0 1px 1px 0px #dbdbdb",
   background: theme.palette.appBar.appBarColor,
 }));
@@ -35,7 +42,7 @@ export const CustomAppBar = ({
 }) => {
   const theme = useTheme();
   const backButtonDirection = theme.direction === "rtl" ? -1 : 1;
-
+  const isMobile = useMediaQuery("(max-width:700px)");
   const navigate = useNavigate();
 
   const backBtnHandler = () => {
@@ -95,7 +102,7 @@ export const CustomAppBar = ({
                 )
               )}
             </div>
-            <div>
+            <div style={{ width: isMobile ? "" : "100%" }}>
               {!englishName ? (
                 <AppBarActions
                   showSearch={showSearch}
@@ -113,7 +120,7 @@ export const CustomAppBar = ({
         </CustomAppBarStyled>
         <Box
           style={{
-            marginTop: "45px",
+            marginTop: "64px",
           }}
         >
           {tabBar}

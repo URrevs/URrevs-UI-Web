@@ -100,6 +100,10 @@ function App() {
         searchBarColor: isDark ? "#3A3B3C" : COLORS.ce5e5e7,
         searchIcon: isDark ? "#B0B3B8" : COLORS.c050505,
       },
+      deskTopSearchBar: {
+        searchBarColor: isDark ? "#3A3B3C" : COLORS.ce5e5e7,
+        searchIcon: isDark ? "#B0B3B8" : COLORS.c65676b,
+      },
       interactionCard: {
         backgroundColor: COLORS.cffffff,
         iconColor: COLORS.c2196f3,

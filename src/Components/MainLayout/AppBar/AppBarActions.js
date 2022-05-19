@@ -11,7 +11,13 @@ import { Fragment } from "react";
 import { isDarkActions } from "../../../store/darkModeSlice";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { languageActions } from "../../../store/languageSlice";
-import { Avatar } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  InputAdornment,
+  TextField,
+  useMediaQuery,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { regDialogActions } from "../../../store/uiRegisterDialogSlice";
 import ROUTES_NAMES from "../../../RoutesNames";
@@ -41,12 +47,51 @@ export const AppBarActions = ({
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const textContainer = useAppSelector((state) => state.language.textContainer);
   const language = useAppSelector((state) => state.language.language);
   const isDark = useAppSelector((state) => state.darkMode.isDark);
+  const isMobile = useMediaQuery("(max-width:700px)");
 
   const theme = useTheme();
-
+  const params = {
+    variant: "standard",
+    sx: {
+      flex: 1,
+      // width: "100",
+      input: {
+        "&::placeholder": {
+          opacity: 1,
+          fontWeight: 300,
+          fontSize: 16,
+        },
+      },
+    },
+    placeholder: textContainer.searchForAProductOrACompany,
+    InputProps: {
+      // type: "search",
+      disableUnderline: true,
+      startAdornment: (
+        <InputAdornment position="start">
+          <IconButton onClick={() => {}}>
+            <SearchIcon htmlColor={theme.palette.deskTopSearchBar.searchIcon} />
+          </IconButton>
+        </InputAdornment>
+      ),
+      style: {
+        width: "100%",
+        height: "50px",
+        ...theme.typography.S16W500C050505,
+        alignContent: "center",
+        color: theme.palette.textField.inputFieldText,
+        background: theme.palette.textField.inputFieldBackground,
+        borderRadius: 90,
+        // border: `0.1px solid ${theme.palette.textField.borderColor} `,
+        //
+        // borderRadius: TEXT_FIELD_BORDER_RADIUS,
+        // border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,
+      },
+    },
+  };
   const photo = useAppSelector((state) => state.auth.photo);
   const name = useAppSelector((state) => state.auth.name);
 
@@ -65,51 +110,59 @@ export const AppBarActions = ({
 
   return (
     <Fragment>
-      {/* search icon */}
-      {showSearch && (
-        <CircleBtn onClick={navigateToSearchPage}>
-          <SearchIcon />
-        </CircleBtn>
-      )}
-      {/* user account */}
-      {showProfile && (
-        <CircleBtn
-          onClick={!isLoggedIn ? handleRegestrationOpen : navigateToProfilePage}
-        >
-          {!isLoggedIn ? (
-            <AccountCircle />
-          ) : (
-            <Avatar
-              sx={{ width: circleWidth, height: circleHeight }}
-              src={photo}
-            />
-          )}
-        </CircleBtn>
-      )}
-      {/* // language */}
-      {showLanguage && (
-        <CircleBtn
-          onClick={() => {
-            dispatch(
-              languageActions.switchLanguage({
-                language: language === "en" ? "ar" : "en",
-              })
-            );
-          }}
-        >
-          {language !== "en" ? "En" : "ع"}
-        </CircleBtn>
-      )}
-      {/* // darkMode */}
-      {showDark && (
-        <CircleBtn
-          onClick={() => {
-            dispatch(isDarkActions.switchMode());
-          }}
-        >
-          {isDark ? <DarkModeIcon /> : <LightModeIcon />}
-        </CircleBtn>
-      )}
+      <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+        {/* search icon */}
+        {isMobile ? (
+          showSearch && (
+            <CircleBtn onClick={navigateToSearchPage}>
+              <SearchIcon />
+            </CircleBtn>
+          )
+        ) : (
+          <TextField {...params} sx={{ padding: "0px 15px", width: "100%" }} />
+        )}
+        {/* user account */}
+        {showProfile && (
+          <CircleBtn
+            onClick={
+              !isLoggedIn ? handleRegestrationOpen : navigateToProfilePage
+            }
+          >
+            {!isLoggedIn ? (
+              <AccountCircle />
+            ) : (
+              <Avatar
+                sx={{ width: circleWidth, height: circleHeight }}
+                src={photo}
+              />
+            )}
+          </CircleBtn>
+        )}
+        {/* // language */}
+        {showLanguage && (
+          <CircleBtn
+            onClick={() => {
+              dispatch(
+                languageActions.switchLanguage({
+                  language: language === "en" ? "ar" : "en",
+                })
+              );
+            }}
+          >
+            {language !== "en" ? "En" : "ع"}
+          </CircleBtn>
+        )}
+        {/* // darkMode */}
+        {showDark && (
+          <CircleBtn
+            onClick={() => {
+              dispatch(isDarkActions.switchMode());
+            }}
+          >
+            {isDark ? <DarkModeIcon /> : <LightModeIcon />}
+          </CircleBtn>
+        )}
+      </Box>
     </Fragment>
   );
 };

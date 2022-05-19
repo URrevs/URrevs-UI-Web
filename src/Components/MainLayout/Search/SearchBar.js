@@ -59,6 +59,7 @@ export const SearchBar = (props) => {
         <SearchIconWrapper>
           <SearchIcon htmlColor={theme.palette.searchIcon} />
         </SearchIconWrapper>
+
         <StyledInputBase
           placeholder={props.searchTitle}
           inputProps={{ "aria-label": "search" }}
