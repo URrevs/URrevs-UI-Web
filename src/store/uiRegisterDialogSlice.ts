@@ -18,6 +18,6 @@ const regDialogSlice = createSlice({
   },
 });
 
-export const uiActions = regDialogSlice.actions;
+export const regDialogActions = regDialogSlice.actions;
 export const uiSliceName = regDialogSlice.name;
 export default regDialogSlice;

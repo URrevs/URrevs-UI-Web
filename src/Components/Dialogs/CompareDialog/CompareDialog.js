@@ -55,7 +55,7 @@ export const CompareDialog = ({ item, handleClose }) => {
                   compareId: compareItem,
                 })
               );
-              console.log(compareItem);
+              // console.log(compareItem);
               try {
                 indicateComparison({ pid1: item._id, pid2: compareItem.pid });
               } catch (e) {
