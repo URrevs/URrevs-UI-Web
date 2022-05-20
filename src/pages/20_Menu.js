@@ -32,16 +32,20 @@ import FacebookIcon from "../Components/Icons/FacebookIcon";
 import LinkedIn from "../Components/Icons/LinkedIn";
 import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
 import { SettingsSideBar } from "../Components/MainLayout/Drawer/Sidebar/SettingsSideBar";
+import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
 
 export default function Menu({ isDesktop = false, drawerRef }) {
   const theme = useTheme();
 
   const currentUserProfile = useAppSelector((state) => state.auth);
   const profileData = currentUserProfile;
-  const [open, setOpen] = React.useState(false);
+  const [signOutDialog, setSignOutDialog] = React.useState(false);
+  const [invitationCodeDialog, setInvitationCodeDialog] = React.useState(true);
   const [settingsSlide, setSettingsSlide] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleSignOutOpen = () => setSignOutDialog(true);
+  const handleSignOutClose = () => setSignOutDialog(false);
+  const handleInvitationOpen = () => setInvitationCodeDialog(true);
+  const handleInvitationClose = () => setInvitationCodeDialog(false);
   const isMobile = useMediaQuery("(max-width:700px)");
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionry = {
@@ -140,7 +144,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       icon: <LogoutOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
       onClick: () => {
-        handleOpen();
+        handleSignOutOpen();
       },
       authenticate: currentUserProfile.isLoggedIn,
     },
@@ -219,6 +223,9 @@ export default function Menu({ isDesktop = false, drawerRef }) {
 
   return (
     <React.Fragment>
+      {/* <Modal open={open} onClose={handleClose} dir={theme.direction}>
+        <InvitationDialog />
+      </Modal> */}
       {isDesktop ? (
         <SettingsSideBar
           settingsSlide={settingsSlide}
@@ -239,9 +246,13 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       >
         {isMobile ? <CustomAppBar showLogo showSearch showProfile /> : null}
 
-        <Modal open={open} onClose={handleClose} dir={theme.direction}>
+        <Modal
+          open={signOutDialog}
+          onClose={handleSignOutClose}
+          dir={theme.direction}
+        >
           <Box>
-            <SignoutDialog handleClose={handleClose} />
+            <SignoutDialog handleClose={handleSignOutClose} />
           </Box>
         </Modal>
         <List>
