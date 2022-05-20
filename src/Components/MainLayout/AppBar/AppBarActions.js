@@ -21,6 +21,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { regDialogActions } from "../../../store/uiRegisterDialogSlice";
 import ROUTES_NAMES from "../../../RoutesNames";
+import { SearchSuggestion } from "./SearchSuggestion";
 
 const circleWidth = 35;
 const circleHeight = 35;
@@ -48,54 +49,15 @@ export const AppBarActions = ({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [searchSuggestion, setSearchSuggestion] = React.useState(false);
-  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   const language = useAppSelector((state) => state.language.language);
   const isDark = useAppSelector((state) => state.darkMode.isDark);
   const isMobile = useMediaQuery("(max-width:700px)");
 
   const theme = useTheme();
-  const params = {
-    variant: "standard",
-    sx: {
-      flex: 1,
-      // width: "100",
-      input: {
-        "&::placeholder": {
-          opacity: 1,
-          fontWeight: 300,
-          fontSize: 16,
-        },
-      },
-    },
-    placeholder: textContainer.searchForAProductOrACompany,
-    InputProps: {
-      // type: "search",
-      disableUnderline: true,
-      startAdornment: (
-        <InputAdornment position="start">
-          <IconButton onClick={() => {}}>
-            <SearchIcon htmlColor={theme.palette.deskTopSearchBar.searchIcon} />
-          </IconButton>
-        </InputAdornment>
-      ),
-      style: {
-        width: "100%",
-        height: "50px",
-        ...theme.typography.S16W500C050505,
-        alignContent: "center",
-        color: theme.palette.textField.inputFieldText,
-        background: theme.palette.textField.inputFieldBackground,
-        borderRadius: 90,
-        // border: `0.1px solid ${theme.palette.textField.borderColor} `,
-        //
-        // borderRadius: TEXT_FIELD_BORDER_RADIUS,
-        // border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,
-      },
-    },
-  };
+
   const photo = useAppSelector((state) => state.auth.photo);
   const name = useAppSelector((state) => state.auth.name);
-
   const user = useAppSelector((state) => state.auth);
   const isLoggedIn = user.isLoggedIn;
 
@@ -111,7 +73,13 @@ export const AppBarActions = ({
 
   return (
     <Fragment>
-      <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
         {/* search icon */}
         {isMobile
           ? showSearch && (
@@ -120,18 +88,11 @@ export const AppBarActions = ({
               </CircleBtn>
             )
           : showSearch && (
-              <TextField
-                {...params}
-                sx={{ padding: "0px 15px", width: "100%" }}
-                onFocus={() => {
-                  console.log("focus");
-                  setSearchSuggestion(true);
-                }}
-                onBlur={() => {
-                  console.log("blur");
-                  setSearchSuggestion(false);
-                }}
-              />
+              <Fragment>
+                <Box sx={{ width: "100%" }}>
+                  <SearchSuggestion />
+                </Box>
+              </Fragment>
             )}
         {/* user account */}
         {showProfile && (
@@ -175,6 +136,7 @@ export const AppBarActions = ({
           </CircleBtn>
         )}
       </Box>
+      {/* {theme.isMobile ? null : <SearchSuggestion />} */}
     </Fragment>
   );
 };

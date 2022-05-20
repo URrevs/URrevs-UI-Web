@@ -18,6 +18,7 @@ const CustomAppBarStyled = styled(MuiAppBar, {
 })(({ theme, direction }) => ({
   direction: direction,
   minHeight: 45,
+
   boxShadow: "0 1px 1px 0px #dbdbdb",
   background: theme.palette.appBar.appBarColor,
 }));
@@ -67,7 +68,11 @@ export const CustomAppBar = ({
                 padding: "0 16px",
               }}
             >
-              <div style={{ display: "flex" }}>
+              <div
+                style={{
+                  display: "flex",
+                }}
+              >
                 <Fragment>
                   {showBackBtn && (
                     <IconButton onClick={backBtnHandler}>
@@ -127,9 +132,11 @@ export const CustomAppBar = ({
         </Box>
       )}
       <Box
-        style={{
-          // marginTop: "16px",
-        }}
+        style={
+          {
+            // marginTop: "16px",
+          }
+        }
       >
         {children}
       </Box>
