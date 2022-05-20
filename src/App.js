@@ -73,9 +73,9 @@ function App() {
       height: "59px",
     },
     appBar: {
-      zIndex: 1251,
+      zIndex: 1500,
     },
-    drawer: { zIndex: 1250, width: "72px" },
+    drawer: { zIndex: 1000, width: "72px" },
 
     palette: {
       mode: isDark ? "dark" : "light",

@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react";
 import { useMediaQuery } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import { styled } from "@mui/material/styles";
@@ -25,6 +26,7 @@ const AppBar = styled(MuiAppBar, {
 
 export const MyAppBar = (props) => {
   const open = props.open;
+  const theme = useTheme();
   const isMobile = useMediaQuery("(max-width:700px)");
 
   return (
@@ -33,6 +35,7 @@ export const MyAppBar = (props) => {
       elevation={0}
       open={open}
       style={{
+        zIndex: theme.appBar.zIndex,
         height: props.appBarHeight,
         width: isMobile
           ? "100%"

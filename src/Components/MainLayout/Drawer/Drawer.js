@@ -66,7 +66,7 @@ const PerDrawer = styled(
   MuiDrawer,
   {}
 )(({ theme, open }) => ({
-  zIndex: 1,
+  zIndex: theme.drawer.zIndex,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
   ...(open && {
@@ -188,15 +188,6 @@ export const MyDrawer = (props) => {
   };
   return (
     <React.Fragment>
-      <ClickAwayListener
-        mouseEvent="onMouseDown"
-        touchEvent="onTouchStart"
-        onClickAway={handleClickAway}
-      >
-        <div>
-          <MenuSideBar open={menu} drawerRef={drawerRef} />
-        </div>
-      </ClickAwayListener>
       <PerDrawer
         ref={drawerRef}
         variant="permanent"
@@ -233,21 +224,30 @@ export const MyDrawer = (props) => {
               </ListItem>
             </NavLink>
           ))}
-          <ListItem
-            button
-            onClick={() => {
-              setMenu(!menu);
-            }}
+          <ClickAwayListener
+            mouseEvent="onMouseDown"
+            touchEvent="onTouchStart"
+            onClickAway={handleClickAway}
           >
-            <ListItemIcon>
-              <MenuIcon
-                sx={{
-                  fontSize: menu ? focusedIconSize : unfocusedIconSize,
+            <div>
+              <ListItem
+                button
+                onClick={() => {
+                  setMenu(!menu);
                 }}
-                htmlColor={menu ? focusedColor : unFocusedColor}
-              />
-            </ListItemIcon>
-          </ListItem>
+              >
+                <MenuSideBar open={menu} drawerRef={drawerRef} />
+                <ListItemIcon>
+                  <MenuIcon
+                    sx={{
+                      fontSize: menu ? focusedIconSize : unfocusedIconSize,
+                    }}
+                    htmlColor={menu ? focusedColor : unFocusedColor}
+                  />
+                </ListItemIcon>
+              </ListItem>
+            </div>
+          </ClickAwayListener>
         </List>
       </PerDrawer>
     </React.Fragment>
