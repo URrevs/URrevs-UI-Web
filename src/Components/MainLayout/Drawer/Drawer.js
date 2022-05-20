@@ -195,61 +195,61 @@ export const MyDrawer = (props) => {
       >
         <div>
           <MenuSideBar open={menu} drawerRef={drawerRef} />
-          <PerDrawer
-            ref={drawerRef}
-            variant="permanent"
-            open={open}
-            onClose={handleDrawerClose}
-          >
-            {/* <DrawerHeader>
+        </div>
+      </ClickAwayListener>
+      <PerDrawer
+        ref={drawerRef}
+        variant="permanent"
+        open={open}
+        onClose={handleDrawerClose}
+      >
+        {/* <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {language !== "ar" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
       </DrawerHeader> */}
-            <Divider />
-            <div style={{ ...theme.mixins.toolbar }}></div>
-            <List>
-              {drawerTiles.map((item) => (
-                <NavLink
+        <Divider />
+        <div style={{ ...theme.mixins.toolbar }}></div>
+        <List>
+          {drawerTiles.map((item) => (
+            <NavLink
+              style={{
+                textDecoration: "none",
+                color: `${theme.palette.drawer.tileText}`,
+              }}
+              end
+              to={item.path}
+              key={item.path}
+            >
+              <ListItem onClick={item.onClick} button key={item.title}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText
                   style={{
-                    textDecoration: "none",
-                    color: `${theme.palette.drawer.tileText}`,
+                    textAlign: language === "ar" ? "right" : "left",
                   }}
-                  end
-                  to={item.path}
-                  key={item.path}
                 >
-                  <ListItem onClick={item.onClick} button key={item.title}>
-                    <ListItemIcon>{item.icon}</ListItemIcon>
-                    <ListItemText
-                      style={{
-                        textAlign: language === "ar" ? "right" : "left",
-                      }}
-                    >
-                      <Typography>{item.title}</Typography>
-                    </ListItemText>
-                  </ListItem>
-                </NavLink>
-              ))}
-              <ListItem
-                button
-                onClick={() => {
-                  setMenu(!menu);
-                }}
-              >
-                <ListItemIcon>
-                  <MenuIcon
-                    sx={{
-                      fontSize: menu ? focusedIconSize : unfocusedIconSize,
-                    }}
-                    htmlColor={menu ? focusedColor : unFocusedColor}
-                  />
-                </ListItemIcon>
+                  <Typography>{item.title}</Typography>
+                </ListItemText>
               </ListItem>
-            </List>
-          </PerDrawer>
-        </div>
-      </ClickAwayListener>
+            </NavLink>
+          ))}
+          <ListItem
+            button
+            onClick={() => {
+              setMenu(!menu);
+            }}
+          >
+            <ListItemIcon>
+              <MenuIcon
+                sx={{
+                  fontSize: menu ? focusedIconSize : unfocusedIconSize,
+                }}
+                htmlColor={menu ? focusedColor : unFocusedColor}
+              />
+            </ListItemIcon>
+          </ListItem>
+        </List>
+      </PerDrawer>
     </React.Fragment>
   );
 };
