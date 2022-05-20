@@ -5,10 +5,14 @@ export const useCheckSignedIn = () => {
   const currentUser = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
-  if (!currentUser.isLoggedIn) {
-    console.log("show reg");
-    dispatch(regDialogActions.toggleRegistration());
-    return false;
+  function checkSignedIn() {
+    if (!currentUser.isLoggedIn) {
+      console.log("show reg");
+      dispatch(regDialogActions.toggleRegistration());
+      return false;
+    }
+    return true;
   }
-  return true;
+
+  return checkSignedIn;
 };

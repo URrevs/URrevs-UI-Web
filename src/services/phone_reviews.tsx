@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import APIComment from "../models/interfaces/APIComment.model";
 import { APIReview } from "../models/interfaces/APIReview.model";
 import { RootState } from "../store/store";
+import { snackbarActions } from "../store/uiSnackbarSlice";
 
 export const phoneReviewsApi = createApi({
   reducerPath: "phoneReviewsApi",
@@ -52,28 +53,18 @@ export const phoneReviewsApi = createApi({
           url: `/phone`,
           method: "POST",
           body: review,
-          // {
-          //   phoneId: review.phoneId,
-          //   companyId: review.companyId,
-          //   ownedDate: review.ownedDate,
-          //   generalRating: review.generalRating,
-          //   uiRating: review.uiRating,
-          //   manQuality: review.manQuality,
-          //   valFMon: review.valFMon,
-          //   camera: review.camera,
-          //   callQuality: review.callQuality,
-          //   battery: review.battery,
-          //   pros: review.pros,
-          //   cons: review.cons,
-          //   refCode: review.refCode,
-          //   companyRating: review.companyRating,
-          //   compPros: review.compPros,
-          //   compCons: review.compCons,
-          // },
         };
       },
-      // transformResponse: (response: { review: APIReview }) =>
-      //   new Review(response.review),
+
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (e: any) {
+          dispatch(
+            snackbarActions.showSnackbar({ message: e.error.data.status })
+          );
+        }
+      },
     }),
 
     likePhoneReview: builder.mutation({

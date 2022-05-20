@@ -9,7 +9,7 @@ import {
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import {
   useAuthenticateMutation,
   useGetCurrentUserProfileMutation,
@@ -21,6 +21,8 @@ import { ProductProfile } from "./pages/10_ProductProfile";
 import { ComparisonScreen } from "./pages/11_ComparisonScreen";
 import { CompanyProfile } from "./pages/14_CompanyProfile";
 import { AllProductsScreen } from "./pages/16_AllProductsScreen";
+// import CompanyQuestionFullScreen from "./pages/17_CompanyQuestionFullScreen";
+import PhoneQuestionFullScreen from "./pages/17_PhoneQuestionFullScreen";
 import ReviewPostingScreen from "./pages/18_ReviewPostingScreen";
 import Menu from "./pages/20_Menu";
 import { SettingsScreen } from "./pages/21_SettingsScreen";
@@ -235,6 +237,11 @@ function App() {
                 <Grid item md={2} sm={0.5} xs={0}></Grid>
                 <Grid item md={8} sm={11} xs={12}>
                   <Routes>
+                    {/* not found handling */}
+                    <Route path="/404" element={<div>404</div>} />
+                    <Route path="*" element={<Navigate to="/404" replace />} />
+
+                    {/* review full review */}
                     <Route
                       path={ROUTES_NAMES.EXACT_PHONE_REVIEW}
                       element={<PhoneReviewFullScreen />}
@@ -243,6 +250,16 @@ function App() {
                       path={ROUTES_NAMES.EXACT_COMPANY_REVIEW}
                       element={<CompanyReviewFullScreen />}
                     />
+
+                    {/* question full screen */}
+                    <Route
+                      path={ROUTES_NAMES.EXACT_PHONE_QUESTION}
+                      element={<PhoneQuestionFullScreen />}
+                    />
+                    {/* <Route
+                      path={ROUTES_NAMES.EXACT_COMPANY_QEXACT_PHONE_QUESTION}
+                      element={<CompanyQuestionFullScreen />}
+                    /> */}
                     <Route path={ROUTES_NAMES.HOME}>
                       <Route index element={<Reviews />} />
                       <Route path={ROUTES_NAMES.MENU}>

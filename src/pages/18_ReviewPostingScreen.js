@@ -390,6 +390,7 @@ const ReviewPostingScreen = () => {
               try {
                 const response = await addReview(reviewPost).unwrap();
               } catch (e) {
+                console.log("asd askjd bhasb", e);
                 setError(e);
               }
               setSubmitting(false);

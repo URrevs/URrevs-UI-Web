@@ -14,6 +14,8 @@ const ROUTES_NAMES = {
   USER_PROFILE: "user-profile",
   EXACT_PHONE_REVIEW: "phone-review",
   EXACT_COMPANY_REVIEW: "company-review",
+  EXACT_PHONE_QUESTION: "phone-question",
+  EXACT_COMPANY_QUESTION: "company-question",
   PHONE_PROFILE: "phone",
   COMPANY_PROFILE: "company",
   //level 3

@@ -1,6 +1,7 @@
 import { ButtonBase, styled, Typography } from "@mui/material";
 import React from "react";
 import { convertDateToString } from "../../functions/convertDateToString";
+import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
@@ -30,16 +31,18 @@ export const InteractionFooter = ({
   const lang = useAppSelector((state) => state.language.language);
   const transDate = convertDateToString(date, lang);
 
-  // get current user to chech if there's a user or not
-  const currentUser = useAppSelector((state) => state.auth);
-  const dispatch = useAppDispatch();
-
-  const checkSignedIn = useCheckSignedIn;
+  const checkSignedIn = useCheckSignedIn();
+  const checkOwnership = useCheckOwnership({
+    ownerId: ownerId,
+    message: "لا يمكنك الاعجاب بالتعليق الخاص بك",
+  });
 
   const handler = () => {
-    onClickHandler();
+    if (checkSignedIn() && checkOwnership()) {
+      onClickHandler();
+    }
   };
-  
+
   return (
     <React.Fragment>
       <CommentButton onClick={handler}>

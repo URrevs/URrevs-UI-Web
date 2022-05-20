@@ -5,13 +5,17 @@ export const useCheckOwnership = ({ ownerId, message }) => {
   const currentUser = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
-  if (currentUser.uid === ownerId) {
-    dispatch(
-      snackbarActions.showSnackbar({
-        message: "You can not like your own comment",
-      })
-    );
-    return false;
+  function checkOwnership() {
+    if (currentUser.uid === ownerId) {
+      dispatch(
+        snackbarActions.showSnackbar({
+          message: message,
+        })
+      );
+      return false;
+    }
+    return true;
   }
-  return true;
+
+  return checkOwnership;
 };
