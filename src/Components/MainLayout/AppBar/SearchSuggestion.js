@@ -230,12 +230,12 @@ export const SearchSuggestion = () => {
           setSearchSuggestion(true);
         }}
         onChange={(e) => {
-          // If no recent results
-          if (e.target.value === "") setSearchSuggestion(false);
-          // When Searching
-          if (!searchSuggestion || e.target.value !== "") {
-            setSearchSuggestion(true);
-          }
+          // // If no recent results
+          // if (e.target.value === "") setSearchSuggestion(false);
+          // // When Searching
+          // if (!searchSuggestion || e.target.value !== "") {
+          //   setSearchSuggestion(true);
+          // }
           // Show recent search
           if (e.target.value === "") {
             setResults(oldResults);
