@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import APIComment from "../models/interfaces/APIComment.model";
-import { APIReview } from "../models/interfaces/APIReview.model";
+import { APIQuestion } from "../models/interfaces/APIQuestion.model";
 import { RootState } from "../store/store";
+import { snackbarActions } from "../store/uiSnackbarSlice";
 
 export const phoneQuestionsApi = createApi({
   reducerPath: "phoneQuestionsApi",
@@ -20,29 +21,29 @@ export const phoneQuestionsApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getAllQuestions: builder.query<APIReview[], number>({
+    getAllQuestions: builder.query<APIQuestion[], number>({
       keepUnusedDataFor: 0,
       query: (round = 1) => `/phone/by/me?round=${1}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
+      transformResponse: (response: { reviews: APIQuestion[] }) => {
         return response.reviews;
       },
     }),
 
-    getCertainPhoneQuestion: builder.query<APIReview, string>({
+    getCertainPhoneQuestion: builder.query<APIQuestion, string>({
       keepUnusedDataFor: 0,
       query: (id: string) => `/phone/${id}`,
-      transformResponse: (response: { review: APIReview }) => {
-        return response.review;
+      transformResponse: (response: { question: APIQuestion }) => {
+        return response.question;
       },
     }),
 
     getPhoneQuestions: builder.query<
-      APIReview[],
+      APIQuestion[],
       { round: number; pid: string }
     >({
       keepUnusedDataFor: 0,
       query: ({ round, pid }) => `/phone/on/${pid}?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
+      transformResponse: (response: { reviews: APIQuestion[] }) => {
         return response.reviews;
       },
     }),
@@ -54,6 +55,19 @@ export const phoneQuestionsApi = createApi({
           method: "POST",
           body: question,
         };
+      },
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+
+          dispatch(
+            snackbarActions.showSnackbar({ message: "تم نشر سؤالك بنجاح" })
+          );
+        } catch (e: any) {
+          dispatch(
+            snackbarActions.showSnackbar({ message: e.error.data.status })
+          );
+        }
       },
     }),
 
@@ -94,21 +108,21 @@ export const phoneQuestionsApi = createApi({
       },
     }),
 
-    getUserPhoneQuestions: builder.query<APIReview[], number>({
+    getUserPhoneQuestions: builder.query<APIQuestion[], number>({
       keepUnusedDataFor: 0,
       query: (round = 1) => `/phone/by/me?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
+      transformResponse: (response: { reviews: APIQuestion[] }) => {
         return response.reviews;
       },
     }),
 
     getOtherUserPhoneQuestions: builder.query<
-      APIReview[],
+      APIQuestion[],
       { round: number; uid: string }
     >({
       keepUnusedDataFor: 0,
       query: ({ round, uid }) => `/phone/by/${uid}?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
+      transformResponse: (response: { reviews: APIQuestion[] }) => {
         return response.reviews;
       },
     }),

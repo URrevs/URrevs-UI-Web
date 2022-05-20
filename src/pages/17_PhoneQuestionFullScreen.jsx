@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import {
-  useGetCertainPhoneQuestionQuery,
-  useGetPhoneQuestionCommentsQuery,
-  useAddCommentOnPhoneQuestionMutation,
-  useAddReplyOnPhoneQuestionMutation,
-  useLikePhoneQuestionCommentMutation,
-  useUnLikePhoneQuestionCommentMutation,
-  useLikePhoneQuestionReplyMutation,
-  useUnLikePhoneQuestionReplyMutation,
-} from "../services/phone_questions";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { commentsListActions } from "../store/commentsListSlice";
-import CommentsList from "./CommentsList";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import ROUTES_NAMES from "../RoutesNames";
 import { Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
-import { reviewsActions } from "../store/reviewsSlice";
-import PhoneReview from "../Components/ReviewCard/PhoneReview";
+import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
+import QuestionCard from "../Components/ReviewCard/QuestionCard";
+import ROUTES_NAMES from "../RoutesNames";
+import {
+  useAddCommentOnPhoneQuestionMutation,
+  useAddReplyOnPhoneQuestionMutation,
+  useGetCertainPhoneQuestionQuery,
+  useGetPhoneQuestionCommentsQuery,
+  useLikePhoneQuestionCommentMutation,
+  useLikePhoneQuestionReplyMutation,
+  useUnLikePhoneQuestionCommentMutation,
+  useUnLikePhoneQuestionReplyMutation,
+} from "../services/phone_questions";
+import { commentsListActions } from "../store/commentsListSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { questionsActions } from "../store/questionsSlice";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -51,8 +49,8 @@ export default function PhoneQuestionFullScreen() {
 
   const [page, setPage] = useState(1);
 
-  // const { data, isLoading, isFetching, error } =
-  //   useGetPhoneQuestionCommentsQuery({ reviewId, round: page });
+  const { data, isLoading, isFetching, error } =
+    useGetPhoneQuestionCommentsQuery({ reviewId, round: page });
 
   // add comment
   const [addCommentLoading, setAddCommentLoading] = useState(false);
@@ -85,12 +83,12 @@ export default function PhoneQuestionFullScreen() {
     }
   };
 
-  // // get this review from store
-  // const currentReview = useAppSelector((state) => state.reviews.newReviews).find(
-  //   (element) => {
-  //     return element._id === reviewId;
-  //   }
-  // );
+  // get this review from store
+  // const currentReview = useAppSelector(
+  //   (state) => state.reviews.newReviews
+  // ).find((element) => {
+  //   return element._id === reviewId;
+  // });
 
   // get review from server
   const {
@@ -100,26 +98,23 @@ export default function PhoneQuestionFullScreen() {
   } = useGetCertainPhoneQuestionQuery(reviewId);
 
   const currentReviewData = useAppSelector(
-    (state) => state.reviews.newReviews
+    (state) => state.questions.newReviews
   )[0];
 
   useEffect(() => {
-    console.log(reviewLoading);
     if (!reviewLoading) {
-      console.log("currentReview", currentReview);
-
-      dispatch(reviewsActions.clearReviews());
+      dispatch(questionsActions.clearReviews());
       dispatch(
-        reviewsActions.addToLoaddedReviews({ newReviews: [currentReview] })
+        questionsActions.addToLoaddedReviews({ newReviews: [currentReview] })
       );
     }
   }, [reviewLoading]);
 
   const stateLikePhoneReview = (id) =>
-    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
+    dispatch(questionsActions.setIsLiked({ id: id, isLiked: true }));
 
   const stateUnLikePhoneReview = (id) =>
-    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: false }));
+    dispatch(questionsActions.setIsLiked({ id: id, isLiked: false }));
 
   // comment like and unlike
   const stateLikePhoneComment = (id) =>
@@ -265,7 +260,6 @@ export default function PhoneQuestionFullScreen() {
   const deleteReviewFromStore = (id) => {};
 
   const reviewCard = () => {
-    console.log(currentReviewData);
     return (
       <div>
         {reviewLoading ? (
@@ -274,7 +268,7 @@ export default function PhoneQuestionFullScreen() {
           <div>Error</div>
         ) : (
           currentReviewData && (
-            <PhoneReview
+            <PhoneQuestion
               key={currentReviewData._id}
               index={0}
               fullScreen={true}

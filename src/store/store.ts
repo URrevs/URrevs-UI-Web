@@ -9,6 +9,7 @@ import authSlice from "./authSlice";
 import isDarkSlice from "./darkModeSlice";
 import languageSlice from "./languageSlice";
 import reviewsSlice from "./reviewsSlice";
+import questionsSlice from "./questionsSlice";
 import commentsListSlice from "./commentsListSlice";
 import regDialogSlice from "./uiRegisterDialogSlice";
 import snackbarSlice from "./uiSnackbarSlice";
@@ -30,6 +31,7 @@ export const store = configureStore({
     [companyQuestionsApi.reducerPath]: companyQuestionsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [reviewsSlice.name]: reviewsSlice.reducer,
+    [questionsSlice.name]: questionsSlice.reducer,
     [commentsListSlice.name]: commentsListSlice.reducer,
     [languageSlice.name]: languageSlice.reducer,
     [compareSlice.name]: compareSlice.reducer,
