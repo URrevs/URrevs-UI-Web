@@ -32,16 +32,21 @@ import FacebookIcon from "../Components/Icons/FacebookIcon";
 import LinkedIn from "../Components/Icons/LinkedIn";
 import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
 import { SettingsSideBar } from "../Components/MainLayout/Drawer/Sidebar/SettingsSideBar";
+import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
 
 export default function Menu({ isDesktop = false, drawerRef }) {
   const theme = useTheme();
 
   const currentUserProfile = useAppSelector((state) => state.auth);
+
   const profileData = currentUserProfile;
-  const [open, setOpen] = React.useState(false);
+  const [signOutDialog, setSignOutDialog] = React.useState(false);
+  const [invitationCodeDialog, setInvitationCodeDialog] = React.useState(false);
   const [settingsSlide, setSettingsSlide] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleSignOutOpen = () => setSignOutDialog(true);
+  const handleSignOutClose = () => setSignOutDialog(false);
+  const handleInvitationOpen = () => setInvitationCodeDialog(true);
+  const handleInvitationClose = () => setInvitationCodeDialog(false);
   const isMobile = useMediaQuery("(max-width:700px)");
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionry = {
@@ -92,7 +97,9 @@ export default function Menu({ isDesktop = false, drawerRef }) {
     {
       title: pageDictionry.referalCode,
       icon: <GroupsOutlinedIcon sx={{ fontSize: 40 }} />,
-      onClick: () => navigator.clipboard.writeText(profileData.refCode),
+      onClick: () => {
+        handleInvitationOpen();
+      },
       subtitle: pageDictionry.inviteFriends,
       authenticate: currentUserProfile.isLoggedIn,
     },
@@ -140,7 +147,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       icon: <LogoutOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
       onClick: () => {
-        handleOpen();
+        handleSignOutOpen();
       },
       authenticate: currentUserProfile.isLoggedIn,
     },
@@ -232,16 +239,30 @@ export default function Menu({ isDesktop = false, drawerRef }) {
           //Margin from top appbar
           display: "flex",
           flexDirection: "column",
-          // height: "83vh",
+
+          height: currentUserProfile ? "65vh" : "",
           marginBottom: 70,
           padding: "0px 14px",
         }}
       >
         {isMobile ? <CustomAppBar showLogo showSearch showProfile /> : null}
 
-        <Modal open={open} onClose={handleClose} dir={theme.direction}>
+        <Modal
+          open={signOutDialog}
+          onClose={handleSignOutClose}
+          dir={theme.direction}
+        >
           <Box>
-            <SignoutDialog handleClose={handleClose} />
+            <SignoutDialog handleClose={handleSignOutClose} />
+          </Box>
+        </Modal>
+        <Modal
+          open={invitationCodeDialog}
+          onClose={handleInvitationClose}
+          dir={theme.direction}
+        >
+          <Box>
+            <InvitationDialog handleClose={handleInvitationClose} />
           </Box>
         </Modal>
         <List>

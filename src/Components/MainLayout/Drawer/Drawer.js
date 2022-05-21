@@ -184,10 +184,26 @@ export const MyDrawer = (props) => {
     props.setOpen(false);
   };
   const handleClickAway = () => {
-    setMenu(false);
+    //Works for some reason
+    setTimeout(() => {
+      if (menu) setMenu(false);
+    }, 200);
   };
   return (
     <React.Fragment>
+      <ClickAwayListener
+        mouseEvent="onMouseDown"
+        touchEvent="onTouchStart"
+        onClickAway={handleClickAway}
+      >
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <MenuSideBar open={menu} drawerRef={drawerRef} />
+        </div>
+      </ClickAwayListener>
       <PerDrawer
         ref={drawerRef}
         variant="permanent"
@@ -224,30 +240,21 @@ export const MyDrawer = (props) => {
               </ListItem>
             </NavLink>
           ))}
-          <ClickAwayListener
-            mouseEvent="onMouseDown"
-            touchEvent="onTouchStart"
-            onClickAway={handleClickAway}
+          <ListItem
+            button
+            onClick={() => {
+              setMenu(!menu);
+            }}
           >
-            <div>
-              <ListItem
-                button
-                onClick={() => {
-                  setMenu(!menu);
+            <ListItemIcon>
+              <MenuIcon
+                sx={{
+                  fontSize: menu ? focusedIconSize : unfocusedIconSize,
                 }}
-              >
-                <MenuSideBar open={menu} drawerRef={drawerRef} />
-                <ListItemIcon>
-                  <MenuIcon
-                    sx={{
-                      fontSize: menu ? focusedIconSize : unfocusedIconSize,
-                    }}
-                    htmlColor={menu ? focusedColor : unFocusedColor}
-                  />
-                </ListItemIcon>
-              </ListItem>
-            </div>
-          </ClickAwayListener>
+                htmlColor={menu ? focusedColor : unFocusedColor}
+              />
+            </ListItemIcon>
+          </ListItem>
         </List>
       </PerDrawer>
     </React.Fragment>
