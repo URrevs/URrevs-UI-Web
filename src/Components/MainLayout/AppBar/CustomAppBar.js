@@ -124,7 +124,7 @@ export const CustomAppBar = ({
           </CustomAppBarStyled>
           <Box
             style={{
-              marginTop: "64px",
+              marginTop: "45px",
             }}
           >
             {tabBar}
