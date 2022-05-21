@@ -143,7 +143,9 @@ export const MyDrawer = (props) => {
       ),
       title: textContainer.AddNavBarItem,
       itemValue: 4,
-      onClick: () => {},
+      onClick: () => {
+        setValue(5);
+      },
       path: ROUTES_NAMES.ADD_REVIEW,
     },
 
