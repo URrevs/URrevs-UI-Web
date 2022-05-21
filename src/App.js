@@ -165,6 +165,7 @@ function App() {
         buttonBg: isDark ? "#FFFFFF" : COLORS.cffffff,
         borderColor: isDark ? "#FFFFFF" : COLORS.c606266,
       },
+      blackIconColor: isDark ? COLORS.cCED0D4 : COLORS.c050505,
       defaultRedBtnIconColor: isDark ? COLORS.cCED0D4 : COLORS.cffffff,
       defaultIconColor: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
       cancel: isDark ? COLORS.cCED0D4 : COLORS.c050505,

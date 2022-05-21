@@ -38,9 +38,10 @@ export default function Menu({ isDesktop = false, drawerRef }) {
   const theme = useTheme();
 
   const currentUserProfile = useAppSelector((state) => state.auth);
+
   const profileData = currentUserProfile;
   const [signOutDialog, setSignOutDialog] = React.useState(false);
-  const [invitationCodeDialog, setInvitationCodeDialog] = React.useState(true);
+  const [invitationCodeDialog, setInvitationCodeDialog] = React.useState(false);
   const [settingsSlide, setSettingsSlide] = React.useState(false);
   const handleSignOutOpen = () => setSignOutDialog(true);
   const handleSignOutClose = () => setSignOutDialog(false);
@@ -96,7 +97,9 @@ export default function Menu({ isDesktop = false, drawerRef }) {
     {
       title: pageDictionry.referalCode,
       icon: <GroupsOutlinedIcon sx={{ fontSize: 40 }} />,
-      onClick: () => navigator.clipboard.writeText(profileData.refCode),
+      onClick: () => {
+        handleInvitationOpen();
+      },
       subtitle: pageDictionry.inviteFriends,
       authenticate: currentUserProfile.isLoggedIn,
     },
@@ -223,9 +226,6 @@ export default function Menu({ isDesktop = false, drawerRef }) {
 
   return (
     <React.Fragment>
-      {/* <Modal open={open} onClose={handleClose} dir={theme.direction}>
-        <InvitationDialog />
-      </Modal> */}
       {isDesktop ? (
         <SettingsSideBar
           settingsSlide={settingsSlide}
@@ -239,7 +239,8 @@ export default function Menu({ isDesktop = false, drawerRef }) {
           //Margin from top appbar
           display: "flex",
           flexDirection: "column",
-          // height: "83vh",
+
+          height: currentUserProfile ? "65vh" : "",
           marginBottom: 70,
           padding: "0px 14px",
         }}
@@ -253,6 +254,15 @@ export default function Menu({ isDesktop = false, drawerRef }) {
         >
           <Box>
             <SignoutDialog handleClose={handleSignOutClose} />
+          </Box>
+        </Modal>
+        <Modal
+          open={invitationCodeDialog}
+          onClose={handleInvitationClose}
+          dir={theme.direction}
+        >
+          <Box>
+            <InvitationDialog handleClose={handleInvitationClose} />
           </Box>
         </Modal>
         <List>

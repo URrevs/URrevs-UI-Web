@@ -1,32 +1,42 @@
 import { useTheme } from "@emotion/react";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
-import { Box, Grid, TextField, Typography } from "@mui/material";
+import { Box, Grid, IconButton, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import {
   TEXT_FIELD_BORDER_RADIUS,
   TEXT_FIELD_BORDER_THICKNESS,
 } from "../../constants";
+import ROUTES_NAMES from "../../RoutesNames";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { snackbarActions } from "../../store/uiSnackbarSlice";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
 import { DialogTemplate } from "./DialogTemplate";
 
-export const InvitationDialog = ({ invitationCode = "UR1029" }) => {
-  const textContainer = useSelector((state) => state.language.textContainer);
-  const paragraph = textContainer.reviewEncouragement;
-  const title = `${textContainer.yourInvitationCode}:`;
-  const shareCode = textContainer.shareInvitationLink;
+export const InvitationDialog = ({ handleClose }) => {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+  const currentUserProfile = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const pageDictionary = {
+    paragraph: textContainer.reviewEncouragement,
+    title: `${textContainer.yourInvitationCode}:`,
+    shareCode: textContainer.shareInvitationLink,
+    codeCopyWasSuccessful: "تم نسخ كود الدعوة",
+    linkCopyWasSuccessful: "تم نسخ رابط الدعوة",
+  };
+
   const theme = useTheme();
   return (
     <React.Fragment>
-      <DialogTemplate title={title}>
+      <DialogTemplate handleClose={handleClose} title={pageDictionary.title}>
         <Typography
           sx={{
             whiteSpace: "pre-line",
           }}
           variant="S16W400C050505"
         >
-          {paragraph}
+          {pageDictionary.paragraph}
         </Typography>
         <Grid
           container
@@ -48,7 +58,7 @@ export const InvitationDialog = ({ invitationCode = "UR1029" }) => {
             >
               <TextField
                 variant="outlined"
-                value={invitationCode}
+                value={currentUserProfile.refCode}
                 disabled
                 // How to overwrite style by knowing className
                 // sx={{
@@ -73,12 +83,46 @@ export const InvitationDialog = ({ invitationCode = "UR1029" }) => {
             {/* <StyledTextField disabled defaultValue={invitationCode} /> */}
           </Grid>
           <Grid item xs={4}>
-            <ContentCopyOutlinedIcon sx={{ fontSize: "40px" }} />
+            {/* <ContentCopyOutlinedIcon sx={{ fontSize: "40px" }} /> */}
+            <IconButton
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                textAlign: "center",
+                verticalAlign: "center",
+                color: theme.palette.blackIconColor,
+              }}
+              onClick={() => {
+                dispatch(
+                  snackbarActions.showSnackbar({
+                    message: pageDictionary.codeCopyWasSuccessful,
+                  })
+                );
+                navigator.clipboard.writeText(currentUserProfile.refCode);
+              }}
+            >
+              <ContentCopyOutlinedIcon sx={{ fontSize: "40px" }} />
+            </IconButton>
           </Grid>
         </Grid>
-        <OrangeGradientButton color="red">
+        <OrangeGradientButton
+          color="red"
+          onClick={() => {
+            dispatch(
+              snackbarActions.showSnackbar({
+                message: pageDictionary.linkCopyWasSuccessful,
+              })
+            );
+            navigator.clipboard.writeText(
+              `http://localhost:3000/add-review?refCode=${currentUserProfile.refCode}`
+            );
+          }}
+        >
           <ShareOutlinedIcon sx={{ fontSize: "25px" }} />
-          <Typography variant="S18W700Cffffff">{shareCode}</Typography>
+
+          <Typography variant="S18W700Cffffff">
+            {pageDictionary.shareCode}
+          </Typography>
         </OrangeGradientButton>
       </DialogTemplate>
     </React.Fragment>
