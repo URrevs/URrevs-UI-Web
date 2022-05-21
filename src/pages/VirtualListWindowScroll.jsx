@@ -99,7 +99,7 @@ export default function VirtualReviewList({
           <div style={{ ...style, direction: theme.direction }}>
             {index >= reviewsList.length ? (
               data.length === 0 ? (
-                <div>No more reviews</div>
+                <div></div>
               ) : (
                 [...Array(1)].map((a, index) => (
                   <LoadingReviewSkeleton key={index} />
@@ -116,7 +116,7 @@ export default function VirtualReviewList({
 
   return (
     <Fragment>
-      <div style={{ height: "calc(100vh)", margin: "0 12px" }}>
+      <div style={{ height: "calc(100vh)", margin: "0px 12px" }}>
         <AutoSizer>
           {({ height, width }) => {
             return (

@@ -15,6 +15,7 @@ export default function ListItemNavigator({
   icon,
   to,
   onClick,
+  endIcon,
 }) {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -58,6 +59,7 @@ export default function ListItemNavigator({
           secondaryTypographyProps={{ ...theme.typography.S16W400C65676B }}
           secondary={subTitle}
         />
+        {endIcon}
       </ListItemButton>
     </ListItem>
   );

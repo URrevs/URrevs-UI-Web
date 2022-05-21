@@ -15,6 +15,7 @@ import FormikTextField from "../Components/Form/FormikTextField";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { Tabbar } from "../Components/Tabbar/Tabbar";
 import { useAddPhoneReviewMutation } from "../services/phone_reviews";
+import { useSearchPhonesOnlyMutation } from "../services/search";
 import { QuestionsTab } from "./PostingScreen/QuestionsTab";
 
 const handleInitialValues = (fieldName, empty = "") => {
@@ -92,6 +93,8 @@ const Basic = ({ ...props }) => {
       </Stack>
     );
   };
+  const [searchFn] = useSearchPhonesOnlyMutation();
+
   return (
     <React.Fragment>
       <Modal open={open} onClose={handleClose} dir={theme.direction}>
@@ -118,6 +121,8 @@ const Basic = ({ ...props }) => {
         <FormikSearchComponent
           fieldName="chooseProduct"
           label={textContainer.writeProductName}
+          searchFn={searchFn}
+          toGetManufacturingCompany={true}
         />
 
         <br />
@@ -221,7 +226,7 @@ const Basic = ({ ...props }) => {
         />
 
         {/* Submit Button */}
-        {console.log(props.values)}
+        {/* {console.log(props.values)} */}
         <OrangeGradientButton
           type="submit"
           color="red"
@@ -268,7 +273,7 @@ const ReviewPostingScreen = () => {
   };
   /* Form Validation */
   const BasicValidationSchema = Yup.object().shape({
-    chooseProduct: Yup.string().required("Select a phone"),
+    // chooseProduct: Yup.string().required("Select a phone"),
     purchaseDate: Yup.date().required(pageDictionary.purchaseDateErrorMsg),
     manufacturingQuality: Yup.number().integer().min(1, "Select Stars"),
     userInterface: Yup.number().integer().min(1, "Select Stars"),
@@ -360,9 +365,11 @@ const ReviewPostingScreen = () => {
             // }}
             validationSchema={BasicValidationSchema}
             onSubmit={async (values, { setSubmitting }) => {
+              console.log("values");
+
               sessionStorage.clear();
               const reviewPost = {
-                phoneId: values.chooseProduct,
+                phoneId: values.chooseProduct.pid,
                 companyId: values.companyId._id,
                 ownedDate: values.purchaseDate,
                 generalRating: values.overAllExp,
@@ -379,10 +386,11 @@ const ReviewPostingScreen = () => {
                 compPros: values.likeAbout,
                 compCons: values.hateAbout,
               };
-              console.log(JSON.stringify(reviewPost, null, 2));
+              // console.log(JSON.stringify(reviewPost, null, 2));
               try {
                 const response = await addReview(reviewPost).unwrap();
               } catch (e) {
+                console.log("asd askjd bhasb", e);
                 setError(e);
               }
               setSubmitting(false);

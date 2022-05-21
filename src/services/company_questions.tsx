@@ -2,12 +2,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import APIComment from "../models/interfaces/APIComment.model";
 import { APIReview } from "../models/interfaces/APIReview.model";
 import { RootState } from "../store/store";
-import { snackbarActions } from "../store/uiSnackbarSlice";
 
-export const phoneReviewsApi = createApi({
-  reducerPath: "phoneReviewsApi",
+export const companyQuestionsApi = createApi({
+  reducerPath: "companyQuestionsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_PATH}/reviews`,
+    baseUrl: `${process.env.REACT_APP_API_PATH}/questions/company`,
     // add token to all endpoints headers
     prepareHeaders: (headers, { getState, endpoint }) => {
       const state = getState();
@@ -21,56 +20,50 @@ export const phoneReviewsApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getAllReviews: builder.query<APIReview[], number>({
-      keepUnusedDataFor: 0,
-      query: (round = 1) => `/phone/by/me?round=${1}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
-        return response.reviews;
+    addCompanyQuestion: builder.mutation({
+      query: (question) => {
+        return {
+          url: `/`,
+          method: "POST",
+          body: question,
+        };
       },
     }),
 
-    getCertainPhoneReview: builder.query<APIReview, string>({
+    getCertainCompanyReview: builder.query<APIReview, string>({
       keepUnusedDataFor: 0,
-      query: (id: string) => `/phone/${id}`,
+      query: (id: string) => `/${id}`,
       transformResponse: (response: { review: APIReview }) => {
         return response.review;
       },
     }),
 
-    getPhoneReviews: builder.query<APIReview[], { round: number; pid: string }>(
-      {
-        keepUnusedDataFor: 0,
-        query: ({ round, pid }) => `/phone/on/${pid}?round=${round}`,
-        transformResponse: (response: { reviews: APIReview[] }) => {
-          return response.reviews;
-        },
-      }
-    ),
-
-    addPhoneReview: builder.mutation({
-      query: (review) => {
-        return {
-          url: `/phone`,
-          method: "POST",
-          body: review,
-        };
-      },
-
-      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-        } catch (e: any) {
-          dispatch(
-            snackbarActions.showSnackbar({ message: e.error.data.status })
-          );
-        }
+    getCompanyReviews: builder.query<
+      APIReview[],
+      { round: number; cid: string }
+    >({
+      keepUnusedDataFor: 0,
+      query: ({ round, cid }) => `/on/${cid}?round=${round}`,
+      transformResponse: (response: { questions: APIReview[] }) => {
+        return response.questions;
       },
     }),
 
-    likePhoneReview: builder.mutation({
+    getComoanyReviews: builder.query<
+      APIReview[],
+      { round: number; pid: string }
+    >({
+      keepUnusedDataFor: 0,
+      query: ({ round, pid }) => `/on/${pid}?round=${round}`,
+      transformResponse: (response: { questions: APIReview[] }) => {
+        return response.questions;
+      },
+    }),
+
+    likeCompanyReview: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/like`,
+          url: `/${reviewId}/like`,
           method: "POST",
         };
       },
@@ -85,10 +78,10 @@ export const phoneReviewsApi = createApi({
       },
     }),
 
-    unLikePhoneReview: builder.mutation({
+    unLikeCompanyReview: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/unlike`,
+          url: `/${reviewId}/unlike`,
           method: "POST",
         };
       },
@@ -104,61 +97,61 @@ export const phoneReviewsApi = createApi({
       },
     }),
 
-    getUserPhoneReviews: builder.query<APIReview[], number>({
+    getUserCompanyReviews: builder.query<APIReview[], number>({
       keepUnusedDataFor: 0,
-      query: (round = 1) => `/phone/by/me?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
-        return response.reviews;
+      query: (round = 1) => `/by/me?round=${round}`,
+      transformResponse: (response: { questions: APIReview[] }) => {
+        return response.questions;
       },
     }),
 
-    getOtherUserPhoneReviews: builder.query<
+    getOtherUserCompanyReviews: builder.query<
       APIReview[],
       { round: number; uid: string }
     >({
       keepUnusedDataFor: 0,
-      query: ({ round, uid }) => `/phone/by/${uid}?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
-        return response.reviews;
+      query: ({ round, uid }) => `/by/${uid}?round=${round}`,
+      transformResponse: (response: { questions: APIReview[] }) => {
+        return response.questions;
       },
     }),
 
-    addCommentOnPhoneReview: builder.mutation({
+    addCommentOnCompanyReview: builder.mutation({
       query: ({ reviewId, comment }) => {
         return {
-          url: `/phone/${reviewId}/comments`,
+          url: `/${reviewId}/comments`,
           method: "POST",
           body: { content: comment },
         };
       },
     }),
 
-    getPhoneReviewComments: builder.query<
+    getCompanyReviewComments: builder.query<
       APIComment[],
       { reviewId: string; round: number }
     >({
       keepUnusedDataFor: 0,
       query: ({ reviewId, round = 1 }) =>
-        `/phone/${reviewId}/comments?round=${round}`,
+        `/${reviewId}/comments?round=${round}`,
       transformResponse: (response: { comments: APIComment[] }) => {
         return response.comments;
       },
     }),
 
-    addReplyOnPhoneReview: builder.mutation({
+    addReplyOnCompanyReview: builder.mutation({
       query: ({ commentId, reply }) => {
         return {
-          url: `/phone/comments/${commentId}/replies`,
+          url: `/comments/${commentId}/replies`,
           method: "POST",
           body: { content: reply },
         };
       },
     }),
 
-    likePhoneReviewReply: builder.mutation({
+    likeCompanyReviewReply: builder.mutation({
       query: ({ commentId, replyId }) => {
         return {
-          url: `/phone/comments/${commentId}/replies/${replyId}/like`,
+          url: `/comments/${commentId}/replies/${replyId}/like`,
           method: "POST",
         };
       },
@@ -173,10 +166,10 @@ export const phoneReviewsApi = createApi({
       },
     }),
 
-    unLikePhoneReviewReply: builder.mutation({
+    unLikeCompanyReviewReply: builder.mutation({
       query: ({ commentId, replyId }) => {
         return {
-          url: `/phone/comments/${commentId}/replies/${replyId}/unlike`,
+          url: `/comments/${commentId}/replies/${replyId}/unlike`,
           method: "POST",
         };
       },
@@ -192,10 +185,10 @@ export const phoneReviewsApi = createApi({
     }),
 
     // comments likes
-    likePhoneReviewComment: builder.mutation({
+    likeCompanyReviewComment: builder.mutation({
       query: ({ commentId }) => {
         return {
-          url: `/phone/comments/${commentId}/like`,
+          url: `/comments/${commentId}/like`,
           method: "POST",
         };
       },
@@ -210,10 +203,10 @@ export const phoneReviewsApi = createApi({
       },
     }),
 
-    unLikePhoneReviewComment: builder.mutation({
+    unLikeCompanyReviewComment: builder.mutation({
       query: ({ commentId }) => {
         return {
-          url: `/phone/comments/${commentId}/unlike`,
+          url: `/comments/${commentId}/unlike`,
           method: "POST",
         };
       },
@@ -228,10 +221,10 @@ export const phoneReviewsApi = createApi({
       },
     }),
 
-    idontLikeThisPhoneReview: builder.mutation({
+    idontLikeThisCompanyReview: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/hate`,
+          url: `/${reviewId}/hate`,
           method: "POST",
         };
       },
@@ -240,20 +233,19 @@ export const phoneReviewsApi = createApi({
 });
 //auto-generated hooks
 export const {
-  useGetAllReviewsQuery,
-  useGetCertainPhoneReviewQuery,
-  useGetPhoneReviewsQuery,
-  useAddPhoneReviewMutation,
-  useLikePhoneReviewMutation,
-  useUnLikePhoneReviewMutation,
-  useGetUserPhoneReviewsQuery,
-  useGetOtherUserPhoneReviewsQuery,
-  useAddCommentOnPhoneReviewMutation,
-  useGetPhoneReviewCommentsQuery,
-  useAddReplyOnPhoneReviewMutation,
-  useLikePhoneReviewCommentMutation,
-  useUnLikePhoneReviewCommentMutation,
-  useLikePhoneReviewReplyMutation,
-  useUnLikePhoneReviewReplyMutation,
-  useIdontLikeThisPhoneReviewMutation,
-} = phoneReviewsApi;
+  useAddCompanyQuestionMutation,
+  useGetCertainCompanyReviewQuery,
+  useGetCompanyReviewsQuery,
+  useLikeCompanyReviewMutation,
+  useUnLikeCompanyReviewMutation,
+  useGetUserCompanyReviewsQuery,
+  useGetOtherUserCompanyReviewsQuery,
+  useAddCommentOnCompanyReviewMutation,
+  useGetCompanyReviewCommentsQuery,
+  useAddReplyOnCompanyReviewMutation,
+  useLikeCompanyReviewCommentMutation,
+  useUnLikeCompanyReviewCommentMutation,
+  useLikeCompanyReviewReplyMutation,
+  useUnLikeCompanyReviewReplyMutation,
+  useIdontLikeThisCompanyReviewMutation,
+} = companyQuestionsApi;

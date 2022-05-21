@@ -1,40 +1,41 @@
 import { useTheme } from "@emotion/react";
 import {
-  Typography,
+  Box,
+  Collapse,
+  Divider,
+  IconButton,
+  InputAdornment,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Box,
-  Divider,
-  IconButton,
+  Paper,
+  Slide,
   TextField,
+  Typography,
+  Zoom,
 } from "@mui/material";
 import React from "react";
-import { useAppSelector } from "../store/hooks";
+import SearchIcon from "@mui/icons-material/Search";
 import SmartphoneRoundedIcon from "@mui/icons-material/SmartphoneRounded";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import SearchComponent from "../Components/SearchComponent";
-import { InputAdornment } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
+import { useAppSelector } from "../../../store/hooks";
 import {
-  useSearchAllMutation,
   useAddToMyRecentSearchesMutation,
-  useGetMyRecentSearchesQuery,
   useDeleteRecentSearchesMutation,
-} from "../services/search";
-import { SEARCH_INPUT_DELAY } from "../constants";
+  useGetMyRecentSearchesQuery,
+  useSearchAllMutation,
+} from "../../../services/search";
 import { useNavigate } from "react-router-dom";
-import ROUTES_NAMES from "../RoutesNames";
+import ROUTES_NAMES from "../../../RoutesNames";
+import LoadingSpinner from "../../Loaders/LoadingSpinner";
+import { SEARCH_INPUT_DELAY } from "../../../constants";
 
-export const SearchScreen = () => {
+export const SearchSuggestion = () => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const user = useAppSelector((state) => state.auth);
-
   const pageDictionary = {
     search: textContainer.search,
     placeholder: textContainer.searchForAProductOrACompany,
@@ -65,45 +66,9 @@ export const SearchScreen = () => {
 
   const [results, setResults] = React.useState([]);
   const navigate = useNavigate();
+  const [searchSuggestion, setSearchSuggestion] = React.useState(false);
+  const searchRef = React.useRef();
   const theme = useTheme();
-  //TextField styling
-  const params = {
-    sx: {
-      width: "100",
-      input: {
-        "&::placeholder": {
-          opacity: 1,
-          fontWeight: 300,
-          fontSize: 16,
-        },
-      },
-    },
-    placeholder: textContainer.searchForAProductOrACompany,
-    InputProps: {
-      // type: "search",
-      endAdornment: (
-        <InputAdornment position="end">
-          <IconButton onClick={() => {}}>
-            <SearchIcon htmlColor={theme.palette.searchBar.searchIcon} />
-          </IconButton>
-        </InputAdornment>
-      ),
-      style: {
-        width: "100%",
-        height: "50px",
-        ...theme.typography.S16W500C050505,
-        alignContent: "center",
-        color: theme.palette.textField.inputFieldText,
-        background: theme.palette.textField.inputFieldBackground,
-        borderRadius: 90,
-        border: `0.8px solid ${theme.palette.textField.borderColor} `,
-        //
-        // borderRadius: TEXT_FIELD_BORDER_RADIUS,
-        // border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,
-      },
-    },
-  };
-  // console.log(results);
   const renderSearchItems = (title, type, id) => (
     <React.Fragment key={id}>
       <ListItem sx={{ padding: 0, margin: 0, lineHeight: 0 }}>
@@ -205,63 +170,139 @@ export const SearchScreen = () => {
     if (searchQuery === "" && oldResults) setResults(oldResults);
   }, [searchQuery, oldResults]);
 
+  React.useEffect(() => {
+    function handleResize() {
+      setSearchSuggestion(false);
+    }
+    //On window resize close the suggestion
+    window.addEventListener("resize", handleResize);
+    return (_) => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
+  const params = {
+    variant: "standard",
+    sx: {
+      flex: 1,
+      // width: "100",
+      input: {
+        "&::placeholder": {
+          opacity: 1,
+          fontWeight: 300,
+          fontSize: 16,
+        },
+      },
+    },
+    placeholder: pageDictionary.placeholder,
+    InputProps: {
+      // type: "search",
+      disableUnderline: true,
+      startAdornment: (
+        <InputAdornment position="start">
+          <IconButton onClick={() => {}}>
+            <SearchIcon htmlColor={theme.palette.deskTopSearchBar.searchIcon} />
+          </IconButton>
+        </InputAdornment>
+      ),
+      style: {
+        width: "100%",
+        height: "50px",
+        ...theme.typography.S16W500C050505,
+        alignContent: "center",
+        color: theme.palette.textField.inputFieldText,
+        background: theme.palette.textField.inputFieldBackground,
+        borderRadius: 90,
+        // border: `0.1px solid ${theme.palette.textField.borderColor} `,
+        //
+        // borderRadius: TEXT_FIELD_BORDER_RADIUS,
+        // border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,
+      },
+    },
+  };
   return (
-    <CustomAppBar showLabel label={pageDictionary.search} showBackBtn>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          margin: "60px 13px",
+    <div>
+      <TextField
+        {...params}
+        ref={searchRef}
+        sx={{ padding: "0px 15px", width: "100%" }}
+        onFocus={() => {
+          console.log("focus");
+          setSearchSuggestion(true);
         }}
-      >
-        <TextField
-          {...params}
-          onChange={async (e) => {
-            if (e.target.value === "") {
-              setResults(oldResults);
-            }
-            setSearchQuery(e.target.value);
-            try {
-              setTimeout(async () => {
-                if (e.target.value.trim() !== "") {
-                  const results = await search(e.target.value.trim()).unwrap();
-                  setResults(results);
-                }
-              }, SEARCH_INPUT_DELAY);
-            } catch (e) {
-              console.log(e);
-            }
+        onChange={(e) => {
+          // // If no recent results
+          // if (e.target.value === "") setSearchSuggestion(false);
+          // // When Searching
+          // if (!searchSuggestion || e.target.value !== "") {
+          //   setSearchSuggestion(true);
+          // }
+          // Show recent search
+          if (e.target.value === "") {
+            setResults(oldResults);
+          }
+          setSearchQuery(e.target.value);
+          try {
+            setTimeout(async () => {
+              if (e.target.value.trim() !== "") {
+                const results = await search(e.target.value.trim()).unwrap();
+                setResults(results);
+              }
+            }, SEARCH_INPUT_DELAY);
+          } catch (e) {
+            console.log(e);
+          }
+        }}
+        onBlur={() => {
+          console.log("blur");
+          setSearchSuggestion(false);
+        }}
+      />
+      <Slide direction="down" in={searchSuggestion} mountOnEnter unmountOnExit>
+        {/* <Zoom in={searchSuggestion}> */}
+        {/* <Collapse in={searchSuggestion}> */}
+        <Paper
+          sx={{
+            position: "absolute",
+            // top: theme.sideBar.height,
+            // left: "150px",
+            width: searchRef.current?.offsetWidth
+              ? searchRef.current.offsetWidth
+              : "",
+            // height: "20vh",
+            zIndex: 1,
           }}
-          // value={searchQuery}
-        />
-        {isLoading ? (
-          <LoadingSpinner />
-        ) : error ? (
-          <div>{error.data.status}</div>
-        ) : searchQuery === "" ? (
-          <Box sx={{ margin: "16px 12px" }}>
-            <Typography variant="S16W500C65676b">
-              {pageDictionary.oldResults}
-            </Typography>
-            <List>
-              {results.map((item) =>
-                renderRecentItems(item.name, item.type, item._id)
-              )}
-            </List>
-          </Box>
-        ) : (
-          <Box sx={{ margin: "16px 12px" }}>
-            <Typography variant="S16W500C65676b">
-              {pageDictionary.suggestedResults}
-            </Typography>
-            <List>
-              {results.map((item) =>
-                renderSearchItems(item.name, item.type, item._id)
-              )}
-            </List>
-          </Box>
-        )}
-      </Box>
-    </CustomAppBar>
+        >
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : error ? (
+            <div>{error.data.status}</div>
+          ) : searchQuery === "" ? (
+            <Box sx={{ margin: "16px 12px 0px 12px" }}>
+              <Typography variant="S16W500C65676b">
+                {pageDictionary.oldResults}
+              </Typography>
+              <List>
+                {results.map((item) =>
+                  renderRecentItems(item.name, item.type, item._id)
+                )}
+              </List>
+            </Box>
+          ) : (
+            <Box sx={{ margin: "16px 12px 0px 12px" }}>
+              <Typography variant="S16W500C65676b">
+                {pageDictionary.suggestedResults}
+              </Typography>
+              <List>
+                {results.map((item) =>
+                  renderSearchItems(item.name, item.type, item._id)
+                )}
+              </List>
+            </Box>
+          )}
+        </Paper>
+        {/* </Collapse> */}
+        {/* </Zoom> */}
+      </Slide>
+    </div>
   );
 };

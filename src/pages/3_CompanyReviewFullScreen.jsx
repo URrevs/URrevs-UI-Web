@@ -296,7 +296,6 @@ export default function CompanyReviewFullScreen() {
 
   return (
     <Box>
-      <CustomAppBar showLogo showSearch showProfile />
       {reviewLoading ? (
         <div>Loading review...</div>
       ) : reviewError ? (

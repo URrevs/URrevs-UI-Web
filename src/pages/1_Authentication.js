@@ -23,7 +23,7 @@ import {
 } from "../services/users";
 import { authActions } from "../store/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { uiActions } from "../store/uiSlice";
+import { regDialogActions } from "../store/uiRegisterDialogSlice";
 import { DialogTemplate } from "../Components/Dialogs/DialogTemplate";
 
 const ModalBox = styled(
@@ -48,7 +48,9 @@ const Registeration = ({}) => {
   const dispatch = useAppDispatch();
 
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
-  const openRegistration = useAppSelector((state) => state.ui.registration);
+  const openRegistration = useAppSelector(
+    (state) => state.regDialog.registration
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const [signingError, setSigningError] = useState(null);
@@ -110,7 +112,7 @@ const Registeration = ({}) => {
   };
 
   const handleRegistrationClose = () => {
-    dispatch(uiActions.toggleRegistration());
+    dispatch(regDialogActions.toggleRegistration());
   };
 
   return (
