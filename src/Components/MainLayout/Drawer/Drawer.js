@@ -22,7 +22,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../store/hooks";
 import Menu from "../../../pages/20_Menu";
 import { MenuSideBar } from "./Sidebar/MenuSideBar";
@@ -105,7 +105,7 @@ export const MyDrawer = (props) => {
   const unFocusedColor = theme.palette.drawer.drawerIcon;
   const focusedIconSize = 39; //45
   const unfocusedIconSize = 39; //39
-
+  const navigate = useNavigate();
   const open = props.open;
 
   // const isMobile = useMediaQuery("(max-width:700px)");
@@ -127,8 +127,8 @@ export const MyDrawer = (props) => {
       itemValue: 0,
       onClick: () => {
         setValue(0);
+        navigate(ROUTES_NAMES.HOME);
       },
-      path: ROUTES_NAMES.HOME,
     },
 
     //Addreview
@@ -145,8 +145,8 @@ export const MyDrawer = (props) => {
       itemValue: 4,
       onClick: () => {
         setValue(5);
+        navigate(ROUTES_NAMES.ADD_REVIEW);
       },
-      path: ROUTES_NAMES.ADD_REVIEW,
     },
 
     //ProductList
@@ -163,6 +163,7 @@ export const MyDrawer = (props) => {
       itemValue: 1,
       onClick: () => {
         setValue(1);
+        navigate(ROUTES_NAMES.PRODUCTS);
       },
       path: ROUTES_NAMES.PRODUCTS,
     },
@@ -181,8 +182,8 @@ export const MyDrawer = (props) => {
       itemValue: 2,
       onClick: () => {
         setValue(2);
+        navigate(ROUTES_NAMES.LEADERBOARD);
       },
-      path: ROUTES_NAMES.LEADERBOARD,
     },
     //Menu
     {
@@ -199,7 +200,6 @@ export const MyDrawer = (props) => {
       onClick: () => {
         setMenu(!menu);
       },
-      path: "",
     },
   ];
 
@@ -242,40 +242,30 @@ export const MyDrawer = (props) => {
         <div style={{ ...theme.mixins.toolbar }}></div>
         <List>
           {drawerTiles.map((item, i) => (
-            <NavLink
-              style={{
-                textDecoration: "none",
-                color: `${theme.palette.drawer.tileText}`,
-              }}
-              end
-              to={item.path}
-              key={item.path + item.title}
+            <ListItem
+              style={{ padding: 0, justifyContent: "center" }}
+              onClick={item.onClick}
+              button
+              key={item.title}
             >
-              <ListItem
-                style={{ padding: 0, justifyContent: "center" }}
-                onClick={item.onClick}
-                button
-                key={item.title}
-              >
-                <div style={{ textAlign: "center", padding: "8px 0" }}>
-                  <ListItemIcon sx={{ justifyContent: "center" }}>
-                    {item.icon}
-                  </ListItemIcon>
+              <div style={{ textAlign: "center", padding: "8px 0" }}>
+                <ListItemIcon sx={{ justifyContent: "center" }}>
+                  {item.icon}
+                </ListItemIcon>
 
-                  {currentPage === item.itemValue && !menu ? (
-                    <Typography
-                      // variant="S14W700C2196f3"
-                      sx={{
-                        textAlign: "center",
-                        ...theme.typography.S14W700C2196f3,
-                      }}
-                    >
-                      {item.title}
-                    </Typography>
-                  ) : null}
-                </div>
-              </ListItem>
-            </NavLink>
+                {currentPage === item.itemValue && !menu ? (
+                  <Typography
+                    // variant="S14W700C2196f3"
+                    sx={{
+                      textAlign: "center",
+                      ...theme.typography.S14W700C2196f3,
+                    }}
+                  >
+                    {item.title}
+                  </Typography>
+                ) : null}
+              </div>
+            </ListItem>
           ))}
         </List>
       </PerDrawer>
