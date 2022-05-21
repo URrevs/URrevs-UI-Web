@@ -2,13 +2,13 @@ import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
-  useIdontLikeThisPhoneReviewMutation,
-  useLikePhoneReviewMutation,
-  useUnLikePhoneReviewMutation,
-} from "../../services/phone_reviews";
-import ReviewCard from "./ReviewCard";
+  useIdontLikeThisPhoneQuestionMutation,
+  useLikePhoneQuestionMutation,
+  useUnLikePhoneQuestionMutation,
+} from "../../services/phone_questions";
+import QuestionCard from "./QuestionCard";
 
-export default function PhoneReview({
+export default function CompanyQuestion({
   reviewDetails,
   index,
   clearIndexCache,
@@ -21,7 +21,7 @@ export default function PhoneReview({
   fullScreen,
   isExpanded,
 }) {
-  const [dontLikeThisRequest] = useIdontLikeThisPhoneReviewMutation();
+  const [dontLikeThisRequest] = useIdontLikeThisPhoneQuestionMutation();
 
   const actionBtnFunction = async () => {
     try {
@@ -32,18 +32,18 @@ export default function PhoneReview({
     }
   };
 
-  const [likePhoneReview] = useLikePhoneReviewMutation();
-  const [unLikePhoneReview] = useUnLikePhoneReviewMutation();
+  const [likePhoneReview] = useLikePhoneQuestionMutation();
+  const [unLikePhoneReview] = useUnLikePhoneQuestionMutation();
 
   const checkIsSignedIn = useCheckSignedIn();
   const checkOwnerShip = useCheckOwnership({
     ownerId: reviewDetails.userId,
-    message: "لا يمكنك الاعجاب بالمراجعة الخاصة بك",
+    message: "لا يمكنك التصويت للسؤال الخاصة بك",
   });
 
   const likeBtnHandler = async () => {
     if (checkIsSignedIn() && checkOwnerShip()) {
-      reviewDetails.liked
+      reviewDetails.upvoted
         ? unLikePhoneReview({
             reviewId: reviewDetails._id,
             doFn: stateUnLikeFn.bind(null, reviewDetails._id),
@@ -58,16 +58,16 @@ export default function PhoneReview({
   };
 
   return (
-    <ReviewCard
+    <QuestionCard
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}
       clearIndexCache={clearIndexCache}
       reviewDetails={reviewDetails}
-      isPhoneReview={true}
+      isPhoneReview={false}
       targetProfilePath={targetProfilePath}
       userProfilePath={userProfilePath}
-      fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewDetails._id}`}
+      fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_QUESTION}?id=${reviewDetails._id}`}
       actionBtnFunction={showActionBtn && actionBtnFunction}
       likeBtnHandler={likeBtnHandler}
     />

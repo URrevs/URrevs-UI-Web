@@ -33,15 +33,15 @@ export default function BottomNavBar() {
   const backgroundColor = theme.palette.bottomNavigationBar.backgroundColor;
   const focusedColor = theme.palette.bottomNavigationBar.selectedTap;
   const unFocusedColor = theme.palette.bottomNavigationBar.unselectedTap;
+  const iconColor = (val) =>
+    currentPage === val ? focusedColor : unFocusedColor;
+  const focusedIconSize = 45; //45
+  const unfocusedIconSize = 39; //39
 
   const dictionary = useAppSelector((state) => state.language.textContainer);
   const navigate = useNavigate();
 
   // item styles
-  const iconColor = (val) =>
-    currentPage === val ? focusedColor : unFocusedColor;
-  const focusedIconSize = 45; //45
-  const unfocusedIconSize = 39; //39
 
   const navBarItems = [
     {

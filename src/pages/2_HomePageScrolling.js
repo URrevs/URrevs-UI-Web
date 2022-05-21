@@ -23,7 +23,7 @@ function Reviews() {
   const { data, isLoading, isFetching, error } =
     useGetOtherUserPhoneReviewsQuery({
       round: page,
-      uid: "627427a13567ed5a52e4c953",
+      uid: "6286ce670098ecee17926543",
     });
 
   const stateLike = (id) =>

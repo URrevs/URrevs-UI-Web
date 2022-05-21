@@ -107,6 +107,7 @@ const Card = ({ children, reviewIcon, tooltipTitle }) => {
                 }
           }
         >
+          {/* tooltip */}
           {reviewIcon ? (
             <Tooltip title={tooltipTitle}>
               <RateReviewOutlinedIcon

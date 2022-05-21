@@ -9,7 +9,7 @@ import {
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import {
   useAuthenticateMutation,
   useGetCurrentUserProfileMutation,
@@ -21,15 +21,21 @@ import { ProductProfile } from "./pages/10_ProductProfile";
 import { ComparisonScreen } from "./pages/11_ComparisonScreen";
 import { CompanyProfile } from "./pages/14_CompanyProfile";
 import { AllProductsScreen } from "./pages/16_AllProductsScreen";
+// import CompanyQuestionFullScreen from "./pages/17_CompanyQuestionFullScreen";
+import PhoneQuestionFullScreen from "./pages/17_PhoneQuestionFullScreen";
 import ReviewPostingScreen from "./pages/18_ReviewPostingScreen";
 import Menu from "./pages/20_Menu";
+import { SettingsScreen } from "./pages/21_SettingsScreen";
 import { AdminPanel } from "./pages/26_AdminPanel";
 import { UpdateProducts } from "./pages/29_UpdateProducts";
 import Reviews from "./pages/2_HomePageScrolling";
 import CompanyReviewFullScreen from "./pages/3_CompanyReviewFullScreen";
 import PhoneReviewFullScreen from "./pages/3_PhoneReviewFullScreen";
+import { NotFoundPage } from "./pages/404/404";
 import PostedCompanyReviews from "./pages/5_PostedCompanyReviews";
-import PostedReviews from "./pages/5_PostedPhoneReviews";
+import PostedPhoneReviews from "./pages/5_PostedPhoneReviews";
+import PostedCompanyQuestions from "./pages/7_PostedCompanyQuestions";
+import PostedPhoneQuestions from "./pages/7_PostedPhoneQuestions";
 import { SearchScreen } from "./pages/8_SearchScreen";
 import AddReview from "./pages/AddReview";
 import ComponentsTest from "./pages/ComponentsTest";
@@ -66,6 +72,13 @@ function App() {
         lg: 1200,
       },
     },
+    sideBar: {
+      height: "59px",
+    },
+    appBar: {
+      zIndex: 1500,
+    },
+    drawer: { zIndex: 1000, width: "72px" },
 
     palette: {
       mode: isDark ? "dark" : "light",
@@ -91,13 +104,17 @@ function App() {
       },
       drawer: {
         drawerColor: isDark ? "#242526" : COLORS.cffffff,
-        drawerIcon: isDark ? COLORS.cffffff : COLORS.c1e1e1e,
+        drawerIcon: isDark ? COLORS.cffffff : COLORS.c050505,
         activePage: isDark ? "#383838" : COLORS.cdbdbdb,
         tileText: isDark ? COLORS.cffffff : COLORS.c000000,
       },
       searchBar: {
         searchBarColor: isDark ? "#3A3B3C" : COLORS.ce5e5e7,
         searchIcon: isDark ? "#B0B3B8" : COLORS.c050505,
+      },
+      deskTopSearchBar: {
+        searchBarColor: isDark ? "#3A3B3C" : COLORS.ce5e5e7,
+        searchIcon: isDark ? "#B0B3B8" : COLORS.c65676b,
       },
       interactionCard: {
         backgroundColor: COLORS.cffffff,
@@ -151,6 +168,7 @@ function App() {
         buttonBg: isDark ? "#FFFFFF" : COLORS.cffffff,
         borderColor: isDark ? "#FFFFFF" : COLORS.c606266,
       },
+      blackIconColor: isDark ? COLORS.cCED0D4 : COLORS.c050505,
       defaultRedBtnIconColor: isDark ? COLORS.cCED0D4 : COLORS.cffffff,
       defaultIconColor: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
       cancel: isDark ? COLORS.cCED0D4 : COLORS.c050505,
@@ -227,6 +245,11 @@ function App() {
                 <Grid item md={2} sm={0.5} xs={0}></Grid>
                 <Grid item md={8} sm={11} xs={12}>
                   <Routes>
+                    {/* not found handling */}
+                    <Route path="/404" element={<NotFoundPage />} />
+                    <Route path="*" element={<Navigate to="/404" replace />} />
+
+                    {/* review full review */}
                     <Route
                       path={ROUTES_NAMES.EXACT_PHONE_REVIEW}
                       element={<PhoneReviewFullScreen />}
@@ -235,6 +258,16 @@ function App() {
                       path={ROUTES_NAMES.EXACT_COMPANY_REVIEW}
                       element={<CompanyReviewFullScreen />}
                     />
+
+                    {/* question full screen */}
+                    <Route
+                      path={ROUTES_NAMES.EXACT_PHONE_QUESTION}
+                      element={<PhoneQuestionFullScreen />}
+                    />
+                    {/* <Route
+                      path={ROUTES_NAMES.EXACT_COMPANY_QEXACT_PHONE_QUESTION}
+                      element={<CompanyQuestionFullScreen />}
+                    /> */}
                     <Route path={ROUTES_NAMES.HOME}>
                       <Route index element={<Reviews />} />
                       <Route path={ROUTES_NAMES.MENU}>
@@ -258,11 +291,21 @@ function App() {
                         <Route path={ROUTES_NAMES.REVIEWS}>
                           <Route
                             path={ROUTES_NAMES.PHONE_REVIEWS}
-                            element={<PostedReviews />}
+                            element={<PostedPhoneReviews />}
                           />
                           <Route
-                            path={ROUTES_NAMES.MY_COMPANY_REVIEWS}
+                            path={ROUTES_NAMES.COMPANY_REVIEWS}
                             element={<PostedCompanyReviews />}
+                          />
+                        </Route>
+                        <Route path={ROUTES_NAMES.QUESTIONS}>
+                          <Route
+                            path={ROUTES_NAMES.PHONE_REVIEWS}
+                            element={<PostedPhoneQuestions />}
+                          />
+                          <Route
+                            path={ROUTES_NAMES.COMPANY_REVIEWS}
+                            element={<PostedCompanyQuestions />}
                           />
                         </Route>
                       </Route>
@@ -298,6 +341,10 @@ function App() {
                     <Route path={ROUTES_NAMES.MENU}>
                       <Route index element={<Menu />} />
                     </Route>
+                    <Route
+                      path={ROUTES_NAMES.SETTINGS}
+                      element={<SettingsScreen />}
+                    />
                     <Route path={ROUTES_NAMES.ADMIN_PANEL}>
                       <Route index element={<AdminPanel />} />
                       <Route path={ROUTES_NAMES.UPDATE}>

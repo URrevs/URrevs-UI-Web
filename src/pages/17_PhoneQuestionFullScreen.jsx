@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import {
-  useGetCertainPhoneReviewQuery,
-  useGetPhoneReviewCommentsQuery,
-  useAddCommentOnPhoneReviewMutation,
-  useAddReplyOnPhoneReviewMutation,
-  useLikePhoneReviewCommentMutation,
-  useUnLikePhoneReviewCommentMutation,
-  useLikePhoneReviewReplyMutation,
-  useUnLikePhoneReviewReplyMutation,
-} from "../services/phone_reviews";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { commentsListActions } from "../store/commentsListSlice";
-import CommentsList from "./CommentsList";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import ROUTES_NAMES from "../RoutesNames";
 import { Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
-import { reviewsActions } from "../store/reviewsSlice";
-import PhoneReview from "../Components/ReviewCard/PhoneReview";
+import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
+import QuestionCard from "../Components/ReviewCard/QuestionCard";
+import ROUTES_NAMES from "../RoutesNames";
+import {
+  useAddCommentOnPhoneQuestionMutation,
+  useAddReplyOnPhoneQuestionMutation,
+  useGetCertainPhoneQuestionQuery,
+  useGetPhoneQuestionCommentsQuery,
+  useLikePhoneQuestionCommentMutation,
+  useLikePhoneQuestionReplyMutation,
+  useUnLikePhoneQuestionCommentMutation,
+  useUnLikePhoneQuestionReplyMutation,
+} from "../services/phone_questions";
+import { commentsListActions } from "../store/commentsListSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { questionsActions } from "../store/questionsSlice";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -28,7 +26,7 @@ const cache = new CellMeasurerCache({
   defaultHeight: loadingSkeletonHeight,
 });
 
-export default function PhoneReviewFullScreen() {
+export default function PhoneQuestionFullScreen() {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -51,30 +49,29 @@ export default function PhoneReviewFullScreen() {
 
   const [page, setPage] = useState(1);
 
-  const { data, isLoading, isFetching, error } = useGetPhoneReviewCommentsQuery(
-    { reviewId, round: page }
-  );
+  const { data, isLoading, isFetching, error } =
+    useGetPhoneQuestionCommentsQuery({ reviewId, round: page });
 
   // add comment
   const [addCommentLoading, setAddCommentLoading] = useState(false);
   const [addCommentError, setAddCommentError] = useState(null);
-  const [addCommentOnPhoneReview] = useAddCommentOnPhoneReviewMutation();
+  const [addCommentOnPhoneReview] = useAddCommentOnPhoneQuestionMutation();
 
   // add reply
   const [addReplyLoading, setAddReplyLoading] = useState(false);
   const [addReplyError, setAddReplyError] = useState(null);
-  const [addReplyOnPhoneReview] = useAddReplyOnPhoneReviewMutation();
+  const [addReplyOnPhoneReview] = useAddReplyOnPhoneQuestionMutation();
 
   // like comment
-  const [likeComment] = useLikePhoneReviewCommentMutation();
+  const [likeComment] = useLikePhoneQuestionCommentMutation();
 
   // unlike comment
-  const [unLikeComment] = useUnLikePhoneReviewCommentMutation();
+  const [unLikeComment] = useUnLikePhoneQuestionCommentMutation();
 
   // like reply
-  const [likeReply] = useLikePhoneReviewReplyMutation();
+  const [likeReply] = useLikePhoneQuestionReplyMutation();
   // unlike reply
-  const [unLikeReply] = useUnLikePhoneReviewReplyMutation();
+  const [unLikeReply] = useUnLikePhoneQuestionReplyMutation();
 
   const [ex, setEx] = useState(false);
   const clearCache = (index) => {
@@ -86,41 +83,38 @@ export default function PhoneReviewFullScreen() {
     }
   };
 
-  // // get this review from store
-  // const currentReview = useAppSelector((state) => state.reviews.newReviews).find(
-  //   (element) => {
-  //     return element._id === reviewId;
-  //   }
-  // );
+  // get this review from store
+  // const currentReview = useAppSelector(
+  //   (state) => state.reviews.newReviews
+  // ).find((element) => {
+  //   return element._id === reviewId;
+  // });
 
   // get review from server
   const {
     data: currentReview,
     isLoading: reviewLoading,
     error: reviewError,
-  } = useGetCertainPhoneReviewQuery(reviewId);
+  } = useGetCertainPhoneQuestionQuery(reviewId);
 
   const currentReviewData = useAppSelector(
-    (state) => state.reviews.newReviews
+    (state) => state.questions.newReviews
   )[0];
 
   useEffect(() => {
-    console.log(reviewLoading);
     if (!reviewLoading) {
-      console.log("currentReview", currentReview);
-
-      dispatch(reviewsActions.clearReviews());
+      dispatch(questionsActions.clearReviews());
       dispatch(
-        reviewsActions.addToLoaddedReviews({ newReviews: [currentReview] })
+        questionsActions.addToLoaddedReviews({ newReviews: [currentReview] })
       );
     }
   }, [reviewLoading]);
 
   const stateLikePhoneReview = (id) =>
-    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
+    dispatch(questionsActions.setIsLiked({ id: id, isLiked: true }));
 
   const stateUnLikePhoneReview = (id) =>
-    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: false }));
+    dispatch(questionsActions.setIsLiked({ id: id, isLiked: false }));
 
   // comment like and unlike
   const stateLikePhoneComment = (id) =>
@@ -170,12 +164,12 @@ export default function PhoneReviewFullScreen() {
     });
   };
 
-  const addToLoadedComments = () =>
-    dispatch(
-      commentsListActions.addToLoaddedComments({
-        newComments: data,
-      })
-    );
+  // const addToLoadedComments = () =>
+  //   dispatch(
+  //     commentsListActions.addToLoaddedComments({
+  //       newComments: data,
+  //     })
+  //   );
 
   const addOneCommentToLoadedComments = (comment, index) => {
     dispatch(
@@ -266,7 +260,6 @@ export default function PhoneReviewFullScreen() {
   const deleteReviewFromStore = (id) => {};
 
   const reviewCard = () => {
-    console.log(currentReviewData);
     return (
       <div>
         {reviewLoading ? (
@@ -275,7 +268,7 @@ export default function PhoneReviewFullScreen() {
           <div>Error</div>
         ) : (
           currentReviewData && (
-            <PhoneReview
+            <PhoneQuestion
               key={currentReviewData._id}
               index={0}
               fullScreen={true}
@@ -303,24 +296,25 @@ export default function PhoneReviewFullScreen() {
       ) : reviewError ? (
         <div>Error</div>
       ) : (
-        <CommentsList
-          reviewCard={reviewCard}
-          commentsList={commentsList}
-          page={page}
-          data={data}
-          error={error}
-          isLoading={isLoading}
-          isFetching={isFetching}
-          commentLike={likeCommentRequest}
-          commentUnlike={unLikeCommentRequest}
-          replyLike={likeReplyRequest}
-          replyUnlike={unLikeReplyRequest}
-          addToReviewsList={addToLoadedComments}
-          increasePage={increasePage}
-          cache={cache}
-          clearCache={clearCache}
-          submitReplyHandler={submitReplyHandler}
-        />
+        reviewCard()
+        // <CommentsList
+        //   reviewCard={reviewCard}
+        //   commentsList={commentsList}
+        //   page={page}
+        //   data={data}
+        //   error={error}
+        //   isLoading={isLoading}
+        //   isFetching={isFetching}
+        //   commentLike={likeCommentRequest}
+        //   commentUnlike={unLikeCommentRequest}
+        //   replyLike={likeReplyRequest}
+        //   replyUnlike={unLikeReplyRequest}
+        //   addToReviewsList={addToLoadedComments}
+        //   increasePage={increasePage}
+        //   cache={cache}
+        //   clearCache={clearCache}
+        //   submitReplyHandler={submitReplyHandler}
+        // />
       )}
 
       <div

@@ -77,6 +77,7 @@ export default function CommentsList({
       increasePage();
     }
     maxIndex = Math.max(index, maxIndex);
+
     return index < commentsList.length ? (
       <div
         key={key}
@@ -118,6 +119,7 @@ export default function CommentsList({
                   commentUnlike={commentUnlike}
                   submitReplyHandler={submitReplyHandler}
                   avatar={commentsList[index].userPicture}
+                  userId={commentsList[index].userId}
                 />
               )}
             </div>
@@ -129,7 +131,7 @@ export default function CommentsList({
 
   return (
     <Fragment>
-      <CustomAppBar showBackBtn showSearch showProfile>
+      <CustomAppBar showBackBtn showProfile>
         <div style={{ height: "calc(100vh)", margin: "55px 12px" }}>
           {reviewCard()}
           <AutoSizer>

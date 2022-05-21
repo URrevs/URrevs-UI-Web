@@ -52,11 +52,12 @@ export default function SearchComponent({
   isFormik = false,
   error = false,
   helperText = "",
+  searchFn,
 }) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [results, setResults] = React.useState([]);
   const [lock, setLock] = React.useState(false);
-  const [search] = useSearchPhonesOnlyMutation();
+
   const theme = useTheme();
   return (
     <Stack spacing={2} sx={{ width: "100%" }}>
@@ -79,6 +80,7 @@ export default function SearchComponent({
         disableClearable
         options={results.map((option) => ({
           label: option.name,
+          type: option.type,
           pid: option._id,
           cid: "", //TODO
           //GET MANUFACTURING COMPANY
@@ -99,7 +101,9 @@ export default function SearchComponent({
               try {
                 setTimeout(async () => {
                   if (e.target.value.trim() !== "") {
-                    const phones = await search(e.target.value.trim()).unwrap();
+                    const phones = await searchFn(
+                      e.target.value.trim()
+                    ).unwrap();
 
                     setResults(phones);
                   }
@@ -114,7 +118,9 @@ export default function SearchComponent({
               try {
                 setTimeout(async () => {
                   if (e.target.value.trim() !== "") {
-                    const phones = await search(e.target.value.trim()).unwrap();
+                    const phones = await searchFn(
+                      e.target.value.trim()
+                    ).unwrap();
 
                     setResults(phones);
                   }

@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Box, Button, Snackbar, Typography } from "@mui/material";
+import { Button, Snackbar, Typography } from "@mui/material";
 import React from "react";
 
 export const StyledSnackbar = ({

@@ -2,6 +2,7 @@ import { useTheme } from "@emotion/react";
 import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
@@ -18,6 +19,7 @@ import {
   ListItemButton,
   Typography,
   Modal,
+  useMediaQuery,
 } from "@mui/material";
 import { List } from "@mui/material/";
 import React from "react";
@@ -29,15 +31,23 @@ import { Link } from "react-router-dom";
 import FacebookIcon from "../Components/Icons/FacebookIcon";
 import LinkedIn from "../Components/Icons/LinkedIn";
 import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
+import { SettingsSideBar } from "../Components/MainLayout/Drawer/Sidebar/SettingsSideBar";
+import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
 
-export default function Menu() {
+export default function Menu({ isDesktop = false, drawerRef }) {
   const theme = useTheme();
 
   const currentUserProfile = useAppSelector((state) => state.auth);
+
   const profileData = currentUserProfile;
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [signOutDialog, setSignOutDialog] = React.useState(false);
+  const [invitationCodeDialog, setInvitationCodeDialog] = React.useState(false);
+  const [settingsSlide, setSettingsSlide] = React.useState(false);
+  const handleSignOutOpen = () => setSignOutDialog(true);
+  const handleSignOutClose = () => setSignOutDialog(false);
+  const handleInvitationOpen = () => setInvitationCodeDialog(true);
+  const handleInvitationClose = () => setInvitationCodeDialog(false);
+  const isMobile = useMediaQuery("(max-width:700px)");
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
@@ -63,60 +73,83 @@ export default function Menu() {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${currentUserProfile.uid}`,
+      authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.myQuestions,
       icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: "",
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${currentUserProfile.uid}`,
+      authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.ownedProducts,
       icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?userId=${profileData.uid}`,
+      authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.askedQuestions,
       icon: <HelpCenterOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: pageDictionry.helpOthers,
       to: "",
+      authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.referalCode,
       icon: <GroupsOutlinedIcon sx={{ fontSize: 40 }} />,
-      onClick: () => navigator.clipboard.writeText(profileData.refCode),
+      onClick: () => {
+        handleInvitationOpen();
+      },
       subtitle: pageDictionry.inviteFriends,
+      authenticate: currentUserProfile.isLoggedIn,
     },
+    //Admin panel
     {
       title: pageDictionry.adminPanel,
       icon: <AdminPanelSettingsOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
       to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
+      authenticate: currentUserProfile.isAdmin,
     },
+    //Settings
     {
       title: pageDictionry.settings,
       icon: <SettingsOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: "",
+      to: `../../${ROUTES_NAMES.SETTINGS}`,
+      authenticate: true,
+      onClick: () => {
+        setSettingsSlide(!settingsSlide);
+      },
+      endIcon: isDesktop ? (
+        <KeyboardArrowLeftOutlinedIcon sx={{ fontSize: 40 }} />
+      ) : (
+        ""
+      ),
     },
+    //Aboutus
     {
       title: pageDictionry.aboutUs,
       icon: <ErrorOutlineOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
       to: "",
+      authenticate: true,
     },
     {
       title: pageDictionry.contactUs,
       icon: <ContactMailOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
       to: "",
+      authenticate: true,
     },
     {
       title: pageDictionry.logOut,
       icon: <LogoutOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
       onClick: () => {
-        handleOpen();
+        handleSignOutOpen();
       },
+      authenticate: currentUserProfile.isLoggedIn,
     },
   ];
   const userProfile = () => (
@@ -126,7 +159,7 @@ export default function Menu() {
       sx={{ mr: "8px" }}
     ></Avatar>
   );
-  const useProfileButton = () => (
+  const userProfileButton = () => (
     <Link
       to={`../../${ROUTES_NAMES.USER_PROFILE}?userId=${profileData.uid}`}
       style={{
@@ -178,7 +211,7 @@ export default function Menu() {
       </ListItem>
     </Link>
   );
-  const listItem = (title, subTitle, icon, to, onClick) => {
+  const listItem = (title, subTitle, icon, to, onClick, endIcon) => {
     return (
       <ListItemNavigator
         title={title}
@@ -186,41 +219,84 @@ export default function Menu() {
         icon={icon}
         to={to}
         onClick={onClick}
+        endIcon={endIcon}
       />
     );
   };
 
   return (
-    <Box
-      style={{
-        marginBottom: 70,
-      }}
-    >
-      <CustomAppBar showLogo showSearch showProfile />
+    <React.Fragment>
+      {isDesktop ? (
+        <SettingsSideBar
+          settingsSlide={settingsSlide}
+          setSettingsSlide={setSettingsSlide}
+          drawerRef={drawerRef}
+        />
+      ) : null}
 
-      <Modal open={open} onClose={handleClose} dir={theme.direction}>
-        <Box>
-          <SignoutDialog handleClose={handleClose} />
-        </Box>
-      </Modal>
-      <List>
-        {useProfileButton()}
-        <Box style={{ height: 12 }}></Box>
-        {listItems.map((item, index) => {
-          return (
-            <div key={item.title + index}>
-              {listItem(
-                item.title,
-                item.subtitle,
-                item.icon,
-                item.to,
-                item.onClick
-              )}
-            </div>
-          );
-        })}
-      </List>
-      <Box sx={{ paddingTop: "20px" }}>
+      <Box
+        style={{
+          //Margin from top appbar
+          display: "flex",
+          flexDirection: "column",
+
+          height: currentUserProfile ? "65vh" : "",
+          marginBottom: 70,
+          padding: "0px 14px",
+        }}
+      >
+        {isMobile ? <CustomAppBar showLogo showSearch showProfile /> : null}
+
+        <Modal
+          open={signOutDialog}
+          onClose={handleSignOutClose}
+          dir={theme.direction}
+        >
+          <Box>
+            <SignoutDialog handleClose={handleSignOutClose} />
+          </Box>
+        </Modal>
+        <Modal
+          open={invitationCodeDialog}
+          onClose={handleInvitationClose}
+          dir={theme.direction}
+        >
+          <Box>
+            <InvitationDialog handleClose={handleInvitationClose} />
+          </Box>
+        </Modal>
+        <List>
+          {currentUserProfile.isLoggedIn ? userProfileButton() : null}
+          <Box style={{ height: 12 }}></Box>
+          {listItems.map((item, index) => {
+            if (item.authenticate)
+              return (
+                <div key={item.title + index}>
+                  {listItem(
+                    item.title,
+                    item.subtitle,
+                    item.icon,
+                    item.to,
+                    item.onClick,
+                    item.endIcon
+                  )}
+                </div>
+              );
+            else return null;
+          })}
+        </List>
+      </Box>
+      <Box
+        sx={{
+          marginTop: "auto",
+          // // Footer just above the foot appbar
+          // position: "absolute",
+          // bottom: "0",
+          paddingBottom: isMobile ? "75px" : "20px",
+          // // margin: "-90px 0px -90px 0px",
+          // width: "95%",
+        }}
+      >
         <Typography variant="S22W500C050505">{`${pageDictionry.followUs}:`}</Typography>
         <Box
           sx={{
@@ -233,21 +309,28 @@ export default function Menu() {
             <FacebookIcon />
             <LinkedIn />
           </Box>
-          <Box sx={{ display: "flex" }}>
-            <Link to="/">
-              <Typography underline="always">
-                {pageDictionry.termsAndAgreements}
-              </Typography>
-            </Link>
-            <Typography variant="S16W400C050505">•</Typography>
-            <Link to="/">
-              <Typography underline="always">
-                {pageDictionry.privacyPolicy}
-              </Typography>
-            </Link>
-          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Link to="/">
+            <Typography underline="always">
+              {pageDictionry.termsAndAgreements}
+            </Typography>
+          </Link>
+          <Typography sx={{ padding: "0px 3px" }} variant="S16W400C050505">
+            |
+          </Typography>
+          <Link to="/">
+            <Typography underline="always">
+              {pageDictionry.privacyPolicy}
+            </Typography>
+          </Link>
         </Box>
       </Box>
-    </Box>
+    </React.Fragment>
   );
 }

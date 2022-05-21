@@ -11,10 +11,17 @@ import { Fragment } from "react";
 import { isDarkActions } from "../../../store/darkModeSlice";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { languageActions } from "../../../store/languageSlice";
-import { Avatar } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  InputAdornment,
+  TextField,
+  useMediaQuery,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { uiActions } from "../../../store/uiSlice";
+import { regDialogActions } from "../../../store/uiRegisterDialogSlice";
 import ROUTES_NAMES from "../../../RoutesNames";
+import { SearchSuggestion } from "./SearchSuggestion";
 
 const circleWidth = 35;
 const circleHeight = 35;
@@ -41,15 +48,16 @@ export const AppBarActions = ({
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [searchSuggestion, setSearchSuggestion] = React.useState(false);
 
   const language = useAppSelector((state) => state.language.language);
   const isDark = useAppSelector((state) => state.darkMode.isDark);
+  const isMobile = useMediaQuery("(max-width:700px)");
 
   const theme = useTheme();
 
   const photo = useAppSelector((state) => state.auth.photo);
   const name = useAppSelector((state) => state.auth.name);
-
   const user = useAppSelector((state) => state.auth);
   const isLoggedIn = user.isLoggedIn;
 
@@ -60,56 +68,75 @@ export const AppBarActions = ({
     navigate(`/${ROUTES_NAMES.SEARCH}`);
   };
   const handleRegestrationOpen = () => {
-    dispatch(uiActions.toggleRegistration());
+    dispatch(regDialogActions.toggleRegistration());
   };
 
   return (
     <Fragment>
-      {/* search icon */}
-      {showSearch && (
-        <CircleBtn onClick={navigateToSearchPage}>
-          <SearchIcon />
-        </CircleBtn>
-      )}
-      {/* user account */}
-      {showProfile && (
-        <CircleBtn
-          onClick={!isLoggedIn ? handleRegestrationOpen : navigateToProfilePage}
-        >
-          {!isLoggedIn ? (
-            <AccountCircle />
-          ) : (
-            <Avatar
-              sx={{ width: circleWidth, height: circleHeight }}
-              src={photo}
-            />
-          )}
-        </CircleBtn>
-      )}
-      {/* // language */}
-      {showLanguage && (
-        <CircleBtn
-          onClick={() => {
-            dispatch(
-              languageActions.switchLanguage({
-                language: language === "en" ? "ar" : "en",
-              })
-            );
-          }}
-        >
-          {language !== "en" ? "En" : "ع"}
-        </CircleBtn>
-      )}
-      {/* // darkMode */}
-      {showDark && (
-        <CircleBtn
-          onClick={() => {
-            dispatch(isDarkActions.switchMode());
-          }}
-        >
-          {isDark ? <DarkModeIcon /> : <LightModeIcon />}
-        </CircleBtn>
-      )}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        {/* search icon */}
+        {isMobile
+          ? showSearch && (
+              <CircleBtn onClick={navigateToSearchPage}>
+                <SearchIcon />
+              </CircleBtn>
+            )
+          : showSearch && (
+              <Fragment>
+                <Box sx={{ width: "100%" }}>
+                  <SearchSuggestion />
+                </Box>
+              </Fragment>
+            )}
+        {/* user account */}
+        {showProfile && (
+          <CircleBtn
+            onClick={
+              !isLoggedIn ? handleRegestrationOpen : navigateToProfilePage
+            }
+          >
+            {!isLoggedIn ? (
+              <AccountCircle />
+            ) : (
+              <Avatar
+                sx={{ width: circleWidth, height: circleHeight }}
+                src={photo}
+              />
+            )}
+          </CircleBtn>
+        )}
+        {/* // language */}
+        {showLanguage && (
+          <CircleBtn
+            onClick={() => {
+              dispatch(
+                languageActions.switchLanguage({
+                  language: language === "en" ? "ar" : "en",
+                })
+              );
+            }}
+          >
+            {language !== "en" ? "En" : "ع"}
+          </CircleBtn>
+        )}
+        {/* // darkMode */}
+        {showDark && (
+          <CircleBtn
+            onClick={() => {
+              dispatch(isDarkActions.switchMode());
+            }}
+          >
+            {isDark ? <DarkModeIcon /> : <LightModeIcon />}
+          </CircleBtn>
+        )}
+      </Box>
+      {/* {theme.isMobile ? null : <SearchSuggestion />} */}
     </Fragment>
   );
 };
