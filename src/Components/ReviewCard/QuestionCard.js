@@ -1,7 +1,6 @@
 import { Box, ButtonBase, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import * as React from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND,
@@ -9,17 +8,9 @@ import {
   USER_CIRCLE_AVATAR_LARGE,
 } from "../../constants";
 import { cropText } from "../../functions/cropText";
-import ROUTES_NAMES from "../../RoutesNames";
-import {
-  useLikePhoneReviewMutation,
-  useUnLikePhoneReviewMutation,
-} from "../../services/phone_reviews";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import reviewsSlice from "../../store/reviewsSlice";
+import { useAppSelector } from "../../store/hooks";
 import Card from "../Card";
-import { StarLine } from "../StarLine";
 import CardActionButtons from "./CardActions/CardActionButtons";
-import FullStars from "./CardBody/FullStars";
 import ProsConsText from "./CardBody/ProsConsText";
 import CardFooter from "./CardFooter/CardFooter";
 import CardHeader from "./CardHeader/CardHeader";
@@ -41,8 +32,6 @@ export default function QuestionCard({
   const isReview = true;
   const navigate = useNavigate();
 
-  const dispatch = useAppDispatch();
-
   const isLiked = reviewDetails.upvoted;
 
   const content = reviewDetails.content;
@@ -55,16 +44,6 @@ export default function QuestionCard({
   const [expanded, setExpanded] = React.useState(initialIsExpanded);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
-
-  const starsRatingTextContainer = [
-    textContainer.generalProductRating,
-    textContainer.userInterface,
-    textContainer.manufacturingQuality,
-    textContainer.priceQuality,
-    textContainer.camera,
-    textContainer.callsQuality,
-    textContainer.battery,
-  ];
 
   const [croppedText, setCroppedText] = React.useState({
     pros: "",
@@ -154,10 +133,10 @@ export default function QuestionCard({
   return (
     <Card
       key={ukey}
-      reviewIcon={true}
+      reviewIcon={false}
       tooltipTitle={
         isPhoneReview
-          ? textContainer.productReview
+          ? textContainer.askedQuestion
           : textContainer.companyReview
       }
     >

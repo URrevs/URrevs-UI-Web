@@ -67,7 +67,7 @@ export default function PhoneQuestion({
       isPhoneReview={true}
       targetProfilePath={targetProfilePath}
       userProfilePath={userProfilePath}
-      fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewDetails._id}`}
+      fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_QUESTION}?id=${reviewDetails._id}`}
       actionBtnFunction={showActionBtn && actionBtnFunction}
       likeBtnHandler={likeBtnHandler}
     />

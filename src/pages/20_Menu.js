@@ -73,7 +73,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
     {
       title: pageDictionry.myQuestions,
       icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: "",
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${currentUserProfile.uid}`,
       authenticate: currentUserProfile.isLoggedIn,
     },
     {

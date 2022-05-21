@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import CompanyReview from "../Components/ReviewCard/CompanyReview";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
-import { useGetOtherUserPhoneReviewsQuery } from "../services/phone_reviews";
+import ROUTES_NAMES from "../RoutesNames";
+import { useGetOtherUserCompanyReviewsQuery } from "../services/company_reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";
-import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import ROUTES_NAMES from "../RoutesNames";
-import PhoneReview from "../Components/ReviewCard/PhoneReview";
 
-export default function PostedPhoneReviews() {
+export default function PostedCompanyQuestions() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -19,6 +18,8 @@ export default function PostedPhoneReviews() {
     dispatch(reviewsActions.clearReviews());
   }, []);
 
+  const currentUser = useAppSelector((state) => state.auth);
+
   const reviewsList = useAppSelector((state) => state.reviews.newReviews);
   const [page, setPage] = useState(1);
 
@@ -26,7 +27,7 @@ export default function PostedPhoneReviews() {
   const userId = searchParams.get("userId");
 
   const { data, isLoading, isFetching, error } =
-    useGetOtherUserPhoneReviewsQuery({ round: page, uid: userId });
+    useGetOtherUserCompanyReviewsQuery({ round: page, uid: userId });
 
   const stateLike = (id) =>
     dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
@@ -56,7 +57,7 @@ export default function PostedPhoneReviews() {
 
   const reviewCard = (index, clearCache) => {
     return (
-      <PhoneReview
+      <CompanyReview
         key={reviewsList[index]._id}
         index={index}
         fullScreen={false}
@@ -64,12 +65,11 @@ export default function PostedPhoneReviews() {
         clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
         isPhoneReview={true}
-        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
+        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
-        fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewsList[index]._id}`}
-        showActionBtn={true}
+        showActionBtn={userId !== currentUser.uid}
         deleteReviewFromStore={deleteReviewFromStore}
       />
     );

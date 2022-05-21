@@ -24,8 +24,8 @@ export const phoneQuestionsApi = createApi({
     getAllQuestions: builder.query<APIQuestion[], number>({
       keepUnusedDataFor: 0,
       query: (round = 1) => `/phone/by/me?round=${1}`,
-      transformResponse: (response: { reviews: APIQuestion[] }) => {
-        return response.reviews;
+      transformResponse: (response: { questions: APIQuestion[] }) => {
+        return response.questions;
       },
     }),
 
@@ -43,8 +43,8 @@ export const phoneQuestionsApi = createApi({
     >({
       keepUnusedDataFor: 0,
       query: ({ round, pid }) => `/phone/on/${pid}?round=${round}`,
-      transformResponse: (response: { reviews: APIQuestion[] }) => {
-        return response.reviews;
+      transformResponse: (response: { questions: APIQuestion[] }) => {
+        return response.questions;
       },
     }),
 
@@ -111,8 +111,8 @@ export const phoneQuestionsApi = createApi({
     getUserPhoneQuestions: builder.query<APIQuestion[], number>({
       keepUnusedDataFor: 0,
       query: (round = 1) => `/phone/by/me?round=${round}`,
-      transformResponse: (response: { reviews: APIQuestion[] }) => {
-        return response.reviews;
+      transformResponse: (response: { questions: APIQuestion[] }) => {
+        return response.questions;
       },
     }),
 
@@ -122,8 +122,8 @@ export const phoneQuestionsApi = createApi({
     >({
       keepUnusedDataFor: 0,
       query: ({ round, uid }) => `/phone/by/${uid}?round=${round}`,
-      transformResponse: (response: { reviews: APIQuestion[] }) => {
-        return response.reviews;
+      transformResponse: (response: { questions: APIQuestion[] }) => {
+        return response.questions;
       },
     }),
 
