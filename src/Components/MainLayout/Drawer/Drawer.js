@@ -12,7 +12,7 @@ import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
 import AddBoxTwoToneIcon from "@mui/icons-material/AddBoxTwoTone";
 import RateReviewTwoToneIcon from "@mui/icons-material/RateReviewTwoTone";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import { Paper, Slide, Typography, useMediaQuery } from "@mui/material";
+import { Box, Paper, Slide, Typography, useMediaQuery } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -124,6 +124,7 @@ export const MyDrawer = (props) => {
         />
       ),
       title: textContainer.homeNavBarItem,
+      itemValue: 0,
       onClick: () => {
         setValue(0);
       },
@@ -141,6 +142,7 @@ export const MyDrawer = (props) => {
         />
       ),
       title: textContainer.AddNavBarItem,
+      itemValue: 4,
       onClick: () => {},
       path: ROUTES_NAMES.ADD_REVIEW,
     },
@@ -156,6 +158,7 @@ export const MyDrawer = (props) => {
         />
       ),
       title: textContainer.categoryNavBarItem,
+      itemValue: 1,
       onClick: () => {
         setValue(1);
       },
@@ -173,10 +176,28 @@ export const MyDrawer = (props) => {
         />
       ),
       title: textContainer.leaderboardNavBarItem,
+      itemValue: 2,
       onClick: () => {
         setValue(2);
       },
       path: ROUTES_NAMES.LEADERBOARD,
+    },
+    //Menu
+    {
+      title: "قائمة",
+      itemValue: 3,
+      icon: (
+        <MenuIcon
+          sx={{
+            fontSize: menu ? focusedIconSize : unfocusedIconSize,
+          }}
+          htmlColor={menu ? focusedColor : unFocusedColor}
+        />
+      ),
+      onClick: () => {
+        setMenu(!menu);
+      },
+      path: "",
     },
   ];
 
@@ -218,7 +239,7 @@ export const MyDrawer = (props) => {
         <Divider />
         <div style={{ ...theme.mixins.toolbar }}></div>
         <List>
-          {drawerTiles.map((item) => (
+          {drawerTiles.map((item, i) => (
             <NavLink
               style={{
                 textDecoration: "none",
@@ -226,35 +247,34 @@ export const MyDrawer = (props) => {
               }}
               end
               to={item.path}
-              key={item.path}
+              key={item.path + item.title}
             >
-              <ListItem onClick={item.onClick} button key={item.title}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText
-                  style={{
-                    textAlign: language === "ar" ? "right" : "left",
-                  }}
-                >
-                  <Typography>{item.title}</Typography>
-                </ListItemText>
+              <ListItem
+                style={{ padding: 0, justifyContent: "center" }}
+                onClick={item.onClick}
+                button
+                key={item.title}
+              >
+                <div style={{ textAlign: "center", padding: "8px 0" }}>
+                  <ListItemIcon sx={{ justifyContent: "center" }}>
+                    {item.icon}
+                  </ListItemIcon>
+
+                  {currentPage === item.itemValue && !menu ? (
+                    <Typography
+                      // variant="S14W700C2196f3"
+                      sx={{
+                        textAlign: "center",
+                        ...theme.typography.S14W700C2196f3,
+                      }}
+                    >
+                      {item.title}
+                    </Typography>
+                  ) : null}
+                </div>
               </ListItem>
             </NavLink>
           ))}
-          <ListItem
-            button
-            onClick={() => {
-              setMenu(!menu);
-            }}
-          >
-            <ListItemIcon>
-              <MenuIcon
-                sx={{
-                  fontSize: menu ? focusedIconSize : unfocusedIconSize,
-                }}
-                htmlColor={menu ? focusedColor : unFocusedColor}
-              />
-            </ListItemIcon>
-          </ListItem>
         </List>
       </PerDrawer>
     </React.Fragment>
