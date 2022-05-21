@@ -33,7 +33,7 @@ export default function Layout(props) {
 
   const logoWidth = 94;
   const logoHeight = 30;
-  const appBarHeight = theme.isMobile ? 45 : 64;
+  const appBarHeight = theme.isMobile ? 0 : 64;
 
   const dictionary = useAppSelector((state) => state.language.textContainer);
 
@@ -115,7 +115,14 @@ export default function Layout(props) {
       <Registeration />
       <CustomizedSnackbar />
       {theme.isMobile ? <BottomNavBar /> : <></>}
-      <Box component="main" sx={{ flexGrow: 1, p: 3, padding: 0 }}>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          padding: 0,
+          marginTop: `${appBarHeight}px`,
+        }}
+      >
         {/* <DrawerHeader /> */}
         {props.children}
       </Box>
