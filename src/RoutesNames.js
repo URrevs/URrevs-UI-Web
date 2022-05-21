@@ -22,8 +22,9 @@ const ROUTES_NAMES = {
   // ADD_COMPETITION: "add-competition",
   OWNED_PHONES: "owned-phones",
   REVIEWS: "reviews",
-  PHONE_REVIEWS: "phones",
-  MY_COMPANY_REVIEWS: "companies",
+  QUESTIONS: "questions",
+  PHONE_REVIEWS: "phone",
+  COMPANY_REVIEWS: "company",
   COMPARISON: "compare",
   UPDATE: "update",
   //level 4

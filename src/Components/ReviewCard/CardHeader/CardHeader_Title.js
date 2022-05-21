@@ -9,8 +9,6 @@ import ROUTES_NAMES from "../../../RoutesNames";
 const CardHeaderTitle = ({
   userName,
   productName,
-  userId,
-  targetId,
   userProfilePath,
   targetProfilePath,
 }) => {

@@ -31,8 +31,11 @@ import { UpdateProducts } from "./pages/29_UpdateProducts";
 import Reviews from "./pages/2_HomePageScrolling";
 import CompanyReviewFullScreen from "./pages/3_CompanyReviewFullScreen";
 import PhoneReviewFullScreen from "./pages/3_PhoneReviewFullScreen";
+import { NotFoundPage } from "./pages/404/404";
 import PostedCompanyReviews from "./pages/5_PostedCompanyReviews";
-import PostedReviews from "./pages/5_PostedPhoneReviews";
+import PostedPhoneReviews from "./pages/5_PostedPhoneReviews";
+import PostedCompanyQuestions from "./pages/7_PostedCompanyQuestions";
+import PostedPhoneQuestions from "./pages/7_PostedPhoneQuestions";
 import { SearchScreen } from "./pages/8_SearchScreen";
 import AddReview from "./pages/AddReview";
 import ComponentsTest from "./pages/ComponentsTest";
@@ -243,7 +246,7 @@ function App() {
                 <Grid item md={8} sm={11} xs={12}>
                   <Routes>
                     {/* not found handling */}
-                    <Route path="/404" element={<div>404</div>} />
+                    <Route path="/404" element={<NotFoundPage />} />
                     <Route path="*" element={<Navigate to="/404" replace />} />
 
                     {/* review full review */}
@@ -288,11 +291,21 @@ function App() {
                         <Route path={ROUTES_NAMES.REVIEWS}>
                           <Route
                             path={ROUTES_NAMES.PHONE_REVIEWS}
-                            element={<PostedReviews />}
+                            element={<PostedPhoneReviews />}
                           />
                           <Route
-                            path={ROUTES_NAMES.MY_COMPANY_REVIEWS}
+                            path={ROUTES_NAMES.COMPANY_REVIEWS}
                             element={<PostedCompanyReviews />}
+                          />
+                        </Route>
+                        <Route path={ROUTES_NAMES.QUESTIONS}>
+                          <Route
+                            path={ROUTES_NAMES.PHONE_REVIEWS}
+                            element={<PostedPhoneQuestions />}
+                          />
+                          <Route
+                            path={ROUTES_NAMES.COMPANY_REVIEWS}
+                            element={<PostedCompanyQuestions />}
                           />
                         </Route>
                       </Route>

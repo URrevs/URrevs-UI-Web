@@ -20,6 +20,8 @@ const questionsSlice = createSlice({
   reducers: {
     addToLoaddedReviews(state, action: PayloadAction<InitialState>) {
       const loadedReviews = action.payload.newReviews;
+      console.log(loadedReviews);
+      
       state.newReviews.push(...loadedReviews);
     },
     clearReviews(state) {
