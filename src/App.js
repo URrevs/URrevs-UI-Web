@@ -294,7 +294,7 @@ function App() {
                             element={<PostedPhoneReviews />}
                           />
                           <Route
-                            path={ROUTES_NAMES.MY_COMPANY_REVIEWS}
+                            path={ROUTES_NAMES.COMPANY_REVIEWS}
                             element={<PostedCompanyReviews />}
                           />
                         </Route>
@@ -304,7 +304,7 @@ function App() {
                             element={<PostedPhoneQuestions />}
                           />
                           <Route
-                            path={ROUTES_NAMES.MY_COMPANY_REVIEWS}
+                            path={ROUTES_NAMES.COMPANY_REVIEWS}
                             element={<PostedCompanyQuestions />}
                           />
                         </Route>

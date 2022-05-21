@@ -6,7 +6,7 @@ import { RootState } from "../store/store";
 export const companyQuestionsApi = createApi({
   reducerPath: "companyQuestionsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_PATH}/questions`,
+    baseUrl: `${process.env.REACT_APP_API_PATH}/questions/company`,
     // add token to all endpoints headers
     prepareHeaders: (headers, { getState, endpoint }) => {
       const state = getState();
@@ -23,7 +23,7 @@ export const companyQuestionsApi = createApi({
     addCompanyQuestion: builder.mutation({
       query: (question) => {
         return {
-          url: `/company`,
+          url: `/`,
           method: "POST",
           body: question,
         };
@@ -32,7 +32,7 @@ export const companyQuestionsApi = createApi({
 
     getCertainCompanyReview: builder.query<APIReview, string>({
       keepUnusedDataFor: 0,
-      query: (id: string) => `/company/${id}`,
+      query: (id: string) => `/${id}`,
       transformResponse: (response: { review: APIReview }) => {
         return response.review;
       },
@@ -43,9 +43,9 @@ export const companyQuestionsApi = createApi({
       { round: number; cid: string }
     >({
       keepUnusedDataFor: 0,
-      query: ({ round, cid }) => `/company/on/${cid}?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
-        return response.reviews;
+      query: ({ round, cid }) => `/on/${cid}?round=${round}`,
+      transformResponse: (response: { questions: APIReview[] }) => {
+        return response.questions;
       },
     }),
 
@@ -54,16 +54,16 @@ export const companyQuestionsApi = createApi({
       { round: number; pid: string }
     >({
       keepUnusedDataFor: 0,
-      query: ({ round, pid }) => `/company/on/${pid}?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
-        return response.reviews;
+      query: ({ round, pid }) => `/on/${pid}?round=${round}`,
+      transformResponse: (response: { questions: APIReview[] }) => {
+        return response.questions;
       },
     }),
 
     likeCompanyReview: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/company/${reviewId}/like`,
+          url: `/${reviewId}/like`,
           method: "POST",
         };
       },
@@ -81,7 +81,7 @@ export const companyQuestionsApi = createApi({
     unLikeCompanyReview: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/company/${reviewId}/unlike`,
+          url: `/${reviewId}/unlike`,
           method: "POST",
         };
       },
@@ -99,9 +99,9 @@ export const companyQuestionsApi = createApi({
 
     getUserCompanyReviews: builder.query<APIReview[], number>({
       keepUnusedDataFor: 0,
-      query: (round = 1) => `/company/by/me?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
-        return response.reviews;
+      query: (round = 1) => `/by/me?round=${round}`,
+      transformResponse: (response: { questions: APIReview[] }) => {
+        return response.questions;
       },
     }),
 
@@ -110,16 +110,16 @@ export const companyQuestionsApi = createApi({
       { round: number; uid: string }
     >({
       keepUnusedDataFor: 0,
-      query: ({ round, uid }) => `/company/by/${uid}?round=${round}`,
-      transformResponse: (response: { reviews: APIReview[] }) => {
-        return response.reviews;
+      query: ({ round, uid }) => `/by/${uid}?round=${round}`,
+      transformResponse: (response: { questions: APIReview[] }) => {
+        return response.questions;
       },
     }),
 
     addCommentOnCompanyReview: builder.mutation({
       query: ({ reviewId, comment }) => {
         return {
-          url: `/company/${reviewId}/comments`,
+          url: `/${reviewId}/comments`,
           method: "POST",
           body: { content: comment },
         };
@@ -132,7 +132,7 @@ export const companyQuestionsApi = createApi({
     >({
       keepUnusedDataFor: 0,
       query: ({ reviewId, round = 1 }) =>
-        `/company/${reviewId}/comments?round=${round}`,
+        `/${reviewId}/comments?round=${round}`,
       transformResponse: (response: { comments: APIComment[] }) => {
         return response.comments;
       },
@@ -141,7 +141,7 @@ export const companyQuestionsApi = createApi({
     addReplyOnCompanyReview: builder.mutation({
       query: ({ commentId, reply }) => {
         return {
-          url: `/company/comments/${commentId}/replies`,
+          url: `/comments/${commentId}/replies`,
           method: "POST",
           body: { content: reply },
         };
@@ -151,7 +151,7 @@ export const companyQuestionsApi = createApi({
     likeCompanyReviewReply: builder.mutation({
       query: ({ commentId, replyId }) => {
         return {
-          url: `/company/comments/${commentId}/replies/${replyId}/like`,
+          url: `/comments/${commentId}/replies/${replyId}/like`,
           method: "POST",
         };
       },
@@ -169,7 +169,7 @@ export const companyQuestionsApi = createApi({
     unLikeCompanyReviewReply: builder.mutation({
       query: ({ commentId, replyId }) => {
         return {
-          url: `/company/comments/${commentId}/replies/${replyId}/unlike`,
+          url: `/comments/${commentId}/replies/${replyId}/unlike`,
           method: "POST",
         };
       },
@@ -188,7 +188,7 @@ export const companyQuestionsApi = createApi({
     likeCompanyReviewComment: builder.mutation({
       query: ({ commentId }) => {
         return {
-          url: `/company/comments/${commentId}/like`,
+          url: `/comments/${commentId}/like`,
           method: "POST",
         };
       },
@@ -206,7 +206,7 @@ export const companyQuestionsApi = createApi({
     unLikeCompanyReviewComment: builder.mutation({
       query: ({ commentId }) => {
         return {
-          url: `/company/comments/${commentId}/unlike`,
+          url: `/comments/${commentId}/unlike`,
           method: "POST",
         };
       },
@@ -224,7 +224,7 @@ export const companyQuestionsApi = createApi({
     idontLikeThisCompanyReview: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/company/${reviewId}/hate`,
+          url: `/${reviewId}/hate`,
           method: "POST",
         };
       },

@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import CompanyReview from "../Components/ReviewCard/CompanyReview";
+import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
+import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import ROUTES_NAMES from "../RoutesNames";
-import { useGetOtherUserCompanyReviewsQuery } from "../services/company_reviews";
+import { useGetOtherUserCompanyReviewsQuery } from "../services/company_questions";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { reviewsActions } from "../store/reviewsSlice";
+import { questionsActions } from "../store/questionsSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";
 
 export default function PostedCompanyQuestions() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log("clear reviews");
+    console.log("clear questions");
 
-    dispatch(reviewsActions.clearReviews());
+    dispatch(questionsActions.clearReviews());
   }, []);
 
-  const currentUser = useAppSelector((state) => state.auth);
-
-  const reviewsList = useAppSelector((state) => state.reviews.newReviews);
+  const reviewsList = useAppSelector((state) => state.questions.newReviews);
   const [page, setPage] = useState(1);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -30,14 +29,14 @@ export default function PostedCompanyQuestions() {
     useGetOtherUserCompanyReviewsQuery({ round: page, uid: userId });
 
   const stateLike = (id) =>
-    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
+    dispatch(questionsActions.setIsLiked({ id: id, isLiked: true }));
 
   const stateUnLike = (id) =>
-    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: false }));
+    dispatch(questionsActions.setIsLiked({ id: id, isLiked: false }));
 
   const addToReviewsList = () =>
     dispatch(
-      reviewsActions.addToLoaddedReviews({
+      questionsActions.addToLoaddedReviews({
         newReviews: data,
       })
     );
@@ -45,11 +44,11 @@ export default function PostedCompanyQuestions() {
   const increasePage = () => setPage(page + 1);
 
   const deleteReviewFromStore = (id) => {
-    dispatch(reviewsActions.clearReviews());
+    dispatch(questionsActions.clearReviews());
     const n = reviewsList.filter((review) => review._id !== id);
 
     dispatch(
-      reviewsActions.addToLoaddedReviews({
+      questionsActions.addToLoaddedReviews({
         newReviews: n,
       })
     );
@@ -57,19 +56,19 @@ export default function PostedCompanyQuestions() {
 
   const reviewCard = (index, clearCache) => {
     return (
-      <CompanyReview
+      <CompanyQuestion
         key={reviewsList[index]._id}
-        index={index}
+        index={0}
         fullScreen={false}
         isExpanded={false}
         clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
-        isPhoneReview={true}
-        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+        isPhoneReview={false}
+        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
-        showActionBtn={userId !== currentUser.uid}
+        showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
       />
     );
@@ -78,7 +77,7 @@ export default function PostedCompanyQuestions() {
   return (
     <CustomAppBar
       showLabel
-      label="مراجعاتي"
+      label="الاسئلة المطروحة"
       showBackBtn
       tabBar={<FilterTabbar />}
     >
@@ -87,9 +86,9 @@ export default function PostedCompanyQuestions() {
         reviewsList={reviewsList}
         page={page}
         data={data}
+        isFetching={isFetching}
         error={error}
         isLoading={isLoading}
-        isFetching={isFetching}
         addToReviewsList={addToReviewsList}
         increasePage={increasePage}
       />

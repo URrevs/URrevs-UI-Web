@@ -24,7 +24,7 @@ const ROUTES_NAMES = {
   REVIEWS: "reviews",
   QUESTIONS: "questions",
   PHONE_REVIEWS: "phone",
-  MY_COMPANY_REVIEWS: "companiy",
+  COMPANY_REVIEWS: "company",
   COMPARISON: "compare",
   UPDATE: "update",
   //level 4
