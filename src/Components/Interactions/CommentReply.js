@@ -16,6 +16,7 @@ export const CommentReply = ({
   replyId,
   commentId,
   avatar,
+  userId
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -57,6 +58,7 @@ export const CommentReply = ({
           commentLike={replyLike}
           commentUnlike={replyUnlike}
           commentId={commentId}
+          ownerId={userId}
         ></InteractionFooter>
       </InteractionBody>
     </div>
