@@ -37,15 +37,16 @@ export const InteractionFooter = ({
     message: "لا يمكنك الاعجاب بالتعليق الخاص بك",
   });
 
-  const handler = () => {
-    if (checkSignedIn() && checkOwnership()) {
-      onClickHandler();
-    }
-  };
-
   return (
     <React.Fragment>
-      <CommentButton onClick={handler}>
+      <CommentButton
+        onClick={() => {
+          console.log("pressed");
+          if (checkSignedIn() && checkOwnership()) {
+            onClickHandler();
+          }
+        }}
+      >
         <Typography variant={condition ? "S13W700C2196F3" : "S13W700C050505"}>
           {buttonName}
         </Typography>

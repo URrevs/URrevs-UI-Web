@@ -106,6 +106,7 @@ export default function CommentsList({
                   replyUnlike={replyUnlike}
                   commentId={commentsList[index].commentId}
                   avatar={commentsList[index].userPicture}
+                  userId={commentsList[index].userId}
                 />
               ) : (
                 <Comment
@@ -132,7 +133,7 @@ export default function CommentsList({
   return (
     <Fragment>
       <CustomAppBar showBackBtn showProfile>
-        <div style={{ height: "calc(100vh)", margin: "55px 12px" }}>
+        <div style={{ height: "calc(100vh)", margin: "55px 0" }}>
           {reviewCard()}
           <AutoSizer>
             {({ height, width }) => {
