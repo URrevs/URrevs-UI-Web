@@ -5,7 +5,7 @@ import { InteractionCard } from "./InteractionCard";
 export const InteractionBody = ({
   user,
   text,
-  subtitle,
+  ownedAt,
   likes,
   children,
   renderIcon,
@@ -23,7 +23,7 @@ export const InteractionBody = ({
           <InteractionCard
             user={user}
             text={text}
-            subtitle={subtitle}
+            ownedAt={ownedAt}
             likes={likes}
             renderIcon={renderIcon}
           ></InteractionCard>

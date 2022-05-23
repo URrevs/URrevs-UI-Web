@@ -171,9 +171,9 @@ export default function QuestionCard({
           }
         >
           <ProsConsText
-            expanded={expanded}
             croppedText={croppedText}
             prosTitle=""
+            consTitle=""
           />
         </ButtonBase>
 

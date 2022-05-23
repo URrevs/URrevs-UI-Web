@@ -24,7 +24,7 @@ const ProductDetailsTable = ({
     productDimensions: phoneData.dimensions,
     networkType: phoneData.network,
     productWeight: phoneData.weight,
-    simCard: "مجهول",
+    simCard: phoneData.sim,
     displayType: phoneData.screenType,
     displaySize: phoneData.screenSize,
     displayResolution: phoneData.screenResolution,
@@ -59,7 +59,7 @@ const ProductDetailsTable = ({
       productDimensions: comparedPhoneData.dimensions,
       networkType: comparedPhoneData.network,
       productWeight: comparedPhoneData.weight,
-      simCard: "مجهول",
+      simCard: comparedPhoneData.sim,
       displayType: comparedPhoneData.screenType,
       displaySize: comparedPhoneData.screenSize,
       displayResolution: comparedPhoneData.screenResolution,
@@ -159,6 +159,11 @@ const ProductDetailsTable = ({
   };
 
   const dataCell = (index, key, dataRow, compData) => {
+    const data =
+      key === "price"
+        ? dataRow[key] + " " + textContainer.egyptianPound
+        : dataRow[key];
+
     return (
       key != "id" && (
         <TableCell
@@ -191,9 +196,7 @@ const ProductDetailsTable = ({
                   key === "manufacturingCompany" ? "underline" : "none",
               }}
             >
-              {key === "price"
-                ? dataRow[key] + " " + textContainer.egyptianPound
-                : dataRow[key]}
+              {data ?? "مجهول"}
             </Typography>
           </Button>
         </TableCell>
