@@ -22,7 +22,7 @@ import { ProductRateCard } from "../Components/OverviewCard/ProductRateCard";
 import { ProductOverviewCard } from "../Components/OverviewCard/ProductOverviewCard";
 import { useAppSelector } from "../store/hooks";
 import { convertDateToString } from "../functions/convertDateToString";
-import { substituteDate } from "../functions/substituteDate";
+import { subtractDate } from "../functions/subtractDate";
 import { MyAppBar } from "../Components/MainLayout/AppBar/AppBar";
 import { AppBarActions } from "../Components/MainLayout/AppBar/AppBarActions";
 import { Box } from "@mui/system";
@@ -77,7 +77,7 @@ const ComponentsTest = (props) => {
   const language = useAppSelector((state) => state.language.language);
   const [value, setValue] = React.useState(0);
   const date1 = convertDateToString(new Date(2020, 1, 1), language);
-  const date2 = substituteDate(new Date(2022, 3, 29), language);
+  const date2 = subtractDate(new Date(2022, 3, 29), language);
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);

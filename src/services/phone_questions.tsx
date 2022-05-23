@@ -231,11 +231,11 @@ export const phoneQuestionsApi = createApi({
       },
     }),
 
-    // 
+    // answer acceptance
     markAnswerAsAccepted: builder.mutation({
-      query: ({ commentId }) => {
+      query: ({ questionId, answerId }) => {
         return {
-          url: `/answers/${commentId}/unlike`,
+          url: `/${questionId}/answers/${answerId}/accept`,
           method: "POST",
         };
       },
@@ -251,9 +251,9 @@ export const phoneQuestionsApi = createApi({
     }),
 
     unmarkAnswerAsAccepted: builder.mutation({
-      query: ({ commentId }) => {
+      query: ({ questionId, answerId }) => {
         return {
-          url: `/answers/${commentId}/unlike`,
+          url: `/${questionId}/answers/${answerId}/reject`,
           method: "POST",
         };
       },

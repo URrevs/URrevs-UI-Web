@@ -31,6 +31,10 @@ export default function CommentsList({
   cache,
   clearCache,
   submitReplyHandler,
+  acceptAnswer,
+  rejectAnswer,
+  questionOwnerId,
+  questionId,
 }) {
   const dispatch = useAppDispatch();
   const theme = useTheme();
@@ -110,12 +114,17 @@ export default function CommentsList({
                   user={commentsList[index].userName}
                   likes={commentsList[index].upvotes}
                   text={commentsList[index].content}
-                  accepted={commentsList[index].upvoted}
+                  upvoted={commentsList[index].upvoted}
                   commentLike={commentLike}
                   commentUnlike={commentUnlike}
                   submitReplyHandler={submitReplyHandler}
-                  avatar={commentsList[index].userPicture}
+                  avatar={commentsList[index].picture}
                   ownerId={commentsList[index].userId}
+                  ownedAt={commentsList[index].ownedAt}
+                  questionOwnerId={questionOwnerId}
+                  questionId={questionId}
+                  acceptAnswer={acceptAnswer}
+                  rejectAnswer={rejectAnswer}
                 />
               )}
             </div>

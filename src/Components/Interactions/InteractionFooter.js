@@ -41,7 +41,6 @@ export const InteractionFooter = ({
     <React.Fragment>
       <CommentButton
         onClick={() => {
-          console.log("pressed");
           if (checkSignedIn() && checkOwnership()) {
             onClickHandler();
           }

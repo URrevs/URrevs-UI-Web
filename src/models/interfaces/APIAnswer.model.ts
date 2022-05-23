@@ -3,6 +3,7 @@ export default interface APIAnswer {
   userId: string;
   userName: string;
   picture: string;
+  userPicture: string;
   content: string;
   createdAt: string;
   ownedAt: string;

@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
 import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
-import QuestionCard from "../Components/ReviewCard/QuestionCard";
+import AnswersList from "../pages/AnswersList";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useAddCommentOnPhoneQuestionMutation,
@@ -13,13 +13,14 @@ import {
   useGetPhoneQuestionCommentsQuery,
   useLikePhoneQuestionCommentMutation,
   useLikePhoneQuestionReplyMutation,
+  useMarkAnswerAsAcceptedMutation,
   useUnLikePhoneQuestionCommentMutation,
   useUnLikePhoneQuestionReplyMutation,
+  useUnmarkAnswerAsAcceptedMutation,
 } from "../services/phone_questions";
 import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
-import AnswersList from "../pages/AnswersList";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -71,6 +72,11 @@ export default function PhoneQuestionFullScreen() {
   const [likeReply] = useLikePhoneQuestionReplyMutation();
   // unlike reply
   const [unLikeReply] = useUnLikePhoneQuestionReplyMutation();
+
+  // accept answer
+  const [acceptAnswer] = useMarkAnswerAsAcceptedMutation();
+  //reject answer
+  const [rejectAnswer] = useUnmarkAnswerAsAcceptedMutation();
 
   const [ex, setEx] = useState(false);
   const clearCache = (index) => {
@@ -155,7 +161,7 @@ export default function PhoneQuestionFullScreen() {
   };
 
   const unLikeReplyRequest = (commentId, replyId) => {
-    unLikeReply({
+    likeReply({
       commentId: commentId,
       replyId: replyId,
       doFn: stateUnLikePhoneReply,
@@ -163,8 +169,33 @@ export default function PhoneQuestionFullScreen() {
     });
   };
 
+  // answer accept and reject
+  const stateAcceptAnswer = (id) =>
+    dispatch(answersListActions.setIsLiked({ id: id, isLiked: true }));
+
+  const stateRejectAnswer = (id) =>
+    dispatch(answersListActions.setIsLiked({ id: id, isLiked: false }));
+
+  const acceptAnswerRequest = (questionId, answerId) => {
+    acceptAnswer({
+      questionId: questionId,
+      answerId: answerId,
+      doFn: stateAcceptAnswer,
+      unDoFn: stateRejectAnswer,
+    });
+  };
+
+  const rejectAnswerRequest = (questionId, answerId) => {
+    console.log("aa");
+    rejectAnswer({
+      questionId: questionId,
+      answerId: answerId,
+      doFn: stateRejectAnswer,
+      unDoFn: stateAcceptAnswer,
+    });
+  };
+
   const addToLoadedComments = () => {
-    console.log("aasas");
     dispatch(
       answersListActions.addToLoaddedComments({
         newComments: data,
@@ -298,24 +329,30 @@ export default function PhoneQuestionFullScreen() {
       ) : reviewError ? (
         <div>Error</div>
       ) : (
-        <AnswersList
-          reviewCard={reviewCard}
-          commentsList={commentsList}
-          page={page}
-          data={data}
-          error={error}
-          isLoading={isLoading}
-          isFetching={isFetching}
-          commentLike={likeCommentRequest}
-          commentUnlike={unLikeCommentRequest}
-          replyLike={likeReplyRequest}
-          replyUnlike={unLikeReplyRequest}
-          addToReviewsList={addToLoadedComments}
-          increasePage={increasePage}
-          cache={cache}
-          clearCache={clearCache}
-          submitReplyHandler={submitReplyHandler}
-        />
+        currentReviewData && (
+          <AnswersList
+            reviewCard={reviewCard}
+            commentsList={commentsList}
+            page={page}
+            data={data}
+            error={error}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            commentLike={likeCommentRequest}
+            commentUnlike={unLikeCommentRequest}
+            replyLike={likeReplyRequest}
+            replyUnlike={unLikeReplyRequest}
+            addToReviewsList={addToLoadedComments}
+            increasePage={increasePage}
+            cache={cache}
+            clearCache={clearCache}
+            submitReplyHandler={submitReplyHandler}
+            acceptAnswer={acceptAnswerRequest}
+            rejectAnswer={rejectAnswerRequest}
+            questionOwnerId={currentReviewData.userId}
+            questionId={currentReviewData._id}
+          />
+        )
       )}
 
       <div
