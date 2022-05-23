@@ -45,7 +45,6 @@ export const CommentReply = ({
         text={text}
         avatarSize="32px"
         buttonName={buttonName}
-        reply={false}
         renderIcon={renderIcon}
         avatar={avatar}
       >

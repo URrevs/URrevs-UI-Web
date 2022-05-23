@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import APIComment from "../models/interfaces/APIComment.model";
-import { APIReview } from "../models/interfaces/APIReview.model";
+import { APIQuestion } from "../models/interfaces/APIQuestion.model";
 import { RootState } from "../store/store";
+import { snackbarActions } from "../store/uiSnackbarSlice";
 
 export const companyQuestionsApi = createApi({
   reducerPath: "companyQuestionsApi",
@@ -20,47 +21,57 @@ export const companyQuestionsApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    addCompanyQuestion: builder.mutation({
-      query: (question) => {
-        return {
-          url: `/`,
-          method: "POST",
-          body: question,
-        };
-      },
-    }),
-
-    getCertainCompanyReview: builder.query<APIReview, string>({
+    getAllQuestions: builder.query<APIQuestion[], number>({
       keepUnusedDataFor: 0,
-      query: (id: string) => `/${id}`,
-      transformResponse: (response: { review: APIReview }) => {
-        return response.review;
-      },
-    }),
-
-    getCompanyReviews: builder.query<
-      APIReview[],
-      { round: number; cid: string }
-    >({
-      keepUnusedDataFor: 0,
-      query: ({ round, cid }) => `/on/${cid}?round=${round}`,
-      transformResponse: (response: { questions: APIReview[] }) => {
+      query: (round = 1) => `/by/me?round=${1}`,
+      transformResponse: (response: { questions: APIQuestion[] }) => {
         return response.questions;
       },
     }),
 
-    getComoanyReviews: builder.query<
-      APIReview[],
+    getCertainCompanyQuestion: builder.query<APIQuestion, string>({
+      keepUnusedDataFor: 0,
+      query: (id: string) => `/${id}`,
+      transformResponse: (response: { question: APIQuestion }) => {
+        return response.question;
+      },
+    }),
+
+    getCompanyQuestions: builder.query<
+      APIQuestion[],
       { round: number; pid: string }
     >({
       keepUnusedDataFor: 0,
       query: ({ round, pid }) => `/on/${pid}?round=${round}`,
-      transformResponse: (response: { questions: APIReview[] }) => {
+      transformResponse: (response: { questions: APIQuestion[] }) => {
         return response.questions;
       },
     }),
 
-    likeCompanyReview: builder.mutation({
+    addCompanyQuestion: builder.mutation({
+      query: (question) => {
+        return {
+          url: ``,
+          method: "POST",
+          body: question,
+        };
+      },
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+
+          dispatch(
+            snackbarActions.showSnackbar({ message: "تم نشر سؤالك بنجاح" })
+          );
+        } catch (e: any) {
+          dispatch(
+            snackbarActions.showSnackbar({ message: e.error.data.status })
+          );
+        }
+      },
+    }),
+
+    likeCompanyQuestion: builder.mutation({
       query: ({ reviewId }) => {
         return {
           url: `/${reviewId}/like`,
@@ -78,7 +89,7 @@ export const companyQuestionsApi = createApi({
       },
     }),
 
-    unLikeCompanyReview: builder.mutation({
+    unLikeCompanyQuestion: builder.mutation({
       query: ({ reviewId }) => {
         return {
           url: `/${reviewId}/unlike`,
@@ -97,61 +108,61 @@ export const companyQuestionsApi = createApi({
       },
     }),
 
-    getUserCompanyReviews: builder.query<APIReview[], number>({
+    getUserCompanyQuestions: builder.query<APIQuestion[], number>({
       keepUnusedDataFor: 0,
       query: (round = 1) => `/by/me?round=${round}`,
-      transformResponse: (response: { questions: APIReview[] }) => {
+      transformResponse: (response: { questions: APIQuestion[] }) => {
         return response.questions;
       },
     }),
 
-    getOtherUserCompanyReviews: builder.query<
-      APIReview[],
+    getOtherUserCompanyQuestions: builder.query<
+      APIQuestion[],
       { round: number; uid: string }
     >({
       keepUnusedDataFor: 0,
       query: ({ round, uid }) => `/by/${uid}?round=${round}`,
-      transformResponse: (response: { questions: APIReview[] }) => {
+      transformResponse: (response: { questions: APIQuestion[] }) => {
         return response.questions;
       },
     }),
 
-    addCommentOnCompanyReview: builder.mutation({
+    addCommentOnCompanyQuestion: builder.mutation({
       query: ({ reviewId, comment }) => {
         return {
-          url: `/${reviewId}/comments`,
+          url: `/${reviewId}/answers`,
           method: "POST",
           body: { content: comment },
         };
       },
     }),
 
-    getCompanyReviewComments: builder.query<
+    getCompanyQuestionComments: builder.query<
       APIComment[],
       { reviewId: string; round: number }
     >({
       keepUnusedDataFor: 0,
       query: ({ reviewId, round = 1 }) =>
-        `/${reviewId}/comments?round=${round}`,
+        `/${reviewId}/answers?round=${round}`,
       transformResponse: (response: { comments: APIComment[] }) => {
         return response.comments;
       },
     }),
 
-    addReplyOnCompanyReview: builder.mutation({
+    addReplyOnCompanyQuestion: builder.mutation({
       query: ({ commentId, reply }) => {
         return {
-          url: `/comments/${commentId}/replies`,
+          url: `/answers/${commentId}/replies`,
           method: "POST",
           body: { content: reply },
         };
       },
     }),
 
-    likeCompanyReviewReply: builder.mutation({
+    likeCompanyQuestionReply: builder.mutation({
       query: ({ commentId, replyId }) => {
         return {
-          url: `/comments/${commentId}/replies/${replyId}/like`,
+          url: `/answers/${commentId}/replies/${replyId}/like`,
           method: "POST",
         };
       },
@@ -166,10 +177,10 @@ export const companyQuestionsApi = createApi({
       },
     }),
 
-    unLikeCompanyReviewReply: builder.mutation({
+    unLikeCompanyQuestionReply: builder.mutation({
       query: ({ commentId, replyId }) => {
         return {
-          url: `/comments/${commentId}/replies/${replyId}/unlike`,
+          url: `/answers/${commentId}/replies/${replyId}/unlike`,
           method: "POST",
         };
       },
@@ -185,10 +196,10 @@ export const companyQuestionsApi = createApi({
     }),
 
     // comments likes
-    likeCompanyReviewComment: builder.mutation({
+    likeCompanyQuestionComment: builder.mutation({
       query: ({ commentId }) => {
         return {
-          url: `/comments/${commentId}/like`,
+          url: `/answers/${commentId}/like`,
           method: "POST",
         };
       },
@@ -203,10 +214,10 @@ export const companyQuestionsApi = createApi({
       },
     }),
 
-    unLikeCompanyReviewComment: builder.mutation({
+    unLikeCompanyQuestionComment: builder.mutation({
       query: ({ commentId }) => {
         return {
-          url: `/comments/${commentId}/unlike`,
+          url: `/answers/${commentId}/unlike`,
           method: "POST",
         };
       },
@@ -221,7 +232,7 @@ export const companyQuestionsApi = createApi({
       },
     }),
 
-    idontLikeThisCompanyReview: builder.mutation({
+    idontLikeThisCompanyQuestion: builder.mutation({
       query: ({ reviewId }) => {
         return {
           url: `/${reviewId}/hate`,
@@ -233,19 +244,20 @@ export const companyQuestionsApi = createApi({
 });
 //auto-generated hooks
 export const {
+  useGetAllQuestionsQuery,
+  useGetCertainCompanyQuestionQuery,
+  useGetCompanyQuestionsQuery,
   useAddCompanyQuestionMutation,
-  useGetCertainCompanyReviewQuery,
-  useGetCompanyReviewsQuery,
-  useLikeCompanyReviewMutation,
-  useUnLikeCompanyReviewMutation,
-  useGetUserCompanyReviewsQuery,
-  useGetOtherUserCompanyReviewsQuery,
-  useAddCommentOnCompanyReviewMutation,
-  useGetCompanyReviewCommentsQuery,
-  useAddReplyOnCompanyReviewMutation,
-  useLikeCompanyReviewCommentMutation,
-  useUnLikeCompanyReviewCommentMutation,
-  useLikeCompanyReviewReplyMutation,
-  useUnLikeCompanyReviewReplyMutation,
-  useIdontLikeThisCompanyReviewMutation,
+  useLikeCompanyQuestionMutation,
+  useUnLikeCompanyQuestionMutation,
+  useGetUserCompanyQuestionsQuery,
+  useGetOtherUserCompanyQuestionsQuery,
+  useAddCommentOnCompanyQuestionMutation,
+  useGetCompanyQuestionCommentsQuery,
+  useAddReplyOnCompanyQuestionMutation,
+  useLikeCompanyQuestionCommentMutation,
+  useUnLikeCompanyQuestionCommentMutation,
+  useLikeCompanyQuestionReplyMutation,
+  useUnLikeCompanyQuestionReplyMutation,
+  useIdontLikeThisCompanyQuestionMutation,
 } = companyQuestionsApi;

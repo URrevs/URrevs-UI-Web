@@ -1,23 +1,24 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import { phoneReviewsApi } from "../services/phone_reviews";
-import { companyReviewsApi } from "../services/company_reviews";
-import { phoneQuestionsApi } from "../services/phone_questions";
+import { companyApi } from "../services/companies";
 import { companyQuestionsApi } from "../services/company_questions";
+import { companyReviewsApi } from "../services/company_reviews";
+import { phoneApi } from "../services/phones";
+import { phoneQuestionsApi } from "../services/phone_questions";
+import { phoneReviewsApi } from "../services/phone_reviews";
+import { searchApi } from "../services/search";
+import { updateApi } from "../services/update";
 import { usersApi } from "../services/users";
+import answersListSlice from "./answersListSlice";
 import authSlice from "./authSlice";
+import commentsListSlice from "./commentsListSlice";
+import compareSlice from "./compareSlice";
 import isDarkSlice from "./darkModeSlice";
 import languageSlice from "./languageSlice";
-import reviewsSlice from "./reviewsSlice";
 import questionsSlice from "./questionsSlice";
-import commentsListSlice from "./commentsListSlice";
+import reviewsSlice from "./reviewsSlice";
 import regDialogSlice from "./uiRegisterDialogSlice";
 import snackbarSlice from "./uiSnackbarSlice";
-import { updateApi } from "../services/update";
-import { searchApi } from "../services/search";
-import { phoneApi } from "../services/phones";
-import compareSlice from "./compareSlice";
-import { companyApi } from "../services/companies";
 
 export const store = configureStore({
   reducer: {
@@ -33,6 +34,7 @@ export const store = configureStore({
     [reviewsSlice.name]: reviewsSlice.reducer,
     [questionsSlice.name]: questionsSlice.reducer,
     [commentsListSlice.name]: commentsListSlice.reducer,
+    [answersListSlice.name]: answersListSlice.reducer,
     [languageSlice.name]: languageSlice.reducer,
     [compareSlice.name]: compareSlice.reducer,
     [isDarkSlice.name]: isDarkSlice.reducer,

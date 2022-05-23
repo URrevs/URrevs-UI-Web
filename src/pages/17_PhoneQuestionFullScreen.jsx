@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
 import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
-import QuestionCard from "../Components/ReviewCard/QuestionCard";
+import AnswersList from "../pages/AnswersList";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useAddCommentOnPhoneQuestionMutation,
@@ -13,10 +13,12 @@ import {
   useGetPhoneQuestionCommentsQuery,
   useLikePhoneQuestionCommentMutation,
   useLikePhoneQuestionReplyMutation,
+  useMarkAnswerAsAcceptedMutation,
   useUnLikePhoneQuestionCommentMutation,
   useUnLikePhoneQuestionReplyMutation,
+  useUnmarkAnswerAsAcceptedMutation,
 } from "../services/phone_questions";
-import { commentsListActions } from "../store/commentsListSlice";
+import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
 
@@ -33,16 +35,14 @@ export default function PhoneQuestionFullScreen() {
 
   useEffect(() => {
     return () => {
-      console.log("clear comments");
-      dispatch(commentsListActions.clearComments());
+      console.log("clear answers");
+      dispatch(answersListActions.clearComments());
     };
   }, []);
 
   const currentUser = useAppSelector((state) => state.auth);
 
-  const commentsList = useAppSelector(
-    (state) => state.commentsList.newComments
-  );
+  const commentsList = useAppSelector((state) => state.answersList.newComments);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const reviewId = searchParams.get("id");
@@ -72,6 +72,11 @@ export default function PhoneQuestionFullScreen() {
   const [likeReply] = useLikePhoneQuestionReplyMutation();
   // unlike reply
   const [unLikeReply] = useUnLikePhoneQuestionReplyMutation();
+
+  // accept answer
+  const [acceptAnswer] = useMarkAnswerAsAcceptedMutation();
+  //reject answer
+  const [rejectAnswer] = useUnmarkAnswerAsAcceptedMutation();
 
   const [ex, setEx] = useState(false);
   const clearCache = (index) => {
@@ -118,10 +123,10 @@ export default function PhoneQuestionFullScreen() {
 
   // comment like and unlike
   const stateLikePhoneComment = (id) =>
-    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: true }));
+    dispatch(answersListActions.setIsLiked({ id: id, isLiked: true }));
 
   const stateUnLikePhoneComment = (id) =>
-    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: false }));
+    dispatch(answersListActions.setIsLiked({ id: id, isLiked: false }));
 
   const likeCommentRequest = (id) => {
     likeComment({
@@ -141,10 +146,10 @@ export default function PhoneQuestionFullScreen() {
 
   // reply like and unlike
   const stateLikePhoneReply = (id) =>
-    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: true }));
+    dispatch(answersListActions.setIsLiked({ id: id, isLiked: true }));
 
   const stateUnLikePhoneReply = (id) =>
-    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: false }));
+    dispatch(answersListActions.setIsLiked({ id: id, isLiked: false }));
 
   const likeReplyRequest = (commentId, replyId) => {
     likeReply({
@@ -156,7 +161,7 @@ export default function PhoneQuestionFullScreen() {
   };
 
   const unLikeReplyRequest = (commentId, replyId) => {
-    unLikeReply({
+    likeReply({
       commentId: commentId,
       replyId: replyId,
       doFn: stateUnLikePhoneReply,
@@ -164,16 +169,43 @@ export default function PhoneQuestionFullScreen() {
     });
   };
 
-  // const addToLoadedComments = () =>
-  //   dispatch(
-  //     commentsListActions.addToLoaddedComments({
-  //       newComments: data,
-  //     })
-  //   );
+  // answer accept and reject
+  const stateAcceptAnswer = (id) =>
+    dispatch(answersListActions.setIsLiked({ id: id, isLiked: true }));
+
+  const stateRejectAnswer = (id) =>
+    dispatch(answersListActions.setIsLiked({ id: id, isLiked: false }));
+
+  const acceptAnswerRequest = (questionId, answerId) => {
+    acceptAnswer({
+      questionId: questionId,
+      answerId: answerId,
+      doFn: stateAcceptAnswer,
+      unDoFn: stateRejectAnswer,
+    });
+  };
+
+  const rejectAnswerRequest = (questionId, answerId) => {
+    console.log("aa");
+    rejectAnswer({
+      questionId: questionId,
+      answerId: answerId,
+      doFn: stateRejectAnswer,
+      unDoFn: stateAcceptAnswer,
+    });
+  };
+
+  const addToLoadedComments = () => {
+    dispatch(
+      answersListActions.addToLoaddedComments({
+        newComments: data,
+      })
+    );
+  };
 
   const addOneCommentToLoadedComments = (comment, index) => {
     dispatch(
-      commentsListActions.addNewCommentLocally({
+      answersListActions.addNewCommentLocally({
         newComment: comment,
       })
     );
@@ -182,7 +214,7 @@ export default function PhoneQuestionFullScreen() {
   };
   const addOneReplyToLoadedComments = (comment) => {
     dispatch(
-      commentsListActions.addNewReplyLocally({
+      answersListActions.addNewReplyLocally({
         newComment: comment,
       })
     );
@@ -203,7 +235,8 @@ export default function PhoneQuestionFullScreen() {
 
       const response = await addCommentOnPhoneReview({
         reviewId: reviewId,
-        comment: e.target.comment.value,
+        content: e.target.comment.value,
+        phoneId: currentReviewData.targetId,
       });
 
       setAddCommentLoading(false);
@@ -296,25 +329,30 @@ export default function PhoneQuestionFullScreen() {
       ) : reviewError ? (
         <div>Error</div>
       ) : (
-        reviewCard()
-        // <CommentsList
-        //   reviewCard={reviewCard}
-        //   commentsList={commentsList}
-        //   page={page}
-        //   data={data}
-        //   error={error}
-        //   isLoading={isLoading}
-        //   isFetching={isFetching}
-        //   commentLike={likeCommentRequest}
-        //   commentUnlike={unLikeCommentRequest}
-        //   replyLike={likeReplyRequest}
-        //   replyUnlike={unLikeReplyRequest}
-        //   addToReviewsList={addToLoadedComments}
-        //   increasePage={increasePage}
-        //   cache={cache}
-        //   clearCache={clearCache}
-        //   submitReplyHandler={submitReplyHandler}
-        // />
+        currentReviewData && (
+          <AnswersList
+            reviewCard={reviewCard}
+            commentsList={commentsList}
+            page={page}
+            data={data}
+            error={error}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            commentLike={likeCommentRequest}
+            commentUnlike={unLikeCommentRequest}
+            replyLike={likeReplyRequest}
+            replyUnlike={unLikeReplyRequest}
+            addToReviewsList={addToLoadedComments}
+            increasePage={increasePage}
+            cache={cache}
+            clearCache={clearCache}
+            submitReplyHandler={submitReplyHandler}
+            acceptAnswer={acceptAnswerRequest}
+            rejectAnswer={rejectAnswerRequest}
+            questionOwnerId={currentReviewData.userId}
+            questionId={currentReviewData._id}
+          />
+        )
       )}
 
       <div

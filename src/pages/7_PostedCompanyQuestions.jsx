@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
-import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import ROUTES_NAMES from "../RoutesNames";
-import { useGetOtherUserCompanyReviewsQuery } from "../services/company_questions";
+import { useGetOtherUserCompanyQuestionsQuery } from "../services/company_questions";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";
@@ -26,7 +25,7 @@ export default function PostedCompanyQuestions() {
   const userId = searchParams.get("userId");
 
   const { data, isLoading, isFetching, error } =
-    useGetOtherUserCompanyReviewsQuery({ round: page, uid: userId });
+    useGetOtherUserCompanyQuestionsQuery({ round: page, uid: userId });
 
   const stateLike = (id) =>
     dispatch(questionsActions.setIsLiked({ id: id, isLiked: true }));
@@ -64,7 +63,7 @@ export default function PostedCompanyQuestions() {
         clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
         isPhoneReview={false}
-        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
+        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}

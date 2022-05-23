@@ -21,6 +21,7 @@ import { ProductProfile } from "./pages/10_ProductProfile";
 import { ComparisonScreen } from "./pages/11_ComparisonScreen";
 import { CompanyProfile } from "./pages/14_CompanyProfile";
 import { AllProductsScreen } from "./pages/16_AllProductsScreen";
+import CompanyQuestionFullScreen from "./pages/17_CompanyQuestionFullScreen";
 // import CompanyQuestionFullScreen from "./pages/17_CompanyQuestionFullScreen";
 import PhoneQuestionFullScreen from "./pages/17_PhoneQuestionFullScreen";
 import ReviewPostingScreen from "./pages/18_ReviewPostingScreen";
@@ -246,8 +247,8 @@ function App() {
                 <Grid item md={8} sm={11} xs={12}>
                   <Routes>
                     {/* not found handling */}
-                    <Route path="/404" element={<NotFoundPage />} />
-                    <Route path="*" element={<Navigate to="/404" replace />} />
+                    {/* <Route path="/404" element={<NotFoundPage />} />
+                    <Route path="*" element={<Navigate to="/404" replace />} /> */}
 
                     {/* review full review */}
                     <Route
@@ -264,10 +265,10 @@ function App() {
                       path={ROUTES_NAMES.EXACT_PHONE_QUESTION}
                       element={<PhoneQuestionFullScreen />}
                     />
-                    {/* <Route
-                      path={ROUTES_NAMES.EXACT_COMPANY_QEXACT_PHONE_QUESTION}
+                    <Route
+                      path={ROUTES_NAMES.EXACT_COMPANY_QUESTION}
                       element={<CompanyQuestionFullScreen />}
-                    /> */}
+                    />
                     <Route path={ROUTES_NAMES.HOME}>
                       <Route index element={<Reviews />} />
                       <Route path={ROUTES_NAMES.MENU}>

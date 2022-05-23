@@ -38,7 +38,7 @@ export default function CompanyQuestion({
   const checkIsSignedIn = useCheckSignedIn();
   const checkOwnerShip = useCheckOwnership({
     ownerId: reviewDetails.userId,
-    message: "لا يمكنك التصويت للسؤال الخاصة بك",
+    message: "لا يمكنك التصويت للسؤال الخاص بك",
   });
 
   const likeBtnHandler = async () => {
@@ -67,7 +67,7 @@ export default function CompanyQuestion({
       isPhoneReview={false}
       targetProfilePath={targetProfilePath}
       userProfilePath={userProfilePath}
-      fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_QUESTION}?id=${reviewDetails._id}`}
+      fullScreenRoute={`/${ROUTES_NAMES.EXACT_COMPANY_QUESTION}?id=${reviewDetails._id}`}
       actionBtnFunction={showActionBtn && actionBtnFunction}
       likeBtnHandler={likeBtnHandler}
     />

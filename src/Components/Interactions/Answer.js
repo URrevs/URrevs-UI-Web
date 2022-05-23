@@ -1,32 +1,66 @@
-import React, { useState } from "react";
-import CheckIcon from "@mui/icons-material/Check";
-import { InteractionBody } from "./InteractionBody";
 import { useTheme } from "@emotion/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpLong } from "@fortawesome/free-solid-svg-icons";
-import { InteractionFooter } from "./InteractionFooter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CheckIcon from "@mui/icons-material/Check";
+import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/hooks";
+import { InteractionBody } from "./InteractionBody";
+import { InteractionFooter } from "./InteractionFooter";
 
 export const Answer = ({
+  commentId,
+  answerId,
   date,
+  user,
   likes,
   text,
-  user,
+  upvoted,
+  commentLike,
+  commentUnlike,
+  submitReplyHandler,
+  avatarm,
+  ownerId,
+  questionOwnerId,
+  questionId,
   subtitle,
-  admin = false,
+  acceptAnswer,
+  rejectAnswer,
+  acceptedAnswer = true,
+  avatar,
+  ownedAt,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const currentUserId = useAppSelector((state) => state.auth).uid;
 
   const theme = useTheme();
-  const [accepted, setAccepted] = useState(false);
-  const onClickHandler = () => {
-    setAccepted(!accepted);
-  };
-  const buttonName1 = accepted
-    ? textContainer.acceptedAnswer
+
+  const buttonName1 = upvoted
+    ? textContainer.upvotedAnswer
     : textContainer.acceptAnswer;
+
+  // if the question asker
+  const [admin, setAdmin] = useState(false);
+
+  useEffect(() => {
+    if (questionOwnerId === currentUserId) {
+      setAdmin(true);
+    } else {
+      setAdmin(false);
+    }
+  }, [currentUserId]);
+
+  const onClickHandler = admin
+    ? acceptedAnswer
+      ? acceptAnswer.bind(null, questionId, commentId)
+      : rejectAnswer.bind(null, questionId, commentId)
+    : upvoted
+    ? commentUnlike.bind(null, commentId)
+    : commentLike.bind(null, commentId);
+
   const buttonName2 = textContainer.vote;
+
   const buttonName = admin ? buttonName1 : buttonName2;
+
   const renderIcon = () => {
     return (
       <FontAwesomeIcon
@@ -38,7 +72,7 @@ export const Answer = ({
   };
   return (
     <div style={{ display: "flex" }}>
-      {accepted && admin ? (
+      {upvoted && admin ? (
         <CheckIcon
           sx={{
             fontSize: "40px",
@@ -53,17 +87,19 @@ export const Answer = ({
           likes={likes}
           date={date}
           text={text}
-          condition={accepted}
-          onClickHandler={onClickHandler}
+          condition={upvoted}
           buttonName={buttonName}
           renderIcon={renderIcon}
+          avatar={avatar}
+          ownedAt={ownedAt}
         >
           <InteractionFooter
             date={date}
-            condition={accepted}
+            condition={upvoted}
             onClickHandler={onClickHandler}
             reply={false}
             buttonName={buttonName}
+            ownerId={ownerId}
           ></InteractionFooter>
         </InteractionBody>
       </div>

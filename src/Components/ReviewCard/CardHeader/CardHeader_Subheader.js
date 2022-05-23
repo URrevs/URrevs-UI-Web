@@ -4,7 +4,7 @@ import * as React from "react";
 import { useConvertNumberToHumanLanguage } from "../../../hooks/useMillify";
 import { useAppSelector } from "../../../store/hooks";
 import { convertDateToString } from "../../../functions/convertDateToString";
-import { substituteDate } from "../../../functions/substituteDate";
+import { subtractDate } from "../../../functions/subtractDate";
 
 const CardSubheader = ({ reviewDate, buyDate, showViewsCounter, views }) => {
   const convert = useConvertNumberToHumanLanguage;
@@ -12,7 +12,7 @@ const CardSubheader = ({ reviewDate, buyDate, showViewsCounter, views }) => {
   const language = useAppSelector((state) => state.language.language);
 
   reviewDate = convertDateToString(reviewDate, language);
-  if (buyDate) buyDate = substituteDate(buyDate, language);
+  if (buyDate) buyDate = subtractDate(buyDate, language);
 
   return (
     <React.Fragment>

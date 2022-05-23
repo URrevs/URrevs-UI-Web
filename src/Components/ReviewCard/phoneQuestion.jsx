@@ -38,7 +38,7 @@ export default function PhoneQuestion({
   const checkIsSignedIn = useCheckSignedIn();
   const checkOwnerShip = useCheckOwnership({
     ownerId: reviewDetails.userId,
-    message: "لا يمكنك التصويت للسؤال الخاصة بك",
+    message: "لا يمكنك التصويت للسؤال الخاص بك",
   });
 
   const likeBtnHandler = async () => {

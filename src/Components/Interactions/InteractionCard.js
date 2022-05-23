@@ -1,6 +1,8 @@
 import React from "react";
 import { Card, styled, Typography } from "@mui/material";
 import { useConvertNumberToHumanLanguage } from "../../hooks/useMillify";
+import { useAppSelector } from "../../store/hooks";
+import { subtractDate } from "../../functions/subtractDate";
 
 const InteractionCardStyle = styled(
   Card,
@@ -34,19 +36,21 @@ const LikeCounterStyle = styled(
   right: "-10px",
 }));
 
-export const InteractionCard = ({
-  user,
-  text,
-  likes,
-  subtitle,
-  renderIcon,
-}) => {
+export const InteractionCard = ({ user, text, likes, ownedAt, renderIcon }) => {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+  const lang = useAppSelector((state) => state.language.language);
+
   return (
     <div>
       <InteractionCardStyle>
         <Typography variant="S14W700C050505">{user}</Typography>
-        {subtitle ? (
-          <Typography variant="S12W400C65676b">{subtitle}</Typography>
+        {ownedAt ? (
+          <Typography variant="S12W400C65676b">
+            {`${textContainer.usedThisProductFor} ${subtractDate(
+              ownedAt,
+              lang
+            )}`}
+          </Typography>
         ) : (
           <React.Fragment></React.Fragment>
         )}
