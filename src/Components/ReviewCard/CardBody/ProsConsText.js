@@ -1,18 +1,7 @@
-import { Typography } from "@mui/material";
 import React from "react";
-import { useAppSelector } from "../../../store/hooks";
-import { cropText } from "../../../functions/cropText";
 import BodyCardText from "./BodyCardText";
 
-const ProsConsText = ({
-  expanded,
-  croppedText,
-  prosTitle,
-  consTitle,
-  seeMoreButtonHandler,
-}) => {
-  const textContainer = useAppSelector((state) => state.language.textContainer);
-
+const ProsConsText = ({ croppedText, prosTitle, consTitle }) => {
   return (
     <div>
       <BodyCardText title={prosTitle} text={croppedText.pros} />

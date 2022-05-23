@@ -16,7 +16,7 @@ export const CommentReply = ({
   replyId,
   commentId,
   avatar,
-  userId
+  userId,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -45,7 +45,6 @@ export const CommentReply = ({
         text={text}
         avatarSize="32px"
         buttonName={buttonName}
-        reply={false}
         renderIcon={renderIcon}
         avatar={avatar}
       >

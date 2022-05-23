@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import APIComment from "../models/interfaces/APIComment.model";
+import APIAnswer from "../models/interfaces/APIAnswer.model";
 import { APIQuestion } from "../models/interfaces/APIQuestion.model";
 import { RootState } from "../store/store";
 import { snackbarActions } from "../store/uiSnackbarSlice";
@@ -7,7 +7,7 @@ import { snackbarActions } from "../store/uiSnackbarSlice";
 export const phoneQuestionsApi = createApi({
   reducerPath: "phoneQuestionsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_PATH}/questions`,
+    baseUrl: `${process.env.REACT_APP_API_PATH}/questions/phone`,
     // add token to all endpoints headers
     prepareHeaders: (headers, { getState, endpoint }) => {
       const state = getState();
@@ -23,7 +23,7 @@ export const phoneQuestionsApi = createApi({
   endpoints: (builder) => ({
     getAllQuestions: builder.query<APIQuestion[], number>({
       keepUnusedDataFor: 0,
-      query: (round = 1) => `/phone/by/me?round=${1}`,
+      query: (round = 1) => `/by/me?round=${1}`,
       transformResponse: (response: { questions: APIQuestion[] }) => {
         return response.questions;
       },
@@ -31,7 +31,7 @@ export const phoneQuestionsApi = createApi({
 
     getCertainPhoneQuestion: builder.query<APIQuestion, string>({
       keepUnusedDataFor: 0,
-      query: (id: string) => `/phone/${id}`,
+      query: (id: string) => `/${id}`,
       transformResponse: (response: { question: APIQuestion }) => {
         return response.question;
       },
@@ -42,7 +42,7 @@ export const phoneQuestionsApi = createApi({
       { round: number; pid: string }
     >({
       keepUnusedDataFor: 0,
-      query: ({ round, pid }) => `/phone/on/${pid}?round=${round}`,
+      query: ({ round, pid }) => `/on/${pid}?round=${round}`,
       transformResponse: (response: { questions: APIQuestion[] }) => {
         return response.questions;
       },
@@ -51,7 +51,7 @@ export const phoneQuestionsApi = createApi({
     addPhoneQuestion: builder.mutation({
       query: (question) => {
         return {
-          url: `/phone`,
+          url: ``,
           method: "POST",
           body: question,
         };
@@ -74,7 +74,7 @@ export const phoneQuestionsApi = createApi({
     likePhoneQuestion: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/like`,
+          url: `/${reviewId}/like`,
           method: "POST",
         };
       },
@@ -92,7 +92,7 @@ export const phoneQuestionsApi = createApi({
     unLikePhoneQuestion: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/unlike`,
+          url: `/${reviewId}/unlike`,
           method: "POST",
         };
       },
@@ -110,7 +110,7 @@ export const phoneQuestionsApi = createApi({
 
     getUserPhoneQuestions: builder.query<APIQuestion[], number>({
       keepUnusedDataFor: 0,
-      query: (round = 1) => `/phone/by/me?round=${round}`,
+      query: (round = 1) => `/by/me?round=${round}`,
       transformResponse: (response: { questions: APIQuestion[] }) => {
         return response.questions;
       },
@@ -121,38 +121,37 @@ export const phoneQuestionsApi = createApi({
       { round: number; uid: string }
     >({
       keepUnusedDataFor: 0,
-      query: ({ round, uid }) => `/phone/by/${uid}?round=${round}`,
+      query: ({ round, uid }) => `/by/${uid}?round=${round}`,
       transformResponse: (response: { questions: APIQuestion[] }) => {
         return response.questions;
       },
     }),
 
     addCommentOnPhoneQuestion: builder.mutation({
-      query: ({ reviewId, comment }) => {
+      query: ({ reviewId, content, phoneId }) => {
         return {
-          url: `/phone/${reviewId}/answers`,
+          url: `/${reviewId}/answers`,
           method: "POST",
-          body: { content: comment },
+          body: { content: content, phoneId: phoneId },
         };
       },
     }),
 
     getPhoneQuestionComments: builder.query<
-      APIComment[],
+      APIAnswer[],
       { reviewId: string; round: number }
     >({
       keepUnusedDataFor: 0,
-      query: ({ reviewId, round = 1 }) =>
-        `/phone/${reviewId}/answers?round=${round}`,
-      transformResponse: (response: { comments: APIComment[] }) => {
-        return response.comments;
+      query: ({ reviewId, round = 1 }) => `/${reviewId}/answers?round=${round}`,
+      transformResponse: (response: { answers: APIAnswer[] }) => {
+        return response.answers;
       },
     }),
 
     addReplyOnPhoneQuestion: builder.mutation({
       query: ({ commentId, reply }) => {
         return {
-          url: `/phone/answers/${commentId}/replies`,
+          url: `/answers/${commentId}/replies`,
           method: "POST",
           body: { content: reply },
         };
@@ -162,7 +161,7 @@ export const phoneQuestionsApi = createApi({
     likePhoneQuestionReply: builder.mutation({
       query: ({ commentId, replyId }) => {
         return {
-          url: `/phone/answers/${commentId}/replies/${replyId}/like`,
+          url: `/answers/${commentId}/replies/${replyId}/like`,
           method: "POST",
         };
       },
@@ -180,7 +179,7 @@ export const phoneQuestionsApi = createApi({
     unLikePhoneQuestionReply: builder.mutation({
       query: ({ commentId, replyId }) => {
         return {
-          url: `/phone/answers/${commentId}/replies/${replyId}/unlike`,
+          url: `/answers/${commentId}/replies/${replyId}/unlike`,
           method: "POST",
         };
       },
@@ -199,7 +198,7 @@ export const phoneQuestionsApi = createApi({
     likePhoneQuestionComment: builder.mutation({
       query: ({ commentId }) => {
         return {
-          url: `/phone/answers/${commentId}/like`,
+          url: `/answers/${commentId}/like`,
           method: "POST",
         };
       },
@@ -217,7 +216,44 @@ export const phoneQuestionsApi = createApi({
     unLikePhoneQuestionComment: builder.mutation({
       query: ({ commentId }) => {
         return {
-          url: `/phone/answers/${commentId}/unlike`,
+          url: `/answers/${commentId}/unlike`,
+          method: "POST",
+        };
+      },
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        payload.doFn(payload.commentId);
+
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          payload.unDoFn(payload.commentId);
+        }
+      },
+    }),
+
+    // 
+    markAnswerAsAccepted: builder.mutation({
+      query: ({ commentId }) => {
+        return {
+          url: `/answers/${commentId}/unlike`,
+          method: "POST",
+        };
+      },
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        payload.doFn(payload.commentId);
+
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          payload.unDoFn(payload.commentId);
+        }
+      },
+    }),
+
+    unmarkAnswerAsAccepted: builder.mutation({
+      query: ({ commentId }) => {
+        return {
+          url: `/answers/${commentId}/unlike`,
           method: "POST",
         };
       },
@@ -235,7 +271,7 @@ export const phoneQuestionsApi = createApi({
     idontLikeThisPhoneQuestion: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/hate`,
+          url: `/${reviewId}/hate`,
           method: "POST",
         };
       },
@@ -259,5 +295,7 @@ export const {
   useUnLikePhoneQuestionCommentMutation,
   useLikePhoneQuestionReplyMutation,
   useUnLikePhoneQuestionReplyMutation,
+  useMarkAnswerAsAcceptedMutation,
+  useUnmarkAnswerAsAcceptedMutation,
   useIdontLikeThisPhoneQuestionMutation,
 } = phoneQuestionsApi;

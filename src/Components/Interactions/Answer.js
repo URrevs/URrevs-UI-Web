@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import { InteractionBody } from "./InteractionBody";
 import { useTheme } from "@emotion/react";
@@ -8,25 +8,47 @@ import { InteractionFooter } from "./InteractionFooter";
 import { useAppSelector } from "../../store/hooks";
 
 export const Answer = ({
+  commentId,
   date,
+  user,
   likes,
   text,
-  user,
+  accepted,
+  commentLike,
+  commentUnlike,
+  submitReplyHandler,
+  avatarm,
+  ownerId,
   subtitle,
-  admin = false,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const currentUserId = useAppSelector((state) => state.auth).uid;
 
   const theme = useTheme();
-  const [accepted, setAccepted] = useState(false);
-  const onClickHandler = () => {
-    setAccepted(!accepted);
-  };
+
+  const onClickHandler = accepted
+    ? commentUnlike.bind(null, commentId)
+    : commentLike.bind(null, commentId);
+
   const buttonName1 = accepted
     ? textContainer.acceptedAnswer
     : textContainer.acceptAnswer;
+
+  // if the question asker
+  const [admin, setAdmin] = useState(false);
+
+  useEffect(() => {
+    if (ownerId === currentUserId) {
+      setAdmin(true);
+    } else {
+      setAdmin(false);
+    }
+  }, [currentUserId]);
+
   const buttonName2 = textContainer.vote;
+
   const buttonName = admin ? buttonName1 : buttonName2;
+
   const renderIcon = () => {
     return (
       <FontAwesomeIcon
@@ -64,6 +86,7 @@ export const Answer = ({
             onClickHandler={onClickHandler}
             reply={false}
             buttonName={buttonName}
+            ownerId={ownerId}
           ></InteractionFooter>
         </InteractionBody>
       </div>
