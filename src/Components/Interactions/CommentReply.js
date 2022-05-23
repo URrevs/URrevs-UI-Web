@@ -16,7 +16,7 @@ export const CommentReply = ({
   replyId,
   commentId,
   avatar,
-  userId
+  userId,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
