@@ -4,10 +4,9 @@ import {
   AutoSizer,
   CellMeasurer,
   List,
-  WindowScroller,
+  WindowScroller
 } from "react-virtualized";
 import { Answer } from "../Components/Interactions/Answer";
-import { Comment } from "../Components/Interactions/Comment";
 import { CommentReply } from "../Components/Interactions/CommentReply";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { useAppDispatch } from "../store/hooks";
