@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import PhoneReview from "../Components/ReviewCard/PhoneReview";
 import ROUTES_NAMES from "../RoutesNames";
@@ -76,19 +77,21 @@ function Reviews() {
 
   return (
     <CustomAppBar showLogo showSearch showProfile>
-      <VirtualReviewList
-        reviewCard={reviewCard}
-        reviewsList={reviewsList}
-        page={page}
-        data={data}
-        error={error}
-        isLoading={isLoading}
-        isFetching={isFetching}
-        stateLike={stateLike}
-        stateUnLike={stateUnLike}
-        addToReviewsList={addToReviewsList}
-        increasePage={increasePage}
-      />
+      <FixedGrid>
+        <VirtualReviewList
+          reviewCard={reviewCard}
+          reviewsList={reviewsList}
+          page={page}
+          data={data}
+          error={error}
+          isLoading={isLoading}
+          isFetching={isFetching}
+          stateLike={stateLike}
+          stateUnLike={stateUnLike}
+          addToReviewsList={addToReviewsList}
+          increasePage={increasePage}
+        />
+      </FixedGrid>
     </CustomAppBar>
   );
 }
