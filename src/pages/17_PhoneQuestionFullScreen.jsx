@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
+import { Answer } from "../Components/Interactions/Answer";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
 import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
 import AnswersList from "../pages/AnswersList";
@@ -108,6 +109,17 @@ export default function PhoneQuestionFullScreen() {
   )[0];
 
   useEffect(() => {
+    if (currentReview && currentReview.acceptedAns) {
+      console.log("add answer");
+      dispatch(
+        answersListActions.addAcceptedAnswer({
+          acceptedAnswer: currentReviewData.acceptedAns,
+        })
+      );
+    }
+  }, [currentReviewData]);
+
+  useEffect(() => {
     if (!reviewLoading) {
       dispatch(questionsActions.clearReviews());
       dispatch(
@@ -162,7 +174,7 @@ export default function PhoneQuestionFullScreen() {
   };
 
   const unLikeReplyRequest = (commentId, replyId) => {
-    likeReply({
+    unLikeReply({
       commentId: commentId,
       replyId: replyId,
       doFn: stateUnLikePhoneReply,
@@ -172,12 +184,14 @@ export default function PhoneQuestionFullScreen() {
 
   // answer accept and reject
   const stateAcceptAnswer = (id) =>
-    dispatch(answersListActions.setIsLiked({ id: id, isLiked: true }));
+    dispatch(answersListActions.setIsAccepted({ id: id, isAccepted: true }));
 
   const stateRejectAnswer = (id) =>
-    dispatch(answersListActions.setIsLiked({ id: id, isLiked: false }));
+    dispatch(answersListActions.setIsAccepted({ id: id, isAccepted: false }));
 
   const acceptAnswerRequest = (questionId, answerId) => {
+    console.log("aa");
+
     acceptAnswer({
       questionId: questionId,
       answerId: answerId,

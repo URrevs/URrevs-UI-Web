@@ -20,6 +20,7 @@ export default function PhoneQuestion({
   deleteReviewFromStore,
   fullScreen,
   isExpanded,
+  acceptedAnswerWidget
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisPhoneQuestionMutation();
 
@@ -70,6 +71,7 @@ export default function PhoneQuestion({
       fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_QUESTION}?id=${reviewDetails._id}`}
       actionBtnFunction={showActionBtn && actionBtnFunction}
       likeBtnHandler={likeBtnHandler}
+      acceptedAnswerWidget={acceptedAnswerWidget}
     />
   );
 }

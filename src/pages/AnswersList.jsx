@@ -4,7 +4,7 @@ import {
   AutoSizer,
   CellMeasurer,
   List,
-  WindowScroller
+  WindowScroller,
 } from "react-virtualized";
 import { Answer } from "../Components/Interactions/Answer";
 import { CommentReply } from "../Components/Interactions/CommentReply";
@@ -124,6 +124,7 @@ export default function CommentsList({
                   questionId={questionId}
                   acceptAnswer={acceptAnswer}
                   rejectAnswer={rejectAnswer}
+                  acceptedAnswer={commentsList[index].isAccepted}
                 />
               )}
             </div>
