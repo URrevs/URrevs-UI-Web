@@ -1,18 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import Review from "../models/classes/Review";
-import APIAnswer from "../models/interfaces/APIAnswer.model";
 import { APIQuestion } from "../models/interfaces/APIQuestion.model";
 
 interface InitialState {
   newReviews: APIQuestion[];
-  acceptedAnswer: APIAnswer;
   page: number;
   currentIndex: number;
 }
 
 const initialState: InitialState = {
   newReviews: [],
-  acceptedAnswer: <APIAnswer>{},
   page: 1,
   currentIndex: 0,
 };
@@ -74,15 +70,20 @@ const questionsSlice = createSlice({
         isLiked: boolean;
       }>
     ) {
-      const targetReview = state.acceptedAnswer;
+      const targetReview = state.newReviews.findIndex((element) => {
+        return (
+          element.acceptedAns._id.toString() === action.payload.id.toString()
+        );
+      });
 
-      console.log(action.payload);
+      console.log(targetReview);
 
-      if (targetReview !== null) {
-        state.acceptedAnswer.upvoted = action.payload.isLiked;
+      if (targetReview != -1) {
+        state.newReviews[targetReview].acceptedAns.upvoted =
+          action.payload.isLiked;
         action.payload.isLiked
-          ? state.acceptedAnswer.upvotes++
-          : state.acceptedAnswer.upvotes--;
+          ? state.newReviews[targetReview].acceptedAns.upvotes++
+          : state.newReviews[targetReview].acceptedAns.upvotes--;
       }
     },
   },

@@ -109,7 +109,7 @@ export default function PostedPhoneQuestions() {
           rejectAnswer={() => {}}
           acceptedAnswer={true}
           showReply={false}
-          upvoted={}
+          upvoted={reviewsList[index].acceptedAns.upvoted}
         />
       );
     }
