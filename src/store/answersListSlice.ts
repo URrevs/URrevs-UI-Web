@@ -3,10 +3,12 @@ import APIAnswer from "../models/interfaces/APIAnswer.model";
 
 interface InitialState {
   newComments: APIAnswer[];
+  acceptedAnswer: APIAnswer;
 }
 
 const initialState: InitialState = {
   newComments: [],
+  acceptedAnswer: <APIAnswer>{},
 };
 
 const answersList = createSlice({
@@ -18,8 +20,6 @@ const answersList = createSlice({
       let newList: APIAnswer[] = [];
       const loadedComments = action.payload.newComments;
 
-      console.log("asasasa");
-
       loadedComments.forEach((comment) => {
         newList.push({ ...comment, isReply: false });
         if (comment.replies) {
@@ -29,6 +29,14 @@ const answersList = createSlice({
         }
       });
       state.newComments.push(...newList);
+    },
+
+    addAcceptedAnswer(
+      state,
+      action: { payload: { acceptedAnswer: APIAnswer } }
+    ) {
+      const answer = { ...action.payload.acceptedAnswer, isAccepted: true };
+      state.newComments = [answer, ...state.newComments];
     },
 
     addNewCommentLocally(
@@ -62,12 +70,13 @@ const answersList = createSlice({
         isLiked: boolean;
       }>
     ) {
-      console.log(action.payload.id);
-
+      
       const targetReview = state.newComments.findIndex((element) => {
         return element._id.toString() === action.payload.id.toString();
       });
-
+      
+      console.log(action.payload);
+      
       if (targetReview != -1) {
         if (state.newComments[targetReview].isReply) {
           state.newComments[targetReview].liked = action.payload.isLiked;
@@ -80,6 +89,33 @@ const answersList = createSlice({
             ? state.newComments[targetReview].upvotes++
             : state.newComments[targetReview].upvotes--;
         }
+      }
+    },
+
+    setIsAccepted(
+      state,
+      action: PayloadAction<{
+        id: string;
+        isAccepted: boolean;
+      }>
+    ) {
+      state.newComments.forEach((element) => {
+        if (element.isAccepted && element._id !== action.payload.id) {
+          element.isAccepted = false;
+          // element.upvotes--;
+        }
+      });
+
+      const targetReview = state.newComments.findIndex((element) => {
+        return element._id.toString() === action.payload.id.toString();
+      });
+
+      if (targetReview != -1) {
+        state.newComments[targetReview].isAccepted = action.payload.isAccepted;
+        // upvotes
+        // action.payload.isAccepted
+        //   ? state.newComments[targetReview].upvotes++
+        //   : state.newComments[targetReview].upvotes--;
       }
     },
   },

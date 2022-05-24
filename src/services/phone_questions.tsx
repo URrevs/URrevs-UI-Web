@@ -240,12 +240,12 @@ export const phoneQuestionsApi = createApi({
         };
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-        payload.doFn(payload.commentId);
+        payload.doFn(payload.answerId);
 
         try {
           await queryFulfilled;
         } catch (e) {
-          payload.unDoFn(payload.commentId);
+          payload.unDoFn(payload.answerId);
         }
       },
     }),
@@ -258,12 +258,12 @@ export const phoneQuestionsApi = createApi({
         };
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-        payload.doFn(payload.commentId);
+        payload.doFn(payload.answerId);
 
         try {
           await queryFulfilled;
         } catch (e) {
-          payload.unDoFn(payload.commentId);
+          payload.unDoFn(payload.answerId);
         }
       },
     }),
