@@ -1,67 +1,95 @@
 import { useTheme } from "@emotion/react";
-import {
-  Avatar,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-} from "@mui/material";
-import React from "react";
-import { useSelector } from "react-redux";
+import { Avatar, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  AutoSizer,
+  CellMeasurer,
+  CellMeasurerCache,
+  List,
+  WindowScroller,
+} from "react-virtualized";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import ListItemNavigator from "../Components/Shared/ListItemNavigator";
+import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
+import ROUTES_NAMES from "../RoutesNames";
+import { useGetAllPhonesQuery } from "../services/phones";
+import { productListActions } from "../store/allProductsSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
-export const AllProductsScreen = () => {
-  const theme = useTheme();
+const cache = new CellMeasurerCache({
+  fixedWidth: true,
+  fixedHeight: false,
+  defaultHeight: 24,
+});
+
+let maxIndex = 0;
+
+export function AllProductsScreen() {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const textContainer = useSelector((state) => state.language.textContainer);
-  //Fetch All products in this array
-  const arrayOfAllProducts = [
-    {
-      name: "Xiaomi Redmi Note 5",
-      avatar: "",
-      subtitle: "هاتف ذكي",
-    },
-    {
-      name: "Oppo Reno 6",
-      avatar: "",
-      subtitle: "هاتف ذكي",
-    },
-    {
-      name: "Xiaomi Redmi S2",
-      avatar: "",
-      subtitle: "هاتف ذكي",
-    },
-    {
-      name: "Oppo Reno 5",
-      avatar: "",
-      subtitle: "هاتف ذكي",
-    },
-    {
-      name: "Xiaomi Redmi Note 4",
-      avatar: "",
-      subtitle: "هاتف ذكي",
-    },
-    {
-      name: "Nokia 7 plus",
-      avatar: "",
-      subtitle: "هاتف ذكي",
-    },
-    {
-      name: "Samsung Note 5",
-      avatar: "",
-      subtitle: "هاتف ذكي",
-    },
-    {
-      name: "Huawei nova 9",
-      avatar: "",
-      subtitle: "هاتف ذكي",
-    },
-  ];
-  const renderProduct = (title, subtitle, imgSrc, to) => {
+
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
+  useEffect(() => {
+    console.log("clear reviews");
+
+    dispatch(productListActions.clearProducts());
+  }, []);
+
+  const currentUser = useAppSelector((state) => state.auth);
+
+  const productsList = useAppSelector((state) => state.productList.newProducts);
+  const [page, setPage] = useState(1);
+
+  const { data, isLoading, isFetching, error } = useGetAllPhonesQuery(page);
+
+  const addToProductsList = () =>
+    dispatch(
+      productListActions.addToLoaddedProducts({
+        newProducts: data,
+      })
+    );
+
+  const increasePage = () => setPage(page + 1);
+
+  const theme = useTheme();
+  const listRef = useRef();
+  const [ex, setEx] = useState(false);
+
+  const clearCache = (index) => {
+    setEx(!ex);
+    if (index === 0) {
+      cache.clear(0);
+    } else {
+      cache.clear(index);
+    }
+  };
+
+  useEffect(() => {
+    if (data) {
+      addToProductsList();
+      if (page < 2 && !isLoading && !isFetching) {
+        increasePage();
+      }
+    }
+  }, [data]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return (
+      <div>
+        {error.status}
+        {error.code}
+        {error.message}
+      </div>
+    );
+  }
+
+  const renderProduct = (title, imgSrc, to) => {
     return (
       <ListItem
         onClick={() => {
@@ -103,26 +131,92 @@ export const AllProductsScreen = () => {
             }}
             primary={title}
             secondaryTypographyProps={{ ...theme.typography.S16W400C65676B }}
-            secondary={subtitle}
+            secondary={textContainer.smartphone}
           />
         </ListItemButton>
       </ListItem>
     );
   };
-  const pageDictionary = {};
-  return (
-    <React.Fragment>
-      <CustomAppBar showLogo showSearch showProfile />
 
+  const renderRow = ({ index, key, style, parent }) => {
+    if (
+      maxIndex !== 0 &&
+      page >= 2 &&
+      !isLoading &&
+      !isFetching &&
+      maxIndex === productsList.length &&
+      data.length !== 0
+    ) {
+      maxIndex = 0;
+      increasePage();
+    }
+    maxIndex = Math.max(index, maxIndex);
+
+    const item = productsList[index];
+    return (
+      <div key={key}>
+        {data.length === 0 ? (
+          <div>No data</div>
+        ) : index >= productsList.length ? (
+          <div>Loading...</div>
+        ) : (
+          <div style={{ ...style, direction: theme.direction }}>
+            <CellMeasurer
+              cache={cache}
+              parent={parent}
+              columnIndex={0}
+              rowIndex={index}
+            >
+              {renderProduct(
+                item.name,
+                "",
+                `/${ROUTES_NAMES.PHONE_PROFILE}?pid=${item._id}`
+              )}
+            </CellMeasurer>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <CustomAppBar
+      showLabel
+      label="مراجعاتي"
+      showBackBtn
+      tabBar={<FilterTabbar />}
+    >
       <CompanyHorizontalList />
-      <List>
-        {arrayOfAllProducts.map((item) => (
-          <React.Fragment>
-            {renderProduct(item.name, item.subtitle, item.avatar, "")}
-            <Divider />
-          </React.Fragment>
-        ))}
-      </List>
-    </React.Fragment>
+
+      <Fragment>
+        <div style={{ height: "calc(100vh)", margin: "0px 0" }}>
+          <AutoSizer>
+            {({ height, width }) => {
+              return (
+                <WindowScroller>
+                  {({ height, isScrolling, registerChild, scrollTop }) => (
+                    <div ref={registerChild}>
+                      <List
+                        ref={listRef}
+                        autoHeight
+                        overscanRowCount={10}
+                        isScrolling={isScrolling}
+                        scrollTop={scrollTop}
+                        width={width}
+                        height={height}
+                        deferredMeasurementCache={cache}
+                        rowHeight={cache.rowHeight}
+                        rowCount={productsList.length + 1}
+                        rowRenderer={renderRow}
+                      />
+                    </div>
+                  )}
+                </WindowScroller>
+              );
+            }}
+          </AutoSizer>
+        </div>
+      </Fragment>
+    </CustomAppBar>
   );
-};
+}
