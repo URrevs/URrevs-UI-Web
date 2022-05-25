@@ -53,7 +53,7 @@ function App() {
   const language = useSelector((state) => state.language.language);
   const direction = language === "ar" ? "rtl" : "ltr";
   const isDark = useSelector((state) => state.darkMode.isDark);
-  const isMobile = useMediaQuery("(max-width:500)");
+  const isMobile = useMediaQuery("(max-width:500px)");
 
   const theme = createTheme({
     isMobile: isMobile,
