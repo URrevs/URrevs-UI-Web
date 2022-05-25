@@ -184,10 +184,13 @@ export function AllProductsScreen() {
       showLabel
       label="مراجعاتي"
       showBackBtn
-      tabBar={<FilterTabbar />}
+      tabBar={
+        <React.Fragment>
+          <CompanyHorizontalList />
+          <FilterTabbar />
+        </React.Fragment>
+      }
     >
-      <CompanyHorizontalList />
-
       <Fragment>
         <div style={{ height: "calc(100vh)", margin: "0px 0" }}>
           <AutoSizer>
