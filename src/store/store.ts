@@ -9,6 +9,7 @@ import { phoneReviewsApi } from "../services/phone_reviews";
 import { searchApi } from "../services/search";
 import { updateApi } from "../services/update";
 import { usersApi } from "../services/users";
+import productListSlice from "./allProductsSlice";
 import answersListSlice from "./answersListSlice";
 import authSlice from "./authSlice";
 import commentsListSlice from "./commentsListSlice";
@@ -31,6 +32,7 @@ export const store = configureStore({
     [phoneQuestionsApi.reducerPath]: phoneQuestionsApi.reducer,
     [companyQuestionsApi.reducerPath]: companyQuestionsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [productListSlice.name]: productListSlice.reducer,
     [reviewsSlice.name]: reviewsSlice.reducer,
     [questionsSlice.name]: questionsSlice.reducer,
     [commentsListSlice.name]: commentsListSlice.reducer,

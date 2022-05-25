@@ -25,17 +25,18 @@ export const Answer = ({
   subtitle,
   acceptAnswer,
   rejectAnswer,
-  acceptedAnswer = true,
+  acceptedAnswer,
   avatar,
   ownedAt,
+  showReply = true,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const currentUserId = useAppSelector((state) => state.auth).uid;
 
   const theme = useTheme();
 
-  const buttonName1 = upvoted
-    ? textContainer.upvotedAnswer
+  const buttonName1 = acceptedAnswer
+    ? textContainer.acceptedAnswer
     : textContainer.acceptAnswer;
 
   // if the question asker
@@ -51,8 +52,8 @@ export const Answer = ({
 
   const onClickHandler = admin
     ? acceptedAnswer
-      ? acceptAnswer.bind(null, questionId, commentId)
-      : rejectAnswer.bind(null, questionId, commentId)
+      ? rejectAnswer.bind(null, questionId, commentId)
+      : acceptAnswer.bind(null, questionId, commentId)
     : upvoted
     ? commentUnlike.bind(null, commentId)
     : commentLike.bind(null, commentId);
@@ -71,8 +72,8 @@ export const Answer = ({
     );
   };
   return (
-    <div style={{ display: "flex" }}>
-      {upvoted && admin ? (
+    <div style={{ display: "flex", padding: "4px 0px" }}>
+      {acceptedAnswer ? (
         <CheckIcon
           sx={{
             fontSize: "40px",
@@ -95,13 +96,24 @@ export const Answer = ({
         >
           <InteractionFooter
             date={date}
-            condition={upvoted}
+            condition={admin ? acceptedAnswer : upvoted}
             onClickHandler={onClickHandler}
             reply={false}
             buttonName={buttonName}
             ownerId={ownerId}
           ></InteractionFooter>
         </InteractionBody>
+        {showReply && (
+          <div>
+            <form
+              onSubmit={(e) => {
+                submitReplyHandler(e, commentId);
+              }}
+            >
+              <input id="comment" />
+            </form>
+          </div>
+        )}
       </div>
     </div>
   );

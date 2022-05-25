@@ -10,6 +10,7 @@ export default interface APIAnswer {
   upvotes: number;
   likes: number;
   upvoted: boolean;
+  isAccepted: boolean;
   liked: boolean;
   commentId: string;
   isReply: boolean;

@@ -44,6 +44,20 @@ export const phoneApi = createApi({
         return response.phones;
       },
     }),
+
+    getAllPhones: builder.query({
+      keepUnusedDataFor: 0,
+      query: (round) => {
+        return {
+          url: `/all?round=${round}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: { phones: any }) => {
+        return response.phones;
+      },
+    }),
+
     getStatisticalInfo: builder.query({
       keepUnusedDataFor: 0,
       query: (pid) => {
@@ -86,6 +100,7 @@ export const phoneApi = createApi({
 export const {
   useGetPhoneSpecsQuery,
   useGetSimilarPhonesQuery,
+  useGetAllPhonesQuery,
   useGetManufacturingCompanyMutation,
   useGetStatisticalInfoQuery,
   useIndicateUserComparingMutation,

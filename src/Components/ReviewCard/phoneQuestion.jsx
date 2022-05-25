@@ -5,6 +5,7 @@ import {
   useIdontLikeThisPhoneQuestionMutation,
   useLikePhoneQuestionMutation,
   useUnLikePhoneQuestionMutation,
+  useUserPressesFullScreenPhoneQuestionMutation,
 } from "../../services/phone_questions";
 import QuestionCard from "./QuestionCard";
 
@@ -20,8 +21,10 @@ export default function PhoneQuestion({
   deleteReviewFromStore,
   fullScreen,
   isExpanded,
+  acceptedAnswerWidget,
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisPhoneQuestionMutation();
+  const [fullScreenRequest] = useUserPressesFullScreenPhoneQuestionMutation();
 
   const actionBtnFunction = async () => {
     try {
@@ -57,6 +60,10 @@ export default function PhoneQuestion({
     }
   };
 
+  const fullScreenHandler = () => {
+    fullScreenRequest(reviewDetails._id);
+  };
+
   return (
     <QuestionCard
       index={index}
@@ -68,8 +75,10 @@ export default function PhoneQuestion({
       targetProfilePath={targetProfilePath}
       userProfilePath={userProfilePath}
       fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_QUESTION}?id=${reviewDetails._id}`}
+      fullScreenFn={fullScreenHandler}
       actionBtnFunction={showActionBtn && actionBtnFunction}
       likeBtnHandler={likeBtnHandler}
+      acceptedAnswerWidget={acceptedAnswerWidget}
     />
   );
 }

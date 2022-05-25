@@ -8,6 +8,7 @@ import { CompanyOverviewCard } from "../Components/OverviewCard/CompanyOverviewC
 import { Tabbar } from "../Components/Tabbar/Tabbar";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetCompanyStatsInfoQuery } from "../services/companies";
+import { CompanyQuestions } from "./CompanyProfileTabs/CompanyQuestions";
 import { CompanyReviews } from "./CompanyProfileTabs/CompanyReviews";
 export const CompanyProfile = () => {
   const [value, setValue] = React.useState(0);
@@ -58,7 +59,7 @@ export const CompanyProfile = () => {
               type={pageDictionary.company}
             />
           ) : (
-            <div>كستنائي</div>
+            <CompanyQuestions />
           )}
         </CustomAppBar>
       )}
