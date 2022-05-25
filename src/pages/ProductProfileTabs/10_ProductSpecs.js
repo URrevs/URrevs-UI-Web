@@ -140,6 +140,7 @@ export const ProductSpecsScreen = ({ data }) => {
       <Grid container>
         {/* Right Grid */}
         <Grid item lg={2.75} md={1} sm={1.5} xs={0}></Grid>
+        {/* Center Grid */}
         <Grid item lg={5.5} md={5.25} sm={10} xs={12}>
           {theme.isMobile ? overviewCard() : null}
           <Typography variant="S18W700C050505">
@@ -182,8 +183,7 @@ export const ProductSpecsScreen = ({ data }) => {
           <div
             style={{
               height: "100%",
-              marginTop: "-80px",
-              margin: "0px 50px 0px 0px",
+              margin: "-50px 50px 0px 0px",
             }}
           >
             <div
