@@ -1,7 +1,7 @@
 import { useTheme } from "@emotion/react";
 import CompareOutlinedIcon from "@mui/icons-material/CompareOutlined";
 import HelpIcon from "@mui/icons-material/Help";
-import { Box, Card, IconButton, Modal, Typography } from "@mui/material";
+import { Box, Card, Grid, IconButton, Modal, Typography } from "@mui/material";
 import { styled } from "@mui/styles";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -55,103 +55,136 @@ export const ProductSpecsScreen = ({ data }) => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   const theme = useTheme();
+
+  const overviewCard = () => (
+    <ProductOverviewCard
+      productRating={statistical.generalRating}
+      companyRating={statistical.companyRating}
+      viewer={statistical.views}
+      ratings={[
+        statistical.uiRating,
+        statistical.manufacturingQuality,
+        statistical.valueForMoney,
+        statistical.camera,
+        statistical.callQuality,
+        statistical.battery,
+      ]}
+      phone={data.name}
+      type="هاتف ذكي"
+    />
+  );
 
   return (
     <React.Fragment>
-      <Box sx={{ padding: "10px 0px" }}>
-        {statisticalLoading ? (
-          <LoadingSpinner />
-        ) : statisticalError ? (
-          <div>{statisticalError.data.status}</div>
-        ) : (
-          <ProductOverviewCard
-            productRating={statistical.generalRating}
-            companyRating={statistical.companyRating}
-            viewer={statistical.views}
-            ratings={[
-              statistical.uiRating,
-              statistical.manufacturingQuality,
-              statistical.valueForMoney,
-              statistical.camera,
-              statistical.callQuality,
-              statistical.battery,
-            ]}
-            phone={data.name}
-            type="هاتف ذكي"
-          />
-        )}
-        <Typography variant="S18W700C050505">
-          {componentDictionary.productImage + ":"}
-        </Typography>
-        <CardStyled elevation={3}>
-          <img alt="im" src={data.picture}></img>
-        </CardStyled>
-        <Typography
-          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
-          variant="S18W700C050505"
-        >
-          {componentDictionary.specs + ":"}
-          <IconButton
+      <Grid container>
+        {/* Right Grid */}
+        <Grid item lg={2.75} md={1} sm={0.5} xs={0}></Grid>
+        <Grid item lg={5.5} md={6.5} sm={11} xs={12}>
+          <Typography variant="S18W700C050505">
+            {componentDictionary.productImage + ":"}
+          </Typography>
+          <CardStyled elevation={3}>
+            <img alt="im" src={data.picture}></img>
+          </CardStyled>
+          <Typography
             sx={{
-              padding: 0,
-              marginLeft: "4px",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
             }}
+            variant="S18W700C050505"
           >
-            <HelpIcon
+            {componentDictionary.specs + ":"}
+            <IconButton
               sx={{
                 padding: 0,
-                fontSize: "25px",
-                color: theme.palette.defaultIconColor,
-              }}
-            />
-          </IconButton>
-        </Typography>
-        <ProductDetailsTable phoneData={data} />
-        <Typography variant="S18W700C050505">
-          {componentDictionary.similarPhones + ":"}
-        </Typography>
-        {similarPhoneLoading ? (
-          <LoadingSpinner />
-        ) : similarPhoneError ? (
-          <div>{similarPhoneError.data.status}</div>
-        ) : (
-          <HorizontalPhoneList items={similarPhones} />
-        )}
-
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "end",
-            alignItems: "center",
-          }}
-        >
-          <ButtonPage
-            sx={{ background: theme.palette.defaultPageBtn }}
-            onClick={handleOpen}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center",
+                marginLeft: "4px",
               }}
             >
-              <CompareOutlinedIcon
-                sx={{ fontSize: "28px", color: "#FFFFFF" }}
+              <HelpIcon
+                sx={{
+                  padding: 0,
+                  fontSize: "25px",
+                  color: theme.palette.defaultIconColor,
+                }}
               />
-              <Typography variant="S14W700Cffffff">
-                {componentDictionary.compareWithAnotherProduct}
-              </Typography>
-            </Box>
-          </ButtonPage>
-          <Modal open={open} onClose={handleClose}>
-            <CompareDialog item={data} handleClose={handleClose} />
-          </Modal>
-        </Box>
-      </Box>
+            </IconButton>
+          </Typography>
+          <ProductDetailsTable phoneData={data} />
+          <Typography variant="S18W700C050505">
+            {componentDictionary.similarPhones + ":"}
+          </Typography>
+          {similarPhoneLoading ? (
+            <LoadingSpinner />
+          ) : similarPhoneError ? (
+            <div>{similarPhoneError.data.status}</div>
+          ) : (
+            <HorizontalPhoneList items={similarPhones} />
+          )}
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "end",
+              alignItems: "center",
+            }}
+          >
+            <ButtonPage
+              sx={{ background: theme.palette.defaultPageBtn }}
+              onClick={handleOpen}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
+              >
+                <CompareOutlinedIcon
+                  sx={{ fontSize: "28px", color: "#FFFFFF" }}
+                />
+                <Typography variant="S14W700Cffffff">
+                  {componentDictionary.compareWithAnotherProduct}
+                </Typography>
+              </Box>
+            </ButtonPage>
+            <Modal open={open} onClose={handleClose}>
+              <CompareDialog item={data} handleClose={handleClose} />
+            </Modal>
+          </Box>
+        </Grid>
+        {/* Left Grid*/}
+
+        <Grid item lg={3.75} md={4.5} sm={0.5} xs={0}>
+          <div
+            style={{
+              height: "100%",
+              marginTop: "-80px",
+            }}
+          >
+            {statisticalLoading ? (
+              <LoadingSpinner />
+            ) : statisticalError ? (
+              <div>{statisticalError.data.status}</div>
+            ) : (
+              <div
+                style={{
+                  position: "sticky",
+                  top: "0px",
+                  padding: "80px 0px",
+                  maxHeight: "100vh",
+                  overflowY: "scroll",
+                }}
+              >
+                {overviewCard()}
+                {overviewCard()}
+              </div>
+            )}
+          </div>
+        </Grid>
+      </Grid>
     </React.Fragment>
   );
 };

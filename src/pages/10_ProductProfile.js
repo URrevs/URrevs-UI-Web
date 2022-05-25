@@ -53,19 +53,13 @@ export const ProductProfile = () => {
             />
           }
         >
-          <Box
-            sx={{
-              padding: "0px 6px",
-            }}
-          >
-            {value === 0 ? (
-              <ProductReviews />
-            ) : value === 1 ? (
-              <ProductSpecsScreen data={data}></ProductSpecsScreen>
-            ) : (
-              <div>QuestionAndAnswer</div>
-            )}
-          </Box>
+          {value === 0 ? (
+            <ProductReviews />
+          ) : value === 1 ? (
+            <ProductSpecsScreen data={data}></ProductSpecsScreen>
+          ) : (
+            <div>QuestionAndAnswer</div>
+          )}
         </CustomAppBar>
       )}
     </React.Fragment>
