@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
@@ -82,17 +83,19 @@ export default function PostedReviews() {
       showBackBtn
       tabBar={<FilterTabbar />}
     >
-      <VirtualReviewList
-        reviewCard={reviewCard}
-        reviewsList={reviewsList}
-        page={page}
-        data={data}
-        error={error}
-        isLoading={isLoading}
-        isFetching={isFetching}
-        addToReviewsList={addToReviewsList}
-        increasePage={increasePage}
-      />
+      <FixedGrid>
+        <VirtualReviewList
+          reviewCard={reviewCard}
+          reviewsList={reviewsList}
+          page={page}
+          data={data}
+          error={error}
+          isLoading={isLoading}
+          isFetching={isFetching}
+          addToReviewsList={addToReviewsList}
+          increasePage={increasePage}
+        />
+      </FixedGrid>
     </CustomAppBar>
   );
 }

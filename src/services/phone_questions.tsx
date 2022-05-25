@@ -127,6 +127,14 @@ export const phoneQuestionsApi = createApi({
       },
     }),
 
+    getMyPhonesQuestions: builder.query<APIQuestion[],any>({
+      keepUnusedDataFor: 0,
+      query: (round) => `/owned/by/me?round=${round}`,
+      transformResponse: (response: { questions: APIQuestion[] }) => {
+        return response.questions;
+      },
+    }),
+
     addCommentOnPhoneQuestion: builder.mutation({
       query: ({ reviewId, content, phoneId }) => {
         return {
@@ -240,12 +248,12 @@ export const phoneQuestionsApi = createApi({
         };
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-        payload.doFn(payload.commentId);
+        payload.doFn(payload.answerId);
 
         try {
           await queryFulfilled;
         } catch (e) {
-          payload.unDoFn(payload.commentId);
+          payload.unDoFn(payload.answerId);
         }
       },
     }),
@@ -258,12 +266,12 @@ export const phoneQuestionsApi = createApi({
         };
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-        payload.doFn(payload.commentId);
+        payload.doFn(payload.answerId);
 
         try {
           await queryFulfilled;
         } catch (e) {
-          payload.unDoFn(payload.commentId);
+          payload.unDoFn(payload.answerId);
         }
       },
     }),
@@ -276,6 +284,15 @@ export const phoneQuestionsApi = createApi({
         };
       },
     }),
+
+    userPressesFullScreenPhoneQuestion: builder.mutation({
+      query: (reviewId) => {
+        return {
+          url: `/${reviewId}/fullscreen`,
+          method: "POST",
+        };
+      },
+    }),
   }),
 });
 //auto-generated hooks
@@ -284,6 +301,7 @@ export const {
   useGetCertainPhoneQuestionQuery,
   useGetPhoneQuestionsQuery,
   useAddPhoneQuestionMutation,
+  useGetMyPhonesQuestionsQuery,
   useLikePhoneQuestionMutation,
   useUnLikePhoneQuestionMutation,
   useGetUserPhoneQuestionsQuery,
@@ -298,4 +316,5 @@ export const {
   useMarkAnswerAsAcceptedMutation,
   useUnmarkAnswerAsAcceptedMutation,
   useIdontLikeThisPhoneQuestionMutation,
+  useUserPressesFullScreenPhoneQuestionMutation,
 } = phoneQuestionsApi;

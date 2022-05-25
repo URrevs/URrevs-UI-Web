@@ -1,3 +1,5 @@
+import APIAnswer from "./APIAnswer.model";
+
 export interface APIQuestion {
   _id: string;
   type: string;
@@ -10,4 +12,5 @@ export interface APIQuestion {
   ansCount: number;
   shares: number;
   upvoted: boolean;
+  acceptedAns: APIAnswer;
 }

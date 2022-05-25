@@ -28,6 +28,8 @@ export default function QuestionCard({
   fullScreenRoute,
   actionBtnFunction,
   likeBtnHandler,
+  acceptedAnswerWidget,
+  fullScreenFn,
 }) {
   const isReview = true;
   const navigate = useNavigate();
@@ -69,6 +71,7 @@ export default function QuestionCard({
 
   const navigateToFullScreen = () => {
     if (!fullScreen) navigate(fullScreenRoute);
+    fullScreenFn();
   };
 
   const handleSeeMoreExpansion = () => {
@@ -170,11 +173,7 @@ export default function QuestionCard({
                 }
           }
         >
-          <ProsConsText
-            croppedText={croppedText}
-            prosTitle=""
-            consTitle=""
-          />
+          <ProsConsText croppedText={croppedText} prosTitle="" consTitle="" />
         </ButtonBase>
 
         {fullScreen ? (
@@ -229,6 +228,7 @@ export default function QuestionCard({
             navigateToFullScreen={navigateToFullScreen}
           />
         </Box>
+        {acceptedAnswerWidget && acceptedAnswerWidget()}
       </CardContent>
     </Card>
   );

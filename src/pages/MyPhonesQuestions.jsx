@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Answer } from "../Components/Interactions/Answer";
-import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
-import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
+import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
 import ROUTES_NAMES from "../RoutesNames";
 import {
-  useGetOtherUserCompanyQuestionsQuery,
-  useLikeCompanyQuestionCommentMutation,
-  useUnLikeCompanyQuestionCommentMutation
-} from "../services/company_questions";
+  useGetPhoneQuestionsQuery,
+  useLikePhoneQuestionCommentMutation,
+  useUnLikePhoneQuestionCommentMutation,
+  useGetMyPhonesQuestionsQuery,
+} from "../services/phone_questions";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";
 
-export default function PostedPhoneQuestions() {
+export function MyPhonesQuestions() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -28,11 +27,8 @@ export default function PostedPhoneQuestions() {
   const reviewsList = useAppSelector((state) => state.questions.newReviews);
   const [page, setPage] = useState(1);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const userId = searchParams.get("userId");
-
   const { data, isLoading, isFetching, error } =
-    useGetOtherUserCompanyQuestionsQuery({ round: page, uid: userId });
+    useGetMyPhonesQuestionsQuery(page);
 
   const stateLike = (id) =>
     dispatch(questionsActions.setIsLiked({ id: id, isLiked: true }));
@@ -61,9 +57,9 @@ export default function PostedPhoneQuestions() {
   };
 
   // like comment
-  const [likeComment] = useLikeCompanyQuestionCommentMutation();
+  const [likeComment] = useLikePhoneQuestionCommentMutation();
   // unlike comment
-  const [unLikeComment] = useUnLikeCompanyQuestionCommentMutation();
+  const [unLikeComment] = useUnLikePhoneQuestionCommentMutation();
 
   // comment like and unlike
   const stateLikePhoneComment = (id) =>
@@ -119,15 +115,15 @@ export default function PostedPhoneQuestions() {
 
   const reviewCard = (index, clearCache) => {
     return (
-      <CompanyQuestion
+      <PhoneQuestion
         key={reviewsList[index]._id}
         index={0}
         fullScreen={false}
         isExpanded={false}
         clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
-        isPhoneReview={false}
-        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+        isPhoneReview={true}
+        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
@@ -139,25 +135,18 @@ export default function PostedPhoneQuestions() {
   };
 
   return (
-    <CustomAppBar
-      showLabel
-      label="الاسئلة المطروحة"
-      showBackBtn
-      tabBar={<FilterTabbar />}
-    >
-      <FixedGrid>
-        <VirtualReviewList
-          reviewCard={reviewCard}
-          reviewsList={reviewsList}
-          page={page}
-          data={data}
-          isFetching={isFetching}
-          error={error}
-          isLoading={isLoading}
-          addToReviewsList={addToReviewsList}
-          increasePage={increasePage}
-        />
-      </FixedGrid>
+    <CustomAppBar showLabel label="الاسئلة المطروحة على منتجاتي" showBackBtn>
+      <VirtualReviewList
+        reviewCard={reviewCard}
+        reviewsList={reviewsList}
+        page={page}
+        data={data}
+        isFetching={isFetching}
+        error={error}
+        isLoading={isLoading}
+        addToReviewsList={addToReviewsList}
+        increasePage={increasePage}
+      />
     </CustomAppBar>
   );
 }

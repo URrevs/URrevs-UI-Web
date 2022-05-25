@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import APIComment from "../models/interfaces/APIComment.model";
+import APIAnswer from "../models/interfaces/APIAnswer.model";
 import { APIQuestion } from "../models/interfaces/APIQuestion.model";
 import { RootState } from "../store/store";
 import { snackbarActions } from "../store/uiSnackbarSlice";
@@ -39,10 +39,10 @@ export const companyQuestionsApi = createApi({
 
     getCompanyQuestions: builder.query<
       APIQuestion[],
-      { round: number; pid: string }
+      { round: number; cid: string }
     >({
       keepUnusedDataFor: 0,
-      query: ({ round, pid }) => `/on/${pid}?round=${round}`,
+      query: ({ round, cid }) => `/on/${cid}?round=${round}`,
       transformResponse: (response: { questions: APIQuestion[] }) => {
         return response.questions;
       },
@@ -128,24 +128,23 @@ export const companyQuestionsApi = createApi({
     }),
 
     addCommentOnCompanyQuestion: builder.mutation({
-      query: ({ reviewId, comment }) => {
+      query: ({ reviewId, content, phoneId }) => {
         return {
           url: `/${reviewId}/answers`,
           method: "POST",
-          body: { content: comment },
+          body: { content: content, phoneId: phoneId },
         };
       },
     }),
 
     getCompanyQuestionComments: builder.query<
-      APIComment[],
+      APIAnswer[],
       { reviewId: string; round: number }
     >({
       keepUnusedDataFor: 0,
-      query: ({ reviewId, round = 1 }) =>
-        `/${reviewId}/answers?round=${round}`,
-      transformResponse: (response: { comments: APIComment[] }) => {
-        return response.comments;
+      query: ({ reviewId, round = 1 }) => `/${reviewId}/answers?round=${round}`,
+      transformResponse: (response: { answers: APIAnswer[] }) => {
+        return response.answers;
       },
     }),
 
@@ -232,10 +231,56 @@ export const companyQuestionsApi = createApi({
       },
     }),
 
+    // answer acceptance
+    markAnswerAsAccepted: builder.mutation({
+      query: ({ questionId, answerId }) => {
+        return {
+          url: `/${questionId}/answers/${answerId}/accept`,
+          method: "POST",
+        };
+      },
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        payload.doFn(payload.answerId);
+
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          payload.unDoFn(payload.answerId);
+        }
+      },
+    }),
+
+    unmarkAnswerAsAccepted: builder.mutation({
+      query: ({ questionId, answerId }) => {
+        return {
+          url: `/${questionId}/answers/${answerId}/reject`,
+          method: "POST",
+        };
+      },
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        payload.doFn(payload.answerId);
+
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          payload.unDoFn(payload.answerId);
+        }
+      },
+    }),
+
     idontLikeThisCompanyQuestion: builder.mutation({
       query: ({ reviewId }) => {
         return {
           url: `/${reviewId}/hate`,
+          method: "POST",
+        };
+      },
+    }),
+
+    userPressesFullScreenCompanyQuestion: builder.mutation({
+      query: (reviewId) => {
+        return {
+          url: `/${reviewId}/fullscreen`,
           method: "POST",
         };
       },
@@ -259,5 +304,8 @@ export const {
   useUnLikeCompanyQuestionCommentMutation,
   useLikeCompanyQuestionReplyMutation,
   useUnLikeCompanyQuestionReplyMutation,
+  useMarkAnswerAsAcceptedMutation,
+  useUnmarkAnswerAsAcceptedMutation,
   useIdontLikeThisCompanyQuestionMutation,
+  useUserPressesFullScreenCompanyQuestionMutation,
 } = companyQuestionsApi;

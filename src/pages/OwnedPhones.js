@@ -17,6 +17,7 @@ import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import { useGetOthersOwnedPhonesQuery } from "../services/users";
 import { useAppSelector } from "../store/hooks";
 import PhoneListItem from "../Components/PhoneItemList";
+import { FixedGrid } from "../Components/Grid/FixedGrid";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -121,33 +122,35 @@ function OwnedPhonesPage({ query }) {
 
   return (
     <CustomAppBar showLabel label="المنتجات الممتلكة" showBackBtn>
-      <div style={{ height: "calc(100vh)", margin: "0 0" }}>
-        <AutoSizer>
-          {({ height, width }) => {
-            return (
-              <WindowScroller>
-                {({ height, isScrolling, registerChild, scrollTop }) => (
-                  <div ref={registerChild}>
-                    <List
-                      ref={listRef}
-                      autoHeight
-                      overscanRowCount={10}
-                      isScrolling={isScrolling}
-                      scrollTop={scrollTop}
-                      width={width}
-                      height={height}
-                      deferredMeasurementCache={cache}
-                      rowHeight={cache.rowHeight}
-                      rowCount={phonesList.length + 1}
-                      rowRenderer={renderRow}
-                    />
-                  </div>
-                )}
-              </WindowScroller>
-            );
-          }}
-        </AutoSizer>
-      </div>
+      <FixedGrid>
+        <div style={{ height: "calc(100vh)", margin: "0 0" }}>
+          <AutoSizer>
+            {({ height, width }) => {
+              return (
+                <WindowScroller>
+                  {({ height, isScrolling, registerChild, scrollTop }) => (
+                    <div ref={registerChild}>
+                      <List
+                        ref={listRef}
+                        autoHeight
+                        overscanRowCount={10}
+                        isScrolling={isScrolling}
+                        scrollTop={scrollTop}
+                        width={width}
+                        height={height}
+                        deferredMeasurementCache={cache}
+                        rowHeight={cache.rowHeight}
+                        rowCount={phonesList.length + 1}
+                        rowRenderer={renderRow}
+                      />
+                    </div>
+                  )}
+                </WindowScroller>
+              );
+            }}
+          </AutoSizer>
+        </div>
+      </FixedGrid>
     </CustomAppBar>
   );
 }
