@@ -52,7 +52,6 @@ export const AppBarActions = ({
 
   const language = useAppSelector((state) => state.language.language);
   const isDark = useAppSelector((state) => state.darkMode.isDark);
-  const isMobile = useMediaQuery("(max-width:700px)");
 
   const theme = useTheme();
 
@@ -81,7 +80,7 @@ export const AppBarActions = ({
         }}
       >
         {/* search icon */}
-        {isMobile
+        {theme.isMobile
           ? showSearch && (
               <CircleBtn onClick={navigateToSearchPage}>
                 <SearchIcon />

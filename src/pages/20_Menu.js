@@ -47,7 +47,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
   const handleSignOutClose = () => setSignOutDialog(false);
   const handleInvitationOpen = () => setInvitationCodeDialog(true);
   const handleInvitationClose = () => setInvitationCodeDialog(false);
-  const isMobile = useMediaQuery("(max-width:700px)");
+
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
@@ -245,7 +245,9 @@ export default function Menu({ isDesktop = false, drawerRef }) {
           padding: "0px 14px",
         }}
       >
-        {isMobile ? <CustomAppBar showLogo showSearch showProfile /> : null}
+        {theme.isMobile ? (
+          <CustomAppBar showLogo showSearch showProfile />
+        ) : null}
 
         <Modal
           open={signOutDialog}
@@ -292,7 +294,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
           // // Footer just above the foot appbar
           // position: "absolute",
           // bottom: "0",
-          paddingBottom: isMobile ? "75px" : "20px",
+          paddingBottom: theme.isMobile ? "75px" : "20px",
           // // margin: "-90px 0px -90px 0px",
           // width: "95%",
         }}

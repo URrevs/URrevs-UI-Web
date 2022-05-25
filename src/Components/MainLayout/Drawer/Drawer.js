@@ -108,8 +108,6 @@ export const MyDrawer = (props) => {
   const navigate = useNavigate();
   const open = props.open;
 
-  // const isMobile = useMediaQuery("(max-width:700px)");
-
   const drawerTiles = [
     //Home
     {

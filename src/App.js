@@ -53,7 +53,7 @@ function App() {
   const language = useSelector((state) => state.language.language);
   const direction = language === "ar" ? "rtl" : "ltr";
   const isDark = useSelector((state) => state.darkMode.isDark);
-  const isMobile = useMediaQuery("(max-width:700px)");
+  const isMobile = useMediaQuery("(max-width:500)");
 
   const theme = createTheme({
     isMobile: isMobile,
@@ -68,10 +68,10 @@ function App() {
     },
     breakpoints: {
       values: {
-        xs: 0,
-        sm: 350,
+        xs: 300,
+        sm: 500,
         md: 800,
-        lg: 1200,
+        lg: 1100,
       },
     },
     sideBar: {
