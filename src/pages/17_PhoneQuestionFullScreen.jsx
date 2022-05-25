@@ -39,6 +39,7 @@ export default function PhoneQuestionFullScreen() {
     return () => {
       console.log("clear answers");
       dispatch(answersListActions.clearComments());
+      dispatch(questionsActions.clearReviews());
     };
   }, []);
 

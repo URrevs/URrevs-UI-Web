@@ -9,9 +9,8 @@ import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetOtherUserPhoneQuestionsQuery,
   useLikePhoneQuestionCommentMutation,
-  useUnLikePhoneQuestionCommentMutation,
+  useUnLikePhoneQuestionCommentMutation
 } from "../services/phone_questions";
-import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";

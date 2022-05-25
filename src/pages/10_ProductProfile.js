@@ -12,6 +12,7 @@ import {
 } from "../services/phones";
 import { ProductSpecsScreen } from "./ProductProfileTabs/10_ProductSpecs";
 import { ProductReviews } from "./ProductProfileTabs/12_ProductReviews";
+import { ProductQuestions } from "./ProductProfileTabs/13_ProductQuestions";
 
 export const ProductProfile = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -53,13 +54,19 @@ export const ProductProfile = () => {
             />
           }
         >
-          {value === 0 ? (
-            <ProductReviews />
-          ) : value === 1 ? (
-            <ProductSpecsScreen data={data}></ProductSpecsScreen>
-          ) : (
-            <div>QuestionAndAnswer</div>
-          )}
+          <Box
+            sx={{
+              padding: "0px 6px",
+            }}
+          >
+            {value === 0 ? (
+              <ProductReviews />
+            ) : value === 1 ? (
+              <ProductSpecsScreen data={data}></ProductSpecsScreen>
+            ) : (
+              <ProductQuestions />
+            )}
+          </Box>
         </CustomAppBar>
       )}
     </React.Fragment>

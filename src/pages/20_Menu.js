@@ -91,7 +91,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       title: pageDictionry.askedQuestions,
       icon: <HelpCenterOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: pageDictionry.helpOthers,
-      to: "",
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.MY_QUESTIONS}?userId=${profileData.uid}`,
       authenticate: currentUserProfile.isLoggedIn,
     },
     {

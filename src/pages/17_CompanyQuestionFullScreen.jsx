@@ -2,11 +2,11 @@ import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
+import { Answer } from "../Components/Interactions/Answer";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import CompanyReview from "../Components/ReviewCard/CompanyReview";
-import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
+import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
+import AnswersList from "../pages/AnswersList";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useAddCommentOnCompanyQuestionMutation,
@@ -15,13 +15,15 @@ import {
   useGetCompanyQuestionCommentsQuery,
   useLikeCompanyQuestionCommentMutation,
   useLikeCompanyQuestionReplyMutation,
+  useMarkAnswerAsAcceptedMutation,
   useUnLikeCompanyQuestionCommentMutation,
   useUnLikeCompanyQuestionReplyMutation,
+  useUnmarkAnswerAsAcceptedMutation,
 } from "../services/company_questions";
-import { commentsListActions } from "../store/commentsListSlice";
+import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { reviewsActions } from "../store/reviewsSlice";
-import CommentsList from "./CommentsList";
+import { questionsActions } from "../store/questionsSlice";
+import CommentsList from "../pages/AnswersList";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -36,16 +38,15 @@ export default function CompanyQuestionFullScreen() {
 
   useEffect(() => {
     return () => {
-      console.log("clear comments");
-      // dispatch(commentsListActions.clearComments());
+      console.log("clear answers");
+      dispatch(answersListActions.clearComments());
+      dispatch(questionsActions.clearReviews());
     };
   }, []);
 
   const currentUser = useAppSelector((state) => state.auth);
 
-  const commentsList = useAppSelector(
-    (state) => state.commentsList.newComments
-  );
+  const commentsList = useAppSelector((state) => state.answersList.newComments);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const reviewId = searchParams.get("id");
@@ -58,12 +59,12 @@ export default function CompanyQuestionFullScreen() {
   // add comment
   const [addCommentLoading, setAddCommentLoading] = useState(false);
   const [addCommentError, setAddCommentError] = useState(null);
-  const [addCommentOnPhoneReview] = useAddCommentOnCompanyQuestionMutation();
+  const [addCommentOnCompanyReview] = useAddCommentOnCompanyQuestionMutation();
 
   // add reply
   const [addReplyLoading, setAddReplyLoading] = useState(false);
   const [addReplyError, setAddReplyError] = useState(null);
-  const [addReplyOnPhoneReview] = useAddReplyOnCompanyQuestionMutation();
+  const [addReplyOnCompanyReview] = useAddReplyOnCompanyQuestionMutation();
 
   // like comment
   const [likeComment] = useLikeCompanyQuestionCommentMutation();
@@ -76,6 +77,11 @@ export default function CompanyQuestionFullScreen() {
   // unlike reply
   const [unLikeReply] = useUnLikeCompanyQuestionReplyMutation();
 
+  // accept answer
+  const [acceptAnswer] = useMarkAnswerAsAcceptedMutation();
+  //reject answer
+  const [rejectAnswer] = useUnmarkAnswerAsAcceptedMutation();
+
   const [ex, setEx] = useState(false);
   const clearCache = (index) => {
     setEx(!ex);
@@ -86,12 +92,12 @@ export default function CompanyQuestionFullScreen() {
     }
   };
 
-  // // get this review from store
-  // const currentReview = useAppSelector((state) => state.reviews.newReviews).find(
-  //   (element) => {
-  //     return element._id === reviewId;
-  //   }
-  // );
+  // get this review from store
+  // const currentReview = useAppSelector(
+  //   (state) => state.reviews.newReviews
+  // ).find((element) => {
+  //   return element._id === reviewId;
+  // });
 
   // get review from server
   const {
@@ -101,63 +107,71 @@ export default function CompanyQuestionFullScreen() {
   } = useGetCertainCompanyQuestionQuery(reviewId);
 
   const currentReviewData = useAppSelector(
-    (state) => state.reviews.newReviews
+    (state) => state.questions.newReviews
   )[0];
 
   useEffect(() => {
-    console.log(reviewLoading);
-    if (!reviewLoading) {
-      console.log("currentReview", currentReview);
-
-      dispatch(reviewsActions.clearReviews());
+    if (currentReview && currentReview.acceptedAns) {
+      console.log("add answer");
       dispatch(
-        reviewsActions.addToLoaddedReviews({ newReviews: [currentReview] })
+        answersListActions.addAcceptedAnswer({
+          acceptedAnswer: currentReviewData.acceptedAns,
+        })
+      );
+    }
+  }, [currentReviewData]);
+
+  useEffect(() => {
+    if (!reviewLoading) {
+      dispatch(questionsActions.clearReviews());
+      dispatch(
+        questionsActions.addToLoaddedReviews({ newReviews: [currentReview] })
       );
     }
   }, [reviewLoading]);
 
-  const stateLikePhoneReview = (id) =>
-    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
+  const stateLikeCompanyReview = (id) =>
+    dispatch(questionsActions.setIsLiked({ id: id, isLiked: true }));
 
-  const stateUnLikePhoneReview = (id) =>
-    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: false }));
+  const stateUnLikeCompanyReview = (id) =>
+    dispatch(questionsActions.setIsLiked({ id: id, isLiked: false }));
 
   // comment like and unlike
-  const stateLikePhoneComment = (id) =>
-    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: true }));
+  const stateLikeCompanyComment = (id) =>
+    dispatch(answersListActions.setIsLiked({ id: id, isLiked: true }));
 
-  const stateUnLikePhoneComment = (id) =>
-    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: false }));
+  const stateUnLikeCompanyComment = (id) =>
+    dispatch(answersListActions.setIsLiked({ id: id, isLiked: false }));
 
   const likeCommentRequest = (id) => {
     likeComment({
       commentId: id,
-      doFn: stateLikePhoneComment,
-      unDoFn: stateUnLikePhoneComment,
+      doFn: stateLikeCompanyComment,
+      unDoFn: stateUnLikeCompanyComment,
     });
   };
 
   const unLikeCommentRequest = (id) => {
     unLikeComment({
       commentId: id,
-      doFn: stateUnLikePhoneComment,
-      unDoFn: stateLikePhoneComment,
+      doFn: stateUnLikeCompanyComment,
+      unDoFn: stateLikeCompanyComment,
     });
   };
 
   // reply like and unlike
-  const stateLikePhoneReply = (id) =>
-    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: true }));
+  const stateLikeCompanyReply = (id) =>
+    dispatch(answersListActions.setIsLiked({ id: id, isLiked: true }));
 
-  const stateUnLikePhoneReply = (id) =>
-    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: false }));
+  const stateUnLikeCompanyReply = (id) =>
+    dispatch(answersListActions.setIsLiked({ id: id, isLiked: false }));
 
   const likeReplyRequest = (commentId, replyId) => {
     likeReply({
       commentId: commentId,
       replyId: replyId,
-      doFn: stateLikePhoneReply,
-      unDoFn: stateUnLikePhoneReply,
+      doFn: stateLikeCompanyReply,
+      unDoFn: stateUnLikeCompanyReply,
     });
   };
 
@@ -165,21 +179,50 @@ export default function CompanyQuestionFullScreen() {
     unLikeReply({
       commentId: commentId,
       replyId: replyId,
-      doFn: stateUnLikePhoneReply,
-      unDoFn: stateLikePhoneReply,
+      doFn: stateUnLikeCompanyReply,
+      unDoFn: stateLikeCompanyReply,
     });
   };
 
-  const addToLoadedComments = () =>
+  // answer accept and reject
+  const stateAcceptAnswer = (id) =>
+    dispatch(answersListActions.setIsAccepted({ id: id, isAccepted: true }));
+
+  const stateRejectAnswer = (id) =>
+    dispatch(answersListActions.setIsAccepted({ id: id, isAccepted: false }));
+
+  const acceptAnswerRequest = (questionId, answerId) => {
+    console.log("aa");
+
+    acceptAnswer({
+      questionId: questionId,
+      answerId: answerId,
+      doFn: stateAcceptAnswer,
+      unDoFn: stateRejectAnswer,
+    });
+  };
+
+  const rejectAnswerRequest = (questionId, answerId) => {
+    console.log("aa");
+    rejectAnswer({
+      questionId: questionId,
+      answerId: answerId,
+      doFn: stateRejectAnswer,
+      unDoFn: stateAcceptAnswer,
+    });
+  };
+
+  const addToLoadedComments = () => {
     dispatch(
-      commentsListActions.addToLoaddedComments({
+      answersListActions.addToLoaddedComments({
         newComments: data,
       })
     );
+  };
 
   const addOneCommentToLoadedComments = (comment, index) => {
     dispatch(
-      commentsListActions.addNewCommentLocally({
+      answersListActions.addNewCommentLocally({
         newComment: comment,
       })
     );
@@ -188,7 +231,7 @@ export default function CompanyQuestionFullScreen() {
   };
   const addOneReplyToLoadedComments = (comment) => {
     dispatch(
-      commentsListActions.addNewReplyLocally({
+      answersListActions.addNewReplyLocally({
         newComment: comment,
       })
     );
@@ -207,9 +250,10 @@ export default function CompanyQuestionFullScreen() {
 
       setAddCommentLoading(true);
 
-      const response = await addCommentOnPhoneReview({
+      const response = await addCommentOnCompanyReview({
         reviewId: reviewId,
-        comment: e.target.comment.value,
+        content: e.target.comment.value,
+        phoneId: currentReviewData.targetId,
       });
 
       setAddCommentLoading(false);
@@ -238,7 +282,7 @@ export default function CompanyQuestionFullScreen() {
     e.preventDefault();
 
     try {
-      const response = await addReplyOnPhoneReview({
+      const response = await addReplyOnCompanyReview({
         commentId: commentId,
         reply: e.target.comment.value,
       });
@@ -263,9 +307,7 @@ export default function CompanyQuestionFullScreen() {
     }
   };
 
-  const deleteReviewFromStore = (id) => {
-    navigate(-1);
-  };
+  const deleteReviewFromStore = (id) => {};
 
   const reviewCard = () => {
     return (
@@ -276,7 +318,7 @@ export default function CompanyQuestionFullScreen() {
           <div>Error</div>
         ) : (
           currentReviewData && (
-            <PhoneQuestion
+            <CompanyQuestion
               key={currentReviewData._id}
               index={0}
               fullScreen={true}
@@ -284,10 +326,10 @@ export default function CompanyQuestionFullScreen() {
               clearIndexCache={clearCache}
               reviewDetails={currentReviewData}
               isPhoneReview={true}
-              targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${currentReviewData.targetId}`}
+              targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${currentReviewData.targetId}`}
               userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
-              stateLikeFn={stateLikePhoneReview}
-              stateUnLikeFn={stateUnLikePhoneReview}
+              stateLikeFn={stateLikeCompanyReview}
+              stateUnLikeFn={stateUnLikeCompanyReview}
               showActionBtn={true}
               deleteReviewFromStore={deleteReviewFromStore}
             />

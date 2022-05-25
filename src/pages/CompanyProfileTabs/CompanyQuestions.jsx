@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Answer } from "../Components/Interactions/Answer";
-import { FixedGrid } from "../Components/Grid/FixedGrid";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
-import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
-import ROUTES_NAMES from "../RoutesNames";
+import { Answer } from "../../Components/Interactions/Answer";
+import CompanyQuestion from "../../Components/ReviewCard/companyQuestion";
+import ROUTES_NAMES from "../../RoutesNames";
 import {
-  useGetOtherUserCompanyQuestionsQuery,
-  useLikeCompanyQuestionCommentMutation,
-  useUnLikeCompanyQuestionCommentMutation
-} from "../services/company_questions";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { questionsActions } from "../store/questionsSlice";
-import VirtualReviewList from "./VirtualListWindowScroll";
+    useGetCompanyQuestionsQuery,
+    useLikeCompanyQuestionCommentMutation,
+    useUnLikeCompanyQuestionCommentMutation
+} from "../../services/company_questions";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { questionsActions } from "../../store/questionsSlice";
+import VirtualReviewList from "../VirtualListWindowScroll";
 
-export default function PostedPhoneQuestions() {
+export function CompanyQuestions() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -29,10 +26,12 @@ export default function PostedPhoneQuestions() {
   const [page, setPage] = useState(1);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const userId = searchParams.get("userId");
+  const cid = searchParams.get("cid");
 
-  const { data, isLoading, isFetching, error } =
-    useGetOtherUserCompanyQuestionsQuery({ round: page, uid: userId });
+  const { data, isLoading, isFetching, error } = useGetCompanyQuestionsQuery({
+    round: page,
+    cid: cid,
+  });
 
   const stateLike = (id) =>
     dispatch(questionsActions.setIsLiked({ id: id, isLiked: true }));
@@ -66,10 +65,10 @@ export default function PostedPhoneQuestions() {
   const [unLikeComment] = useUnLikeCompanyQuestionCommentMutation();
 
   // comment like and unlike
-  const stateLikePhoneComment = (id) =>
+  const stateLikeCompanyComment = (id) =>
     dispatch(questionsActions.voteForAcceptedAnswer({ id: id, isLiked: true }));
 
-  const stateUnLikePhoneComment = (id) =>
+  const stateUnLikeCompanyComment = (id) =>
     dispatch(
       questionsActions.voteForAcceptedAnswer({ id: id, isLiked: false })
     );
@@ -77,16 +76,16 @@ export default function PostedPhoneQuestions() {
   const likeCommentRequest = (id) => {
     likeComment({
       commentId: id,
-      doFn: stateLikePhoneComment,
-      unDoFn: stateUnLikePhoneComment,
+      doFn: stateLikeCompanyComment,
+      unDoFn: stateUnLikeCompanyComment,
     });
   };
 
   const unLikeCommentRequest = (id) => {
     unLikeComment({
       commentId: id,
-      doFn: stateUnLikePhoneComment,
-      unDoFn: stateLikePhoneComment,
+      doFn: stateUnLikeCompanyComment,
+      unDoFn: stateLikeCompanyComment,
     });
   };
 
@@ -127,7 +126,7 @@ export default function PostedPhoneQuestions() {
         clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
         isPhoneReview={false}
-        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
@@ -139,25 +138,16 @@ export default function PostedPhoneQuestions() {
   };
 
   return (
-    <CustomAppBar
-      showLabel
-      label="الاسئلة المطروحة"
-      showBackBtn
-      tabBar={<FilterTabbar />}
-    >
-      <FixedGrid>
-        <VirtualReviewList
-          reviewCard={reviewCard}
-          reviewsList={reviewsList}
-          page={page}
-          data={data}
-          isFetching={isFetching}
-          error={error}
-          isLoading={isLoading}
-          addToReviewsList={addToReviewsList}
-          increasePage={increasePage}
-        />
-      </FixedGrid>
-    </CustomAppBar>
+    <VirtualReviewList
+      reviewCard={reviewCard}
+      reviewsList={reviewsList}
+      page={page}
+      data={data}
+      isFetching={isFetching}
+      error={error}
+      isLoading={isLoading}
+      addToReviewsList={addToReviewsList}
+      increasePage={increasePage}
+    />
   );
 }

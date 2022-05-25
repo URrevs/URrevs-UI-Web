@@ -2,10 +2,11 @@ import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
-  useIdontLikeThisPhoneQuestionMutation,
-  useLikePhoneQuestionMutation,
-  useUnLikePhoneQuestionMutation,
-} from "../../services/phone_questions";
+  useIdontLikeThisCompanyQuestionMutation,
+  useLikeCompanyQuestionMutation,
+  useUnLikeCompanyQuestionMutation,
+  useUserPressesFullScreenCompanyQuestionMutation,
+} from "../../services/company_questions";
 import QuestionCard from "./QuestionCard";
 
 export default function CompanyQuestion({
@@ -20,8 +21,10 @@ export default function CompanyQuestion({
   deleteReviewFromStore,
   fullScreen,
   isExpanded,
+  acceptedAnswerWidget,
 }) {
-  const [dontLikeThisRequest] = useIdontLikeThisPhoneQuestionMutation();
+  const [dontLikeThisRequest] = useIdontLikeThisCompanyQuestionMutation();
+  const [fullScreenRequest] = useUserPressesFullScreenCompanyQuestionMutation();
 
   const actionBtnFunction = async () => {
     try {
@@ -32,8 +35,8 @@ export default function CompanyQuestion({
     }
   };
 
-  const [likePhoneReview] = useLikePhoneQuestionMutation();
-  const [unLikePhoneReview] = useUnLikePhoneQuestionMutation();
+  const [likeCompanyReview] = useLikeCompanyQuestionMutation();
+  const [unLikeCompanyReview] = useUnLikeCompanyQuestionMutation();
 
   const checkIsSignedIn = useCheckSignedIn();
   const checkOwnerShip = useCheckOwnership({
@@ -44,17 +47,21 @@ export default function CompanyQuestion({
   const likeBtnHandler = async () => {
     if (checkIsSignedIn() && checkOwnerShip()) {
       reviewDetails.upvoted
-        ? unLikePhoneReview({
+        ? unLikeCompanyReview({
             reviewId: reviewDetails._id,
             doFn: stateUnLikeFn.bind(null, reviewDetails._id),
             unDoFn: stateLikeFn.bind(null, reviewDetails._id),
           })
-        : likePhoneReview({
+        : likeCompanyReview({
             reviewId: reviewDetails._id,
             doFn: stateLikeFn.bind(null, reviewDetails._id),
             unDoFn: stateUnLikeFn.bind(null, reviewDetails._id),
           });
     }
+  };
+
+  const fullScreenHandler = () => {
+    fullScreenRequest(reviewDetails._id);
   };
 
   return (
@@ -68,8 +75,10 @@ export default function CompanyQuestion({
       targetProfilePath={targetProfilePath}
       userProfilePath={userProfilePath}
       fullScreenRoute={`/${ROUTES_NAMES.EXACT_COMPANY_QUESTION}?id=${reviewDetails._id}`}
+      fullScreenFn={fullScreenHandler}
       actionBtnFunction={showActionBtn && actionBtnFunction}
       likeBtnHandler={likeBtnHandler}
+      acceptedAnswerWidget={acceptedAnswerWidget}
     />
   );
 }
