@@ -29,6 +29,7 @@ export default function QuestionCard({
   actionBtnFunction,
   likeBtnHandler,
   acceptedAnswerWidget,
+  fullScreenFn,
 }) {
   const isReview = true;
   const navigate = useNavigate();
@@ -70,6 +71,7 @@ export default function QuestionCard({
 
   const navigateToFullScreen = () => {
     if (!fullScreen) navigate(fullScreenRoute);
+    fullScreenFn();
   };
 
   const handleSeeMoreExpansion = () => {

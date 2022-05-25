@@ -40,6 +40,7 @@ import PostedPhoneQuestions from "./pages/7_PostedPhoneQuestions";
 import { SearchScreen } from "./pages/8_SearchScreen";
 import AddReview from "./pages/AddReview";
 import ComponentsTest from "./pages/ComponentsTest";
+import { MyPhonesQuestions } from "./pages/MyPhonesQuestions";
 import OwnedPhonesPage from "./pages/OwnedPhones";
 import Profile from "./pages/Profile";
 import ROUTES_NAMES from "./RoutesNames";
@@ -309,6 +310,10 @@ function App() {
                             element={<PostedCompanyQuestions />}
                           />
                         </Route>
+                        <Route
+                          path={ROUTES_NAMES.MY_QUESTIONS}
+                          element={<MyPhonesQuestions />}
+                        />
                       </Route>
                       <Route path={ROUTES_NAMES.COMPANY_PROFILE}>
                         <Route index element={<CompanyProfile />} />

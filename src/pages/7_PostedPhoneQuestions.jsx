@@ -8,9 +8,8 @@ import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetOtherUserPhoneQuestionsQuery,
   useLikePhoneQuestionCommentMutation,
-  useUnLikePhoneQuestionCommentMutation,
+  useUnLikePhoneQuestionCommentMutation
 } from "../services/phone_questions";
-import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";
@@ -70,7 +69,9 @@ export default function PostedPhoneQuestions() {
     dispatch(questionsActions.voteForAcceptedAnswer({ id: id, isLiked: true }));
 
   const stateUnLikePhoneComment = (id) =>
-    dispatch(questionsActions.voteForAcceptedAnswer({ id: id, isLiked: false }));
+    dispatch(
+      questionsActions.voteForAcceptedAnswer({ id: id, isLiked: false })
+    );
 
   const likeCommentRequest = (id) => {
     likeComment({

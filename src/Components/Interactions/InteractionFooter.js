@@ -41,9 +41,9 @@ export const InteractionFooter = ({
     <React.Fragment>
       <CommentButton
         onClick={() => {
-          // if (checkSignedIn() && checkOwnership()) {
+          if (checkSignedIn() && checkOwnership()) {
             onClickHandler();
-          // }
+          }
         }}
       >
         <Typography variant={condition ? "S13W700C2196F3" : "S13W700C050505"}>

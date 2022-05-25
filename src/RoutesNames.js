@@ -23,6 +23,7 @@ const ROUTES_NAMES = {
   OWNED_PHONES: "owned-phones",
   REVIEWS: "reviews",
   QUESTIONS: "questions",
+  MY_QUESTIONS: "my-questions",
   PHONE_REVIEWS: "phone",
   COMPANY_REVIEWS: "company",
   COMPARISON: "compare",

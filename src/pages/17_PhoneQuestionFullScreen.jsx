@@ -38,6 +38,7 @@ export default function PhoneQuestionFullScreen() {
     return () => {
       console.log("clear answers");
       dispatch(answersListActions.clearComments());
+      dispatch(questionsActions.clearReviews());
     };
   }, []);
 
@@ -109,7 +110,7 @@ export default function PhoneQuestionFullScreen() {
 
   useEffect(() => {
     if (currentReview && currentReview.acceptedAns) {
-      console.log('add answer')
+      console.log("add answer");
       dispatch(
         answersListActions.addAcceptedAnswer({
           acceptedAnswer: currentReviewData.acceptedAns,

@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Answer } from "../Components/Interactions/Answer";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
-import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
-import ROUTES_NAMES from "../RoutesNames";
+import { Answer } from "../../Components/Interactions/Answer";
+import PhoneQuestion from "../../Components/ReviewCard/phoneQuestion";
+import ROUTES_NAMES from "../../RoutesNames";
 import {
-  useGetOtherUserCompanyQuestionsQuery,
-  useLikeCompanyQuestionCommentMutation,
-  useUnLikeCompanyQuestionCommentMutation
-} from "../services/company_questions";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { questionsActions } from "../store/questionsSlice";
-import VirtualReviewList from "./VirtualListWindowScroll";
+    useGetPhoneQuestionsQuery,
+    useLikePhoneQuestionCommentMutation,
+    useUnLikePhoneQuestionCommentMutation
+} from "../../services/phone_questions";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { questionsActions } from "../../store/questionsSlice";
+import VirtualReviewList from "../VirtualListWindowScroll";
 
-export default function PostedPhoneQuestions() {
+export function ProductQuestions() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -28,10 +26,12 @@ export default function PostedPhoneQuestions() {
   const [page, setPage] = useState(1);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const userId = searchParams.get("userId");
+  const pid = searchParams.get("pid");
 
-  const { data, isLoading, isFetching, error } =
-    useGetOtherUserCompanyQuestionsQuery({ round: page, uid: userId });
+  const { data, isLoading, isFetching, error } = useGetPhoneQuestionsQuery({
+    round: page,
+    pid: pid,
+  });
 
   const stateLike = (id) =>
     dispatch(questionsActions.setIsLiked({ id: id, isLiked: true }));
@@ -60,9 +60,9 @@ export default function PostedPhoneQuestions() {
   };
 
   // like comment
-  const [likeComment] = useLikeCompanyQuestionCommentMutation();
+  const [likeComment] = useLikePhoneQuestionCommentMutation();
   // unlike comment
-  const [unLikeComment] = useUnLikeCompanyQuestionCommentMutation();
+  const [unLikeComment] = useUnLikePhoneQuestionCommentMutation();
 
   // comment like and unlike
   const stateLikePhoneComment = (id) =>
@@ -118,15 +118,15 @@ export default function PostedPhoneQuestions() {
 
   const reviewCard = (index, clearCache) => {
     return (
-      <CompanyQuestion
+      <PhoneQuestion
         key={reviewsList[index]._id}
         index={0}
         fullScreen={false}
         isExpanded={false}
         clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
-        isPhoneReview={false}
-        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+        isPhoneReview={true}
+        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
@@ -138,23 +138,16 @@ export default function PostedPhoneQuestions() {
   };
 
   return (
-    <CustomAppBar
-      showLabel
-      label="الاسئلة المطروحة"
-      showBackBtn
-      tabBar={<FilterTabbar />}
-    >
-      <VirtualReviewList
-        reviewCard={reviewCard}
-        reviewsList={reviewsList}
-        page={page}
-        data={data}
-        isFetching={isFetching}
-        error={error}
-        isLoading={isLoading}
-        addToReviewsList={addToReviewsList}
-        increasePage={increasePage}
-      />
-    </CustomAppBar>
+    <VirtualReviewList
+      reviewCard={reviewCard}
+      reviewsList={reviewsList}
+      page={page}
+      data={data}
+      isFetching={isFetching}
+      error={error}
+      isLoading={isLoading}
+      addToReviewsList={addToReviewsList}
+      increasePage={increasePage}
+    />
   );
 }
