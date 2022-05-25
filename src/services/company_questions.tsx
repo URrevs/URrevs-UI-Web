@@ -132,7 +132,7 @@ export const companyQuestionsApi = createApi({
         return {
           url: `/${reviewId}/answers`,
           method: "POST",
-          body: { content: content, phoneId: phoneId },
+          body: { content: content, companyId: phoneId },
         };
       },
     }),
