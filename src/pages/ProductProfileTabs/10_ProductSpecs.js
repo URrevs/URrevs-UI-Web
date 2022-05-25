@@ -7,6 +7,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import ButtonPage from "../../Components/Buttons/ButtonPage";
 import { CompareDialog } from "../../Components/Dialogs/CompareDialog/CompareDialog";
+import { CompareItem } from "../../Components/Dialogs/CompareDialog/CompareItem";
 import { HorizontalPhoneList } from "../../Components/HorizontalPhoneList/HorizontalPhoneList";
 import LoadingSpinner from "../../Components/Loaders/LoadingSpinner";
 import { ProductOverviewCard } from "../../Components/OverviewCard/ProductOverviewCard";
@@ -56,31 +57,91 @@ export const ProductSpecsScreen = ({ data }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const theme = useTheme();
-
-  const overviewCard = () => (
-    <ProductOverviewCard
-      productRating={statistical.generalRating}
-      companyRating={statistical.companyRating}
-      viewer={statistical.views}
-      ratings={[
-        statistical.uiRating,
-        statistical.manufacturingQuality,
-        statistical.valueForMoney,
-        statistical.camera,
-        statistical.callQuality,
-        statistical.battery,
-      ]}
-      phone={data.name}
-      type="هاتف ذكي"
-    />
+  const ComparePaper = (item) => (
+    <CardStyled>
+      <CompareItem item={item} />
+    </CardStyled>
   );
-
+  const overviewCard = () =>
+    statisticalLoading ? (
+      <LoadingSpinner />
+    ) : statisticalError ? (
+      <div>{statisticalError.data.status}</div>
+    ) : (
+      <div
+        style={{
+          marginTop: "10px",
+        }}
+      >
+        <ProductOverviewCard
+          productRating={statistical.generalRating}
+          companyRating={statistical.companyRating}
+          viewer={statistical.views}
+          ratings={[
+            statistical.uiRating,
+            statistical.manufacturingQuality,
+            statistical.valueForMoney,
+            statistical.camera,
+            statistical.callQuality,
+            statistical.battery,
+          ]}
+          phone={data.name}
+          type="هاتف ذكي"
+        />
+      </div>
+    );
+  const compareWithOtherProducts = () => (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "end",
+        alignItems: "center",
+      }}
+    >
+      <ButtonPage
+        sx={{ background: theme.palette.defaultPageBtn }}
+        onClick={handleOpen}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+        >
+          <CompareOutlinedIcon sx={{ fontSize: "28px", color: "#FFFFFF" }} />
+          <Typography variant="S14W700Cffffff">
+            {componentDictionary.compareWithAnotherProduct}
+          </Typography>
+        </Box>
+      </ButtonPage>
+      <Modal open={open} onClose={handleClose}>
+        <CompareDialog item={data} handleClose={handleClose} />
+      </Modal>
+    </Box>
+  );
+  const similarPhonesComponent = () => (
+    <div>
+      <Typography variant="S18W700C050505">
+        {componentDictionary.similarPhones + ":"}
+      </Typography>
+      {similarPhoneLoading ? (
+        <LoadingSpinner />
+      ) : similarPhoneError ? (
+        <div>{similarPhoneError.data.status}</div>
+      ) : (
+        <HorizontalPhoneList items={similarPhones} />
+      )}
+    </div>
+  );
   return (
     <React.Fragment>
       <Grid container>
         {/* Right Grid */}
-        <Grid item lg={2.75} md={1} sm={0.5} xs={0}></Grid>
-        <Grid item lg={5.5} md={6.5} sm={11} xs={12}>
+        <Grid item lg={2.75} md={1} sm={1.5} xs={0}></Grid>
+        <Grid item lg={5.5} md={5.25} sm={10} xs={12}>
+          {theme.isMobile ? overviewCard() : null}
           <Typography variant="S18W700C050505">
             {componentDictionary.productImage + ":"}
           </Typography>
@@ -112,76 +173,32 @@ export const ProductSpecsScreen = ({ data }) => {
             </IconButton>
           </Typography>
           <ProductDetailsTable phoneData={data} />
-          <Typography variant="S18W700C050505">
-            {componentDictionary.similarPhones + ":"}
-          </Typography>
-          {similarPhoneLoading ? (
-            <LoadingSpinner />
-          ) : similarPhoneError ? (
-            <div>{similarPhoneError.data.status}</div>
-          ) : (
-            <HorizontalPhoneList items={similarPhones} />
-          )}
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "end",
-              alignItems: "center",
-            }}
-          >
-            <ButtonPage
-              sx={{ background: theme.palette.defaultPageBtn }}
-              onClick={handleOpen}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  textAlign: "center",
-                }}
-              >
-                <CompareOutlinedIcon
-                  sx={{ fontSize: "28px", color: "#FFFFFF" }}
-                />
-                <Typography variant="S14W700Cffffff">
-                  {componentDictionary.compareWithAnotherProduct}
-                </Typography>
-              </Box>
-            </ButtonPage>
-            <Modal open={open} onClose={handleClose}>
-              <CompareDialog item={data} handleClose={handleClose} />
-            </Modal>
-          </Box>
+          {theme.isMobile ? similarPhonesComponent() : null}
+          {theme.isMobile ? compareWithOtherProducts() : null}
         </Grid>
         {/* Left Grid*/}
 
-        <Grid item lg={3.75} md={4.5} sm={0.5} xs={0}>
+        <Grid item lg={3.75} md={5.75} sm={0.5} xs={0}>
           <div
             style={{
               height: "100%",
               marginTop: "-80px",
+              margin: "0px 50px 0px 0px",
             }}
           >
-            {statisticalLoading ? (
-              <LoadingSpinner />
-            ) : statisticalError ? (
-              <div>{statisticalError.data.status}</div>
-            ) : (
-              <div
-                style={{
-                  position: "sticky",
-                  top: "0px",
-                  padding: "80px 0px",
-                  maxHeight: "100vh",
-                  overflowY: "scroll",
-                }}
-              >
-                {overviewCard()}
-                {overviewCard()}
-              </div>
-            )}
+            <div
+              style={{
+                position: "sticky",
+                top: "0px",
+                padding: "65px 0px",
+                maxHeight: "100vh",
+                overflowY: "auto",
+              }}
+            >
+              {overviewCard()}
+              {similarPhonesComponent()}
+              {ComparePaper(data)}
+            </div>
           </div>
         </Grid>
       </Grid>
