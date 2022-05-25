@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
 import { Answer } from "../Components/Interactions/Answer";
+import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
 import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
 import AnswersList from "../pages/AnswersList";
@@ -22,6 +23,7 @@ import {
 import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
+import CommentsList from "../pages/AnswersList";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -338,14 +340,14 @@ export default function CompanyQuestionFullScreen() {
   };
 
   return (
-    <Box>
-      {reviewLoading ? (
-        <div>Loading review...</div>
-      ) : reviewError ? (
-        <div>Error</div>
-      ) : (
-        currentReviewData && (
-          <AnswersList
+    <FixedGrid>
+      <Box>
+        {reviewLoading ? (
+          <div>Loading review...</div>
+        ) : reviewError ? (
+          <div>Error</div>
+        ) : (
+          <CommentsList
             reviewCard={reviewCard}
             commentsList={commentsList}
             page={page}
@@ -362,27 +364,23 @@ export default function CompanyQuestionFullScreen() {
             cache={cache}
             clearCache={clearCache}
             submitReplyHandler={submitReplyHandler}
-            acceptAnswer={acceptAnswerRequest}
-            rejectAnswer={rejectAnswerRequest}
-            questionOwnerId={currentReviewData.userId}
-            questionId={currentReviewData._id}
           />
-        )
-      )}
+        )}
 
-      <div
-        style={{
-          position: "fixed",
-          zIndex: 1000,
-          bottom: 0,
-        }}
-      >
-        <div>
-          <form onSubmit={submitCommentHandler}>
-            <input id="comment" />
-          </form>
+        <div
+          style={{
+            position: "fixed",
+            zIndex: 1000,
+            bottom: 0,
+          }}
+        >
+          <div>
+            <form onSubmit={submitCommentHandler}>
+              <input id="comment" />
+            </form>
+          </div>
         </div>
-      </div>
-    </Box>
+      </Box>
+    </FixedGrid>
   );
 }

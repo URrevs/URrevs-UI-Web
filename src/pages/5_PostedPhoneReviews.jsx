@@ -9,6 +9,7 @@ import VirtualReviewList from "./VirtualListWindowScroll";
 import ReviewCard from "../Components/ReviewCard/ReviewCard";
 import ROUTES_NAMES from "../RoutesNames";
 import PhoneReview from "../Components/ReviewCard/PhoneReview";
+import { FixedGrid } from "../Components/Grid/FixedGrid";
 
 export default function PostedPhoneReviews() {
   const dispatch = useAppDispatch();
@@ -82,17 +83,19 @@ export default function PostedPhoneReviews() {
       showBackBtn
       tabBar={<FilterTabbar />}
     >
-      <VirtualReviewList
-        reviewCard={reviewCard}
-        reviewsList={reviewsList}
-        page={page}
-        data={data}
-        error={error}
-        isLoading={isLoading}
-        isFetching={isFetching}
-        addToReviewsList={addToReviewsList}
-        increasePage={increasePage}
-      />
+      <FixedGrid>
+        <VirtualReviewList
+          reviewCard={reviewCard}
+          reviewsList={reviewsList}
+          page={page}
+          data={data}
+          error={error}
+          isLoading={isLoading}
+          isFetching={isFetching}
+          addToReviewsList={addToReviewsList}
+          increasePage={increasePage}
+        />
+      </FixedGrid>
     </CustomAppBar>
   );
 }

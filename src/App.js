@@ -69,7 +69,7 @@ function App() {
     breakpoints: {
       values: {
         xs: 0,
-        sm: 400,
+        sm: 350,
         md: 800,
         lg: 1200,
       },
@@ -244,8 +244,8 @@ function App() {
           <BrowserRouter>
             <Layout>
               <Grid container style={{}}>
-                <Grid item md={2} sm={0.5} xs={0}></Grid>
-                <Grid item md={8} sm={11} xs={12}>
+                <Grid item sm={0.5} xs={0}></Grid>
+                <Grid item sm={11} xs={12}>
                   <Routes>
                     {/* not found handling */}
                     {/* <Route path="/404" element={<NotFoundPage />} />
@@ -371,7 +371,7 @@ function App() {
                     />
                   </Routes>
                 </Grid>
-                <Grid item md={2} sm={0.5} xs={0}></Grid>
+                <Grid item sm={0.5} xs={0}></Grid>
               </Grid>
             </Layout>
           </BrowserRouter>
