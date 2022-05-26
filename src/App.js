@@ -4,7 +4,7 @@ import {
   createTheme,
   CssBaseline,
   Grid,
-  useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   useAuthenticateMutation,
-  useGetCurrentUserProfileMutation
+  useGetCurrentUserProfileMutation,
 } from "../src/services/users";
 import "./App.css";
 import Layout from "./Components/MainLayout/Layout";
@@ -245,8 +245,8 @@ function App() {
                 <Grid item md={12} sm={11} xs={12}>
                   <Routes>
                     {/* not found handling */}
-                    {/* <Route path="/404" element={<NotFoundPage />} />
-                    <Route path="*" element={<Navigate to="/404" replace />} /> */}
+                    <Route path="/404" element={<NotFoundPage />} />
+                    <Route path="*" element={<Navigate to="/404" replace />} />
 
                     {/* review full review */}
                     <Route
