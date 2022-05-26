@@ -9,7 +9,7 @@ import {
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import {
   useAuthenticateMutation,
   useGetCurrentUserProfileMutation,
@@ -31,6 +31,7 @@ import { UpdateProducts } from "./pages/29_UpdateProducts";
 import Reviews from "./pages/2_HomePageScrolling";
 import CompanyReviewFullScreen from "./pages/3_CompanyReviewFullScreen";
 import PhoneReviewFullScreen from "./pages/3_PhoneReviewFullScreen";
+import { NotFoundPage } from "./pages/404/404";
 import { PostedReviews } from "./pages/5_PostedReviews";
 import { PostedQuestions } from "./pages/7_PostedQuestions";
 import { SearchScreen } from "./pages/8_SearchScreen";
