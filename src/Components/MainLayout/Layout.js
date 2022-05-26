@@ -123,6 +123,7 @@ export default function Layout(props) {
           padding: 0,
           marginTop: `${appBarHeight}px`,
           marginLeft: drawerWidth,
+          marginBottom: theme.isMobile ? "75px" : "",
         }}
       >
         {/* <DrawerHeader /> */}
