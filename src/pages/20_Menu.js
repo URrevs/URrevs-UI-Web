@@ -26,19 +26,20 @@ import React from "react";
 import StarWithCount from "../Components/Leaderboard/StarWithCount";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ListItemNavigator from "../Components/Shared/ListItemNavigator";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { Link } from "react-router-dom";
 import FacebookIcon from "../Components/Icons/FacebookIcon";
 import LinkedIn from "../Components/Icons/LinkedIn";
 import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
 import { SettingsSideBar } from "../Components/MainLayout/Drawer/Sidebar/SettingsSideBar";
 import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
+import { menuActions } from "../store/uiMenuSlice";
 
 export default function Menu({ isDesktop = false, drawerRef }) {
   const theme = useTheme();
 
   const currentUserProfile = useAppSelector((state) => state.auth);
-
+  const dispatch = useAppDispatch();
   const profileData = currentUserProfile;
   const [signOutDialog, setSignOutDialog] = React.useState(false);
   const [invitationCodeDialog, setInvitationCodeDialog] = React.useState(false);
@@ -211,7 +212,16 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       </ListItem>
     </Link>
   );
-  const listItem = (title, subTitle, icon, to, onClick, endIcon) => {
+  const listItem = (
+    title,
+    subTitle,
+    icon,
+    to,
+    onClick = () => {
+      dispatch(menuActions.hideMenu());
+    },
+    endIcon
+  ) => {
     return (
       <ListItemNavigator
         title={title}
@@ -240,7 +250,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
           display: "flex",
           flexDirection: "column",
 
-          height: currentUserProfile ? "85vh" : "",
+          height: currentUserProfile ? "80vh" : "",
           marginBottom: 70,
           padding: "0px 14px",
         }}
