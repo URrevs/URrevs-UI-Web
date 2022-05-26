@@ -93,9 +93,12 @@ export const AdminPanel = () => {
       <Grid item lg={2.6}>
         <Paper
           style={{
+            padding: "65px 8px",
             height: "100vh",
+            marginTop: "-65px",
             overflowY: "auto",
-            padding: "8px",
+            position: "sticky",
+            top: 0,
             borderRadius: PAPER_BORDER_RADIUS_DESKTOP,
           }}
         >
@@ -111,6 +114,7 @@ export const AdminPanel = () => {
       <Grid
         sx={{
           marginTop: "39px",
+          marginBottom: "65px",
         }}
         item
         lg={5.6 - page * 2}
