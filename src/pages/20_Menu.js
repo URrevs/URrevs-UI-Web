@@ -1,38 +1,33 @@
 import { useTheme } from "@emotion/react";
-import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
-import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import ContactMailOutlinedIcon from "@mui/icons-material/ContactMailOutlined";
+import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
+import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import ContactMailOutlinedIcon from "@mui/icons-material/ContactMailOutlined";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import ROUTES_NAMES from "../RoutesNames";
 import {
   Avatar,
-  Box,
-  ListItemText,
-  ListItem,
-  ListItemButton,
-  Typography,
-  Modal,
-  useMediaQuery,
+  Box, ListItem,
+  ListItemButton, ListItemText, Modal, Typography
 } from "@mui/material";
 import { List } from "@mui/material/";
 import React from "react";
-import StarWithCount from "../Components/Leaderboard/StarWithCount";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import ListItemNavigator from "../Components/Shared/ListItemNavigator";
-import { useAppSelector } from "../store/hooks";
 import { Link } from "react-router-dom";
+import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
+import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
 import FacebookIcon from "../Components/Icons/FacebookIcon";
 import LinkedIn from "../Components/Icons/LinkedIn";
-import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
+import StarWithCount from "../Components/Leaderboard/StarWithCount";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { SettingsSideBar } from "../Components/MainLayout/Drawer/Sidebar/SettingsSideBar";
-import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
+import ListItemNavigator from "../Components/Shared/ListItemNavigator";
+import ROUTES_NAMES from "../RoutesNames";
+import { useAppSelector } from "../store/hooks";
 
 export default function Menu({ isDesktop = false, drawerRef }) {
   const theme = useTheme();
@@ -72,13 +67,13 @@ export default function Menu({ isDesktop = false, drawerRef }) {
     {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${currentUserProfile.uid}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}?userId=${currentUserProfile.uid}`,
       authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.myQuestions,
       icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${currentUserProfile.uid}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}?userId=${currentUserProfile.uid}`,
       authenticate: currentUserProfile.isLoggedIn,
     },
     {
