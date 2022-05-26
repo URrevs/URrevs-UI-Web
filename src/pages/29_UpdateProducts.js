@@ -10,7 +10,7 @@ import ProductList from "../Components/ProductList/ProductList";
 import { convertDateToString } from "../functions/convertDateToString";
 import {
   useGetLastUpdateInfoQuery,
-  useUpdateMutation,
+  useUpdateMutation
 } from "../services/update";
 
 export const UpdateProducts = () => {

@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";
 
-export default function PostedReviews() {
+export function PostedCompanyReviews() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -77,25 +77,16 @@ export default function PostedReviews() {
   };
 
   return (
-    <CustomAppBar
-      showLabel
-      label="مراجعاتي"
-      showBackBtn
-      tabBar={<FilterTabbar />}
-    >
-      <FixedGrid>
-        <VirtualReviewList
-          reviewCard={reviewCard}
-          reviewsList={reviewsList}
-          page={page}
-          data={data}
-          error={error}
-          isLoading={isLoading}
-          isFetching={isFetching}
-          addToReviewsList={addToReviewsList}
-          increasePage={increasePage}
-        />
-      </FixedGrid>
-    </CustomAppBar>
+    <VirtualReviewList
+      reviewCard={reviewCard}
+      reviewsList={reviewsList}
+      page={page}
+      data={data}
+      error={error}
+      isLoading={isLoading}
+      isFetching={isFetching}
+      addToReviewsList={addToReviewsList}
+      increasePage={increasePage}
+    />
   );
 }

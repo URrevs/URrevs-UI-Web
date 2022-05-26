@@ -5,17 +5,7 @@ import { useSelector } from "react-redux";
 import { FILTER_BUTTON_BORDER_RADIUS } from "../../constants";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 
-export const FilterTabbar = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const userId = searchParams.get("userId");
-
-  const [value, setValue] = React.useState(
-    location.pathname === `/user-profile/reviews/companies` ? 1 : 0
-  );
-
+export const FilterTabbar = ({ value = 0, setValue }) => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const theme = useTheme();
   return (
@@ -60,7 +50,7 @@ export const FilterTabbar = () => {
             },
           }}
           onClick={() => {
-            navigate(`../phones?userId=${userId}`);
+            setValue(0);
           }}
         >
           <Typography
@@ -101,7 +91,7 @@ export const FilterTabbar = () => {
             },
           }}
           onClick={() => {
-            navigate(`../companies?userId=${userId}`);
+            setValue(1);
           }}
         >
           <Typography

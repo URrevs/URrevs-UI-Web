@@ -22,7 +22,6 @@ import { ComparisonScreen } from "./pages/11_ComparisonScreen";
 import { CompanyProfile } from "./pages/14_CompanyProfile";
 import { AllProductsScreen } from "./pages/16_AllProductsScreen";
 import CompanyQuestionFullScreen from "./pages/17_CompanyQuestionFullScreen";
-// import CompanyQuestionFullScreen from "./pages/17_CompanyQuestionFullScreen";
 import PhoneQuestionFullScreen from "./pages/17_PhoneQuestionFullScreen";
 import ReviewPostingScreen from "./pages/18_ReviewPostingScreen";
 import Menu from "./pages/20_Menu";
@@ -33,10 +32,8 @@ import Reviews from "./pages/2_HomePageScrolling";
 import CompanyReviewFullScreen from "./pages/3_CompanyReviewFullScreen";
 import PhoneReviewFullScreen from "./pages/3_PhoneReviewFullScreen";
 import { NotFoundPage } from "./pages/404/404";
-import PostedCompanyReviews from "./pages/5_PostedCompanyReviews";
-import PostedPhoneReviews from "./pages/5_PostedPhoneReviews";
-import PostedCompanyQuestions from "./pages/7_PostedCompanyQuestions";
-import PostedPhoneQuestions from "./pages/7_PostedPhoneQuestions";
+import { PostedReviews } from "./pages/5_PostedReviews";
+import { PostedQuestions } from "./pages/7_PostedQuestions";
 import { SearchScreen } from "./pages/8_SearchScreen";
 import AddReview from "./pages/AddReview";
 import ComponentsTest from "./pages/ComponentsTest";
@@ -249,8 +246,8 @@ function App() {
                 <Grid item md={12} sm={11} xs={12}>
                   <Routes>
                     {/* not found handling */}
-                    {/* <Route path="/404" element={<NotFoundPage />} />
-                    <Route path="*" element={<Navigate to="/404" replace />} /> */}
+                    <Route path="/404" element={<NotFoundPage />} />
+                    <Route path="*" element={<Navigate to="/404" replace />} />
 
                     {/* review full review */}
                     <Route
@@ -291,26 +288,16 @@ function App() {
                           path={ROUTES_NAMES.OWNED_PHONES}
                           element={<OwnedPhonesPage />}
                         />
-                        <Route path={ROUTES_NAMES.REVIEWS}>
-                          <Route
-                            path={ROUTES_NAMES.PHONE_REVIEWS}
-                            element={<PostedPhoneReviews />}
-                          />
-                          <Route
-                            path={ROUTES_NAMES.COMPANY_REVIEWS}
-                            element={<PostedCompanyReviews />}
-                          />
-                        </Route>
-                        <Route path={ROUTES_NAMES.QUESTIONS}>
-                          <Route
-                            path={ROUTES_NAMES.PHONE_REVIEWS}
-                            element={<PostedPhoneQuestions />}
-                          />
-                          <Route
-                            path={ROUTES_NAMES.COMPANY_REVIEWS}
-                            element={<PostedCompanyQuestions />}
-                          />
-                        </Route>
+                        <Route
+                          path={ROUTES_NAMES.REVIEWS}
+                          element={<PostedReviews />}
+                        />
+
+                        <Route
+                          path={ROUTES_NAMES.QUESTIONS}
+                          element={<PostedQuestions />}
+                        />
+
                         <Route
                           path={ROUTES_NAMES.MY_QUESTIONS}
                           element={<MyPhonesQuestions />}

@@ -3,12 +3,9 @@ import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import PhoneReview from "../Components/ReviewCard/PhoneReview";
 import ROUTES_NAMES from "../RoutesNames";
-import {
-  useGetAllReviewsQuery,
-  useGetOtherUserPhoneReviewsQuery,
-} from "../services/phone_reviews";
+import { useGetRecommendedQuery } from "../services/homePage";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { reviewsActions } from "../store/reviewsSlice";
+import { homePageActions } from "../store/homePageSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";
 
 function Reviews() {
@@ -16,26 +13,22 @@ function Reviews() {
   useEffect(() => {
     console.log("clear reviews");
 
-    dispatch(reviewsActions.clearReviews());
+    dispatch(homePageActions.clearReviews());
   }, []);
 
-  const reviewsList = useAppSelector((state) => state.reviews.newReviews);
+  const reviewsList = useAppSelector((state) => state.homePage.newReviews);
   const [page, setPage] = useState(1);
-  const { data, isLoading, isFetching, error } =
-    useGetOtherUserPhoneReviewsQuery({
-      round: page,
-      uid: "6286ce670098ecee17926543",
-    });
+  const { data, isLoading, isFetching, error } = useGetRecommendedQuery();
 
   const stateLike = (id) =>
-    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
+    dispatch(homePageActions.setIsLiked({ id: id, isLiked: true }));
 
   const stateUnLike = (id) =>
-    dispatch(reviewsActions.setIsLiked({ id: id, isLiked: false }));
+    dispatch(homePageActions.setIsLiked({ id: id, isLiked: false }));
 
   const addToReviewsList = () =>
     dispatch(
-      reviewsActions.addToLoaddedReviews({
+      homePageActions.addToLoaddedReviews({
         newReviews: data,
       })
     );
@@ -43,12 +36,12 @@ function Reviews() {
   const increasePage = () => setPage(page + 1);
 
   const deleteReviewFromStore = (id) => {
-    dispatch(reviewsActions.clearReviews());
+    dispatch(homePageActions.clearReviews());
     const n = reviewsList.filter((review) => review._id !== id);
     console.log(n);
 
     dispatch(
-      reviewsActions.addToLoaddedReviews({
+      homePageActions.addToLoaddedReviews({
         newReviews: n,
       })
     );
