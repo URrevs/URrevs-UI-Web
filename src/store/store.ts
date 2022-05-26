@@ -18,6 +18,7 @@ import isDarkSlice from "./darkModeSlice";
 import languageSlice from "./languageSlice";
 import questionsSlice from "./questionsSlice";
 import reviewsSlice from "./reviewsSlice";
+import menuSlice from "./uiMenuSlice";
 import regDialogSlice from "./uiRegisterDialogSlice";
 import snackbarSlice from "./uiSnackbarSlice";
 
@@ -43,6 +44,7 @@ export const store = configureStore({
     [authSlice.name]: authSlice.reducer,
     [regDialogSlice.name]: regDialogSlice.reducer,
     [snackbarSlice.name]: snackbarSlice.reducer,
+    [menuSlice.name]: menuSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

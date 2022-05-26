@@ -1,32 +1,23 @@
 import { useTheme } from "@emotion/react";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import AddIcon from "@mui/icons-material/Add";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
 import StarsIcon from "@mui/icons-material/Stars";
-import ErrorTwoToneIcon from "@mui/icons-material/ErrorTwoTone";
-import ForumTwoToneIcon from "@mui/icons-material/ForumTwoTone";
-import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
-import AddBoxTwoToneIcon from "@mui/icons-material/AddBoxTwoTone";
-import RateReviewTwoToneIcon from "@mui/icons-material/RateReviewTwoTone";
+import { Typography } from "@mui/material";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import { Box, Paper, Slide, Typography, useMediaQuery } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import MuiDrawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../../store/hooks";
-import Menu from "../../../pages/20_Menu";
-import { MenuSideBar } from "./Sidebar/MenuSideBar";
+import { useLocation, useNavigate } from "react-router-dom";
 import ROUTES_NAMES from "../../../RoutesNames";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { menuActions } from "../../../store/uiMenuSlice";
+import { MenuSideBar } from "./Sidebar/MenuSideBar";
 
 export const drawerWidth = 240;
 
@@ -81,7 +72,8 @@ const PerDrawer = styled(
 }));
 
 export const MyDrawer = (props) => {
-  const [menu, setMenu] = React.useState(false);
+  const menuShow = useAppSelector((state) => state.menu.show);
+  const dispatch = useAppDispatch();
   const drawerRef = React.useRef("10px");
   const language = useAppSelector((state) => state.language.language);
   const textContainer = useAppSelector((state) => state.language.textContainer);
@@ -98,7 +90,7 @@ export const MyDrawer = (props) => {
   );
   // Change Icon Color based on pathname
   const iconColor = (val) =>
-    currentPage === val && !menu ? focusedColor : unFocusedColor;
+    currentPage === val && !menuShow ? focusedColor : unFocusedColor;
   const theme = useTheme();
   // const backgroundColor = theme.palette.bottomNavigationBar.backgroundColor;
   const focusedColor = theme.palette.bottomNavigationBar.selectedTap;
@@ -190,13 +182,16 @@ export const MyDrawer = (props) => {
       icon: (
         <MenuIcon
           sx={{
-            fontSize: menu ? focusedIconSize : unfocusedIconSize,
+            fontSize: menuShow ? focusedIconSize : unfocusedIconSize,
           }}
-          htmlColor={menu ? focusedColor : unFocusedColor}
+          htmlColor={menuShow ? focusedColor : unFocusedColor}
         />
       ),
       onClick: () => {
-        setMenu(!menu);
+        if (!menuShow) dispatch(menuActions.showMenu());
+        else dispatch(menuActions.hideMenu());
+
+        console.log(menuShow);
       },
     },
   ];
@@ -207,7 +202,7 @@ export const MyDrawer = (props) => {
   const handleClickAway = () => {
     //Works for some reason
     setTimeout(() => {
-      if (menu) setMenu(false);
+      if (menuShow) dispatch(menuActions.hideMenu());
     }, 200);
   };
   return (
@@ -222,7 +217,7 @@ export const MyDrawer = (props) => {
             e.stopPropagation();
           }}
         >
-          <MenuSideBar open={menu} drawerRef={drawerRef} />
+          <MenuSideBar open={menuShow} drawerRef={drawerRef} />
         </div>
       </ClickAwayListener>
       <PerDrawer
@@ -251,7 +246,7 @@ export const MyDrawer = (props) => {
                   {item.icon}
                 </ListItemIcon>
 
-                {currentPage === item.itemValue && !menu ? (
+                {currentPage === item.itemValue && !menuShow ? (
                   <Typography
                     // variant="S14W700C2196f3"
                     sx={{

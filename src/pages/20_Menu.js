@@ -12,12 +12,16 @@ import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import {
   Avatar,
-  Box, ListItem,
-  ListItemButton, ListItemText, Modal, Typography
+  Box,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Modal,
+  Typography
 } from "@mui/material";
 import { List } from "@mui/material/";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
 import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
 import FacebookIcon from "../Components/Icons/FacebookIcon";
@@ -27,13 +31,15 @@ import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { SettingsSideBar } from "../Components/MainLayout/Drawer/Sidebar/SettingsSideBar";
 import ListItemNavigator from "../Components/Shared/ListItemNavigator";
 import ROUTES_NAMES from "../RoutesNames";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { menuActions } from "../store/uiMenuSlice";
 
 export default function Menu({ isDesktop = false, drawerRef }) {
   const theme = useTheme();
 
   const currentUserProfile = useAppSelector((state) => state.auth);
-
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const profileData = currentUserProfile;
   const [signOutDialog, setSignOutDialog] = React.useState(false);
   const [invitationCodeDialog, setInvitationCodeDialog] = React.useState(false);
@@ -206,7 +212,17 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       </ListItem>
     </Link>
   );
-  const listItem = (title, subTitle, icon, to, onClick, endIcon) => {
+  const listItem = (
+    title,
+    subTitle,
+    icon,
+    to,
+    onClick = () => {
+      dispatch(menuActions.hideMenu());
+      navigate(to);
+    },
+    endIcon
+  ) => {
     return (
       <ListItemNavigator
         title={title}
@@ -235,7 +251,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
           display: "flex",
           flexDirection: "column",
 
-          height: currentUserProfile ? "85vh" : "",
+          height: currentUserProfile ? "80vh" : "",
           marginBottom: 70,
           padding: "0px 14px",
         }}
