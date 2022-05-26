@@ -27,7 +27,7 @@ import StarWithCount from "../Components/Leaderboard/StarWithCount";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ListItemNavigator from "../Components/Shared/ListItemNavigator";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FacebookIcon from "../Components/Icons/FacebookIcon";
 import LinkedIn from "../Components/Icons/LinkedIn";
 import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
@@ -40,6 +40,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
 
   const currentUserProfile = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const profileData = currentUserProfile;
   const [signOutDialog, setSignOutDialog] = React.useState(false);
   const [invitationCodeDialog, setInvitationCodeDialog] = React.useState(false);
@@ -219,6 +220,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
     to,
     onClick = () => {
       dispatch(menuActions.hideMenu());
+      navigate(to);
     },
     endIcon
   ) => {
