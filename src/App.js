@@ -53,7 +53,7 @@ function App() {
   const language = useSelector((state) => state.language.language);
   const direction = language === "ar" ? "rtl" : "ltr";
   const isDark = useSelector((state) => state.darkMode.isDark);
-  const isMobile = useMediaQuery("(max-width:700px)");
+  const isMobile = useMediaQuery("(max-width:500px)");
 
   const theme = createTheme({
     isMobile: isMobile,
@@ -68,10 +68,10 @@ function App() {
     },
     breakpoints: {
       values: {
-        xs: 0,
-        sm: 350,
+        xs: 300,
+        sm: 500,
         md: 800,
-        lg: 1200,
+        lg: 1100,
       },
     },
     sideBar: {
@@ -244,8 +244,8 @@ function App() {
           <BrowserRouter>
             <Layout>
               <Grid container style={{}}>
-                <Grid item sm={0.5} xs={0}></Grid>
-                <Grid item sm={11} xs={12}>
+                <Grid item md={0} sm={0.5} xs={0}></Grid>
+                <Grid item md={12} sm={11} xs={12}>
                   <Routes>
                     {/* not found handling */}
                     {/* <Route path="/404" element={<NotFoundPage />} />
@@ -371,7 +371,7 @@ function App() {
                     />
                   </Routes>
                 </Grid>
-                <Grid item sm={0.5} xs={0}></Grid>
+                <Grid item md={0} sm={0.5} xs={0}></Grid>
               </Grid>
             </Layout>
           </BrowserRouter>

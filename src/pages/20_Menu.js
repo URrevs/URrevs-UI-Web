@@ -47,7 +47,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
   const handleSignOutClose = () => setSignOutDialog(false);
   const handleInvitationOpen = () => setInvitationCodeDialog(true);
   const handleInvitationClose = () => setInvitationCodeDialog(false);
-  const isMobile = useMediaQuery("(max-width:700px)");
+
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
@@ -240,12 +240,14 @@ export default function Menu({ isDesktop = false, drawerRef }) {
           display: "flex",
           flexDirection: "column",
 
-          height: currentUserProfile ? "65vh" : "",
+          height: currentUserProfile ? "85vh" : "",
           marginBottom: 70,
           padding: "0px 14px",
         }}
       >
-        {isMobile ? <CustomAppBar showLogo showSearch showProfile /> : null}
+        {theme.isMobile ? (
+          <CustomAppBar showLogo showSearch showProfile />
+        ) : null}
 
         <Modal
           open={signOutDialog}
@@ -285,50 +287,49 @@ export default function Menu({ isDesktop = false, drawerRef }) {
             else return null;
           })}
         </List>
-      </Box>
-      <Box
-        sx={{
-          marginTop: "auto",
-          // // Footer just above the foot appbar
-          // position: "absolute",
-          // bottom: "0",
-          paddingBottom: isMobile ? "75px" : "20px",
-          // // margin: "-90px 0px -90px 0px",
-          // width: "95%",
-        }}
-      >
-        <Typography variant="S22W500C050505">{`${pageDictionry.followUs}:`}</Typography>
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "baseline",
+            // // Footer just above the foot appbar
+            marginTop: "auto",
+            // position: "absolute",
+            // bottom: "0",
+            // // margin: "-90px 0px -90px 0px",
+            // width: "95%",
           }}
         >
-          <Box sx={{ display: "flex" }}>
-            <FacebookIcon />
-            <LinkedIn />
+          <Typography variant="S22W500C050505">{`${pageDictionry.followUs}:`}</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "baseline",
+            }}
+          >
+            <Box sx={{ display: "flex" }}>
+              <FacebookIcon />
+              <LinkedIn />
+            </Box>
           </Box>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Link to="/">
-            <Typography underline="always">
-              {pageDictionry.termsAndAgreements}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Link to="/">
+              <Typography underline="always">
+                {pageDictionry.termsAndAgreements}
+              </Typography>
+            </Link>
+            <Typography sx={{ padding: "0px 3px" }} variant="S16W400C050505">
+              |
             </Typography>
-          </Link>
-          <Typography sx={{ padding: "0px 3px" }} variant="S16W400C050505">
-            |
-          </Typography>
-          <Link to="/">
-            <Typography underline="always">
-              {pageDictionry.privacyPolicy}
-            </Typography>
-          </Link>
+            <Link to="/">
+              <Typography underline="always">
+                {pageDictionry.privacyPolicy}
+              </Typography>
+            </Link>
+          </Box>
         </Box>
       </Box>
     </React.Fragment>
