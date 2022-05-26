@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
-import { Answer } from "../Components/Interactions/Answer";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
 import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
@@ -23,7 +22,6 @@ import {
 import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
-import CommentsList from "../pages/AnswersList";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -260,15 +258,17 @@ export default function CompanyQuestionFullScreen() {
 
       // add comment to store
       const comment = {
-        _id: response.data.comment,
+        _id: response.data.answer,
+        ownedAt: response.data.ownedAt,
         userId: currentUser.uid,
         userName: currentUser.name,
-        userPicture: currentUser.photo,
+        picture: currentUser.photo,
         content: e.target.comment.value,
         createdAt: new Date(),
         likes: 0,
         liked: false,
       };
+      console.log(currentUser.photo);
 
       addOneCommentToLoadedComments(comment);
     } catch (e) {
@@ -325,7 +325,6 @@ export default function CompanyQuestionFullScreen() {
               isExpanded={true}
               clearIndexCache={clearCache}
               reviewDetails={currentReviewData}
-              isPhoneReview={true}
               targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${currentReviewData.targetId}`}
               userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
               stateLikeFn={stateLikeCompanyReview}
@@ -347,24 +346,30 @@ export default function CompanyQuestionFullScreen() {
         ) : reviewError ? (
           <div>Error</div>
         ) : (
-          <CommentsList
-            reviewCard={reviewCard}
-            commentsList={commentsList}
-            page={page}
-            data={data}
-            error={error}
-            isLoading={isLoading}
-            isFetching={isFetching}
-            commentLike={likeCommentRequest}
-            commentUnlike={unLikeCommentRequest}
-            replyLike={likeReplyRequest}
-            replyUnlike={unLikeReplyRequest}
-            addToReviewsList={addToLoadedComments}
-            increasePage={increasePage}
-            cache={cache}
-            clearCache={clearCache}
-            submitReplyHandler={submitReplyHandler}
-          />
+          currentReviewData && (
+            <AnswersList
+              reviewCard={reviewCard}
+              commentsList={commentsList}
+              page={page}
+              data={data}
+              error={error}
+              isLoading={isLoading}
+              isFetching={isFetching}
+              commentLike={likeCommentRequest}
+              commentUnlike={unLikeCommentRequest}
+              replyLike={likeReplyRequest}
+              replyUnlike={unLikeReplyRequest}
+              addToReviewsList={addToLoadedComments}
+              increasePage={increasePage}
+              cache={cache}
+              clearCache={clearCache}
+              submitReplyHandler={submitReplyHandler}
+              acceptAnswer={acceptAnswerRequest}
+              rejectAnswer={rejectAnswerRequest}
+              questionOwnerId={currentReviewData.userId}
+              questionId={currentReviewData._id}
+            />
+          )
         )}
 
         <div

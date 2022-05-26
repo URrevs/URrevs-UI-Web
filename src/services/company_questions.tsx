@@ -83,8 +83,10 @@ export const companyQuestionsApi = createApi({
 
         try {
           await queryFulfilled;
-        } catch (e) {
-          payload.unDoFn();
+        } catch (e: any) {
+          if (e.error.data.status !== "already liked") {
+            payload.unDoFn();
+          }
         }
       },
     }),

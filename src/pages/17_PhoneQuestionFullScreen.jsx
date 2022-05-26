@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
-import { Answer } from "../Components/Interactions/Answer";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
 import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
 import AnswersList from "../pages/AnswersList";
@@ -260,9 +259,10 @@ export default function PhoneQuestionFullScreen() {
       // add comment to store
       const comment = {
         _id: response.data.comment,
+        ownedAt: response.data.ownedAt,
         userId: currentUser.uid,
         userName: currentUser.name,
-        userPicture: currentUser.photo,
+        picture: currentUser.photo,
         content: e.target.comment.value,
         createdAt: new Date(),
         likes: 0,
