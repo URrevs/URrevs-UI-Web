@@ -15,9 +15,11 @@ const PromptStyled = styled(
   [theme.breakpoints.down("md")]: {
     width: "calc(100% - 32px)",
   },
+  maxHeight: "75vh",
   boxShadow: 24,
   padding: 16,
   borderRadius: 15,
+  overflowY: "scroll",
   background: theme.palette.modalColor,
 }));
 
@@ -38,6 +40,8 @@ export const DialogTemplate = ({ title, children, handleClose }) => {
               justifyContent: "space-between",
               alignItems: "center",
               paddingBottom: title === undefined ? 0 : "16px",
+              // position: "sticky",
+              // top: 0,
             }}
           >
             <Typography variant="S16W700C050505">{title}</Typography>

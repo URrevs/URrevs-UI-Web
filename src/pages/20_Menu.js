@@ -34,6 +34,7 @@ import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
 import { SettingsSideBar } from "../Components/MainLayout/Drawer/Sidebar/SettingsSideBar";
 import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
 import { menuActions } from "../store/uiMenuSlice";
+import { KeyboardArrowRightOutlined } from "@mui/icons-material";
 
 export default function Menu({ isDesktop = false, drawerRef }) {
   const theme = useTheme();
@@ -51,6 +52,8 @@ export default function Menu({ isDesktop = false, drawerRef }) {
   const handleInvitationClose = () => setInvitationCodeDialog(false);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const language = useAppSelector((state) => state.language.language);
+
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
     myReviews: textContainer.myReviews,
@@ -124,7 +127,11 @@ export default function Menu({ isDesktop = false, drawerRef }) {
         setSettingsSlide(!settingsSlide);
       },
       endIcon: isDesktop ? (
-        <KeyboardArrowLeftOutlinedIcon sx={{ fontSize: 40 }} />
+        language === "ar" ? (
+          <KeyboardArrowLeftOutlinedIcon sx={{ fontSize: 40 }} />
+        ) : (
+          <KeyboardArrowRightOutlined sx={{ fontSize: 40 }} />
+        )
       ) : (
         ""
       ),
