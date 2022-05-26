@@ -215,6 +215,7 @@ function App() {
             refreshToken: user.refreshToken,
             email: user.email,
             points: userProfile.points,
+            isAdmin: isAdmin,
           })
         );
       } catch (e) {

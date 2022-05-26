@@ -62,39 +62,45 @@ export const UpdateProducts = () => {
     >
       {isLoading ? (
         <LoadingSpinner />
-      ) : error || updateError ? (
-        <div>{error.data.status + "\n" + updateError.data.status}</div>
+      ) : updateError ? (
+        <div>{updateError}</div>
       ) : (
         <div style={{ margin: "0px 14.6px" }}>
-          <Box
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              paddingBottom: "5px",
-            }}
-          >
-            <Typography variant="S18W700C000000">
-              {`${pageDictionary.lastUpdateDone} ${
-                data.automatic ? pageDictionary.auto : pageDictionary.manual
-              } ${pageDictionary.in} ${convertDateToString(
-                data.date,
-                language
-              )}`}
-            </Typography>
-            <Typography variant="S16W400C65676b">
-              {data.isUpdating
-                ? "جاري التحديث"
-                : data.failed
-                ? pageDictionary.updateFailed
-                : pageDictionary.completeSuccess}
-            </Typography>
-          </Box>
-          <Box>
-            <ProductList list={data.phones} />
-            <br></br>
-            <CompanyList list={data.companies} />
-          </Box>
-          {data.isUpdating || buttonLoading ? (
+          {error ? (
+            <Box>لا توجد تحديثات بعد</Box>
+          ) : (
+            <Box
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                paddingBottom: "5px",
+              }}
+            >
+              <Typography variant="S18W700C000000">
+                {`${pageDictionary.lastUpdateDone} ${
+                  data.automatic ? pageDictionary.auto : pageDictionary.manual
+                } ${pageDictionary.in} ${convertDateToString(
+                  data.date,
+                  language
+                )}`}
+              </Typography>
+              <Typography variant="S16W400C65676b">
+                {data.isUpdating
+                  ? "جاري التحديث"
+                  : data.failed
+                  ? pageDictionary.updateFailed
+                  : pageDictionary.completeSuccess}
+              </Typography>
+            </Box>
+          )}
+          {!error && (
+            <Box>
+              <ProductList list={data.phones} />
+              <br></br>
+              <CompanyList list={data.companies} />
+            </Box>
+          )}
+          {!error && (data.isUpdating || buttonLoading) ? (
             <div>Update is currently working...</div>
           ) : (
             <Box
