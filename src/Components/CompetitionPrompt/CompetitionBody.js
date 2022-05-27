@@ -8,8 +8,13 @@ import * as Yup from "yup";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
 import FormikDatePicker from "../Form/FormikDatePicker";
 import FormikTextField from "../Form/FormikTextField";
+import { useAddCompetetionMutation } from "../../services/competetion";
+import { useAppDispatch } from "../../store/hooks";
+import { snackbarActions } from "../../store/uiSnackbarSlice";
 
 export const CompetitionBody = ({ button, handleClose }) => {
+  const [addCompetitionRequest] = useAddCompetetionMutation();
+
   const textContainer = useSelector((state) => state.language.textContainer);
   const handleInitialValues = (fieldName, empty = "") => {
     return sessionStorage.getItem(fieldName)
@@ -25,7 +30,7 @@ export const CompetitionBody = ({ button, handleClose }) => {
           endDate: Yup.date().required("أختر تاريخ"),
           winners: Yup.string().required("ضروري"),
           prize: Yup.string().required("لازم"),
-          imgLink: Yup.string().url("لازم لينك يا صاحبي").required("من فضلك"),
+          imgLink: Yup.string().required("لازم لينك يا صاحبي"),
         }
       : {
           endDate: Yup.date().required("Select a Date"),
@@ -49,6 +54,7 @@ export const CompetitionBody = ({ button, handleClose }) => {
       </React.Fragment>
     );
   };
+  const dispatch = useAppDispatch();
   return (
     <React.Fragment>
       <Formik
@@ -59,12 +65,22 @@ export const CompetitionBody = ({ button, handleClose }) => {
           imgLink: handleInitialValues("imgLink", ""),
         }}
         validationSchema={PromptValidationScheme}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting }) => {
           sessionStorage.clear();
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          // add competetion request
+          try {
+            await addCompetitionRequest({
+              deadline: new Date(values.endDate),
+              numWinners: parseInt(values.winners),
+              prize: values.prize,
+              prizePic: values.imgLink,
+            }).unwrap();
+            dispatch(
+              snackbarActions.showSnackbar({ message: "Competition added" })
+            );
+          } catch (e) {
+            dispatch(snackbarActions.showSnackbar({ message: e.data.status }));
+          }
         }}
       >
         {({
@@ -99,6 +115,7 @@ export const CompetitionBody = ({ button, handleClose }) => {
                   isRequired={false}
                   label={textContainer.competitionEndDate}
                   fieldName={"endDate"}
+                  noFutureDate={false}
                 />
               </div>
               <div

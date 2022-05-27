@@ -10,6 +10,7 @@ import { searchApi } from "../services/search";
 import { updateApi } from "../services/update";
 import { usersApi } from "../services/users";
 import { homeApi } from "../services/homePage";
+import { competetionApi } from "../services/competetion";
 import productListSlice from "./allProductsSlice";
 import answersListSlice from "./answersListSlice";
 import authSlice from "./authSlice";
@@ -36,6 +37,7 @@ export const store = configureStore({
     [companyQuestionsApi.reducerPath]: companyQuestionsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
     [homeApi.reducerPath]: homeApi.reducer,
+    [competetionApi.reducerPath]: competetionApi.reducer,
     [productListSlice.name]: productListSlice.reducer,
     [reviewsSlice.name]: reviewsSlice.reducer,
     [homePageSlice.name]: homePageSlice.reducer,
@@ -59,6 +61,7 @@ export const store = configureStore({
       .concat(phoneQuestionsApi.middleware)
       .concat(companyQuestionsApi.middleware)
       .concat(homeApi.middleware)
+      .concat(competetionApi.middleware)
       .concat(usersApi.middleware),
 });
 

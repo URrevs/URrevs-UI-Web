@@ -6,27 +6,47 @@ import {
   ListItemButton,
   ListItemText,
   Paper,
-  Typography,
+  Typography
 } from "@mui/material";
-import React from "react";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { CompetitionBanner } from "../Components/CompetitionBanner/CompetitionBanner";
 import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { CARD_BORDER_RADIUS } from "../constants";
+import { subtractDate } from "../functions/subtractDate";
+import {
+  useGetLatestCompetetionQuery,
+  useGetMyCurrentRankQuery,
+  useGetTopCompetetionUsersQuery
+} from "../services/competetion";
 import { useAppSelector } from "../store/hooks";
 
 export const Leaderboard = () => {
+  const currentUserApi = useAppSelector((state) => state.auth.uid);
+
+  const {
+    data: myRankData,
+    error: myRankError,
+    isLoading: myRankIsLoading,
+  } = useGetMyCurrentRankQuery();
+
+  const {
+    data: latestCompetetionData,
+    error: latestCompetetionError,
+    isLoading: latestCompetetionIsLoading,
+  } = useGetLatestCompetetionQuery();
+
+  const {
+    data: topUsersData,
+    error: topUsersError,
+    isLoading: topUsersIsLoading,
+  } = useGetTopCompetetionUsersQuery();
+
   const theme = useTheme();
   const navigate = useNavigate();
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  const pageDictionary = {
-    daysLeft: "15",
-    prize: "Xiaomi Nokia F16",
-    yourRank: "ترتيبك",
-    userRanking: "ترتيب المستخدمين",
-  };
+
   const arr = new Array(10).fill(10);
   const renderProduct = (title, imgSrc, to) => {
     return (
@@ -83,38 +103,64 @@ export const Leaderboard = () => {
       </ListItem>
     );
   };
+
   const leaderboardList = () => (
     <Paper
       sx={{
         borderRadius: `${CARD_BORDER_RADIUS}px`,
       }}
     >
-      {arr.map((item, i) => (
-        <Fragment>
-          <LeaderboardEntry isBody userRank={i + 1} />
-          <Divider></Divider>
-        </Fragment>
-      ))}
+      {topUsersError ? (
+        <div>Error</div>
+      ) : topUsersIsLoading ? (
+        <div>Loading...</div>
+      ) : (
+        topUsersData.map((item, i) => (
+          <Fragment>
+            <LeaderboardEntry
+              isBody
+              userRank={i + 1}
+              userName={item.name}
+              points={item.points}
+            />
+            <Divider></Divider>
+          </Fragment>
+        ))
+      )}
     </Paper>
   );
   return (
     <CustomAppBar showLabel showLogo showSearch showProfile>
       <div style={{ height: "14px" }}></div>
-      <CompetitionBanner
-        prize={pageDictionary.prize}
-        daysLeft={pageDictionary.daysLeft}
-      />
+      {latestCompetetionError ? (
+        <div>Error</div>
+      ) : latestCompetetionIsLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <CompetitionBanner
+          prize={latestCompetetionData.prize}
+          daysLeft={subtractDate(latestCompetetionData.deadline)}
+        />
+      )}
 
       {/* Your Rank In The Leaderboard */}
       <div style={{ height: "14px" }}></div>
-      <Typography variant="S20W700C050505">
-        {pageDictionary.yourRank + ": "}
-      </Typography>
-      <LeaderboardEntry />
+      <Typography variant="S20W700C050505">{"ترتيبك" + ": "}</Typography>
+      {myRankError ? (
+        <div>Error</div>
+      ) : myRankIsLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <LeaderboardEntry
+          userName={myRankData.name}
+          userRank={myRankData.rank}
+          points={myRankData.points}
+        />
+      )}
       {/* List of users rank in leaderboard */}
       <div style={{ height: "14px" }}></div>
       <Typography variant="S20W700C050505">
-        {pageDictionary.userRanking + ": "}
+        {"ترتيب المستخدمين" + ": "}
       </Typography>
       {leaderboardList()}
     </CustomAppBar>
