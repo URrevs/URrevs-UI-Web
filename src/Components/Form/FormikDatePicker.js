@@ -13,7 +13,12 @@ import {
   TEXT_FIELD_BORDER_THICKNESS,
 } from "../../constants";
 
-const FormikDatePicker = ({ label, fieldName, isRequired = true }) => {
+const FormikDatePicker = ({
+  label,
+  fieldName,
+  isRequired = true,
+  noFutureDate = true,
+}) => {
   const [openDate, setOpenDate] = useState(false);
   const theme = useTheme();
   const language = useSelector((state) => state.language.language);
@@ -27,7 +32,7 @@ const FormikDatePicker = ({ label, fieldName, isRequired = true }) => {
             locale={localeDate}
           >
             <MobileDatePicker
-              maxDate={new Date()}
+              maxDate={noFutureDate ? new Date() : null}
               value={value}
               views={["year", "month"]}
               onChange={(newValue) => {

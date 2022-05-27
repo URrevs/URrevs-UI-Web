@@ -16,6 +16,7 @@ const CardFooter = ({
   shareCounter,
   likesCounter,
   commentsCounter,
+  shareBtnHandler,
 }) => {
   const theme = useTheme();
   const iconStyle = {
@@ -65,6 +66,7 @@ const CardFooter = ({
             onClickHandler={commentOnClickHandler}
           />
           <div style={{ width: "10px" }}></div>
+          {/* share btn */}
           <FooterButton
             icon={<ShareOutlinedIcon style={iconStyle} />}
             number={useConvertNumberToHumanLanguage(shareCounter)}

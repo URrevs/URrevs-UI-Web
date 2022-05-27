@@ -1,44 +1,46 @@
 import { useTheme } from "@emotion/react";
-import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
-import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import ContactMailOutlinedIcon from "@mui/icons-material/ContactMailOutlined";
+import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
+import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import ContactMailOutlinedIcon from "@mui/icons-material/ContactMailOutlined";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import ROUTES_NAMES from "../RoutesNames";
 import {
   Avatar,
   Box,
-  ListItemText,
   ListItem,
   ListItemButton,
-  Typography,
+  ListItemText,
   Modal,
-  useMediaQuery,
+  Typography
 } from "@mui/material";
 import { List } from "@mui/material/";
 import React from "react";
-import StarWithCount from "../Components/Leaderboard/StarWithCount";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import ListItemNavigator from "../Components/Shared/ListItemNavigator";
-import { useAppSelector } from "../store/hooks";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
+import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
 import FacebookIcon from "../Components/Icons/FacebookIcon";
 import LinkedIn from "../Components/Icons/LinkedIn";
-import { SignoutDialog } from "../Components/Dialogs/SignoutDialog";
+import StarWithCount from "../Components/Leaderboard/StarWithCount";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { SettingsSideBar } from "../Components/MainLayout/Drawer/Sidebar/SettingsSideBar";
-import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
+import ListItemNavigator from "../Components/Shared/ListItemNavigator";
+import ROUTES_NAMES from "../RoutesNames";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { menuActions } from "../store/uiMenuSlice";
+import { KeyboardArrowRightOutlined } from "@mui/icons-material";
 
 export default function Menu({ isDesktop = false, drawerRef }) {
   const theme = useTheme();
 
   const currentUserProfile = useAppSelector((state) => state.auth);
-
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const profileData = currentUserProfile;
   const [signOutDialog, setSignOutDialog] = React.useState(false);
   const [invitationCodeDialog, setInvitationCodeDialog] = React.useState(false);
@@ -47,8 +49,10 @@ export default function Menu({ isDesktop = false, drawerRef }) {
   const handleSignOutClose = () => setSignOutDialog(false);
   const handleInvitationOpen = () => setInvitationCodeDialog(true);
   const handleInvitationClose = () => setInvitationCodeDialog(false);
-  const isMobile = useMediaQuery("(max-width:700px)");
+
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const language = useAppSelector((state) => state.language.language);
+
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
     myReviews: textContainer.myReviews,
@@ -72,13 +76,13 @@ export default function Menu({ isDesktop = false, drawerRef }) {
     {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${currentUserProfile.uid}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}?userId=${currentUserProfile.uid}`,
       authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.myQuestions,
       icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${currentUserProfile.uid}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}?userId=${currentUserProfile.uid}`,
       authenticate: currentUserProfile.isLoggedIn,
     },
     {
@@ -122,7 +126,11 @@ export default function Menu({ isDesktop = false, drawerRef }) {
         setSettingsSlide(!settingsSlide);
       },
       endIcon: isDesktop ? (
-        <KeyboardArrowLeftOutlinedIcon sx={{ fontSize: 40 }} />
+        language === "ar" ? (
+          <KeyboardArrowLeftOutlinedIcon sx={{ fontSize: 40 }} />
+        ) : (
+          <KeyboardArrowRightOutlined sx={{ fontSize: 40 }} />
+        )
       ) : (
         ""
       ),
@@ -211,7 +219,17 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       </ListItem>
     </Link>
   );
-  const listItem = (title, subTitle, icon, to, onClick, endIcon) => {
+  const listItem = (
+    title,
+    subTitle,
+    icon,
+    to,
+    onClick = () => {
+      dispatch(menuActions.hideMenu());
+      navigate(to);
+    },
+    endIcon
+  ) => {
     return (
       <ListItemNavigator
         title={title}
@@ -240,12 +258,14 @@ export default function Menu({ isDesktop = false, drawerRef }) {
           display: "flex",
           flexDirection: "column",
 
-          height: currentUserProfile ? "65vh" : "",
+          height: currentUserProfile ? "80vh" : "",
           marginBottom: 70,
           padding: "0px 14px",
         }}
       >
-        {isMobile ? <CustomAppBar showLogo showSearch showProfile /> : null}
+        {theme.isMobile ? (
+          <CustomAppBar showLogo showSearch showProfile />
+        ) : null}
 
         <Modal
           open={signOutDialog}
@@ -285,50 +305,49 @@ export default function Menu({ isDesktop = false, drawerRef }) {
             else return null;
           })}
         </List>
-      </Box>
-      <Box
-        sx={{
-          marginTop: "auto",
-          // // Footer just above the foot appbar
-          // position: "absolute",
-          // bottom: "0",
-          paddingBottom: isMobile ? "75px" : "20px",
-          // // margin: "-90px 0px -90px 0px",
-          // width: "95%",
-        }}
-      >
-        <Typography variant="S22W500C050505">{`${pageDictionry.followUs}:`}</Typography>
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "baseline",
+            // // Footer just above the foot appbar
+            marginTop: "auto",
+            // position: "absolute",
+            // bottom: "0",
+            // // margin: "-90px 0px -90px 0px",
+            // width: "95%",
           }}
         >
-          <Box sx={{ display: "flex" }}>
-            <FacebookIcon />
-            <LinkedIn />
+          <Typography variant="S22W500C050505">{`${pageDictionry.followUs}:`}</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "baseline",
+            }}
+          >
+            <Box sx={{ display: "flex" }}>
+              <FacebookIcon />
+              <LinkedIn />
+            </Box>
           </Box>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Link to="/">
-            <Typography underline="always">
-              {pageDictionry.termsAndAgreements}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Link to="/">
+              <Typography underline="always">
+                {pageDictionry.termsAndAgreements}
+              </Typography>
+            </Link>
+            <Typography sx={{ padding: "0px 3px" }} variant="S16W400C050505">
+              |
             </Typography>
-          </Link>
-          <Typography sx={{ padding: "0px 3px" }} variant="S16W400C050505">
-            |
-          </Typography>
-          <Link to="/">
-            <Typography underline="always">
-              {pageDictionry.privacyPolicy}
-            </Typography>
-          </Link>
+            <Link to="/">
+              <Typography underline="always">
+                {pageDictionry.privacyPolicy}
+              </Typography>
+            </Link>
+          </Box>
         </Box>
       </Box>
     </React.Fragment>

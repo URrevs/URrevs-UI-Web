@@ -9,6 +9,8 @@ import { phoneReviewsApi } from "../services/phone_reviews";
 import { searchApi } from "../services/search";
 import { updateApi } from "../services/update";
 import { usersApi } from "../services/users";
+import { homeApi } from "../services/homePage";
+import { competetionApi } from "../services/competetion";
 import productListSlice from "./allProductsSlice";
 import answersListSlice from "./answersListSlice";
 import authSlice from "./authSlice";
@@ -18,6 +20,8 @@ import isDarkSlice from "./darkModeSlice";
 import languageSlice from "./languageSlice";
 import questionsSlice from "./questionsSlice";
 import reviewsSlice from "./reviewsSlice";
+import homePageSlice from "./homePageSlice";
+import menuSlice from "./uiMenuSlice";
 import regDialogSlice from "./uiRegisterDialogSlice";
 import snackbarSlice from "./uiSnackbarSlice";
 
@@ -32,8 +36,11 @@ export const store = configureStore({
     [phoneQuestionsApi.reducerPath]: phoneQuestionsApi.reducer,
     [companyQuestionsApi.reducerPath]: companyQuestionsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [homeApi.reducerPath]: homeApi.reducer,
+    [competetionApi.reducerPath]: competetionApi.reducer,
     [productListSlice.name]: productListSlice.reducer,
     [reviewsSlice.name]: reviewsSlice.reducer,
+    [homePageSlice.name]: homePageSlice.reducer,
     [questionsSlice.name]: questionsSlice.reducer,
     [commentsListSlice.name]: commentsListSlice.reducer,
     [answersListSlice.name]: answersListSlice.reducer,
@@ -43,6 +50,7 @@ export const store = configureStore({
     [authSlice.name]: authSlice.reducer,
     [regDialogSlice.name]: regDialogSlice.reducer,
     [snackbarSlice.name]: snackbarSlice.reducer,
+    [menuSlice.name]: menuSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -52,6 +60,8 @@ export const store = configureStore({
       .concat(companyReviewsApi.middleware)
       .concat(phoneQuestionsApi.middleware)
       .concat(companyQuestionsApi.middleware)
+      .concat(homeApi.middleware)
+      .concat(competetionApi.middleware)
       .concat(usersApi.middleware),
 });
 

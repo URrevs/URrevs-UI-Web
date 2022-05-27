@@ -2,12 +2,14 @@ import { useTheme } from "@emotion/react";
 import { Paper, Slide } from "@mui/material";
 import React from "react";
 import Menu from "../../../../pages/20_Menu";
+import { useAppSelector } from "../../../../store/hooks";
 
-export const MenuSideBar = ({ drawerRef, open }) => {
+export const MenuSideBar = ({ drawerRef }) => {
   const theme = useTheme();
+  const menuOpen = useAppSelector((state) => state.menu.show);
   return (
     <React.Fragment>
-      <Slide direction="left" in={open} mountOnEnter unmountOnExit>
+      <Slide direction="left" in={menuOpen} mountOnEnter unmountOnExit>
         <Paper
           sx={{
             position: "fixed",

@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
+import PhoneReview from "../Components/ReviewCard/PhoneReview";
+import ROUTES_NAMES from "../RoutesNames";
 import { useGetOtherUserPhoneReviewsQuery } from "../services/phone_reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";
-import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import ROUTES_NAMES from "../RoutesNames";
-import PhoneReview from "../Components/ReviewCard/PhoneReview";
-import { FixedGrid } from "../Components/Grid/FixedGrid";
 
-export default function PostedPhoneReviews() {
+export function PostedPhoneReviews() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -77,25 +73,16 @@ export default function PostedPhoneReviews() {
   };
 
   return (
-    <CustomAppBar
-      showLabel
-      label="مراجعاتي"
-      showBackBtn
-      tabBar={<FilterTabbar />}
-    >
-      <FixedGrid>
-        <VirtualReviewList
-          reviewCard={reviewCard}
-          reviewsList={reviewsList}
-          page={page}
-          data={data}
-          error={error}
-          isLoading={isLoading}
-          isFetching={isFetching}
-          addToReviewsList={addToReviewsList}
-          increasePage={increasePage}
-        />
-      </FixedGrid>
-    </CustomAppBar>
+    <VirtualReviewList
+      reviewCard={reviewCard}
+      reviewsList={reviewsList}
+      page={page}
+      data={data}
+      error={error}
+      isLoading={isLoading}
+      isFetching={isFetching}
+      addToReviewsList={addToReviewsList}
+      increasePage={increasePage}
+    />
   );
 }
