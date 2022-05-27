@@ -34,6 +34,7 @@ export default function Layout(props) {
   const logoWidth = 94;
   const logoHeight = 30;
   const appBarHeight = theme.isMobile ? 0 : 64;
+  const drawerWidth = theme.isMobile ? 0 : theme.drawer.width;
 
   const dictionary = useAppSelector((state) => state.language.textContainer);
 
@@ -121,6 +122,8 @@ export default function Layout(props) {
           flexGrow: 1,
           padding: 0,
           marginTop: `${appBarHeight}px`,
+          marginLeft: drawerWidth,
+          // marginBottom: theme.isMobile ? "75px" : "",
         }}
       >
         {/* <DrawerHeader /> */}

@@ -3,6 +3,7 @@ import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
   useIdontLikeThisPhoneQuestionMutation,
+  useIncreaseShareCounterMutation,
   useLikePhoneQuestionMutation,
   useUnLikePhoneQuestionMutation,
   useUserPressesFullScreenPhoneQuestionMutation,
@@ -25,6 +26,7 @@ export default function PhoneQuestion({
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisPhoneQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenPhoneQuestionMutation();
+  const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
 
   const actionBtnFunction = async () => {
     try {
@@ -64,6 +66,10 @@ export default function PhoneQuestion({
     fullScreenRequest(reviewDetails._id);
   };
 
+  const shareBtnHandler = () => {
+    increaseShareCounterRequest({ reviewId: reviewDetails._id });
+  };
+
   return (
     <QuestionCard
       index={index}
@@ -79,6 +85,7 @@ export default function PhoneQuestion({
       actionBtnFunction={showActionBtn && actionBtnFunction}
       likeBtnHandler={likeBtnHandler}
       acceptedAnswerWidget={acceptedAnswerWidget}
+      shareBtnFn={shareBtnHandler}
     />
   );
 }

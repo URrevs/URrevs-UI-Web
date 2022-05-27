@@ -1,5 +1,13 @@
 import { useTheme } from "@emotion/react";
-import { Avatar, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import {
+  Avatar,
+  Grid,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Paper,
+  Typography,
+} from "@mui/material";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,6 +20,7 @@ import {
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
+import { PAPER_BORDER_RADIUS_DESKTOP } from "../constants";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetAllPhonesQuery } from "../services/phones";
 import { productListActions } from "../store/allProductsSlice";
@@ -110,7 +119,14 @@ export function AllProductsScreen() {
           },
         }}
       >
-        <ListItemButton sx={{ padding: 0 }}>
+        <ListItemButton
+          sx={{
+            padding: 0,
+            "&:hover": {
+              backgroundColor: "transparent",
+            },
+          }}
+        >
           <Avatar
             sx={{
               margin: "18px 17px 10px 13px",
@@ -137,7 +153,28 @@ export function AllProductsScreen() {
       </ListItem>
     );
   };
-
+  const renderProductOnDesktop = (title, imgSrc, to) => (
+    <div>
+      <Paper
+        // elevation={3}
+        sx={{
+          margin: "0px 3px",
+          borderRadius: `${PAPER_BORDER_RADIUS_DESKTOP}px`,
+          boxShadow: 3,
+          "&:hover": {
+            backgroundColor: theme.palette.hover,
+          },
+        }}
+      >
+        {renderProduct(title, imgSrc, to)}
+      </Paper>
+      <div
+        style={{
+          height: "20px",
+        }}
+      ></div>
+    </div>
+  );
   const renderRow = ({ index, key, style, parent }) => {
     if (
       maxIndex !== 0 &&
@@ -167,11 +204,17 @@ export function AllProductsScreen() {
               columnIndex={0}
               rowIndex={index}
             >
-              {renderProduct(
-                item.name,
-                "",
-                `/${ROUTES_NAMES.PHONE_PROFILE}?pid=${item._id}`
-              )}
+              {theme.isMobile
+                ? renderProduct(
+                    item.name,
+                    "",
+                    `/${ROUTES_NAMES.PHONE_PROFILE}?pid=${item._id}`
+                  )
+                : renderProductOnDesktop(
+                    item.name,
+                    "",
+                    `/${ROUTES_NAMES.PHONE_PROFILE}?pid=${item._id}`
+                  )}
             </CellMeasurer>
           </div>
         )}
@@ -180,43 +223,75 @@ export function AllProductsScreen() {
   };
 
   return (
-    <CustomAppBar
-      showLabel
-      label="مراجعاتي"
-      showBackBtn
-      tabBar={<FilterTabbar />}
-    >
-      <CompanyHorizontalList />
-
-      <Fragment>
-        <div style={{ height: "calc(100vh)", margin: "0px 0" }}>
-          <AutoSizer>
-            {({ height, width }) => {
-              return (
-                <WindowScroller>
-                  {({ height, isScrolling, registerChild, scrollTop }) => (
-                    <div ref={registerChild}>
-                      <List
-                        ref={listRef}
-                        autoHeight
-                        overscanRowCount={10}
-                        isScrolling={isScrolling}
-                        scrollTop={scrollTop}
-                        width={width}
-                        height={height}
-                        deferredMeasurementCache={cache}
-                        rowHeight={cache.rowHeight}
-                        rowCount={productsList.length + 1}
-                        rowRenderer={renderRow}
-                      />
-                    </div>
-                  )}
-                </WindowScroller>
-              );
-            }}
-          </AutoSizer>
-        </div>
-      </Fragment>
-    </CustomAppBar>
+    <Fragment>
+      {/* CustomAppBar appears only on mobile */}
+      <CustomAppBar
+        showLabel
+        label="مراجعاتي"
+        showBackBtn
+        tabBar={
+          <React.Fragment>
+            <CompanyHorizontalList />
+          </React.Fragment>
+        }
+      >
+        <Grid container>
+          {/* Right grid */}
+          <Grid style={{}} item lg={2.6} sm={0} xs={0}>
+            {/* <div style={{}}>
+              <Paper
+                style={{
+                  position: "sticky",
+                  top: "0px",
+                  padding: "65px 0px",
+                  height: "50vh",
+                  // maxHeight: "100vh",
+                  overflowY: "auto",
+                }}
+              ></Paper>
+            </div> */}
+          </Grid>
+          <Grid item lg={1.9} sm={0} xs={0}></Grid>
+          <Grid item lg={5.6} sm={12} xs={12}>
+            {
+              <div style={{ height: "calc(100vh)", margin: "0px 0" }}>
+                <AutoSizer>
+                  {({ height, width }) => {
+                    return (
+                      <WindowScroller>
+                        {({
+                          height,
+                          isScrolling,
+                          registerChild,
+                          scrollTop,
+                        }) => (
+                          <div ref={registerChild}>
+                            <List
+                              ref={listRef}
+                              autoHeight
+                              overscanRowCount={10}
+                              isScrolling={isScrolling}
+                              scrollTop={scrollTop}
+                              width={width}
+                              height={height}
+                              deferredMeasurementCache={cache}
+                              rowHeight={cache.rowHeight}
+                              rowCount={productsList.length + 1}
+                              rowRenderer={renderRow}
+                            />
+                          </div>
+                        )}
+                      </WindowScroller>
+                    );
+                  }}
+                </AutoSizer>
+              </div>
+            }
+          </Grid>
+          {/* Left Grid */}
+          <Grid item lg={1.9} sm={0} xs={0}></Grid>
+        </Grid>
+      </CustomAppBar>
+    </Fragment>
   );
 }

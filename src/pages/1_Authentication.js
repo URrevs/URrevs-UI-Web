@@ -71,7 +71,9 @@ const Registeration = ({}) => {
     try {
       setIsLoading(true);
 
-      const { token: apiToken } = await getApiToken(user.accessToken).unwrap();
+      const { token: apiToken, admin: isAdmin } = await getApiToken(
+        user.accessToken
+      ).unwrap();
       const userProfile = await getProfile(apiToken).unwrap();
 
       dispatch(
@@ -86,12 +88,14 @@ const Registeration = ({}) => {
           refreshToken: user.refreshToken,
           email: user.email,
           points: userProfile.points,
+          isAdmin: isAdmin,
         })
       );
       setIsLoading(false);
       handleRegistrationClose();
     } catch (error) {
       setIsLoading(false);
+      handleRegistrationClose();
       console.log(error);
     }
   };

@@ -139,9 +139,9 @@ export const ProductSpecsScreen = ({ data }) => {
     <React.Fragment>
       <Grid container>
         {/* Right Grid */}
-        <Grid item lg={2.75} md={1} sm={1.5} xs={0}></Grid>
+        <Grid item lg={2.75} md={1.25} sm={0.5} xs={0}></Grid>
         {/* Center Grid */}
-        <Grid item lg={5.5} md={5.25} sm={10} xs={12}>
+        <Grid item lg={5.5} md={5} sm={12} xs={12}>
           {theme.isMobile ? overviewCard() : null}
           <Typography variant="S18W700C050505">
             {componentDictionary.productImage + ":"}

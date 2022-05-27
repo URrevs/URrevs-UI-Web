@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Answer } from "../Components/Interactions/Answer";
-import { FixedGrid } from "../Components/Grid/FixedGrid";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
-import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetOtherUserCompanyQuestionsQuery,
   useLikeCompanyQuestionCommentMutation,
-  useUnLikeCompanyQuestionCommentMutation
+  useUnLikeCompanyQuestionCommentMutation,
 } from "../services/company_questions";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";
 
-export default function PostedPhoneQuestions() {
+export function PostedCompanyQuestions() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -139,25 +136,16 @@ export default function PostedPhoneQuestions() {
   };
 
   return (
-    <CustomAppBar
-      showLabel
-      label="الاسئلة المطروحة"
-      showBackBtn
-      tabBar={<FilterTabbar />}
-    >
-      <FixedGrid>
-        <VirtualReviewList
-          reviewCard={reviewCard}
-          reviewsList={reviewsList}
-          page={page}
-          data={data}
-          isFetching={isFetching}
-          error={error}
-          isLoading={isLoading}
-          addToReviewsList={addToReviewsList}
-          increasePage={increasePage}
-        />
-      </FixedGrid>
-    </CustomAppBar>
+    <VirtualReviewList
+      reviewCard={reviewCard}
+      reviewsList={reviewsList}
+      page={page}
+      data={data}
+      isFetching={isFetching}
+      error={error}
+      isLoading={isLoading}
+      addToReviewsList={addToReviewsList}
+      increasePage={increasePage}
+    />
   );
 }

@@ -83,8 +83,10 @@ export const companyQuestionsApi = createApi({
 
         try {
           await queryFulfilled;
-        } catch (e) {
-          payload.unDoFn();
+        } catch (e: any) {
+          if (e.error.data.status !== "already liked") {
+            payload.unDoFn();
+          }
         }
       },
     }),
@@ -132,7 +134,7 @@ export const companyQuestionsApi = createApi({
         return {
           url: `/${reviewId}/answers`,
           method: "POST",
-          body: { content: content, phoneId: phoneId },
+          body: { content: content, companyId: phoneId },
         };
       },
     }),
@@ -285,6 +287,15 @@ export const companyQuestionsApi = createApi({
         };
       },
     }),
+
+    increaseShareCounter: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/${reviewId}/share`,
+          method: "PUT",
+        };
+      },
+    }),
   }),
 });
 //auto-generated hooks
@@ -308,4 +319,5 @@ export const {
   useUnmarkAnswerAsAcceptedMutation,
   useIdontLikeThisCompanyQuestionMutation,
   useUserPressesFullScreenCompanyQuestionMutation,
+  useIncreaseShareCounterMutation,
 } = companyQuestionsApi;

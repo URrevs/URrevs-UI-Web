@@ -22,7 +22,6 @@ import { ComparisonScreen } from "./pages/11_ComparisonScreen";
 import { CompanyProfile } from "./pages/14_CompanyProfile";
 import { AllProductsScreen } from "./pages/16_AllProductsScreen";
 import CompanyQuestionFullScreen from "./pages/17_CompanyQuestionFullScreen";
-// import CompanyQuestionFullScreen from "./pages/17_CompanyQuestionFullScreen";
 import PhoneQuestionFullScreen from "./pages/17_PhoneQuestionFullScreen";
 import ReviewPostingScreen from "./pages/18_ReviewPostingScreen";
 import Menu from "./pages/20_Menu";
@@ -33,13 +32,12 @@ import Reviews from "./pages/2_HomePageScrolling";
 import CompanyReviewFullScreen from "./pages/3_CompanyReviewFullScreen";
 import PhoneReviewFullScreen from "./pages/3_PhoneReviewFullScreen";
 import { NotFoundPage } from "./pages/404/404";
-import PostedCompanyReviews from "./pages/5_PostedCompanyReviews";
-import PostedPhoneReviews from "./pages/5_PostedPhoneReviews";
-import PostedCompanyQuestions from "./pages/7_PostedCompanyQuestions";
-import PostedPhoneQuestions from "./pages/7_PostedPhoneQuestions";
+import { PostedReviews } from "./pages/5_PostedReviews";
+import { PostedQuestions } from "./pages/7_PostedQuestions";
 import { SearchScreen } from "./pages/8_SearchScreen";
 import AddReview from "./pages/AddReview";
 import ComponentsTest from "./pages/ComponentsTest";
+import { Leaderboard } from "./pages/Leaderboard";
 import { MyPhonesQuestions } from "./pages/MyPhonesQuestions";
 import OwnedPhonesPage from "./pages/OwnedPhones";
 import Profile from "./pages/Profile";
@@ -53,7 +51,7 @@ function App() {
   const language = useSelector((state) => state.language.language);
   const direction = language === "ar" ? "rtl" : "ltr";
   const isDark = useSelector((state) => state.darkMode.isDark);
-  const isMobile = useMediaQuery("(max-width:700px)");
+  const isMobile = useMediaQuery("(max-width:500px)");
 
   const theme = createTheme({
     isMobile: isMobile,
@@ -68,10 +66,10 @@ function App() {
     },
     breakpoints: {
       values: {
-        xs: 0,
-        sm: 350,
+        xs: 300,
+        sm: 500,
         md: 800,
-        lg: 1200,
+        lg: 1100,
       },
     },
     sideBar: {
@@ -215,6 +213,7 @@ function App() {
             refreshToken: user.refreshToken,
             email: user.email,
             points: userProfile.points,
+            isAdmin: isAdmin,
           })
         );
       } catch (e) {
@@ -244,12 +243,12 @@ function App() {
           <BrowserRouter>
             <Layout>
               <Grid container style={{}}>
-                <Grid item md={0} sm={0.5} xs={0}></Grid>
-                <Grid item md={12} sm={11} xs={12}>
+                <Grid item md={0} sm={0.5} xs={0.5}></Grid>
+                <Grid item md={12} sm={11} xs={11}>
                   <Routes>
                     {/* not found handling */}
-                    {/* <Route path="/404" element={<NotFoundPage />} />
-                    <Route path="*" element={<Navigate to="/404" replace />} /> */}
+                    <Route path="/404" element={<NotFoundPage />} />
+                    <Route path="*" element={<Navigate to="/404" replace />} />
 
                     {/* review full review */}
                     <Route
@@ -290,26 +289,16 @@ function App() {
                           path={ROUTES_NAMES.OWNED_PHONES}
                           element={<OwnedPhonesPage />}
                         />
-                        <Route path={ROUTES_NAMES.REVIEWS}>
-                          <Route
-                            path={ROUTES_NAMES.PHONE_REVIEWS}
-                            element={<PostedPhoneReviews />}
-                          />
-                          <Route
-                            path={ROUTES_NAMES.COMPANY_REVIEWS}
-                            element={<PostedCompanyReviews />}
-                          />
-                        </Route>
-                        <Route path={ROUTES_NAMES.QUESTIONS}>
-                          <Route
-                            path={ROUTES_NAMES.PHONE_REVIEWS}
-                            element={<PostedPhoneQuestions />}
-                          />
-                          <Route
-                            path={ROUTES_NAMES.COMPANY_REVIEWS}
-                            element={<PostedCompanyQuestions />}
-                          />
-                        </Route>
+                        <Route
+                          path={ROUTES_NAMES.REVIEWS}
+                          element={<PostedReviews />}
+                        />
+
+                        <Route
+                          path={ROUTES_NAMES.QUESTIONS}
+                          element={<PostedQuestions />}
+                        />
+
                         <Route
                           path={ROUTES_NAMES.MY_QUESTIONS}
                           element={<MyPhonesQuestions />}
@@ -342,7 +331,7 @@ function App() {
                     />
                     <Route
                       path={ROUTES_NAMES.LEADERBOARD}
-                      element={<div>leaderboard</div>}
+                      element={<Leaderboard />}
                     />
                     <Route path={ROUTES_NAMES.MENU}>
                       <Route index element={<Menu />} />
@@ -371,7 +360,7 @@ function App() {
                     />
                   </Routes>
                 </Grid>
-                <Grid item md={0} sm={0.5} xs={0}></Grid>
+                <Grid item md={0} sm={0.5} xs={0.5}></Grid>
               </Grid>
             </Layout>
           </BrowserRouter>

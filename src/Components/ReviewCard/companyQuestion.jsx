@@ -3,6 +3,7 @@ import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
   useIdontLikeThisCompanyQuestionMutation,
+  useIncreaseShareCounterMutation,
   useLikeCompanyQuestionMutation,
   useUnLikeCompanyQuestionMutation,
   useUserPressesFullScreenCompanyQuestionMutation,
@@ -37,6 +38,7 @@ export default function CompanyQuestion({
 
   const [likeCompanyReview] = useLikeCompanyQuestionMutation();
   const [unLikeCompanyReview] = useUnLikeCompanyQuestionMutation();
+  const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
 
   const checkIsSignedIn = useCheckSignedIn();
   const checkOwnerShip = useCheckOwnership({
@@ -64,6 +66,10 @@ export default function CompanyQuestion({
     fullScreenRequest(reviewDetails._id);
   };
 
+  const shareBtnHandler = () => {
+    increaseShareCounterRequest({ reviewId: reviewDetails._id });
+  };
+
   return (
     <QuestionCard
       index={index}
@@ -79,6 +85,7 @@ export default function CompanyQuestion({
       actionBtnFunction={showActionBtn && actionBtnFunction}
       likeBtnHandler={likeBtnHandler}
       acceptedAnswerWidget={acceptedAnswerWidget}
+      shareBtnFn={shareBtnHandler}
     />
   );
 }

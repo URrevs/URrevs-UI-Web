@@ -37,6 +37,9 @@ export default function ReviewCard({
   fullScreenRoute,
   actionBtnFunction,
   likeBtnHandler,
+  fullScreenFn,
+  seeMoreFn,
+  shareBtnFn,
 }) {
   const isReview = true;
   const navigate = useNavigate();
@@ -103,6 +106,7 @@ export default function ReviewCard({
   }, []);
 
   const navigateToFullScreen = () => {
+    fullScreenFn();
     if (!fullScreen) navigate(fullScreenRoute);
   };
 
@@ -153,6 +157,7 @@ export default function ReviewCard({
       );
     } else {
       // expand to limit
+      seeMoreFn();
       setExpanded(true);
       setCroppedText(
         cropText(
@@ -273,7 +278,7 @@ export default function ReviewCard({
           <CardFooter
             isReview={isReview}
             navigateToFullScreen={navigateToFullScreen}
-            shareCounter={reviewDetails.comments}
+            shareCounter={reviewDetails.shares}
             likesCounter={reviewDetails.likes}
             commentsCounter={reviewDetails.commentsCount}
           />
@@ -286,6 +291,8 @@ export default function ReviewCard({
             firstButtonNonPressedText={textContainer.like}
             firstButtonPressedText={textContainer.liked}
             navigateToFullScreen={navigateToFullScreen}
+            shareBtnHandler={shareBtnFn}
+
           />
         </Box>
       </CardContent>

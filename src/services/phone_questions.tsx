@@ -127,7 +127,7 @@ export const phoneQuestionsApi = createApi({
       },
     }),
 
-    getMyPhonesQuestions: builder.query<APIQuestion[],any>({
+    getMyPhonesQuestions: builder.query<APIQuestion[], any>({
       keepUnusedDataFor: 0,
       query: (round) => `/owned/by/me?round=${round}`,
       transformResponse: (response: { questions: APIQuestion[] }) => {
@@ -293,6 +293,15 @@ export const phoneQuestionsApi = createApi({
         };
       },
     }),
+
+    increaseShareCounter: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/${reviewId}/share`,
+          method: "PUT",
+        };
+      },
+    }),
   }),
 });
 //auto-generated hooks
@@ -317,4 +326,5 @@ export const {
   useUnmarkAnswerAsAcceptedMutation,
   useIdontLikeThisPhoneQuestionMutation,
   useUserPressesFullScreenPhoneQuestionMutation,
+  useIncreaseShareCounterMutation,
 } = phoneQuestionsApi;
