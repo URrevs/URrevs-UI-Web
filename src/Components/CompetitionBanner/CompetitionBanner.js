@@ -3,6 +3,7 @@ import { Box, Card, styled, Typography } from "@mui/material";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import { useAppSelector } from "../../store/hooks";
 const BannerStyle = styled(
   Card,
   {}
@@ -10,7 +11,10 @@ const BannerStyle = styled(
   background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
   borderRadius: "15px",
 }));
-export const CompetitionBanner = (props) => {
+
+export const CompetitionBanner = ({ daysLeft, prize }) => {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+  const pageDictionary = {};
   return (
     <React.Fragment>
       <BannerStyle elevation={3}>
@@ -23,14 +27,14 @@ export const CompetitionBanner = (props) => {
           }}
         >
           <Typography variant="S22W500Cffffff">
-            {props.daysLeft + ` يوم و تنتهي المسابقة `}
+            {daysLeft + ` يوم و تنتهي المسابقة `}
           </Typography>
           <Typography variant="S22W500Cffffff">{"الجائزة هي"}</Typography>
           <Typography
             variant="S22W800Cffffff"
             style={{ textDecoration: "underline" }}
           >
-            {props.prize}
+            {prize}
           </Typography>
         </Box>
         <Box

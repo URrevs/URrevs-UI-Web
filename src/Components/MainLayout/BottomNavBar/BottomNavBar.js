@@ -132,6 +132,7 @@ export default function BottomNavBar() {
           backgroundColor: backgroundColor,
           borderRadius: "10px 10px 0px 0px",
           boxShadow: "0px 2px 6px 0px",
+          marginTop: "65px",
         }}
         showLabels
         currentPage={currentPage}
