@@ -3,6 +3,10 @@ import {
   useIdontLikeThisCompanyReviewMutation,
   useLikeCompanyReviewMutation,
   useUnLikeCompanyReviewMutation,
+  useUserPressFullScreenMutation,
+  useUserPressSeeMoreMutation,
+  useIncreaseViewCounterMutation,
+  useIncreaseShareCounterMutation,
 } from "../../services/company_reviews";
 import { useAppSelector } from "../../store/hooks";
 import ReviewCard from "./ReviewCard";
@@ -21,8 +25,11 @@ const CompanyReview = ({
   isExpanded,
 }) => {
   const [dontLikeThisRequest] = useIdontLikeThisCompanyReviewMutation();
+  const [fullScreenRequest] = useUserPressFullScreenMutation();
+  const [seeMoreRequest] = useUserPressSeeMoreMutation();
+  const [increaseViewCounterRequest] = useIncreaseViewCounterMutation();
+  const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
 
-  console.log(reviewDetails);
   const actionBtnFunction = async () => {
     try {
       deleteReviewFromStore(reviewDetails._id);
@@ -49,6 +56,18 @@ const CompanyReview = ({
         });
   };
 
+  const fullScreenHandler = () => {
+    fullScreenRequest({ reviewId: reviewDetails._id });
+  };
+  const seeMoreHandler = () => {
+    seeMoreRequest({ reviewId: reviewDetails._id });
+    increaseViewCounterRequest({ reviewId: reviewDetails._id });
+  };
+
+  const shareBtnHandler = () => {
+    increaseShareCounterRequest({ reviewId: reviewDetails._id });
+  };
+
   return (
     <ReviewCard
       index={index}
@@ -62,6 +81,9 @@ const CompanyReview = ({
       fullScreenRoute={`/${ROUTES_NAMES.EXACT_COMPANY_REVIEW}?id=${reviewDetails._id}`}
       actionBtnFunction={showActionBtn && actionBtnFunction}
       likeBtnHandler={likeBtnHandler}
+      fullScreenFn={fullScreenHandler}
+      seeMoreFn={seeMoreHandler}
+      shareBtnFn={shareBtnHandler}
     />
   );
 };

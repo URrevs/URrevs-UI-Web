@@ -236,6 +236,42 @@ export const phoneReviewsApi = createApi({
         };
       },
     }),
+
+    userPressFullScreen: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/phone/${reviewId}/fullscreen`,
+          method: "POST",
+        };
+      },
+    }),
+
+    userPressSeeMore: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/phone/${reviewId}/seemore`,
+          method: "POST",
+        };
+      },
+    }),
+
+    increaseViewCounter: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/phone/${reviewId}/view`,
+          method: "PUT",
+        };
+      },
+    }),
+
+    increaseShareCounter: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/phone/${reviewId}/share`,
+          method: "PUT",
+        };
+      },
+    }),
   }),
 });
 //auto-generated hooks
@@ -256,4 +292,8 @@ export const {
   useLikePhoneReviewReplyMutation,
   useUnLikePhoneReviewReplyMutation,
   useIdontLikeThisPhoneReviewMutation,
+  useUserPressFullScreenMutation,
+  useUserPressSeeMoreMutation,
+  useIncreaseViewCounterMutation,
+  useIncreaseShareCounterMutation,
 } = phoneReviewsApi;

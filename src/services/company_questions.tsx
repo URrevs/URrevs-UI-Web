@@ -287,6 +287,15 @@ export const companyQuestionsApi = createApi({
         };
       },
     }),
+
+    increaseShareCounter: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/${reviewId}/share`,
+          method: "PUT",
+        };
+      },
+    }),
   }),
 });
 //auto-generated hooks
@@ -310,4 +319,5 @@ export const {
   useUnmarkAnswerAsAcceptedMutation,
   useIdontLikeThisCompanyQuestionMutation,
   useUserPressesFullScreenCompanyQuestionMutation,
+  useIncreaseShareCounterMutation,
 } = companyQuestionsApi;

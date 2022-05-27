@@ -60,6 +60,25 @@ const homePageSlice = createSlice({
           : state.newReviews[targetReview].likes--;
       }
     },
+
+    setQuestionIsLiked(
+      state,
+      action: PayloadAction<{
+        id: string;
+        isLiked: boolean;
+      }>
+    ) {
+      const targetReview = state.newReviews.findIndex((element) => {
+        return element._id.toString() === action.payload.id.toString();
+      });
+
+      if (targetReview != -1) {
+        state.newReviews[targetReview].upvoted = action.payload.isLiked;
+        action.payload.isLiked
+          ? state.newReviews[targetReview].upvotes++
+          : state.newReviews[targetReview].upvotes--;
+      }
+    },
   },
 });
 

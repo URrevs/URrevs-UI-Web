@@ -29,11 +29,36 @@ export const homeApi = createApi({
         phoneQuestions: APIQuestion[];
         companyQuestions: APIQuestion[];
       }) => {
+        const phoneRevs = response.phoneRevs.map((rev) => {
+          return {
+            ...rev,
+            type: "phoneRev",
+          };
+        });
+        const companyRevs = response.companyRevs.map((rev) => {
+          return {
+            ...rev,
+            type: "companyRev",
+          };
+        });
+        const phoneQuestions = response.phoneQuestions.map((rev) => {
+          return {
+            ...rev,
+            type: "phoneQuestion",
+          };
+        });
+        const companyQuestions = response.companyQuestions.map((rev) => {
+          return {
+            ...rev,
+            type: "companyQuestion",
+          };
+        });
+
         return [
-          ...response.phoneRevs,
-          ...response.companyRevs,
-          ...response.phoneQuestions,
-          ...response.companyQuestions,
+          ...phoneRevs,
+          ...companyRevs,
+          ...phoneQuestions,
+          ...companyQuestions,
         ];
       },
     }),
