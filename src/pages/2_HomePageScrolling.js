@@ -30,7 +30,7 @@ function Reviews() {
 
   const reviewsList = useAppSelector((state) => state.homePage.newReviews);
   const [page, setPage] = useState(1);
-  const { data, isLoading, isFetching, error } = useGetRecommendedQuery();
+  const { data, isLoading, isFetching, error } = useGetRecommendedQuery(page);
 
   const stateLikeReview = (id) =>
     dispatch(homePageActions.setReviewIsLiked({ id: id, isLiked: true }));
