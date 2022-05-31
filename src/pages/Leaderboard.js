@@ -6,7 +6,7 @@ import {
   ListItemButton,
   ListItemText,
   Paper,
-  Typography
+  Typography,
 } from "@mui/material";
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ import { subtractDate } from "../functions/subtractDate";
 import {
   useGetLatestCompetetionQuery,
   useGetMyCurrentRankQuery,
-  useGetTopCompetetionUsersQuery
+  useGetTopCompetetionUsersQuery,
 } from "../services/competetion";
 import { useAppSelector } from "../store/hooks";
 
@@ -122,6 +122,7 @@ export const Leaderboard = () => {
               userRank={i + 1}
               userName={item.name}
               points={item.points}
+              userPicture={item.picture}
             />
             <Divider></Divider>
           </Fragment>
@@ -155,6 +156,7 @@ export const Leaderboard = () => {
           userName={myRankData.name}
           userRank={myRankData.rank}
           points={myRankData.points}
+          userPicture={myRankData.picture}
         />
       )}
       {/* List of users rank in leaderboard */}
