@@ -47,18 +47,18 @@ export default function OtherUserProfilePage({ uid }) {
     {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `${ROUTES_NAMES.REVIEWS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${uid}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}?userId=${uid}`,
     },
     {
       title: pageDictionry.ownedProducts,
       icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `${ROUTES_NAMES.OWNED_PHONES}?userId=${uid}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?userId=${uid}`,
     },
     {
       title: pageDictionry.askedQuestions,
       icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: pageDictionry.helpOthers,
-      to: "",
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}?userId=${uid}`,
     },
   ];
 
