@@ -13,7 +13,7 @@ export const homeApi = createApi({
       const token = (state as RootState).auth.apiToken;
 
       if (token && endpoint !== "authenticate") {
-        headers.set("authorization", `Bearer ${token}`);
+        headers.set("authorization", `bearer ${token}`);
       }
       return headers;
     },
