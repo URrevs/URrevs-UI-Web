@@ -15,6 +15,8 @@ import {
   useGetCurrentUserProfileMutation,
 } from "../src/services/users";
 import "./App.css";
+import Banner from "./Components/Banners/Banner";
+import { Footer } from "./Components/Banners/Footer";
 import Layout from "./Components/MainLayout/Layout";
 import RTL from "./Components/RTL";
 import { ProductProfile } from "./pages/10_ProductProfile";
@@ -36,7 +38,7 @@ import { PostedReviews } from "./pages/5_PostedReviews";
 import { PostedQuestions } from "./pages/7_PostedQuestions";
 import { SearchScreen } from "./pages/8_SearchScreen";
 import AddReview from "./pages/AddReview";
-import ComponentsTest from "./pages/ComponentsTest";
+import { ComponentsTest } from "./pages/ComponentsTest";
 import { Leaderboard } from "./pages/Leaderboard";
 import { MyPhonesQuestions } from "./pages/MyPhonesQuestions";
 import OwnedPhonesPage from "./pages/OwnedPhones";
@@ -78,7 +80,10 @@ function App() {
     appBar: {
       zIndex: 1500,
     },
-    drawer: { zIndex: 1000, width: "72px" },
+    footer: {
+      zIndex: 1400,
+    },
+    drawer: { zIndex: 1450, width: "72px" },
 
     palette: {
       mode: isDark ? "dark" : "light",
