@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import React from "react";
 import { useAppSelector } from "../../store/hooks";
@@ -11,8 +12,13 @@ export const Footer = () => {
     followUs: textContainer.followUs,
     downloadTheApp: textContainer.downloadTheApp,
   };
+  const theme = useTheme();
   return (
-    <Paper>
+    <Paper
+      sx={{
+        zIndex: theme.footer,
+      }}
+    >
       <Grid container>
         <Grid item md={1}></Grid>
         <Grid item md={2}>
