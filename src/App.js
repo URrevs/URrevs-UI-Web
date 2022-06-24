@@ -15,6 +15,7 @@ import {
   useGetCurrentUserProfileMutation,
 } from "../src/services/users";
 import "./App.css";
+import { Footer } from "./Components/Banners/Footer";
 import Layout from "./Components/MainLayout/Layout";
 import RTL from "./Components/RTL";
 import { ProductProfile } from "./pages/10_ProductProfile";
@@ -242,6 +243,7 @@ function App() {
         <RTL direction={theme.direction}>
           <BrowserRouter>
             <Layout>
+              <Footer />
               <Grid container style={{}}>
                 <Grid item md={0} sm={0.5} xs={0.5}></Grid>
                 <Grid item md={12} sm={11} xs={11}>
