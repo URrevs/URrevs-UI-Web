@@ -1,14 +1,24 @@
 import React from "react";
 import { Footer } from "../Components/Banners/Footer";
 import Banner from "../Components/Banners/Banner";
+import { PersonalTabbar } from "../Components/Tabbar/Desktop/PersonalTabbar";
+import { useAppSelector } from "../store/hooks";
 
 export const ComponentsTest = () => {
+  const [value, setValue] = React.useState();
+  const currentUserProfile = useAppSelector((state) => state.auth);
   return (
     <React.Fragment>
-      <Footer />
+      <PersonalTabbar
+        userProfile={currentUserProfile}
+        arrayOfTabs={["المراجعات", "الاسئلة المطروحة", "المنتجات الممتكلة"]}
+        value={value}
+        setValue={setValue}
+      />
+      {/* <Footer />
       <div>
         <Banner />
-      </div>
+      </div> */}
     </React.Fragment>
   );
 };
