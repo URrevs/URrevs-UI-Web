@@ -4,7 +4,7 @@ import { RootState } from "../store/store";
 export const phoneApi = createApi({
   reducerPath: "phoneApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_PATH}/phones`,
+    baseUrl: `${process.env.REACT_APP_API_PATH}`,
     // add token to all endpoints headers
     prepareHeaders: (headers, { getState, endpoint }) => {
       const state = getState();
@@ -22,7 +22,7 @@ export const phoneApi = createApi({
       keepUnusedDataFor: 0,
       query: (pid) => {
         return {
-          url: `${pid}/specs`,
+          url: `/phones${pid}/specs`,
           method: "GET",
         };
       },
@@ -36,7 +36,7 @@ export const phoneApi = createApi({
 
       query: (pid) => {
         return {
-          url: `${pid}/similar`,
+          url: `/phones${pid}/similar`,
           method: "GET",
         };
       },
@@ -47,9 +47,12 @@ export const phoneApi = createApi({
 
     getAllPhones: builder.query({
       keepUnusedDataFor: 0,
-      query: (round) => {
+      query: ({ round, companyId }) => {
+        console.log(companyId);
         return {
-          url: `/all?round=${round}`,
+          url: companyId
+            ? `/phones/by/${companyId}?round=${round}`
+            : `/phones/all?round=${round}`,
           method: "GET",
         };
       },
@@ -58,11 +61,38 @@ export const phoneApi = createApi({
       },
     }),
 
+    // getExactCompanyPhones: builder.query({
+    //   keepUnusedDataFor: 0,
+    //   query: ({ round, companyId }) => {
+    //     return {
+    //       url: `/phones/by/${companyId}?round=${round}`,
+    //       method: "GET",
+    //     };
+    //   },
+    //   transformResponse: (response: { phones: any }) => {
+    //     return response.phones;
+    //   },
+    // }),
+
+    getAllCompanies: builder.query({
+      keepUnusedDataFor: 0,
+      query: (round) => {
+        return {
+          url: `/companies/all?round=${round}`,
+          method: "GET",
+        };
+      },
+
+      transformResponse: (response: { companies: any }) => {
+        return response.companies;
+      },
+    }),
+
     getStatisticalInfo: builder.query({
       keepUnusedDataFor: 0,
       query: (pid) => {
         return {
-          url: `${pid}/stats`,
+          url: `/phones${pid}/stats`,
           method: "GET",
         };
       },
@@ -70,10 +100,11 @@ export const phoneApi = createApi({
         return response.stats;
       },
     }),
+
     getManufacturingCompany: builder.mutation({
       query: (pid) => {
         return {
-          url: `${pid}/company`,
+          url: `/phones${pid}/company`,
           method: "GET",
         };
       },
@@ -85,7 +116,7 @@ export const phoneApi = createApi({
     indicateUserComparing: builder.mutation({
       query: ({ pid1, pid2 }) => {
         return {
-          url: `/${pid1}/compare/${pid2}`,
+          url: `/phones/${pid1}/compare/${pid2}`,
           method: "PUT",
         };
       },
@@ -104,4 +135,6 @@ export const {
   useGetManufacturingCompanyMutation,
   useGetStatisticalInfoQuery,
   useIndicateUserComparingMutation,
+  useGetAllCompaniesQuery,
+  // useGetExactCompanyPhonesQuery,
 } = phoneApi;

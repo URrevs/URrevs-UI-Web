@@ -45,6 +45,59 @@ export const CompanyHorizontalList = () => {
     setSelectedCompany(index);
   };
 
+  let srcs = [
+    "./images/logos/acer.png",
+    "./images/logos/alcatel.jpg",
+    "./images/logos/apple.jpg",
+    "./images/logos/asus.png",
+    "./images/logos/benq.jpg",
+    "./images/logos/blackview.jpg",
+    "./images/logos/blu.png",
+    "./images/logos/bq.png",
+    "./images/logos/casio.png",
+    "./images/logos/cat.png",
+    "./images/logos/celkon.png",
+    "./images/logos/extractor.js",
+    "./images/logos/fairphone.jpg",
+    "./images/logos/garmin-asus.png",
+    "./images/logos/gigabyte.png",
+    "./images/logos/google.jpg",
+    "./images/logos/htc.jpg",
+    "./images/logos/huawei.jpg",
+    "./images/logos/icemobile.png",
+    "./images/logos/infinix.jpg",
+    "./images/logos/intex.jpg",
+    "./images/logos/lava.png",
+    "./images/logos/lenovo.jpg",
+    "./images/logos/maxwest.png",
+    "./images/logos/microsoft.png",
+    "./images/logos/mitac.png",
+    "./images/logos/motorola.jpg",
+    "./images/logos/nokia.jpg",
+    "./images/logos/nvidia.png",
+    "./images/logos/oppo.jpg",
+    "./images/logos/orange.png",
+    "./images/logos/panasonic.jpg",
+    "./images/logos/pantech.jpg",
+    "./images/logos/parla.jpg",
+    "./images/logos/prestigio.jpg",
+    "./images/logos/razer.png",
+    "./images/logos/samsung.jpg",
+    "./images/logos/sharp.png",
+    "./images/logos/sony ericsson.png",
+    "./images/logos/sony.jpg",
+    "./images/logos/tcl.png",
+    "./images/logos/tecno.png",
+    "./images/logos/toshiba.png",
+    "./images/logos/unnecto.jpg",
+    "./images/logos/vodafone.png",
+    "./images/logos/wiko.png",
+    "./images/logos/xiaomi.jpg",
+    "./images/logos/xolo.png",
+    "./images/logos/yota.png",
+    "./images/logos/zte.png",
+  ];
+
   const listItem = (index) => {
     return (
       <CompanyButton
@@ -66,21 +119,18 @@ export const CompanyHorizontalList = () => {
             sx={{
               width: "50px",
               height: "50px",
+              objectFit: "contain",
             }}
-          >
-            <img
-              alt=""
-              objectfit="cover"
-              width="45px"
-              height="45px"
-              src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Acer_Logo.svg"
-            />
-          </Avatar>
+            src={srcs[index % srcs.length]}
+          ></Avatar>
         </ListItemAvatar>
         <ListItemText
           sx={{ textAlign: "center" }}
           primaryTypographyProps={{ ...theme.typography.S16W400C050505 }}
-          primary="oppo"
+          primary={srcs[index % srcs.length].substring(
+            15,
+            srcs[index % srcs.length].length - 4
+          )}
         />
       </CompanyButton>
     );
