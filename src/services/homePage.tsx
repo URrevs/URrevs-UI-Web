@@ -13,7 +13,7 @@ export const homeApi = createApi({
       const token = (state as RootState).auth.apiToken;
 
       if (token && endpoint !== "authenticate") {
-        headers.set("authorization", `Bearer ${token}`);
+        headers.set("authorization", `bearer ${token}`);
       }
       return headers;
     },
@@ -28,13 +28,53 @@ export const homeApi = createApi({
         companyRevs: APIReview[];
         phoneQuestions: APIQuestion[];
         companyQuestions: APIQuestion[];
+        total: String[];
       }) => {
-        return [
-          ...response.phoneRevs,
-          ...response.companyRevs,
-          ...response.phoneQuestions,
-          ...response.companyQuestions,
+        const phoneRevs = response.phoneRevs.map((rev) => {
+          return {
+            ...rev,
+            type: "phoneRev",
+          };
+        });
+        const companyRevs = response.companyRevs.map((rev) => {
+          return {
+            ...rev,
+            type: "companyRev",
+          };
+        });
+        const phoneQuestions = response.phoneQuestions.map((rev) => {
+          return {
+            ...rev,
+            type: "phoneQuestion",
+          };
+        });
+        const companyQuestions = response.companyQuestions.map((rev) => {
+          return {
+            ...rev,
+            type: "companyQuestion",
+          };
+        });
+
+        let posts = [
+          ...phoneRevs,
+          ...companyRevs,
+          ...phoneQuestions,
+          ...companyQuestions,
         ];
+
+        if (response.total && response.total.length) {
+          let sortedPosts: any = [];
+          posts.forEach((post, i) => {
+            let toBeAppendedPost = posts.find(
+              (post) => post._id === response.total[i]
+            );
+            if (toBeAppendedPost) sortedPosts.push(toBeAppendedPost);
+          });
+
+          return sortedPosts;
+        } else {
+          return posts;
+        }
       },
     }),
   }),

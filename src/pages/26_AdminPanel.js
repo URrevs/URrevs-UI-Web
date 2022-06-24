@@ -1,12 +1,11 @@
 import { useTheme } from "@emotion/react";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import UpdateOutlinedIcon from "@mui/icons-material/UpdateOutlined";
-import { Box, Modal, Paper, Typography, Grid } from "@mui/material";
+import { Box, Grid, Modal, Paper, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CompetitionBody } from "../Components/CompetitionPrompt/CompetitionBody";
-
 import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
@@ -14,6 +13,7 @@ import ListItemNavigator from "../Components/Shared/ListItemNavigator";
 import { PAPER_BORDER_RADIUS_DESKTOP } from "../constants";
 import { convertDateToString } from "../functions/convertDateToString";
 import ROUTES_NAMES from "../RoutesNames";
+import { useGetLatestCompetetionQuery } from "../services/competetion";
 import { useGetLastUpdateInfoQuery } from "../services/update";
 import { UpdateProducts } from "./29_UpdateProducts";
 
@@ -23,6 +23,12 @@ export const AdminPanel = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const { data, latestUpdateError, isLoading } = useGetLastUpdateInfoQuery();
+  const {
+    data: lastCompetetionData,
+    error: latestCompetetionError,
+    isLoading: latestCompetetionIsLoading,
+  } = useGetLatestCompetetionQuery();
+
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(0);
   const handleOpen = () => setOpen(true);
@@ -73,7 +79,12 @@ export const AdminPanel = () => {
         <ListItemNavigator
           key={listItems[0].title}
           title={listItems[0].title}
-          subTitle={listItems[0].subtitle + " " + lastUpdateDate}
+          subTitle={
+            lastUpdateDate &&
+            listItems[0].subtitle +
+              " " +
+              convertDateToString(lastUpdateDate, language)
+          }
           icon={listItems[0].icon}
           onClick={listItems[0].onClick}
           to={listItems[0].to}
@@ -81,7 +92,12 @@ export const AdminPanel = () => {
         <ListItemNavigator
           key={listItems[1].title}
           title={listItems[1].title}
-          subTitle={listItems[1].subtitle + " " + lastUpdateDate}
+          subTitle={
+            lastCompetetionData &&
+            listItems[1].subtitle +
+              " " +
+              convertDateToString(lastCompetetionData.createdAt, language)
+          }
           onClick={listItems[1].onClick}
           icon={listItems[1].icon}
         />

@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import PhoneReview from "../Components/ReviewCard/PhoneReview";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetRecommendedQuery } from "../services/homePage";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { homePageActions } from "../store/homePageSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";
+import PhoneReview from "../Components/ReviewCard/PhoneReview";
+import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
+import CompanyReview from "../Components/ReviewCard/CompanyReview";
+import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
+import { Answer } from "../Components/Interactions/Answer";
+import {
+  useLikePhoneQuestionCommentMutation,
+  useUnLikePhoneQuestionCommentMutation,
+} from "../services/phone_questions";
+import {
+  useLikeCompanyQuestionCommentMutation,
+  useUnLikeCompanyQuestionCommentMutation,
+} from "../services/company_questions";
 
 function Reviews() {
   const dispatch = useAppDispatch();
@@ -18,13 +30,19 @@ function Reviews() {
 
   const reviewsList = useAppSelector((state) => state.homePage.newReviews);
   const [page, setPage] = useState(1);
-  const { data, isLoading, isFetching, error } = useGetRecommendedQuery();
+  const { data, isLoading, isFetching, error } = useGetRecommendedQuery(page);
 
-  const stateLike = (id) =>
-    dispatch(homePageActions.setIsLiked({ id: id, isLiked: true }));
+  const stateLikeReview = (id) =>
+    dispatch(homePageActions.setReviewIsLiked({ id: id, isLiked: true }));
 
-  const stateUnLike = (id) =>
-    dispatch(homePageActions.setIsLiked({ id: id, isLiked: false }));
+  const stateUnLikeReview = (id) =>
+    dispatch(homePageActions.setReviewIsLiked({ id: id, isLiked: false }));
+
+  const stateLikeQuestion = (id) =>
+    dispatch(homePageActions.setQuestionIsLiked({ id: id, isLiked: true }));
+
+  const stateUnLikeQuestion = (id) =>
+    dispatch(homePageActions.setQuestionIsLiked({ id: id, isLiked: false }));
 
   const addToReviewsList = () =>
     dispatch(
@@ -47,25 +65,209 @@ function Reviews() {
     );
   };
 
+  // like comment
+  const [likePhoneQuestionAnswer] = useLikePhoneQuestionCommentMutation();
+  // unlike comment
+  const [unlikePhoneQuestionAnswer] = useUnLikePhoneQuestionCommentMutation();
+
+  // like comment
+  const [likeCompanyQuestionAnswer] = useLikeCompanyQuestionCommentMutation();
+  // unlike comment
+  const [unlikeCompanyQuestionAnswer] =
+    useUnLikeCompanyQuestionCommentMutation();
+
   const reviewCard = (index, clearCache) => {
-    return (
-      <PhoneReview
-        key={reviewsList[index]._id}
-        index={index}
-        fullScreen={false}
-        isExpanded={false}
-        clearIndexCache={clearCache}
-        reviewDetails={reviewsList[index]}
-        isPhoneReview={true}
-        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
-        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
-        stateLikeFn={stateLike}
-        stateUnLikeFn={stateUnLike}
-        fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewsList[index]._id}`}
-        showActionBtn={true}
-        deleteReviewFromStore={deleteReviewFromStore}
-      />
-    );
+    const currentElement = reviewsList[index];
+    if (currentElement.type === "phoneRev") {
+      return (
+        <PhoneReview
+          key={reviewsList[index]._id}
+          index={index}
+          fullScreen={false}
+          isExpanded={false}
+          clearIndexCache={clearCache}
+          reviewDetails={reviewsList[index]}
+          isPhoneReview={true}
+          targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
+          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+          stateLikeFn={stateLikeReview}
+          stateUnLikeFn={stateUnLikeReview}
+          fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewsList[index]._id}`}
+          showActionBtn={true}
+          deleteReviewFromStore={deleteReviewFromStore}
+        />
+      );
+    }
+
+    if (currentElement.type === "companyRev") {
+      return (
+        <CompanyReview
+          key={reviewsList[index]._id}
+          index={index}
+          fullScreen={false}
+          isExpanded={false}
+          clearIndexCache={clearCache}
+          reviewDetails={reviewsList[index]}
+          isPhoneReview={true}
+          targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+          stateLikeFn={stateLikeReview}
+          stateUnLikeFn={stateUnLikeReview}
+          showActionBtn={true}
+          deleteReviewFromStore={deleteReviewFromStore}
+        />
+      );
+    }
+
+    if (currentElement.type === "phoneQuestion") {
+      // comment like and unlike
+      const stateLikePhoneComment = (id) =>
+        dispatch(
+          homePageActions.voteForAcceptedAnswer({ id: id, isLiked: true })
+        );
+
+      const stateUnLikePhoneComment = (id) =>
+        dispatch(
+          homePageActions.voteForAcceptedAnswer({ id: id, isLiked: false })
+        );
+
+      const likeCommentRequest = (id) => {
+        likePhoneQuestionAnswer({
+          commentId: id,
+          doFn: stateLikePhoneComment,
+          unDoFn: stateUnLikePhoneComment,
+        });
+      };
+
+      const unLikeCommentRequest = (id) => {
+        unlikePhoneQuestionAnswer({
+          commentId: id,
+          doFn: stateUnLikePhoneComment,
+          unDoFn: stateLikePhoneComment,
+        });
+      };
+
+      // add accepted answer if found
+      const acceptedAnswerWidget = (index) => {
+        if (currentElement.acceptedAns) {
+          return (
+            <Answer
+              commentId={currentElement.acceptedAns._id}
+              date={currentElement.acceptedAns.createdAt}
+              user={currentElement.acceptedAns.userName}
+              likes={currentElement.acceptedAns.upvotes}
+              text={currentElement.acceptedAns.content}
+              commentLike={likeCommentRequest}
+              commentUnlike={unLikeCommentRequest}
+              avatar={currentElement.acceptedAns.picture}
+              ownerId={currentElement.acceptedAns.userId}
+              ownedAt={currentElement.acceptedAns.ownedAt}
+              questionOwnerId={currentElement.userId}
+              questionId={currentElement._id}
+              acceptAnswer={() => {}}
+              rejectAnswer={() => {}}
+              acceptedAnswer={true}
+              showReply={false}
+              upvoted={currentElement.acceptedAns.upvoted}
+            />
+          );
+        }
+      };
+
+      return (
+        <PhoneQuestion
+          key={reviewsList[index]._id}
+          index={0}
+          fullScreen={false}
+          isExpanded={false}
+          clearIndexCache={clearCache}
+          reviewDetails={reviewsList[index]}
+          isPhoneReview={true}
+          targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
+          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+          stateLikeFn={stateLikeQuestion}
+          stateUnLikeFn={stateUnLikeQuestion}
+          showActionBtn={true}
+          deleteReviewFromStore={deleteReviewFromStore}
+          acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}
+        />
+      );
+    }
+
+    if (currentElement.type === "companyQuestion") {
+      // comment like and unlike
+      const stateLikePhoneComment = (id) =>
+        dispatch(
+          homePageActions.voteForAcceptedAnswer({ id: id, isLiked: true })
+        );
+
+      const stateUnLikePhoneComment = (id) =>
+        dispatch(
+          homePageActions.voteForAcceptedAnswer({ id: id, isLiked: false })
+        );
+
+      const likeCommentRequest = (id) => {
+        likeCompanyQuestionAnswer({
+          commentId: id,
+          doFn: stateLikePhoneComment,
+          unDoFn: stateUnLikePhoneComment,
+        });
+      };
+
+      const unLikeCommentRequest = (id) => {
+        unlikeCompanyQuestionAnswer({
+          commentId: id,
+          doFn: stateUnLikePhoneComment,
+          unDoFn: stateLikePhoneComment,
+        });
+      };
+
+      // add accepted answer if found
+      const acceptedAnswerWidget = (index) => {
+        if (currentElement.acceptedAns) {
+          return (
+            <Answer
+              commentId={currentElement.acceptedAns._id}
+              date={currentElement.acceptedAns.createdAt}
+              user={currentElement.acceptedAns.userName}
+              likes={currentElement.acceptedAns.upvotes}
+              text={currentElement.acceptedAns.content}
+              commentLike={likeCommentRequest}
+              commentUnlike={unLikeCommentRequest}
+              avatar={currentElement.acceptedAns.picture}
+              ownerId={currentElement.acceptedAns.userId}
+              ownedAt={currentElement.acceptedAns.ownedAt}
+              questionOwnerId={currentElement.userId}
+              questionId={currentElement._id}
+              acceptAnswer={() => {}}
+              rejectAnswer={() => {}}
+              acceptedAnswer={true}
+              showReply={false}
+              upvoted={currentElement.acceptedAns.upvoted}
+            />
+          );
+        }
+      };
+
+      return (
+        <CompanyQuestion
+          key={reviewsList[index]._id}
+          index={0}
+          fullScreen={false}
+          isExpanded={false}
+          clearIndexCache={clearCache}
+          reviewDetails={reviewsList[index]}
+          isPhoneReview={false}
+          targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+          stateLikeFn={stateLikeQuestion}
+          stateUnLikeFn={stateUnLikeQuestion}
+          showActionBtn={true}
+          deleteReviewFromStore={deleteReviewFromStore}
+          acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}
+        />
+      );
+    }
   };
 
   return (
@@ -79,8 +281,6 @@ function Reviews() {
           error={error}
           isLoading={isLoading}
           isFetching={isFetching}
-          stateLike={stateLike}
-          stateUnLike={stateUnLike}
           addToReviewsList={addToReviewsList}
           increasePage={increasePage}
         />

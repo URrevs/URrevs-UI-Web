@@ -5,6 +5,10 @@ import {
   useIdontLikeThisPhoneReviewMutation,
   useLikePhoneReviewMutation,
   useUnLikePhoneReviewMutation,
+  useUserPressFullScreenMutation,
+  useUserPressSeeMoreMutation,
+  useIncreaseViewCounterMutation,
+  useIncreaseShareCounterMutation,
 } from "../../services/phone_reviews";
 import ReviewCard from "./ReviewCard";
 
@@ -22,6 +26,10 @@ export default function PhoneReview({
   isExpanded,
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisPhoneReviewMutation();
+  const [fullScreenRequest] = useUserPressFullScreenMutation();
+  const [seeMoreRequest] = useUserPressSeeMoreMutation();
+  const [increaseViewCounterRequest] = useIncreaseViewCounterMutation();
+  const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
 
   const actionBtnFunction = async () => {
     try {
@@ -57,6 +65,18 @@ export default function PhoneReview({
     }
   };
 
+  const fullScreenHandler = () => {
+    fullScreenRequest({ reviewId: reviewDetails._id });
+  };
+  const seeMoreHandler = () => {
+    seeMoreRequest({ reviewId: reviewDetails._id });
+    increaseViewCounterRequest({ reviewId: reviewDetails._id });
+  };
+
+  const shareBtnHandler = () => {
+    increaseShareCounterRequest({ reviewId: reviewDetails._id });
+  };
+
   return (
     <ReviewCard
       index={index}
@@ -68,8 +88,11 @@ export default function PhoneReview({
       targetProfilePath={targetProfilePath}
       userProfilePath={userProfilePath}
       fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewDetails._id}`}
+      fullScreenFn={fullScreenHandler}
+      seeMoreFn={seeMoreHandler}
       actionBtnFunction={showActionBtn && actionBtnFunction}
       likeBtnHandler={likeBtnHandler}
+      shareBtnFn={shareBtnHandler}
     />
   );
 }

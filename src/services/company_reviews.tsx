@@ -219,6 +219,42 @@ export const companyReviewsApi = createApi({
         };
       },
     }),
+
+    userPressFullScreen: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/company/${reviewId}/fullscreen`,
+          method: "POST",
+        };
+      },
+    }),
+
+    userPressSeeMore: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/company/${reviewId}/seemore`,
+          method: "POST",
+        };
+      },
+    }),
+
+    increaseViewCounter: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/company/${reviewId}/view`,
+          method: "PUT",
+        };
+      },
+    }),
+
+    increaseShareCounter: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/company/${reviewId}/share`,
+          method: "PUT",
+        };
+      },
+    }),
   }),
 });
 //auto-generated hooks
@@ -237,4 +273,8 @@ export const {
   useLikeCompanyReviewReplyMutation,
   useUnLikeCompanyReviewReplyMutation,
   useIdontLikeThisCompanyReviewMutation,
+  useUserPressFullScreenMutation,
+  useUserPressSeeMoreMutation,
+  useIncreaseViewCounterMutation,
+  useIncreaseShareCounterMutation,
 } = companyReviewsApi;

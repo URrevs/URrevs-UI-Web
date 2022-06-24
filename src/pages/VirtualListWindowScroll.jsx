@@ -47,6 +47,7 @@ export default function VirtualReviewList({
   };
 
   useEffect(() => {
+    console.log(data);
     if (data) {
       addToReviewsList();
       if (page < 2 && !isLoading && !isFetching) {

@@ -38,7 +38,9 @@ const UserAvatar = styled(
 const LeaderboardEntry = ({
   userRank = 1,
   userName = "John Do",
+  userPicture,
   isBody = false,
+  points = 0,
 }) => {
   const theme = useTheme();
 
@@ -71,11 +73,11 @@ const LeaderboardEntry = ({
           </div>
         </RankCircle>
         <div style={{ width: "18px" }}></div>
-        <UserAvatar></UserAvatar>
+        <UserAvatar src={userPicture}></UserAvatar>
         <div style={{ width: "18px" }}></div>
         <Typography variant="S20W700C050505">{userName}</Typography>
       </div>
-      <StarWithCount value={40000} starSize={38} textStyle="S20W400C65676B" />
+      <StarWithCount value={points} starSize={38} textStyle="S20W400C65676B" />
     </Fragment>
   );
   return isBody ? (

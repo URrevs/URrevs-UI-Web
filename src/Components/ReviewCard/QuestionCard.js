@@ -30,6 +30,7 @@ export default function QuestionCard({
   likeBtnHandler,
   acceptedAnswerWidget,
   fullScreenFn,
+  shareBtnFn,
 }) {
   const isReview = true;
   const navigate = useNavigate();
@@ -226,6 +227,7 @@ export default function QuestionCard({
             firstButtonNonPressedText={textContainer.vote}
             firstButtonPressedText={textContainer.vote}
             navigateToFullScreen={navigateToFullScreen}
+            shareBtnHandler={shareBtnFn}
           />
         </Box>
         {acceptedAnswerWidget && acceptedAnswerWidget()}

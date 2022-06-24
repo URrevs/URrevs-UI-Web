@@ -18,6 +18,7 @@ const CardActionButtons = ({
   toggleLike,
   isReview,
   navigateToFullScreen: commentButtonOnClick,
+  shareBtnHandler,
 }) => {
   const activeFirstIcon = isReview ? (
     <ThumbUpIcon fontSize="medium" />
@@ -61,6 +62,7 @@ const CardActionButtons = ({
         />
 
         <BottomCardActionBtn
+          onClickAction={shareBtnHandler}
           title={textContainer.share}
           icon={<ShareOutlinedIcon fontSize="medium" />}
         />
