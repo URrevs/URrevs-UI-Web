@@ -62,15 +62,19 @@ export const homeApi = createApi({
           ...companyQuestions,
         ];
 
-        let sortedPosts: any = [];
-        posts.forEach((post, i) => {
-          let toBeAppendedPost = posts.find(
-            (post) => post._id === response.total[i]
-          );
-          if (toBeAppendedPost) sortedPosts.push(toBeAppendedPost);
-        });
+        if (response.total && response.total.length) {
+          let sortedPosts: any = [];
+          posts.forEach((post, i) => {
+            let toBeAppendedPost = posts.find(
+              (post) => post._id === response.total[i]
+            );
+            if (toBeAppendedPost) sortedPosts.push(toBeAppendedPost);
+          });
 
-        return sortedPosts;
+          return sortedPosts;
+        } else {
+          return posts;
+        }
       },
     }),
   }),
