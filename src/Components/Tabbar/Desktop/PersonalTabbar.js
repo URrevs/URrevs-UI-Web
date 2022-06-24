@@ -11,7 +11,7 @@ export const PersonalTabbar = ({
   value,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
-
+  userProfile = useAppSelector((state) => state.auth);
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
   };

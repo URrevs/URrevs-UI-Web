@@ -18,7 +18,9 @@ export const Tabbar = ({
   const fscale = (arrayOfTabs.length - 1) * 100; // input 3 therefore fullscale = 200
   const isAr = language === "ar";
 
-  const [translation, setTranslation] = React.useState(isAr ? fscale : 0);
+  const [translation, setTranslation] = React.useState(
+    isAr ? (isVertical ? fscale : fscale * 2 + 100) : 0
+  );
   const handleTranslation = (id) => {
     if (isAr) {
       let x = fscale - 100 * id;
@@ -45,7 +47,7 @@ export const Tabbar = ({
           position: "relative",
         }}
       >
-        <div></div>
+        {/* Equal spacing tabbars */}
         <Grid container spacing={0}>
           {arrayOfTabs.map((tab, id) => (
             <React.Fragment key={tab}>
@@ -93,6 +95,7 @@ export const Tabbar = ({
             </React.Fragment>
           ))}
         </Grid>
+        {/* Tabbar Indicator */}
         <div
           style={{
             position: "absolute",

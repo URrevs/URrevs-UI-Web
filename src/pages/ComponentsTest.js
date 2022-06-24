@@ -5,7 +5,7 @@ import { PersonalTabbar } from "../Components/Tabbar/Desktop/PersonalTabbar";
 import { useAppSelector } from "../store/hooks";
 
 export const ComponentsTest = () => {
-  const [value, setValue] = React.useState();
+  const [value, setValue] = React.useState(0);
   const currentUserProfile = useAppSelector((state) => state.auth);
   return (
     <React.Fragment>
