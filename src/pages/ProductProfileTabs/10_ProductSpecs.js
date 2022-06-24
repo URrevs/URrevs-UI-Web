@@ -180,26 +180,28 @@ export const ProductSpecsScreen = ({ data }) => {
         {/* Left Grid*/}
 
         <Grid item lg={3.75} md={5.75} sm={0.5} xs={0}>
-          <div
-            style={{
-              height: "100%",
-              margin: "-50px 50px 0px 0px",
-            }}
-          >
+          {theme.isMobile ? null : (
             <div
               style={{
-                position: "sticky",
-                top: "0px",
-                padding: "65px 0px",
-                maxHeight: "100vh",
-                overflowY: "auto",
+                height: "100%",
+                margin: "-50px 50px 0px 0px",
               }}
             >
-              {overviewCard()}
-              {similarPhonesComponent()}
-              {ComparePaper(data)}
+              <div
+                style={{
+                  position: "sticky",
+                  top: "0px",
+                  padding: "65px 0px",
+                  maxHeight: "100vh",
+                  overflowY: "auto",
+                }}
+              >
+                {overviewCard()}
+                {similarPhonesComponent()}
+                {ComparePaper(data)}
+              </div>
             </div>
-          </div>
+          )}
         </Grid>
       </Grid>
     </React.Fragment>
