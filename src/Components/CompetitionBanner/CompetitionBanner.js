@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Box, Card, styled, Typography } from "@mui/material";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
@@ -26,16 +26,29 @@ export const CompetitionBanner = ({ daysLeft, prize }) => {
             pt: "21px",
           }}
         >
-          <Typography variant="S22W500Cffffff">
-            {daysLeft + ` يوم و تنتهي المسابقة `}
-          </Typography>
-          <Typography variant="S22W500Cffffff">{"الجائزة هي"}</Typography>
-          <Typography
-            variant="S22W800Cffffff"
-            style={{ textDecoration: "underline" }}
-          >
-            {prize}
-          </Typography>
+          {!daysLeft && !prize && (
+            <Typography variant="S22W500Cffffff">
+              ساعد الاخرين لتجمع اكبر عدد من النقاط
+            </Typography>
+          )}
+          {/* dayes left */}
+          {daysLeft && (
+            <Typography variant="S22W500Cffffff">
+              {daysLeft + " يوم و تنتهي المسابقة"}
+            </Typography>
+          )}
+          {/* prize */}
+          {prize && (
+            <Fragment>
+              <Typography variant="S22W500Cffffff">{"الجائزة هي"}</Typography>
+              <Typography
+                variant="S22W800Cffffff"
+                style={{ textDecoration: "underline" }}
+              >
+                {prize}
+              </Typography>
+            </Fragment>
+          )}
         </Box>
         <Box
           sx={{
