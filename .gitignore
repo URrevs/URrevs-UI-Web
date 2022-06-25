@@ -29,4 +29,5 @@ yarn-error.log*
 
 .vscode
 
+/public/images/logos
 # src/firebase-config.json
