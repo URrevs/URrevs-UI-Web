@@ -2,6 +2,7 @@ import React from "react";
 import { useTheme } from "@emotion/react";
 import { Card, CardContent, CardHeader, Typography } from "@mui/material";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
+
 export default function Banner() {
   const theme = useTheme();
   const cardShadow = "0px 14px 80px rgba(34, 35, 58, 0.2)";
@@ -13,6 +14,7 @@ export default function Banner() {
     primaryActionText: "راجع الاَن",
     secondaryActionText: "سجل الاَن",
   };
+
   return (
     <Card
       style={{
