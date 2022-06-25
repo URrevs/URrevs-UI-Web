@@ -421,7 +421,11 @@ export function AllProductsScreen() {
           showBackBtn
           tabBar={
             <React.Fragment>
-              <CompanyHorizontalList />
+              <CompanyHorizontalList
+                companiesList={companiesList}
+                selectCompanyHandler={selectCompanyHandler}
+                selectedCompany={queryParams.selectedCompany}
+              />
             </React.Fragment>
           }
         >

@@ -36,14 +36,12 @@ const CompanyButton = styled(Button, {
 }));
 
 // consider adding reducer for this state
-export const CompanyHorizontalList = () => {
+export const CompanyHorizontalList = ({
+  selectCompanyHandler,
+  selectedCompany,
+  companiesList,
+}) => {
   const theme = useTheme();
-
-  const [selectedCompany, setSelectedCompany] = React.useState(null);
-
-  const selectCompanyHandler = (index) => {
-    setSelectedCompany(index);
-  };
 
   let srcs = [
     "./images/logos/acer.png",
@@ -98,13 +96,13 @@ export const CompanyHorizontalList = () => {
     "./images/logos/zte.png",
   ];
 
-  const listItem = (index) => {
+  const listItem = (title, imgSrc, index, id) => {
     return (
       <CompanyButton
         key={index}
-        onClick={selectCompanyHandler.bind(this, index)}
+        onClick={selectCompanyHandler.bind(this, index, id)}
         backgroundColor={
-          selectedCompany === index
+          selectedCompany.index === index
             ? alpha(theme.palette.allProductsScreen.selectedItemBackground, 0.8)
             : "white"
         }
@@ -127,10 +125,7 @@ export const CompanyHorizontalList = () => {
         <ListItemText
           sx={{ textAlign: "center" }}
           primaryTypographyProps={{ ...theme.typography.S16W400C050505 }}
-          primary={srcs[index % srcs.length].substring(
-            15,
-            srcs[index % srcs.length].length - 4
-          )}
+          primary={title}
         />
       </CompanyButton>
     );
@@ -150,9 +145,9 @@ export const CompanyHorizontalList = () => {
         boxShadow: 3,
       }}
     >
-      {Array(40)
-        .fill(0)
-        .map((_, index) => listItem(index))}
+      {companiesList.map((item, index) =>
+        listItem(item.name, "", index, item._id)
+      )}
     </List>
   );
 };
