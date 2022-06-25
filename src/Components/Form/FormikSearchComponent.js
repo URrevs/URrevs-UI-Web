@@ -2,11 +2,11 @@ import { useTheme } from "@emotion/react";
 import { Field } from "formik";
 import React from "react";
 import { useGetManufacturingCompanyMutation } from "../../services/phones";
-import { useSearchPhonesOnlyMutation } from "../../services/search";
 import SearchComponent from "../SearchComponent";
 const FormikSearchComponent = ({
   fieldName,
   label,
+  // error,
   searchFn,
   toGetManufacturingCompany = false,
 }) => {
@@ -19,13 +19,13 @@ const FormikSearchComponent = ({
         <React.Fragment>
           <SearchComponent
             isFormik={true}
-            error={meta.touched && Boolean(meta.error)}
-            helperText={meta.touched && meta.error}
+            error={Boolean(meta.error?.pid)}
+            helperText={meta.touched && meta.error?.pid}
             setCompareItem={async (response) => {
               setFieldValue(fieldName, response);
 
               // not to do this request in question tab
-              if (toGetManufacturingCompany) {
+              if (toGetManufacturingCompany && response) {
                 const companyId = await getManufacturingCompany(response.pid);
                 setFieldValue("companyId", companyId.data);
                 sessionStorage.setItem(
