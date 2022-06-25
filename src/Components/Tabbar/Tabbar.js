@@ -86,11 +86,13 @@ export const Tabbar = ({
                 }}
               >
                 {isVertical ? (
-                  <Divider
-                    orientation="vertical"
-                    flexItem
-                    sx={{ marginLeft: "-1px" }}
-                  />
+                  arrayOfTabs.length !== id + 1 ? (
+                    <Divider
+                      orientation="vertical"
+                      flexItem
+                      sx={{ marginLeft: "-1px" }}
+                    />
+                  ) : null
                 ) : null}
               </Grid>
             </React.Fragment>
@@ -106,7 +108,7 @@ export const Tabbar = ({
             background: "#22CBF4",
             height: "4px",
             bottom: "0px",
-            transition: "0.5s",
+            transition: "0.39s",
             transform: `translateX(${translation}%)`,
           }}
         ></div>
