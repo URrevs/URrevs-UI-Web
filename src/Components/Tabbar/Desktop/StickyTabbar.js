@@ -1,8 +1,7 @@
-import { Box, Card, Tab, Tabs } from "@mui/material";
+import { Card, Tab, Tabs } from "@mui/material";
 import React from "react";
-import { FixedGrid } from "../../Grid/FixedGrid";
 
-export const StickyTabbar = ({ stickyRef }) => {
+export const StickyTabbar = ({ userPhoto }) => {
   const [value, setValue] = React.useState(0);
 
   const arrayOfTabs = [
@@ -18,20 +17,21 @@ export const StickyTabbar = ({ stickyRef }) => {
   };
   return (
     <Card
-      ref={stickyRef}
       style={{
         position: "sticky",
+        justifyContent: "space-between",
+        display: "flex",
         top: "64px",
+        padding: "0px 150px 0px 150px",
         width: "100%",
       }}
     >
-      <FixedGrid>
-        <Tabs value={value} onChange={handleChange}>
-          {arrayOfTabs.map((tab) => (
-            <Tab value={tab.value} label={tab.label} />
-          ))}
-        </Tabs>
-      </FixedGrid>
+      <Tabs value={value} onChange={handleChange}>
+        {arrayOfTabs.map((tab) => (
+          <Tab value={tab.value} label={tab.label} />
+        ))}
+      </Tabs>
+      {userPhoto()}
     </Card>
   );
 };

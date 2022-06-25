@@ -1,18 +1,12 @@
-import {
-  Avatar,
-  Box,
-  Divider,
-  Paper,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Divider, Paper, Typography } from "@mui/material";
 import React from "react";
 import { useAppSelector } from "../../../store/hooks";
 import StarWithCount from "../../Leaderboard/StarWithCount";
+import { StickyTabbar } from "./StickyTabbar";
 
 export const PersonalTabbar = ({
   userProfile,
+  children,
   arrayOfTabs = [
     {
       value: 0,
@@ -25,11 +19,33 @@ export const PersonalTabbar = ({
   value,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
+
   userProfile = useAppSelector((state) => state.auth);
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
   };
-
+  // const [smallPfpVisible, setSmallPfpVisible] = React.useState(false);
+  // const observer = new IntersectionObserver(
+  //   (entries) => {
+  //     setSmallPfpVisible(!entries[0].isIntersecting);
+  //   },
+  //   { threshold: 1 }
+  // );
+  // const profileRef = React.useRef();
+  // if (profileRef.current) observer.observe(profileRef.current);
+  // console.log(profileRef.current);
+  const userPhoto = (height, width) => (
+    <Avatar
+      src={userProfile.photo}
+      alt="User profile picture"
+      sx={{
+        mr: "8px",
+        height: `${height}px`,
+        width: `${width}px`,
+        transition: "0.1s",
+      }}
+    ></Avatar>
+  );
   const userProfileFn = () => (
     <Box
       style={{
@@ -39,13 +55,7 @@ export const PersonalTabbar = ({
     >
       {/* User name and Profile Picture */}
       <Box style={{ display: "flex", alignItems: "flex-end" }}>
-        {
-          <Avatar
-            src={userProfile.photo}
-            alt="User profile picture"
-            sx={{ mr: "8px", height: "90px", width: "90px" }}
-          ></Avatar>
-        }
+        {userPhoto(90, 90)}
         <Typography variant="S32W700C050505">{userProfile.name}</Typography>
       </Box>
 
@@ -68,8 +78,18 @@ export const PersonalTabbar = ({
 
   return (
     <React.Fragment>
-      <Paper elevation={0}>{userProfileFn()}</Paper>
-      <Divider />
+      <Paper
+        elevation={0}
+        style={{
+          padding: "0px 150px",
+        }}
+      >
+        {userProfileFn()}
+        <Divider />
+      </Paper>
+
+      <StickyTabbar userPhoto={userPhoto} />
+      {children}
     </React.Fragment>
   );
 };
