@@ -22,7 +22,7 @@ export const phoneApi = createApi({
       keepUnusedDataFor: 0,
       query: (pid) => {
         return {
-          url: `/phones${pid}/specs`,
+          url: `/phones/${pid}/specs`,
           method: "GET",
         };
       },
@@ -36,7 +36,7 @@ export const phoneApi = createApi({
 
       query: (pid) => {
         return {
-          url: `/phones${pid}/similar`,
+          url: `/phones/${pid}/similar`,
           method: "GET",
         };
       },
@@ -92,7 +92,7 @@ export const phoneApi = createApi({
       keepUnusedDataFor: 0,
       query: (pid) => {
         return {
-          url: `/phones${pid}/stats`,
+          url: `/phones/${pid}/stats`,
           method: "GET",
         };
       },
@@ -104,7 +104,7 @@ export const phoneApi = createApi({
     getManufacturingCompany: builder.mutation({
       query: (pid) => {
         return {
-          url: `/phones${pid}/company`,
+          url: `/phones/${pid}/company`,
           method: "GET",
         };
       },
