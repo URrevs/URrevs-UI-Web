@@ -33,6 +33,8 @@ function Reviews() {
 
   const isMobile = useTheme().isMobile;
 
+  const currentUser = useAppSelector((state) => state.auth);
+
   const reviewsList = useAppSelector((state) => state.homePage.newReviews);
   const [page, setPage] = useState(1);
   const { data, isLoading, isFetching, error } = useGetRecommendedQuery(page);
@@ -277,15 +279,20 @@ function Reviews() {
 
   return (
     <CustomAppBar showLogo showSearch showProfile>
-      {!isMobile && (
-        <Grid container style={{ display: "flex" }}>
-          <Grid item xl={2} md={1} xs={0}></Grid>
-          <Grid item xl={8} md={10} xs={12}>
-            <Banner></Banner>
+      {!isMobile ? (
+        !currentUser.isLoggedIn && (
+          <Grid container style={{ display: "flex" }}>
+            <Grid item xl={2} md={1} xs={0}></Grid>
+            <Grid item xl={8} md={10} xs={12}>
+              <Banner></Banner>
+            </Grid>
+            <Grid item xl={2} md={1} xs={0}></Grid>
           </Grid>
-          <Grid item xl={2} md={1} xs={0}></Grid>
-        </Grid>
+        )
+      ) : (
+        <div></div>
       )}
+      
       <Grid container style={{ display: "flex" }}>
         <Grid item xl={3} md={2} xs={0}></Grid>
         <Grid item xl={6} md={8} xs={12}>

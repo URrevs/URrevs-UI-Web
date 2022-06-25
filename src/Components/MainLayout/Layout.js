@@ -72,7 +72,7 @@ export default function Layout(props) {
       >
         <Toolbar variant="dense" sx={{ minHeight: appBarHeight }}>
           {/* logo */}
-          <Link to='./'>
+          <Link to="./">
             <animated.div
               style={{
                 ...logoAnimationStyles,
@@ -130,7 +130,10 @@ export default function Layout(props) {
         }}
       >
         {/* <DrawerHeader /> */}
-        {props.children}
+        {/* div for spacing between app bar and whole pages */}
+        <div style={{ marginTop: `${appBarHeight + 30}px` }}>
+          {props.children}
+        </div>
       </Box>
     </Box>
   );
