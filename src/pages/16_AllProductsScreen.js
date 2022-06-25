@@ -384,6 +384,7 @@ export function AllProductsScreen() {
   return (
     <div>
       {/* company list */}
+      {/* Right grid */}
       {!theme.isMobile && (
         <div
           style={{
@@ -401,16 +402,17 @@ export function AllProductsScreen() {
                 ref={listRef}
                 autoHeight
                 overscanRowCount={10}
-                width={300}
+                width={250}
                 height={companiesList.length * 300}
                 rowHeight={companyCache.rowHeight}
-                rowCount={85}
+                rowCount={companiesList.length}
                 rowRenderer={renderCompanyRow}
               />
             </div>
           </div>
         </div>
       )}
+
       <div>
         {/* CustomAppBar appears only on mobile */}
         <CustomAppBar
@@ -425,9 +427,10 @@ export function AllProductsScreen() {
         >
           <Grid container>
             {/* Right grid */}
-            <Grid style={{}} item lg={2} sm={0} xs={0}></Grid>
-            <Grid item lg={2} sm={0} xs={0}></Grid>
-            <Grid item lg={6} sm={12} xs={12}>
+            {/* company list space */}
+            <Grid item xl={2} lg={5} md={5} sm={0} xs={0}></Grid>
+            <Grid item xl={2} lg={0} md={0} sm={0} xs={0}></Grid>
+            <Grid item xl={6} lg={6} md={7} sm={12} xs={12}>
               {
                 <div style={{ height: "calc(100vh)", margin: "0px 0" }}>
                   <AutoSizer>
@@ -464,7 +467,7 @@ export function AllProductsScreen() {
               }
             </Grid>
             {/* Left Grid */}
-            <Grid item lg={2} sm={0} xs={0}></Grid>
+            <Grid item xl={2} lg={1} md={0} sm={0} xs={0}></Grid>
           </Grid>
         </CustomAppBar>
       </div>
