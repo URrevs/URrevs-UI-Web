@@ -1,12 +1,26 @@
-import { Avatar, Box, Divider, Paper, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Divider,
+  Paper,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { useAppSelector } from "../../../store/hooks";
 import StarWithCount from "../../Leaderboard/StarWithCount";
-import { Tabbar } from "../Tabbar";
 
 export const PersonalTabbar = ({
   userProfile,
-  arrayOfTabs = [],
+  arrayOfTabs = [
+    {
+      value: 0,
+      label: "Tab 1",
+    },
+    { value: 1, label: "Tab 2" },
+    { value: 2, label: "Tab 3" },
+  ],
   setValue,
   value,
 }) => {
@@ -54,23 +68,8 @@ export const PersonalTabbar = ({
 
   return (
     <React.Fragment>
-      <Paper>
-        {userProfileFn()}
-        <Divider />
-      </Paper>
-      <Box
-        style={{
-          position: "sticky",
-          top: 0,
-        }}
-      >
-        <Tabbar
-          value={value}
-          setValue={setValue}
-          isVertical={false}
-          arrayOfTabs={arrayOfTabs}
-        />
-      </Box>
+      <Paper elevation={0}>{userProfileFn()}</Paper>
+      <Divider />
     </React.Fragment>
   );
 };

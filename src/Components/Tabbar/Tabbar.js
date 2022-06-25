@@ -43,6 +43,7 @@ export const Tabbar = ({
           borderRadius: `${TABCARD_BORDER_RADIUS}px`,
           minHeight: "35px",
           marginBottom: "12px",
+          border: "1px solid transparent",
 
           position: "relative",
         }}
