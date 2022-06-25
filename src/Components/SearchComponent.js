@@ -1,20 +1,14 @@
-import * as React from "react";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
-import Autocomplete from "@mui/material/Autocomplete";
 import { useTheme } from "@emotion/react";
-import {
-  SEARCH_INPUT_DELAY,
-  TEXT_FIELD_BORDER_RADIUS,
-  TEXT_FIELD_BORDER_THICKNESS,
-} from "../constants";
-import SearchIcon from "@mui/icons-material/Search";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import InputBase from "@mui/material/InputBase";
-import { alpha, styled } from "@mui/material/styles";
-
+import SearchIcon from "@mui/icons-material/Search";
 import { IconButton, InputAdornment } from "@mui/material";
-import { useSearchPhonesOnlyMutation } from "../services/search";
+import Autocomplete from "@mui/material/Autocomplete";
+import InputBase from "@mui/material/InputBase";
+import Stack from "@mui/material/Stack";
+import { alpha, styled } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import * as React from "react";
+import { SEARCH_INPUT_DELAY } from "../constants";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -49,8 +43,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function SearchComponent({
   label,
   setCompareItem,
+  item = {},
   isFormik = false,
   error = false,
+  setError = () => {},
   helperText = "",
   searchFn,
 }) {
@@ -66,6 +62,7 @@ export default function SearchComponent({
         value={searchQuery}
         onChange={(e, value) => {
           setLock(true);
+          setError(false);
           setCompareItem(value);
           if (isFormik) {
             sessionStorage.setItem("chooseProduct", value.pid);
@@ -101,10 +98,7 @@ export default function SearchComponent({
               try {
                 setTimeout(async () => {
                   if (e.target.value.trim() !== "") {
-                    const phones = await searchFn(
-                      e.target.value.trim()
-                    ).unwrap();
-
+                    let phones = await searchFn(e.target.value.trim()).unwrap();
                     setResults(phones);
                   }
                 }, SEARCH_INPUT_DELAY);
@@ -118,12 +112,12 @@ export default function SearchComponent({
               try {
                 setTimeout(async () => {
                   if (e.target.value.trim() !== "") {
-                    const phones = await searchFn(
-                      e.target.value.trim()
-                    ).unwrap();
+                    let phones = await searchFn(e.target.value.trim()).unwrap();
+
+                    phones = phones.filter((phone) => phone.name !== item.name);
 
                     setResults(phones);
-                  }
+                  } else setError(false);
                 }, SEARCH_INPUT_DELAY);
               } catch (e) {
                 console.log(e);
@@ -137,27 +131,24 @@ export default function SearchComponent({
               // type: "search",
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => {
-                      setSearchQuery("");
-                      setLock(false);
-                      setCompareItem({
-                        pid: "",
-                        cid: "",
-                        label: "",
-                      });
-                    }}
-                  >
-                    {lock ? (
+                  {lock ? (
+                    <IconButton
+                      onClick={() => {
+                        // setSearchQuery("");
+                        setLock(false);
+                        setCompareItem(undefined);
+                        setError(false);
+                      }}
+                    >
                       <CloseOutlinedIcon
                         htmlColor={theme.palette.searchBar.searchIcon}
                       />
-                    ) : (
-                      <SearchIcon
-                        htmlColor={theme.palette.searchBar.searchIcon}
-                      />
-                    )}
-                  </IconButton>
+                    </IconButton>
+                  ) : (
+                    <SearchIcon
+                      htmlColor={theme.palette.searchBar.searchIcon}
+                    />
+                  )}
                 </InputAdornment>
               ),
               style: {
