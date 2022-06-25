@@ -50,7 +50,6 @@ export const CompareItem = ({ item }) => {
           searchFn={searchFn}
           setError={setError}
           error={error} //Checks if a phone was locked in search component
-          helperText={error && "Lock your phone selection"} //Need a custom ArEn error message
         />
 
         <OrangeGradientButton

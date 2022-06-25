@@ -3,43 +3,50 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { IconButton, InputAdornment } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
-import InputBase from "@mui/material/InputBase";
 import Stack from "@mui/material/Stack";
-import { alpha, styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
 import { SEARCH_INPUT_DELAY } from "../constants";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.searchBar.searchBarColor,
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.searchBar.searchBarColor, 0.8),
-  },
-  marginLeft: 0,
-  width: "100%",
-}));
+// const Search = styled("div")(({ theme }) => ({
+//   position: "relative",
+//   borderRadius: theme.shape.borderRadius,
+//   backgroundColor: theme.palette.searchBar.searchBarColor,
+//   "&:hover": {
+//     backgroundColor: alpha(theme.palette.searchBar.searchBarColor, 0.8),
+//   },
+//   marginLeft: 0,
+//   width: "100%",
+// }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
+// const SearchIconWrapper = styled("div")(({ theme }) => ({
+//   padding: theme.spacing(0, 2),
+//   height: "100%",
+//   position: "absolute",
+//   pointerEvents: "none",
+//   display: "flex",
+//   alignItems: "center",
+//   justifyContent: "center",
+// }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-  },
-}));
+// const StyledInputBase = styled(InputBase)(({ theme }) => ({
+//   "& .MuiInputBase-input": {
+//     padding: theme.spacing(1, 1, 1, 0),
+//     // vertical padding + font size from searchIcon
+//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+//     transition: theme.transitions.create("width"),
+//     width: "100%",
+//   },
+// }));
+/*============COMMENT=============== */
+/* 
+  Error handling:
+  1- error flag is raisen only when user clicks on search button while compareItem is undefined
+  2- if the textfield is emptied the flag is turned false
+  3- if user clicks search while field is empty the error flag is turned true with error message_1
+  4- if user clicks search without locking the error flag is turned true with error message_2
+  5- if user clicks search with a gibberish input the error flag is turned true with error message_3
+  */
 export default function SearchComponent({
   label,
   setCompareItem,
@@ -53,7 +60,7 @@ export default function SearchComponent({
   const [searchQuery, setSearchQuery] = React.useState("");
   const [results, setResults] = React.useState([]);
   const [lock, setLock] = React.useState(false);
-
+  const [errorMsg, setErrorMsg] = React.useState("لا يوجد شئ للبحث عنه");
   const theme = useTheme();
   return (
     <Stack spacing={2} sx={{ width: "100%" }}>
@@ -98,9 +105,13 @@ export default function SearchComponent({
               try {
                 setTimeout(async () => {
                   if (e.target.value.trim() !== "") {
-                    let phones = await searchFn(e.target.value.trim()).unwrap();
+                    const phones = await searchFn(
+                      e.target.value.trim()
+                    ).unwrap();
+                    setErrorMsg("اختر الهاتف من القائمة");
+                    if (phones.length === 0) setErrorMsg("لما نجد هذا الهاتف");
                     setResults(phones);
-                  }
+                  } else setErrorMsg("لا يوجد شئ للبحث عنه");
                 }, SEARCH_INPUT_DELAY);
               } catch (e) {
                 console.log(e);
@@ -124,7 +135,7 @@ export default function SearchComponent({
               }
             }}
             error={error}
-            helperText={helperText}
+            helperText={error && errorMsg}
             placeholder={label}
             InputProps={{
               ...params.InputProps,
