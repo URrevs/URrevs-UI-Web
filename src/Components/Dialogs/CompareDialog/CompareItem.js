@@ -1,29 +1,36 @@
 import CompareIcon from "@mui/icons-material/Compare";
 import { Box, Typography } from "@mui/material";
-import React, { Fragment } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
-import OrangeGradientButton from "../../Buttons/OrangeGradientButton";
-import { DialogTemplate } from "../DialogTemplate";
-import SearchComponent from "../../SearchComponent";
-import { useAppDispatch } from "../../../store/hooks";
-import { compareActions } from "../../../store/compareSlice";
 import { useNavigate } from "react-router-dom";
 import ROUTES_NAMES from "../../../RoutesNames";
-import { useSearchPhonesOnlyMutation } from "../../../services/search";
 import { useIndicateUserComparingMutation } from "../../../services/phones";
+import { useSearchPhonesOnlyMutation } from "../../../services/search";
+import { compareActions } from "../../../store/compareSlice";
+import { useAppDispatch } from "../../../store/hooks";
+import OrangeGradientButton from "../../Buttons/OrangeGradientButton";
+import SearchComponent from "../../SearchComponent";
 
 export const CompareItem = ({ item }) => {
-  const [compareItem, setCompareItem] = React.useState({});
-
+  const [compareItem, setCompareItem] = React.useState();
+  // console.log(item);
   const textContainer = useSelector((state) => {
     return state.language.textContainer;
   });
   const dispatch = useAppDispatch();
+  //
 
   const navigate = useNavigate();
 
   const [searchFn] = useSearchPhonesOnlyMutation();
   const [indicateComparison] = useIndicateUserComparingMutation();
+  const [error, setError] = React.useState(false);
+  // React.useEffect(() => {
+  //   setError(!Boolean(compareItem));
+  // }, [compareItem]);
+  // React.useEffect(() => {
+  //   setError(false);
+  // }, []);
   return (
     <React.Fragment>
       <Box
@@ -38,9 +45,13 @@ export const CompareItem = ({ item }) => {
         {/* PLACEHOLDER FOR ACTUAL SEARCHBAR  */}
         <SearchComponent
           setCompareItem={setCompareItem}
+          item={item}
           label={textContainer.writeProductName}
           searchFn={searchFn}
+          setError={setError}
+          error={error} //Checks if a phone was locked in search component
         />
+
         <OrangeGradientButton
           color="red"
           sx={{
@@ -49,7 +60,7 @@ export const CompareItem = ({ item }) => {
           }}
           onClick={async () => {
             // TODO:
-            if (compareItem !== 0) {
+            if (compareItem) {
               dispatch(
                 compareActions.compare({
                   productId: item._id,
@@ -66,7 +77,7 @@ export const CompareItem = ({ item }) => {
               navigate(
                 `${ROUTES_NAMES.COMPARISON}?cid=${compareItem.pid}&pid=${item._id}`
               );
-            }
+            } else setError(true);
           }}
         >
           <CompareIcon />

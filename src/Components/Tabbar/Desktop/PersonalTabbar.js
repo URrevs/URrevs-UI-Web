@@ -46,10 +46,12 @@ export const PersonalTabbar = ({
       }}
     ></Avatar>
   );
+
   const userProfileFn = () => (
     <Box
       style={{
         display: "flex",
+        maxHeight: "90px",
         justifyContent: "space-between",
       }}
     >

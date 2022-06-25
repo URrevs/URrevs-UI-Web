@@ -1,63 +1,66 @@
-import * as React from "react";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
-import Autocomplete from "@mui/material/Autocomplete";
 import { useTheme } from "@emotion/react";
-import {
-  SEARCH_INPUT_DELAY,
-  TEXT_FIELD_BORDER_RADIUS,
-  TEXT_FIELD_BORDER_THICKNESS,
-} from "../constants";
-import SearchIcon from "@mui/icons-material/Search";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import InputBase from "@mui/material/InputBase";
-import { alpha, styled } from "@mui/material/styles";
-
+import SearchIcon from "@mui/icons-material/Search";
 import { IconButton, InputAdornment } from "@mui/material";
-import { useSearchPhonesOnlyMutation } from "../services/search";
+import Autocomplete from "@mui/material/Autocomplete";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import * as React from "react";
+import { SEARCH_INPUT_DELAY } from "../constants";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.searchBar.searchBarColor,
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.searchBar.searchBarColor, 0.8),
-  },
-  marginLeft: 0,
-  width: "100%",
-}));
+// const Search = styled("div")(({ theme }) => ({
+//   position: "relative",
+//   borderRadius: theme.shape.borderRadius,
+//   backgroundColor: theme.palette.searchBar.searchBarColor,
+//   "&:hover": {
+//     backgroundColor: alpha(theme.palette.searchBar.searchBarColor, 0.8),
+//   },
+//   marginLeft: 0,
+//   width: "100%",
+// }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
+// const SearchIconWrapper = styled("div")(({ theme }) => ({
+//   padding: theme.spacing(0, 2),
+//   height: "100%",
+//   position: "absolute",
+//   pointerEvents: "none",
+//   display: "flex",
+//   alignItems: "center",
+//   justifyContent: "center",
+// }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-  },
-}));
+// const StyledInputBase = styled(InputBase)(({ theme }) => ({
+//   "& .MuiInputBase-input": {
+//     padding: theme.spacing(1, 1, 1, 0),
+//     // vertical padding + font size from searchIcon
+//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+//     transition: theme.transitions.create("width"),
+//     width: "100%",
+//   },
+// }));
+/*============COMMENT=============== */
+/* 
+  Error handling:
+  1- error flag is raisen only when user clicks on search button while compareItem is undefined
+  2- if the textfield is emptied the flag is turned false
+  3- if user clicks search while field is empty the error flag is turned true with error message_1
+  4- if user clicks search without locking the error flag is turned true with error message_2
+  5- if user clicks search with a gibberish input the error flag is turned true with error message_3
+  */
 export default function SearchComponent({
   label,
   setCompareItem,
+  item = {},
   isFormik = false,
   error = false,
+  setError = () => {},
   helperText = "",
   searchFn,
 }) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [results, setResults] = React.useState([]);
   const [lock, setLock] = React.useState(false);
-
+  const [errorMsg, setErrorMsg] = React.useState("لا يوجد شئ للبحث عنه");
   const theme = useTheme();
   return (
     <Stack spacing={2} sx={{ width: "100%" }}>
@@ -66,6 +69,7 @@ export default function SearchComponent({
         value={searchQuery}
         onChange={(e, value) => {
           setLock(true);
+          setError(false);
           setCompareItem(value);
           if (isFormik) {
             sessionStorage.setItem("chooseProduct", value.pid);
@@ -104,9 +108,10 @@ export default function SearchComponent({
                     const phones = await searchFn(
                       e.target.value.trim()
                     ).unwrap();
-
+                    setErrorMsg("اختر الهاتف من القائمة");
+                    if (phones.length === 0) setErrorMsg("لما نجد هذا الهاتف");
                     setResults(phones);
-                  }
+                  } else setErrorMsg("لا يوجد شئ للبحث عنه");
                 }, SEARCH_INPUT_DELAY);
               } catch (e) {
                 console.log(e);
@@ -118,46 +123,43 @@ export default function SearchComponent({
               try {
                 setTimeout(async () => {
                   if (e.target.value.trim() !== "") {
-                    const phones = await searchFn(
-                      e.target.value.trim()
-                    ).unwrap();
+                    let phones = await searchFn(e.target.value.trim()).unwrap();
+
+                    phones = phones.filter((phone) => phone.name !== item.name);
 
                     setResults(phones);
-                  }
+                  } else setError(false);
                 }, SEARCH_INPUT_DELAY);
               } catch (e) {
                 console.log(e);
               }
             }}
             error={error}
-            helperText={helperText}
+            helperText={error && errorMsg}
             placeholder={label}
             InputProps={{
               ...params.InputProps,
               // type: "search",
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => {
-                      setSearchQuery("");
-                      setLock(false);
-                      setCompareItem({
-                        pid: "",
-                        cid: "",
-                        label: "",
-                      });
-                    }}
-                  >
-                    {lock ? (
+                  {lock ? (
+                    <IconButton
+                      onClick={() => {
+                        // setSearchQuery("");
+                        setLock(false);
+                        setCompareItem(undefined);
+                        setError(false);
+                      }}
+                    >
                       <CloseOutlinedIcon
                         htmlColor={theme.palette.searchBar.searchIcon}
                       />
-                    ) : (
-                      <SearchIcon
-                        htmlColor={theme.palette.searchBar.searchIcon}
-                      />
-                    )}
-                  </IconButton>
+                    </IconButton>
+                  ) : (
+                    <SearchIcon
+                      htmlColor={theme.palette.searchBar.searchIcon}
+                    />
+                  )}
                 </InputAdornment>
               ),
               style: {
