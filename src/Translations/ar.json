@@ -235,5 +235,8 @@
   "english": "الإنجليزية",
   "lightTheme": "الأبيض",
   "darkTheme": "الأسود",
-  "starRatingMissingField": "يجب ادخال تقييمك"
+  "starRatingMissingField": "يجب ادخال تقييمك",
+  "nothingToSearchFor": "لا شئ للبحث عنه",
+  "phoneNotFound": "هذا الهاتف غير موجود",
+  "selectPhone": "اختر هاتف من القائمة"
 }

@@ -7,6 +7,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
 import { SEARCH_INPUT_DELAY } from "../constants";
+import { useAppSelector } from "../store/hooks";
 
 // const Search = styled("div")(({ theme }) => ({
 //   position: "relative",
@@ -57,10 +58,16 @@ export default function SearchComponent({
   helperText = "",
   searchFn,
 }) {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+  const pageDictionary = {
+    noInputError: textContainer.nothingToSearchFor,
+    phoneNotFound: textContainer.phoneNotFound,
+    selectPhone: textContainer.selectPhone,
+  };
   const [searchQuery, setSearchQuery] = React.useState("");
   const [results, setResults] = React.useState([]);
   const [lock, setLock] = React.useState(false);
-  const [errorMsg, setErrorMsg] = React.useState("لا يوجد شئ للبحث عنه");
+  const [errorMsg, setErrorMsg] = React.useState(pageDictionary.noInputError);
   const theme = useTheme();
   return (
     <Stack spacing={2} sx={{ width: "100%" }}>
@@ -108,10 +115,11 @@ export default function SearchComponent({
                     const phones = await searchFn(
                       e.target.value.trim()
                     ).unwrap();
-                    setErrorMsg("اختر الهاتف من القائمة");
-                    if (phones.length === 0) setErrorMsg("لما نجد هذا الهاتف");
+                    setErrorMsg(pageDictionary.selectPhone);
+                    if (phones.length === 0)
+                      setErrorMsg(pageDictionary.phoneNotFound);
                     setResults(phones);
-                  } else setErrorMsg("لا يوجد شئ للبحث عنه");
+                  } else setErrorMsg(pageDictionary.noInputError);
                 }, SEARCH_INPUT_DELAY);
               } catch (e) {
                 console.log(e);
@@ -147,7 +155,7 @@ export default function SearchComponent({
                       onClick={() => {
                         // setSearchQuery("");
                         if (searchQuery !== "")
-                          setErrorMsg("اختر الهاتف من القائمة");
+                          setErrorMsg(pageDictionary.selectPhone);
                         setLock(false);
                         setCompareItem(undefined);
                         setError(false);
