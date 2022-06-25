@@ -48,7 +48,6 @@ export const phoneApi = createApi({
     getAllPhones: builder.query({
       keepUnusedDataFor: 0,
       query: ({ round, companyId }) => {
-        console.log(companyId);
         return {
           url: companyId
             ? `/phones/by/${companyId}?round=${round}`

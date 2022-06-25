@@ -63,24 +63,22 @@ export function AllProductsScreen() {
 
   const currentUser = useAppSelector((state) => state.auth);
 
-  const [selectedCompany, setSelectedCompany] = React.useState({
-    index: -1,
-    id: null,
-  });
-
-  console.log(selectedCompany);
-
   const productsList = useAppSelector((state) => state.productList.newProducts);
-  const [page, setPage] = useState(1);
 
   const companiesList = useAppSelector(
     (state) => state.productList.newCompanies
   );
+
   const [companyPage, setCompanyPage] = useState(1);
 
+  const [queryParams, setQueryParams] = useState({
+    page: 1,
+    selectedCompany: { index: -1, id: null },
+  });
+
   const { data, isLoading, isFetching, error } = useGetAllPhonesQuery({
-    round: page,
-    companyId: selectedCompany.id,
+    round: queryParams.page,
+    companyId: queryParams.selectedCompany.id,
   });
 
   const {
@@ -104,27 +102,38 @@ export function AllProductsScreen() {
       })
     );
 
-  const increasePage = () => setPage(page + 1);
+  const increasePage = () => {
+    setQueryParams({
+      selectedCompany: {
+        index: queryParams.selectedCompany.index,
+        id: queryParams.selectedCompany.id,
+      },
+      page: queryParams.page + 1,
+    });
+  };
   const increaseCompanyPage = () => setCompanyPage(companyPage + 1);
 
   const theme = useTheme();
   const listRef = useRef();
 
   const selectCompanyHandler = (index, id) => {
-    window.scrollTo(0, 0);
     clearProductsList();
-    setPage(1);
-    selectedCompany.index === index
-      ? setSelectedCompany({ index: -1, id: null })
-      : setSelectedCompany({ index, id });
+    maxIndex = 0;
+    window.scrollTo(0, 0);
+
+    console.log("increased", queryParams.page);
+
+    queryParams.selectedCompany.index === index
+      ? setQueryParams({ page: 1, selectedCompany: { index: -1, id: null } })
+      : setQueryParams({ page: 1, selectedCompany: { index: index, id: id } });
   };
 
   useEffect(() => {
     if (data) {
       addToProductsList();
-      if (page < 2 && !isLoading && !isFetching) {
-        increasePage();
-      }
+      // if (page < 2 && !isLoading && !isFetching) {
+      //   increasePage();
+      // }
     }
   }, [data]);
 
@@ -216,7 +225,7 @@ export function AllProductsScreen() {
         key={title}
         style={{
           backgroundColor:
-            selectedCompany.index === index
+            queryParams.selectedCompany.index === index
               ? alpha(
                   theme.palette.allProductsScreen.selectedItemBackground,
                   0.8
@@ -292,7 +301,6 @@ export function AllProductsScreen() {
   const renderRow = ({ index, key, style, parent }) => {
     if (
       maxIndex !== 0 &&
-      page >= 2 &&
       !isLoading &&
       !isFetching &&
       maxIndex === productsList.length &&
