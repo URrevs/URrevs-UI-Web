@@ -124,9 +124,7 @@ const Basic = ({ ...props }) => {
           searchFn={searchFn}
           toGetManufacturingCompany={true}
         />
-
         <br />
-
         {/* Datepicker*/}
         <Typography variant="S18W500C050505">
           {pageDictionary.howLong}
@@ -170,7 +168,6 @@ const Basic = ({ ...props }) => {
           "hateAboutProduct",
           pageDictionary.cons
         )}
-
         {/* RENDER COMPANY REVIEW FIELDS */}
         {props.values.companyId?._id ? (
           <React.Fragment>
@@ -224,7 +221,6 @@ const Basic = ({ ...props }) => {
           label={pageDictionary.invitationCode}
           isControlled={false}
         />
-
         {/* Submit Button */}
         {/* {console.log(props.values)} */}
         <OrangeGradientButton
@@ -273,7 +269,9 @@ const ReviewPostingScreen = () => {
   };
   /* Form Validation */
   const BasicValidationSchema = Yup.object().shape({
-    // chooseProduct: Yup.string().required("Select a phone"),
+    chooseProduct: Yup.object().shape({
+      pid: Yup.string().required(),
+    }),
     purchaseDate: Yup.date().required(pageDictionary.purchaseDateErrorMsg),
     manufacturingQuality: Yup.number().integer().min(1, "Select Stars"),
     userInterface: Yup.number().integer().min(1, "Select Stars"),
@@ -365,8 +363,6 @@ const ReviewPostingScreen = () => {
             // }}
             validationSchema={BasicValidationSchema}
             onSubmit={async (values, { setSubmitting }) => {
-              console.log("values");
-
               sessionStorage.clear();
               const reviewPost = {
                 phoneId: values.chooseProduct.pid,

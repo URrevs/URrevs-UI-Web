@@ -146,6 +146,8 @@ export default function SearchComponent({
                     <IconButton
                       onClick={() => {
                         // setSearchQuery("");
+                        if (searchQuery !== "")
+                          setErrorMsg("اختر الهاتف من القائمة");
                         setLock(false);
                         setCompareItem(undefined);
                         setError(false);
