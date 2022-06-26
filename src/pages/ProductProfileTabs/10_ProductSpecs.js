@@ -3,7 +3,7 @@ import CompareOutlinedIcon from "@mui/icons-material/CompareOutlined";
 import HelpIcon from "@mui/icons-material/Help";
 import { Box, Card, Grid, IconButton, Modal, Typography } from "@mui/material";
 import { styled } from "@mui/styles";
-import React from "react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import ButtonPage from "../../Components/Buttons/ButtonPage";
 import { CompareDialog } from "../../Components/Dialogs/CompareDialog/CompareDialog";
@@ -121,20 +121,24 @@ export const ProductSpecsScreen = ({ data }) => {
       </Modal>
     </Box>
   );
+
   const similarPhonesComponent = () => (
     <div>
-      <Typography variant="S18W700C050505">
-        {componentDictionary.similarPhones + ":"}
-      </Typography>
       {similarPhoneLoading ? (
         <LoadingSpinner />
       ) : similarPhoneError ? (
         <div>{similarPhoneError.data.status}</div>
       ) : (
-        <HorizontalPhoneList items={similarPhones} />
+        <Fragment>
+          <Typography variant="S18W700C050505">
+            {componentDictionary.similarPhones + ":"}
+          </Typography>
+          <HorizontalPhoneList items={similarPhones} />
+        </Fragment>
       )}
     </div>
   );
+
   return (
     <React.Fragment>
       <Grid container>
