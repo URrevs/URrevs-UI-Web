@@ -16,6 +16,7 @@ import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { Tabbar } from "../Components/Tabbar/Tabbar";
 import { useAddPhoneReviewMutation } from "../services/phone_reviews";
 import { useSearchPhonesOnlyMutation } from "../services/search";
+import { FormSubmitButton } from "./PostingScreen/FormSubmitButton";
 import { QuestionsTab } from "./PostingScreen/QuestionsTab";
 
 const handleInitialValues = (fieldName, empty = "") => {
@@ -79,7 +80,7 @@ const Basic = ({ ...props }) => {
     },
   ];
 
-  const renderFields = (text, fieldName, label, controlled = false) => {
+  const renderFields = (text, fieldName, label, controlled = true) => {
     return (
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Typography sx={{}} variant="S18W500C050505">
@@ -109,7 +110,7 @@ const Basic = ({ ...props }) => {
         {/* Searchbar */}
         {/* Todo:
         Put X icon instead of SearchIcon and lock SearchBar with previous result
-        When X is hit delete PID and CompanyId entries from state
+        When X is hit delete id and CompanyId entries from state
         ERROR: When you overwrite a correct search result with a wrong one it passes validation
         Walkaround: display snackbar with the error
         Fix: add validation to companyId probably
@@ -124,9 +125,7 @@ const Basic = ({ ...props }) => {
           searchFn={searchFn}
           toGetManufacturingCompany={true}
         />
-
         <br />
-
         {/* Datepicker*/}
         <Typography variant="S18W500C050505">
           {pageDictionary.howLong}
@@ -170,7 +169,6 @@ const Basic = ({ ...props }) => {
           "hateAboutProduct",
           pageDictionary.cons
         )}
-
         {/* RENDER COMPANY REVIEW FIELDS */}
         {props.values.companyId?._id ? (
           <React.Fragment>
@@ -224,33 +222,9 @@ const Basic = ({ ...props }) => {
           label={pageDictionary.invitationCode}
           isControlled={false}
         />
-
         {/* Submit Button */}
         {/* {console.log(props.values)} */}
-        <OrangeGradientButton
-          type="submit"
-          color="red"
-          sx={{ width: "100%", textAlign: "center", marginTop: "20px" }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-            }}
-          >
-            <AddIcon
-              sx={{
-                color: theme.palette.defaultRedBtnIconColor,
-                fontSize: "28px",
-              }}
-            />
-            <Typography variant="S18W700Cffffff">
-              {pageDictionary.postReview}
-            </Typography>
-          </Box>
-        </OrangeGradientButton>
+        <FormSubmitButton submitLabel={pageDictionary.postReview} />
       </form>
     </React.Fragment>
   );
@@ -259,7 +233,6 @@ const Basic = ({ ...props }) => {
 const ReviewPostingScreen = () => {
   const [addReview] = useAddPhoneReviewMutation();
   const [value, setValue] = React.useState(0);
-  const [error, setError] = React.useState(null);
   const textContainer = useSelector((state) => state.language.textContainer);
   const pageDictionary = {
     tabbar: [textContainer.tabBarReview, textContainer.tabBarQuestion],
@@ -273,7 +246,11 @@ const ReviewPostingScreen = () => {
   };
   /* Form Validation */
   const BasicValidationSchema = Yup.object().shape({
-    // chooseProduct: Yup.string().required("Select a phone"),
+    chooseProduct: Yup.object().shape({
+      label: Yup.string().required(),
+      id: Yup.string().required(),
+      type: Yup.string().required(),
+    }),
     purchaseDate: Yup.date().required(pageDictionary.purchaseDateErrorMsg),
     manufacturingQuality: Yup.number().integer().min(1, "Select Stars"),
     userInterface: Yup.number().integer().min(1, "Select Stars"),
@@ -365,11 +342,9 @@ const ReviewPostingScreen = () => {
             // }}
             validationSchema={BasicValidationSchema}
             onSubmit={async (values, { setSubmitting }) => {
-              console.log("values");
-
               sessionStorage.clear();
               const reviewPost = {
-                phoneId: values.chooseProduct.pid,
+                phoneId: values.chooseProduct.id,
                 companyId: values.companyId._id,
                 ownedDate: values.purchaseDate,
                 generalRating: values.overAllExp,
@@ -391,7 +366,6 @@ const ReviewPostingScreen = () => {
                 const response = await addReview(reviewPost).unwrap();
               } catch (e) {
                 console.log("asd askjd bhasb", e);
-                setError(e);
               }
               setSubmitting(false);
             }}

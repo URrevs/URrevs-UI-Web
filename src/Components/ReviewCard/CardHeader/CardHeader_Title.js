@@ -3,7 +3,7 @@ import ArrowLeftRoundedIcon from "@mui/icons-material/ArrowLeftRounded";
 import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ROUTES_NAMES from "../../../RoutesNames";
 
 const CardHeaderTitle = ({
@@ -26,8 +26,9 @@ const CardHeaderTitle = ({
         }}
       >
         {/* user name */}
-        <Typography
-          sx={{
+        <Link
+          style={{
+            textDecoration: "none",
             display: "-webkit-box",
             overflow: "hidden",
             WebkitBoxOrient: "vertical",
@@ -35,16 +36,21 @@ const CardHeaderTitle = ({
             textAlign: "center",
             direction: "rtl",
             maxWidth: "50%",
-            "&:hover": {
-              cursor: "pointer",
-              textDecoration: "underline",
-            },
           }}
-          variant="S16W700C050505"
-          onClick={() => navigate(userProfilePath)}
+          to={userProfilePath}
         >
-          {userName}
-        </Typography>
+          <Typography
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+                textDecoration: "underline",
+              },
+            }}
+            variant="S16W700C050505"
+          >
+            {userName}
+          </Typography>
+        </Link>
         {/* product name and arrow */}
         {productName && (
           <div
@@ -66,9 +72,9 @@ const CardHeaderTitle = ({
             )}
           </div>
         )}
-        <Typography
-          variant="S16W700C050505"
-          sx={{
+        <Link
+          style={{
+            textDecoration: "none",
             display: "-webkit-box",
             overflow: "hidden",
             WebkitBoxOrient: "vertical",
@@ -76,15 +82,21 @@ const CardHeaderTitle = ({
             textAlign: "center",
             direction: "rtl",
             maxWidth: "50%",
-            "&:hover": {
-              cursor: "pointer",
-              textDecoration: "underline",
-            },
           }}
-          onClick={() => navigate(targetProfilePath)}
+          to={targetProfilePath}
         >
-          {productName}
-        </Typography>
+          <Typography
+            variant="S16W700C050505"
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+                textDecoration: "underline",
+              },
+            }}
+          >
+            {productName}
+          </Typography>
+        </Link>
       </div>
     </React.Fragment>
   );

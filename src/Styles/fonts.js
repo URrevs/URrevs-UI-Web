@@ -266,4 +266,9 @@ export const fonts = {
     fontSize: 28,
     color: "#050505",
   },
+  S32W700C050505: {
+    fontWeight: 700,
+    fontSize: 32,
+    color: "#050505",
+  },
 };
