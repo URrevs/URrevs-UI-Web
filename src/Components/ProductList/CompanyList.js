@@ -28,7 +28,7 @@ export default function CompanyList({ list = [] }) {
                 }}
               />
             }
-            to={`/companycpid=${item._id}`}
+            to={`/company?cid=${item._id}`}
           />
           {/* <ListItem sx={{ padding: 0 }}>
             <BusinessOutlinedIcon
