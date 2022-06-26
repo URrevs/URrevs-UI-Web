@@ -293,9 +293,26 @@ function Reviews() {
         <div></div>
       )}
 
-      <Grid container style={{ display: "flex" }}>
-        <Grid item xl={3} md={2} xs={0}></Grid>
-        <Grid item xl={6} md={8} xs={12}>
+      {!isMobile ? (
+        <Grid container>
+          <Grid item xl={3} lg={2} md={2} sm={0} xs={0}></Grid>
+          <Grid item xl={6} lg={8} md={8} sm={12} xs={12}>
+            <VirtualReviewList
+              reviewCard={reviewCard}
+              reviewsList={reviewsList}
+              page={page}
+              data={data}
+              error={error}
+              isLoading={isLoading}
+              isFetching={isFetching}
+              addToReviewsList={addToReviewsList}
+              increasePage={increasePage}
+            />
+          </Grid>
+          <Grid item xl={3} lg={2} md={2} sm={0} xs={0}></Grid>
+        </Grid>
+      ) : (
+        <FixedGrid>
           <VirtualReviewList
             reviewCard={reviewCard}
             reviewsList={reviewsList}
@@ -307,9 +324,8 @@ function Reviews() {
             addToReviewsList={addToReviewsList}
             increasePage={increasePage}
           />
-        </Grid>
-        <Grid item xl={3} md={2} xs={0}></Grid>
-      </Grid>
+        </FixedGrid>
+      )}
     </CustomAppBar>
   );
 }
