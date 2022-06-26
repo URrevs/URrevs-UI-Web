@@ -1,12 +1,10 @@
 import { useTheme } from "@emotion/react";
-import AddIcon from "@mui/icons-material/Add";
 import HelpIcon from "@mui/icons-material/Help";
 import { Box, IconButton, Modal, Stack, Typography } from "@mui/material";
 import { Formik } from "formik";
 import React from "react";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
-import OrangeGradientButton from "../Components/Buttons/OrangeGradientButton";
 import { DialogText } from "../Components/Dialogs/DialogText";
 import FormikDatePicker from "../Components/Form/FormikDatePicker";
 import FormikSearchComponent from "../Components/Form/FormikSearchComponent";
@@ -291,8 +289,8 @@ const ReviewPostingScreen = () => {
         {value === 0 ? (
           <Formik
             initialValues={{
-              companyId: { _id: "", name: "", type: "" },
-              chooseProduct: "",
+              companyId: "",
+              chooseProduct: { _id: "", name: "", type: "" },
               overAllExp: 0,
               manufacturingQuality: 0,
               userInterface: 0,
