@@ -139,9 +139,9 @@ export const ProductSpecsScreen = ({ data }) => {
     <React.Fragment>
       <Grid container>
         {/* Right Grid */}
-        <Grid item xl={2} lg={1} md={0.5}></Grid>
+        <Grid item xl={1} lg={1} md={0.5}></Grid>
         {/* Center Grid */}
-        <Grid item xl={5} lg={5} md={5.5}>
+        <Grid item xl={5} lg={5} md={5}>
           {theme.isMobile ? overviewCard() : null}
           <Typography variant="S18W700C050505">
             {componentDictionary.productImage + ":"}
@@ -177,14 +177,14 @@ export const ProductSpecsScreen = ({ data }) => {
           {theme.isMobile ? similarPhonesComponent() : null}
           {theme.isMobile ? compareWithOtherProducts() : null}
         </Grid>
-        <Grid item xl={1} lg={0} md={0.5}></Grid>
+        <Grid item xl={1} lg={1} md={0.5}></Grid>
         {/* Left Grid*/}
-        <Grid item xl={4} lg={5} md={4.5}>
+        <Grid item xl={5} lg={5} md={6}>
           {theme.isMobile ? null : (
             <div
               style={{
                 height: "100%",
-                margin: "-50px 50px 0px 0px",
+                // margin: "-50px 50px 0px 0px",
               }}
             >
               <div

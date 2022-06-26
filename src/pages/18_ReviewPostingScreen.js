@@ -16,7 +16,19 @@ import { useAddPhoneReviewMutation } from "../services/phone_reviews";
 import { useSearchPhonesOnlyMutation } from "../services/search";
 import { FormSubmitButton } from "./PostingScreen/FormSubmitButton";
 import { QuestionsTab } from "./PostingScreen/QuestionsTab";
+/*Documentation */
+/*
+##TODO:
+- Fix error messages when user changes language (hopefully it is solved when switch language feature is implemented)
+##TEST:
+- SearchComponent:{
+  1-If input is empty:Err1
+  2-If user didn't select: Err2
+  3-If user input is gibberish:Err3
 
+}
+
+*/
 const handleInitialValues = (fieldName, empty = "") => {
   return sessionStorage.getItem(fieldName)
     ? sessionStorage.getItem(fieldName)
