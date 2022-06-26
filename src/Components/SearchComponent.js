@@ -51,6 +51,7 @@ import { useAppSelector } from "../store/hooks";
 export default function SearchComponent({
   label,
   onResult,
+  query = "",
   item = {},
   isFormik = false,
   error = false,
@@ -64,9 +65,9 @@ export default function SearchComponent({
     phoneNotFound: textContainer.phoneNotFound,
     selectPhone: textContainer.selectPhone,
   };
-  const [searchQuery, setSearchQuery] = React.useState("");
+  const [searchQuery, setSearchQuery] = React.useState(query);
   const [results, setResults] = React.useState([]);
-  const [lock, setLock] = React.useState(false);
+  const [lock, setLock] = React.useState(query !== "");
   const [errorMsg, setErrorMsg] = React.useState(pageDictionary.noInputError);
   const theme = useTheme();
   return (
@@ -152,6 +153,8 @@ export default function SearchComponent({
                     <IconButton
                       onClick={() => {
                         setSearchQuery("");
+                        setResults([]);
+                        console.log(searchQuery);
                         if (searchQuery !== "")
                           setErrorMsg(pageDictionary.selectPhone);
                         setLock(false);
