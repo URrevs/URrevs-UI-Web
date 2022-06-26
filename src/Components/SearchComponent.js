@@ -134,7 +134,7 @@ export default function SearchComponent({
                     phones = phones.filter((phone) => phone.name !== item.name);
 
                     setResults(phones);
-                  } else setError(false);
+                  }
                 }, SEARCH_INPUT_DELAY);
               } catch (e) {
                 console.log(e);

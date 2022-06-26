@@ -19,7 +19,7 @@ const FormikSearchComponent = ({
         <React.Fragment>
           <SearchComponent
             isFormik={true}
-            error={Boolean(meta.error?.id)}
+            error={meta.touched && Boolean(meta.error?.id)}
             helperText={meta.touched && meta.error?.id}
             setError={(bool) => {
               setFieldError(fieldName, bool);
@@ -35,7 +35,7 @@ const FormikSearchComponent = ({
                   "companyId",
                   JSON.stringify(companyId.data)
                 );
-              }
+              } else setFieldValue("companyId", "");
             }}
             label={label}
             searchFn={searchFn}

@@ -1,12 +1,10 @@
 import { useTheme } from "@emotion/react";
-import AddIcon from "@mui/icons-material/Add";
 import HelpIcon from "@mui/icons-material/Help";
 import { Box, IconButton, Modal, Stack, Typography } from "@mui/material";
 import { Formik } from "formik";
 import React from "react";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
-import OrangeGradientButton from "../Components/Buttons/OrangeGradientButton";
 import { DialogText } from "../Components/Dialogs/DialogText";
 import FormikDatePicker from "../Components/Form/FormikDatePicker";
 import FormikSearchComponent from "../Components/Form/FormikSearchComponent";
@@ -18,7 +16,19 @@ import { useAddPhoneReviewMutation } from "../services/phone_reviews";
 import { useSearchPhonesOnlyMutation } from "../services/search";
 import { FormSubmitButton } from "./PostingScreen/FormSubmitButton";
 import { QuestionsTab } from "./PostingScreen/QuestionsTab";
+/*Documentation */
+/*
+##TODO:
+- Fix error messages when user changes language (hopefully it is solved when switch language feature is implemented)
+##TEST:
+- SearchComponent:{
+  1-If input is empty:Err1
+  2-If user didn't select: Err2
+  3-If user input is gibberish:Err3
 
+}
+
+*/
 const handleInitialValues = (fieldName, empty = "") => {
   return sessionStorage.getItem(fieldName)
     ? sessionStorage.getItem(fieldName)
@@ -291,8 +301,8 @@ const ReviewPostingScreen = () => {
         {value === 0 ? (
           <Formik
             initialValues={{
-              companyId: { _id: "", name: "", type: "" },
-              chooseProduct: "",
+              companyId: "",
+              chooseProduct: { _id: "", name: "", type: "" },
               overAllExp: 0,
               manufacturingQuality: 0,
               userInterface: 0,
