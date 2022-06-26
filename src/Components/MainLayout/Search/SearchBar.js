@@ -62,6 +62,7 @@ export const SearchBar = (props) => {
 
         <StyledInputBase
           placeholder={props.searchTitle}
+          autoComplete="off"
           inputProps={{ "aria-label": "search" }}
           onFocus={props.onSearchBarFocus}
           onBlur={props.onSearchBarBlur}

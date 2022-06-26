@@ -1,35 +1,33 @@
 import { useTheme } from "@emotion/react";
+import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import SearchIcon from "@mui/icons-material/Search";
+import SmartphoneRoundedIcon from "@mui/icons-material/SmartphoneRounded";
 import {
-  Typography,
+  Box,
+  Divider,
+  IconButton,
+  InputAdornment,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Box,
-  Divider,
-  IconButton,
   TextField,
+  Typography,
 } from "@mui/material";
 import React from "react";
-import { useAppSelector } from "../store/hooks";
-import SmartphoneRoundedIcon from "@mui/icons-material/SmartphoneRounded";
-import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import SearchComponent from "../Components/SearchComponent";
-import { InputAdornment } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
-import {
-  useSearchAllMutation,
-  useAddToMyRecentSearchesMutation,
-  useGetMyRecentSearchesQuery,
-  useDeleteRecentSearchesMutation,
-} from "../services/search";
-import { SEARCH_INPUT_DELAY } from "../constants";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ROUTES_NAMES from "../RoutesNames";
+import {
+  useAddToMyRecentSearchesMutation,
+  useDeleteRecentSearchesMutation,
+  useGetMyRecentSearchesQuery,
+  useSearchAllMutation,
+} from "../services/search";
+import { useAppSelector } from "../store/hooks";
 
 export const SearchScreen = () => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
@@ -72,42 +70,7 @@ export const SearchScreen = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   //TextField styling
-  const params = {
-    sx: {
-      width: "100",
-      input: {
-        "&::placeholder": {
-          opacity: 1,
-          fontWeight: 300,
-          fontSize: 16,
-        },
-      },
-    },
-    placeholder: textContainer.searchForAProductOrACompany,
-    InputProps: {
-      // type: "search",
-      endAdornment: (
-        <InputAdornment position="end">
-          <IconButton onClick={() => {}}>
-            <SearchIcon htmlColor={theme.palette.searchBar.searchIcon} />
-          </IconButton>
-        </InputAdornment>
-      ),
-      style: {
-        width: "100%",
-        height: "50px",
-        ...theme.typography.S16W500C050505,
-        alignContent: "center",
-        color: theme.palette.textField.inputFieldText,
-        background: theme.palette.textField.inputFieldBackground,
-        borderRadius: 90,
-        border: `0.8px solid ${theme.palette.textField.borderColor} `,
-        //
-        // borderRadius: TEXT_FIELD_BORDER_RADIUS,
-        // border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,
-      },
-    },
-  };
+
   // console.log(results);
   const renderSearchItems = (title, type, id) => (
     <React.Fragment key={id}>
@@ -208,6 +171,43 @@ export const SearchScreen = () => {
     if (searchQuery === "" && recentResults) setResults(recentResults);
   }, [searchQuery, recentResults]);
 
+  const params = {
+    autoComplete: "off",
+    sx: {
+      width: "100",
+      input: {
+        "&::placeholder": {
+          opacity: 1,
+          fontWeight: 300,
+          fontSize: 16,
+        },
+      },
+    },
+    placeholder: textContainer.searchForAProductOrACompany,
+    InputProps: {
+      // type: "search",
+      endAdornment: (
+        <InputAdornment position="end">
+          <IconButton onClick={() => {}}>
+            <SearchIcon htmlColor={theme.palette.searchBar.searchIcon} />
+          </IconButton>
+        </InputAdornment>
+      ),
+      style: {
+        width: "100%",
+        height: "50px",
+        ...theme.typography.S16W500C050505,
+        alignContent: "center",
+        color: theme.palette.textField.inputFieldText,
+        background: theme.palette.textField.inputFieldBackground,
+        borderRadius: 90,
+        border: `0.8px solid ${theme.palette.textField.borderColor} `,
+        //
+        // borderRadius: TEXT_FIELD_BORDER_RADIUS,
+        // border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,
+      },
+    },
+  };
   return (
     <CustomAppBar showLabel label={pageDictionary.search} showBackBtn>
       <Box

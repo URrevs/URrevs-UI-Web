@@ -11,6 +11,7 @@ export const StyledTextField = (props) => {
   return (
     <React.Fragment>
       <TextField
+        autoComplete="off"
         variant="outlined"
         {...props}
         sx={{
