@@ -19,14 +19,13 @@ import {
   WindowScroller,
 } from "react-virtualized";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
+import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import { PAPER_BORDER_RADIUS_DESKTOP } from "../constants";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetAllCompaniesQuery,
   useGetAllPhonesQuery,
-  useGetExactCompanyPhonesQuery,
 } from "../services/phones";
 import { productListActions } from "../store/allProductsSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -55,6 +54,11 @@ export function AllProductsScreen() {
   useEffect(() => {
     console.log("clear reviews");
     clearProductsList();
+    return () => {
+      console.log("clear reviews");
+      clearProductsList();
+      maxIndex = 0;
+    };
   }, []);
 
   const clearProductsList = () => {
@@ -76,10 +80,15 @@ export function AllProductsScreen() {
     selectedCompany: { index: -1, id: null },
   });
 
-  const { data, isLoading, isFetching, error } = useGetAllPhonesQuery({
-    round: queryParams.page,
-    companyId: queryParams.selectedCompany.id,
-  });
+  const { data, isLoading, isFetching, error } = useGetAllPhonesQuery(
+    {
+      round: queryParams.page,
+      companyId: queryParams.selectedCompany.id,
+    },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   const {
     data: companiesData,
@@ -314,32 +323,44 @@ export function AllProductsScreen() {
     const item = productsList[index];
     return (
       <div key={key}>
-        {data.length === 0 ? (
-          <div>No data</div>
-        ) : index >= productsList.length ? (
-          <div>Loading...</div>
-        ) : (
+        <CellMeasurer
+          cache={productCache}
+          parent={parent}
+          columnIndex={0}
+          rowIndex={index}
+        >
           <div style={{ ...style, direction: theme.direction }}>
-            <CellMeasurer
-              cache={productCache}
-              parent={parent}
-              columnIndex={0}
-              rowIndex={index}
-            >
-              {theme.isMobile
-                ? renderProduct(
-                    item.name,
-                    "",
-                    `/${ROUTES_NAMES.PHONE_PROFILE}?pid=${item._id}`
-                  )
-                : renderProductOnDesktop(
-                    item.name,
-                    "",
-                    `/${ROUTES_NAMES.PHONE_PROFILE}?pid=${item._id}`
-                  )}
-            </CellMeasurer>
+            {index >= productsList.length ? (
+              data.length === 0 ? (
+                <div></div>
+              ) : (
+                [...Array(1)].map((a, index) => (
+                  <div
+                    style={{
+                      padding: "8px",
+                    }}
+                  >
+                    <LoadingSpinner />
+                  </div>
+                ))
+              )
+            ) : (
+              <Fragment>
+                {theme.isMobile
+                  ? renderProduct(
+                      item.name,
+                      "",
+                      `/${ROUTES_NAMES.PHONE_PROFILE}?pid=${item._id}`
+                    )
+                  : renderProductOnDesktop(
+                      item.name,
+                      "",
+                      `/${ROUTES_NAMES.PHONE_PROFILE}?pid=${item._id}`
+                    )}
+              </Fragment>
+            )}
           </div>
-        )}
+        </CellMeasurer>
       </div>
     );
   };

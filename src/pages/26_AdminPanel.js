@@ -130,7 +130,7 @@ export const AdminPanel = () => {
   const desktopView = () => (
     <Grid container>
       {/* Right Grid => On Arabic Language */}
-      <Grid item xl={3} lg={4} md={5}>
+      <Grid item xl={3} lg={3.5} md={4}>
         <Paper
           style={{
             padding: "65px 8px",
@@ -150,12 +150,11 @@ export const AdminPanel = () => {
       </Grid>
       {/* Remove the  page * 2 later it's just for show */}
       <Grid item xl={2} lg={1} md={0.5}></Grid>
-
       <Grid
         item
         xl={5}
-        lg={6}
-        md={6}
+        lg={6.5}
+        md={7}
         sx={{
           marginTop: "39px",
           marginBottom: "65px",
