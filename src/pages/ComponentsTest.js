@@ -7,6 +7,8 @@ import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { Card } from "@mui/material";
 import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
 import { QuestionsTab } from "./PostingScreen/QuestionsTab";
+import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
+import { PostingComponent } from "../Components/PostingComponents/PostingComponent";
 
 export const ComponentsTest = () => {
   /* Footer */
@@ -267,8 +269,13 @@ export const ComponentsTest = () => {
   );
   /* Formik QuestionsTab */
   const renderQuestionsTab = () => <QuestionsTab />;
+
+  /* CompetitionPrompt */
+  const renderCompetitionPrompt = () => <CompetitionPrompt />;
+  /* PostingComponent*/
+  const renderPostingComponent = () => <PostingComponent />;
   //---RETURN---
-  return <React.Fragment></React.Fragment>;
+  return <React.Fragment>{renderPostingComponent()}</React.Fragment>;
 };
 
 // import { Button } from "@mui/material";

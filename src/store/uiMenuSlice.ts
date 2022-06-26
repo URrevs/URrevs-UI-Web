@@ -22,5 +22,5 @@ const menuSlice = createSlice({
 });
 
 export const menuActions = menuSlice.actions;
-export const snackbarSliceName = menuSlice.name;
+export const MenuSliceName = menuSlice.name;
 export default menuSlice;

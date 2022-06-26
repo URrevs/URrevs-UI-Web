@@ -20,6 +20,8 @@ const FormikDatePicker = ({
   isRequired = true,
   noFutureDate = true,
 }) => {
+  let minDate = new Date();
+  minDate = minDate.setDate(minDate.getDate() + 1);
   const [openDate, setOpenDate] = useState(false);
   const theme = useTheme();
   const language = useSelector((state) => state.language.language);
@@ -36,7 +38,7 @@ const FormikDatePicker = ({
           >
             <MobileDatePicker
               maxDate={noFutureDate ? new Date() : null}
-              minDate={noFutureDate ? null : new Date()}
+              minDate={noFutureDate ? null : minDate}
               value={value}
               views={view}
               onChange={(newValue) => {
