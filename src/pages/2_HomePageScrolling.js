@@ -28,7 +28,7 @@ function Reviews() {
   useEffect(() => {
     console.log("clear reviews");
 
-    // dispatch(homePageActions.clearReviews());
+    dispatch(homePageActions.clearReviews());
   }, []);
 
   const isMobile = useTheme().isMobile;
@@ -292,7 +292,7 @@ function Reviews() {
       ) : (
         <div></div>
       )}
-      
+
       <Grid container style={{ display: "flex" }}>
         <Grid item xl={3} md={2} xs={0}></Grid>
         <Grid item xl={6} md={8} xs={12}>

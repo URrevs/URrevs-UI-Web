@@ -1,3 +1,5 @@
+import { useTheme } from "@emotion/react";
+import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -10,6 +12,7 @@ import { reviewsActions } from "../../store/reviewsSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
 
 export function CompanyReviews({ viewer, companyRating, companyName, type }) {
+  const theme = useTheme();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -76,25 +79,67 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
     );
   };
 
-  return (
-    <Box>
+  const companyOverView = () => {
+    return (
       <CompanyOverviewCard
         companyName={companyName}
         companyRating={companyRating}
         type="شركة"
         viewer={viewer}
       />
-      <VirtualReviewList
-        reviewCard={reviewCard}
-        reviewsList={reviewsList}
-        page={page}
-        data={data}
-        error={error}
-        isLoading={isLoading}
-        isFetching={isFetching}
-        addToReviewsList={addToReviewsList}
-        increasePage={increasePage}
-      />
+    );
+  };
+
+  return (
+    <Box>
+      <Grid container>
+        <Grid item xl={2} lg={0.5} md={0.5} sm={0}></Grid>
+        <Grid item xl={6} lg={7} md={7} sm={12}>
+          {theme.isMobile && companyOverView()}
+          <VirtualReviewList
+            reviewCard={reviewCard}
+            reviewsList={reviewsList}
+            page={page}
+            data={data}
+            error={error}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            addToReviewsList={addToReviewsList}
+            increasePage={increasePage}
+          />
+        </Grid>
+
+        {!theme.isMobile && (
+          <Grid
+            item
+            xl={4}
+            lg={4.5}
+            md={4.5}
+            sm={0}
+            sx={{
+              [theme.breakpoints.up("xl")]: {
+                width: "30%",
+              },
+              [theme.breakpoints.up("lg")]: {
+                width: "36%",
+              },
+              [theme.breakpoints.up("md")]: {
+                width: "35%",
+              },
+            }}
+          >
+            <Box
+              sx={{
+                position: "fixed",
+                padding: "0 12px",
+                width: "inherit",
+              }}
+            >
+              {companyOverView()}
+            </Box>
+          </Grid>
+        )}
+      </Grid>
     </Box>
   );
 }
