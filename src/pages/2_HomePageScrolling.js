@@ -19,14 +19,21 @@ import {
   useLikeCompanyQuestionCommentMutation,
   useUnLikeCompanyQuestionCommentMutation,
 } from "../services/company_questions";
+import Banner from "../Components/Banners/Banner";
+import { Grid } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 function Reviews() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     console.log("clear reviews");
 
-    dispatch(homePageActions.clearReviews());
+    // dispatch(homePageActions.clearReviews());
   }, []);
+
+  const isMobile = useTheme().isMobile;
+
+  const currentUser = useAppSelector((state) => state.auth);
 
   const reviewsList = useAppSelector((state) => state.homePage.newReviews);
   const [page, setPage] = useState(1);
@@ -272,19 +279,37 @@ function Reviews() {
 
   return (
     <CustomAppBar showLogo showSearch showProfile>
-      <FixedGrid>
-        <VirtualReviewList
-          reviewCard={reviewCard}
-          reviewsList={reviewsList}
-          page={page}
-          data={data}
-          error={error}
-          isLoading={isLoading}
-          isFetching={isFetching}
-          addToReviewsList={addToReviewsList}
-          increasePage={increasePage}
-        />
-      </FixedGrid>
+      {!isMobile ? (
+        !currentUser.isLoggedIn && (
+          <Grid container style={{ display: "flex" }}>
+            <Grid item xl={2} md={1} xs={0}></Grid>
+            <Grid item xl={8} md={10} xs={12}>
+              <Banner></Banner>
+            </Grid>
+            <Grid item xl={2} md={1} xs={0}></Grid>
+          </Grid>
+        )
+      ) : (
+        <div></div>
+      )}
+      
+      <Grid container style={{ display: "flex" }}>
+        <Grid item xl={3} md={2} xs={0}></Grid>
+        <Grid item xl={6} md={8} xs={12}>
+          <VirtualReviewList
+            reviewCard={reviewCard}
+            reviewsList={reviewsList}
+            page={page}
+            data={data}
+            error={error}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            addToReviewsList={addToReviewsList}
+            increasePage={increasePage}
+          />
+        </Grid>
+        <Grid item xl={3} md={2} xs={0}></Grid>
+      </Grid>
     </CustomAppBar>
   );
 }

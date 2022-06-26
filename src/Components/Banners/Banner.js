@@ -2,7 +2,12 @@ import React from "react";
 import { useTheme } from "@emotion/react";
 import { Card, CardContent, CardHeader, Typography } from "@mui/material";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
+import { regDialogActions } from "../../store/uiRegisterDialogSlice";
+import { useAppDispatch } from "../../store/hooks";
+
 export default function Banner() {
+  const dispatch = useAppDispatch();
+
   const theme = useTheme();
   const cardShadow = "0px 14px 80px rgba(34, 35, 58, 0.2)";
   const headerShadow = "4px 4px 20px 1px rgba(33, 203, 243, .3)";
@@ -13,6 +18,7 @@ export default function Banner() {
     primaryActionText: "راجع الاَن",
     secondaryActionText: "سجل الاَن",
   };
+
   return (
     <Card
       style={{
@@ -22,6 +28,8 @@ export default function Banner() {
         position: "relative",
         overflow: "initial",
         background: "#ffffff",
+        // space between header and list
+        marginBottom: "12px",
         marginTop: theme.spacing(4),
         padding: theme.spacing(2, 0, 0, 0),
         [theme.breakpoints.only("xs")]: {
@@ -36,7 +44,8 @@ export default function Banner() {
           right: 20,
           left: 20,
           borderRadius: theme.spacing(2),
-          background: `linear-gradient(45deg, ${theme.palette.primary.dark} 30%, ${theme.palette.primary.light} 90%)`,
+          background:
+            "conic-gradient(from 180deg at 50% 50%, rgba(33, 150, 243, 0.72) 0deg, #21ADF3 151.87deg, #22CBF4 315deg, rgba(33, 150, 243, 0.72) 360deg)",
           overflow: "hidden",
           boxShadow: headerShadow,
           textAlign: "center",
@@ -78,7 +87,12 @@ export default function Banner() {
           <Typography variant="subtitle1" component="h3">
             {pageContainer.subtitle}
           </Typography>
-          <OrangeGradientButton color="red" onClick={() => {}}>
+          <OrangeGradientButton
+            color="red"
+            onClick={() => {
+              dispatch(regDialogActions.toggleRegistration());
+            }}
+          >
             {pageContainer.primaryActionText}
           </OrangeGradientButton>
           {pageContainer.showSecondaryAction && (
