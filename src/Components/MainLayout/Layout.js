@@ -131,9 +131,9 @@ export default function Layout(props) {
       >
         {/* <DrawerHeader /> */}
         {/* div for spacing between app bar and whole pages */}
-        <div style={{ marginTop: `${appBarHeight + 30}px` }}>
-          {props.children}
-        </div>
+        {/* <div style={{ marginTop: `${appBarHeight + 30}px` }}> */}
+        {props.children}
+        {/* </div> */}
       </Box>
     </Box>
   );
