@@ -83,6 +83,7 @@ export const SearchSuggestion = () => {
             // setResults([...results, { _id: id, name: title, type }]);
 
             // add recent search to server
+            setSearchSuggestion(false);
             addRecentSearch({ type, id });
             type === "phone"
               ? navigate(`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${id}`)
@@ -123,6 +124,7 @@ export const SearchSuggestion = () => {
           }}
           onClick={() => {
             //Navigate to that phone
+            setSearchSuggestion(false);
             type === "phone"
               ? navigate(`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${id}`)
               : navigate(`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${id}`);
