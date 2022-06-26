@@ -268,13 +268,7 @@ export const ComponentsTest = () => {
   /* Formik QuestionsTab */
   const renderQuestionsTab = () => <QuestionsTab />;
   //---RETURN---
-  return (
-    <React.Fragment>
-      <div>{renderQuestionsTab()}</div>
-      {/* <div>{renderBanner()}</div>
-      <div>{renderPersonalTabbar()}</div> */}
-    </React.Fragment>
-  );
+  return <React.Fragment></React.Fragment>;
 };
 
 // import { Button } from "@mui/material";

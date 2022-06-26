@@ -6,6 +6,7 @@ import SearchComponent from "../SearchComponent";
 const FormikSearchComponent = ({
   fieldName,
   label,
+  query = "",
   // error,
   searchFn,
   toGetManufacturingCompany = false,
@@ -19,6 +20,7 @@ const FormikSearchComponent = ({
         <React.Fragment>
           <SearchComponent
             isFormik={true}
+            query={query}
             error={meta.touched && Boolean(meta.error?.id)}
             helperText={meta.touched && meta.error?.id}
             setError={(bool) => {
