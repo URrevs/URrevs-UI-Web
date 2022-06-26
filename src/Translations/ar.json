@@ -215,7 +215,7 @@
   "posting": "جاري النشر",
   "yourQuestionRegarding": "سؤالك بخصوص:",
   "writeTheNameOfProductOrCompany": "اكتب اسم المنتج او الشركة",
-  "writeYourQuestion": "اكتب سؤالك",
+  "writeYourQuestion": "اكتب سؤالك:",
   "question": "السؤال",
   "productNameOrCompanyNameErrorMsg": "يجب ادخال اسم المنتج أو الشركة.",
   "enterYourQuestionErrorMsg": "يجب ادخال سؤالك.",
@@ -228,6 +228,14 @@
   "aboutUsContent": "اول منصة متخصصة في الوطن العربي لمراجعات المستخدمين. هدفنا مساعدة الشخص المقبل علي الشراء في اختيار هاتفه من خلال المراجعات التي توفرها المنصة له والتي تشمل تجارب المستخدمين لهواتفهم من مميزات وعيوب وكذلك توفير امكانيات واسعار احدث الهواتف.",
   "contactUs": "تواصل معنا",
   "followUs": "تابعنا:",
+  "downloadTheApp": "حمل التطبيق:",
+  "language": "اللغة",
+  "theme": "اللون",
+  "arabic": "العربية",
+  "english": "الإنجليزية",
+  "lightTheme": "الأبيض",
+  "darkTheme": "الأسود",
+  "starRatingMissingField": "يجب ادخال تقييمك",
   "language": "اللغة",
   "theme": "اللون",
   "arabic": "العربية",
@@ -244,5 +252,8 @@
   "invitationCodeCopied": "تم نسخ كود الدعوة",
   "systemTheme": "حسب النظام",
   "youCannotUseYourInvitationCode": "لا يمكنك استخدام كود الدعوة الخاص بك",
-  "cantLogoutFromAllDevices": "لا يمكن تسجيل الخروج من جميع الأجهزة"
+  "cantLogoutFromAllDevices": "لا يمكن تسجيل الخروج من جميع الأجهزة",
+  "nothingToSearchFor": "لا شئ للبحث عنه",
+  "phoneNotFound": "هذا الهاتف غير موجود",
+  "selectPhone": "اختر هاتف من القائمة"
 }

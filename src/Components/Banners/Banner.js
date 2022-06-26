@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, Typography } from "@mui/material";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
 import { regDialogActions } from "../../store/uiRegisterDialogSlice";
 import { useAppDispatch } from "../../store/hooks";
+import { CARD_BORDER_RADIUS } from "../../constants";
 
 export default function Banner() {
   const dispatch = useAppDispatch();
@@ -22,8 +23,8 @@ export default function Banner() {
   return (
     <Card
       style={{
-        borderRadius: theme.shape.borderRadius,
-        transition: "0.3s",
+        borderRadius: `${CARD_BORDER_RADIUS}px`,
+        transition: "0.3s", //why?
         boxShadow: cardShadow,
         position: "relative",
         overflow: "initial",

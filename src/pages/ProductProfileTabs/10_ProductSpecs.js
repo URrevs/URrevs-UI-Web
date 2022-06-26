@@ -139,9 +139,9 @@ export const ProductSpecsScreen = ({ data }) => {
     <React.Fragment>
       <Grid container>
         {/* Right Grid */}
-        <Grid item lg={2.75} md={1.25} sm={0.5} xs={0}></Grid>
+        <Grid item xl={2} lg={1} md={0.5}></Grid>
         {/* Center Grid */}
-        <Grid item lg={5.5} md={5} sm={12} xs={12}>
+        <Grid item xl={5} lg={5} md={5.5}>
           {theme.isMobile ? overviewCard() : null}
           <Typography variant="S18W700C050505">
             {componentDictionary.productImage + ":"}
@@ -177,9 +177,9 @@ export const ProductSpecsScreen = ({ data }) => {
           {theme.isMobile ? similarPhonesComponent() : null}
           {theme.isMobile ? compareWithOtherProducts() : null}
         </Grid>
+        <Grid item xl={1} lg={0} md={0.5}></Grid>
         {/* Left Grid*/}
-
-        <Grid item lg={3.75} md={5.75} sm={0.5} xs={0}>
+        <Grid item xl={4} lg={5} md={4.5}>
           {theme.isMobile ? null : (
             <div
               style={{
@@ -190,9 +190,9 @@ export const ProductSpecsScreen = ({ data }) => {
               <div
                 style={{
                   position: "sticky",
-                  top: "0px",
-                  padding: "65px 0px",
-                  maxHeight: "100vh",
+                  top: "65px",
+                  // padding: "65px 0px",
+                  maxHeight: "90vh",
                   overflowY: "auto",
                 }}
               >
