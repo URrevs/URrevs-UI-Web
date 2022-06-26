@@ -15,12 +15,16 @@ import { convertDateToString } from "../functions/convertDateToString";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetLatestCompetetionQuery } from "../services/competetion";
 import { useGetLastUpdateInfoQuery } from "../services/update";
+import { useAppDispatch } from "../store/hooks";
+import { snackbarActions } from "../store/uiSnackbarSlice";
 import { UpdateProducts } from "./29_UpdateProducts";
 
 export const AdminPanel = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const language = useSelector((state) => state.language.language);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const theme = useTheme();
   const { data, latestUpdateError, isLoading } = useGetLastUpdateInfoQuery();
   const {
@@ -94,12 +98,28 @@ export const AdminPanel = () => {
           key={listItems[1].title}
           title={listItems[1].title}
           subTitle={
-            lastCompetetionData &&
-            listItems[1].subtitle +
-              " " +
-              convertDateToString(lastCompetetionData.createdAt, language)
+            latestCompetetionError &&
+            latestCompetetionError.data.status === "not yet"
+              ? "لا يوجد مسابقات بعد"
+              : lastCompetetionData &&
+                new Date(lastCompetetionData.deadline) - new Date() > 0
+              ? "هناك مسابقة قائمة الان"
+              : listItems[1].subtitle +
+                " " +
+                convertDateToString(lastCompetetionData.createdAt, language)
           }
-          onClick={listItems[1].onClick}
+          onClick={
+            lastCompetetionData &&
+            new Date(lastCompetetionData.deadline) - new Date() > 0
+              ? () => {
+                  dispatch(
+                    snackbarActions.showSnackbar({
+                      message: "يوجد مسابقة قائمة بالفعل",
+                    })
+                  );
+                }
+              : listItems[1].onClick
+          }
           icon={listItems[1].icon}
         />
       </React.Fragment>
