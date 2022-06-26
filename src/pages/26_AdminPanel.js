@@ -68,9 +68,10 @@ export const AdminPanel = () => {
 
   useEffect(() => {
     if (data) {
-      setLastUpdateDate(convertDateToString(data.lastUpdateDate, language));
+      setLastUpdateDate(convertDateToString(data.date, language));
     }
   }, [data]);
+
   const renderAdminOption = () =>
     isLoading ? (
       <LoadingSpinner />
@@ -106,7 +107,7 @@ export const AdminPanel = () => {
   const desktopView = () => (
     <Grid container>
       {/* Right Grid => On Arabic Language */}
-      <Grid item lg={2.6}>
+      <Grid item xl={4} lg={5} md={5}>
         <Paper
           style={{
             padding: "65px 8px",
@@ -125,7 +126,7 @@ export const AdminPanel = () => {
         </Paper>
       </Grid>
       {/* Remove the  page * 2 later it's just for show */}
-      <Grid item lg={1.9}></Grid>
+      <Grid item xl={2} lg={1} md={1}></Grid>
 
       <Grid
         sx={{
@@ -133,7 +134,9 @@ export const AdminPanel = () => {
           marginBottom: "65px",
         }}
         item
-        lg={5.6 - page * 2}
+        xl={4}
+        lg={5}
+        md={5}
       >
         {page === 0 ? (
           <UpdateProducts />
@@ -150,7 +153,7 @@ export const AdminPanel = () => {
           </Paper>
         )}
       </Grid>
-      <Grid item lg={1.9}></Grid>
+      <Grid item xl={2} lg={1} md={1}></Grid>
     </Grid>
   );
   return (
