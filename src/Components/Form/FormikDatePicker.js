@@ -15,6 +15,7 @@ import {
 
 const FormikDatePicker = ({
   label,
+  view = ["year", "month"],
   fieldName,
   isRequired = true,
   noFutureDate = true,
@@ -35,8 +36,9 @@ const FormikDatePicker = ({
           >
             <MobileDatePicker
               maxDate={noFutureDate ? new Date() : null}
+              minDate={noFutureDate ? null : new Date()}
               value={value}
-              views={["year", "month"]}
+              views={view}
               onChange={(newValue) => {
                 setFieldValue(fieldName, newValue);
                 if (newValue) sessionStorage.setItem(fieldName, newValue);
