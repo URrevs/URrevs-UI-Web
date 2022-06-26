@@ -151,7 +151,7 @@ export default function SearchComponent({
                   {lock ? (
                     <IconButton
                       onClick={() => {
-                        // setSearchQuery("");
+                        setSearchQuery("");
                         if (searchQuery !== "")
                           setErrorMsg(pageDictionary.selectPhone);
                         setLock(false);
