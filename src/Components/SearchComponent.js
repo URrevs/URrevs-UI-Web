@@ -50,7 +50,7 @@ import { useAppSelector } from "../store/hooks";
   */
 export default function SearchComponent({
   label,
-  setCompareItem,
+  onResult,
   item = {},
   isFormik = false,
   error = false,
@@ -77,9 +77,9 @@ export default function SearchComponent({
         onChange={(e, value) => {
           setLock(true);
           setError(false);
-          setCompareItem(value);
+          onResult(value);
           if (isFormik) {
-            sessionStorage.setItem("chooseProduct", value.pid);
+            sessionStorage.setItem("chooseProduct", value.id);
             sessionStorage.setItem("search field", value.label);
           }
         }}
@@ -92,9 +92,7 @@ export default function SearchComponent({
         options={results.map((option) => ({
           label: option.name,
           type: option.type,
-          pid: option._id,
-          cid: "", //TODO
-          //GET MANUFACTURING COMPANY
+          id: option._id, //Company/PhoneId depends on the search function
         }))}
         renderInput={(params) => (
           <TextField
@@ -157,7 +155,11 @@ export default function SearchComponent({
                         if (searchQuery !== "")
                           setErrorMsg(pageDictionary.selectPhone);
                         setLock(false);
-                        setCompareItem(undefined);
+                        onResult({
+                          label: "",
+                          id: "",
+                          type: "",
+                        });
                         setError(false);
                       }}
                     >

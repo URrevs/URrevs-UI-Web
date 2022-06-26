@@ -15,18 +15,21 @@ const FormikSearchComponent = ({
 
   return (
     <Field name={fieldName}>
-      {({ field: { value }, form: { setFieldValue }, meta }) => (
+      {({ field: { value }, form: { setFieldValue, setFieldError }, meta }) => (
         <React.Fragment>
           <SearchComponent
             isFormik={true}
-            error={Boolean(meta.error?.pid)}
-            helperText={meta.touched && meta.error?.pid}
-            setCompareItem={async (response) => {
+            error={Boolean(meta.error?.id)}
+            helperText={meta.touched && meta.error?.id}
+            setError={(bool) => {
+              setFieldError(fieldName, bool);
+            }}
+            onResult={async (response) => {
               setFieldValue(fieldName, response);
 
-              // not to do this request in question tab
-              if (toGetManufacturingCompany && response) {
-                const companyId = await getManufacturingCompany(response.pid);
+              // To fetch company for reviewposting
+              if (toGetManufacturingCompany && response.id !== "") {
+                const companyId = await getManufacturingCompany(response.id);
                 setFieldValue("companyId", companyId.data);
                 sessionStorage.setItem(
                   "companyId",

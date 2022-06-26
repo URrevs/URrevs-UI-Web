@@ -6,20 +6,24 @@ import { useAppSelector } from "../store/hooks";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { Card } from "@mui/material";
 import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
+import { QuestionsTab } from "./PostingScreen/QuestionsTab";
 
 export const ComponentsTest = () => {
-  const [value, setValue] = React.useState(0);
-
+  /* Footer */
+  const renderFooter = () => <Footer />;
+  /* Banner */
+  const renderBanner = () => <Banner />;
+  /* Personal Tabbar*/
   const currentUserProfile = useAppSelector((state) => state.auth);
-
-  return (
-    <React.Fragment>
-      <PersonalTabbar
-        userProfile={currentUserProfile}
-        arrayOfTabs={["المراجعات", "الاسئلة المطروحة", "المنتجات الممتكلة"]}
-        value={value}
-        setValue={setValue}
-      >
+  const [value, setValue] = React.useState(0);
+  const renderPersonalTabbar = () => (
+    <PersonalTabbar
+      userProfile={currentUserProfile}
+      arrayOfTabs={["المراجعات", "الاسئلة المطروحة", "المنتجات الممتكلة"]}
+      value={value}
+      setValue={setValue}
+    >
+      <div>
         <h2>Sticky Element: Scroll Down to See the Effect</h2>
         <p>Scroll down this page to see how sticky positioning works.</p>
 
@@ -258,12 +262,17 @@ export const ComponentsTest = () => {
           fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor
           porta. Cras ac leo purus. Mauris quis diam velit.
         </p>
-      </PersonalTabbar>
-
-      {/* <Footer />
-      <div>
-        <Banner />
-      </div> */}
+      </div>
+    </PersonalTabbar>
+  );
+  /* Formik QuestionsTab */
+  const renderQuestionsTab = () => <QuestionsTab />;
+  //---RETURN---
+  return (
+    <React.Fragment>
+      <div>{renderQuestionsTab()}</div>
+      {/* <div>{renderBanner()}</div>
+      <div>{renderPersonalTabbar()}</div> */}
     </React.Fragment>
   );
 };

@@ -12,7 +12,11 @@ import OrangeGradientButton from "../../Buttons/OrangeGradientButton";
 import SearchComponent from "../../SearchComponent";
 
 export const CompareItem = ({ item }) => {
-  const [compareItem, setCompareItem] = React.useState();
+  const [compareItem, setCompareItem] = React.useState({
+    id: "",
+    label: "",
+    type: "",
+  });
   // console.log(item);
   const textContainer = useSelector((state) => {
     return state.language.textContainer;
@@ -44,7 +48,7 @@ export const CompareItem = ({ item }) => {
         <Typography variant="S18W500C050505">{`${textContainer.compare} ${item.name} ${textContainer.withWord}`}</Typography>
         {/* PLACEHOLDER FOR ACTUAL SEARCHBAR  */}
         <SearchComponent
-          setCompareItem={setCompareItem}
+          onResult={setCompareItem}
           item={item}
           label={textContainer.writeProductName}
           searchFn={searchFn}
@@ -60,22 +64,27 @@ export const CompareItem = ({ item }) => {
           }}
           onClick={async () => {
             // TODO:
-            if (compareItem) {
+            //Error handling
+            /* 
+            1- Input is empty
+            2- 
+             */
+            if (!(compareItem.id === "")) {
               dispatch(
                 compareActions.compare({
                   productId: item._id,
-                  compareId: compareItem,
+                  compareId: compareItem.id,
                 })
               );
               // console.log(compareItem);
               try {
-                indicateComparison({ pid1: item._id, pid2: compareItem.pid });
+                indicateComparison({ pid1: item._id, pid2: compareItem.id });
               } catch (e) {
                 console.log(e);
               }
 
               navigate(
-                `${ROUTES_NAMES.COMPARISON}?cid=${compareItem.pid}&pid=${item._id}`
+                `${ROUTES_NAMES.COMPARISON}?cid=${compareItem.id}&pid=${item._id}`
               );
             } else setError(true);
           }}
