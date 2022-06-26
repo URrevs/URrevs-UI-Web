@@ -11,8 +11,8 @@ const CardStyled = styled(
   borderRadius: `${CARD_BORDER_RADIUS}px`,
   padding: "6px 12px 19px 21px",
   marginBottom: "15px",
-  margin: "0 12px",
-}));
+  margin: "0 0px",
+}));  
 export const OverviewCard = ({
   viewer = "0",
   title = "",
