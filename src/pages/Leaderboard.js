@@ -137,20 +137,29 @@ export const Leaderboard = () => {
     </Fragment>
   );
 
+  console.log(latestCompetetionError);
+
   const competetionBanner = () => {
-    return latestCompetetionError &&
-      latestCompetetionError.data.status != "not yet" ? (
-      <div>Error</div>
-    ) : latestCompetetionIsLoading ? (
-      <div>Loading...</div>
-    ) : latestCompetetionError.data.status === "not yet" ? (
-      <CompetitionBanner prize="" daysLeft="" />
-    ) : (
-      <CompetitionBanner
-        prize={latestCompetetionData.prize}
-        daysLeft={subtractDate(latestCompetetionData.deadline)}
-      />
-    );
+    if (latestCompetetionError) {
+      if (latestCompetetionError.data.status != "not yet") {
+        return <div>Error</div>;
+      } else {
+        if (latestCompetetionError.data.status === "not yet") {
+          return <CompetitionBanner prize="" daysLeft="" />;
+        }
+      }
+    } else {
+      if (latestCompetetionIsLoading) {
+        return <div>Loading...</div>;
+      } else {
+        return (
+          <CompetitionBanner
+            prize={latestCompetetionData.prize}
+            daysLeft={subtractDate(latestCompetetionData.deadline)}
+          />
+        );
+      }
+    }
   };
 
   const currentUserRank = () => {
