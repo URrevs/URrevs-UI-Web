@@ -18,6 +18,7 @@ import Registeration from "../../pages/1_Authentication";
 import BottomNavBar from "./BottomNavBar/BottomNavBar";
 import { CustomAppBar } from "./AppBar/CustomAppBar";
 import CustomizedSnackbar from "../Snackbar";
+import { Link } from "react-router-dom";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -71,19 +72,21 @@ export default function Layout(props) {
       >
         <Toolbar variant="dense" sx={{ minHeight: appBarHeight }}>
           {/* logo */}
-          <animated.div
-            style={{
-              ...logoAnimationStyles,
-              margin: "5px 12px 0px 12px",
-            }}
-          >
-            <img
-              src="./images/logo.png"
-              width={logoWidth}
-              height={logoHeight}
-              alt="URrevs"
-            />
-          </animated.div>
+          <Link to="./">
+            <animated.div
+              style={{
+                ...logoAnimationStyles,
+                margin: "5px 12px 0px 12px",
+              }}
+            >
+              <img
+                src="./images/logo.png"
+                width={logoWidth}
+                height={logoHeight}
+                alt="URrevs"
+              />
+            </animated.div>
+          </Link>
 
           {/* <SearchBar
             searchTitle={dictionary.search}
@@ -127,7 +130,10 @@ export default function Layout(props) {
         }}
       >
         {/* <DrawerHeader /> */}
+        {/* div for spacing between app bar and whole pages */}
+        {/* <div style={{ marginTop: `${appBarHeight + 30}px` }}> */}
         {props.children}
+        {/* </div> */}
       </Box>
     </Box>
   );

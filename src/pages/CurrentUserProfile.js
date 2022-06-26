@@ -35,17 +35,17 @@ export default function CurrentUserProfilePage({}) {
     {
       title: pageDictionry.myReviews,
       icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `${ROUTES_NAMES.REVIEWS}/${ROUTES_NAMES.PHONE_REVIEWS}?userId=${profileData.uid}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}?userId=${profileData.uid}`,
     },
     {
       title: pageDictionry.myQuestions,
       icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: "",
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}?userId=${profileData.uid}`,
     },
     {
       title: pageDictionry.ownedProducts,
       icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
-      to: `${ROUTES_NAMES.OWNED_PHONES}?userId=${profileData.uid}`,
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?userId=${profileData.uid}`,
     },
     {
       title: pageDictionry.referalCode,
@@ -57,7 +57,7 @@ export default function CurrentUserProfilePage({}) {
       title: pageDictionry.askedQuestions,
       icon: <HelpCenterOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: pageDictionry.helpOthers,
-      to: "",
+      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.MY_QUESTIONS}?userId=${profileData.uid}`,
     },
   ];
 

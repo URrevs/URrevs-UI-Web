@@ -24,6 +24,7 @@ export const OverviewCard = ({
       <CardStyled elevation={3}>
         <Grid container spacing={2} sx={{ padding: "0px 0px 7px 0px" }}>
           <Grid item xs={2}></Grid>
+          {/* center title and subtitle */}
           <Grid
             item
             xs={8}
@@ -44,19 +45,20 @@ export const OverviewCard = ({
               <Typography variant="S14W400C65676B">{subtitle}</Typography>
             </Box>
           </Grid>
-          <Grid
-            item
-            xs={2}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              alignSelf: "center",
-            }}
-          >
-            <RemoveRedEyeRoundedIcon sx={{ margin: "0px 3px 0px 0px" }} />
-            <Typography variant="S14W400C050505">
-              {useConvertNumberToHumanLanguage(viewer)}
-            </Typography>
+          <Grid item xs={2}>
+            <Box
+              style={{
+                display: "flex",
+                alignItems: "center",
+                alignSelf: "center",
+              }}
+            >
+              <RemoveRedEyeRoundedIcon sx={{ margin: "0px 3px 0px 0px" }} />
+
+              <Typography variant="S14W400C050505">
+                {useConvertNumberToHumanLanguage(viewer)}
+              </Typography>
+            </Box>
           </Grid>
         </Grid>
         {children}

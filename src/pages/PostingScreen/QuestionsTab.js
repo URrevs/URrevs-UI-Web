@@ -1,124 +1,150 @@
-import { useTheme } from "@emotion/react";
-import AddIcon from "@mui/icons-material/Add";
-import { Box, Stack, Typography } from "@mui/material";
-import { FormikProvider, useFormik } from "formik";
+import { Stack, Typography } from "@mui/material";
+import { Form, Formik } from "formik";
 import React from "react";
-import { useSelector } from "react-redux";
-import OrangeGradientButton from "../../Components/Buttons/OrangeGradientButton";
+import * as Yup from "yup";
 import FormikSearchComponent from "../../Components/Form/FormikSearchComponent";
 import FormikTextField from "../../Components/Form/FormikTextField";
-import { useSearchAllMutation } from "../../services/search";
-import { useAddPhoneQuestionMutation } from "../../services/phone_questions";
 import { useAddCompanyQuestionMutation } from "../../services/company_questions";
+import { useAddPhoneQuestionMutation } from "../../services/phone_questions";
+import { useSearchAllMutation } from "../../services/search";
+import { useAppSelector } from "../../store/hooks";
+import { FastFormikTextField } from "./FastFormikTextField";
+import { FormSubmitButton } from "./FormSubmitButton";
+
+/* DOCUMENTATION */
+/*
+BUGS:
+Search Component:
+Display error only when hitting submit button and then disable error when user types something.
+DATA:
+Search Product or Company => spoc type object
+spoc = {
+label: "Acer"
+id: "6256a7575f87fa90093a4bd0"
+type: "company"
+}
+User Question => question type string
+question = ""
+
+##TODO:
+- When finally implementing language change make sure that error messages change language too
+and not just when page reloads
+
+- Search Component
+ */
 export const QuestionsTab = () => {
-  const [addPhoneQuestion] = useAddPhoneQuestionMutation();
-  const [addCompanyQuestion] = useAddCompanyQuestionMutation();
-
-  const [addQuestionError, setAddQuestionError] = React.useState(null);
-
-  const formik = useFormik({
-    initialValues: {
-      id: "",
-      content: "",
-    },
-    // validationSchema: {},
-    onSubmit: async (values) => {
-      console.log(values.id.type);
-      try {
-        if (values.id.type === "company") {
-          await addCompanyQuestion({
-            content: values.content,
-            company: values.id.pid,
-          });
-        } else {
-          await addPhoneQuestion({
-            content: values.content,
-            phone: values.id.pid,
-          });
-        }
-      } catch (e) {
-        setAddQuestionError(e);
-        console.log(e);
-      }
-    },
-  });
-  const renderFields = (text, fieldName, label, controlled = false) => {
-    return (
-      <Stack spacing={2} sx={{ width: "100%" }}>
-        <Typography sx={{}} variant="S18W500C050505">
-          {text}
-        </Typography>
-        <FormikTextField
-          fieldName={fieldName}
-          label={label}
-          isControlled={controlled}
-        />
-      </Stack>
-    );
-  };
-  const textContainer = useSelector((state) => state.language.textContainer);
+  // UI, theme, and Text:
+  const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionary = {
-    chooseProduct: textContainer.chooseProduct,
-    writeProductName: textContainer.writeProductName,
+    yourQuestionRegarding: textContainer.yourQuestionRegarding,
+    enterYourQuestionErrorMsg: textContainer.enterYourQuestionErrorMsg,
+    searchForAProductOrACompany: textContainer.searchForAProductOrACompany,
     writeYourQuestion: textContainer.writeYourQuestion,
     question: textContainer.question,
     postQuestion: textContainer.postQuestion,
   };
-  const theme = useTheme();
-
+  // RTK:
   const [searchFn] = useSearchAllMutation();
+  const [addPhoneQuestion] = useAddPhoneQuestionMutation();
+  const [addCompanyQuestion] = useAddCompanyQuestionMutation();
+  // const [addQuestionError, setAddQuestionError] = React.useState(null);
+  //Handle Submit
+  const handleSubmit = async (values) => {
+    console.log(JSON.stringify(values));
+    // alert(JSON.stringify(values));
+    try {
+      if (values.spoc.type === "company") {
+        await addCompanyQuestion({
+          content: values.question,
+          company: values.spoc.id,
+        });
+      } else if (values.spoc.type === "phone") {
+        await addPhoneQuestion({
+          content: values.question,
+          phone: values.spoc.id,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  // Validation:
+  const QuestionValidationSchema = Yup.object().shape({
+    spoc: Yup.object().shape({
+      label: Yup.string().required(),
+      id: Yup.string().required(),
+      type: Yup.string().required(),
+    }),
+    question: Yup.string().required(pageDictionary.enterYourQuestionErrorMsg),
+  });
+  // Render Functions:
+  //Search
+  const renderSearch = () => (
+    <Stack spacing={1} sx={{ width: "100%" }}>
+      <Typography variant="S18W500C050505">
+        {pageDictionary.yourQuestionRegarding}
+      </Typography>
+      <FormikSearchComponent
+        fieldName="spoc"
+        label={pageDictionary.searchForAProductOrACompany}
+        searchFn={searchFn}
+        toGetManufacturingCompany={false}
+      />
+      <div></div>
+    </Stack>
+  );
+  //TextField
+  const renderField = () => {
+    return (
+      <Stack spacing={1} sx={{ width: "100%" }}>
+        <Typography sx={{}} variant="S18W500C050505">
+          {pageDictionary.writeYourQuestion}
+        </Typography>
+        <FormikTextField
+          fieldName={"question"}
+          label={pageDictionary.question}
+        />
+        <div></div>
+      </Stack>
+    );
+  };
 
   return (
-    <React.Fragment>
-      <FormikProvider value={formik}>
-        <form onSubmit={formik.handleSubmit}>
-          {/* Searchbar */}
-          {/* TODO:
-            Need a new searchbar that searches company OR phone and returns that companyId/phoneId
-            and type:phone/company
-        */}
-          <Typography variant="S18W500C050505">
-            {pageDictionary.chooseProduct + ":"}
-          </Typography>
-          <FormikSearchComponent
-            fieldName="id"
-            label={pageDictionary.writeProductName}
-            searchFn={searchFn}
-            toGetManufacturingCompany={false}
-          />
-          {renderFields(
-            pageDictionary.writeYourQuestion,
-            "content",
-            pageDictionary.question
-          )}
+    <Formik
+      initialValues={{
+        spoc: {
+          label: "",
+          id: "",
+          type: "",
+        },
+        question: "",
+      }}
+      onSubmit={handleSubmit}
+      validationSchema={QuestionValidationSchema}
+    >
+      {(formik) => (
+        <div>
+          {console.log(formik.values)}
+          <Form>
+            {renderSearch()}
+            {renderField()}
 
-          {/* Submit Button */}
-          <OrangeGradientButton
-            type="submit"
-            color="red"
-            sx={{ width: "100%", textAlign: "center", marginTop: "20px" }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <AddIcon
-                sx={{
-                  color: theme.palette.defaultRedBtnIconColor,
-                  fontSize: "28px",
-                }}
-              />
-              <Typography variant="S18W700Cffffff">
-                {pageDictionary.postQuestion}
-              </Typography>
-            </Box>
-          </OrangeGradientButton>
-        </form>
-      </FormikProvider>
-    </React.Fragment>
+            {/* FastFormikTextField Test */}
+            {/* <FastFormikTextField name="mombar" label="Field 1" />
+            <FastFormikTextField name="kromb" label="Field 2" />
+            <FastFormikTextField name="wara2 3enab" label="Field 3" />
+            <FastFormikTextField name="btngan" label="Field 4" />
+            <FastFormikTextField name="kosa" label="Field 5" />
+            <FastFormikTextField name="basal" label="Field 6" />
+            <FastFormikTextField name="batates" label="Field 7" />
+            <FastFormikTextField name="ta3mya" label="Field 8" />
+            <FastFormikTextField name="me5lel" label="Field 9" />
+            <FastFormikTextField name="koshary" label="Field 10" />
+            <FastFormikTextField name="noston" label="Field 11" /> */}
+            <FormSubmitButton submitLabel={pageDictionary.postQuestion} />
+          </Form>
+        </div>
+      )}
+    </Formik>
   );
 };

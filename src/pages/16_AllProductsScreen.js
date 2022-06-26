@@ -1,5 +1,6 @@
 import { useTheme } from "@emotion/react";
 import {
+  alpha,
   Avatar,
   Grid,
   ListItem,
@@ -22,17 +23,28 @@ import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import { PAPER_BORDER_RADIUS_DESKTOP } from "../constants";
 import ROUTES_NAMES from "../RoutesNames";
-import { useGetAllPhonesQuery } from "../services/phones";
+import {
+  useGetAllCompaniesQuery,
+  useGetAllPhonesQuery,
+  useGetExactCompanyPhonesQuery,
+} from "../services/phones";
 import { productListActions } from "../store/allProductsSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
-const cache = new CellMeasurerCache({
+const productCache = new CellMeasurerCache({
+  fixedWidth: true,
+  fixedHeight: false,
+  defaultHeight: 24,
+});
+
+const companyCache = new CellMeasurerCache({
   fixedWidth: true,
   fixedHeight: false,
   defaultHeight: 24,
 });
 
 let maxIndex = 0;
+let maxCompanyIndex = 0;
 
 export function AllProductsScreen() {
   const dispatch = useAppDispatch();
@@ -42,16 +54,39 @@ export function AllProductsScreen() {
 
   useEffect(() => {
     console.log("clear reviews");
-
-    dispatch(productListActions.clearProducts());
+    clearProductsList();
   }, []);
+
+  const clearProductsList = () => {
+    dispatch(productListActions.clearProducts());
+  };
 
   const currentUser = useAppSelector((state) => state.auth);
 
   const productsList = useAppSelector((state) => state.productList.newProducts);
-  const [page, setPage] = useState(1);
 
-  const { data, isLoading, isFetching, error } = useGetAllPhonesQuery(page);
+  const companiesList = useAppSelector(
+    (state) => state.productList.newCompanies
+  );
+
+  const [companyPage, setCompanyPage] = useState(1);
+
+  const [queryParams, setQueryParams] = useState({
+    page: 1,
+    selectedCompany: { index: -1, id: null },
+  });
+
+  const { data, isLoading, isFetching, error } = useGetAllPhonesQuery({
+    round: queryParams.page,
+    companyId: queryParams.selectedCompany.id,
+  });
+
+  const {
+    data: companiesData,
+    isLoading: companiesIsLoading,
+    isFetching: companiesIsFetching,
+    error: companiesError,
+  } = useGetAllCompaniesQuery(companyPage);
 
   const addToProductsList = () =>
     dispatch(
@@ -60,29 +95,56 @@ export function AllProductsScreen() {
       })
     );
 
-  const increasePage = () => setPage(page + 1);
+  const addToCompaniesList = () =>
+    dispatch(
+      productListActions.addToLoaddedCompanies({
+        newCompanies: companiesData,
+      })
+    );
+
+  const increasePage = () => {
+    setQueryParams({
+      selectedCompany: {
+        index: queryParams.selectedCompany.index,
+        id: queryParams.selectedCompany.id,
+      },
+      page: queryParams.page + 1,
+    });
+  };
+  const increaseCompanyPage = () => setCompanyPage(companyPage + 1);
 
   const theme = useTheme();
   const listRef = useRef();
-  const [ex, setEx] = useState(false);
 
-  const clearCache = (index) => {
-    setEx(!ex);
-    if (index === 0) {
-      cache.clear(0);
-    } else {
-      cache.clear(index);
-    }
+  const selectCompanyHandler = (index, id) => {
+    clearProductsList();
+    maxIndex = 0;
+    window.scrollTo(0, 0);
+
+    console.log("increased", queryParams.page);
+
+    queryParams.selectedCompany.index === index
+      ? setQueryParams({ page: 1, selectedCompany: { index: -1, id: null } })
+      : setQueryParams({ page: 1, selectedCompany: { index: index, id: id } });
   };
 
   useEffect(() => {
     if (data) {
       addToProductsList();
-      if (page < 2 && !isLoading && !isFetching) {
-        increasePage();
-      }
+      // if (page < 2 && !isLoading && !isFetching) {
+      //   increasePage();
+      // }
     }
   }, [data]);
+
+  useEffect(() => {
+    if (companiesData) {
+      addToCompaniesList();
+      if (companyPage < 1 && !companiesIsFetching && !companiesIsLoading) {
+        increaseCompanyPage();
+      }
+    }
+  }, [companiesData]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -153,6 +215,66 @@ export function AllProductsScreen() {
       </ListItem>
     );
   };
+
+  const renderCompany = (title, imgSrc, index, id) => {
+    return (
+      <ListItem
+        onClick={selectCompanyHandler.bind(this, index, id)}
+        disablePadding
+        dense
+        key={title}
+        style={{
+          backgroundColor:
+            queryParams.selectedCompany.index === index
+              ? alpha(
+                  theme.palette.allProductsScreen.selectedItemBackground,
+                  0.8
+                )
+              : "transparent",
+          "&:hover": {
+            backgroundColor: theme.palette.hover,
+          },
+          "&:active": {
+            backgroundColor: theme.palette.hover,
+          },
+          "&:focus": {
+            backgroundColor: theme.palette.hover,
+          },
+        }}
+      >
+        <ListItemButton
+          sx={{
+            padding: 0,
+            "&:hover": {
+              backgroundColor: "transparent",
+            },
+          }}
+        >
+          <Avatar
+            sx={{
+              margin: "18px 17px 10px 13px",
+            }}
+          >
+            <img
+              alt=""
+              objectfit="cover"
+              width="40px"
+              height="40px"
+              src="./images/logos/nvidia.png"
+            />
+          </Avatar>
+          <ListItemText
+            primaryTypographyProps={{
+              ...theme.typography.S20W700C050505,
+              lineHeight: 1,
+            }}
+            primary={title}
+          />
+        </ListItemButton>
+      </ListItem>
+    );
+  };
+
   const renderProductOnDesktop = (title, imgSrc, to) => (
     <div>
       <Paper
@@ -175,10 +297,10 @@ export function AllProductsScreen() {
       ></div>
     </div>
   );
+
   const renderRow = ({ index, key, style, parent }) => {
     if (
       maxIndex !== 0 &&
-      page >= 2 &&
       !isLoading &&
       !isFetching &&
       maxIndex === productsList.length &&
@@ -199,7 +321,7 @@ export function AllProductsScreen() {
         ) : (
           <div style={{ ...style, direction: theme.direction }}>
             <CellMeasurer
-              cache={cache}
+              cache={productCache}
               parent={parent}
               columnIndex={0}
               rowIndex={index}
@@ -222,76 +344,137 @@ export function AllProductsScreen() {
     );
   };
 
+  const renderCompanyRow = ({ index, key, style, parent }) => {
+    if (
+      maxCompanyIndex !== 0 &&
+      !companiesIsLoading &&
+      !companiesIsFetching &&
+      companyPage >= 1 &&
+      maxCompanyIndex === companiesList.length &&
+      companiesData.length !== 0
+    ) {
+      maxCompanyIndex = 0;
+      increaseCompanyPage();
+    }
+    maxCompanyIndex = Math.max(index, maxCompanyIndex);
+
+    const item = companiesList[index];
+    return (
+      <div key={key}>
+        {companiesData.length === 0 ? (
+          <div>No data</div>
+        ) : index >= companiesList.length ? (
+          <div>Loading...</div>
+        ) : (
+          <div style={{ ...style, direction: theme.direction }}>
+            <CellMeasurer
+              cache={companyCache}
+              parent={parent}
+              columnIndex={0}
+              rowIndex={index}
+            >
+              {renderCompany(item.name, "", index, item._id)}
+            </CellMeasurer>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
-    <Fragment>
-      {/* CustomAppBar appears only on mobile */}
-      <CustomAppBar
-        showLabel
-        label="مراجعاتي"
-        showBackBtn
-        tabBar={
-          <React.Fragment>
-            <CompanyHorizontalList />
-          </React.Fragment>
-        }
-      >
-        <Grid container>
-          {/* Right grid */}
-          <Grid style={{}} item lg={2.6} sm={0} xs={0}>
-            {/* <div style={{}}>
-              <Paper
-                style={{
-                  position: "sticky",
-                  top: "0px",
-                  padding: "65px 0px",
-                  height: "50vh",
-                  // maxHeight: "100vh",
-                  overflowY: "auto",
-                }}
-              ></Paper>
-            </div> */}
+    <div>
+      {/* company list */}
+      {/* Right grid */}
+      {!theme.isMobile && (
+        <div
+          style={{
+            position: "fixed",
+            maxHeight: "100vh",
+            overflow: "scroll",
+            background: "#FFF",
+            padding: "12px",
+          }}
+        >
+          <Typography variant="S16W700C050505">الفلاتر:</Typography>
+          <div style={{ height: "calc(100vh)", margin: "0px 0" }}>
+            <div>
+              <List
+                ref={listRef}
+                autoHeight
+                overscanRowCount={10}
+                width={250}
+                height={companiesList.length * 300}
+                rowHeight={companyCache.rowHeight}
+                rowCount={companiesList.length}
+                rowRenderer={renderCompanyRow}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div>
+        {/* CustomAppBar appears only on mobile */}
+        <CustomAppBar
+          showLabel
+          label="مراجعاتي"
+          showBackBtn
+          tabBar={
+            <React.Fragment>
+              <CompanyHorizontalList
+                companiesList={companiesList}
+                selectCompanyHandler={selectCompanyHandler}
+                selectedCompany={queryParams.selectedCompany}
+              />
+            </React.Fragment>
+          }
+        >
+          <Grid container>
+            {/* Right grid */}
+            {/* company list space */}
+            <Grid item xl={2} lg={5} md={5} sm={0} xs={0}></Grid>
+            <Grid item xl={2} lg={0} md={0} sm={0} xs={0}></Grid>
+            <Grid item xl={6} lg={6} md={7} sm={12} xs={12}>
+              {
+                <div style={{ height: "calc(100vh)", margin: "0px 0" }}>
+                  <AutoSizer>
+                    {({ height, width }) => {
+                      return (
+                        <WindowScroller>
+                          {({
+                            height,
+                            isScrolling,
+                            registerChild,
+                            scrollTop,
+                          }) => (
+                            <div ref={registerChild}>
+                              <List
+                                ref={listRef}
+                                autoHeight
+                                overscanRowCount={10}
+                                isScrolling={isScrolling}
+                                scrollTop={scrollTop}
+                                width={width}
+                                height={height}
+                                deferredMeasurementCache={productCache}
+                                rowHeight={productCache.rowHeight}
+                                rowCount={productsList.length + 1}
+                                rowRenderer={renderRow}
+                              />
+                            </div>
+                          )}
+                        </WindowScroller>
+                      );
+                    }}
+                  </AutoSizer>
+                </div>
+              }
+            </Grid>
+            {/* Left Grid */}
+            <Grid item xl={2} lg={1} md={0} sm={0} xs={0}></Grid>
           </Grid>
-          <Grid item lg={1.9} sm={0} xs={0}></Grid>
-          <Grid item lg={5.6} sm={12} xs={12}>
-            {
-              <div style={{ height: "calc(100vh)", margin: "0px 0" }}>
-                <AutoSizer>
-                  {({ height, width }) => {
-                    return (
-                      <WindowScroller>
-                        {({
-                          height,
-                          isScrolling,
-                          registerChild,
-                          scrollTop,
-                        }) => (
-                          <div ref={registerChild}>
-                            <List
-                              ref={listRef}
-                              autoHeight
-                              overscanRowCount={10}
-                              isScrolling={isScrolling}
-                              scrollTop={scrollTop}
-                              width={width}
-                              height={height}
-                              deferredMeasurementCache={cache}
-                              rowHeight={cache.rowHeight}
-                              rowCount={productsList.length + 1}
-                              rowRenderer={renderRow}
-                            />
-                          </div>
-                        )}
-                      </WindowScroller>
-                    );
-                  }}
-                </AutoSizer>
-              </div>
-            }
-          </Grid>
-          {/* Left Grid */}
-          <Grid item lg={1.9} sm={0} xs={0}></Grid>
-        </Grid>
-      </CustomAppBar>
-    </Fragment>
+        </CustomAppBar>
+      </div>
+    </div>
   );
 }

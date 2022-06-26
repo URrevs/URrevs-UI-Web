@@ -28,6 +28,7 @@ export const homeApi = createApi({
         companyRevs: APIReview[];
         phoneQuestions: APIQuestion[];
         companyQuestions: APIQuestion[];
+        total: String[];
       }) => {
         const phoneRevs = response.phoneRevs.map((rev) => {
           return {
@@ -54,12 +55,26 @@ export const homeApi = createApi({
           };
         });
 
-        return [
+        let posts = [
           ...phoneRevs,
           ...companyRevs,
           ...phoneQuestions,
           ...companyQuestions,
         ];
+
+        if (response.total && response.total.length) {
+          let sortedPosts: any = [];
+          posts.forEach((post, i) => {
+            let toBeAppendedPost = posts.find(
+              (post) => post._id === response.total[i]
+            );
+            if (toBeAppendedPost) sortedPosts.push(toBeAppendedPost);
+          });
+
+          return sortedPosts;
+        } else {
+          return posts;
+        }
       },
     }),
   }),

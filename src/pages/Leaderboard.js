@@ -2,11 +2,12 @@ import { useTheme } from "@emotion/react";
 import {
   Avatar,
   Divider,
+  Grid,
   ListItem,
   ListItemButton,
   ListItemText,
   Paper,
-  Typography
+  Typography,
 } from "@mui/material";
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,18 +19,19 @@ import { subtractDate } from "../functions/subtractDate";
 import {
   useGetLatestCompetetionQuery,
   useGetMyCurrentRankQuery,
-  useGetTopCompetetionUsersQuery
+  useGetTopCompetetionUsersQuery,
 } from "../services/competetion";
 import { useAppSelector } from "../store/hooks";
 
 export const Leaderboard = () => {
-  const currentUserApi = useAppSelector((state) => state.auth.uid);
+  const currentUser = useAppSelector((state) => state.auth);
+  const isMobile = useTheme().isMobile;
 
   const {
     data: myRankData,
     error: myRankError,
     isLoading: myRankIsLoading,
-  } = useGetMyCurrentRankQuery();
+  } = useGetMyCurrentRankQuery({}, { skip: !currentUser.isLoggedIn });
 
   const {
     data: latestCompetetionData,
@@ -47,7 +49,6 @@ export const Leaderboard = () => {
   const navigate = useNavigate();
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
-  const arr = new Array(10).fill(10);
   const renderProduct = (title, imgSrc, to) => {
     return (
       <ListItem
@@ -105,64 +106,114 @@ export const Leaderboard = () => {
   };
 
   const leaderboardList = () => (
-    <Paper
-      sx={{
-        borderRadius: `${CARD_BORDER_RADIUS}px`,
-      }}
-    >
-      {topUsersError ? (
-        <div>Error</div>
-      ) : topUsersIsLoading ? (
-        <div>Loading...</div>
-      ) : (
-        topUsersData.map((item, i) => (
-          <Fragment>
-            <LeaderboardEntry
-              isBody
-              userRank={i + 1}
-              userName={item.name}
-              points={item.points}
-            />
-            <Divider></Divider>
-          </Fragment>
-        ))
-      )}
-    </Paper>
-  );
-  return (
-    <CustomAppBar showLabel showLogo showSearch showProfile>
-      <div style={{ height: "14px" }}></div>
-      {latestCompetetionError ? (
-        <div>Error</div>
-      ) : latestCompetetionIsLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <CompetitionBanner
-          prize={latestCompetetionData.prize}
-          daysLeft={subtractDate(latestCompetetionData.deadline)}
-        />
-      )}
-
-      {/* Your Rank In The Leaderboard */}
-      <div style={{ height: "14px" }}></div>
-      <Typography variant="S20W700C050505">{"ترتيبك" + ": "}</Typography>
-      {myRankError ? (
-        <div>Error</div>
-      ) : myRankIsLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <LeaderboardEntry
-          userName={myRankData.name}
-          userRank={myRankData.rank}
-          points={myRankData.points}
-        />
-      )}
-      {/* List of users rank in leaderboard */}
-      <div style={{ height: "14px" }}></div>
+    <Fragment>
       <Typography variant="S20W700C050505">
         {"ترتيب المستخدمين" + ": "}
       </Typography>
-      {leaderboardList()}
+      <Paper
+        sx={{
+          borderRadius: `${CARD_BORDER_RADIUS}px`,
+        }}
+      >
+        {topUsersError ? (
+          <div>Error</div>
+        ) : topUsersIsLoading ? (
+          <div>Loading...</div>
+        ) : (
+          topUsersData.map((item, i) => (
+            <Fragment>
+              <LeaderboardEntry
+                isBody
+                userRank={i + 1}
+                userName={item.name}
+                points={item.points}
+                userPicture={item.picture}
+              />
+              <Divider></Divider>
+            </Fragment>
+          ))
+        )}
+      </Paper>
+    </Fragment>
+  );
+
+  const competetionBanner = () => {
+    return latestCompetetionError &&
+      latestCompetetionError.data.status != "not yet" ? (
+      <div>Error</div>
+    ) : latestCompetetionIsLoading ? (
+      <div>Loading...</div>
+    ) : latestCompetetionError.data.status === "not yet" ? (
+      <CompetitionBanner prize="" daysLeft="" />
+    ) : (
+      <CompetitionBanner
+        prize={latestCompetetionData.prize}
+        daysLeft={subtractDate(latestCompetetionData.deadline)}
+      />
+    );
+  };
+
+  const currentUserRank = () => {
+    return (
+      currentUser.isLoggedIn && (
+        <div>
+          <div style={{ height: "14px" }}></div>
+          <Typography variant="S20W700C050505">{"ترتيبك" + ": "}</Typography>
+          {myRankError ? (
+            <div>Error</div>
+          ) : myRankIsLoading ? (
+            <div>Loading...</div>
+          ) : !myRankData ? (
+            <Typography>login first</Typography>
+          ) : (
+            <LeaderboardEntry
+              userName={myRankData.name}
+              userRank={myRankData.rank}
+              points={myRankData.points}
+              userPicture={myRankData.picture}
+            />
+          )}
+        </div>
+      )
+    );
+  };
+
+  return (
+    <CustomAppBar showLabel showLogo showSearch showProfile>
+      <div style={{ height: "14px" }}></div>
+      <div style={{ height: "14px" }}></div>
+
+      {isMobile && (
+        <div>
+          {/* competetion banner */}
+          {competetionBanner()}
+          {/* Your Rank In The Leaderboard */}
+          {currentUserRank()}
+          {leaderboardList()}
+        </div>
+      )}
+
+      {!isMobile && (
+        <Grid container>
+          <Grid item xl={2} lg={1} md={0.5}></Grid>
+
+          <Grid item xl={5} lg={5} md={5.5}>
+            {/* List of users rank in leaderboard */}
+
+            {leaderboardList()}
+          </Grid>
+
+          <Grid item xl={1} lg={0} md={0.5}></Grid>
+          <Grid item xl={4} lg={5} md={4.5}>
+            <div style={{ position: "fixed", padding: "0 12px" }}>
+              {/* competetion banner */}
+              {competetionBanner()}
+              {/* Your Rank In The Leaderboard */}
+              {currentUserRank()}
+            </div>
+          </Grid>
+        </Grid>
+      )}
     </CustomAppBar>
   );
 };

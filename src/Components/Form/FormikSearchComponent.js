@@ -2,11 +2,11 @@ import { useTheme } from "@emotion/react";
 import { Field } from "formik";
 import React from "react";
 import { useGetManufacturingCompanyMutation } from "../../services/phones";
-import { useSearchPhonesOnlyMutation } from "../../services/search";
 import SearchComponent from "../SearchComponent";
 const FormikSearchComponent = ({
   fieldName,
   label,
+  // error,
   searchFn,
   toGetManufacturingCompany = false,
 }) => {
@@ -15,18 +15,21 @@ const FormikSearchComponent = ({
 
   return (
     <Field name={fieldName}>
-      {({ field: { value }, form: { setFieldValue }, meta }) => (
+      {({ field: { value }, form: { setFieldValue, setFieldError }, meta }) => (
         <React.Fragment>
           <SearchComponent
             isFormik={true}
-            error={meta.touched && Boolean(meta.error)}
-            helperText={meta.touched && meta.error}
-            setCompareItem={async (response) => {
+            error={Boolean(meta.error?.id)}
+            helperText={meta.touched && meta.error?.id}
+            setError={(bool) => {
+              setFieldError(fieldName, bool);
+            }}
+            onResult={async (response) => {
               setFieldValue(fieldName, response);
 
-              // not to do this request in question tab
-              if (toGetManufacturingCompany) {
-                const companyId = await getManufacturingCompany(response.pid);
+              // To fetch company for reviewposting
+              if (toGetManufacturingCompany && response.id !== "") {
+                const companyId = await getManufacturingCompany(response.id);
                 setFieldValue("companyId", companyId.data);
                 sessionStorage.setItem(
                   "companyId",
