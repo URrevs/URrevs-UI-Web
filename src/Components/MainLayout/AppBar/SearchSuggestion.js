@@ -1,6 +1,7 @@
 import { useTheme } from "@emotion/react";
 import {
   Box,
+  ClickAwayListener,
   Collapse,
   Divider,
   IconButton,
@@ -36,6 +37,7 @@ import { SEARCH_INPUT_DELAY } from "../../../constants";
 export const SearchSuggestion = () => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const user = useAppSelector((state) => state.auth);
+
   const pageDictionary = {
     search: textContainer.search,
     placeholder: textContainer.searchForAProductOrACompany,
@@ -170,6 +172,7 @@ export const SearchSuggestion = () => {
     if (searchQuery === "" && oldResults) setResults(oldResults);
   }, [searchQuery, oldResults]);
 
+  /* Close SearchSuggestion on window resize*/
   React.useEffect(() => {
     function handleResize() {
       setSearchSuggestion(false);
@@ -180,8 +183,12 @@ export const SearchSuggestion = () => {
       window.removeEventListener("resize", handleResize);
     };
   });
+  const handleClickAway = () => {
+    setSearchSuggestion(false);
+  };
   const params = {
     variant: "standard",
+    autoComplete: "off",
     sx: {
       flex: 1,
       // width: "100",
@@ -226,17 +233,9 @@ export const SearchSuggestion = () => {
         ref={searchRef}
         sx={{ padding: "0px 15px", width: "100%" }}
         onFocus={() => {
-          console.log("focus");
           setSearchSuggestion(true);
         }}
         onChange={(e) => {
-          // // If no recent results
-          // if (e.target.value === "") setSearchSuggestion(false);
-          // // When Searching
-          // if (!searchSuggestion || e.target.value !== "") {
-          //   setSearchSuggestion(true);
-          // }
-          // Show recent search
           if (e.target.value === "") {
             setResults(oldResults);
           }
@@ -252,57 +251,55 @@ export const SearchSuggestion = () => {
             console.log(e);
           }
         }}
-        onBlur={() => {
-          console.log("blur");
-          setSearchSuggestion(false);
-        }}
       />
-      <Slide direction="down" in={searchSuggestion} mountOnEnter unmountOnExit>
-        {/* <Zoom in={searchSuggestion}> */}
-        {/* <Collapse in={searchSuggestion}> */}
-        <Paper
-          sx={{
-            position: "absolute",
-            // top: theme.sideBar.height,
-            // left: "150px",
-            width: searchRef.current?.offsetWidth
-              ? searchRef.current.offsetWidth
-              : "",
-            // height: "20vh",
-            zIndex: 1,
-          }}
+      {searchSuggestion ? (
+        <ClickAwayListener
+          mouseEvent="onMouseDown"
+          touchEvent="onTouchStart"
+          onClickAway={handleClickAway}
         >
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : error ? (
-            <div>{error.data.status}</div>
-          ) : searchQuery === "" ? (
-            <Box sx={{ margin: "16px 12px 0px 12px" }}>
-              <Typography variant="S16W500C65676b">
-                {pageDictionary.oldResults}
-              </Typography>
-              <List>
-                {results.map((item) =>
-                  renderRecentItems(item.name, item.type, item._id)
-                )}
-              </List>
-            </Box>
-          ) : (
-            <Box sx={{ margin: "16px 12px 0px 12px" }}>
-              <Typography variant="S16W500C65676b">
-                {pageDictionary.suggestedResults}
-              </Typography>
-              <List>
-                {results.map((item) =>
-                  renderSearchItems(item.name, item.type, item._id)
-                )}
-              </List>
-            </Box>
-          )}
-        </Paper>
-        {/* </Collapse> */}
-        {/* </Zoom> */}
-      </Slide>
+          <Paper
+            sx={{
+              position: "absolute",
+              // top: theme.sideBar.height,
+              // left: "150px",
+              width: searchRef.current?.offsetWidth
+                ? searchRef.current.offsetWidth
+                : "",
+              // height: "20vh",
+              zIndex: 1,
+            }}
+          >
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : error ? (
+              <div>{error.data.status}</div>
+            ) : searchQuery === "" ? (
+              <Box sx={{ margin: "16px 12px 0px 12px" }}>
+                <Typography variant="S16W500C65676b">
+                  {pageDictionary.oldResults}
+                </Typography>
+                <List>
+                  {results.map((item) =>
+                    renderRecentItems(item.name, item.type, item._id)
+                  )}
+                </List>
+              </Box>
+            ) : (
+              <Box sx={{ margin: "16px 12px 0px 12px" }}>
+                <Typography variant="S16W500C65676b">
+                  {pageDictionary.suggestedResults}
+                </Typography>
+                <List>
+                  {results.map((item) =>
+                    renderSearchItems(item.name, item.type, item._id)
+                  )}
+                </List>
+              </Box>
+            )}
+          </Paper>
+        </ClickAwayListener>
+      ) : null}
     </div>
   );
 };

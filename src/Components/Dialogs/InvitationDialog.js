@@ -57,6 +57,7 @@ export const InvitationDialog = ({ handleClose }) => {
               }}
             >
               <TextField
+                autoComplete="off"
                 variant="outlined"
                 value={currentUserProfile.refCode}
                 disabled
