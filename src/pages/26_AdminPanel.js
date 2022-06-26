@@ -33,6 +33,8 @@ export const AdminPanel = () => {
     isLoading: latestCompetetionIsLoading,
   } = useGetLatestCompetetionQuery();
 
+  console.log(lastCompetetionData);
+
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(0);
   const handleOpen = () => setOpen(true);
@@ -104,9 +106,7 @@ export const AdminPanel = () => {
               : lastCompetetionData &&
                 new Date(lastCompetetionData.deadline) - new Date() > 0
               ? "هناك مسابقة قائمة الان"
-              : listItems[1].subtitle +
-                " " +
-                convertDateToString(lastCompetetionData.createdAt, language)
+              : listItems[1].subtitle + " "
           }
           onClick={
             lastCompetetionData &&
@@ -127,7 +127,7 @@ export const AdminPanel = () => {
   const desktopView = () => (
     <Grid container>
       {/* Right Grid => On Arabic Language */}
-      <Grid item xl={4} lg={5} md={5}>
+      <Grid item xl={3} lg={4} md={5}>
         <Paper
           style={{
             padding: "65px 8px",
@@ -146,17 +146,17 @@ export const AdminPanel = () => {
         </Paper>
       </Grid>
       {/* Remove the  page * 2 later it's just for show */}
-      <Grid item xl={2} lg={1} md={1}></Grid>
+      <Grid item xl={2} lg={1} md={0.5}></Grid>
 
       <Grid
+        item
+        xl={5}
+        lg={6}
+        md={6}
         sx={{
           marginTop: "39px",
           marginBottom: "65px",
         }}
-        item
-        xl={4}
-        lg={5}
-        md={5}
       >
         {page === 0 ? (
           <UpdateProducts />
@@ -173,7 +173,7 @@ export const AdminPanel = () => {
           </Paper>
         )}
       </Grid>
-      <Grid item xl={2} lg={1} md={1}></Grid>
+      <Grid item xl={2} lg={1} md={0.5}></Grid>
     </Grid>
   );
   return (
