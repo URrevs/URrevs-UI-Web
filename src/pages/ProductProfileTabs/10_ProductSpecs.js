@@ -190,9 +190,9 @@ export const ProductSpecsScreen = ({ data }) => {
               <div
                 style={{
                   position: "sticky",
-                  top: "0px",
-                  padding: "65px 0px",
-                  maxHeight: "100vh",
+                  top: "65px",
+                  // padding: "65px 0px",
+                  maxHeight: "90vh",
                   overflowY: "auto",
                 }}
               >
