@@ -1,7 +1,9 @@
+import { useTheme } from "@emotion/react";
 import { Card, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 
 export const StickyTabbar = ({ userPhoto, userProfile }) => {
+  const theme = useTheme();
   const [smallPfpVisible, setSmallPfpVisible] = React.useState(false);
   const [value, setValue] = React.useState(0);
   React.useEffect(() => {
@@ -30,12 +32,19 @@ export const StickyTabbar = ({ userPhoto, userProfile }) => {
   };
   return (
     <Card
-      style={{
+      sx={{
         position: smallPfpVisible ? "fixed" : "sticky",
         justifyContent: "space-between",
         display: "flex",
         top: "64px",
-        padding: "0px 150px 0px 150px",
+        padding: "0px 200px",
+        [theme.breakpoints.down("xl")]: {
+          padding: "0px 150px",
+        },
+        [theme.breakpoints.down("lg")]: {
+          padding: "0px 50px",
+        },
+        // padding: "0px 150px 0px 150px",
         width: "100%",
         zIndex: "10",
       }}

@@ -100,11 +100,12 @@ export const ProfileTabbar = ({
           // profileRef={profileRef}
           elevation={0}
           sx={{
+            padding: "0px 200px", //Above XL
             [theme.breakpoints.down("xl")]: {
               padding: "0px 150px",
             },
-            [theme.breakpoints.down("md")]: {
-              padding: "0px 0px",
+            [theme.breakpoints.down("lg")]: {
+              padding: "0px 50px",
             },
           }}
         >
