@@ -1,3 +1,6 @@
+import { useCheckOwnership } from "../../hooks/useCheckOwnership";
+import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
+import { useShareSnackbar } from "../../hooks/useShareSnackbar";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
   useIdontLikeThisCompanyReviewMutation,
@@ -30,6 +33,14 @@ const CompanyReview = ({
   const [increaseViewCounterRequest] = useIncreaseViewCounterMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
 
+  const checkIsSignedIn = useCheckSignedIn();
+  const checkOwnerShip = useCheckOwnership({
+    ownerId: reviewDetails.userId,
+    message: "لا يمكنك الاعجاب بالمراجعة الخاصة بك",
+  });
+
+  const showShareSnackbar = useShareSnackbar();
+
   const actionBtnFunction = async () => {
     try {
       deleteReviewFromStore(reviewDetails._id);
@@ -43,17 +54,19 @@ const CompanyReview = ({
   const [unLikePhoneReview] = useUnLikeCompanyReviewMutation();
 
   const likeBtnHandler = async () => {
-    reviewDetails.liked
-      ? unLikePhoneReview({
-          reviewId: reviewDetails._id,
-          doFn: stateUnLikeFn.bind(null, reviewDetails._id),
-          unDoFn: stateLikeFn.bind(null, reviewDetails._id),
-        })
-      : likePhoneReview({
-          reviewId: reviewDetails._id,
-          doFn: stateLikeFn.bind(null, reviewDetails._id),
-          unDoFn: stateUnLikeFn.bind(null, reviewDetails._id),
-        });
+    if (checkIsSignedIn() && checkOwnerShip()) {
+      reviewDetails.liked
+        ? unLikePhoneReview({
+            reviewId: reviewDetails._id,
+            doFn: stateUnLikeFn.bind(null, reviewDetails._id),
+            unDoFn: stateLikeFn.bind(null, reviewDetails._id),
+          })
+        : likePhoneReview({
+            reviewId: reviewDetails._id,
+            doFn: stateLikeFn.bind(null, reviewDetails._id),
+            unDoFn: stateUnLikeFn.bind(null, reviewDetails._id),
+          });
+    }
   };
 
   const fullScreenHandler = () => {
@@ -66,6 +79,7 @@ const CompanyReview = ({
 
   const shareBtnHandler = () => {
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
+    showShareSnackbar(`/company-review?id=${reviewDetails._id}`);
   };
 
   return (

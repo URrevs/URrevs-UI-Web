@@ -1,5 +1,6 @@
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
+import { useShareSnackbar } from "../../hooks/useShareSnackbar";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
   useIdontLikeThisPhoneQuestionMutation,
@@ -27,6 +28,8 @@ export default function PhoneQuestion({
   const [dontLikeThisRequest] = useIdontLikeThisPhoneQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenPhoneQuestionMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
+
+  const showShareSnackbar = useShareSnackbar();
 
   const actionBtnFunction = async () => {
     try {
@@ -68,6 +71,7 @@ export default function PhoneQuestion({
 
   const shareBtnHandler = () => {
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
+    showShareSnackbar(`/phone-question?id=${reviewDetails._id}`);
   };
 
   return (
