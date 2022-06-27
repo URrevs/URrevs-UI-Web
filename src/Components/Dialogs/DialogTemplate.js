@@ -15,11 +15,12 @@ const PromptStyled = styled(
   [theme.breakpoints.down("md")]: {
     width: "calc(100% - 32px)",
   },
-  maxHeight: "75vh",
+  maxHeight: "652px",
+  maxWidth: "450px",
   boxShadow: 24,
   padding: 16,
   borderRadius: 15,
-  overflowY: "scroll",
+  overflowY: "auto",
   background: theme.palette.modalColor,
 }));
 

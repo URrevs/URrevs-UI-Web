@@ -99,6 +99,7 @@ export default function SearchComponent({
           <TextField
             {...params}
             sx={{
+              ...theme.typography.S16W500C050505,
               input: {
                 "&::placeholder": {
                   opacity: 1,

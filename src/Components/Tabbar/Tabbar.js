@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Card, Divider, Grid, Typography } from "@mui/material";
+import { Box, Card, Divider, Grid, Typography } from "@mui/material";
 import React from "react";
 import { TABCARD_BORDER_RADIUS } from "../../constants";
 import { useAppSelector } from "../../store/hooks";
@@ -9,6 +9,7 @@ export const Tabbar = ({
   setValue,
   isVertical = true,
   value,
+  children,
 }) => {
   const theme = useTheme();
   const language = useAppSelector((state) => state.language.language);
@@ -113,6 +114,7 @@ export const Tabbar = ({
           }}
         ></div>
       </Card>
+      <Box>{children}</Box>
     </React.Fragment>
   );
 };
