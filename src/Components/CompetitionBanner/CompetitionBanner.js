@@ -5,6 +5,7 @@ import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import { useAppSelector } from "../../store/hooks";
 import { CARD_BORDER_RADIUS } from "../../constants";
+import { subtractDate } from "../../functions/subtractDate";
 
 export const CompetitionBanner = ({ daysLeft, prize }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
@@ -50,7 +51,7 @@ export const CompetitionBanner = ({ daysLeft, prize }) => {
           {/* dayes left */}
           {isActive && (
             <Typography variant="S22W500Cffffff">
-              {daysLeft + pageDictionary.remainigDays}
+              {subtractDate(daysLeft, "ar") + " وتنتهي المسابقة"}
             </Typography>
           )}
           {/* prize */}
