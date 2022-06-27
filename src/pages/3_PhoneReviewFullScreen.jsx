@@ -267,7 +267,6 @@ export default function PhoneReviewFullScreen() {
   const deleteReviewFromStore = (id) => {};
 
   const reviewCard = () => {
-    console.log(currentReviewData);
     return (
       <div>
         {reviewLoading ? (
