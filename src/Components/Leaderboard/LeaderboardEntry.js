@@ -48,6 +48,7 @@ const LeaderboardEntry = ({
   const { fontSize, ref } = useFitText({
     maxFontSize: 90,
   });
+  const prizeIcon = isWinner ? <div>icon</div> : null;
   const leaderboardBody = () => (
     <Fragment>
       <div
@@ -78,8 +79,14 @@ const LeaderboardEntry = ({
         <div style={{ width: "18px" }}></div>
         <Typography variant="S20W700C050505">{userName}</Typography>
       </div>
-      
-      <StarWithCount value={points} starSize={38} textStyle="S20W400C65676B" isWinner={isWinner}/>
+
+      <StarWithCount
+        value={points}
+        starSize={38}
+        textStyle="S20W400C65676B"
+        prizeIcon={prizeIcon}
+        // isWinner={isWinner}
+      />
     </Fragment>
   );
   return isBody ? (

@@ -1,7 +1,7 @@
 import React from "react";
 import { Footer } from "../Components/Banners/Footer";
 import Banner from "../Components/Banners/Banner";
-import { PersonalTabbar } from "../Components/Tabbar/Desktop/PersonalTabbar";
+import { ProfileTabbar } from "../Components/Tabbar/Desktop/ProfileTabbar";
 import { useAppSelector } from "../store/hooks";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { Card } from "@mui/material";
@@ -22,8 +22,8 @@ export const ComponentsTest = () => {
   /* Personal Tabbar*/
   const currentUserProfile = useAppSelector((state) => state.auth);
   const [value, setValue] = React.useState(0);
-  const renderPersonalTabbar = () => (
-    <PersonalTabbar
+  const renderProfileTabbar = () => (
+    <ProfileTabbar
       userProfile={currentUserProfile}
       arrayOfTabs={["المراجعات", "الاسئلة المطروحة", "المنتجات الممتكلة"]}
       value={value}
@@ -269,7 +269,7 @@ export const ComponentsTest = () => {
           porta. Cras ac leo purus. Mauris quis diam velit.
         </p>
       </div>
-    </PersonalTabbar>
+    </ProfileTabbar>
   );
   /* Formik QuestionsTab */
   const renderQuestionsTab = () => <QuestionsTab />;

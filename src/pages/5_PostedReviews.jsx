@@ -5,7 +5,7 @@ import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import { PostedCompanyReviews } from "./5_PostedCompanyReviews";
 import { PostedPhoneReviews } from "./5_PostedPhoneReviews";
-import { PersonalTabbar } from "../Components/Tabbar/Desktop/PersonalTabbar";
+import { ProfileTabbar } from "../Components/Tabbar/Desktop/ProfileTabbar";
 
 export function PostedReviews() {
   const [filter, setFilter] = useState(0);
@@ -20,14 +20,14 @@ export function PostedReviews() {
       tabBar={<FilterTabbar value={filter} setValue={setFilter} />}
     >
       {!isMobile && (
-        <PersonalTabbar
+        <ProfileTabbar
           children={
             <FixedGrid>
               {filter === 0 ? <PostedPhoneReviews /> : <PostedCompanyReviews />}
             </FixedGrid>
           }
           arrayOfTabs={["المراجعات", "الاسئلة المطروحة", "المنتجات الممتكلة"]}
-        ></PersonalTabbar>
+        ></ProfileTabbar>
       )}
     </CustomAppBar>
   );
