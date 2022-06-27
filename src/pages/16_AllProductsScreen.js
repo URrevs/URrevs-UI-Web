@@ -233,6 +233,7 @@ export function AllProductsScreen() {
         dense
         key={title}
         style={{
+          borderRadius: 10,
           backgroundColor:
             queryParams.selectedCompany.index === index
               ? alpha(
@@ -261,7 +262,7 @@ export function AllProductsScreen() {
         >
           <Avatar
             sx={{
-              margin: "18px 17px 10px 13px",
+              margin: "10px 14px 10px 14px",
             }}
           >
             <img
@@ -413,7 +414,7 @@ export function AllProductsScreen() {
             maxHeight: "100vh",
             overflow: "scroll",
             background: "#FFF",
-            padding: "12px",
+            padding: "0 12px 0 6px",
           }}
         >
           <Typography variant="S16W700C050505">الفلاتر:</Typography>
