@@ -18,6 +18,7 @@ export const StyledTextField = (props) => {
           input: {
             "&::placeholder": {
               opacity: 1,
+              ...theme.typography.S16W300C050505,
             },
           },
         }}
@@ -25,7 +26,7 @@ export const StyledTextField = (props) => {
           style: {
             fontWeight: 300,
             fontSize: 16,
-            color: theme.palette.textField.inputFieldText,
+            ...theme.typography.S16W500C050505,
             background: theme.palette.textField.inputFieldBackground,
             borderRadius: TEXT_FIELD_BORDER_RADIUS,
             border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,

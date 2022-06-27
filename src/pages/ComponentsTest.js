@@ -10,6 +10,9 @@ import { QuestionsTab } from "./PostingScreen/QuestionsTab";
 import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
 import { PostingComponent } from "../Components/PostingComponents/PostingComponent";
 import { PostingModal } from "../Components/PostingComponents/PostingModal";
+import { PostingField } from "../Components/PostingComponents/PostingField";
+import { Comment } from "../Components/Interactions/Comment";
+import { CommentReply } from "../Components/Interactions/CommentReply";
 
 export const ComponentsTest = () => {
   /* Footer */
@@ -275,12 +278,26 @@ export const ComponentsTest = () => {
   const renderCompetitionPrompt = () => <CompetitionPrompt />;
   /*====PostingComponents */
   /* PostingComponent*/
-  const renderPostingComponent = () => <PostingComponent />;
+  const renderPostingComponent = () => (
+    <PostingComponent label="يمكنك اضافة مراجعة:" placeholder="اكتب مراجعتك" />
+  );
   /*PostingModal */
   const renderPostingModal = () => <PostingModal />;
-
+  /* PostingField*/
+  const renderCommentSection = () => (
+    <PostingField placeholder="اكتب تعليقاً" />
+  );
   //---RETURN---
-  return <React.Fragment>{renderPostingModal()}</React.Fragment>;
+  return (
+    <React.Fragment>
+      <FixedGrid>
+        <div style={{ height: "20px" }}> </div>
+        {renderPostingComponent()}
+        <div style={{ height: "20px" }}> </div>
+        {renderCommentSection()}
+      </FixedGrid>
+    </React.Fragment>
+  );
 };
 
 // import { Button } from "@mui/material";

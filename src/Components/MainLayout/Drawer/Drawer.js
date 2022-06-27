@@ -177,7 +177,7 @@ export const MyDrawer = (props) => {
     },
     //Menu
     {
-      title: "قائمة",
+      title: textContainer.menuNavBarItem,
       itemValue: 3,
       icon: (
         <MenuIcon
@@ -190,8 +190,6 @@ export const MyDrawer = (props) => {
       onClick: () => {
         if (!menuShow) dispatch(menuActions.showMenu());
         else dispatch(menuActions.hideMenu());
-
-        console.log(menuShow);
       },
     },
   ];
@@ -247,6 +245,16 @@ export const MyDrawer = (props) => {
                 </ListItemIcon>
 
                 {currentPage === item.itemValue && !menuShow ? (
+                  <Typography
+                    // variant="S14W700C2196f3"
+                    sx={{
+                      textAlign: "center",
+                      ...theme.typography.S14W700C2196f3,
+                    }}
+                  >
+                    {item.title}
+                  </Typography>
+                ) : item.itemValue === 3 && menuShow ? (
                   <Typography
                     // variant="S14W700C2196f3"
                     sx={{
