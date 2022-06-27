@@ -23,6 +23,7 @@ const reviewsSlice = createSlice({
       state.newReviews.push(...loadedReviews);
     },
     clearReviews(state) {
+      console.log("clear");
       state.newReviews = [];
     },
     // setIsExpanded(

@@ -17,7 +17,6 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
 
   useEffect(() => {
     console.log("clear reviews");
-
     dispatch(reviewsActions.clearReviews());
   }, []);
 

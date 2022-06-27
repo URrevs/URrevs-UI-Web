@@ -21,7 +21,6 @@ export default function ActionButton({ actionBtnFunction }) {
   };
 
   const handleClose = (event) => {
-    actionBtnFunction();
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -92,7 +91,7 @@ export default function ActionButton({ actionBtnFunction }) {
                   >
                     <MenuItem
                       sx={{ padding: "10px 28px", minHeight: 0 }}
-                      onClick={handleClose}
+                      onClick={actionBtnFunction}
                     >
                       <Typography variant="S16W700C050505">
                         {textContainer.iDontLikeThis}

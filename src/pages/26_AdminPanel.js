@@ -26,12 +26,17 @@ export const AdminPanel = () => {
   const dispatch = useAppDispatch();
 
   const theme = useTheme();
-  const { data, latestUpdateError, isLoading } = useGetLastUpdateInfoQuery();
+  const { data, latestUpdateError, isLoading } = useGetLastUpdateInfoQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
   const {
     data: lastCompetetionData,
     error: latestCompetetionError,
     isLoading: latestCompetetionIsLoading,
   } = useGetLatestCompetetionQuery();
+
+  console.log(lastCompetetionData);
 
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(0);
@@ -104,9 +109,7 @@ export const AdminPanel = () => {
               : lastCompetetionData &&
                 new Date(lastCompetetionData.deadline) - new Date() > 0
               ? "هناك مسابقة قائمة الان"
-              : listItems[1].subtitle +
-                " " +
-                convertDateToString(lastCompetetionData.createdAt, language)
+              : listItems[1].subtitle + " "
           }
           onClick={
             lastCompetetionData &&
@@ -127,7 +130,7 @@ export const AdminPanel = () => {
   const desktopView = () => (
     <Grid container>
       {/* Right Grid => On Arabic Language */}
-      <Grid item xl={4} lg={5} md={5}>
+      <Grid item xl={3} lg={3.5} md={4}>
         <Paper
           style={{
             padding: "65px 8px",
@@ -146,17 +149,16 @@ export const AdminPanel = () => {
         </Paper>
       </Grid>
       {/* Remove the  page * 2 later it's just for show */}
-      <Grid item xl={2} lg={1} md={1}></Grid>
-
+      <Grid item xl={2} lg={1} md={0.5}></Grid>
       <Grid
+        item
+        xl={5}
+        lg={6.5}
+        md={7}
         sx={{
           marginTop: "39px",
           marginBottom: "65px",
         }}
-        item
-        xl={4}
-        lg={5}
-        md={5}
       >
         {page === 0 ? (
           <UpdateProducts />
@@ -173,7 +175,7 @@ export const AdminPanel = () => {
           </Paper>
         )}
       </Grid>
-      <Grid item xl={2} lg={1} md={1}></Grid>
+      <Grid item xl={2} lg={1} md={0.5}></Grid>
     </Grid>
   );
   return (
