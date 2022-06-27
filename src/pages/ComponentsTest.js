@@ -9,6 +9,7 @@ import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
 import { QuestionsTab } from "./PostingScreen/QuestionsTab";
 import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
 import { PostingComponent } from "../Components/PostingComponents/PostingComponent";
+import { PostingModal } from "../Components/PostingComponents/PostingModal";
 
 export const ComponentsTest = () => {
   /* Footer */
@@ -272,10 +273,14 @@ export const ComponentsTest = () => {
 
   /* CompetitionPrompt */
   const renderCompetitionPrompt = () => <CompetitionPrompt />;
+  /*====PostingComponents */
   /* PostingComponent*/
   const renderPostingComponent = () => <PostingComponent />;
+  /*PostingModal */
+  const renderPostingModal = () => <PostingModal />;
+
   //---RETURN---
-  return <React.Fragment>{renderPostingComponent()}</React.Fragment>;
+  return <React.Fragment>{renderPostingModal()}</React.Fragment>;
 };
 
 // import { Button } from "@mui/material";

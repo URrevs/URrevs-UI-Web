@@ -132,6 +132,7 @@
   "requestWasCancelled": "تم إلغاء الطلب",
   "unknownNetworkError": "حدث خطأ غير معروف في الشبكة",
   "addingCompetition": "اضافة مسابقة",
+  "addPost": "اضافة منشور:",
   "enterCompetitionFinishingDate": "ادخل تاريخ انتهاء المسابقة:",
   "competitionEndDate": "تاريخ انتهاء المسابقة",
   "enterNumberOfWinners": "ادخل عدد الفائزين:",
