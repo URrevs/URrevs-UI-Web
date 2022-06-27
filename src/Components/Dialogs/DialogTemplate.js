@@ -8,13 +8,14 @@ const PromptStyled = styled(
   {}
 )(({ theme }) => ({
   position: "absolute",
-  top: "50%",
+  top: "55%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "80%",
   [theme.breakpoints.down("md")]: {
     width: "calc(100% - 32px)",
   },
+
   maxHeight: "652px",
   maxWidth: "450px",
   boxShadow: 24,

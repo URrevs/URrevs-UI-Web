@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Modal, Stack } from "@mui/material";
 import React from "react";
 import ReviewPostingScreen from "../../pages/18_ReviewPostingScreen";
 import PostingScreen from "../../pages/PostingScreen/PostingScreen";
@@ -15,13 +15,15 @@ export const PostingModal = () => {
     textContainer.tabBarQuestion,
   ];
   return (
-    <Stack spacing={1}>
-      <DialogTemplate title={textContainer.addPost}>
-        <div></div>
-        <Tabbar arrayOfTabs={arrayOfTabs} setValue={setValue} value={value}>
-          <PostingScreen setValue={setValue} value={value} />
-        </Tabbar>
-      </DialogTemplate>
-    </Stack>
+    <Modal open={true}>
+      <Stack spacing={1}>
+        <DialogTemplate title={textContainer.addPost}>
+          <div></div>
+          <Tabbar arrayOfTabs={arrayOfTabs} setValue={setValue} value={value}>
+            <PostingScreen setValue={setValue} value={value} />
+          </Tabbar>
+        </DialogTemplate>
+      </Stack>
+    </Modal>
   );
 };
