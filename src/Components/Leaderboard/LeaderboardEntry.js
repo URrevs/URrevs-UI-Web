@@ -37,10 +37,11 @@ const UserAvatar = styled(
 
 const LeaderboardEntry = ({
   userRank = 1,
-  userName = "John Do",
+  userName = "",
   userPicture,
   isBody = false,
   points = 0,
+  isWinner = false,
 }) => {
   const theme = useTheme();
 
@@ -77,7 +78,8 @@ const LeaderboardEntry = ({
         <div style={{ width: "18px" }}></div>
         <Typography variant="S20W700C050505">{userName}</Typography>
       </div>
-      <StarWithCount value={points} starSize={38} textStyle="S20W400C65676B" />
+      
+      <StarWithCount value={points} starSize={38} textStyle="S20W400C65676B" isWinner={isWinner}/>
     </Fragment>
   );
   return isBody ? (

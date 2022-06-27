@@ -128,6 +128,10 @@ export const Leaderboard = () => {
                 userName={item.name}
                 points={item.points}
                 userPicture={item.picture}
+                isWinner={
+                  latestCompetetionData &&
+                  latestCompetetionData.numWinners >= i + 1
+                }
               />
               <Divider></Divider>
             </Fragment>
@@ -151,11 +155,16 @@ export const Leaderboard = () => {
     } else {
       if (latestCompetetionIsLoading) {
         return <div>Loading...</div>;
+      } else if (
+        latestCompetetionData &&
+        new Date(latestCompetetionData.deadline) - new Date() < 0
+      ) {
+        return <CompetitionBanner prize="" daysLeft="" />;
       } else {
         return (
           <CompetitionBanner
             prize={latestCompetetionData.prize}
-            daysLeft={subtractDate(latestCompetetionData.deadline)}
+            daysLeft={latestCompetetionData.deadline}
           />
         );
       }
