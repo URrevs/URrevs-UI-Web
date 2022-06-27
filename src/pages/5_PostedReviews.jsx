@@ -19,7 +19,7 @@ export function PostedReviews() {
       showBackBtn
       tabBar={<FilterTabbar value={filter} setValue={setFilter} />}
     >
-      {!isMobile && (
+      {!isMobile ? (
         <ProfileTabbar
           children={
             <FixedGrid>
@@ -28,6 +28,10 @@ export function PostedReviews() {
           }
           arrayOfTabs={["المراجعات", "الاسئلة المطروحة", "المنتجات الممتكلة"]}
         ></ProfileTabbar>
+      ) : (
+        <FixedGrid>
+          {filter === 0 ? <PostedPhoneReviews /> : <PostedCompanyReviews />}
+        </FixedGrid>
       )}
     </CustomAppBar>
   );
