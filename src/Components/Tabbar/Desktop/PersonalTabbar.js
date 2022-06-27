@@ -34,16 +34,16 @@ export const PersonalTabbar = ({
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
   };
-  // const [smallPfpVisible, setSmallPfpVisible] = React.useState(false);
-  // const observer = new IntersectionObserver(
-  //   (entries) => {
-  //     setSmallPfpVisible(!entries[0].isIntersecting);
-  //   },
-  //   { threshold: 1 }
-  // );
-  // const profileRef = React.useRef();
-  // if (profileRef.current) observer.observe(profileRef.current);
-  // console.log(profileRef.current);
+  const [smallPfpVisible, setSmallPfpVisible] = React.useState(false);
+  const observer = new IntersectionObserver(
+    (entries) => {
+      setSmallPfpVisible(!entries[0].isIntersecting);
+    },
+    { threshold: 1 }
+  );
+  const profileRef = React.useRef();
+  if (profileRef.current) observer.observe(profileRef.current);
+  console.log(profileRef.current);
   const userPhoto = (height, width) => (
     <Avatar
       src={userProfile.photo}
@@ -90,18 +90,25 @@ export const PersonalTabbar = ({
 
   return userProfile ? (
     <React.Fragment>
-      <Paper
-        elevation={0}
+      <div
         style={{
-          padding: "0px 150px",
+          height: "100%",
         }}
       >
-        {userProfileFn()}
-        <Divider />
-      </Paper>
+        <Paper
+          profileRef={profileRef}
+          elevation={0}
+          style={{
+            padding: "0px 150px",
+          }}
+        >
+          {userProfileFn()}
+          <Divider />
+        </Paper>
 
-      <StickyTabbar  userPhoto={userPhoto} />
-      {children}
+        <StickyTabbar userPhoto={userPhoto} smallPfpVisible={smallPfpVisible} />
+        {children}
+      </div>
     </React.Fragment>
   ) : (
     <div>Loading...</div>

@@ -1,7 +1,7 @@
 import { Card, Tab, Tabs } from "@mui/material";
 import React from "react";
 
-export const StickyTabbar = ({ userPhoto }) => {
+export const StickyTabbar = ({ userPhoto, smallPfpVisible }) => {
   const [value, setValue] = React.useState(0);
 
   const arrayOfTabs = [
@@ -18,7 +18,7 @@ export const StickyTabbar = ({ userPhoto }) => {
   return (
     <Card
       style={{
-        position: "sticky",
+        position: smallPfpVisible ? "fixed" : "sticky",
         justifyContent: "space-between",
         display: "flex",
         top: "64px",
