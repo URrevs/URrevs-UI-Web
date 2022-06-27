@@ -3,11 +3,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { DialogTemplate } from "./DialogTemplate";
 
-export const HowToWinDialog = () => {
+export const HowToWinDialog = ({ handleClose }) => {
   const textContainer = useSelector((state) => state.language.textContainer);
   return (
     <React.Fragment>
       <DialogTemplate
+        handleClose={handleClose}
         title={textContainer.howToWinPromptTitle}
         sx={
           {
@@ -23,8 +24,9 @@ export const HowToWinDialog = () => {
         >
           {textContainer.howToWinPrompt}
         </Typography>
+
         <Link
-          href="https://www.youtube.com/watch?v=atQOxz9a1zo"
+          href="https://www.youtube.com/watch?v=atQOxz9a1zo" //Placeholder Link
           underline="always"
         >
           <Typography variant="S16W700C050505">

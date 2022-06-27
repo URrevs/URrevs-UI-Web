@@ -6,12 +6,15 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Modal,
   Paper,
   Typography,
 } from "@mui/material";
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { CompetitionBanner } from "../Components/CompetitionBanner/CompetitionBanner";
+import { HowToWinDialog } from "../Components/Dialogs/HowToWinDialog";
+import { PrizeDialog } from "../Components/Dialogs/PrizeDialog";
 import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { CARD_BORDER_RADIUS } from "../constants";
@@ -34,7 +37,7 @@ export const Leaderboard = () => {
   } = useGetMyCurrentRankQuery({}, { skip: !currentUser.isLoggedIn });
 
   const {
-    data: latestCompetetionData,
+    data: latestCompetitionData,
     error: latestCompetetionError,
     isLoading: latestCompetetionIsLoading,
   } = useGetLatestCompetetionQuery();
@@ -45,10 +48,25 @@ export const Leaderboard = () => {
     isLoading: topUsersIsLoading,
   } = useGetTopCompetetionUsersQuery();
 
+  console.log(latestCompetitionData);
+
   const theme = useTheme();
   const navigate = useNavigate();
   const textContainer = useAppSelector((state) => state.language.textContainer);
-
+  const [openPic, setOpenPic] = React.useState(false);
+  const [openHowToWin, setOpenHowToWin] = React.useState(false);
+  const handleCloseHowToWin = () => {
+    setOpenHowToWin(false);
+  };
+  const handleOpenHowToWin = () => {
+    setOpenHowToWin(true);
+  };
+  const handleClosePic = () => {
+    setOpenPic(false);
+  };
+  const handleOpenPic = () => {
+    setOpenPic(true);
+  };
   const renderProduct = (title, imgSrc, to) => {
     return (
       <ListItem
@@ -128,9 +146,10 @@ export const Leaderboard = () => {
                 userName={item.name}
                 points={item.points}
                 userPicture={item.picture}
+                competitionData={latestCompetitionData}
                 isWinner={
-                  latestCompetetionData &&
-                  latestCompetetionData.numWinners >= i + 1
+                  latestCompetitionData &&
+                  latestCompetitionData.numWinners >= i + 1
                 }
               />
               <Divider></Divider>
@@ -156,15 +175,28 @@ export const Leaderboard = () => {
       if (latestCompetetionIsLoading) {
         return <div>Loading...</div>;
       } else if (
-        latestCompetetionData &&
-        new Date(latestCompetetionData.deadline) - new Date() < 0
+        latestCompetitionData &&
+        new Date(latestCompetitionData.deadline) - new Date() < 0
       ) {
-        return <CompetitionBanner prize="" daysLeft="" />;
+        return (
+          <div>
+            <CompetitionBanner prize="" daysLeft="" />
+            <Modal open={openPic}>
+              <PrizeDialog
+                prize={latestCompetitionData.prize}
+                prizeImgSrc={latestCompetitionData.prizePic}
+              />
+            </Modal>
+            <Modal open={openHowToWin}>
+              <HowToWinDialog />
+            </Modal>
+          </div>
+        );
       } else {
         return (
           <CompetitionBanner
-            prize={latestCompetetionData.prize}
-            daysLeft={latestCompetetionData.deadline}
+            prize={latestCompetitionData.prize}
+            daysLeft={latestCompetitionData.deadline}
           />
         );
       }
