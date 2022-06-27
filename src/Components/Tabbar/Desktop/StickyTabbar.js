@@ -24,6 +24,7 @@ export const StickyTabbar = ({ userPhoto }) => {
         top: "64px",
         padding: "0px 150px 0px 150px",
         width: "100%",
+        zIndex: "10",
       }}
     >
       <Tabs value={value} onChange={handleChange}>

@@ -1,11 +1,12 @@
 import { Avatar, Box, Divider, Paper, Typography } from "@mui/material";
 import React from "react";
+import { useSearchParams } from "react-router-dom";
+import { useGetOtherUserProfileQuery } from "../../../services/users";
 import { useAppSelector } from "../../../store/hooks";
 import StarWithCount from "../../Leaderboard/StarWithCount";
 import { StickyTabbar } from "./StickyTabbar";
 
 export const PersonalTabbar = ({
-  userProfile,
   children,
   arrayOfTabs = [
     {
@@ -15,10 +16,19 @@ export const PersonalTabbar = ({
     { value: 1, label: "Tab 2" },
     { value: 2, label: "Tab 3" },
   ],
-  setValue,
-  value,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const uid = searchParams.get("userId");
+
+  const {
+    isLoading,
+    isFetching,
+    isError,
+    error,
+    data: userProfile,
+  } = useGetOtherUserProfileQuery(uid);
 
   // userProfile = useAppSelector((state) => state.auth);
   const pageDictionry = {
@@ -78,7 +88,7 @@ export const PersonalTabbar = ({
     </Box>
   );
 
-  return (
+  return userProfile ? (
     <React.Fragment>
       <Paper
         elevation={0}
@@ -90,8 +100,10 @@ export const PersonalTabbar = ({
         <Divider />
       </Paper>
 
-      <StickyTabbar userPhoto={userPhoto} />
+      <StickyTabbar  userPhoto={userPhoto} />
       {children}
     </React.Fragment>
+  ) : (
+    <div>Loading...</div>
   );
 };
