@@ -1,9 +1,22 @@
-import { Card, Tab, Tabs } from "@mui/material";
+import { Card, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 
-export const StickyTabbar = ({ userPhoto, smallPfpVisible }) => {
+export const StickyTabbar = ({ userPhoto, userProfile }) => {
+  const [smallPfpVisible, setSmallPfpVisible] = React.useState(false);
   const [value, setValue] = React.useState(0);
-
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY;
+      console.log(scrolled);
+      if (scrolled > 100) setSmallPfpVisible(true);
+      else setSmallPfpVisible(false);
+    };
+    window.addEventListener("scroll", handleScroll);
+    //On window scroll set pfp true or false
+    return (_) => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   const arrayOfTabs = [
     {
       value: 0,
@@ -32,7 +45,17 @@ export const StickyTabbar = ({ userPhoto, smallPfpVisible }) => {
           <Tab value={tab.value} label={tab.label} />
         ))}
       </Tabs>
-      {userPhoto()}
+      {smallPfpVisible ? (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          {userPhoto()}
+          <Typography variant="S18W700C050505">{userProfile.name}</Typography>
+        </div>
+      ) : null}
     </Card>
   );
 };

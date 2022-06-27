@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react";
 import { Avatar, Box, Divider, Paper, Typography } from "@mui/material";
 import React from "react";
 import { useSearchParams } from "react-router-dom";
@@ -6,7 +7,7 @@ import { useAppSelector } from "../../../store/hooks";
 import StarWithCount from "../../Leaderboard/StarWithCount";
 import { StickyTabbar } from "./StickyTabbar";
 
-export const PersonalTabbar = ({
+export const ProfileTabbar = ({
   children,
   arrayOfTabs = [
     {
@@ -18,7 +19,7 @@ export const PersonalTabbar = ({
   ],
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
-
+  const theme = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
   const uid = searchParams.get("userId");
 
@@ -35,15 +36,15 @@ export const PersonalTabbar = ({
     collectedStars: textContainer.collectedStars,
   };
   const [smallPfpVisible, setSmallPfpVisible] = React.useState(false);
-  const observer = new IntersectionObserver(
-    (entries) => {
-      setSmallPfpVisible(!entries[0].isIntersecting);
-    },
-    { threshold: 1 }
-  );
-  const profileRef = React.useRef();
-  if (profileRef.current) observer.observe(profileRef.current);
-  console.log(profileRef.current);
+  // const observer = new IntersectionObserver(
+  //   (entries) => {
+  //     setSmallPfpVisible(!entries[0].isIntersecting);
+  //   },
+  //   { threshold: 1 }
+  // );
+  // const profileRef = React.useRef();
+  // if (profileRef.current) observer.observe(profileRef.current);
+  // console.log(profileRef.current);
   const userPhoto = (height, width) => (
     <Avatar
       src={userProfile.photo}
@@ -54,7 +55,7 @@ export const PersonalTabbar = ({
         width: `${width}px`,
         transition: "0.1s",
       }}
-    ></Avatar>
+    />
   );
 
   const userProfileFn = () => (
@@ -96,17 +97,26 @@ export const PersonalTabbar = ({
         }}
       >
         <Paper
-          profileRef={profileRef}
+          // profileRef={profileRef}
           elevation={0}
-          style={{
-            padding: "0px 150px",
+          sx={{
+            [theme.breakpoints.down("xl")]: {
+              padding: "0px 150px",
+            },
+            [theme.breakpoints.down("md")]: {
+              padding: "0px 0px",
+            },
           }}
         >
           {userProfileFn()}
           <Divider />
         </Paper>
 
-        <StickyTabbar userPhoto={userPhoto} smallPfpVisible={smallPfpVisible} />
+        <StickyTabbar
+          userPhoto={userPhoto}
+          smallPfpVisible={smallPfpVisible}
+          userProfile={userProfile}
+        />
         {children}
       </div>
     </React.Fragment>
