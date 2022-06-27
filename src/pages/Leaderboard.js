@@ -128,6 +128,10 @@ export const Leaderboard = () => {
                 userName={item.name}
                 points={item.points}
                 userPicture={item.picture}
+                isWinner={
+                  latestCompetetionData &&
+                  latestCompetetionData.numWinners >= i + 1
+                }
               />
               <Divider></Divider>
             </Fragment>
