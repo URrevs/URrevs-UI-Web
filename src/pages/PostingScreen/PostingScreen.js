@@ -242,6 +242,7 @@ const Basic = ({ ...props }) => {
 
 const PostingScreen = ({ value, setValue }) => {
   const [addReview] = useAddPhoneReviewMutation();
+  const theme = useTheme();
   const textContainer = useSelector((state) => state.language.textContainer);
   const pageDictionary = {
     tabbar: [textContainer.tabBarReview, textContainer.tabBarQuestion],
@@ -284,107 +285,94 @@ const PostingScreen = ({ value, setValue }) => {
     // invitationCode: Yup.string().required("Required"),
   });
   return (
-    <div style={{ marginBottom: "85px" }}>
-      <CustomAppBar
-        tabBar={
-          <Tabbar
-            arrayOfTabs={pageDictionary.tabbar}
-            setValue={setValue}
-            value={value}
-          />
-        }
-        showLogo
-        showSearch
-        showProfile
-      >
-        {value === 0 ? (
-          <Formik
-            initialValues={{
-              companyId: "",
-              chooseProduct: { _id: "", name: "", type: "" },
-              overAllExp: 0,
-              manufacturingQuality: 0,
-              userInterface: 0,
-              priceQuality: 0,
-              camera: 0,
-              callsQuality: 0,
-              battery: 0,
-              rateManufacturer: 0,
-              purchaseDate: "",
-              likeAboutProduct: "",
-              hateAboutProduct: "",
-              likeAbout: "",
-              hateAbout: "",
-              invitationCode: "",
-            }}
-            // initialValues={{
-            //   companyId: handleInitialValues(
-            //     "companyId",
-            //     '{"_id":"","name":"","type":""}'
-            //   )
-            //     ? JSON.parse(
-            //         handleInitialValues(
-            //           "companyId",
-            //           '{"_id":"","name":"","type":""}'
-            //         )
-            //       )
-            //     : JSON.parse('{"_id":"","name":"","type":""}'),
-            //   chooseProduct: handleInitialValues("chooseProduct", ""),
-            //   overAllExp: parseInt(handleInitialValues("overAllExp", 0)),
-            //   manufacturingQuality: parseInt(
-            //     handleInitialValues("manufacturingQuality", 0)
-            //   ),
-            //   userInterface: parseInt(handleInitialValues("userInterface", 0)),
-            //   priceQuality: parseInt(handleInitialValues("priceQuality", 0)),
-            //   camera: parseInt(handleInitialValues("camera", 0)),
-            //   callsQuality: parseInt(handleInitialValues("callsQuality", 0)),
-            //   battery: parseInt(handleInitialValues("battery", 0)),
-            //   rateManufacturer: parseInt(
-            //     handleInitialValues("rateManufacturer", 0)
-            //   ),
-            //   purchaseDate: handleInitialValues("purchaseDate"),
-            //   likeAboutProduct: handleInitialValues("likeAboutProduct"),
-            //   hateAboutProduct: handleInitialValues("hateAboutProduct"),
-            //   likeAbout: handleInitialValues("likeAbout"),
-            //   hateAbout: handleInitialValues("hateAbout"),
-            //   invitationCode: handleInitialValues("invitationCode"),
-            // }}
-            validationSchema={BasicValidationSchema}
-            onSubmit={async (values, { setSubmitting }) => {
-              sessionStorage.clear();
-              const reviewPost = {
-                phoneId: values.chooseProduct.id,
-                companyId: values.companyId._id,
-                ownedDate: values.purchaseDate,
-                generalRating: values.overAllExp,
-                uiRating: values.userInterface,
-                manQuality: values.manufacturingQuality,
-                valFMon: values.priceQuality,
-                camera: values.camera,
-                callQuality: values.callsQuality,
-                battery: values.battery,
-                pros: values.likeAboutProduct,
-                cons: values.hateAboutProduct,
-                refCode: values.invitationCode,
-                companyRating: values.rateManufacturer,
-                compPros: values.likeAbout,
-                compCons: values.hateAbout,
-              };
-              // console.log(JSON.stringify(reviewPost, null, 2));
-              try {
-                const response = await addReview(reviewPost).unwrap();
-              } catch (e) {
-                console.log("asd askjd bhasb", e);
-              }
-              setSubmitting(false);
-            }}
-          >
-            {(props) => <Basic {...props} />}
-          </Formik>
-        ) : (
-          <QuestionsTab />
-        )}
-      </CustomAppBar>
+    <div style={{ marginBottom: theme.isMobile ? "85px" : 0 }}>
+      {value === 0 ? (
+        <Formik
+          initialValues={{
+            companyId: "",
+            chooseProduct: { _id: "", name: "", type: "" },
+            overAllExp: 0,
+            manufacturingQuality: 0,
+            userInterface: 0,
+            priceQuality: 0,
+            camera: 0,
+            callsQuality: 0,
+            battery: 0,
+            rateManufacturer: 0,
+            purchaseDate: "",
+            likeAboutProduct: "",
+            hateAboutProduct: "",
+            likeAbout: "",
+            hateAbout: "",
+            invitationCode: "",
+          }}
+          // initialValues={{
+          //   companyId: handleInitialValues(
+          //     "companyId",
+          //     '{"_id":"","name":"","type":""}'
+          //   )
+          //     ? JSON.parse(
+          //         handleInitialValues(
+          //           "companyId",
+          //           '{"_id":"","name":"","type":""}'
+          //         )
+          //       )
+          //     : JSON.parse('{"_id":"","name":"","type":""}'),
+          //   chooseProduct: handleInitialValues("chooseProduct", ""),
+          //   overAllExp: parseInt(handleInitialValues("overAllExp", 0)),
+          //   manufacturingQuality: parseInt(
+          //     handleInitialValues("manufacturingQuality", 0)
+          //   ),
+          //   userInterface: parseInt(handleInitialValues("userInterface", 0)),
+          //   priceQuality: parseInt(handleInitialValues("priceQuality", 0)),
+          //   camera: parseInt(handleInitialValues("camera", 0)),
+          //   callsQuality: parseInt(handleInitialValues("callsQuality", 0)),
+          //   battery: parseInt(handleInitialValues("battery", 0)),
+          //   rateManufacturer: parseInt(
+          //     handleInitialValues("rateManufacturer", 0)
+          //   ),
+          //   purchaseDate: handleInitialValues("purchaseDate"),
+          //   likeAboutProduct: handleInitialValues("likeAboutProduct"),
+          //   hateAboutProduct: handleInitialValues("hateAboutProduct"),
+          //   likeAbout: handleInitialValues("likeAbout"),
+          //   hateAbout: handleInitialValues("hateAbout"),
+          //   invitationCode: handleInitialValues("invitationCode"),
+          // }}
+          validationSchema={BasicValidationSchema}
+          onSubmit={async (values, { setSubmitting }) => {
+            sessionStorage.clear();
+            const reviewPost = {
+              phoneId: values.chooseProduct.id,
+              companyId: values.companyId._id,
+              ownedDate: values.purchaseDate,
+              generalRating: values.overAllExp,
+              uiRating: values.userInterface,
+              manQuality: values.manufacturingQuality,
+              valFMon: values.priceQuality,
+              camera: values.camera,
+              callQuality: values.callsQuality,
+              battery: values.battery,
+              pros: values.likeAboutProduct,
+              cons: values.hateAboutProduct,
+              refCode: values.invitationCode,
+              companyRating: values.rateManufacturer,
+              compPros: values.likeAbout,
+              compCons: values.hateAbout,
+            };
+            // console.log(JSON.stringify(reviewPost, null, 2));
+            try {
+              const response = await addReview(reviewPost).unwrap();
+            } catch (e) {
+              console.log("asd askjd bhasb", e);
+            }
+            setSubmitting(false);
+          }}
+        >
+          {(props) => <Basic {...props} />}
+        </Formik>
+      ) : (
+        <QuestionsTab />
+      )}
     </div>
   );
 };
