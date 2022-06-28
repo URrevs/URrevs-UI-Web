@@ -3,7 +3,7 @@ import { Avatar, Card, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-export const StickyTabbar = ({ userPhoto, userProfile, arrayOfTabs }) => {
+export const StickyTabbar = ({ userPhoto, userName, arrayOfTabs }) => {
   const theme = useTheme();
 
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ export const StickyTabbar = ({ userPhoto, userProfile, arrayOfTabs }) => {
             alignItems: "center",
           }}
         >
-          {
+          {userPhoto && (
             <Avatar
               src={userPhoto}
               alt="User profile picture"
@@ -83,8 +83,8 @@ export const StickyTabbar = ({ userPhoto, userProfile, arrayOfTabs }) => {
                 transition: "0.1s",
               }}
             />
-          }
-          <Typography variant="S18W700C050505">{userProfile.name}</Typography>
+          )}
+          <Typography variant="S18W700C050505">{userName}</Typography>
         </div>
       ) : null}
     </Card>

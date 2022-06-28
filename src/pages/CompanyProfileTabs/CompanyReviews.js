@@ -6,6 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import { CompanyOverviewCard } from "../../Components/OverviewCard/CompanyOverviewCard";
 import CompanyReview from "../../Components/ReviewCard/CompanyReview";
 import ROUTES_NAMES from "../../RoutesNames";
+import { useGetCompanyStatsInfoQuery } from "../../services/companies";
 import { useGetCompanyReviewsQuery } from "../../services/company_reviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
@@ -22,6 +23,7 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
 
   let reviewsList = useAppSelector((state) => state.reviews.newReviews);
   const [page, setPage] = useState(1);
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const cid = searchParams.get("cid");
@@ -30,6 +32,13 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
     round: page,
     cid: cid,
   });
+
+  const {
+    isLoading: companyStatsIsLoading,
+    error: companyStatsError,
+    isFetching: companyStatsIsFetching,
+    data: companyStatsData,
+  } = useGetCompanyStatsInfoQuery(cid);
 
   const stateLike = (id) =>
     dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
@@ -79,14 +88,20 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
   };
 
   const companyOverView = () => {
-    return (
-      <CompanyOverviewCard
-        companyName={companyName}
-        companyRating={companyRating}
-        type="شركة"
-        viewer={viewer}
-      />
-    );
+    if (companyStatsIsLoading) {
+      return <div>Loading...</div>;
+    } else if (companyStatsError) {
+      return <div>Error</div>;
+    } else {
+      return (
+        <CompanyOverviewCard
+          companyName={companyStatsData.name}
+          type={textContainer.company}
+          companyRating={companyStatsData.rating.toPrecision(2)}
+          viewer={companyStatsData.views}
+        />
+      );
+    }
   };
 
   return (

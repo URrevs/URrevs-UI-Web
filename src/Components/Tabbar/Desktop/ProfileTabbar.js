@@ -104,7 +104,7 @@ export const ProfileTabbar = ({ children, arrayOfTabs }) => {
         <StickyTabbar
           userPhoto={userProfile.photo}
           smallPfpVisible={smallPfpVisible}
-          userProfile={userProfile}
+          userName={userProfile.name}
           arrayOfTabs={arrayOfTabs}
         />
         {children}
