@@ -25,7 +25,7 @@ const PromptStyled = styled(
   background: theme.palette.modalColor,
 }));
 
-export const DialogTemplate = ({ title, children, handleClose }) => {
+export const DialogTemplate = ({ title, children, handleClose = null }) => {
   return (
     <React.Fragment>
       <PromptStyled elevation={3}>
@@ -47,18 +47,20 @@ export const DialogTemplate = ({ title, children, handleClose }) => {
             }}
           >
             <Typography variant="S16W700C050505">{title}</Typography>
-            <IconButton
-              sx={{
-                border: "1px solid #050505",
-                filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25))",
-                padding: 0,
-                margin: 0,
-                backgroundColor: "#E8E8E8",
-              }}
-              onClick={handleClose}
-            >
-              <CloseIcon htmlColor="#000" fontSize="medium" />
-            </IconButton>
+            {handleClose ? (
+              <IconButton
+                sx={{
+                  border: "1px solid #050505",
+                  filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25))",
+                  padding: 0,
+                  margin: 0,
+                  backgroundColor: "#E8E8E8",
+                }}
+                onClick={handleClose}
+              >
+                <CloseIcon htmlColor="#000" fontSize="medium" />
+              </IconButton>
+            ) : null}
           </Box>
           {children}
         </Box>

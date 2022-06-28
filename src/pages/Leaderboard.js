@@ -234,9 +234,9 @@ export const Leaderboard = () => {
       )}
       {!isMobile && (
         <Grid container>
-          <Grid item xl={2} lg={1.5} md={1}></Grid>
+          <Grid item xl={2} lg={1.5} md={0.5}></Grid>
 
-          <Grid item xl={5} lg={5} md={5}>
+          <Grid item xl={5} lg={5} md={5.5}>
             {/* List of users rank in leaderboard */}
 
             {leaderboardList()}
@@ -251,6 +251,7 @@ export const Leaderboard = () => {
             xl={4}
             lg={4.5}
             md={4}
+            sm={4}
           >
             <div
               style={{

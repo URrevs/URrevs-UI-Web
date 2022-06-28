@@ -253,8 +253,8 @@ function App() {
           <BrowserRouter>
             <Layout>
               <Grid container style={{}}>
-                <Grid item md={0} sm={0.5} xs={0.5}></Grid>
-                <Grid item md={12} sm={11} xs={11}>
+                <Grid item md={0} sm={0} xs={0.5}></Grid>
+                <Grid item md={12} sm={12} xs={11}>
                   <Routes>
                     {/* not found handling */}
                     <Route path="/404" element={<NotFoundPage />} />
@@ -401,7 +401,7 @@ function App() {
                     />
                   </Routes>
                 </Grid>
-                <Grid item md={0} sm={0.5} xs={0.5}></Grid>
+                <Grid item md={0} sm={0} xs={0.5}></Grid>
               </Grid>
             </Layout>
           </BrowserRouter>

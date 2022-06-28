@@ -103,10 +103,7 @@ export const AddReviewTab = ({ ...props }) => {
     <React.Fragment>
       <Modal open={open} onClose={handleClose} dir={theme.direction}>
         <Box>
-          <DialogText
-            text={pageDictionary.referralCodeHelpPrompt}
-            onClose={handleClose}
-          />
+          <DialogText text={pageDictionary.referralCodeHelpPrompt} />
         </Box>
       </Modal>
       <form onSubmit={props.handleSubmit}>
