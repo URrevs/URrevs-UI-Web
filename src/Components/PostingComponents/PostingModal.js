@@ -10,6 +10,13 @@ import { Tabbar } from "../Tabbar/Tabbar";
 //This should go into Layout
 export const PostingModal = ({ open, handleClose }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  /* uiPostingModalSlice */
+  const show = useAppSelector((state) => state.postingModal.show);
+  const tab = useAppSelector((state) => state.postingModal.tab);
+  const id = useAppSelector((state) => state.postingModal.id);
+  const name = useAppSelector((state) => state.postingModal.name);
+  const type = useAppSelector((state) => state.postingModal.type);
+
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const arrayOfTabs = [

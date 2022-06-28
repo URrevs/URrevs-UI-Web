@@ -1,38 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// interface initialState {
-//   show: boolean;
-//   message: string;
-//   showActionBtn: boolean;
-//   actionBtnText: string;
-//   actionBtnFunction: () => void;
-// }
+interface initialState {
+  show: boolean;
+  tab: string;
+  id: string;
+  name: string;
+  type: string;
+}
 
-// const initialState: initialState = {
-//   show: false,
-//   message: "",
-//   showActionBtn: false,
-//   actionBtnText: "",
-//   actionBtnFunction: () => {},
-// };
+const initialState: initialState = {
+  show: false,
+  tab: "",
+  id: "",
+  name: "",
+  type: "",
+};
 
-// const snackbarSlice = createSlice({
-//   name: "snackbar",
-//   initialState: initialState,
-//   reducers: {
-//     showSnackbar(state, action) {
-//       state.show = true;
-//       state.message = action.payload.message;
-//       state.showActionBtn = action.payload.showActionBtn;
-//       state.actionBtnText = action.payload.actionBtnText;
-//       state.actionBtnFunction = action.payload.actionBtnFunctoin;
-//     },
-//     hideSnackbar(state) {
-//       state.show = false;
-//     },
-//   },
-// });
+const postingModalSlice = createSlice({
+  name: "postingModal",
+  initialState: initialState,
+  reducers: {
+    showPostingModal(state, action) {
+      state.show = true;
+      state.tab = action.payload.tab;
+      state.id = action.payload.id;
+      state.name = action.payload.name;
+      state.type = action.payload.type;
+    },
+    hidePostingModal(state) {
+      state.show = false;
+    },
+  },
+});
 
-// export const snackbarActions = snackbarSlice.actions;
-// export const snackbarSliceName = snackbarSlice.name;
-// export default snackbarSlice;
+export const postingModalActions = postingModalSlice.actions;
+export const postingModalSliceName = postingModalSlice.name;
+export default postingModalSlice;
