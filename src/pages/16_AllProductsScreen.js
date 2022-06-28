@@ -193,6 +193,7 @@ export function AllProductsScreen() {
         <ListItemButton
           sx={{
             padding: 0,
+
             "&:hover": {
               backgroundColor: "transparent",
             },

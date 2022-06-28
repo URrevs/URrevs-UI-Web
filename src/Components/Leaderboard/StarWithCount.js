@@ -13,7 +13,9 @@ export default function StarWithCount({
   const theme = useTheme();
 
   return (
-    <div style={{ display: "flex", alignItems: "end" }}>
+    <div
+      style={{ display: "flex", justifyContent: "center", alignItems: "end" }}
+    >
       {prizeIcon}
       <RoundedStar
         color={theme.palette.reviewCard.filledStarColor}
