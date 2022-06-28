@@ -1,17 +1,25 @@
 import { useTheme } from "@emotion/react";
 import { Avatar, Card, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 export const StickyTabbar = ({ userPhoto, userProfile, arrayOfTabs }) => {
   const theme = useTheme();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [smallPfpVisible, setSmallPfpVisible] = React.useState(false);
 
   // set tab indicator on current route
-  const [value, setValue] = React.useState(0);
+  const currentPath = location.pathname.split("/").slice(-1)[0];
+  const pathValue = arrayOfTabs.findIndex(
+    (element) => element.to.split("?")[0] === currentPath
+  );
+
+  console.log(currentPath, arrayOfTabs[0].to.split("?")[0], pathValue);
+
+  const [value, setValue] = React.useState(pathValue === -1 ? 0 : pathValue);
 
   React.useEffect(() => {
     const handleScroll = () => {

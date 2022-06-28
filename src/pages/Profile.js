@@ -1,11 +1,11 @@
-import React, { Fragment } from "react";
+import { useTheme } from "@emotion/react";
+import { Fragment } from "react";
+import { Outlet, useSearchParams } from "react-router-dom";
+import { ProfileTabbar } from "../Components/Tabbar/Desktop/ProfileTabbar";
+import ROUTES_NAMES from "../RoutesNames";
 import { useAppSelector } from "../store/hooks";
-import { Link, Outlet, useSearchParams } from "react-router-dom";
 import CurrentUserProfilePage from "./CurrentUserProfile";
 import OtherUserProfilePage from "./OtherUserProfile";
-import ROUTES_NAMES from "../RoutesNames";
-import { ProfileTabbar } from "../Components/Tabbar/Desktop/ProfileTabbar";
-import { useTheme } from "@emotion/react";
 
 export default function Profile() {
   const isMobile = useTheme().isMobile;
@@ -30,15 +30,15 @@ export default function Profile() {
   const listItems = [
     {
       title: pageDictionry.myReviews,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}?userId=${paramId}`,
+      to: `${ROUTES_NAMES.REVIEWS}?userId=${paramId}`,
     },
     {
       title: pageDictionry.myQuestions,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}?userId=${paramId}`,
+      to: `${ROUTES_NAMES.QUESTIONS}?userId=${paramId}`,
     },
     {
       title: pageDictionry.ownedProducts,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?userId=${paramId}`,
+      to: `${ROUTES_NAMES.OWNED_PHONES}?userId=${paramId}`,
     },
     {
       title: pageDictionry.referalCode,
@@ -46,7 +46,7 @@ export default function Profile() {
     },
     {
       title: pageDictionry.askedQuestions,
-      to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.MY_QUESTIONS}?userId=${paramId}`,
+      to: `${ROUTES_NAMES.MY_QUESTIONS}?userId=${paramId}`,
     },
   ];
 

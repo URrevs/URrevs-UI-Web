@@ -297,6 +297,7 @@ function App() {
                           path={ROUTES_NAMES.USER_PROFILE}
                           element={<Profile />}
                         >
+                          <Route index element={<PostedReviews />} />
                           <Route
                             path={ROUTES_NAMES.OWNED_PHONES}
                             element={<OwnedPhonesPage />}
