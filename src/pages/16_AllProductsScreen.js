@@ -406,12 +406,14 @@ export function AllProductsScreen() {
 
   return (
     <div>
+      <div style={{ height: "20px" }} />
       {/* company list */}
       {/* Right grid */}
       {!theme.isMobile && (
         <div
           style={{
             position: "fixed",
+            top: "64px",
             maxHeight: "100vh",
             overflow: "scroll",
             background: "#FFF",

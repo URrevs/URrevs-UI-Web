@@ -284,6 +284,7 @@ function Reviews() {
           <Grid container style={{ display: "flex" }}>
             <Grid item xl={2} md={1} xs={0}></Grid>
             <Grid item xl={8} md={10} xs={12}>
+              <div style={{ height: "20px" }} />
               <Banner></Banner>
             </Grid>
             <Grid item xl={2} md={1} xs={0}></Grid>
