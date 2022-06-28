@@ -5,6 +5,7 @@ import { Box, Card, Grid, IconButton, Modal, Typography } from "@mui/material";
 import { styled } from "@mui/styles";
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import ButtonPage from "../../Components/Buttons/ButtonPage";
 import { CompareDialog } from "../../Components/Dialogs/CompareDialog/CompareDialog";
 import { CompareItem } from "../../Components/Dialogs/CompareDialog/CompareItem";
@@ -14,6 +15,7 @@ import { ProductOverviewCard } from "../../Components/OverviewCard/ProductOvervi
 import ProductDetailsTable from "../../Components/ProductDetailsTable";
 import { CARD_BORDER_RADIUS } from "../../constants";
 import {
+  useGetPhoneSpecsQuery,
   useGetSimilarPhonesQuery,
   useGetStatisticalInfoQuery,
 } from "../../services/phones";
@@ -29,8 +31,14 @@ const CardStyled = styled(
   justifyContent: "center",
 }));
 
-export const ProductSpecsScreen = ({ data }) => {
+export const ProductSpecsScreen = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramId = searchParams.get("pid");
+
+  let { isLoading, error, isFetching, data } = useGetPhoneSpecsQuery(paramId);
+
   const componentDictionary = {
     productImage: textContainer.productImage,
     specs: textContainer.tabBarSpecs,
@@ -62,6 +70,7 @@ export const ProductSpecsScreen = ({ data }) => {
       <CompareItem item={item} />
     </CardStyled>
   );
+
   const overviewCard = () =>
     statisticalLoading ? (
       <LoadingSpinner />
@@ -90,6 +99,7 @@ export const ProductSpecsScreen = ({ data }) => {
         />
       </div>
     );
+
   const compareWithOtherProducts = () => (
     <Box
       sx={{

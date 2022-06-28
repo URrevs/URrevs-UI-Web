@@ -18,6 +18,8 @@ const ROUTES_NAMES = {
   EXACT_COMPANY_QUESTION: "company-question",
   PHONE_PROFILE: "phone",
   COMPANY_PROFILE: "company",
+  SPECS: "specs",
+
   //level 3
   // ADD_COMPETITION: "add-competition",
   OWNED_PHONES: "owned-phones",

@@ -1,10 +1,12 @@
 import { Box } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
 import { Tabbar } from "../Components/Tabbar/Tabbar";
+import ROUTES_NAMES from "../RoutesNames";
 
 import {
   useGetPhoneSpecsQuery,
@@ -21,17 +23,32 @@ export const ProductProfile = () => {
   let { isLoading, error, isFetching, data } = useGetPhoneSpecsQuery(paramId);
 
   const textContainer = useSelector((state) => state.language.textContainer);
-  const [value, setValue] = React.useState(1);
+
   const pageDictionary = {
     reviews: textContainer.tabBarReviews,
     specs: textContainer.tabBarSpecs,
     QnA: textContainer.tabBarQuestionsAndAnswers,
   };
 
-  const tabBarArray = [
-    pageDictionary.reviews,
-    pageDictionary.specs,
-    pageDictionary.QnA,
+  const pageDictionry = {
+    reviews: pageDictionary.reviews,
+    specs: pageDictionary.specs,
+    qAnda: pageDictionary.QnA,
+  };
+
+  const listOfItems = [
+    {
+      title: pageDictionry.reviews,
+      to: `${ROUTES_NAMES.REVIEWS}?pid=${paramId}`,
+    },
+    {
+      title: pageDictionry.specs,
+      to: `${ROUTES_NAMES.SPECS}?pid=${paramId}`,
+    },
+    {
+      title: pageDictionry.qAnda,
+      to: `${ROUTES_NAMES.QUESTIONS}?pid=${paramId}`,
+    },
   ];
 
   return (
@@ -46,26 +63,16 @@ export const ProductProfile = () => {
           label={data.name}
           showSearch
           showProfile
-          tabBar={
-            <Tabbar
-              arrayOfTabs={tabBarArray}
-              value={value}
-              setValue={setValue}
-            />
-          }
         >
           <Box
             sx={{
               padding: "0px 6px",
             }}
           >
-            {value === 0 ? (
-              <ProductReviews />
-            ) : value === 1 ? (
-              <ProductSpecsScreen data={data}></ProductSpecsScreen>
-            ) : (
-              <ProductQuestions />
-            )}
+            <Fragment>
+              <StickyTabbar arrayOfTabs={listOfItems} />
+              <Outlet />
+            </Fragment>
           </Box>
         </CustomAppBar>
       )}
