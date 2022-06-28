@@ -14,7 +14,7 @@ import LoadingReviewSkeleton, {
 import { useAppDispatch } from "../store/hooks";
 
 const cache = new CellMeasurerCache({
-  fixedWidth: true,
+  fixedWidth: false,
   fixedHeight: false,
   defaultHeight: loadingSkeletonHeight,
 });

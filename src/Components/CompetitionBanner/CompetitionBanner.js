@@ -29,7 +29,7 @@ export const CompetitionBanner = ({ daysLeft, prize, setModal }) => {
         sx={{
           background: cardGradientColor,
           minHeight: "154px",
-          minWidth: "382px",
+          // minWidth: "382px",
           borderRadius: `${CARD_BORDER_RADIUS}px`,
         }}
         elevation={3}

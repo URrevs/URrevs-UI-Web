@@ -7,28 +7,18 @@ import { useAppSelector } from "../../../store/hooks";
 import StarWithCount from "../../Leaderboard/StarWithCount";
 import { StickyTabbar } from "./StickyTabbar";
 
-export const ProfileTabbar = ({
-  children,
-  arrayOfTabs = [
-    {
-      value: 0,
-      label: "Tab 1",
-    },
-    { value: 1, label: "Tab 2" },
-    { value: 2, label: "Tab 3" },
-  ],
-}) => {
+export const ProfileTabbar = ({ children, arrayOfTabs }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const theme = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
   const uid = searchParams.get("userId");
 
   const {
+    data: userProfile,
     isLoading,
     isFetching,
     isError,
     error,
-    data: userProfile,
   } = useGetOtherUserProfileQuery(uid);
 
   // userProfile = useAppSelector((state) => state.auth);
@@ -36,6 +26,7 @@ export const ProfileTabbar = ({
     collectedStars: textContainer.collectedStars,
   };
   const [smallPfpVisible, setSmallPfpVisible] = React.useState(false);
+
   // const observer = new IntersectionObserver(
   //   (entries) => {
   //     setSmallPfpVisible(!entries[0].isIntersecting);
@@ -45,18 +36,6 @@ export const ProfileTabbar = ({
   // const profileRef = React.useRef();
   // if (profileRef.current) observer.observe(profileRef.current);
   // console.log(profileRef.current);
-  const userPhoto = (height, width) => (
-    <Avatar
-      src={userProfile.photo}
-      alt="User profile picture"
-      sx={{
-        mr: "8px",
-        height: `${height}px`,
-        width: `${width}px`,
-        transition: "0.1s",
-      }}
-    />
-  );
 
   const userProfileFn = () => (
     <Box
@@ -68,7 +47,16 @@ export const ProfileTabbar = ({
     >
       {/* User name and Profile Picture */}
       <Box style={{ display: "flex", alignItems: "flex-end" }}>
-        {userPhoto(90, 90)}
+        <Avatar
+          src={userProfile.photo}
+          alt="User profile picture"
+          sx={{
+            mr: "8px",
+            height: `90px`,
+            width: `90px`,
+            transition: "0.1s",
+          }}
+        />
         <Typography variant="S32W700C050505">{userProfile.name}</Typography>
       </Box>
 
@@ -92,9 +80,9 @@ export const ProfileTabbar = ({
   return userProfile ? (
     <React.Fragment>
       <div
-        style={{
-          height: "100%",
-        }}
+      // style={{
+      //   height: "100%",
+      // }}
       >
         <Paper
           // profileRef={profileRef}
@@ -114,9 +102,10 @@ export const ProfileTabbar = ({
         </Paper>
 
         <StickyTabbar
-          userPhoto={userPhoto}
+          userPhoto={userProfile.photo}
           smallPfpVisible={smallPfpVisible}
           userProfile={userProfile}
+          arrayOfTabs={arrayOfTabs}
         />
         {children}
       </div>
