@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { CustomAppBar } from "../../Components/MainLayout/AppBar/CustomAppBar";
 import PhoneReview from "../../Components/ReviewCard/PhoneReview";
 import ReviewCard from "../../Components/ReviewCard/ReviewCard";
@@ -83,18 +84,20 @@ export function ProductReviews() {
   };
 
   return (
-    <VirtualReviewList
-      reviewCard={reviewCard}
-      reviewsList={reviewsList}
-      page={page}
-      data={data}
-      error={error}
-      isLoading={isLoading}
-      isFetching={isFetching}
-      stateLike={stateLike}
-      stateUnLike={stateUnLike}
-      addToReviewsList={addToReviewsList}
-      increasePage={increasePage}
-    />
+    <AlonePostsGrid>
+      <VirtualReviewList
+        reviewCard={reviewCard}
+        reviewsList={reviewsList}
+        page={page}
+        data={data}
+        error={error}
+        isLoading={isLoading}
+        isFetching={isFetching}
+        stateLike={stateLike}
+        stateUnLike={stateUnLike}
+        addToReviewsList={addToReviewsList}
+        increasePage={increasePage}
+      />
+    </AlonePostsGrid>
   );
 }

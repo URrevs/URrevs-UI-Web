@@ -64,16 +64,14 @@ export const ProductProfile = () => {
           showSearch
           showProfile
         >
-          <Box
-            sx={{
-              padding: "0px 6px",
-            }}
-          >
-            <Fragment>
-              <StickyTabbar arrayOfTabs={listOfItems} userName={data.name} />
-              <Outlet />
-            </Fragment>
-          </Box>
+          <Fragment>
+            <StickyTabbar
+              hasParent={false}
+              arrayOfTabs={listOfItems}
+              userName={data.name}
+            />
+            <Outlet />
+          </Fragment>
         </CustomAppBar>
       )}
     </React.Fragment>
