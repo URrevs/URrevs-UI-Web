@@ -37,7 +37,8 @@ const FormikSearchComponent = ({
                   "companyId",
                   JSON.stringify(companyId.data)
                 );
-              } else setFieldValue("companyId", "");
+              } else
+                setFieldValue("companyId", { _id: "", name: "", type: "" });
             }}
             label={label}
             searchFn={searchFn}

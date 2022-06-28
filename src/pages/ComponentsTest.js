@@ -2,7 +2,7 @@ import React from "react";
 import { Footer } from "../Components/Banners/Footer";
 import Banner from "../Components/Banners/Banner";
 import { ProfileTabbar } from "../Components/Tabbar/Desktop/ProfileTabbar";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { Card } from "@mui/material";
 import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
@@ -13,6 +13,7 @@ import { PostingModal } from "../Components/PostingComponents/PostingModal";
 import { PostingField } from "../Components/PostingComponents/PostingField";
 import { Comment } from "../Components/Interactions/Comment";
 import { CommentReply } from "../Components/Interactions/CommentReply";
+import { postingModalActions } from "../store/uiPostingModalSlice";
 
 export const ComponentsTest = () => {
   /* Footer */
@@ -278,12 +279,17 @@ export const ComponentsTest = () => {
   const renderCompetitionPrompt = () => <CompetitionPrompt />;
   /*====PostingComponents */
   /* PostingComponent*/
+  const dispatch = useAppDispatch();
   const renderPostingComponent = () => (
     <PostingComponent
       params={{
         disabled: true,
         onClick: () => {
-          setOpen(true);
+          dispatch(
+            postingModalActions.showPostingModal({
+              tab: 0,
+            })
+          );
         },
       }}
       label="يمكنك اضافة مراجعة:"
@@ -291,13 +297,7 @@ export const ComponentsTest = () => {
     />
   );
   /*PostingModal */
-  const [open, setOpen] = React.useState(false);
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const renderPostingModal = () => (
-    <PostingModal open={open} handleClose={handleClose} />
-  );
+  const renderPostingModal = () => <PostingModal />;
   /* PostingField*/
   const renderCommentSection = () => (
     <PostingField placeholder="اكتب تعليقاً" />
@@ -305,7 +305,6 @@ export const ComponentsTest = () => {
   //---RETURN---
   return (
     <React.Fragment>
-      {renderPostingModal()}
       <FixedGrid>
         <div style={{ height: "20px" }}> </div>
         {renderPostingComponent()}
