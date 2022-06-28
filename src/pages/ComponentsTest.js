@@ -279,10 +279,25 @@ export const ComponentsTest = () => {
   /*====PostingComponents */
   /* PostingComponent*/
   const renderPostingComponent = () => (
-    <PostingComponent label="يمكنك اضافة مراجعة:" placeholder="اكتب مراجعتك" />
+    <PostingComponent
+      params={{
+        disabled: true,
+        onClick: () => {
+          setOpen(true);
+        },
+      }}
+      label="يمكنك اضافة مراجعة:"
+      placeholder="اكتب مراجعتك"
+    />
   );
   /*PostingModal */
-  const renderPostingModal = () => <PostingModal />;
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const renderPostingModal = () => (
+    <PostingModal open={open} handleClose={handleClose} />
+  );
   /* PostingField*/
   const renderCommentSection = () => (
     <PostingField placeholder="اكتب تعليقاً" />
@@ -290,6 +305,7 @@ export const ComponentsTest = () => {
   //---RETURN---
   return (
     <React.Fragment>
+      {renderPostingModal()}
       <FixedGrid>
         <div style={{ height: "20px" }}> </div>
         {renderPostingComponent()}

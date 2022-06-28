@@ -2,8 +2,12 @@ import { Card, Typography } from "@mui/material";
 import React from "react";
 import { CARD_BORDER_RADIUS } from "../../constants";
 import { PostingField } from "./PostingField";
-const params = {};
-export const PostingComponent = ({ placeholder = "", label = "" }) => {
+
+export const PostingComponent = ({
+  placeholder = "",
+  label = "",
+  params = {},
+}) => {
   /*Edit Text Field here */
 
   return (
@@ -16,7 +20,7 @@ export const PostingComponent = ({ placeholder = "", label = "" }) => {
         //   minWidth: "641px",
       }}
     >
-      <div style={{ padding: "20px 17px 0px 0px" }}>
+      <div style={{ padding: "20px 17px 0px 17px" }}>
         <Typography variant="S14W500C050505">{label}</Typography>
       </div>
       <div style={{ padding: "19px 8px 29px 6px" }}>

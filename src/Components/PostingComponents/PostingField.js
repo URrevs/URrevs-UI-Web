@@ -7,14 +7,20 @@ import { useAppSelector } from "../../store/hooks";
 export const PostingField = ({
   placeholder = "",
   params = {}, //Adding new textfield params or overwriting existing ones
-  handleClick = () => {},
 }) => {
   const userProfile = useAppSelector((state) => state.auth);
   const theme = useTheme();
   const textFieldParams = {
     autoComplete: "off",
+    disabled: false,
     //Outer part of the TextField
-    style: {
+    sx: {
+      ".Mui-disabled": {
+        //Change Disabled CSS
+        cursor: "pointer",
+        WebkitTextFillColor: "black !important",
+      },
+
       width: "100%",
       border: "none",
     },
@@ -29,7 +35,7 @@ export const PostingField = ({
         padding: "13px",
         ...theme.typography.S16W500C050505,
         alignContent: "center",
-        background: "#f0f2f5",
+        background: theme.palette.textField.postingFieldBackground,
         borderRadius: `${SEARCH_INPUT_BORDER_RADIUS}px`,
       },
     },
@@ -59,7 +65,7 @@ export const PostingField = ({
             transition: "0.1s",
           }}
         />
-        <TextField {...textFieldParams} onClick={handleClick} />
+        <TextField {...textFieldParams} />
       </Box>
     </div>
   );
