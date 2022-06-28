@@ -1,7 +1,7 @@
 import { useTheme } from "@emotion/react";
 import { Avatar, Card, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const StickyTabbar = ({ userPhoto, userProfile, arrayOfTabs }) => {
   const theme = useTheme();
@@ -9,7 +9,10 @@ export const StickyTabbar = ({ userPhoto, userProfile, arrayOfTabs }) => {
   const navigate = useNavigate();
 
   const [smallPfpVisible, setSmallPfpVisible] = React.useState(false);
+
+  // set tab indicator on current route
   const [value, setValue] = React.useState(0);
+
   React.useEffect(() => {
     const handleScroll = () => {
       const scrolled = window.scrollY;
@@ -49,7 +52,9 @@ export const StickyTabbar = ({ userPhoto, userProfile, arrayOfTabs }) => {
     >
       <Tabs value={value} onChange={handleChange}>
         {arrayOfTabs.map((tab, i) => (
+          // <Link style={{ textDecoration: "none" }} to={tab.to}>
           <Tab value={i} label={tab.title} onClick={() => navigate(tab.to)} />
+          // </Link>
         ))}
       </Tabs>
       {smallPfpVisible ? (

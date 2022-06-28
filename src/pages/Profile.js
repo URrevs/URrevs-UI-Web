@@ -59,7 +59,9 @@ export default function Profile() {
         <Outlet />
       </Fragment>
     ) : (
-      <CurrentUserProfilePage />
+      <Fragment>
+        <CurrentUserProfilePage />
+      </Fragment>
     );
   } else {
     return !isMobile ? (

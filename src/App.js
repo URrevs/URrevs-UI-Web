@@ -292,28 +292,49 @@ function App() {
                         </Route>
                       </Route>
 
-                      <Route
-                        path={ROUTES_NAMES.USER_PROFILE}
-                        element={<Profile />}
-                      >
-                        <Route index element={<Profile />} />
+                      {!isMobile ? (
                         <Route
-                          path={ROUTES_NAMES.OWNED_PHONES}
-                          element={<OwnedPhonesPage />}
-                        />
-                        <Route
-                          path={ROUTES_NAMES.REVIEWS}
-                          element={<PostedReviews />}
-                        />
-                        <Route
-                          path={ROUTES_NAMES.QUESTIONS}
-                          element={<PostedQuestions />}
-                        />
-                        <Route
-                          path={ROUTES_NAMES.MY_QUESTIONS}
-                          element={<MyPhonesQuestions />}
-                        />
-                      </Route>
+                          path={ROUTES_NAMES.USER_PROFILE}
+                          element={<Profile />}
+                        >
+                          <Route
+                            path={ROUTES_NAMES.OWNED_PHONES}
+                            element={<OwnedPhonesPage />}
+                          />
+                          <Route
+                            path={ROUTES_NAMES.REVIEWS}
+                            element={<PostedReviews />}
+                          />
+                          <Route
+                            path={ROUTES_NAMES.QUESTIONS}
+                            element={<PostedQuestions />}
+                          />
+                          <Route
+                            path={ROUTES_NAMES.MY_QUESTIONS}
+                            element={<MyPhonesQuestions />}
+                          />
+                        </Route>
+                      ) : (
+                        <Route path={ROUTES_NAMES.USER_PROFILE}>
+                          <Route index element={<Profile />} />
+                          <Route
+                            path={ROUTES_NAMES.OWNED_PHONES}
+                            element={<OwnedPhonesPage />}
+                          />
+                          <Route
+                            path={ROUTES_NAMES.REVIEWS}
+                            element={<PostedReviews />}
+                          />
+                          <Route
+                            path={ROUTES_NAMES.QUESTIONS}
+                            element={<PostedQuestions />}
+                          />
+                          <Route
+                            path={ROUTES_NAMES.MY_QUESTIONS}
+                            element={<MyPhonesQuestions />}
+                          />
+                        </Route>
+                      )}
 
                       <Route path={ROUTES_NAMES.COMPANY_PROFILE}>
                         <Route index element={<CompanyProfile />} />
