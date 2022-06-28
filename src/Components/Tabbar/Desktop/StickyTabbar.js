@@ -3,7 +3,12 @@ import { Avatar, Card, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-export const StickyTabbar = ({ userPhoto, userName, arrayOfTabs }) => {
+export const StickyTabbar = ({
+  userPhoto,
+  userName,
+  arrayOfTabs,
+  hasParent = true,
+}) => {
   const theme = useTheme();
 
   const navigate = useNavigate();
@@ -45,7 +50,7 @@ export const StickyTabbar = ({ userPhoto, userName, arrayOfTabs }) => {
         position: smallPfpVisible ? "fixed" : "sticky",
         justifyContent: "space-between",
         display: "flex",
-        top: "64px",
+        top: hasParent && "64px",
         padding: "0px 200px",
         [theme.breakpoints.down("xl")]: {
           padding: "0px 150px",

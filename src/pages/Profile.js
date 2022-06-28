@@ -72,7 +72,9 @@ export default function Profile() {
         <ProfileTabbar
           arrayOfTabs={[listItems[0], listItems[1], listItems[2]]}
         ></ProfileTabbar>
-        <Outlet />
+        <AlonePostsGrid>
+          <Outlet />
+        </AlonePostsGrid>
       </Fragment>
     ) : (
       <OtherUserProfilePage uid={paramId} />

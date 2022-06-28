@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useOutletContext, useSearchParams } from "react-router-dom";
+
+import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { CustomAppBar } from "../../Components/MainLayout/AppBar/CustomAppBar";
 import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
 import { PostingModal } from "../../Components/PostingComponents/PostingModal";
@@ -88,7 +90,7 @@ export function ProductReviews() {
   };
 
   return (
-    <React.Fragment>
+    <AlonePostsGrid>
       {/* <div style={{ height: "20px" }} /> */}
       <PostingComponent
         label={textContainer.youCanAddReview}
@@ -121,6 +123,6 @@ export function ProductReviews() {
         addToReviewsList={addToReviewsList}
         increasePage={increasePage}
       />
-    </React.Fragment>
+    </AlonePostsGrid>
   );
 }
