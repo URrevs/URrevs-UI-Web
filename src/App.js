@@ -297,6 +297,7 @@ function App() {
                         </Route>
                       </Route>
 
+                      {/* profile */}
                       {!isMobile ? (
                         <Route
                           path={ROUTES_NAMES.USER_PROFILE}

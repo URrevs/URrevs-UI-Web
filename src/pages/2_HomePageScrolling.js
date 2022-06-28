@@ -22,6 +22,7 @@ import {
 import Banner from "../Components/Banners/Banner";
 import { Grid } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 
 function Reviews() {
   const dispatch = useAppDispatch();
@@ -295,23 +296,19 @@ function Reviews() {
       )}
 
       {!isMobile ? (
-        <Grid container>
-          <Grid item xl={3} lg={2} md={2} sm={0} xs={0}></Grid>
-          <Grid item xl={6} lg={8} md={8} sm={12} xs={12}>
-            <VirtualReviewList
-              reviewCard={reviewCard}
-              reviewsList={reviewsList}
-              page={page}
-              data={data}
-              error={error}
-              isLoading={isLoading}
-              isFetching={isFetching}
-              addToReviewsList={addToReviewsList}
-              increasePage={increasePage}
-            />
-          </Grid>
-          <Grid item xl={3} lg={2} md={2} sm={0} xs={0}></Grid>
-        </Grid>
+        <AlonePostsGrid>
+          <VirtualReviewList
+            reviewCard={reviewCard}
+            reviewsList={reviewsList}
+            page={page}
+            data={data}
+            error={error}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            addToReviewsList={addToReviewsList}
+            increasePage={increasePage}
+          />
+        </AlonePostsGrid>
       ) : (
         <FixedGrid>
           <VirtualReviewList

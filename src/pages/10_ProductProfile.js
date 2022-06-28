@@ -70,7 +70,7 @@ export const ProductProfile = () => {
             }}
           >
             <Fragment>
-              <StickyTabbar arrayOfTabs={listOfItems} />
+              <StickyTabbar arrayOfTabs={listOfItems} userName={data.name} />
               <Outlet />
             </Fragment>
           </Box>
