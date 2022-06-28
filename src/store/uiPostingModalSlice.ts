@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface initialState {
   show: boolean;
-  tab: string;
+  tab: number;
   id: string;
   name: string;
   type: string;
@@ -10,7 +10,7 @@ interface initialState {
 
 const initialState: initialState = {
   show: false,
-  tab: "",
+  tab: 0,
   id: "",
   name: "",
   type: "",
@@ -26,6 +26,9 @@ const postingModalSlice = createSlice({
       state.id = action.payload.id;
       state.name = action.payload.name;
       state.type = action.payload.type;
+    },
+    switchTab(state, action) {
+      state.tab = action.payload.tab;
     },
     hidePostingModal(state) {
       state.show = false;

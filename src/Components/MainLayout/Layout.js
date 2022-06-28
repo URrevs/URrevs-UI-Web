@@ -19,6 +19,7 @@ import BottomNavBar from "./BottomNavBar/BottomNavBar";
 import { CustomAppBar } from "./AppBar/CustomAppBar";
 import CustomizedSnackbar from "../Snackbar";
 import { Link } from "react-router-dom";
+import { PostingModal } from "../PostingComponents/PostingModal";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -118,6 +119,7 @@ export default function Layout(props) {
       {theme.isMobile ? <></> : <MyDrawer open={open} setOpen={setOpen} />}
       <Registeration />
       <CustomizedSnackbar />
+      <PostingModal />
       {theme.isMobile ? <BottomNavBar /> : <></>}
       <Box
         component="main"

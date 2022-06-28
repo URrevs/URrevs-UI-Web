@@ -7,7 +7,17 @@ import { useAddPhoneReviewMutation } from "../../services/phone_reviews";
 import { AddReviewTab } from "./AddReviewTab";
 import { QuestionsTab } from "./QuestionsTab";
 
-const PostingScreen = ({ value }) => {
+const PostingScreen = ({
+  value,
+  initValues = {
+    chooseProduct: { id: "", label: "", type: "" },
+    spoc: {
+      label: "",
+      id: "",
+      type: "",
+    },
+  },
+}) => {
   const [addReview] = useAddPhoneReviewMutation();
   const theme = useTheme();
   const textContainer = useSelector((state) => state.language.textContainer);
@@ -56,8 +66,8 @@ const PostingScreen = ({ value }) => {
       {value === 0 ? (
         <Formik
           initialValues={{
-            companyId: "",
-            chooseProduct: { _id: "", name: "", type: "" },
+            companyId: { _id: "", name: "", type: "" },
+            chooseProduct: { id: "", label: "", type: "" },
             overAllExp: 0,
             manufacturingQuality: 0,
             userInterface: 0,
