@@ -77,7 +77,7 @@ export const CompetitionBanner = ({ daysLeft, prize, setModal }) => {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "8px 50px",
+            padding: "8px 22px",
           }}
         >
           <OrangeGradientButton

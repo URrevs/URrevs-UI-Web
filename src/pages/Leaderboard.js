@@ -221,7 +221,7 @@ export const Leaderboard = () => {
   return (
     <CustomAppBar showLabel showLogo showSearch showProfile>
       <div style={{ height: "14px" }}></div>
-      <div style={{ height: "14px" }}></div>
+
       {latestCompetetionError ? null : <ModalMananger />}
       {isMobile && (
         <div>
@@ -234,7 +234,7 @@ export const Leaderboard = () => {
       )}
       {!isMobile && (
         <Grid container>
-          <Grid item xl={2} lg={1} md={0.5}></Grid>
+          <Grid item xl={2} lg={1.5} md={0.5}></Grid>
 
           <Grid item xl={5} lg={5} md={5.5}>
             {/* List of users rank in leaderboard */}
@@ -242,15 +242,34 @@ export const Leaderboard = () => {
             {leaderboardList()}
           </Grid>
 
-          <Grid item xl={1} lg={0} md={0.5}></Grid>
-          <Grid item xl={4} lg={5} md={4.5}>
-            <div style={{ position: "fixed", padding: "0 12px" }}>
+          <Grid item xl={0.5} lg={0.5} md={0.5}></Grid>
+          <Grid
+            style={{
+              position: "relative",
+            }}
+            item
+            xl={4}
+            lg={4.5}
+            md={4}
+            sm={4}
+          >
+            <div
+              style={{
+                position: "absolute",
+                padding: "0px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <div style={{ height: "30px" }} />
               {/* competetion banner */}
               {competetionBanner()}
               {/* Your Rank In The Leaderboard */}
               {currentUserRank()}
             </div>
           </Grid>
+          <Grid item xl={0.5} lg={0.5} md={1}></Grid>
         </Grid>
       )}
     </CustomAppBar>
