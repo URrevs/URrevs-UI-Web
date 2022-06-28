@@ -39,6 +39,8 @@ import { PostedReviews } from "./pages/5_PostedReviews";
 import { PostedQuestions } from "./pages/7_PostedQuestions";
 import { SearchScreen } from "./pages/8_SearchScreen";
 import AddReview from "./pages/AddReview";
+import { CompanyQuestions } from "./pages/CompanyProfileTabs/CompanyQuestions";
+import { CompanyReviews } from "./pages/CompanyProfileTabs/CompanyReviews";
 import { ComponentsTest } from "./pages/ComponentsTest";
 import { Leaderboard } from "./pages/Leaderboard";
 import { MyPhonesQuestions } from "./pages/MyPhonesQuestions";
@@ -337,11 +339,17 @@ function App() {
                         </Route>
                       )}
 
-                      <Route path={ROUTES_NAMES.COMPANY_PROFILE}>
-                        <Route index element={<CompanyProfile />} />
+                      <Route
+                        path={`${ROUTES_NAMES.COMPANY_PROFILE}`}
+                        element={<CompanyProfile />}
+                      >
                         <Route
-                          path={ROUTES_NAMES.COMPARISON}
-                          element={<ComparisonScreen />}
+                          path={ROUTES_NAMES.REVIEWS}
+                          element={<CompanyReviews />}
+                        />
+                        <Route
+                          path={ROUTES_NAMES.QUESTIONS}
+                          element={<CompanyQuestions />}
                         />
                       </Route>
                       <Route path={ROUTES_NAMES.PHONE_PROFILE}>

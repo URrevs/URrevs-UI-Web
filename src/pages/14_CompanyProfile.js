@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { CompanyOverviewCard } from "../Components/OverviewCard/CompanyOverviewCard";
+import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
 import { Tabbar } from "../Components/Tabbar/Tabbar";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetCompanyStatsInfoQuery } from "../services/companies";
@@ -15,12 +16,6 @@ export const CompanyProfile = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const companyId = searchParams.get("cid");
-  const { isLoading, error, isFetching, data } = useGetCompanyStatsInfoQuery(
-    companyId,
-    {
-      refetchOnMountOrArgChange: true,
-    }
-  );
 
   const textContainer = useSelector((state) => state.language.textContainer);
   const pageDictionary = {
@@ -28,41 +23,43 @@ export const CompanyProfile = () => {
     tabBarQuestionsAndAnswers: textContainer.tabBarQuestionsAndAnswers,
     company: textContainer.company,
   };
+
+  const pageDictionry = {
+    reviews: textContainer.tabBarReviews,
+    questions: textContainer.tabBarQuestionsAndAnswers,
+  };
+
+  const listOfItems = [
+    {
+      title: pageDictionry.reviews,
+      to: `${ROUTES_NAMES.REVIEWS}?cid=${companyId}`,
+    },
+    {
+      title: pageDictionry.questions,
+      to: `${ROUTES_NAMES.QUESTIONS}?cid=${companyId}`,
+    },
+  ];
+
   return (
     <React.Fragment>
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <CustomAppBar
-          label={data.name}
-          showLabel
-          showBackBtn
-          showProfile
-          englishName
-          showSearch
-          tabBar={
-            <Tabbar
-              arrayOfTabs={[
-                pageDictionary.tabBarReviews,
-                pageDictionary.tabBarQuestionsAndAnswers,
-              ]}
-              value={value}
-              setValue={setValue}
-            />
-          }
-        >
-          {value === 0 ? (
-            <CompanyReviews
-              viewer={data.views}
-              companyRating={data.rating.toPrecision(2)}
-              companyName={data.name}
-              type={pageDictionary.company}
-            />
-          ) : (
-            <CompanyQuestions />
-          )}
-        </CustomAppBar>
-      )}
+      <CustomAppBar
+        label="company name"
+        showLabel
+        showBackBtn
+        showProfile
+        englishName
+        showSearch
+      >
+        {
+          <Fragment>
+            <StickyTabbar
+              arrayOfTabs={listOfItems}
+              userName="company"
+            ></StickyTabbar>
+            <Outlet />
+          </Fragment>
+        }
+      </CustomAppBar>
     </React.Fragment>
   );
 };
