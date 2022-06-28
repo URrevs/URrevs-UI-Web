@@ -24,6 +24,7 @@ import homePageSlice from "./homePageSlice";
 import menuSlice from "./uiMenuSlice";
 import regDialogSlice from "./uiRegisterDialogSlice";
 import snackbarSlice from "./uiSnackbarSlice";
+import postingModalSlice from "./uiPostingModalSlice";
 
 export const store = configureStore({
   reducer: {
@@ -50,6 +51,7 @@ export const store = configureStore({
     [authSlice.name]: authSlice.reducer,
     [regDialogSlice.name]: regDialogSlice.reducer,
     [snackbarSlice.name]: snackbarSlice.reducer,
+    [postingModalSlice.name]: postingModalSlice.reducer,
     [menuSlice.name]: menuSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
