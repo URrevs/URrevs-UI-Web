@@ -34,10 +34,12 @@ const StarRating = ({
             emptyIcon={
               readOnly ? (
                 <RoundedStar
+                  size="30px"
                   color={globalTheme.palette.reviewCard.emptyStarColor}
                 />
               ) : (
                 <RoundedOutlinedStar
+                  size="30px"
                   color={globalTheme.palette.reviewCard.outlinedStarColor}
                 />
               )

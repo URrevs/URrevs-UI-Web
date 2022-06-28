@@ -14,7 +14,11 @@ export default function StarWithCount({
 
   return (
     <div
-      style={{ display: "flex", justifyContent: "center", alignItems: "end" }}
+      style={{
+        display: "flex",
+        // justifyContent: "center",
+        alignItems: "center",
+      }}
     >
       {prizeIcon}
       <RoundedStar

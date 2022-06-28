@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Avatar, Card, styled, Typography } from "@mui/material";
+import { Avatar, Card, IconButton, styled, Typography } from "@mui/material";
 import { Fragment } from "react";
 import useFitText from "use-fit-text";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,15 +20,15 @@ const LeaderboardEntryCard = styled(
   padding: "0px 12px",
   borderRadius: "12px",
   cursor: "pointer",
-  "&:hover": {
-    backgroundColor: theme.palette.hover,
-  },
-  "&:active": {
-    backgroundColor: theme.palette.hover,
-  },
-  "&:focus": {
-    backgroundColor: theme.palette.hover,
-  },
+  // "&:hover": {
+  //   backgroundColor: theme.palette.hover,
+  // },
+  // "&:active": {
+  //   backgroundColor: theme.palette.hover,
+  // },
+  // "&:focus": {
+  //   backgroundColor: theme.palette.hover,
+  // },
   transition: "all 0.8s ease",
 }));
 
@@ -65,38 +65,29 @@ const LeaderboardEntry = ({
     maxFontSize: 90,
   });
   const prizeIcon = isWinner ? (
-    <div
-      style={
-        {
-          // height: "40px",
-          // width: "40px",
-          // display: "flex",
-          // justifyContent: "center",
-          // alignItems: "center",
-          // display: "inline-block",
-        }
-      }
+    <IconButton
+      onClick={(e) => {
+        e.stopPropagation(); //Stop Bubbling
+        prizeClick();
+      }}
     >
       <FontAwesomeIcon
         icon={faGift}
+        className="fann"
         style={{
           height: "30px",
           width: "30px",
           color: "#FFBF00", //prize color
-          // ".fa-gift:hover": {
-          //   color: "#000", //prize color
-          // },
-          // backgroundColor: "#000 !important",
-          // transition: "all 0.5s ease",
-          // borderRadius: "50%",
-          // cursor: "pointer",
-        }}
-        onClick={(e) => {
-          e.stopPropagation(); //Stop Bubbling
-          prizeClick();
+          "fann:hover .fa-gift": {
+            color: "#000", //prize color
+          },
+          backgroundColor: "#000 !important",
+          transition: "all 0.5s ease",
+          borderRadius: "50%",
+          cursor: "pointer",
         }}
       />
-    </div>
+    </IconButton>
   ) : null;
 
   const entryBody = () => (
