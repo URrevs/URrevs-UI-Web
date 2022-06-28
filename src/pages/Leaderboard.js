@@ -234,24 +234,23 @@ export const Leaderboard = () => {
       )}
       {!isMobile && (
         <Grid container>
-          <Grid item xl={2} lg={1.5} md={0.5}></Grid>
+          <Grid item xl={2} lg={1} sm={1}></Grid>
 
-          <Grid item xl={5} lg={5} md={5.5}>
+          <Grid item xl={5} lg={5} sm={5.5}>
             {/* List of users rank in leaderboard */}
 
             {leaderboardList()}
           </Grid>
 
-          <Grid item xl={0.5} lg={0.5} md={0.5}></Grid>
+          <Grid item xl={0.5} lg={0.5} sm={0.25}></Grid>
           <Grid
             style={{
               position: "relative",
             }}
             item
             xl={4}
-            lg={4.5}
-            md={4}
-            sm={4}
+            lg={5}
+            sm={5}
           >
             <div
               style={{
@@ -269,7 +268,7 @@ export const Leaderboard = () => {
               {currentUserRank()}
             </div>
           </Grid>
-          <Grid item xl={0.5} lg={0.5} md={1}></Grid>
+          <Grid item xl={0.5} lg={0.5} sm={0.25}></Grid>
         </Grid>
       )}
     </CustomAppBar>
