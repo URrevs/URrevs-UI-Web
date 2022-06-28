@@ -18,6 +18,7 @@ const FormikStar = ({
           <>
             <div style={{ textAlign: "center" }}>
               <StarRating
+                starSize="30px"
                 textSize="S14W500C050505"
                 starDimension={starDimension}
                 starValue={parseInt(value)}
