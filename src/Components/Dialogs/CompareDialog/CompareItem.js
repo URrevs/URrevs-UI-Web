@@ -29,12 +29,7 @@ export const CompareItem = ({ item }) => {
   const [searchFn] = useSearchPhonesOnlyMutation();
   const [indicateComparison] = useIndicateUserComparingMutation();
   const [error, setError] = React.useState(false);
-  // React.useEffect(() => {
-  //   setError(!Boolean(compareItem));
-  // }, [compareItem]);
-  // React.useEffect(() => {
-  //   setError(false);
-  // }, []);
+
   return (
     <React.Fragment>
       <Box
@@ -84,7 +79,7 @@ export const CompareItem = ({ item }) => {
               }
 
               navigate(
-                `${ROUTES_NAMES.COMPARISON}?cid=${compareItem.id}&pid=${item._id}`
+                `../../../${ROUTES_NAMES.COMPARISON}?cid=${compareItem.id}&pid=${item._id}`
               );
             } else setError(true);
           }}

@@ -45,6 +45,9 @@ import { ComponentsTest } from "./pages/ComponentsTest";
 import { Leaderboard } from "./pages/Leaderboard";
 import { MyPhonesQuestions } from "./pages/MyPhonesQuestions";
 import OwnedPhonesPage from "./pages/OwnedPhones";
+import { ProductSpecsScreen } from "./pages/ProductProfileTabs/10_ProductSpecs";
+import { ProductReviews } from "./pages/ProductProfileTabs/12_ProductReviews";
+import { ProductQuestions } from "./pages/ProductProfileTabs/13_ProductQuestions";
 import Profile from "./pages/Profile";
 import ROUTES_NAMES from "./RoutesNames";
 import { authActions } from "./store/authSlice";
@@ -258,7 +261,7 @@ function App() {
                   <Routes>
                     {/* not found handling */}
                     <Route path="/404" element={<NotFoundPage />} />
-                    <Route path="*" element={<Navigate to="/404" replace />} />
+                    {/* <Route path="*" element={<Navigate to="/404" replace />} /> */}
 
                     {/* review full review */}
                     <Route
@@ -339,6 +342,7 @@ function App() {
                         </Route>
                       )}
 
+                      {/* company profile */}
                       <Route
                         path={`${ROUTES_NAMES.COMPANY_PROFILE}`}
                         element={<CompanyProfile />}
@@ -352,13 +356,30 @@ function App() {
                           element={<CompanyQuestions />}
                         />
                       </Route>
-                      <Route path={ROUTES_NAMES.PHONE_PROFILE}>
-                        <Route index element={<ProductProfile />} />
+
+                      {/* phone profile */}
+                      <Route
+                        path={ROUTES_NAMES.PHONE_PROFILE}
+                        element={<ProductProfile />}
+                      >
                         <Route
-                          path={ROUTES_NAMES.COMPARISON}
-                          element={<ComparisonScreen />}
+                          path={ROUTES_NAMES.REVIEWS}
+                          element={<ProductReviews />}
+                        />
+                        <Route path={ROUTES_NAMES.SPECS}>
+                          <Route index element={<ProductSpecsScreen />} />
+                        </Route>
+                        <Route
+                          path={ROUTES_NAMES.QUESTIONS}
+                          element={<ProductQuestions />}
                         />
                       </Route>
+
+                      {/* comparison screen */}
+                      <Route
+                        path={ROUTES_NAMES.COMPARISON}
+                        element={<ComparisonScreen />}
+                      />
                     </Route>
                     <Route path={ROUTES_NAMES.HOME}>
                       <Route
