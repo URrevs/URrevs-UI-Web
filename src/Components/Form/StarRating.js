@@ -18,6 +18,7 @@ const StarRating = ({
   isVertical = true,
   starDimension = "19px",
   readOnly,
+  starSize = "",
 }) => {
   const globalTheme = useTheme();
   const theme = createMuiTheme({ direction: globalTheme.direction });
@@ -34,18 +35,19 @@ const StarRating = ({
             emptyIcon={
               readOnly ? (
                 <RoundedStar
-                  size="30px"
+                  size={starSize}
                   color={globalTheme.palette.reviewCard.emptyStarColor}
                 />
               ) : (
                 <RoundedOutlinedStar
-                  size="30px"
+                  size={starSize}
                   color={globalTheme.palette.reviewCard.outlinedStarColor}
                 />
               )
             }
             icon={
               <RoundedStar
+                size={starSize}
                 color={globalTheme.palette.reviewCard.filledStarColor}
               />
             }

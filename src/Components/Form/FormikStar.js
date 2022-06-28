@@ -1,5 +1,6 @@
 import { Field } from "formik";
 import React from "react";
+import { useAppSelector } from "../../store/hooks";
 import StarRating from "./StarRating";
 
 const FormikStar = ({
@@ -11,6 +12,7 @@ const FormikStar = ({
   starDimension = "35px",
   starSpacing = "5px",
 }) => {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
   return (
     <>
       <Field name={fieldName}>
@@ -18,6 +20,7 @@ const FormikStar = ({
           <>
             <div style={{ textAlign: "center" }}>
               <StarRating
+                starSize="30px"
                 textSize="S14W500C050505"
                 starDimension={starDimension}
                 starValue={parseInt(value)}
@@ -42,7 +45,7 @@ const FormikStar = ({
                     // marginLeft: "14px",
                   }}
                 >
-                  {meta.error}
+                  {textContainer.starRatingMissingField}
                 </p>
               )}
             </div>

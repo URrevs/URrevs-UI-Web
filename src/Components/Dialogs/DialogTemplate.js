@@ -50,7 +50,7 @@ export const DialogTemplate = ({ title, children, handleClose = null }) => {
             {handleClose ? (
               <IconButton
                 sx={{
-                  border: "1px solid #050505",
+                  border: "1px solid transparent",
                   filter: "drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25))",
                   padding: 0,
                   margin: 0,

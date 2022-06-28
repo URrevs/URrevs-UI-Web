@@ -280,6 +280,7 @@ function Reviews() {
 
   return (
     <CustomAppBar showLogo showSearch showProfile>
+      <div style={{ height: "20px" }}></div>
       {!isMobile ? (
         !currentUser.isLoggedIn && (
           <Grid container style={{ display: "flex" }}>
