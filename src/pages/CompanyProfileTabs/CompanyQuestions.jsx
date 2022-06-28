@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { Answer } from "../../Components/Interactions/Answer";
 import CompanyQuestion from "../../Components/ReviewCard/companyQuestion";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
-    useGetCompanyQuestionsQuery,
-    useLikeCompanyQuestionCommentMutation,
-    useUnLikeCompanyQuestionCommentMutation
+  useGetCompanyQuestionsQuery,
+  useLikeCompanyQuestionCommentMutation,
+  useUnLikeCompanyQuestionCommentMutation,
 } from "../../services/company_questions";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { questionsActions } from "../../store/questionsSlice";
@@ -138,16 +139,18 @@ export function CompanyQuestions() {
   };
 
   return (
-    <VirtualReviewList
-      reviewCard={reviewCard}
-      reviewsList={reviewsList}
-      page={page}
-      data={data}
-      isFetching={isFetching}
-      error={error}
-      isLoading={isLoading}
-      addToReviewsList={addToReviewsList}
-      increasePage={increasePage}
-    />
+    <AlonePostsGrid>
+      <VirtualReviewList
+        reviewCard={reviewCard}
+        reviewsList={reviewsList}
+        page={page}
+        data={data}
+        isFetching={isFetching}
+        error={error}
+        isLoading={isLoading}
+        addToReviewsList={addToReviewsList}
+        increasePage={increasePage}
+      />
+    </AlonePostsGrid>
   );
 }

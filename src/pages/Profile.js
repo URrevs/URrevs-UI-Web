@@ -1,6 +1,7 @@
 import { useTheme } from "@emotion/react";
 import { Fragment } from "react";
 import { Outlet, useSearchParams } from "react-router-dom";
+import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { ProfileTabbar } from "../Components/Tabbar/Desktop/ProfileTabbar";
 import ROUTES_NAMES from "../RoutesNames";
 import { useAppSelector } from "../store/hooks";
@@ -56,7 +57,9 @@ export default function Profile() {
         <ProfileTabbar
           arrayOfTabs={[listItems[0], listItems[1], listItems[2], listItems[4]]}
         ></ProfileTabbar>
-        <Outlet />
+        <AlonePostsGrid>
+          <Outlet />
+        </AlonePostsGrid>
       </Fragment>
     ) : (
       <Fragment>

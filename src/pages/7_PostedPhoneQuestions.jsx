@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Answer } from "../Components/Interactions/Answer";
 import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
