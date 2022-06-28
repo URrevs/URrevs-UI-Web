@@ -159,6 +159,7 @@ function App() {
       textField: {
         inputFieldBackground: isDark ? "#18191A" : COLORS.cf9f9f9,
         inputFieldText: isDark ? "#18191A" : COLORS.c050505,
+        postingFieldBackground: isDark ? "#18191A" : COLORS.cf0f2f5,
         borderColor: isDark ? "#18191A" : COLORS.c606266,
       },
       checkbox: {

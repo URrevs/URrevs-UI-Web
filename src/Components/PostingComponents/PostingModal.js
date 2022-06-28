@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react";
 import { Modal, Stack } from "@mui/material";
 import React from "react";
 import ReviewPostingScreen from "../../pages/18_ReviewPostingScreen";
@@ -7,15 +8,16 @@ import { DialogTemplate } from "../Dialogs/DialogTemplate";
 import { Tabbar } from "../Tabbar/Tabbar";
 
 //This should go into Layout
-export const PostingModal = () => {
+export const PostingModal = ({ open, handleClose }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const arrayOfTabs = [
     textContainer.tabBarReview,
     textContainer.tabBarQuestion,
   ];
   return (
-    <Modal open={true}>
+    <Modal open={open} onClose={handleClose} dir={theme.direction}>
       <Stack spacing={1}>
         <DialogTemplate title={textContainer.addPost}>
           <div></div>
