@@ -115,7 +115,7 @@ export const InvitationDialog = ({ handleClose }) => {
               })
             );
             navigator.clipboard.writeText(
-              `http://localhost:3000/add-review?refCode=${currentUserProfile.refCode}`
+              `${window.location.hostname}/add-review?refCode=${currentUserProfile.refCode}`
             );
           }}
         >
