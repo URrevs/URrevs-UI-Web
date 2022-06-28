@@ -280,6 +280,7 @@ function Reviews() {
 
   return (
     <CustomAppBar showLogo showSearch showProfile>
+      <div>HomeModal</div>
       <div style={{ height: "20px" }}></div>
       {!isMobile ? (
         !currentUser.isLoggedIn && (

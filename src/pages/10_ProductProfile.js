@@ -71,7 +71,7 @@ export const ProductProfile = () => {
           >
             <Fragment>
               <StickyTabbar arrayOfTabs={listOfItems} userName={data.name} />
-              <Outlet />
+              <Outlet context={{ phoneName: data.name }} />
             </Fragment>
           </Box>
         </CustomAppBar>

@@ -124,7 +124,6 @@ export const QuestionsTab = () => {
     >
       {(formik) => (
         <div>
-          {console.log(formik.values)}
           <Form>
             {renderSearch()}
             {renderField()}

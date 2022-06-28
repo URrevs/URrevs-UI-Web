@@ -46,7 +46,11 @@ export const PostingModal = () => {
         <DialogTemplate title={textContainer.addPost}>
           <div></div>
           <Tabbar arrayOfTabs={arrayOfTabs} setValue={setTab} value={tab}>
-            <PostingScreen setValue={setTab} value={tab} />
+            <PostingScreen
+              setValue={setTab}
+              value={tab}
+              initValues={{ id: id, label: name, type: type }}
+            />
           </Tabbar>
         </DialogTemplate>
       </Stack>

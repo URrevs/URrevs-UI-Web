@@ -249,5 +249,7 @@
   "cantLogoutFromAllDevices": "لا يمكن تسجيل الخروج من جميع الأجهزة",
   "nothingToSearchFor": "لا شئ للبحث عنه",
   "phoneNotFound": "هذا الهاتف غير موجود",
-  "selectPhone": "اختر هاتف من القائمة"
+  "selectPhone": "اختر هاتف من القائمة",
+  "youCanAddReview": "يمكنك إضافة مراجعة: ",
+  "writeYourReview": "اكتب مراجعتك"
 }

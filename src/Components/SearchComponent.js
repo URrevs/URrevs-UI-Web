@@ -66,6 +66,7 @@ export default function SearchComponent({
     phoneNotFound: textContainer.phoneNotFound,
     selectPhone: textContainer.selectPhone,
   };
+
   const [searchQuery, setSearchQuery] = React.useState(query);
   const [results, setResults] = React.useState([]);
   const [lock, setLock] = React.useState(query !== "");
