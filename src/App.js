@@ -7,7 +7,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { getAuth } from "firebase/auth";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import {
@@ -19,6 +19,7 @@ import Banner from "./Components/Banners/Banner";
 import { Footer } from "./Components/Banners/Footer";
 import Layout from "./Components/MainLayout/Layout";
 import RTL from "./Components/RTL";
+import { ProfileTabbar } from "./Components/Tabbar/Desktop/ProfileTabbar";
 import { ProductProfile } from "./pages/10_ProductProfile";
 import { ComparisonScreen } from "./pages/11_ComparisonScreen";
 import { CompanyProfile } from "./pages/14_CompanyProfile";
@@ -290,7 +291,11 @@ function App() {
                           <Route index element={<UpdateProducts />} />
                         </Route>
                       </Route>
-                      <Route path={ROUTES_NAMES.USER_PROFILE}>
+
+                      <Route
+                        path={ROUTES_NAMES.USER_PROFILE}
+                        element={<Profile />}
+                      >
                         <Route index element={<Profile />} />
                         <Route
                           path={ROUTES_NAMES.OWNED_PHONES}
@@ -300,17 +305,16 @@ function App() {
                           path={ROUTES_NAMES.REVIEWS}
                           element={<PostedReviews />}
                         />
-
                         <Route
                           path={ROUTES_NAMES.QUESTIONS}
                           element={<PostedQuestions />}
                         />
-
                         <Route
                           path={ROUTES_NAMES.MY_QUESTIONS}
                           element={<MyPhonesQuestions />}
                         />
                       </Route>
+
                       <Route path={ROUTES_NAMES.COMPANY_PROFILE}>
                         <Route index element={<CompanyProfile />} />
                         <Route

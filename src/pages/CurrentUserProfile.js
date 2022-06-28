@@ -6,10 +6,13 @@ import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import { Avatar, Box, Typography } from "@mui/material";
 import List from "@mui/material/List";
-import React from "react";
+import React, { Fragment } from "react";
+import { Outlet } from "react-router-dom";
+import { FixedGrid } from "../Components/Grid/FixedGrid";
 import StarWithCount from "../Components/Leaderboard/StarWithCount";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ListItemNavigator from "../Components/Shared/ListItemNavigator";
+import { ProfileTabbar } from "../Components/Tabbar/Desktop/ProfileTabbar";
 import ROUTES_NAMES from "../RoutesNames";
 import { useAppSelector } from "../store/hooks";
 
