@@ -1,13 +1,13 @@
-import React, { Fragment } from "react";
-import { Box, Card, styled, Typography } from "@mui/material";
-import OrangeGradientButton from "../Buttons/OrangeGradientButton";
-import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import { useAppSelector } from "../../store/hooks";
+import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
+import { Box, Card, Typography } from "@mui/material";
+import React, { Fragment } from "react";
 import { CARD_BORDER_RADIUS } from "../../constants";
 import { subtractDate } from "../../functions/subtractDate";
+import { useAppSelector } from "../../store/hooks";
+import OrangeGradientButton from "../Buttons/OrangeGradientButton";
 
-export const CompetitionBanner = ({ daysLeft, prize }) => {
+export const CompetitionBanner = ({ daysLeft, prize, setModal }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionary = {
     helpOthersAndGetPoints: textContainer.helpOthersAndGetPoints,
@@ -15,9 +15,10 @@ export const CompetitionBanner = ({ daysLeft, prize }) => {
     thePrizeIs: textContainer.thePrizeIs,
     howToWin: textContainer.howToWin,
     inviteFriends: textContainer.inviteFriends,
+    howToCollectPoints: textContainer.howToCollectPoints,
   };
   const isActive = Boolean(daysLeft && prize);
-  // const isActive = Boolean(true);
+  // const isActive = Boolean(false);
   const btnGradientColor = isActive ? "red" : "blue";
   const cardGradientColor = isActive
     ? "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)"
@@ -51,7 +52,7 @@ export const CompetitionBanner = ({ daysLeft, prize }) => {
           {/* dayes left */}
           {isActive && (
             <Typography variant="S22W500Cffffff">
-              {subtractDate(daysLeft, "ar") + " وتنتهي المسابقة"}
+              {subtractDate(daysLeft, "ar") + pageDictionary.remainigDays}
             </Typography>
           )}
           {/* prize */}
@@ -61,8 +62,11 @@ export const CompetitionBanner = ({ daysLeft, prize }) => {
                 {pageDictionary.thePrizeIs}
               </Typography>
               <Typography
+                onClick={() => {
+                  setModal("prize");
+                }}
                 variant="S22W800Cffffff"
-                style={{ textDecoration: "underline" }}
+                style={{ textDecoration: "underline", cursor: "pointer" }}
               >
                 {prize}
               </Typography>
@@ -73,16 +77,28 @@ export const CompetitionBanner = ({ daysLeft, prize }) => {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "8px 22px",
+            padding: "8px 50px",
           }}
         >
-          <OrangeGradientButton color={btnGradientColor}>
+          <OrangeGradientButton
+            color={btnGradientColor}
+            onClick={() => {
+              setModal("howtowin");
+            }}
+          >
             <HelpRoundedIcon sx={{ mr: "3px" }} />
             <Typography variant="S14W700CFFFFFF">
-              {pageDictionary.howToWin}
+              {isActive
+                ? pageDictionary.howToWin
+                : pageDictionary.howToCollectPoints}
             </Typography>
           </OrangeGradientButton>
-          <OrangeGradientButton color={btnGradientColor}>
+          <OrangeGradientButton
+            color={btnGradientColor}
+            onClick={() => {
+              setModal("invitefriends");
+            }}
+          >
             <GroupsOutlinedIcon sx={{ mr: "3px" }} />
             <Typography variant="S14W700CFFFFFF">
               {pageDictionary.inviteFriends}
