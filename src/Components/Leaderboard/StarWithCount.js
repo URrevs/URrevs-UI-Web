@@ -19,7 +19,13 @@ export default function StarWithCount({
         color={theme.palette.reviewCard.filledStarColor}
         size={starSize}
       />
-      <Typography variant={textStyle}>
+
+      <Typography
+        sx={{
+          minWidth: "20px",
+        }}
+        variant={textStyle}
+      >
         {useConvertNumberToHumanLanguage(value)}
       </Typography>
     </div>

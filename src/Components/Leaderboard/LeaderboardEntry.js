@@ -2,6 +2,7 @@ import { useTheme } from "@emotion/react";
 import { Avatar, Card, styled, Typography } from "@mui/material";
 import { Fragment } from "react";
 import useFitText from "use-fit-text";
+import RedeemOutlinedIcon from "@mui/icons-material/RedeemOutlined";
 import { CARD_BORDER_RADIUS } from "../../constants";
 import StarWithCount from "./StarWithCount";
 
@@ -41,6 +42,7 @@ const LeaderboardEntry = ({
   userPicture,
   isBody = false,
   points = 0,
+  prizeClick = () => {},
   isWinner = false,
 }) => {
   const theme = useTheme();
@@ -48,7 +50,9 @@ const LeaderboardEntry = ({
   const { fontSize, ref } = useFitText({
     maxFontSize: 90,
   });
-  const prizeIcon = isWinner ? <div>icon</div> : null;
+  const prizeIcon = isWinner ? (
+    <RedeemOutlinedIcon onClick={prizeClick} />
+  ) : null;
   const leaderboardBody = () => (
     <Fragment>
       <div
