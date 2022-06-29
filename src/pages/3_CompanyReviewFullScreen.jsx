@@ -6,6 +6,7 @@ import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import { PostingField } from "../Components/PostingComponents/PostingField";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
 import ROUTES_NAMES from "../RoutesNames";
 import {
@@ -37,7 +38,8 @@ export default function CompanyReviewFullScreen() {
   useEffect(() => {
     return () => {
       console.log("clear comments");
-      dispatch(commentsListActions.clearComments());
+      // TODO:
+      // dispatch(commentsListActions.clearComments());
     };
   }, []);
 
@@ -300,6 +302,23 @@ export default function CompanyReviewFullScreen() {
     );
   };
 
+  const commentField = () => {
+    return (
+      <div
+        style={{
+          position: "fixed",
+          zIndex: 1000,
+          bottom: 0,
+          padding: "12px",
+          background: "#fff",
+          width: "100%",
+        }}
+      >
+        <PostingField />
+      </div>
+    );
+  };
+
   return (
     <FixedGrid>
       <AlonePostsGrid>
@@ -328,20 +347,7 @@ export default function CompanyReviewFullScreen() {
               submitReplyHandler={submitReplyHandler}
             />
           )}
-
-          <div
-            style={{
-              position: "fixed",
-              zIndex: 1000,
-              bottom: 0,
-            }}
-          >
-            <div>
-              <form onSubmit={submitCommentHandler}>
-                <input id="comment" />
-              </form>
-            </div>
-          </div>
+          {commentField()}
         </Box>
       </AlonePostsGrid>
     </FixedGrid>

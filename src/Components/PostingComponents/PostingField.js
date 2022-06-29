@@ -69,7 +69,12 @@ export const PostingField = ({
             transition: "0.1s",
           }}
         />
-        <TextField {...textFieldParams} />
+        <TextField
+          multiline={true}
+          maxRows={5}
+          fullWidth
+          {...textFieldParams}
+        />
       </Box>
     </div>
   );
