@@ -13,7 +13,7 @@ import { CompanyQuestions } from "./CompanyProfileTabs/CompanyQuestions";
 import { CompanyReviews } from "./CompanyProfileTabs/CompanyReviews";
 export const CompanyProfile = () => {
   const [value, setValue] = React.useState(0);
-
+  const companyName = "company name"; //Change this FADY!!!!
   const [searchParams, setSearchParams] = useSearchParams();
   const companyId = searchParams.get("cid");
 
@@ -43,7 +43,7 @@ export const CompanyProfile = () => {
   return (
     <React.Fragment>
       <CustomAppBar
-        label="company name"
+        label={companyName}
         showLabel
         showBackBtn
         showProfile
@@ -54,9 +54,9 @@ export const CompanyProfile = () => {
           <Fragment>
             <StickyTabbar
               arrayOfTabs={listOfItems}
-              userName="company"
+              userName={companyName}
             ></StickyTabbar>
-            <Outlet />
+            <Outlet context={{ companyName: companyName }} />
           </Fragment>
         }
       </CustomAppBar>

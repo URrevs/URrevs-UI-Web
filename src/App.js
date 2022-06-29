@@ -1,4 +1,5 @@
 import { ThemeProvider } from "@emotion/react";
+import { arEG } from "@mui/material/locale";
 import {
   alpha,
   createTheme,
@@ -62,139 +63,142 @@ function App() {
 
   const isMobile = useMediaQuery(`(max-width:768px)`);
 
-  const theme = createTheme({
-    isMobile: isMobile,
-    direction: `${direction}`,
-    typography: fonts,
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          lineHeight: 0,
+  const theme = createTheme(
+    {
+      isMobile: isMobile,
+      direction: `${direction}`,
+      typography: fonts,
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            lineHeight: 0,
+          },
+        },
+      },
+      breakpoints: {
+        values: {
+          xs: 0,
+          sm: 640,
+          md: 768,
+          lg: 890,
+          xl: 1100,
+        },
+      },
+      sideBar: {
+        height: "59px",
+      },
+      appBar: {
+        zIndex: 1500,
+      },
+      footer: {
+        zIndex: 1400,
+      },
+      drawer: { zIndex: 1450, width: "72px" },
+
+      palette: {
+        mode: isDark ? "dark" : "light",
+        modalColor: isDark ? "#18191A" : COLORS.cffffff,
+        appBar: {
+          appBarColor: isDark ? "#242526" : COLORS.cffffff,
+          appBarIconBackgroundColor: isDark ? "#E5E5E7" : COLORS.ce5e5e7,
+          appBarIcon: isDark ? "#000" : COLORS.c050505,
+          backButton: isDark ? COLORS.cffffff : COLORS.c050505,
+        },
+        reviewCard: {
+          reviewCardColor: isDark ? "#18191A" : COLORS.cffffff,
+          actionBtnIcon: isDark ? "#606266" : COLORS.c606266,
+          actionBtnIconHighlight: isDark ? "#2196F3" : COLORS.c2196f3,
+          actionBtnHover: isDark ? COLORS.c000000 : COLORS.c000000,
+          actionBtnBG: isDark ? COLORS.c000000 : COLORS.c000000,
+          expandIcon: isDark ? "#4ED5F6" : COLORS.c4ed5f6,
+          filledStarColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
+          outlinedStarColor: isDark ? COLORS.c65676b : COLORS.c050505,
+          emptyStarColor: isDark ? COLORS.c65676b : COLORS.c65676b,
+          reviewArrow: isDark ? COLORS.c65676b : COLORS.c65676b,
+          indicatorColor: isDark ? COLORS.c65676b : COLORS.c2196f3,
+        },
+        drawer: {
+          drawerColor: isDark ? "#242526" : COLORS.cffffff,
+          drawerIcon: isDark ? COLORS.cffffff : COLORS.c050505,
+          activePage: isDark ? "#383838" : COLORS.cdbdbdb,
+          tileText: isDark ? COLORS.cffffff : COLORS.c000000,
+        },
+        searchBar: {
+          searchBarColor: isDark ? "#3A3B3C" : COLORS.ce5e5e7,
+          searchIcon: isDark ? "#B0B3B8" : COLORS.c050505,
+        },
+        deskTopSearchBar: {
+          searchBarColor: isDark ? "#3A3B3C" : COLORS.ce5e5e7,
+          searchIcon: isDark ? "#B0B3B8" : COLORS.c65676b,
+        },
+        interactionCard: {
+          backgroundColor: COLORS.cffffff,
+          iconColor: COLORS.c2196f3,
+          buttonActiveColor: COLORS.c2196f3,
+        },
+        productList: {
+          backgroundColor: COLORS.cffffff,
+          mobileColor: COLORS.c606266,
+        },
+        progressBar: {
+          backgroundColor: COLORS.cffffff,
+          barColor: COLORS.c2196f3,
+          barBorder: COLORS.c050505,
+        },
+        authenticationButtons: {
+          googleButtonColor: COLORS.c65676b,
+          facebookButtonColor: COLORS.c2196f3,
+        },
+        leaderBoard: {
+          entryCard: COLORS.cffffff,
+          rankCircle: COLORS.cf0f2f5,
+        },
+        bottomNavigationBar: {
+          background: isDark ? "#18191A" : COLORS.cffffff,
+          selectedTap: isDark ? "#2196F3" : COLORS.c2196f3,
+          unselectedTap: isDark ? "#606266" : COLORS.c606266,
+        },
+        textField: {
+          inputFieldBackground: isDark ? "#18191A" : COLORS.cf9f9f9,
+          inputFieldText: isDark ? "#18191A" : COLORS.c050505,
+          postingFieldBackground: isDark ? "#18191A" : COLORS.cf0f2f5,
+          borderColor: isDark ? "#18191A" : COLORS.c606266,
+        },
+        checkbox: {
+          borderColor: isDark ? "#18191A" : COLORS.c050505,
+        },
+        productRateCard: {
+          addPlaylistIconColor: isDark ? "#18191A" : COLORS.c050505,
+          barPrimaryColor: isDark ? "#18191A" : COLORS.c2196f3,
+          barSecondaryColor: isDark ? "#18191A" : COLORS.cBADEFB,
+        },
+        allProductsScreen: {
+          selectedItemBackground: isDark ? "#18191A" : COLORS.c2196f3,
+          brandHover: isDark ? "#18191A" : COLORS.c2196f3,
+        },
+        dialogs: {
+          textFieldInput: isDark ? "#18191A" : COLORS.c050505,
+        },
+        filterTabbar: {
+          buttonBgActive: isDark ? "#FFFFFF" : COLORS.c22cbf4,
+          buttonBg: isDark ? "#FFFFFF" : COLORS.cffffff,
+          borderColor: isDark ? "#FFFFFF" : COLORS.c606266,
+          tabbarBg: isDark ? COLORS.c050505 : COLORS.cffffff,
+        },
+        blackIconColor: isDark ? COLORS.cCED0D4 : COLORS.c050505,
+        defaultRedBtnIconColor: isDark ? COLORS.cCED0D4 : COLORS.cffffff,
+        defaultIconColor: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
+        cancel: isDark ? COLORS.cCED0D4 : COLORS.c050505,
+        divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
+        defaultPageBtn: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
+        hover: isDark ? COLORS.cCED0D4 : alpha(COLORS.c65676b, 0.1),
+        background: {
+          default: isDark ? "#18191A" : COLORS.cf0f2f5,
         },
       },
     },
-    breakpoints: {
-      values: {
-        xs: 0,
-        sm: 640,
-        md: 768,
-        lg: 890,
-        xl: 1100,
-      },
-    },
-    sideBar: {
-      height: "59px",
-    },
-    appBar: {
-      zIndex: 1500,
-    },
-    footer: {
-      zIndex: 1400,
-    },
-    drawer: { zIndex: 1450, width: "72px" },
-
-    palette: {
-      mode: isDark ? "dark" : "light",
-      modalColor: isDark ? "#18191A" : COLORS.cffffff,
-      appBar: {
-        appBarColor: isDark ? "#242526" : COLORS.cffffff,
-        appBarIconBackgroundColor: isDark ? "#E5E5E7" : COLORS.ce5e5e7,
-        appBarIcon: isDark ? "#000" : COLORS.c050505,
-        backButton: isDark ? COLORS.cffffff : COLORS.c050505,
-      },
-      reviewCard: {
-        reviewCardColor: isDark ? "#18191A" : COLORS.cffffff,
-        actionBtnIcon: isDark ? "#606266" : COLORS.c606266,
-        actionBtnIconHighlight: isDark ? "#2196F3" : COLORS.c2196f3,
-        actionBtnHover: isDark ? COLORS.c000000 : COLORS.c000000,
-        actionBtnBG: isDark ? COLORS.c000000 : COLORS.c000000,
-        expandIcon: isDark ? "#4ED5F6" : COLORS.c4ed5f6,
-        filledStarColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
-        outlinedStarColor: isDark ? COLORS.c65676b : COLORS.c050505,
-        emptyStarColor: isDark ? COLORS.c65676b : COLORS.c65676b,
-        reviewArrow: isDark ? COLORS.c65676b : COLORS.c65676b,
-        indicatorColor: isDark ? COLORS.c65676b : COLORS.c2196f3,
-      },
-      drawer: {
-        drawerColor: isDark ? "#242526" : COLORS.cffffff,
-        drawerIcon: isDark ? COLORS.cffffff : COLORS.c050505,
-        activePage: isDark ? "#383838" : COLORS.cdbdbdb,
-        tileText: isDark ? COLORS.cffffff : COLORS.c000000,
-      },
-      searchBar: {
-        searchBarColor: isDark ? "#3A3B3C" : COLORS.ce5e5e7,
-        searchIcon: isDark ? "#B0B3B8" : COLORS.c050505,
-      },
-      deskTopSearchBar: {
-        searchBarColor: isDark ? "#3A3B3C" : COLORS.ce5e5e7,
-        searchIcon: isDark ? "#B0B3B8" : COLORS.c65676b,
-      },
-      interactionCard: {
-        backgroundColor: COLORS.cffffff,
-        iconColor: COLORS.c2196f3,
-        buttonActiveColor: COLORS.c2196f3,
-      },
-      productList: {
-        backgroundColor: COLORS.cffffff,
-        mobileColor: COLORS.c606266,
-      },
-      progressBar: {
-        backgroundColor: COLORS.cffffff,
-        barColor: COLORS.c2196f3,
-        barBorder: COLORS.c050505,
-      },
-      authenticationButtons: {
-        googleButtonColor: COLORS.c65676b,
-        facebookButtonColor: COLORS.c2196f3,
-      },
-      leaderBoard: {
-        entryCard: COLORS.cffffff,
-        rankCircle: COLORS.cf0f2f5,
-      },
-      bottomNavigationBar: {
-        background: isDark ? "#18191A" : COLORS.cffffff,
-        selectedTap: isDark ? "#2196F3" : COLORS.c2196f3,
-        unselectedTap: isDark ? "#606266" : COLORS.c606266,
-      },
-      textField: {
-        inputFieldBackground: isDark ? "#18191A" : COLORS.cf9f9f9,
-        inputFieldText: isDark ? "#18191A" : COLORS.c050505,
-        postingFieldBackground: isDark ? "#18191A" : COLORS.cf0f2f5,
-        borderColor: isDark ? "#18191A" : COLORS.c606266,
-      },
-      checkbox: {
-        borderColor: isDark ? "#18191A" : COLORS.c050505,
-      },
-      productRateCard: {
-        addPlaylistIconColor: isDark ? "#18191A" : COLORS.c050505,
-        barPrimaryColor: isDark ? "#18191A" : COLORS.c2196f3,
-        barSecondaryColor: isDark ? "#18191A" : COLORS.cBADEFB,
-      },
-      allProductsScreen: {
-        selectedItemBackground: isDark ? "#18191A" : COLORS.c2196f3,
-        brandHover: isDark ? "#18191A" : COLORS.c2196f3,
-      },
-      dialogs: {
-        textFieldInput: isDark ? "#18191A" : COLORS.c050505,
-      },
-      filterTabbar: {
-        buttonBgActive: isDark ? "#FFFFFF" : COLORS.c22cbf4,
-        buttonBg: isDark ? "#FFFFFF" : COLORS.cffffff,
-        borderColor: isDark ? "#FFFFFF" : COLORS.c606266,
-        tabbarBg: isDark ? COLORS.c050505 : COLORS.cffffff,
-      },
-      blackIconColor: isDark ? COLORS.cCED0D4 : COLORS.c050505,
-      defaultRedBtnIconColor: isDark ? COLORS.cCED0D4 : COLORS.cffffff,
-      defaultIconColor: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
-      cancel: isDark ? COLORS.cCED0D4 : COLORS.c050505,
-      divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
-      defaultPageBtn: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
-      hover: isDark ? COLORS.cCED0D4 : alpha(COLORS.c65676b, 0.1),
-      background: {
-        default: isDark ? "#18191A" : COLORS.cf0f2f5,
-      },
-    },
-  });
+    arEG
+  );
 
   const dispatch = useAppDispatch();
   const [getApiToken] = useAuthenticateMutation();

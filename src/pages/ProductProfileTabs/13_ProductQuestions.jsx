@@ -148,8 +148,8 @@ export function ProductQuestions() {
   return (
     <AlonePostsGrid>
       <PostingComponent
-        label={textContainer.youCanAddReview}
-        placeholder={textContainer.writeYourReview}
+        label={textContainer.youCanAddQuestion}
+        placeholder={textContainer.writeYourQuestionP}
         params={{
           disabled: true,
           onClick: () => {

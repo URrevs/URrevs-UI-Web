@@ -23,6 +23,8 @@ import Banner from "../Components/Banners/Banner";
 import { Grid } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
+import { PostingComponent } from "../Components/PostingComponents/PostingComponent";
+import { postingModalActions } from "../store/uiPostingModalSlice";
 
 function Reviews() {
   const dispatch = useAppDispatch();
@@ -31,7 +33,7 @@ function Reviews() {
 
     dispatch(homePageActions.clearReviews());
   }, []);
-
+  const textContainer = useAppSelector((state) => state.language.textContainer);
   const isMobile = useTheme().isMobile;
 
   const currentUser = useAppSelector((state) => state.auth);
@@ -287,7 +289,6 @@ function Reviews() {
 
   return (
     <CustomAppBar showLogo showSearch showProfile>
-      <div>HomeModal</div>
       <div style={{ height: "20px" }}></div>
       {!isMobile ? (
         !currentUser.isLoggedIn && (
@@ -306,6 +307,25 @@ function Reviews() {
 
       {!isMobile ? (
         <AlonePostsGrid>
+          {currentUser.isLoggedIn ? (
+            <div>
+              <PostingComponent
+                label={textContainer.youCanAddReview}
+                placeholder={textContainer.writeYourReview}
+                params={{
+                  disabled: true,
+                  onClick: () => {
+                    dispatch(
+                      postingModalActions.showPostingModal({
+                        tab: 0,
+                      })
+                    );
+                  },
+                }}
+              />
+              <div style={{ height: "50px" }}></div>
+            </div>
+          ) : null}
           <VirtualReviewList
             reviewCard={reviewCard}
             reviewsList={reviewsList}

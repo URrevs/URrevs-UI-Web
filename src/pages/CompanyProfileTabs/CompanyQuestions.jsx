@@ -1,7 +1,9 @@
+import { useTheme } from "@emotion/react";
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useOutletContext, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { Answer } from "../../Components/Interactions/Answer";
+import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
 import CompanyQuestion from "../../Components/ReviewCard/companyQuestion";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
@@ -11,11 +13,14 @@ import {
 } from "../../services/company_questions";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { questionsActions } from "../../store/questionsSlice";
+import { postingModalActions } from "../../store/uiPostingModalSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
 
 export function CompanyQuestions() {
   const dispatch = useAppDispatch();
-
+  const { companyName } = useOutletContext();
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+  const theme = useTheme();
   useEffect(() => {
     return () => {
       console.log("clear questions");
@@ -144,6 +149,25 @@ export function CompanyQuestions() {
 
   return (
     <AlonePostsGrid>
+      {!theme.isMobile ? (
+        <PostingComponent
+          label={textContainer.youCanAddQuestion}
+          placeholder={textContainer.writeYourQuestionP}
+          params={{
+            disabled: true,
+            onClick: () => {
+              dispatch(
+                postingModalActions.showPostingModal({
+                  tab: 1,
+                  type: "company",
+                  name: companyName,
+                  id: cid,
+                })
+              );
+            },
+          }}
+        />
+      ) : null}
       <VirtualReviewList
         reviewCard={reviewCard}
         reviewsList={reviewsList}

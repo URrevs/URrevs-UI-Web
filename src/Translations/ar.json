@@ -251,5 +251,7 @@
   "phoneNotFound": "هذا الهاتف غير موجود",
   "selectPhone": "اختر هاتف من القائمة",
   "youCanAddReview": "يمكنك إضافة مراجعة: ",
-  "writeYourReview": "اكتب مراجعتك"
+  "writeYourReview": "اكتب مراجعتك",
+  "youCanAddQuestion": "يمكنك إضافة سؤال:",
+  "writeYourQuestionP": "اكتب سؤالك"
 }
