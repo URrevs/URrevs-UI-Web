@@ -14,10 +14,11 @@ import { useAppSelector } from "../../store/hooks";
 export const PostingField = ({
   placeholder = "",
   avatar = true,
-
+  onSubmit = () => {},
   params = {}, //Adding new textfield params or overwriting existing ones
 }) => {
   const userProfile = useAppSelector((state) => state.auth);
+  const [value, setValue] = React.useState("");
   const theme = useTheme();
   const textFieldParams = {
     multiline: true,
@@ -26,7 +27,12 @@ export const PostingField = ({
     InputProps: {
       endAdornment: theme.isMobile && (
         <InputAdornment position="end">
-          <IconButton onClick={() => {}}>
+          <IconButton
+            onClick={() => {
+              onSubmit(value);
+              setValue("");
+            }}
+          >
             <SendIcon
               fontSize={"30px"}
               htmlColor={theme.palette.sendIconColor}
@@ -58,7 +64,7 @@ export const PostingField = ({
         cursor: "pointer",
         WebkitTextFillColor: "black !important",
       },
-
+      transition: "all 0.2s ease",
       // width: "100%",
       border: "1px solid transparent",
     },
@@ -94,7 +100,22 @@ export const PostingField = ({
             }}
           />
         )}
-        <TextField {...textFieldParams} />
+
+        <TextField
+          {...textFieldParams}
+          value={value}
+          onKeyDown={(e) => {
+            if (e.code === "Enter" && !e.shiftKey) {
+              onSubmit(value);
+              setValue("");
+              e.preventDefault();
+            }
+          }}
+          onChange={(e) => {
+            setValue(e.target.value);
+            // console.log(value);
+          }}
+        />
       </Box>
     </div>
   );

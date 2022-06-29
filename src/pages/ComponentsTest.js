@@ -4,7 +4,7 @@ import Banner from "../Components/Banners/Banner";
 import { ProfileTabbar } from "../Components/Tabbar/Desktop/ProfileTabbar";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
-import { Card } from "@mui/material";
+import { Card, TextField } from "@mui/material";
 import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
 import { QuestionsTab } from "./PostingScreen/QuestionsTab";
 import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
@@ -299,9 +299,7 @@ export const ComponentsTest = () => {
   /*PostingModal */
   const renderPostingModal = () => <PostingModal />;
   /* PostingField*/
-  const renderCommentSection = () => (
-    <PostingField placeholder="اكتب تعليقاً" />
-  );
+  const renderCommentSection = () => <PostingField placeholder="اكتب تعليق" />;
   //---RETURN---
   return (
     <React.Fragment>
@@ -309,13 +307,24 @@ export const ComponentsTest = () => {
         <div style={{ height: "20px" }}> </div>
         {renderPostingComponent()}
         <div style={{ height: "20px" }}> </div>
-        <Card
-          sx={{
-            padding: "50px",
+
+        <div
+          style={{
+            position: "relative",
           }}
         >
-          {renderCommentSection()}
-        </Card>
+          <Card
+            sx={{
+              height: "200px",
+              position: "absolute",
+              width: "100vw",
+            }}
+          >
+            <div style={{ height: "50px" }}></div>
+            {renderCommentSection()}
+            <div style={{ height: "100px" }}></div>
+          </Card>
+        </div>
       </FixedGrid>
     </React.Fragment>
   );
