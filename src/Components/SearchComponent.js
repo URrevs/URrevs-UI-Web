@@ -168,6 +168,7 @@ export default function SearchComponent({
                       onClick={() => {
                         setSearchQuery("");
                         setResults([]);
+                        //useDispatch to reinitialize postingModal when hitting x button I think
                         setErrorMsg(pageDictionary.selectPhone);
                         setLock(false);
                         onResult({

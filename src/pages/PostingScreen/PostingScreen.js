@@ -11,7 +11,7 @@ const PostingScreen = ({
   value,
   initValues = {
     id: "",
-    name: "",
+    label: "",
     type: "",
   },
 }) => {
@@ -117,7 +117,7 @@ const PostingScreen = ({
           {(props) => <AddReviewTab {...props} />}
         </Formik>
       ) : (
-        <QuestionsTab />
+        <QuestionsTab initValues={initValues} />
       )}
     </div>
   );
