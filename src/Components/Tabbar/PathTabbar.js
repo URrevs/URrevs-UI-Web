@@ -78,9 +78,9 @@ export const PathTabbar = ({
                   alignItems: "center",
                   textAlign: "center",
                   cursor: "pointer",
-                  "&:hover": {
-                    backgroundColor: theme.palette.hover,
-                  },
+                  // "&:hover": {
+                  //   backgroundColor: theme.palette.hover,
+                  // },
                   transition: "all 0.7s ease",
 
                   // borderBottom: value === id ? "3px solid #22CBF4" : null,

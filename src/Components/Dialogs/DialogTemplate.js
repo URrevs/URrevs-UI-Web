@@ -16,7 +16,7 @@ const PromptStyled = styled(
     width: "calc(100% - 32px)",
   },
 
-  maxHeight: "652px",
+  maxHeight: "80%",
   maxWidth: "450px",
   boxShadow: 24,
   padding: 16,
