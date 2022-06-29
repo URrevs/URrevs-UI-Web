@@ -1,21 +1,25 @@
-import { Box } from "@mui/material";
+import { useTheme } from "@emotion/react";
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import { CompanyOverviewCard } from "../Components/OverviewCard/CompanyOverviewCard";
 import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
-import { Tabbar } from "../Components/Tabbar/Tabbar";
+import { PathTabbar } from "../Components/Tabbar/PathTabbar";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetCompanyStatsInfoQuery } from "../services/companies";
-import { CompanyQuestions } from "./CompanyProfileTabs/CompanyQuestions";
-import { CompanyReviews } from "./CompanyProfileTabs/CompanyReviews";
 export const CompanyProfile = () => {
-  const [value, setValue] = React.useState(0);
-  const companyName = "company name"; //Change this FADY!!!!
+  const isMobile = useTheme().isMobile;
+
   const [searchParams, setSearchParams] = useSearchParams();
   const companyId = searchParams.get("cid");
+
+  const {
+    isLoading: companyStatsIsLoading,
+    error: companyStatsError,
+    isFetching: companyStatsIsFetching,
+    data: companyStatsData,
+  } = useGetCompanyStatsInfoQuery(companyId);
 
   const textContainer = useSelector((state) => state.language.textContainer);
   const pageDictionary = {
@@ -42,24 +46,34 @@ export const CompanyProfile = () => {
 
   return (
     <React.Fragment>
-      <CustomAppBar
-        label={companyName}
-        showLabel
-        showBackBtn
-        showProfile
-        englishName
-        showSearch
-      >
-        {
-          <Fragment>
-            <StickyTabbar
-              arrayOfTabs={listOfItems}
-              userName={companyName}
-            ></StickyTabbar>
-            <Outlet context={{ companyName: companyName }} />
-          </Fragment>
-        }
-      </CustomAppBar>
+      {companyStatsIsLoading ? (
+        <LoadingSpinner />
+      ) : companyStatsError ? (
+        <div>{companyStatsError.data.status}</div>
+      ) : (
+        <CustomAppBar
+          label={companyStatsData.name}
+          showLabel
+          showBackBtn
+          showProfile
+          englishName
+          showSearch
+        >
+          {
+            <Fragment>
+              {!isMobile ? (
+                <StickyTabbar
+                  arrayOfTabs={listOfItems}
+                  userName={companyStatsData.name}
+                ></StickyTabbar>
+              ) : (
+                <PathTabbar arrayOfTabs={listOfItems} />
+              )}
+              <Outlet context={{ companyName: companyStatsData.name }} />
+            </Fragment>
+          }
+        </CustomAppBar>
+      )}
     </React.Fragment>
   );
 };

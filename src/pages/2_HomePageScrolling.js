@@ -30,7 +30,6 @@ function Reviews() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     console.log("clear reviews");
-
     dispatch(homePageActions.clearReviews());
   }, []);
   const textContainer = useAppSelector((state) => state.language.textContainer);
@@ -39,7 +38,9 @@ function Reviews() {
   const currentUser = useAppSelector((state) => state.auth);
 
   const reviewsList = useAppSelector((state) => state.homePage.newReviews);
+
   const [page, setPage] = useState(1);
+
   const { data, isLoading, isFetching, error } = useGetRecommendedQuery(page);
 
   const stateLikeReview = (id) =>

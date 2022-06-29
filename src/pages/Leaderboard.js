@@ -138,7 +138,10 @@ export const Leaderboard = () => {
   const leaderboardList = () => (
     <Fragment>
       <Typography variant="S20W700C050505">
-        {pageDictionary.usersRanking}
+        {latestCompetitionData &&
+        new Date(latestCompetitionData.deadline) - new Date() < 0
+          ? pageDictionary.usersRankingInCurrentCompetetion
+          : pageDictionary.usersRanking}
       </Typography>
       {theme.isMobile ? (
         <Paper
@@ -153,8 +156,6 @@ export const Leaderboard = () => {
       )}
     </Fragment>
   );
-
-  console.log(latestCompetetionError);
 
   const competetionBanner = () => {
     if (latestCompetetionError) {
