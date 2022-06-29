@@ -214,7 +214,7 @@ export default function QuestionCard({
           <CardFooter
             isReview={false}
             navigateToFullScreen={navigateToFullScreen}
-            shareCounter={reviewDetails.comments}
+            shareCounter={reviewDetails.shares}
             likesCounter={reviewDetails.upvotes}
             commentsCounter={reviewDetails.ansCount}
           />

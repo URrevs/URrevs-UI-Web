@@ -52,6 +52,9 @@ function Reviews() {
   const stateUnLikeQuestion = (id) =>
     dispatch(homePageActions.setQuestionIsLiked({ id: id, isLiked: false }));
 
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(homePageActions.increaseShareCounter({ id: id }));
+
   const addToReviewsList = () =>
     dispatch(
       homePageActions.addToLoaddedReviews({
@@ -100,6 +103,7 @@ function Reviews() {
           userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
           stateLikeFn={stateLikeReview}
           stateUnLikeFn={stateUnLikeReview}
+          stateShare={stateIncreaseShareCounter}
           fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewsList[index]._id}`}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
@@ -121,6 +125,7 @@ function Reviews() {
           userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
           stateLikeFn={stateLikeReview}
           stateUnLikeFn={stateUnLikeReview}
+          stateShare={stateIncreaseShareCounter}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
         />
@@ -195,6 +200,7 @@ function Reviews() {
           userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
           stateLikeFn={stateLikeQuestion}
           stateUnLikeFn={stateUnLikeQuestion}
+          stateShare={stateIncreaseShareCounter}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
           acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}
@@ -270,6 +276,7 @@ function Reviews() {
           userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
           stateLikeFn={stateLikeQuestion}
           stateUnLikeFn={stateUnLikeQuestion}
+          stateShare={stateIncreaseShareCounter}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
           acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}

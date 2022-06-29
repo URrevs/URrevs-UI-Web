@@ -51,6 +51,9 @@ export function PostedPhoneReviews() {
     );
   };
 
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(reviewsActions.increaseShareCounter({ id: id }));
+
   const reviewCard = (index, clearCache) => {
     return (
       <PhoneReview
@@ -65,6 +68,7 @@ export function PostedPhoneReviews() {
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
+        stateShare={stateIncreaseShareCounter}
         fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewsList[index]._id}`}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}

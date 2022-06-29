@@ -26,6 +26,7 @@ const CompanyReview = ({
   deleteReviewFromStore,
   fullScreen,
   isExpanded,
+  stateShare,
 }) => {
   const [dontLikeThisRequest] = useIdontLikeThisCompanyReviewMutation();
   const [fullScreenRequest] = useUserPressFullScreenMutation();
@@ -78,6 +79,7 @@ const CompanyReview = ({
   };
 
   const shareBtnHandler = () => {
+    stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
     showShareSnackbar(`/company-review?id=${reviewDetails._id}`);
   };

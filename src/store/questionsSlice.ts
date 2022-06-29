@@ -86,6 +86,21 @@ const questionsSlice = createSlice({
           : state.newReviews[targetReview].acceptedAns.upvotes--;
       }
     },
+
+    increaseShareCounter(
+      state,
+      action: PayloadAction<{
+        id: string;
+      }>
+    ) {
+      const targetReview = state.newReviews.findIndex((element) => {
+        return element._id.toString() === action.payload.id.toString();
+      });
+
+      if (targetReview != -1) {
+        state.newReviews[targetReview].shares++;
+      }
+    },
   },
 });
 

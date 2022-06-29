@@ -113,6 +113,9 @@ export function MyPhonesQuestions() {
     }
   };
 
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(questionsActions.increaseShareCounter({ id: id }));
+
   const reviewCard = (index, clearCache) => {
     return (
       <PhoneQuestion
@@ -127,6 +130,7 @@ export function MyPhonesQuestions() {
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
+        stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
         acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}

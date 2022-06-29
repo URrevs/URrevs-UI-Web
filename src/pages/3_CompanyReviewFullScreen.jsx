@@ -36,7 +36,7 @@ export default function CompanyReviewFullScreen() {
   useEffect(() => {
     return () => {
       console.log("clear comments");
-      // dispatch(commentsListActions.clearComments());
+      dispatch(commentsListActions.clearComments());
     };
   }, []);
 
@@ -266,6 +266,9 @@ export default function CompanyReviewFullScreen() {
     navigate(-1);
   };
 
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(reviewsActions.increaseShareCounter({ id: id }));
+
   const reviewCard = () => {
     return (
       <div>
@@ -286,6 +289,7 @@ export default function CompanyReviewFullScreen() {
               userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
               stateLikeFn={stateLikePhoneReview}
               stateUnLikeFn={stateUnLikePhoneReview}
+              stateShare={stateIncreaseShareCounter}
               showActionBtn={currentUser.uid !== currentReviewData._id}
               deleteReviewFromStore={deleteReviewFromStore}
             />
