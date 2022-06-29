@@ -50,9 +50,15 @@ export default function VirtualReviewList({
     if (data) {
       addToReviewsList();
       if (page < 2 && !isLoading && !isFetching) {
-        increasePage();
+        // console.log('first increase')
+        // increasePage();
       }
     }
+
+    return () => {
+      console.log("clear max index");
+      maxIndex = 0;
+    };
   }, [data]);
 
   if (isLoading) {
@@ -76,17 +82,19 @@ export default function VirtualReviewList({
   }
 
   const renderRow = ({ index, key, style, parent }) => {
+    console.log("max: ", maxIndex, "length: ", reviewsList.length);
     if (
       maxIndex !== 0 &&
-      page >= 2 &&
+      // page >= 2 &&
       !isLoading &&
       !isFetching &&
-      maxIndex === reviewsList.length &&
+      maxIndex === reviewsList.length - 1 &&
       data.length !== 0
     ) {
-      maxIndex = 0;
       increasePage();
+      maxIndex = 0;
     }
+
     maxIndex = Math.max(index, maxIndex);
     return (
       <div key={key}>
@@ -99,7 +107,7 @@ export default function VirtualReviewList({
           <div style={{ ...style, direction: theme.direction }}>
             {index >= reviewsList.length ? (
               data.length === 0 ? (
-                <div></div>
+                <div>لا يوجد عناصر</div>
               ) : (
                 [...Array(1)].map((a, index) => (
                   <LoadingReviewSkeleton key={index} />

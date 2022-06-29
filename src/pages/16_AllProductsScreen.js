@@ -334,7 +334,7 @@ export function AllProductsScreen() {
           <div style={{ ...style, direction: theme.direction }}>
             {index >= productsList.length ? (
               data.length === 0 ? (
-                <div></div>
+                <div>لا يوجد عناصر</div>
               ) : (
                 [...Array(1)].map((a, index) => (
                   <div
@@ -385,7 +385,7 @@ export function AllProductsScreen() {
     return (
       <div key={key}>
         {companiesData.length === 0 ? (
-          <div>No data</div>
+          <div>لا يوجد عناصر</div>
         ) : index >= companiesList.length ? (
           <div>Loading...</div>
         ) : (
