@@ -11,8 +11,23 @@ export const PostingField = ({
   const userProfile = useAppSelector((state) => state.auth);
   const theme = useTheme();
   const textFieldParams = {
+    multiline: true,
+    variant: "standard",
+    InputProps: {
+      disableUnderline: true,
+      style: {
+        width: "100%",
+        padding: "13px",
+        ...theme.typography.S16W500C050505,
+        alignContent: "center",
+        background: theme.palette.textField.postingFieldBackground,
+        borderRadius: `${SEARCH_INPUT_BORDER_RADIUS}px`,
+      },
+    },
     autoComplete: "off",
+    fullWidth: true,
     disabled: false,
+
     //Outer part of the TextField
     sx: {
       ".Mui-disabled": {
@@ -21,24 +36,13 @@ export const PostingField = ({
         WebkitTextFillColor: "black !important",
       },
 
-      width: "100%",
-      border: "none",
+      // width: "100%",
+      border: "1px solid transparent",
     },
-    variant: "standard",
+
     placeholder: placeholder,
     //All Text Field Styling goes here
-    InputProps: {
-      disableUnderline: true,
-      style: {
-        width: "100%",
-        height: "50px",
-        padding: "13px",
-        ...theme.typography.S16W500C050505,
-        alignContent: "center",
-        background: theme.palette.textField.postingFieldBackground,
-        borderRadius: `${SEARCH_INPUT_BORDER_RADIUS}px`,
-      },
-    },
+
     ...params,
   };
   return (

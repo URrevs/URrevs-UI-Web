@@ -309,7 +309,7 @@ export const ComponentsTest = () => {
         <div style={{ height: "20px" }}> </div>
         {renderPostingComponent()}
         <div style={{ height: "20px" }}> </div>
-        {renderCommentSection()}
+        <Card>{renderCommentSection()}</Card>
       </FixedGrid>
     </React.Fragment>
   );
