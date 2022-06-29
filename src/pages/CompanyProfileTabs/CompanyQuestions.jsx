@@ -149,25 +149,24 @@ export function CompanyQuestions() {
 
   return (
     <AlonePostsGrid>
-      {!theme.isMobile ? (
-        <PostingComponent
-          label={textContainer.youCanAddQuestion}
-          placeholder={textContainer.writeYourQuestionP}
-          params={{
-            disabled: true,
-            onClick: () => {
-              dispatch(
-                postingModalActions.showPostingModal({
-                  tab: 1,
-                  type: "company",
-                  name: companyName,
-                  id: cid,
-                })
-              );
-            },
-          }}
-        />
-      ) : null}
+      <PostingComponent
+        label={textContainer.youCanAddQuestion}
+        placeholder={textContainer.writeYourQuestionP}
+        params={{
+          disabled: true,
+          onClick: () => {
+            dispatch(
+              postingModalActions.showPostingModal({
+                tab: 1,
+                type: "company",
+                name: companyName,
+                id: cid,
+              })
+            );
+          },
+        }}
+      />
+
       <VirtualReviewList
         reviewCard={reviewCard}
         reviewsList={reviewsList}
