@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react";
 import { Card, Typography } from "@mui/material";
 import React from "react";
 import { CARD_BORDER_RADIUS } from "../../constants";
@@ -9,8 +10,8 @@ export const PostingComponent = ({
   params = {},
 }) => {
   /*Edit Text Field here */
-
-  return (
+  const theme = useTheme();
+  return !theme.isMobile ? (
     <Card
       elevation={3}
       style={{
@@ -27,5 +28,5 @@ export const PostingComponent = ({
         <PostingField placeholder={placeholder} params={params} />
       </div>
     </Card>
-  );
+  ) : null;
 };
