@@ -23,28 +23,28 @@ export function PostedQuestions() {
       tabBar={<FilterTabbar value={filter} setValue={setFilter} />}
     >
       <FixedGrid>
+        <div style={{ marginTop: "12px" }}>
+          <PostingComponent
+            label={textContainer.youCanAddQuestion}
+            placeholder={textContainer.writeYourQuestionP}
+            params={{
+              disabled: true,
+              onClick: () => {
+                dispatch(
+                  postingModalActions.showPostingModal({
+                    tab: 0, //AddReview Tab
+                  })
+                );
+              },
+            }}
+          />
+        </div>
         {!isMobile && (
-          <div style={{ marginTop: "12px" }}>
-            <PostingComponent
-              label={textContainer.youCanAddQuestion}
-              placeholder={textContainer.writeYourQuestionP}
-              params={{
-                disabled: true,
-                onClick: () => {
-                  dispatch(
-                    postingModalActions.showPostingModal({
-                      tab: 0, //AddReview Tab
-                    })
-                  );
-                },
-              }}
-            />
-            <FilterTabbar
-              withBackground={false}
-              value={filter}
-              setValue={setFilter}
-            />
-          </div>
+          <FilterTabbar
+            withBackground={false}
+            value={filter}
+            setValue={setFilter}
+          />
         )}
         {filter === 0 ? <PostedPhoneQuestions /> : <PostedCompanyQuestions />}
       </FixedGrid>

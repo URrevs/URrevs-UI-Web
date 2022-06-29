@@ -341,6 +341,23 @@ function Reviews() {
         </AlonePostsGrid>
       ) : (
         <FixedGrid>
+          <div>
+            <PostingComponent
+              label={textContainer.youCanWriteReviewOrAskAQuestion}
+              placeholder={textContainer.writeYourPost}
+              params={{
+                disabled: true,
+                onClick: () => {
+                  dispatch(
+                    postingModalActions.showPostingModal({
+                      tab: 0,
+                    })
+                  );
+                },
+              }}
+            />
+            <div style={{ height: "50px" }}></div>
+          </div>
           <VirtualReviewList
             reviewCard={reviewCard}
             reviewsList={reviewsList}

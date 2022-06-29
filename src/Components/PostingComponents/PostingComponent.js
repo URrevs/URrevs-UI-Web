@@ -11,7 +11,7 @@ export const PostingComponent = ({
 }) => {
   /*Edit Text Field here */
   const theme = useTheme();
-  return !theme.isMobile ? (
+  return (
     <Card
       elevation={3}
       style={{
@@ -28,5 +28,5 @@ export const PostingComponent = ({
         <PostingField placeholder={placeholder} params={params} />
       </div>
     </Card>
-  ) : null;
+  );
 };
