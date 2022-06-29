@@ -80,7 +80,7 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
         clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
         isPhoneReview={true}
-        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${reviewsList[index].targetId}`}
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
         stateUnLikeFn={stateUnLike.bind(null, reviewsList[index]._id)}

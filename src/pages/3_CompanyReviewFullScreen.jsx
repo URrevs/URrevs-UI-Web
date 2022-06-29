@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
@@ -288,7 +288,7 @@ export default function CompanyReviewFullScreen() {
               clearIndexCache={clearCache}
               fullScreen={true}
               isExpanded={true}
-              targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${currentReviewData.targetId}`}
+              targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${currentReviewData.targetId}`}
               userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
               stateLikeFn={stateLikePhoneReview}
               stateUnLikeFn={stateUnLikePhoneReview}
@@ -347,8 +347,8 @@ export default function CompanyReviewFullScreen() {
               submitReplyHandler={submitReplyHandler}
             />
           )}
-          {commentField()}
         </Box>
+        {commentField()}
       </AlonePostsGrid>
     </FixedGrid>
   );

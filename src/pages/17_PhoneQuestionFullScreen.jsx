@@ -329,7 +329,7 @@ export default function PhoneQuestionFullScreen() {
               clearIndexCache={clearCache}
               reviewDetails={currentReviewData}
               isPhoneReview={true}
-              targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${currentReviewData.targetId}`}
+              targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.QUESTIONS}?pid=${currentReviewData.targetId}`}
               userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
               stateLikeFn={stateLikePhoneReview}
               stateUnLikeFn={stateUnLikePhoneReview}

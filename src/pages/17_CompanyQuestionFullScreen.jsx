@@ -329,7 +329,7 @@ export default function CompanyQuestionFullScreen() {
               isExpanded={true}
               clearIndexCache={clearCache}
               reviewDetails={currentReviewData}
-              targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${currentReviewData.targetId}`}
+              targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.QUESTIONS}?cid=${currentReviewData.targetId}`}
               userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
               stateLikeFn={stateLikeCompanyReview}
               stateUnLikeFn={stateUnLikeCompanyReview}
