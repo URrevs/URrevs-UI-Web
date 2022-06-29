@@ -185,6 +185,7 @@ function App() {
           borderColor: isDark ? "#FFFFFF" : COLORS.c606266,
           tabbarBg: isDark ? COLORS.c050505 : COLORS.cffffff,
         },
+        sendIconColor: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
         blackIconColor: isDark ? COLORS.cCED0D4 : COLORS.c050505,
         defaultRedBtnIconColor: isDark ? COLORS.cCED0D4 : COLORS.cffffff,
         defaultIconColor: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,

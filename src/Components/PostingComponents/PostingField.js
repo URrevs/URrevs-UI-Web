@@ -1,19 +1,42 @@
 import { useTheme } from "@emotion/react";
-import { Avatar, Box, TextField } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 import React from "react";
 import { SEARCH_INPUT_BORDER_RADIUS } from "../../constants";
 import { useAppSelector } from "../../store/hooks";
 
 export const PostingField = ({
   placeholder = "",
+  avatar = true,
+
   params = {}, //Adding new textfield params or overwriting existing ones
 }) => {
   const userProfile = useAppSelector((state) => state.auth);
   const theme = useTheme();
   const textFieldParams = {
     multiline: true,
+    maxRows: 3,
     variant: "standard",
     InputProps: {
+      endAdornment: theme.isMobile && (
+        <InputAdornment position="end">
+          <IconButton onClick={() => {}}>
+            <SendIcon
+              fontSize={"30px"}
+              htmlColor={theme.palette.sendIconColor}
+              sx={{
+                transform: theme.direction === "rtl" ? "scale(-1,1)" : "",
+              }}
+            />
+          </IconButton>
+        </InputAdornment>
+      ),
       disableUnderline: true,
       style: {
         width: "100%",
@@ -59,16 +82,18 @@ export const PostingField = ({
           },
         }}
       >
-        <Avatar
-          src={userProfile.photo}
-          alt="User profile picture"
-          sx={{
-            mr: "8px",
-            height: `45px`,
-            width: `45px`,
-            transition: "0.1s",
-          }}
-        />
+        {!theme.isMobile && avatar && (
+          <Avatar
+            src={userProfile.photo}
+            alt="User profile picture"
+            sx={{
+              mr: "8px",
+              height: `45px`,
+              width: `45px`,
+              transition: "0.1s",
+            }}
+          />
+        )}
         <TextField {...textFieldParams} />
       </Box>
     </div>
