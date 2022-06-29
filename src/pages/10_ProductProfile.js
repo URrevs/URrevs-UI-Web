@@ -1,24 +1,20 @@
-import { Box } from "@mui/material";
-import React, { Fragment, useEffect } from "react";
+import { useTheme } from "@emotion/react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
-import { Tabbar } from "../Components/Tabbar/Tabbar";
+import { PathTabbar } from "../Components/Tabbar/PathTabbar";
 import ROUTES_NAMES from "../RoutesNames";
 
-import {
-  useGetPhoneSpecsQuery,
-  useGetSimilarPhonesQuery,
-} from "../services/phones";
-import { ProductSpecsScreen } from "./ProductProfileTabs/10_ProductSpecs";
-import { ProductReviews } from "./ProductProfileTabs/12_ProductReviews";
-import { ProductQuestions } from "./ProductProfileTabs/13_ProductQuestions";
+import { useGetPhoneSpecsQuery } from "../services/phones";
 
 export const ProductProfile = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const paramId = searchParams.get("pid");
+
+  const isMobile = useTheme().isMobile;
 
   let { isLoading, error, isFetching, data } = useGetPhoneSpecsQuery(paramId);
 
@@ -63,13 +59,18 @@ export const ProductProfile = () => {
           label={data.name}
           showSearch
           showProfile
+          // tabBar={<PathTabbar />}
         >
           <Fragment>
-            <StickyTabbar
-              hasParent={false}
-              arrayOfTabs={listOfItems}
-              userName={data.name}
-            />
+            {!isMobile ? (
+              <StickyTabbar
+                hasParent={false}
+                arrayOfTabs={listOfItems}
+                userName={data.name}
+              />
+            ) : (
+              <PathTabbar arrayOfTabs={listOfItems} />
+            )}
             <Outlet context={{ phoneName: data.name }} />
           </Fragment>
         </CustomAppBar>
