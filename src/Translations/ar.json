@@ -221,6 +221,7 @@
   "productNameOrCompanyNameErrorMsg": "يجب ادخال اسم المنتج أو الشركة.",
   "enterYourQuestionErrorMsg": "يجب ادخال سؤالك.",
   "usersRanking": "ترتيب المستخدمين:",
+  "usersRankingInCurrentCompetetion":"ترتيب المستخدمين في المسابقة الحالية:",
   "yourRanking": "ترتيبك:",
   "howToCollectPoints": "كيف تجمع النقاط",
   "helpOthersToCollectPoints": "ساعد الاخرين لتجمع اكبر عدد من النقاط",
