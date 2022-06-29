@@ -309,7 +309,13 @@ export const ComponentsTest = () => {
         <div style={{ height: "20px" }}> </div>
         {renderPostingComponent()}
         <div style={{ height: "20px" }}> </div>
-        <Card>{renderCommentSection()}</Card>
+        <Card
+          sx={{
+            padding: "50px",
+          }}
+        >
+          {renderCommentSection()}
+        </Card>
       </FixedGrid>
     </React.Fragment>
   );
