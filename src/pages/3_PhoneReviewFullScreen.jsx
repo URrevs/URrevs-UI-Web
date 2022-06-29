@@ -22,6 +22,7 @@ import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkelet
 import { reviewsActions } from "../store/reviewsSlice";
 import PhoneReview from "../Components/ReviewCard/PhoneReview";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
+import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -300,46 +301,48 @@ export default function PhoneReviewFullScreen() {
 
   return (
     <FixedGrid>
-      <Box>
-        {reviewLoading ? (
-          <div>Loading review...</div>
-        ) : reviewError ? (
-          <div>Error</div>
-        ) : (
-          <CommentsList
-            reviewCard={reviewCard}
-            commentsList={commentsList}
-            page={page}
-            data={data}
-            error={error}
-            isLoading={isLoading}
-            isFetching={isFetching}
-            commentLike={likeCommentRequest}
-            commentUnlike={unLikeCommentRequest}
-            replyLike={likeReplyRequest}
-            replyUnlike={unLikeReplyRequest}
-            addToReviewsList={addToLoadedComments}
-            increasePage={increasePage}
-            cache={cache}
-            clearCache={clearCache}
-            submitReplyHandler={submitReplyHandler}
-          />
-        )}
+      <AlonePostsGrid>
+        <Box>
+          {reviewLoading ? (
+            <div>Loading review...</div>
+          ) : reviewError ? (
+            <div>Error</div>
+          ) : (
+            <CommentsList
+              reviewCard={reviewCard}
+              commentsList={commentsList}
+              page={page}
+              data={data}
+              error={error}
+              isLoading={isLoading}
+              isFetching={isFetching}
+              commentLike={likeCommentRequest}
+              commentUnlike={unLikeCommentRequest}
+              replyLike={likeReplyRequest}
+              replyUnlike={unLikeReplyRequest}
+              addToReviewsList={addToLoadedComments}
+              increasePage={increasePage}
+              cache={cache}
+              clearCache={clearCache}
+              submitReplyHandler={submitReplyHandler}
+            />
+          )}
 
-        <div
-          style={{
-            position: "fixed",
-            zIndex: 1000,
-            bottom: 0,
-          }}
-        >
-          <div>
-            <form onSubmit={submitCommentHandler}>
-              <input id="comment" />
-            </form>
+          <div
+            style={{
+              position: "fixed",
+              zIndex: 1000,
+              bottom: 0,
+            }}
+          >
+            <div>
+              <form onSubmit={submitCommentHandler}>
+                <input id="comment" />
+              </form>
+            </div>
           </div>
-        </div>
-      </Box>
+        </Box>
+      </AlonePostsGrid>
     </FixedGrid>
   );
 }
