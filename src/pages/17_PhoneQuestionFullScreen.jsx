@@ -308,6 +308,9 @@ export default function PhoneQuestionFullScreen() {
 
   const deleteReviewFromStore = (id) => {};
 
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(questionsActions.increaseShareCounter({ id: id }));
+
   const reviewCard = () => {
     return (
       <div>
@@ -329,6 +332,7 @@ export default function PhoneQuestionFullScreen() {
               userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
               stateLikeFn={stateLikePhoneReview}
               stateUnLikeFn={stateUnLikePhoneReview}
+              stateShare={stateIncreaseShareCounter}
               showActionBtn={true}
               deleteReviewFromStore={deleteReviewFromStore}
             />

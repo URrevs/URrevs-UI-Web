@@ -178,9 +178,10 @@ function App() {
         textFieldInput: isDark ? "#18191A" : COLORS.c050505,
       },
       filterTabbar: {
-        buttonBgActive: isDark ? "#FFFFFF" : COLORS.c65676b,
+        buttonBgActive: isDark ? "#FFFFFF" : COLORS.c22cbf4,
         buttonBg: isDark ? "#FFFFFF" : COLORS.cffffff,
         borderColor: isDark ? "#FFFFFF" : COLORS.c606266,
+        tabbarBg: isDark ? COLORS.c050505 : COLORS.cffffff,
       },
       blackIconColor: isDark ? COLORS.cCED0D4 : COLORS.c050505,
       defaultRedBtnIconColor: isDark ? COLORS.cCED0D4 : COLORS.cffffff,

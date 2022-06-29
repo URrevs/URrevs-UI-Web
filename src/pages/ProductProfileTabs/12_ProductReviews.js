@@ -69,6 +69,9 @@ export function ProductReviews() {
     );
   };
 
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(reviewsActions.increaseShareCounter({ id: id }));
+
   const reviewCard = (index, clearCache) => {
     return (
       <PhoneReview
@@ -83,6 +86,7 @@ export function ProductReviews() {
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
         stateUnLikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
+        stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
       />

@@ -6,7 +6,7 @@ import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetOtherUserPhoneQuestionsQuery,
   useLikePhoneQuestionCommentMutation,
-  useUnLikePhoneQuestionCommentMutation
+  useUnLikePhoneQuestionCommentMutation,
 } from "../services/phone_questions";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
@@ -114,6 +114,9 @@ export function PostedPhoneQuestions() {
     }
   };
 
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(questionsActions.increaseShareCounter({ id: id }));
+
   const reviewCard = (index, clearCache) => {
     return (
       <PhoneQuestion
@@ -128,6 +131,7 @@ export function PostedPhoneQuestions() {
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
+        stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
         acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}

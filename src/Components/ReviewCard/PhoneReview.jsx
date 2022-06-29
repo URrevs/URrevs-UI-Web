@@ -3,7 +3,10 @@ import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
-  useIdontLikeThisPhoneReviewMutation, useIncreaseShareCounterMutation, useIncreaseViewCounterMutation, useLikePhoneReviewMutation,
+  useIdontLikeThisPhoneReviewMutation,
+  useIncreaseShareCounterMutation,
+  useIncreaseViewCounterMutation,
+  useLikePhoneReviewMutation,
   useUnLikePhoneReviewMutation,
   useUserPressFullScreenMutation,
   useUserPressSeeMoreMutation
@@ -22,6 +25,7 @@ export default function PhoneReview({
   deleteReviewFromStore,
   fullScreen,
   isExpanded,
+  stateShare,
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisPhoneReviewMutation();
   const [fullScreenRequest] = useUserPressFullScreenMutation();
@@ -74,6 +78,7 @@ export default function PhoneReview({
   };
 
   const shareBtnHandler = () => {
+    stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
     showShareSnackbar(`/phone-review?id=${reviewDetails._id}`);
   };

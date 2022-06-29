@@ -24,6 +24,7 @@ export default function PhoneQuestion({
   fullScreen,
   isExpanded,
   acceptedAnswerWidget,
+  stateShare,
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisPhoneQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenPhoneQuestionMutation();
@@ -70,6 +71,7 @@ export default function PhoneQuestion({
   };
 
   const shareBtnHandler = () => {
+    stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
     showShareSnackbar(`/phone-question?id=${reviewDetails._id}`);
   };

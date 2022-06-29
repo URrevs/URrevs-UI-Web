@@ -32,8 +32,6 @@ const cache = new CellMeasurerCache({
 export default function PhoneReviewFullScreen() {
   const dispatch = useAppDispatch();
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     return () => {
       console.log("clear comments");
@@ -266,6 +264,9 @@ export default function PhoneReviewFullScreen() {
 
   const deleteReviewFromStore = (id) => {};
 
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(reviewsActions.increaseShareCounter({ id: id }));
+
   const reviewCard = () => {
     return (
       <div>
@@ -287,6 +288,7 @@ export default function PhoneReviewFullScreen() {
               userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
               stateLikeFn={stateLikePhoneReview}
               stateUnLikeFn={stateUnLikePhoneReview}
+              stateShare={stateIncreaseShareCounter}
               showActionBtn={true}
               deleteReviewFromStore={deleteReviewFromStore}
             />

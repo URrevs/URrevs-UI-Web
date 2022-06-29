@@ -84,6 +84,7 @@ export const companyQuestionsApi = createApi({
         try {
           await queryFulfilled;
         } catch (e: any) {
+          console.log(e.error.data.status);
           if (e.error.data.status !== "already liked") {
             payload.unDoFn();
           }
@@ -104,8 +105,14 @@ export const companyQuestionsApi = createApi({
 
         try {
           await queryFulfilled;
-        } catch (e) {
-          payload.unDoFn();
+        } catch (e: any) {
+          if (
+            e.error.data.status === "already unliked" ||
+            e.error.data.status === "no likes"
+          ) {
+          } else {
+            payload.unDoFn();
+          }
         }
       },
     }),
@@ -172,8 +179,14 @@ export const companyQuestionsApi = createApi({
 
         try {
           await queryFulfilled;
-        } catch (e) {
-          payload.unDoFn(payload.replyId);
+        }  catch (e: any) {
+          if (
+            e.error.data.status === "not found" ||
+            e.error.data.status === "already liked"
+          ) {
+          } else {
+            payload.unDoFn(payload.replyId);
+          }
         }
       },
     }),
@@ -190,8 +203,14 @@ export const companyQuestionsApi = createApi({
 
         try {
           await queryFulfilled;
-        } catch (e) {
-          payload.unDoFn(payload.replyId);
+        } catch (e: any) {
+          if (
+            e.error.data.status === "not found" ||
+            e.error.data.status === "already liked"
+          ) {
+          } else {
+            payload.unDoFn(payload.replyId);
+          }
         }
       },
     }),
@@ -209,8 +228,12 @@ export const companyQuestionsApi = createApi({
 
         try {
           await queryFulfilled;
-        } catch (e) {
-          payload.unDoFn(payload.commentId);
+        } catch (e: any) {
+          if (e.error.data.status === "not found" ||
+          e.error.data.status === "already liked") {
+          } else {
+            payload.unDoFn(payload.commentId);
+          }
         }
       },
     }),
@@ -227,8 +250,11 @@ export const companyQuestionsApi = createApi({
 
         try {
           await queryFulfilled;
-        } catch (e) {
-          payload.unDoFn(payload.commentId);
+        } catch (e: any) {
+          if (e.error.data.status === "not found") {
+          } else {
+            payload.unDoFn(payload.commentId);
+          }
         }
       },
     }),
@@ -246,8 +272,11 @@ export const companyQuestionsApi = createApi({
 
         try {
           await queryFulfilled;
-        } catch (e) {
-          payload.unDoFn(payload.answerId);
+        } catch (e: any) {
+          if (e.error.data.status === "already accepted") {
+          } else {
+            payload.unDoFn(payload.answerId);
+          }
         }
       },
     }),
@@ -264,8 +293,11 @@ export const companyQuestionsApi = createApi({
 
         try {
           await queryFulfilled;
-        } catch (e) {
-          payload.unDoFn(payload.answerId);
+        } catch (e: any) {
+          if (e.error.data.status === "not yet") {
+          } else {
+            payload.unDoFn(payload.answerId);
+          }
         }
       },
     }),
