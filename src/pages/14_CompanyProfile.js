@@ -69,7 +69,7 @@ export const CompanyProfile = () => {
               ) : (
                 <PathTabbar arrayOfTabs={listOfItems} />
               )}
-              <Outlet />
+              <Outlet context={{ companyName: companyStatsData.name }} />
             </Fragment>
           }
         </CustomAppBar>
