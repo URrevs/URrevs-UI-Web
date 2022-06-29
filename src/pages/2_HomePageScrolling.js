@@ -311,8 +311,8 @@ function Reviews() {
           {currentUser.isLoggedIn ? (
             <div>
               <PostingComponent
-                label={textContainer.youCanAddReview}
-                placeholder={textContainer.writeYourReview}
+                label={textContainer.youCanWriteReviewOrAskAQuestion}
+                placeholder={textContainer.writeYourPost}
                 params={{
                   disabled: true,
                   onClick: () => {

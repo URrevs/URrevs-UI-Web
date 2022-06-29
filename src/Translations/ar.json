@@ -221,7 +221,7 @@
   "productNameOrCompanyNameErrorMsg": "يجب ادخال اسم المنتج أو الشركة.",
   "enterYourQuestionErrorMsg": "يجب ادخال سؤالك.",
   "usersRanking": "ترتيب المستخدمين:",
-  "usersRankingInCurrentCompetetion":"ترتيب المستخدمين في المسابقة الحالية:",
+  "usersRankingInCurrentCompetetion": "ترتيب المستخدمين في المسابقة الحالية:",
   "yourRanking": "ترتيبك:",
   "howToCollectPoints": "كيف تجمع النقاط",
   "helpOthersToCollectPoints": "ساعد الاخرين لتجمع اكبر عدد من النقاط",
@@ -254,5 +254,7 @@
   "youCanAddReview": "يمكنك إضافة مراجعة: ",
   "writeYourReview": "اكتب مراجعتك",
   "youCanAddQuestion": "يمكنك إضافة سؤال:",
-  "writeYourQuestionP": "اكتب سؤالك"
+  "writeYourQuestionP": "اكتب سؤالك",
+  "youCanWriteReviewOrAskAQuestion": "يمكنك كتابة مراجعة او طرح سؤال:",
+  "writeYourPost": "اكتب منشورك"
 }
