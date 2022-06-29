@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useOutletContext, useSearchParams } from "react-router-dom";
+
 import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { CustomAppBar } from "../../Components/MainLayout/AppBar/CustomAppBar";
+import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
+import { PostingModal } from "../../Components/PostingComponents/PostingModal";
 import PhoneReview from "../../Components/ReviewCard/PhoneReview";
 import ReviewCard from "../../Components/ReviewCard/ReviewCard";
 import ROUTES_NAMES from "../../RoutesNames";
@@ -11,9 +14,12 @@ import {
 } from "../../services/phone_reviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
+import { postingModalActions } from "../../store/uiPostingModalSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
 
 export function ProductReviews() {
+  const { phoneName } = useOutletContext();
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     console.log("clear reviews");
@@ -23,7 +29,7 @@ export function ProductReviews() {
 
   const reviewsList = useAppSelector((state) => state.reviews.newReviews);
   const [page, setPage] = useState(1);
-
+  const textContainer = useAppSelector((state) => state.language.textContainer);
   const [searchParams, setSearchParams] = useSearchParams();
   const phoneId = searchParams.get("pid");
 
@@ -89,6 +95,25 @@ export function ProductReviews() {
 
   return (
     <AlonePostsGrid>
+      {/* <div style={{ height: "20px" }} /> */}
+      <PostingComponent
+        label={textContainer.youCanAddReview}
+        placeholder={textContainer.writeYourReview}
+        params={{
+          disabled: true,
+          onClick: () => {
+            dispatch(
+              postingModalActions.showPostingModal({
+                type: "phone",
+                id: phoneId,
+                name: phoneName,
+                tab: 0, //AddReview Tab
+              })
+            );
+          },
+        }}
+      />
+
       <VirtualReviewList
         reviewCard={reviewCard}
         reviewsList={reviewsList}

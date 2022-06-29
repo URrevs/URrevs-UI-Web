@@ -28,7 +28,6 @@ const FormikSearchComponent = ({
             }}
             onResult={async (response) => {
               setFieldValue(fieldName, response);
-
               // To fetch company for reviewposting
               if (toGetManufacturingCompany && response.id !== "") {
                 const companyId = await getManufacturingCompany(response.id);

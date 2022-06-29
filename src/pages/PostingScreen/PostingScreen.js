@@ -10,14 +10,13 @@ import { QuestionsTab } from "./QuestionsTab";
 const PostingScreen = ({
   value,
   initValues = {
-    chooseProduct: { id: "", label: "", type: "" },
-    spoc: {
-      label: "",
-      id: "",
-      type: "",
-    },
+    id: "",
+    name: "",
+    type: "",
   },
 }) => {
+  const isPhone = initValues.type === "phone";
+
   const [addReview] = useAddPhoneReviewMutation();
   const theme = useTheme();
   const textContainer = useSelector((state) => state.language.textContainer);
@@ -67,7 +66,9 @@ const PostingScreen = ({
         <Formik
           initialValues={{
             companyId: { _id: "", name: "", type: "" },
-            chooseProduct: { id: "", label: "", type: "" },
+            chooseProduct: isPhone
+              ? initValues
+              : { id: "", label: "", type: "" },
             overAllExp: 0,
             manufacturingQuality: 0,
             userInterface: 0,

@@ -10,6 +10,7 @@ import { useSearchPhonesOnlyMutation } from "../../services/search";
 import { useAppSelector } from "../../store/hooks";
 import HelpIcon from "@mui/icons-material/Help";
 import { FormSubmitButton } from "./FormSubmitButton";
+import { useGetManufacturingCompanyMutation } from "../../services/phones";
 
 /*Documentation */
 /*
@@ -97,8 +98,19 @@ export const AddReviewTab = ({ ...props }) => {
       </Stack>
     );
   };
+  /*RTK */
   const [searchFn] = useSearchPhonesOnlyMutation();
-
+  const [getManufacturingCompany] = useGetManufacturingCompanyMutation();
+  const handleManufacturingCompany = async () => {
+    const companyId = await getManufacturingCompany(
+      props.values.chooseProduct.id
+    );
+    props.setFieldValue("companyId", companyId.data);
+    sessionStorage.setItem("companyId", JSON.stringify(companyId.data));
+  };
+  React.useEffect(() => {
+    if (props.values.chooseProduct.id !== "") handleManufacturingCompany();
+  }, []);
   return (
     <React.Fragment>
       <Modal open={open} onClose={handleClose} dir={theme.direction}>
@@ -119,11 +131,13 @@ export const AddReviewTab = ({ ...props }) => {
         <Typography variant="S18W500C050505">
           {pageDictionary.chooseProduct + ":"}
         </Typography>
+
         <FormikSearchComponent
           fieldName="chooseProduct"
+          query={props.values.chooseProduct.label}
           label={textContainer.writeProductName}
           searchFn={searchFn}
-          toGetManufacturingCompany={true}
+          toGetManufacturingCompany
         />
         <br />
         {/* Datepicker*/}

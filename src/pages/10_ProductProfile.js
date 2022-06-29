@@ -70,7 +70,7 @@ export const ProductProfile = () => {
               arrayOfTabs={listOfItems}
               userName={data.name}
             />
-            <Outlet />
+            <Outlet context={{ phoneName: data.name }} />
           </Fragment>
         </CustomAppBar>
       )}
