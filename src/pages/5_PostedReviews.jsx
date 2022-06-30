@@ -1,5 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Fragment, useState } from "react";
+import { useOutletContext, useSearchParams } from "react-router-dom";
 
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
@@ -16,6 +17,11 @@ export function PostedReviews() {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const isMobile = useTheme().isMobile;
 
+  const currentUserId = useAppSelector((state) => state.auth.uid);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramId = searchParams.get("userId");
+
   return (
     <CustomAppBar
       showLabel
@@ -25,20 +31,22 @@ export function PostedReviews() {
     >
       <FixedGrid>
         <div style={{ marginTop: "12px" }}>
-          <PostingComponent
-            label={textContainer.youCanAddReview}
-            placeholder={textContainer.writeYourReview}
-            params={{
-              disabled: true,
-              onClick: () => {
-                dispatch(
-                  postingModalActions.showPostingModal({
-                    tab: 0, //AddReview Tab
-                  })
-                );
-              },
-            }}
-          />
+          {currentUserId === paramId && (
+            <PostingComponent
+              label={textContainer.youCanAddReview}
+              placeholder={textContainer.writeYourReview}
+              params={{
+                disabled: true,
+                onClick: () => {
+                  dispatch(
+                    postingModalActions.showPostingModal({
+                      tab: 0, //AddReview Tab
+                    })
+                  );
+                },
+              }}
+            />
+          )}
         </div>
         {!isMobile && (
           <FilterTabbar

@@ -1,5 +1,6 @@
 import { useTheme } from "@emotion/react";
 import React, { useState } from "react";
+import { useOutletContext, useSearchParams } from "react-router-dom";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { PostingComponent } from "../Components/PostingComponents/PostingComponent";
@@ -15,6 +16,11 @@ export function PostedQuestions() {
   const dispatch = useAppDispatch();
   const isMobile = useTheme().isMobile;
 
+  const currentUserId = useAppSelector((state) => state.auth.uid);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramId = searchParams.get("userId");
+
   return (
     <CustomAppBar
       showLabel
@@ -24,20 +30,22 @@ export function PostedQuestions() {
     >
       <FixedGrid>
         <div style={{ marginTop: "12px" }}>
-          <PostingComponent
-            label={textContainer.youCanAddQuestion}
-            placeholder={textContainer.writeYourQuestionP}
-            params={{
-              disabled: true,
-              onClick: () => {
-                dispatch(
-                  postingModalActions.showPostingModal({
-                    tab: 0, //AddReview Tab
-                  })
-                );
-              },
-            }}
-          />
+          {currentUserId === paramId && (
+            <PostingComponent
+              label={textContainer.youCanAddQuestion}
+              placeholder={textContainer.writeYourQuestionP}
+              params={{
+                disabled: true,
+                onClick: () => {
+                  dispatch(
+                    postingModalActions.showPostingModal({
+                      tab: 0, //AddReview Tab
+                    })
+                  );
+                },
+              }}
+            />
+          )}
         </div>
         {!isMobile && (
           <FilterTabbar

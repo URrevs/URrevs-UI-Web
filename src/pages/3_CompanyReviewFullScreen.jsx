@@ -88,6 +88,8 @@ export default function CompanyReviewFullScreen() {
     }
   };
 
+  const clearAllCache = () => cache.clearAll();
+
   // // get this review from store
   // const currentReview = useAppSelector((state) => state.reviews.newReviews).find(
   //   (element) => {
@@ -344,6 +346,7 @@ export default function CompanyReviewFullScreen() {
               increasePage={increasePage}
               cache={cache}
               clearCache={clearCache}
+              clearAllCache={clearAllCache}
               submitReplyHandler={submitReplyHandler}
             />
           )}
