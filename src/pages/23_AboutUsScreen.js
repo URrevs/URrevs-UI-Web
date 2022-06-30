@@ -22,7 +22,7 @@ export const AboutUsScreen = () => {
           <div></div>
           <img
             height="auto"
-            width="50%"
+            width="60%"
             alt="URrevs"
             src="./images/full_logo.png"
           />

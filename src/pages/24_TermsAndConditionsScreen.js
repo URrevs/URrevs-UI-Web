@@ -241,7 +241,7 @@ export const TermsAndConditionsScreen = () => {
             <Typography variant={subHeaderStyling}>
               {pageDictionary[language].privacyPolicyParagraph}
               <Link
-                to={`/${ROUTES_NAMES.PRIVACY_POLICY / { language }}`}
+                href={`/${ROUTES_NAMES.PRIVACY_POLICY}/${language}`}
                 underline="always"
               >
                 {pageDictionary[language].thisLink}
