@@ -4,10 +4,11 @@ import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, Modal, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import React, { Fragment } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import StarWithCount from "../Components/Leaderboard/StarWithCount";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
@@ -18,10 +19,12 @@ import { useAppSelector } from "../store/hooks";
 
 export default function CurrentUserProfilePage({}) {
   const theme = useTheme();
-
+  const navigate = useNavigate();
+  const [invitationCodeDialog, setInvitationCodeDialog] = React.useState(false);
   const currentUserProfile = useAppSelector((state) => state.auth);
   const profileData = currentUserProfile;
-
+  const handleInvitationOpen = () => setInvitationCodeDialog(true);
+  const handleInvitationClose = () => setInvitationCodeDialog(false);
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
@@ -53,6 +56,9 @@ export default function CurrentUserProfilePage({}) {
     {
       title: pageDictionry.referalCode,
       icon: <GroupsOutlinedIcon sx={{ fontSize: 40 }} />,
+      onClick: () => {
+        handleInvitationOpen();
+      },
       to: "",
       subtitle: pageDictionry.inviteFriends,
     },
@@ -64,11 +70,20 @@ export default function CurrentUserProfilePage({}) {
     },
   ];
 
-  const listItem = (title, subTitle, icon, to) => {
+  const listItem = (
+    title,
+    subTitle,
+    icon,
+    to,
+    onClick = () => {
+      navigate(to);
+    }
+  ) => {
     return (
       <ListItemNavigator
         title={title}
         subTitle={subTitle}
+        onClick={onClick}
         icon={icon}
         to={to}
       />
@@ -92,6 +107,15 @@ export default function CurrentUserProfilePage({}) {
   return (
     <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true}>
       <div>
+        <Modal
+          open={invitationCodeDialog}
+          onClose={handleInvitationClose}
+          dir={theme.direction}
+        >
+          <Box>
+            <InvitationDialog handleClose={handleInvitationClose} />
+          </Box>
+        </Modal>
         <div
           style={{
             display: "flex",
@@ -122,7 +146,13 @@ export default function CurrentUserProfilePage({}) {
         <div>
           <List>
             {listItems.map((item, index) => {
-              return listItem(item.title, item.subtitle, item.icon, item.to);
+              return listItem(
+                item.title,
+                item.subtitle,
+                item.icon,
+                item.to,
+                item.onClick
+              );
             })}
           </List>
         </div>
