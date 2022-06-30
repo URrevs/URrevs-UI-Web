@@ -20,7 +20,7 @@ export const PostingModal = () => {
   const id = useAppSelector((state) => state.postingModal.id);
   const name = useAppSelector((state) => state.postingModal.name);
   const type = useAppSelector((state) => state.postingModal.type);
-  console.log(id);
+
   const handleClose = () => {
     dispatch(postingModalActions.hidePostingModal());
   };

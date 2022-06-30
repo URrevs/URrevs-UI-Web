@@ -50,6 +50,9 @@ import { authActions } from "./store/authSlice";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { fonts } from "./Styles/fonts";
 import { COLORS } from "./Styles/main_light_colors";
+import { AboutUsScreen } from "./pages/23_AboutUsScreen";
+import { PrivacyPolicyScreen } from "./pages/25_PrivacyPolicyScreen";
+import { TermsAndConditionsScreen } from "./pages/24_TermsAndConditionsScreen";
 
 function App() {
   const language = useSelector((state) => state.language.language);
@@ -79,16 +82,16 @@ function App() {
           xl: 1100,
         },
       },
-      overrides: {
-        MuiInput: {
-          input: {
-            "&::placeholder": {
-              color: "black",
-            },
-            color: "white", // if you also want to change the color of the input, this is the prop you'd use
-          },
-        },
-      },
+      // overrides: {
+      //   MuiInput: {
+      //     input: {
+      //       "&::placeholder": {
+      //         color: "black",
+      //       },
+      //       color: "white", // if you also want to change the color of the input, this is the prop you'd use
+      //     },
+      //   },
+      // },
       sideBar: {
         height: "59px",
       },
@@ -298,6 +301,15 @@ function App() {
                         <Route index element={<Reviews />} />
                         <Route path={ROUTES_NAMES.MENU}>
                           <Route index element={<Menu />} />
+                        </Route>
+                        <Route path={ROUTES_NAMES.ABOUT_US}>
+                          <Route index element={<AboutUsScreen />} />
+                        </Route>
+                        <Route path={ROUTES_NAMES.PRIVACY_POLICY}>
+                          <Route index element={<PrivacyPolicyScreen />} />
+                        </Route>
+                        <Route path={ROUTES_NAMES.TERMS_AND_CONDITIONS}>
+                          <Route index element={<TermsAndConditionsScreen />} />
                         </Route>
                         <Route path={ROUTES_NAMES.ALL_PRODUCTS}>
                           <Route index element={<AllProductsScreen />} />
