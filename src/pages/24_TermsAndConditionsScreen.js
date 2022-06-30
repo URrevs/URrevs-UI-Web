@@ -89,7 +89,7 @@ export const TermsAndConditionsScreen = () => {
       iHaveReadTheAgreement: `لقد قرأت هذا الاتفاق وأوافق على جميع الأحكام الواردة أعلاه. `,
     },
     en: {
-      title: `Terms Of Usage`,
+      title: `Terms Of Service`,
       welcomeMessage: `Welcome to the URrevs (“URrevs” or “Website”) a social networking website that allows its users to share and comment upon a vast variety of consumer electronic products ,simply it is a customer review platform.
       URrevs provides its services to you subject to the provisions of these Terms of Service (“TOS”). By using this Website or viewing the content herein you accept and agree to be bound by these TOS and each of its provisions. This is a legally binding agreement between you and URrevs, so please read it carefully. If you do not agree to these TOS, please do not use URrevs`,
       eligibility: `Eligibility`,
