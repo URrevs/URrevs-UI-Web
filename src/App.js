@@ -303,11 +303,7 @@ function App() {
                           <Route index element={<Menu />} />
                         </Route>
                         <Route
-                          path={ROUTES_NAMES.ABOUT_US + "/ar"}
-                          element={<AboutUsScreen />}
-                        />
-                        <Route
-                          path={ROUTES_NAMES.ABOUT_US + "/en"}
+                          path={ROUTES_NAMES.ABOUT_US}
                           element={<AboutUsScreen />}
                         />
                         <Route

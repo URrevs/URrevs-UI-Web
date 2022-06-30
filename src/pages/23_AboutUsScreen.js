@@ -1,9 +1,7 @@
 import React from "react";
-import ROUTES_NAMES from "../RoutesNames";
+import { useAppSelector } from "../store/hooks";
 
 export const AboutUsScreen = () => {
-  //if true arabic if false english
-  const language = window.location.pathname === `/${ROUTES_NAMES.ABOUT_US}/ar`;
-
-  return language ? <div>عنا</div> : <div>About Us</div>;
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+  return <div>عنا</div>;
 };

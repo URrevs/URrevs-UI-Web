@@ -1,6 +1,6 @@
 import { Link, Stack, Typography } from "@mui/material";
 import React from "react";
-import { FixedGrid } from "../Components/Grid/FixedGrid";
+import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ROUTES_NAMES from "../RoutesNames";
 
@@ -99,7 +99,7 @@ export const TermsAndConditionsScreen = () => {
       If you have created a User account with URrevs, you are responsible for the security of your account and password. You agree to accept responsibility for all activities that occur in connection with your account, whether or not the use is unauthorized. In addition, you agree to notify us immediately of any unauthorized use of your account. We reserve the right to close your account, revoke your username, and remove any content submitted by you at any time for any or no reason. You understand that URrevs will not be liable to you for invoking this right.`,
       licenseForPersonalUse: `License for Personal Use`,
       licenseForPersonalUseParahgraph1: `We grant you a limited license and permission to access and make personal use of URrevs but not to download or copy any portion of its content for any commercial purpose or to modify any portion of it, except with our written or e-mailed consent. This license does not include any resale or commercial use of URrevs or its content; any collection or use of “User-Generated Content” (as described below); any derivative use of URrevs or its contents; or any use of data mining, robots or similar data gathering or extraction tools or processes; and you agree not to do any of the foregoing. Except as explicitly provided in these TOS, you agree not to store in any form, distribute, transmit, display, reproduce, modify, create derivative works from, sell or otherwise exploit any of the content of any portion of URrevs for any commercial purpose without prior consent from URrevs. You may display and occasionally print a single copy of pages of URrevs for your personal, non-commercial use, but you may not otherwise reproduce any material appearing on URrevs (other than your own "User-Generated Content," as described below) without our prior written consent. Requests for permission to reproduce or distribute materials found on the Website should be sent to `,
-      emailAddress: `this email`,
+      emailAddress: `this email.`,
       licenseForPersonalUseParahgraph2: ` You may not use our name nor any misspelling or typographical variation of URrevs, whether alone or in conjunction with any other word or phrase, trademarks or service marks in any manner (including use in any metatags or any other "hidden text") without our prior written or e-mailed consent. Any violation of the foregoing will terminate the permission and license granted by us to access and use URrevs.`,
       userGeneratedContent: `User-Generated Content`,
       userGeneratedContentParagraph: `URrevs user account holders may submit content and information, including but not limited to text, data,photos and videos (collectively "User-Generated Content"). You understand that whether or not such User-Generated Content is published, URrevs does not guarantee any confidentiality with respect to any User-Generated Content.
@@ -108,7 +108,7 @@ export const TermsAndConditionsScreen = () => {
       You are solely responsible for and assume all risks associated with your User-Generated Content. This includes any reliance on its accuracy, completeness or usefulness by others, or any disclosure by you of information in your User-Generated Content that makes you personally identifiable. You represent that you own, or have the necessary licenses or permissions to use, and authorize URrevs to use your User-Generated Content as described herein.
       URrevs does not endorse any User-Generated Content or any opinion, recommendation, or advice expressed therein, and URrevs expressly disclaims any and all liability in connection with User-Generated Content. You may not imply that your User-Generated Content is in any way sponsored or endorsed by URrevs.
       We reserve the right, but are not obligated to monitor User-Generated Content on URrevs and restrict or remove such content that we believe, in our sole discretion to be inappropriate. If you feel that any User-Generated Content on URrevs is offensive, violates your rights or this TOS, please email us at `,
-      userGeneratedContentParagraph2: `Subject: Inappropriate Material.`,
+      userGeneratedContentParagraph2: ` Subject: Inappropriate Material.`,
       licenseToURrevsAndURrevsUsers: `License to URrevs and URrevs Users`,
       licenseToURrevsAndURrevsUsersParagraph: `You agree that, by posting any User-Generated Content to URrevs, you are granting to URrevs a worldwide, non-exclusive, royalty-free, sublicenseable and transferable license to use, reproduce, distribute, prepare derivative works of, and display that User-Generated Content in connection with the this Website and URrevs’s (and its successors' and affiliates') business, including without limitation for promoting and redistributing part or all of this Website (and derivative works thereof) in any media formats and through any media channels. You are also granting to us the non-exclusive right to seek to enjoin and/or obtain damages from any third party from the unauthorized use or reproduction of your User-Generated Content. If we publish your User-Generated Content or authorize or license others to do so, your User-Generated Content may be edited for length or clarity or for any other reason either before or after it is published.
       You also hereby grant each User of URrevs a non-exclusive license to access your User-Generated Content through the Website, and to use and display such User-Generated Content as permitted through the functionality of the Website and under these TOS.
@@ -148,18 +148,20 @@ export const TermsAndConditionsScreen = () => {
       iHaveReadTheAgreement: `I HAVE READ THIS AGREEMENT AND AGREE TO ALL OF THE PROVISIONS CONTAINED ABOVE.`,
     },
   };
-  const headerStyling = "S18W500C050505";
+  const headerStyling = "S20W700C050505";
   const subHeaderStyling = "";
   return (
     <CustomAppBar label={pageDictionary[language].title} showLabel showBackBtn>
-      <FixedGrid>
+      <AlonePostsGrid>
         <div
           style={{
             whiteSpace: "pre-line",
             direction: direction,
           }}
         >
-          <Stack spacing={1}>
+          <Stack spacing={2}>
+            <div></div>
+
             {/* Welcome Message */}
             <Typography variant={subHeaderStyling}>
               {pageDictionary[language].welcomeMessage}
@@ -330,7 +332,7 @@ export const TermsAndConditionsScreen = () => {
             </Typography>
           </Stack>
         </div>
-      </FixedGrid>
+      </AlonePostsGrid>
     </CustomAppBar>
   );
 };
