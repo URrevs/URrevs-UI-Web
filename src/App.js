@@ -307,15 +307,30 @@ function App() {
                       <Route path={ROUTES_NAMES.MENU}>
                         <Route index element={<Menu />} />
                       </Route>
-                      <Route path={ROUTES_NAMES.ABOUT_US}>
-                        <Route index element={<AboutUsScreen />} />
-                      </Route>
-                      <Route path={ROUTES_NAMES.PRIVACY_POLICY}>
-                        <Route index element={<PrivacyPolicyScreen />} />
-                      </Route>
-                      <Route path={ROUTES_NAMES.TERMS_AND_CONDITIONS}>
-                        <Route index element={<TermsAndConditionsScreen />} />
-                      </Route>
+                      <Route
+                        path={ROUTES_NAMES.ABOUT_US + "/ar"}
+                        element={<AboutUsScreen />}
+                      />
+                      <Route
+                        path={ROUTES_NAMES.ABOUT_US + "/en"}
+                        element={<AboutUsScreen />}
+                      />
+                      <Route
+                        path={ROUTES_NAMES.PRIVACY_POLICY + "/ar"}
+                        element={<PrivacyPolicyScreen />}
+                      />
+                      <Route
+                        path={ROUTES_NAMES.PRIVACY_POLICY + "/en"}
+                        element={<PrivacyPolicyScreen />}
+                      />
+                      <Route
+                        path={ROUTES_NAMES.TERMS_AND_CONDITIONS + "/ar"}
+                        element={<TermsAndConditionsScreen />}
+                      />
+                      <Route
+                        path={ROUTES_NAMES.TERMS_AND_CONDITIONS + "/en"}
+                        element={<TermsAndConditionsScreen />}
+                      />
                       <Route path={ROUTES_NAMES.ALL_PRODUCTS}>
                         <Route index element={<AllProductsScreen />} />
                       </Route>
