@@ -1,5 +1,4 @@
 import { ThemeProvider } from "@emotion/react";
-import { arEG } from "@mui/material/locale";
 import {
   alpha,
   createTheme,
@@ -7,20 +6,15 @@ import {
   Grid,
   useMediaQuery,
 } from "@mui/material";
+import { arEG } from "@mui/material/locale";
 import { getAuth } from "firebase/auth";
-import { Fragment, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import {
-  useAuthenticateMutation,
-  useGetCurrentUserProfileMutation,
-} from "../src/services/users";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useXauthenticateQuery } from "../src/services/users";
 import "./App.css";
-import Banner from "./Components/Banners/Banner";
-import { Footer } from "./Components/Banners/Footer";
 import Layout from "./Components/MainLayout/Layout";
 import RTL from "./Components/RTL";
-import { ProfileTabbar } from "./Components/Tabbar/Desktop/ProfileTabbar";
 import { ProductProfile } from "./pages/10_ProductProfile";
 import { ComparisonScreen } from "./pages/11_ComparisonScreen";
 import { CompanyProfile } from "./pages/14_CompanyProfile";
@@ -50,9 +44,10 @@ import { ProductSpecsScreen } from "./pages/ProductProfileTabs/10_ProductSpecs";
 import { ProductReviews } from "./pages/ProductProfileTabs/12_ProductReviews";
 import { ProductQuestions } from "./pages/ProductProfileTabs/13_ProductQuestions";
 import Profile from "./pages/Profile";
+import { SplashScreen } from "./pages/SplashScreen";
 import ROUTES_NAMES from "./RoutesNames";
 import { authActions } from "./store/authSlice";
-import { useAppDispatch } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { fonts } from "./Styles/fonts";
 import { COLORS } from "./Styles/main_light_colors";
 
@@ -212,101 +207,214 @@ function App() {
   );
 
   const dispatch = useAppDispatch();
-  const [getApiToken] = useAuthenticateMutation();
-  const [getProfile] = useGetCurrentUserProfileMutation();
+
+  const storeUser = useAppSelector((state) => state.auth);
+
+  const { data, isLoading, error } = useXauthenticateQuery(
+    storeUser.isLoggedIn ? storeUser.accessToken : "",
+    {
+      skip: !storeUser.isLoggedIn || storeUser.accessToken == "",
+    }
+  );
+
+  const [firebaseIsLoading, setFirebaseIsLoading] = useState(true);
 
   useEffect(() => {
-    const signIn = async (user) => {
-      try {
-        console.log("hey");
-        const { token: apiToken, admin: isAdmin } = await getApiToken(
-          user.accessToken
-        ).unwrap();
-
-        dispatch(
-          authActions.login({
-            apiToken: apiToken,
-            isAdmin: isAdmin,
-          })
-        );
-
-        const userProfile = await getProfile(apiToken).unwrap();
+    const unregisterObserver = getAuth().onAuthStateChanged((user) => {
+      if (user) {
         dispatch(
           authActions.login({
             isLoggedIn: true,
-            uid: userProfile.uid,
-            refCode: userProfile.refCode,
-            photo: userProfile.photo,
-            apiToken: apiToken,
-            name: userProfile.name,
             accessToken: user.accessToken,
-            refreshToken: user.refreshToken,
-            email: user.email,
-            points: userProfile.points,
-            isAdmin: isAdmin,
           })
         );
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    // this may be checked if token still valid
-    // to reduce authenticate requests
-    getAuth().onIdTokenChanged(async (user) => {
-      console.log("eee");
-      if (user) {
-        await signIn(user);
-        try {
-        } catch (error) {
-          console.log(error);
-        }
+      } else {
+        dispatch(authActions.logout());
+        setFirebaseIsLoading(false);
       }
     });
-  }, [0]);
 
-  return (
-    <ThemeProvider theme={theme}>
-      <div dir={direction}>
-        <CssBaseline enableColorScheme />
-        <RTL direction={theme.direction}>
-          <BrowserRouter>
-            <Layout>
-              <Grid container style={{}}>
-                <Grid item md={0} sm={0} xs={0.5}></Grid>
-                <Grid item md={12} sm={12} xs={11}>
-                  <Routes>
-                    {/* not found handling */}
-                    <Route path="/404" element={<NotFoundPage />} />
-                    {/* <Route path="*" element={<Navigate to="/404" replace />} /> */}
+    return () => {
+      unregisterObserver();
+    };
+  }, [dispatch, setFirebaseIsLoading]);
 
-                    {/* review full review */}
-                    <Route
-                      path={ROUTES_NAMES.EXACT_PHONE_REVIEW}
-                      element={<PhoneReviewFullScreen />}
-                    />
-                    <Route
-                      path={ROUTES_NAMES.EXACT_COMPANY_REVIEW}
-                      element={<CompanyReviewFullScreen />}
-                    />
+  useEffect(() => {
+    if (data) {
+      dispatch(
+        authActions.login({
+          expiration: data.exp,
+          apiToken: data.token,
+          isAdmin: data.admin,
+          uid: data.profile._id,
+          refCode: data.profile.refCode,
+          photo: data.profile.picture,
+          name: data.profile.name,
+          points: data.profile.points,
+        })
+      );
+      setFirebaseIsLoading(false);
+    }
+  }, [data, dispatch, setFirebaseIsLoading]);
 
-                    {/* question full screen */}
-                    <Route
-                      path={ROUTES_NAMES.EXACT_PHONE_QUESTION}
-                      element={<PhoneQuestionFullScreen />}
-                    />
-                    <Route
-                      path={ROUTES_NAMES.EXACT_COMPANY_QUESTION}
-                      element={<CompanyQuestionFullScreen />}
-                    />
-                    <Route path={ROUTES_NAMES.HOME}>
-                      <Route index element={<Reviews />} />
+  if (firebaseIsLoading) {
+    return <SplashScreen />;
+  } else {
+    return (
+      <ThemeProvider theme={theme}>
+        <div dir={direction}>
+          <CssBaseline enableColorScheme />
+          <RTL direction={theme.direction}>
+            <BrowserRouter>
+              <Layout>
+                <Grid container style={{}}>
+                  <Grid item md={0} sm={0} xs={0.5}></Grid>
+                  <Grid item md={12} sm={12} xs={11}>
+                    <Routes>
+                      {/* not found handling */}
+                      <Route path="/404" element={<NotFoundPage />} />
+                      {/* <Route path="*" element={<Navigate to="/404" replace />} /> */}
+
+                      {/* review full review */}
+                      <Route
+                        path={ROUTES_NAMES.EXACT_PHONE_REVIEW}
+                        element={<PhoneReviewFullScreen />}
+                      />
+                      <Route
+                        path={ROUTES_NAMES.EXACT_COMPANY_REVIEW}
+                        element={<CompanyReviewFullScreen />}
+                      />
+
+                      {/* question full screen */}
+                      <Route
+                        path={ROUTES_NAMES.EXACT_PHONE_QUESTION}
+                        element={<PhoneQuestionFullScreen />}
+                      />
+                      <Route
+                        path={ROUTES_NAMES.EXACT_COMPANY_QUESTION}
+                        element={<CompanyQuestionFullScreen />}
+                      />
+                      <Route path={ROUTES_NAMES.HOME}>
+                        <Route index element={<Reviews />} />
+                        <Route path={ROUTES_NAMES.MENU}>
+                          <Route index element={<Menu />} />
+                        </Route>
+                        <Route path={ROUTES_NAMES.ALL_PRODUCTS}>
+                          <Route index element={<AllProductsScreen />} />
+                        </Route>
+                        <Route path={ROUTES_NAMES.ADMIN_PANEL}>
+                          <Route index element={<AdminPanel />} />
+                          <Route path={ROUTES_NAMES.UPDATE}>
+                            <Route index element={<UpdateProducts />} />
+                          </Route>
+                        </Route>
+
+                        {/* profile */}
+                        {!isMobile ? (
+                          <Route
+                            path={ROUTES_NAMES.USER_PROFILE}
+                            element={<Profile />}
+                          >
+                            <Route index element={<PostedReviews />} />
+                            <Route
+                              path={ROUTES_NAMES.OWNED_PHONES}
+                              element={<OwnedPhonesPage />}
+                            />
+                            <Route
+                              path={ROUTES_NAMES.REVIEWS}
+                              element={<PostedReviews />}
+                            />
+                            <Route
+                              path={ROUTES_NAMES.QUESTIONS}
+                              element={<PostedQuestions />}
+                            />
+                            <Route
+                              path={ROUTES_NAMES.MY_QUESTIONS}
+                              element={<MyPhonesQuestions />}
+                            />
+                          </Route>
+                        ) : (
+                          <Route path={ROUTES_NAMES.USER_PROFILE}>
+                            <Route index element={<Profile />} />
+                            <Route
+                              path={ROUTES_NAMES.OWNED_PHONES}
+                              element={<OwnedPhonesPage />}
+                            />
+                            <Route
+                              path={ROUTES_NAMES.REVIEWS}
+                              element={<PostedReviews />}
+                            />
+                            <Route
+                              path={ROUTES_NAMES.QUESTIONS}
+                              element={<PostedQuestions />}
+                            />
+                            <Route
+                              path={ROUTES_NAMES.MY_QUESTIONS}
+                              element={<MyPhonesQuestions />}
+                            />
+                          </Route>
+                        )}
+
+                        {/* company profile */}
+                        <Route
+                          path={`${ROUTES_NAMES.COMPANY_PROFILE}`}
+                          element={<CompanyProfile />}
+                        >
+                          <Route
+                            path={ROUTES_NAMES.REVIEWS}
+                            element={<CompanyReviews />}
+                          />
+                          <Route
+                            path={ROUTES_NAMES.QUESTIONS}
+                            element={<CompanyQuestions />}
+                          />
+                        </Route>
+
+                        {/* phone profile */}
+                        <Route
+                          path={ROUTES_NAMES.PHONE_PROFILE}
+                          element={<ProductProfile />}
+                        >
+                          <Route
+                            path={ROUTES_NAMES.REVIEWS}
+                            element={<ProductReviews />}
+                          />
+                          <Route path={ROUTES_NAMES.SPECS}>
+                            <Route index element={<ProductSpecsScreen />} />
+                          </Route>
+                          <Route
+                            path={ROUTES_NAMES.QUESTIONS}
+                            element={<ProductQuestions />}
+                          />
+                        </Route>
+
+                        {/* comparison screen */}
+                        <Route
+                          path={ROUTES_NAMES.COMPARISON}
+                          element={<ComparisonScreen />}
+                        />
+                      </Route>
+                      <Route path={ROUTES_NAMES.HOME}>
+                        <Route
+                          path={ROUTES_NAMES.ADD_REVIEW}
+                          element={<ReviewPostingScreen />}
+                        />
+                      </Route>
+                      <Route
+                        path={ROUTES_NAMES.SEARCH}
+                        element={<SearchScreen />}
+                      />
+                      <Route
+                        path={ROUTES_NAMES.LEADERBOARD}
+                        element={<Leaderboard />}
+                      />
                       <Route path={ROUTES_NAMES.MENU}>
                         <Route index element={<Menu />} />
                       </Route>
-                      <Route path={ROUTES_NAMES.ALL_PRODUCTS}>
-                        <Route index element={<AllProductsScreen />} />
-                      </Route>
+                      <Route
+                        path={ROUTES_NAMES.SETTINGS}
+                        element={<SettingsScreen />}
+                      />
                       <Route path={ROUTES_NAMES.ADMIN_PANEL}>
                         <Route index element={<AdminPanel />} />
                         <Route path={ROUTES_NAMES.UPDATE}>
@@ -314,140 +422,28 @@ function App() {
                         </Route>
                       </Route>
 
-                      {/* profile */}
-                      {!isMobile ? (
-                        <Route
-                          path={ROUTES_NAMES.USER_PROFILE}
-                          element={<Profile />}
-                        >
-                          <Route index element={<PostedReviews />} />
-                          <Route
-                            path={ROUTES_NAMES.OWNED_PHONES}
-                            element={<OwnedPhonesPage />}
-                          />
-                          <Route
-                            path={ROUTES_NAMES.REVIEWS}
-                            element={<PostedReviews />}
-                          />
-                          <Route
-                            path={ROUTES_NAMES.QUESTIONS}
-                            element={<PostedQuestions />}
-                          />
-                          <Route
-                            path={ROUTES_NAMES.MY_QUESTIONS}
-                            element={<MyPhonesQuestions />}
-                          />
-                        </Route>
-                      ) : (
-                        <Route path={ROUTES_NAMES.USER_PROFILE}>
-                          <Route index element={<Profile />} />
-                          <Route
-                            path={ROUTES_NAMES.OWNED_PHONES}
-                            element={<OwnedPhonesPage />}
-                          />
-                          <Route
-                            path={ROUTES_NAMES.REVIEWS}
-                            element={<PostedReviews />}
-                          />
-                          <Route
-                            path={ROUTES_NAMES.QUESTIONS}
-                            element={<PostedQuestions />}
-                          />
-                          <Route
-                            path={ROUTES_NAMES.MY_QUESTIONS}
-                            element={<MyPhonesQuestions />}
-                          />
-                        </Route>
-                      )}
-
-                      {/* company profile */}
                       <Route
-                        path={`${ROUTES_NAMES.COMPANY_PROFILE}`}
-                        element={<CompanyProfile />}
-                      >
-                        <Route
-                          path={ROUTES_NAMES.REVIEWS}
-                          element={<CompanyReviews />}
-                        />
-                        <Route
-                          path={ROUTES_NAMES.QUESTIONS}
-                          element={<CompanyQuestions />}
-                        />
-                      </Route>
-
-                      {/* phone profile */}
-                      <Route
-                        path={ROUTES_NAMES.PHONE_PROFILE}
-                        element={<ProductProfile />}
-                      >
-                        <Route
-                          path={ROUTES_NAMES.REVIEWS}
-                          element={<ProductReviews />}
-                        />
-                        <Route path={ROUTES_NAMES.SPECS}>
-                          <Route index element={<ProductSpecsScreen />} />
-                        </Route>
-                        <Route
-                          path={ROUTES_NAMES.QUESTIONS}
-                          element={<ProductQuestions />}
-                        />
-                      </Route>
-
-                      {/* comparison screen */}
-                      <Route
-                        path={ROUTES_NAMES.COMPARISON}
-                        element={<ComparisonScreen />}
+                        path={ROUTES_NAMES.PRODUCTS}
+                        element={<AllProductsScreen />}
                       />
-                    </Route>
-                    <Route path={ROUTES_NAMES.HOME}>
+
+                      {/* testing routes */}
+                      <Route path="/test" element={<AddReview />} />
                       <Route
-                        path={ROUTES_NAMES.ADD_REVIEW}
-                        element={<ReviewPostingScreen />}
+                        path="/Components-test"
+                        element={<ComponentsTest />}
                       />
-                    </Route>
-                    <Route
-                      path={ROUTES_NAMES.SEARCH}
-                      element={<SearchScreen />}
-                    />
-                    <Route
-                      path={ROUTES_NAMES.LEADERBOARD}
-                      element={<Leaderboard />}
-                    />
-                    <Route path={ROUTES_NAMES.MENU}>
-                      <Route index element={<Menu />} />
-                    </Route>
-                    <Route
-                      path={ROUTES_NAMES.SETTINGS}
-                      element={<SettingsScreen />}
-                    />
-                    <Route path={ROUTES_NAMES.ADMIN_PANEL}>
-                      <Route index element={<AdminPanel />} />
-                      <Route path={ROUTES_NAMES.UPDATE}>
-                        <Route index element={<UpdateProducts />} />
-                      </Route>
-                    </Route>
-
-                    <Route
-                      path={ROUTES_NAMES.PRODUCTS}
-                      element={<AllProductsScreen />}
-                    />
-
-                    {/* testing routes */}
-                    <Route path="/test" element={<AddReview />} />
-                    <Route
-                      path="/Components-test"
-                      element={<ComponentsTest />}
-                    />
-                  </Routes>
+                    </Routes>
+                  </Grid>
+                  <Grid item md={0} sm={0} xs={0.5}></Grid>
                 </Grid>
-                <Grid item md={0} sm={0} xs={0.5}></Grid>
-              </Grid>
-            </Layout>
-          </BrowserRouter>
-        </RTL>
-      </div>
-    </ThemeProvider>
-  );
+              </Layout>
+            </BrowserRouter>
+          </RTL>
+        </div>
+      </ThemeProvider>
+    );
+  }
 }
 
 export default App;

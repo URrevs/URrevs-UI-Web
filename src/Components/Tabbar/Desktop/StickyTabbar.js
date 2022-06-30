@@ -22,7 +22,7 @@ export const StickyTabbar = ({
     (element) => element.to.split("?")[0] === currentPath
   );
 
-  console.log(currentPath, arrayOfTabs[0].to.split("?")[0], pathValue);
+  // console.log(currentPath, arrayOfTabs[0].to.split("?")[0], pathValue);
 
   const [value, setValue] = React.useState(pathValue === -1 ? 0 : pathValue);
 

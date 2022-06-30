@@ -13,6 +13,8 @@ export const ProfileTabbar = ({ children, arrayOfTabs }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const uid = searchParams.get("userId");
 
+  const storeUser = useAppSelector((state) => state.auth);
+
   const {
     data: userProfile,
     isLoading,
