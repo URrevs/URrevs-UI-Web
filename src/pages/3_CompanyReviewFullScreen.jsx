@@ -27,7 +27,7 @@ import CommentsList from "./CommentsList";
 const cache = new CellMeasurerCache({
   fixedWidth: true,
   fixedHeight: false,
-  defaultHeight: loadingSkeletonHeight,
+  defaultHeight: 15,
 });
 
 export default function CompanyReviewFullScreen() {
@@ -39,7 +39,7 @@ export default function CompanyReviewFullScreen() {
     return () => {
       console.log("clear comments");
       // TODO:
-      // dispatch(commentsListActions.clearComments());
+      dispatch(commentsListActions.clearComments());
     };
   }, []);
 

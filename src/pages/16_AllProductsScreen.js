@@ -352,12 +352,12 @@ export function AllProductsScreen() {
                   ? renderProduct(
                       item.name,
                       "",
-                      `/${ROUTES_NAMES.PHONE_PROFILE}?pid=${item._id}`
+                      `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${item._id}`
                     )
                   : renderProductOnDesktop(
                       item.name,
                       "",
-                      `/${ROUTES_NAMES.PHONE_PROFILE}?pid=${item._id}`
+                      `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${item._id}`
                     )}
               </Fragment>
             )}

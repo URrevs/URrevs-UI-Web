@@ -78,14 +78,8 @@ export default function CommentsList({
     }
     maxIndex = Math.max(index, maxIndex);
 
-    return index < commentsList.length ? (
-      <div
-        key={key}
-        style={{
-          ...style,
-          direction: theme.direction,
-        }}
-      >
+    return (
+      <div key={key}>
         {
           <CellMeasurer
             cache={cache}
@@ -93,48 +87,66 @@ export default function CommentsList({
             columnIndex={0}
             rowIndex={index}
           >
-            <div>
-              {commentsList[index].isReply ? (
-                <CommentReply
-                  replyId={commentsList[index]._id}
-                  date={commentsList[index].createdAt}
-                  user={commentsList[index].userName}
-                  likes={commentsList[index].likes}
-                  text={commentsList[index].content}
-                  liked={commentsList[index].liked}
-                  replyLike={replyLike}
-                  replyUnlike={replyUnlike}
-                  commentId={commentsList[index].commentId}
-                  avatar={commentsList[index].userPicture}
-                  userId={commentsList[index].userId}
-                />
+            <div style={{ ...style, direction: theme.direction }}>
+              {index >= commentsList.length ? (
+                data.length === 0 ? (
+                  <div>لا يوجد عناصر</div>
+                ) : (
+                  [...Array(1)].map((a, index) => <div>Loading...</div>)
+                )
               ) : (
-                <Comment
-                  commentId={commentsList[index]._id}
-                  date={commentsList[index].createdAt}
-                  user={commentsList[index].userName}
-                  likes={commentsList[index].likes}
-                  text={commentsList[index].content}
-                  liked={commentsList[index].liked}
-                  commentLike={commentLike}
-                  commentUnlike={commentUnlike}
-                  submitReplyHandler={submitReplyHandler}
-                  avatar={commentsList[index].userPicture}
-                  userId={commentsList[index].userId}
-                />
+                <Fragment>
+                  {commentsList[index].isReply ? (
+                    <CommentReply
+                      replyId={commentsList[index]._id}
+                      date={commentsList[index].createdAt}
+                      user={commentsList[index].userName}
+                      likes={commentsList[index].likes}
+                      text={commentsList[index].content}
+                      liked={commentsList[index].liked}
+                      replyLike={replyLike}
+                      replyUnlike={replyUnlike}
+                      commentId={commentsList[index].commentId}
+                      avatar={commentsList[index].userPicture}
+                      userId={commentsList[index].userId}
+                    />
+                  ) : (
+                    <Comment
+                      commentId={commentsList[index]._id}
+                      date={commentsList[index].createdAt}
+                      user={commentsList[index].userName}
+                      likes={commentsList[index].likes}
+                      text={commentsList[index].content}
+                      liked={commentsList[index].liked}
+                      commentLike={commentLike}
+                      commentUnlike={commentUnlike}
+                      submitReplyHandler={submitReplyHandler}
+                      avatar={commentsList[index].userPicture}
+                      userId={commentsList[index].userId}
+                    />
+                  )}
+                </Fragment>
               )}
             </div>
           </CellMeasurer>
         }
       </div>
-    ) : null;
+    );
   };
+
+  console.log(cache._rowHeightCache);
 
   return (
     <Fragment>
+      {reviewCard()}
       <CustomAppBar showBackBtn showProfile>
-        <div style={{ height: "calc(100vh)", margin: "55px 0" }}>
-          {reviewCard()}
+        <div
+          style={{
+            height: "calc(100vh)",
+            marginTop: "55px",
+            marginBottom: "670px",
+          }}
+        >
           <AutoSizer>
             {({ height, width }) => {
               return (
@@ -144,7 +156,7 @@ export default function CommentsList({
                       <List
                         ref={listRef}
                         autoHeight
-                        overscanRowCount={10}
+                        overscanRowCount={30}
                         isScrolling={isScrolling}
                         scrollTop={scrollTop}
                         width={width}

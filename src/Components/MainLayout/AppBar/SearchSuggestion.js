@@ -92,8 +92,12 @@ export const SearchSuggestion = () => {
               ...recentResults,
             ]);
             type === "phone"
-              ? navigate(`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${id}`)
-              : navigate(`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${id}`);
+              ? navigate(
+                  `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${id}`
+                )
+              : navigate(
+                  `/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${id}`
+                );
           }}
         >
           <ListItemIcon>
@@ -132,8 +136,12 @@ export const SearchSuggestion = () => {
             //Navigate to that phone
             setSearchSuggestion(false);
             type === "phone"
-              ? navigate(`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${id}`)
-              : navigate(`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${id}`);
+              ? navigate(
+                  `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${id}`
+                )
+              : navigate(
+                  `/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${id}`
+                );
           }}
         >
           <ListItemIcon>
