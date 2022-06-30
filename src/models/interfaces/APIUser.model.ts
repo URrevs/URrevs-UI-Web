@@ -4,4 +4,5 @@ export default interface APIUser {
   picture: string;
   points: number;
   refCode: string;
+  exp: string;
 }

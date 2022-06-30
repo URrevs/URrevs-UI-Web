@@ -82,7 +82,7 @@ export default function VirtualReviewList({
   }
 
   const renderRow = ({ index, key, style, parent }) => {
-    console.log("max: ", maxIndex, "length: ", reviewsList.length);
+    // console.log("max: ", maxIndex, "length: ", reviewsList.length);
     if (
       maxIndex !== 0 &&
       // page >= 2 &&
