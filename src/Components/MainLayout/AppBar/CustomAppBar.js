@@ -71,6 +71,7 @@ export const CustomAppBar = ({
               <div
                 style={{
                   display: "flex",
+                  alignItems: "center",
                 }}
               >
                 <Fragment>
