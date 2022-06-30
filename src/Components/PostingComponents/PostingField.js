@@ -13,6 +13,7 @@ import SendIcon from "@mui/icons-material/Send";
 
 export const PostingField = ({
   placeholder = "",
+  comment = false,
   avatar = true,
   onSubmit = () => {},
   params = {}, //Adding new textfield params or overwriting existing ones
@@ -22,11 +23,16 @@ export const PostingField = ({
   const theme = useTheme();
   const textFieldParams = {
     multiline: true,
+    // maxRows: 3,
     variant: "standard",
     InputProps: {
-      endAdornment: theme.isMobile && (
-        <InputAdornment position="end">
+      endAdornment: theme.isMobile && comment && (
+        <InputAdornment sx={{ position: "relative" }} position="end">
           <IconButton
+            sx={{
+              // position: "absolute",
+              bottom: 0,
+            }}
             onClick={() => {
               onSubmit(value);
               setValue("");
@@ -112,7 +118,6 @@ export const PostingField = ({
           }}
           onChange={(e) => {
             setValue(e.target.value);
-            console.log(value);
           }}
         />
       </Box>

@@ -6,7 +6,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
-import { SEARCH_INPUT_DELAY } from "../constants";
+import { SEARCH_INPUT_BORDER_RADIUS, SEARCH_INPUT_DELAY } from "../constants";
 import { useAppSelector } from "../store/hooks";
 import { COLORS } from "../Styles/main_light_colors";
 
@@ -198,7 +198,7 @@ export default function SearchComponent({
                 alignContent: "center",
                 color: theme.palette.textField.inputFieldText,
                 background: theme.palette.textField.inputFieldBackground, //Change Background color of textfield
-                borderRadius: 90,
+                borderRadius: `${SEARCH_INPUT_BORDER_RADIUS}`,
                 border: `0.8px solid ${theme.palette.textField.borderColor} `,
                 //
                 // borderRadius: TEXT_FIELD_BORDER_RADIUS,
