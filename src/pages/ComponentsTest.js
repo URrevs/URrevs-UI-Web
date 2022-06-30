@@ -311,19 +311,10 @@ export const ComponentsTest = () => {
         <div
           style={{
             position: "relative",
+            backgroundColor: "white",
           }}
         >
-          <Card
-            sx={{
-              height: "200px",
-              position: "absolute",
-              width: "100vw",
-            }}
-          >
-            <div style={{ height: "50px" }}></div>
-            {renderCommentSection()}
-            <div style={{ height: "100px" }}></div>
-          </Card>
+          {renderCommentSection()}
         </div>
       </FixedGrid>
     </React.Fragment>

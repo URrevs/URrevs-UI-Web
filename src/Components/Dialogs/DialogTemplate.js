@@ -8,7 +8,7 @@ const PromptStyled = styled(
   {}
 )(({ theme }) => ({
   position: "absolute",
-  top: "55%",
+  top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "80%",
@@ -16,7 +16,7 @@ const PromptStyled = styled(
     width: "calc(100% - 32px)",
   },
 
-  maxHeight: "80%",
+  maxHeight: "77%",
   maxWidth: "450px",
   boxShadow: 24,
   padding: 16,
