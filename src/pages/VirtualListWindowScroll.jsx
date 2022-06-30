@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import {
   AutoSizer,
   CellMeasurer,
@@ -58,6 +58,7 @@ export default function VirtualReviewList({
     return () => {
       console.log("clear max index");
       maxIndex = 0;
+      cache.clearAll();
     };
   }, [data]);
 
@@ -82,7 +83,6 @@ export default function VirtualReviewList({
   }
 
   const renderRow = ({ index, key, style, parent }) => {
-    // console.log("max: ", maxIndex, "length: ", reviewsList.length);
     if (
       maxIndex !== 0 &&
       // page >= 2 &&
@@ -105,17 +105,13 @@ export default function VirtualReviewList({
           rowIndex={index}
         >
           <div style={{ ...style, direction: theme.direction }}>
-            {index >= reviewsList.length ? (
-              data.length === 0 ? (
-                <div>لا يوجد عناصر</div>
-              ) : (
-                [...Array(1)].map((a, index) => (
-                  <LoadingReviewSkeleton key={index} />
-                ))
-              )
-            ) : (
-              reviewCard(index, clearCache)
-            )}
+            {index >= reviewsList.length
+              ? data.length - 1 <= 0
+                ? reviewsList.length === 0 && <div>لا يوجد عناصر</div>
+                : [...Array(1)].map((a, index) => (
+                    <LoadingReviewSkeleton key={index} />
+                  ))
+              : reviewCard(index, clearCache)}
           </div>
         </CellMeasurer>
       </div>
