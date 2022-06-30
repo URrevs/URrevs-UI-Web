@@ -1,19 +1,47 @@
 import { useTheme } from "@emotion/react";
-import { Avatar, Box, TextField } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
 import React from "react";
 import { SEARCH_INPUT_BORDER_RADIUS } from "../../constants";
 import { useAppSelector } from "../../store/hooks";
+import SendIcon from "@mui/icons-material/Send";
 
 export const PostingField = ({
   placeholder = "",
+  avatar = true,
+  onSubmit = () => {},
   params = {}, //Adding new textfield params or overwriting existing ones
 }) => {
   const userProfile = useAppSelector((state) => state.auth);
+  const [value, setValue] = React.useState("");
   const theme = useTheme();
   const textFieldParams = {
     multiline: true,
     variant: "standard",
     InputProps: {
+      endAdornment: theme.isMobile && (
+        <InputAdornment position="end">
+          <IconButton
+            onClick={() => {
+              onSubmit(value);
+              setValue("");
+            }}
+          >
+            <SendIcon
+              fontSize={"30px"}
+              htmlColor={theme.palette.sendIconColor}
+              sx={{
+                transform: theme.direction === "rtl" ? "scale(-1,1)" : "",
+              }}
+            />
+          </IconButton>
+        </InputAdornment>
+      ),
       disableUnderline: true,
       style: {
         width: "100%",
@@ -35,7 +63,7 @@ export const PostingField = ({
         cursor: "pointer",
         WebkitTextFillColor: "black !important",
       },
-
+      transition: "all 0.2s ease",
       // width: "100%",
       border: "1px solid transparent",
     },
@@ -59,21 +87,33 @@ export const PostingField = ({
           },
         }}
       >
-        <Avatar
-          src={userProfile.photo}
-          alt="User profile picture"
-          sx={{
-            mr: "8px",
-            height: `45px`,
-            width: `45px`,
-            transition: "0.1s",
-          }}
-        />
+        {!theme.isMobile && avatar && (
+          <Avatar
+            src={userProfile.photo}
+            alt="User profile picture"
+            sx={{
+              mr: "8px",
+              height: `45px`,
+              width: `45px`,
+              transition: "0.1s",
+            }}
+          />
+        )}
+
         <TextField
-          multiline={true}
-          maxRows={5}
-          fullWidth
           {...textFieldParams}
+          value={value}
+          onKeyDown={(e) => {
+            if (e.code === "Enter" && !e.shiftKey) {
+              onSubmit(value);
+              setValue("");
+              e.preventDefault();
+            }
+          }}
+          onChange={(e) => {
+            setValue(e.target.value);
+            // console.log(value);
+          }}
         />
       </Box>
     </div>
