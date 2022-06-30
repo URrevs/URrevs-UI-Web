@@ -223,7 +223,7 @@ export const Leaderboard = () => {
     <CustomAppBar showLabel showLogo showSearch showProfile>
       <div style={{ height: "14px" }}></div>
 
-      {latestCompetetionError ? null : <ModalMananger />}
+      <ModalMananger />
       {isMobile && (
         <div>
           {/* competetion banner */}
