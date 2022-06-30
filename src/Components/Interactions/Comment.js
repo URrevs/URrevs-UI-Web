@@ -5,6 +5,7 @@ import { useTheme } from "@emotion/react";
 import { InteractionFooter } from "./InteractionFooter";
 import { useAppSelector } from "../../store/hooks";
 import { comment } from "stylis";
+import { PostingField } from "../PostingComponents/PostingField";
 
 export const Comment = ({
   commentId,
@@ -58,15 +59,12 @@ export const Comment = ({
           ownerId={userId}
         ></InteractionFooter>
       </InteractionBody>
-      <div>
-        <form
-          onSubmit={(e) => {
-            submitReplyHandler(e, commentId);
-          }}
-        >
-          <input id="comment" />
-        </form>
-      </div>
+
+      <PostingField
+        avatar={true}
+        placeholder="اكتب رد"
+        onSubmit={(text) => submitReplyHandler(text, commentId)}
+      />
     </div>
   );
 };

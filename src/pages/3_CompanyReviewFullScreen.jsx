@@ -200,9 +200,7 @@ export default function CompanyReviewFullScreen() {
 
   const increasePage = () => setPage(page + 1);
 
-  const submitCommentHandler = async (e) => {
-    e.preventDefault();
-
+  const submitCommentHandler = async (text) => {
     try {
       // scroll to top
       window.scrollTo(0, 0);
@@ -211,7 +209,7 @@ export default function CompanyReviewFullScreen() {
 
       const response = await addCommentOnPhoneReview({
         reviewId: reviewId,
-        comment: e.target.comment.value,
+        comment: text,
       });
 
       setAddCommentLoading(false);
@@ -222,7 +220,7 @@ export default function CompanyReviewFullScreen() {
         userId: currentUser.uid,
         userName: currentUser.name,
         userPicture: currentUser.photo,
-        content: e.target.comment.value,
+        content: text,
         createdAt: new Date(),
         likes: 0,
         liked: false,
@@ -236,13 +234,11 @@ export default function CompanyReviewFullScreen() {
     }
   };
 
-  const submitReplyHandler = async (e, commentId) => {
-    e.preventDefault();
-
+  const submitReplyHandler = async (text, commentId) => {
     try {
       const response = await addReplyOnPhoneReview({
         commentId: commentId,
-        reply: e.target.comment.value,
+        reply: text,
       });
 
       // add reply to store
@@ -251,7 +247,7 @@ export default function CompanyReviewFullScreen() {
         userId: currentUser.uid,
         userName: currentUser.name,
         userPicture: currentUser.photo,
-        content: e.target.comment.value,
+        content: text,
         createdAt: new Date(),
         likes: 0,
         liked: false,
@@ -314,7 +310,11 @@ export default function CompanyReviewFullScreen() {
           width: "100%",
         }}
       >
-        <PostingField />
+        <PostingField
+          avatar={false}
+          placeholder="اكتب تعليقا"
+          onSubmit={(comment) => submitCommentHandler(comment)}
+        />
       </div>
     );
   };

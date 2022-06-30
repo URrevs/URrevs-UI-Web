@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CheckIcon from "@mui/icons-material/Check";
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/hooks";
+import { PostingField } from "../PostingComponents/PostingField";
 import { InteractionBody } from "./InteractionBody";
 import { InteractionFooter } from "./InteractionFooter";
 
@@ -104,15 +105,11 @@ export const Answer = ({
           ></InteractionFooter>
         </InteractionBody>
         {showReply && (
-          <div>
-            <form
-              onSubmit={(e) => {
-                submitReplyHandler(e, commentId);
-              }}
-            >
-              <input id="comment" />
-            </form>
-          </div>
+          <PostingField
+            avatar={true}
+            placeholder="اكتب اجابة"
+            onSubmit={(text) => submitReplyHandler(text, commentId)}
+          />
         )}
       </div>
     </div>

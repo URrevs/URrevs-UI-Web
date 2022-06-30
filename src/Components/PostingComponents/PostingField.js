@@ -112,7 +112,7 @@ export const PostingField = ({
           }}
           onChange={(e) => {
             setValue(e.target.value);
-            // console.log(value);
+            console.log(value);
           }}
         />
       </Box>
