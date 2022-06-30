@@ -151,14 +151,14 @@ export const TermsAndConditionsScreen = () => {
   const headerStyling = "S20W700C050505";
   const subHeaderStyling = "";
   return (
-    <CustomAppBar label={pageDictionary[language].title} showLabel showBackBtn>
-      <AlonePostsGrid>
-        <div
-          style={{
-            whiteSpace: "pre-line",
-            direction: direction,
-          }}
-        >
+    <div
+      style={{
+        whiteSpace: "pre-line",
+        direction: direction,
+      }}
+    >
+      <CustomAppBar label={pageDictionary[language].title} showLabel showLogo>
+        <AlonePostsGrid>
           <Stack spacing={2}>
             <div></div>
 
@@ -331,8 +331,8 @@ export const TermsAndConditionsScreen = () => {
               {pageDictionary[language].iHaveReadTheAgreement}
             </Typography>
           </Stack>
-        </div>
-      </AlonePostsGrid>
-    </CustomAppBar>
+        </AlonePostsGrid>
+      </CustomAppBar>
+    </div>
   );
 };

@@ -140,7 +140,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       title: pageDictionry.aboutUs,
       icon: <ErrorOutlineOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: `../../${ROUTES_NAMES.ABOUT_US}/${language}`,
+      to: `../../${ROUTES_NAMES.ABOUT_US}`,
       authenticate: true,
     },
     {
@@ -336,6 +336,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
           >
             <Link
               to={`../../${ROUTES_NAMES.TERMS_AND_CONDITIONS}/${language}`}
+              target="_blank"
               onClick={() => {
                 dispatch(menuActions.hideMenu());
               }}
@@ -349,6 +350,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
             </Typography>
             <Link
               to={`../../${ROUTES_NAMES.PRIVACY_POLICY}/${language}`}
+              target="_blank"
               onClick={() => {
                 dispatch(menuActions.hideMenu());
               }}

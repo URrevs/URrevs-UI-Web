@@ -72,14 +72,14 @@ export const PrivacyPolicyScreen = () => {
   // const headerStyle = "";
   // const subHeaderStyle = "";
   return (
-    <CustomAppBar>
-      <AlonePostsGrid>
-        <div
-          style={{
-            whiteSpace: "pre-line",
-            direction: direction,
-          }}
-        >
+    <div
+      style={{
+        whiteSpace: "pre-line",
+        direction: direction,
+      }}
+    >
+      <CustomAppBar showLogo label={pageDictionary[language].title} showLabel>
+        <AlonePostsGrid>
           <Stack spacing={5}>
             <div></div>
             <Typography>{pageDictionary[language].introduction}</Typography>
@@ -106,8 +106,8 @@ export const PrivacyPolicyScreen = () => {
             </Typography>
             <div></div>
           </Stack>
-        </div>
-      </AlonePostsGrid>
-    </CustomAppBar>
+        </AlonePostsGrid>
+      </CustomAppBar>
+    </div>
   );
 };
