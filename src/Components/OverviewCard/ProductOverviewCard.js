@@ -31,6 +31,7 @@ export const ProductOverviewCard = ({
   viewer,
   phone,
   type,
+  paramId = "",
   productRating,
   companyRating,
   ratings,
@@ -56,6 +57,9 @@ export const ProductOverviewCard = ({
               dispatch(
                 postingModalActions.showPostingModal({
                   tab: 0,
+                  id: paramId,
+                  type: "phone",
+                  name: phone,
                 })
               );
             }}

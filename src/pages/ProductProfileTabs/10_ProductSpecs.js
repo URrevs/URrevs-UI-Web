@@ -94,6 +94,7 @@ export const ProductSpecsScreen = () => {
             statistical.callQuality,
             statistical.battery,
           ]}
+          paramId={paramId}
           phone={data.name}
           type="هاتف ذكي"
         />

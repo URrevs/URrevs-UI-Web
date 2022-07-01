@@ -17,6 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ROUTES_NAMES from "../../../RoutesNames";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { menuActions } from "../../../store/uiMenuSlice";
+import { postingModalActions } from "../../../store/uiPostingModalSlice";
 import { MenuSideBar } from "./Sidebar/MenuSideBar";
 
 export const drawerWidth = 240;
@@ -134,8 +135,11 @@ export const MyDrawer = (props) => {
       title: textContainer.AddNavBarItem,
       itemValue: 4,
       onClick: () => {
-        setValue(5);
-        navigate(ROUTES_NAMES.ADD_REVIEW);
+        dispatch(
+          postingModalActions.showPostingModal({
+            tab: 0,
+          })
+        );
       },
     },
 
