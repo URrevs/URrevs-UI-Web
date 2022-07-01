@@ -4,7 +4,7 @@ import Banner from "../Components/Banners/Banner";
 import { ProfileTabbar } from "../Components/Tabbar/Desktop/ProfileTabbar";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
-import { Card, TextField } from "@mui/material";
+import { Card, TextField, Typography } from "@mui/material";
 import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
 import { QuestionsTab } from "./PostingScreen/QuestionsTab";
 import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
@@ -14,6 +14,7 @@ import { PostingField } from "../Components/PostingComponents/PostingField";
 import { Comment } from "../Components/Interactions/Comment";
 import { CommentReply } from "../Components/Interactions/CommentReply";
 import { postingModalActions } from "../store/uiPostingModalSlice";
+import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 
 export const ComponentsTest = () => {
   /* Footer */
@@ -305,20 +306,20 @@ export const ComponentsTest = () => {
   //---RETURN---
   return (
     <React.Fragment>
-      <FixedGrid>
+      <AlonePostsGrid>
         <div style={{ height: "20px" }}> </div>
         {renderPostingComponent()}
         <div style={{ height: "20px" }}> </div>
-
-        <div
-          style={{
-            position: "relative",
-            backgroundColor: "white",
-          }}
-        >
-          {renderCommentSection()}
-        </div>
-      </FixedGrid>
+        <Typography>{navigator.userAgent}</Typography>
+        <div style={{ height: "20px" }}> </div>
+        <Typography variant="S18W700C050505">
+          System mode is{" "}
+          {window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark mode"
+            : "light mode"}
+        </Typography>
+      </AlonePostsGrid>
     </React.Fragment>
   );
 };
