@@ -7,7 +7,8 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
 import { SEARCH_INPUT_BORDER_RADIUS, SEARCH_INPUT_DELAY } from "../constants";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { postingModalActions } from "../store/uiPostingModalSlice";
 import { COLORS } from "../Styles/main_light_colors";
 
 // const Search = styled("div")(({ theme }) => ({
@@ -60,6 +61,8 @@ export default function SearchComponent({
   helperText = "",
   searchFn,
 }) {
+  const dispatch = useAppDispatch();
+  const tab = useAppSelector((state) => state.postingModal.tab);
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionary = {
     noInputError: textContainer.nothingToSearchFor,
@@ -168,7 +171,14 @@ export default function SearchComponent({
                       onClick={() => {
                         setSearchQuery("");
                         setResults([]);
-                        //useDispatch to reinitialize postingModal when hitting x button I think
+                        dispatch(
+                          postingModalActions.showPostingModal({
+                            tab: tab,
+                            id: "",
+                            name: "",
+                            type: "",
+                          })
+                        );
                         setErrorMsg(pageDictionary.selectPhone);
                         setLock(false);
                         onResult({
@@ -198,7 +208,7 @@ export default function SearchComponent({
                 alignContent: "center",
                 color: theme.palette.textField.inputFieldText,
                 background: theme.palette.textField.inputFieldBackground, //Change Background color of textfield
-                borderRadius: `${SEARCH_INPUT_BORDER_RADIUS}`,
+                borderRadius: `${SEARCH_INPUT_BORDER_RADIUS}px`,
                 border: `0.8px solid ${theme.palette.textField.borderColor} `,
                 //
                 // borderRadius: TEXT_FIELD_BORDER_RADIUS,
