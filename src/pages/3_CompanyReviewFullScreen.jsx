@@ -54,8 +54,15 @@ export default function CompanyReviewFullScreen() {
 
   const [page, setPage] = useState(1);
 
+  const currentReviewData = useAppSelector(
+    (state) => state.reviews.newReviews
+  )[0];
+
   const { data, isLoading, isFetching, error } =
-    useGetCompanyReviewCommentsQuery({ reviewId, round: page });
+    useGetCompanyReviewCommentsQuery(
+      { reviewId, round: page },
+      { skip: !currentReviewData }
+    );
 
   // add comment
   const [addCommentLoading, setAddCommentLoading] = useState(false);
@@ -104,21 +111,14 @@ export default function CompanyReviewFullScreen() {
     error: reviewError,
   } = useGetCertainCompanyReviewQuery(reviewId);
 
-  const currentReviewData = useAppSelector(
-    (state) => state.reviews.newReviews
-  )[0];
-
   useEffect(() => {
-    console.log(reviewLoading);
-    if (!reviewLoading) {
-      console.log("currentReview", currentReview);
-
-      dispatch(reviewsActions.clearReviews());
+    if (currentReview) {
+      // dispatch(reviewsActions.clearReviews());
       dispatch(
         reviewsActions.addToLoaddedReviews({ newReviews: [currentReview] })
       );
     }
-  }, [reviewLoading]);
+  }, [currentReview, dispatch]);
 
   const stateLikePhoneReview = (id) =>
     dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
@@ -190,6 +190,7 @@ export default function CompanyReviewFullScreen() {
     // clear 0 cache
     cache.clearAll();
   };
+
   const addOneReplyToLoadedComments = (comment) => {
     dispatch(
       commentsListActions.addNewReplyLocally({
@@ -205,7 +206,7 @@ export default function CompanyReviewFullScreen() {
   const submitCommentHandler = async (text) => {
     try {
       // scroll to top
-      window.scrollTo(0, 0);
+      window.scrollTo(0, cache._rowHeightCache["0-0"]);
 
       setAddCommentLoading(true);
 
@@ -271,33 +272,29 @@ export default function CompanyReviewFullScreen() {
     dispatch(reviewsActions.increaseShareCounter({ id: id }));
 
   const reviewCard = () => {
-    return (
-      <div>
-        {reviewLoading ? (
-          <div>Loading review...</div>
-        ) : reviewError ? (
-          <div>Error</div>
-        ) : (
-          currentReviewData && (
-            <CompanyReview
-              key={currentReviewData._id}
-              reviewDetails={currentReviewData}
-              index={0}
-              clearIndexCache={clearCache}
-              fullScreen={true}
-              isExpanded={true}
-              targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${currentReviewData.targetId}`}
-              userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
-              stateLikeFn={stateLikePhoneReview}
-              stateUnLikeFn={stateUnLikePhoneReview}
-              stateShare={stateIncreaseShareCounter}
-              showActionBtn={currentUser.uid !== currentReviewData._id}
-              deleteReviewFromStore={deleteReviewFromStore}
-            />
-          )
-        )}
-      </div>
-    );
+    if (reviewLoading) {
+      return <div>Loading review...</div>;
+    } else if (reviewError) {
+      return <div>Error</div>;
+    } else if (currentReview) {
+      return (
+        <CompanyReview
+          key={currentReviewData._id}
+          reviewDetails={currentReviewData}
+          index={0}
+          clearIndexCache={clearCache}
+          fullScreen={true}
+          isExpanded={true}
+          targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${currentReviewData.targetId}`}
+          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
+          stateLikeFn={stateLikePhoneReview}
+          stateUnLikeFn={stateUnLikePhoneReview}
+          stateShare={stateIncreaseShareCounter}
+          showActionBtn={currentUser.uid !== currentReviewData._id}
+          deleteReviewFromStore={deleteReviewFromStore}
+        />
+      );
+    }
   };
 
   const commentField = () => {
@@ -330,25 +327,27 @@ export default function CompanyReviewFullScreen() {
           ) : reviewError ? (
             <div>Error</div>
           ) : (
-            <CommentsList
-              reviewCard={reviewCard}
-              commentsList={commentsList}
-              page={page}
-              data={data}
-              error={error}
-              isLoading={isLoading}
-              isFetching={isFetching}
-              commentLike={likeCommentRequest}
-              commentUnlike={unLikeCommentRequest}
-              replyLike={likeReplyRequest}
-              replyUnlike={unLikeReplyRequest}
-              addToReviewsList={addToLoadedComments}
-              increasePage={increasePage}
-              cache={cache}
-              clearCache={clearCache}
-              clearAllCache={clearAllCache}
-              submitReplyHandler={submitReplyHandler}
-            />
+            currentReviewData && (
+              <CommentsList
+                reviewCard={reviewCard}
+                commentsList={commentsList}
+                page={page}
+                data={data}
+                error={error}
+                isLoading={isLoading}
+                isFetching={isFetching}
+                commentLike={likeCommentRequest}
+                commentUnlike={unLikeCommentRequest}
+                replyLike={likeReplyRequest}
+                replyUnlike={unLikeReplyRequest}
+                addToReviewsList={addToLoadedComments}
+                increasePage={increasePage}
+                cache={cache}
+                clearCache={clearCache}
+                clearAllCache={clearAllCache}
+                submitReplyHandler={submitReplyHandler}
+              />
+            )
           )}
         </Box>
         {commentField()}
