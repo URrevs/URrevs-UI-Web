@@ -10,7 +10,7 @@ import ProductList from "../Components/ProductList/ProductList";
 import { convertDateToString } from "../functions/convertDateToString";
 import {
   useGetLastUpdateInfoQuery,
-  useUpdateMutation
+  useUpdateMutation,
 } from "../services/update";
 
 export const UpdateProducts = () => {
@@ -19,7 +19,6 @@ export const UpdateProducts = () => {
   const { data, error, isLoading } = useGetLastUpdateInfoQuery(refetch, {
     refetchOnMountOrArgChange: true,
   });
-
 
   const [updateProductsList] = useUpdateMutation();
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -117,12 +116,18 @@ export const UpdateProducts = () => {
                 }}
                 onClick={() => handleUpdateProducts()}
               >
-                <UpdateOutlinedIcon
-                  sx={{ fontSize: "28", marginRight: "5px" }}
-                />
-                <Typography variant="S18W700Cffffff">
-                  {pageDictionary.updateProducts}
-                </Typography>
+                {buttonLoading ? (
+                  <LoadingSpinner size={20} />
+                ) : (
+                  <div>
+                    <UpdateOutlinedIcon
+                      sx={{ fontSize: "28", marginRight: "5px" }}
+                    />
+                    <Typography variant="S18W700Cffffff">
+                      {pageDictionary.updateProducts}
+                    </Typography>
+                  </div>
+                )}
               </OrangeGradientButton>
             </Box>
           )}
