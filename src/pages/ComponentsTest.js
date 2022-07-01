@@ -299,7 +299,9 @@ export const ComponentsTest = () => {
   /*PostingModal */
   const renderPostingModal = () => <PostingModal />;
   /* PostingField*/
-  const renderCommentSection = () => <PostingField placeholder="اكتب تعليق" />;
+  const renderCommentSection = () => (
+    <PostingField comment placeholder="اكتب تعليق" />
+  );
   //---RETURN---
   return (
     <React.Fragment>

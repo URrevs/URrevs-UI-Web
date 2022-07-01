@@ -33,7 +33,7 @@ export default function CustomizedSnackbar() {
   const location = useLocation();
   const marginBottom =
     theme.isMobile &&
-    navbarRoutes.find((element) => `/${element}` === location.pathname) !=
+    navbarRoutes.find((element) => `/${element}` === location.pathname) !==
       undefined
       ? "70px"
       : 0;

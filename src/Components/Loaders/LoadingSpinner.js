@@ -1,6 +1,6 @@
 import { CircularProgress } from "@mui/material";
 
-const LoadingSpinner = () => {
+const LoadingSpinner = ({ size = 30 }) => {
   return (
     <div
       style={{
@@ -9,7 +9,7 @@ const LoadingSpinner = () => {
         padding: "15px",
       }}
     >
-      <CircularProgress size={30} />
+      <CircularProgress size={size} />
     </div>
   );
 };

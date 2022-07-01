@@ -49,7 +49,7 @@ export const SignoutDialog = ({ handleClose }) => {
         <Box
           sx={{
             display: "flex",
-
+            alignItems: "center",
             padding: "0px 0px 20px 0px",
           }}
         >
@@ -76,7 +76,7 @@ export const SignoutDialog = ({ handleClose }) => {
             checked={checked}
             onChange={handleChecked}
           />
-          <Typography sx={{}} variant="S16W500C050505">
+          <Typography variant="S16W500C050505">
             {textContainer.logOutFromAllDevices}
           </Typography>
         </Box>

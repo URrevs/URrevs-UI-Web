@@ -1,7 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import APIComment from "../models/interfaces/APIComment.model";
 import { APIReview } from "../models/interfaces/APIReview.model";
+import { useAppSelector } from "../store/hooks";
 import { RootState } from "../store/store";
+import { postingModalActions } from "../store/uiPostingModalSlice";
 import { snackbarActions } from "../store/uiSnackbarSlice";
 
 export const phoneReviewsApi = createApi({
@@ -58,7 +60,13 @@ export const phoneReviewsApi = createApi({
 
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled;
+          const response = await queryFulfilled;
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: `Success, earned ${response.data.earnedPoints}`,
+            })
+          );
+          dispatch(postingModalActions.hidePostingModal());
         } catch (e: any) {
           dispatch(
             snackbarActions.showSnackbar({ message: e.error.data.status })

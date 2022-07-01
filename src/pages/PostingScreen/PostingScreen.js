@@ -2,6 +2,7 @@ import { useTheme } from "@emotion/react";
 import { Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
+import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useAddPhoneReviewMutation } from "../../services/phone_reviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { regDialogActions } from "../../store/uiRegisterDialogSlice";
@@ -17,7 +18,7 @@ const PostingScreen = ({
   },
 }) => {
   const isPhone = initValues.type === "phone";
-  const currentUser = useAppSelector((state) => state.auth);
+  const checkSignedIn = useCheckSignedIn();
   const [addReview] = useAddPhoneReviewMutation();
   const theme = useTheme();
   const textContainer = useAppSelector((state) => state.language.textContainer);
@@ -88,9 +89,7 @@ const PostingScreen = ({
           }}
           validationSchema={BasicValidationSchema}
           onSubmit={async (values, { setSubmitting }) => {
-            if (!currentUser.isLoggedIn) {
-              dispatch(regDialogActions.toggleRegistration());
-            } else {
+            if (checkSignedIn) {
               const reviewPost = {
                 phoneId: values.chooseProduct.id,
                 companyId: values.companyId._id,
@@ -112,6 +111,7 @@ const PostingScreen = ({
               // console.log(JSON.stringify(reviewPost, null, 2));
               try {
                 const response = await addReview(reviewPost).unwrap();
+                //Success Message
                 sessionStorage.clear();
               } catch (e) {
                 console.log("asd askjd bhasb", e);

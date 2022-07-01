@@ -1,36 +1,50 @@
 import { useTheme } from "@emotion/react";
 import AddIcon from "@mui/icons-material/Add";
 import { Typography } from "@mui/material";
+import LoadingSpinner from "../../Components/Loaders/LoadingSpinner";
 import { Box } from "@mui/system";
 import React from "react";
+
 import OrangeGradientButton from "../../Components/Buttons/OrangeGradientButton";
 
-
-
-export const FormSubmitButton = ({ submitLabel }) => {
+export const FormSubmitButton = ({
+  submitLabel,
+  error = false,
+  loading = false,
+}) => {
   const theme = useTheme();
-  return (
-    <OrangeGradientButton
-      type="submit"
-      color="red"
-      sx={{ width: "100%", textAlign: "center", marginTop: "20px" }}
+  const renderBtnContent = () => (
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+      }}
     >
-      <Box
+      <AddIcon
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          color: theme.palette.defaultRedBtnIconColor,
+          fontSize: "28px",
+        }}
+      />
+      <Typography variant="S18W700Cffffff">{submitLabel}</Typography>
+    </Box>
+  );
+  return (
+    <div>
+      <OrangeGradientButton
+        type="submit"
+        disabled={loading}
+        color="red"
+        sx={{
+          width: "100%",
           textAlign: "center",
+          marginTop: "20px",
         }}
       >
-        <AddIcon
-          sx={{
-            color: theme.palette.defaultRedBtnIconColor,
-            fontSize: "28px",
-          }}
-        />
-        <Typography variant="S18W700Cffffff">{submitLabel}</Typography>
-      </Box>
-    </OrangeGradientButton>
+        {loading ? <LoadingSpinner size={15} /> : renderBtnContent()}
+      </OrangeGradientButton>
+    </div>
   );
 };
