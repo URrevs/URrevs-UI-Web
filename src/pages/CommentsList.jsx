@@ -34,6 +34,7 @@ export default function CommentsList({
   increasePage,
   reviewCard,
   cache,
+  clearAllCache,
   clearCache,
   submitReplyHandler,
 }) {
@@ -49,6 +50,10 @@ export default function CommentsList({
       }
     }
   }, [data]);
+
+  useEffect(() => {
+    if (page <= 2) clearCache(0);
+  }, [page]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -78,14 +83,8 @@ export default function CommentsList({
     }
     maxIndex = Math.max(index, maxIndex);
 
-    return index < commentsList.length ? (
-      <div
-        key={key}
-        style={{
-          ...style,
-          direction: theme.direction,
-        }}
-      >
+    return (
+      <div key={key}>
         {
           <CellMeasurer
             cache={cache}
@@ -93,48 +92,69 @@ export default function CommentsList({
             columnIndex={0}
             rowIndex={index}
           >
-            <div>
-              {commentsList[index].isReply ? (
-                <CommentReply
-                  replyId={commentsList[index]._id}
-                  date={commentsList[index].createdAt}
-                  user={commentsList[index].userName}
-                  likes={commentsList[index].likes}
-                  text={commentsList[index].content}
-                  liked={commentsList[index].liked}
-                  replyLike={replyLike}
-                  replyUnlike={replyUnlike}
-                  commentId={commentsList[index].commentId}
-                  avatar={commentsList[index].userPicture}
-                  userId={commentsList[index].userId}
-                />
+            <div style={{ ...style, direction: theme.direction }}>
+              {index === 0 ? (
+                reviewCard()
+              ) : index >= commentsList.length ? (
+                data.length === 0 ? (
+                  <div>لا يوجد عناصر</div>
+                ) : (
+                  [...Array(1)].map((a, index) => (
+                    <div style={{ height: "166px" }}>Loading...</div>
+                  ))
+                )
               ) : (
-                <Comment
-                  commentId={commentsList[index]._id}
-                  date={commentsList[index].createdAt}
-                  user={commentsList[index].userName}
-                  likes={commentsList[index].likes}
-                  text={commentsList[index].content}
-                  liked={commentsList[index].liked}
-                  commentLike={commentLike}
-                  commentUnlike={commentUnlike}
-                  submitReplyHandler={submitReplyHandler}
-                  avatar={commentsList[index].userPicture}
-                  userId={commentsList[index].userId}
-                />
+                <Fragment>
+                  {commentsList[index - 1].isReply ? (
+                    <CommentReply
+                      replyId={commentsList[index - 1]._id}
+                      date={commentsList[index - 1].createdAt}
+                      user={commentsList[index - 1].userName}
+                      likes={commentsList[index - 1].likes}
+                      text={commentsList[index - 1].content}
+                      liked={commentsList[index - 1].liked}
+                      replyLike={replyLike}
+                      replyUnlike={replyUnlike}
+                      commentId={commentsList[index - 1].commentId}
+                      avatar={commentsList[index - 1].userPicture}
+                      userId={commentsList[index - 1].userId}
+                    />
+                  ) : (
+                    <Comment
+                      commentId={commentsList[index - 1]._id}
+                      date={commentsList[index - 1].createdAt}
+                      user={commentsList[index - 1].userName}
+                      likes={commentsList[index - 1].likes}
+                      text={commentsList[index - 1].content}
+                      liked={commentsList[index - 1].liked}
+                      commentLike={commentLike}
+                      commentUnlike={commentUnlike}
+                      submitReplyHandler={submitReplyHandler}
+                      avatar={commentsList[index - 1].userPicture}
+                      userId={commentsList[index - 1].userId}
+                    />
+                  )}
+                </Fragment>
               )}
             </div>
           </CellMeasurer>
         }
       </div>
-    ) : null;
+    );
   };
+
+  console.log(cache._rowHeightCache);
 
   return (
     <Fragment>
       <CustomAppBar showBackBtn showProfile>
-        <div style={{ height: "calc(100vh)", margin: "55px 0" }}>
-          {reviewCard()}
+        <div
+          style={{
+            height: "calc(100vh)",
+            marginTop: "55px",
+            marginBottom: "670px",
+          }}
+        >
           <AutoSizer>
             {({ height, width }) => {
               return (
@@ -151,7 +171,7 @@ export default function CommentsList({
                         height={height}
                         deferredMeasurementCache={cache}
                         rowHeight={cache.rowHeight}
-                        rowCount={commentsList.length + 1}
+                        rowCount={commentsList.length + 2}
                         rowRenderer={renderRow}
                       />
                     </div>

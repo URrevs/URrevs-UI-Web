@@ -1,20 +1,26 @@
+import { useTheme } from "@emotion/react";
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useOutletContext, useSearchParams } from "react-router-dom";
+import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { Answer } from "../../Components/Interactions/Answer";
+import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
 import CompanyQuestion from "../../Components/ReviewCard/companyQuestion";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
-    useGetCompanyQuestionsQuery,
-    useLikeCompanyQuestionCommentMutation,
-    useUnLikeCompanyQuestionCommentMutation
+  useGetCompanyQuestionsQuery,
+  useLikeCompanyQuestionCommentMutation,
+  useUnLikeCompanyQuestionCommentMutation,
 } from "../../services/company_questions";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { questionsActions } from "../../store/questionsSlice";
+import { postingModalActions } from "../../store/uiPostingModalSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
 
 export function CompanyQuestions() {
   const dispatch = useAppDispatch();
-
+  const { companyName } = useOutletContext();
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+  const theme = useTheme();
   useEffect(() => {
     return () => {
       console.log("clear questions");
@@ -116,6 +122,9 @@ export function CompanyQuestions() {
     }
   };
 
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(questionsActions.increaseShareCounter({ id: id }));
+
   const reviewCard = (index, clearCache) => {
     return (
       <CompanyQuestion
@@ -126,10 +135,11 @@ export function CompanyQuestions() {
         clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
         isPhoneReview={false}
-        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
+        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.QUESTIONS}?pid=${reviewsList[index].targetId}`}
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
+        stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
         acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}
@@ -138,16 +148,36 @@ export function CompanyQuestions() {
   };
 
   return (
-    <VirtualReviewList
-      reviewCard={reviewCard}
-      reviewsList={reviewsList}
-      page={page}
-      data={data}
-      isFetching={isFetching}
-      error={error}
-      isLoading={isLoading}
-      addToReviewsList={addToReviewsList}
-      increasePage={increasePage}
-    />
+    <AlonePostsGrid>
+      <PostingComponent
+        label={textContainer.youCanAddQuestion}
+        placeholder={textContainer.writeYourQuestionP}
+        params={{
+          disabled: true,
+          onClick: () => {
+            dispatch(
+              postingModalActions.showPostingModal({
+                tab: 1,
+                type: "company",
+                name: companyName,
+                id: cid,
+              })
+            );
+          },
+        }}
+      />
+
+      <VirtualReviewList
+        reviewCard={reviewCard}
+        reviewsList={reviewsList}
+        page={page}
+        data={data}
+        isFetching={isFetching}
+        error={error}
+        isLoading={isLoading}
+        addToReviewsList={addToReviewsList}
+        increasePage={increasePage}
+      />
+    </AlonePostsGrid>
   );
 }

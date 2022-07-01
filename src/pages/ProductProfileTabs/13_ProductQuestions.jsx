@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useOutletContext, useSearchParams } from "react-router-dom";
+import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { Answer } from "../../Components/Interactions/Answer";
+import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
 import PhoneQuestion from "../../Components/ReviewCard/phoneQuestion";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
-    useGetPhoneQuestionsQuery,
-    useLikePhoneQuestionCommentMutation,
-    useUnLikePhoneQuestionCommentMutation
+  useGetPhoneQuestionsQuery,
+  useLikePhoneQuestionCommentMutation,
+  useUnLikePhoneQuestionCommentMutation,
 } from "../../services/phone_questions";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { questionsActions } from "../../store/questionsSlice";
+import { postingModalActions } from "../../store/uiPostingModalSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
 
 export function ProductQuestions() {
   const dispatch = useAppDispatch();
-
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+  const { phoneName } = useOutletContext();
   useEffect(() => {
     return () => {
       console.log("clear questions");
@@ -116,6 +120,9 @@ export function ProductQuestions() {
     }
   };
 
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(questionsActions.increaseShareCounter({ id: id }));
+
   const reviewCard = (index, clearCache) => {
     return (
       <PhoneQuestion
@@ -126,10 +133,11 @@ export function ProductQuestions() {
         clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
         isPhoneReview={true}
-        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
+        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.QUESTIONS}?pid=${reviewsList[index].targetId}`}
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
+        stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
         acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}
@@ -138,16 +146,35 @@ export function ProductQuestions() {
   };
 
   return (
-    <VirtualReviewList
-      reviewCard={reviewCard}
-      reviewsList={reviewsList}
-      page={page}
-      data={data}
-      isFetching={isFetching}
-      error={error}
-      isLoading={isLoading}
-      addToReviewsList={addToReviewsList}
-      increasePage={increasePage}
-    />
+    <AlonePostsGrid>
+      <PostingComponent
+        label={textContainer.youCanAddQuestion}
+        placeholder={textContainer.writeYourQuestionP}
+        params={{
+          disabled: true,
+          onClick: () => {
+            dispatch(
+              postingModalActions.showPostingModal({
+                type: "phone",
+                id: pid,
+                name: phoneName,
+                tab: 1, //AddReview Tab
+              })
+            );
+          },
+        }}
+      />
+      <VirtualReviewList
+        reviewCard={reviewCard}
+        reviewsList={reviewsList}
+        page={page}
+        data={data}
+        isFetching={isFetching}
+        error={error}
+        isLoading={isLoading}
+        addToReviewsList={addToReviewsList}
+        increasePage={increasePage}
+      />
+    </AlonePostsGrid>
   );
 }

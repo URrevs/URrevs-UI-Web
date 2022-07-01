@@ -1,6 +1,7 @@
 import { ButtonBase, styled, Typography } from "@mui/material";
 import React from "react";
 import { convertDateToString } from "../../functions/convertDateToString";
+import { subtractDate } from "../../functions/subtractDate";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -29,7 +30,7 @@ export const InteractionFooter = ({
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const lang = useAppSelector((state) => state.language.language);
-  const transDate = convertDateToString(date, lang);
+  const transDate = subtractDate(date, lang);
 
   const checkSignedIn = useCheckSignedIn();
   const checkOwnership = useCheckOwnership({

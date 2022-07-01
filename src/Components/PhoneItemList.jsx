@@ -1,10 +1,11 @@
 import { useTheme } from "@emotion/react";
 import SmartphoneRoundedIcon from "@mui/icons-material/SmartphoneRounded";
 import {
-    Divider, ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText
+  Divider,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +25,9 @@ export default function PhoneListItem({ title, id }) {
             padding: 0,
           }}
           onClick={() => {
-            navigate(`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${id}`);
+            navigate(
+              `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${id}`
+            );
           }}
         >
           <ListItemIcon>

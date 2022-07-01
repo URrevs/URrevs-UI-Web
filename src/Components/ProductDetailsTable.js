@@ -181,7 +181,8 @@ const ProductDetailsTable = ({
               textTransform: "none",
             }}
             onClick={() => {
-              navigate(`/company?cid=${dataRow.id}`);
+              // TODO:
+              navigate(`/company/reviews?cid=${dataRow.id}`);
             }}
           >
             <Typography

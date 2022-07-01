@@ -1,12 +1,19 @@
 import React from "react";
 import { Footer } from "../Components/Banners/Footer";
 import Banner from "../Components/Banners/Banner";
-import { PersonalTabbar } from "../Components/Tabbar/Desktop/PersonalTabbar";
-import { useAppSelector } from "../store/hooks";
+import { ProfileTabbar } from "../Components/Tabbar/Desktop/ProfileTabbar";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
-import { Card } from "@mui/material";
+import { Card, TextField } from "@mui/material";
 import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
 import { QuestionsTab } from "./PostingScreen/QuestionsTab";
+import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
+import { PostingComponent } from "../Components/PostingComponents/PostingComponent";
+import { PostingModal } from "../Components/PostingComponents/PostingModal";
+import { PostingField } from "../Components/PostingComponents/PostingField";
+import { Comment } from "../Components/Interactions/Comment";
+import { CommentReply } from "../Components/Interactions/CommentReply";
+import { postingModalActions } from "../store/uiPostingModalSlice";
 
 export const ComponentsTest = () => {
   /* Footer */
@@ -16,8 +23,8 @@ export const ComponentsTest = () => {
   /* Personal Tabbar*/
   const currentUserProfile = useAppSelector((state) => state.auth);
   const [value, setValue] = React.useState(0);
-  const renderPersonalTabbar = () => (
-    <PersonalTabbar
+  const renderProfileTabbar = () => (
+    <ProfileTabbar
       userProfile={currentUserProfile}
       arrayOfTabs={["المراجعات", "الاسئلة المطروحة", "المنتجات الممتكلة"]}
       value={value}
@@ -263,16 +270,53 @@ export const ComponentsTest = () => {
           porta. Cras ac leo purus. Mauris quis diam velit.
         </p>
       </div>
-    </PersonalTabbar>
+    </ProfileTabbar>
   );
   /* Formik QuestionsTab */
   const renderQuestionsTab = () => <QuestionsTab />;
+
+  /* CompetitionPrompt */
+  const renderCompetitionPrompt = () => <CompetitionPrompt />;
+  /*====PostingComponents */
+  /* PostingComponent*/
+  const dispatch = useAppDispatch();
+  const renderPostingComponent = () => (
+    <PostingComponent
+      params={{
+        disabled: true,
+        onClick: () => {
+          dispatch(
+            postingModalActions.showPostingModal({
+              tab: 0,
+            })
+          );
+        },
+      }}
+      label="يمكنك اضافة مراجعة:"
+      placeholder="اكتب مراجعتك"
+    />
+  );
+  /*PostingModal */
+  const renderPostingModal = () => <PostingModal />;
+  /* PostingField*/
+  const renderCommentSection = () => <PostingField placeholder="اكتب تعليق" />;
   //---RETURN---
   return (
     <React.Fragment>
-      <div>{renderQuestionsTab()}</div>
-      {/* <div>{renderBanner()}</div>
-      <div>{renderPersonalTabbar()}</div> */}
+      <FixedGrid>
+        <div style={{ height: "20px" }}> </div>
+        {renderPostingComponent()}
+        <div style={{ height: "20px" }}> </div>
+
+        <div
+          style={{
+            position: "relative",
+            backgroundColor: "white",
+          }}
+        >
+          {renderCommentSection()}
+        </div>
+      </FixedGrid>
     </React.Fragment>
   );
 };

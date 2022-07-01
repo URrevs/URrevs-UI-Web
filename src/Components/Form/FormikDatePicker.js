@@ -15,13 +15,18 @@ import {
 
 const FormikDatePicker = ({
   label,
+  view = ["year", "month"],
   fieldName,
   isRequired = true,
   noFutureDate = true,
 }) => {
+  let minDate = new Date();
+  minDate = minDate.setDate(minDate.getDate() + 1);
   const [openDate, setOpenDate] = useState(false);
   const theme = useTheme();
   const language = useSelector((state) => state.language.language);
+  const textContainer = useSelector((state) => state.language.textContainer);
+  const purchaseDateErrorMsg = textContainer.purchaseDateErrorMsg;
   const localeDate = language === "ar" ? arEG : enUS;
   return (
     <Field name={fieldName}>
@@ -33,8 +38,9 @@ const FormikDatePicker = ({
           >
             <MobileDatePicker
               maxDate={noFutureDate ? new Date() : null}
+              minDate={noFutureDate ? null : minDate}
               value={value}
-              views={["year", "month"]}
+              views={view}
               onChange={(newValue) => {
                 setFieldValue(fieldName, newValue);
                 if (newValue) sessionStorage.setItem(fieldName, newValue);
@@ -73,7 +79,9 @@ const FormikDatePicker = ({
                     placeholder={label}
                     {...params}
                     error={meta.touched && meta.error && true}
-                    helperText={meta.touched && meta.error}
+                    helperText={
+                      meta.touched && meta.error && purchaseDateErrorMsg
+                    }
                   />
                 );
               }}

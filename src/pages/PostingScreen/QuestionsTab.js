@@ -32,7 +32,7 @@ and not just when page reloads
 
 - Search Component
  */
-export const QuestionsTab = () => {
+export const QuestionsTab = ({ initValues }) => {
   // UI, theme, and Text:
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionary = {
@@ -79,13 +79,14 @@ export const QuestionsTab = () => {
   });
   // Render Functions:
   //Search
-  const renderSearch = () => (
+  const renderSearch = (query) => (
     <Stack spacing={1} sx={{ width: "100%" }}>
       <Typography variant="S18W500C050505">
         {pageDictionary.yourQuestionRegarding}
       </Typography>
       <FormikSearchComponent
         fieldName="spoc"
+        query={query}
         label={pageDictionary.searchForAProductOrACompany}
         searchFn={searchFn}
         toGetManufacturingCompany={false}
@@ -112,11 +113,7 @@ export const QuestionsTab = () => {
   return (
     <Formik
       initialValues={{
-        spoc: {
-          label: "",
-          id: "",
-          type: "",
-        },
+        spoc: initValues,
         question: "",
       }}
       onSubmit={handleSubmit}
@@ -124,23 +121,9 @@ export const QuestionsTab = () => {
     >
       {(formik) => (
         <div>
-          {console.log(formik.values)}
           <Form>
-            {renderSearch()}
+            {renderSearch(formik.values.spoc.label)}
             {renderField()}
-
-            {/* FastFormikTextField Test */}
-            {/* <FastFormikTextField name="mombar" label="Field 1" />
-            <FastFormikTextField name="kromb" label="Field 2" />
-            <FastFormikTextField name="wara2 3enab" label="Field 3" />
-            <FastFormikTextField name="btngan" label="Field 4" />
-            <FastFormikTextField name="kosa" label="Field 5" />
-            <FastFormikTextField name="basal" label="Field 6" />
-            <FastFormikTextField name="batates" label="Field 7" />
-            <FastFormikTextField name="ta3mya" label="Field 8" />
-            <FastFormikTextField name="me5lel" label="Field 9" />
-            <FastFormikTextField name="koshary" label="Field 10" />
-            <FastFormikTextField name="noston" label="Field 11" /> */}
             <FormSubmitButton submitLabel={pageDictionary.postQuestion} />
           </Form>
         </div>

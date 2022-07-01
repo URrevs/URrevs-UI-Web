@@ -29,6 +29,7 @@ export default function BottomNavBar() {
   const [currentPage, setValue] = React.useState(
     map[location.pathname.substring(1, location.pathname.length)]
   );
+
   const theme = useTheme();
   const backgroundColor = theme.palette.bottomNavigationBar.backgroundColor;
   const focusedColor = theme.palette.bottomNavigationBar.selectedTap;

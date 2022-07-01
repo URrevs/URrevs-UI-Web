@@ -23,6 +23,7 @@ const reviewsSlice = createSlice({
       state.newReviews.push(...loadedReviews);
     },
     clearReviews(state) {
+      console.log("clear");
       state.newReviews = [];
     },
     // setIsExpanded(
@@ -58,6 +59,21 @@ const reviewsSlice = createSlice({
         action.payload.isLiked
           ? state.newReviews[targetReview].likes++
           : state.newReviews[targetReview].likes--;
+      }
+    },
+
+    increaseShareCounter(
+      state,
+      action: PayloadAction<{
+        id: string;
+      }>
+    ) {
+      const targetReview = state.newReviews.findIndex((element) => {
+        return element._id.toString() === action.payload.id.toString();
+      });
+
+      if (targetReview != -1) {
+        state.newReviews[targetReview].shares++;
       }
     },
   },

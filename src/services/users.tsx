@@ -21,7 +21,7 @@ export const usersApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    authenticate: builder.mutation({
+    xauthenticate: builder.query({
       query: (token) => {
         return {
           url: "/authenticate",
@@ -32,6 +32,7 @@ export const usersApi = createApi({
         };
       },
     }),
+
     getCurrentUserProfile: builder.mutation<User, string>({
       query: (token) => {
         return {
@@ -79,7 +80,7 @@ export const usersApi = createApi({
 });
 //auto-generated hooks
 export const {
-  useAuthenticateMutation,
+  useXauthenticateQuery,
   useGetCurrentUserProfileMutation,
   useLogoutFromAllDevicesMutation,
   useGetMyOwnedPhonesMutation,

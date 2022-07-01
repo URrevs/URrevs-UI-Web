@@ -11,6 +11,8 @@ import { CircularProductRate } from "./CircularProductRate";
 import { useTheme } from "@emotion/react";
 import { OverviewCard } from "./OverviewCard";
 import { StarLine } from "../StarLine";
+import { useAppDispatch } from "../../store/hooks";
+import { postingModalActions } from "../../store/uiPostingModalSlice";
 const CardStyled = styled(
   Card,
   {}
@@ -37,6 +39,7 @@ export const ProductOverviewCard = ({
     return state.language.textContainer;
   });
   const theme = useTheme();
+  const dispatch = useAppDispatch();
   const renderStarReview = (text, value) => (
     <StarLine label={text} value={value} />
   );
@@ -46,7 +49,17 @@ export const ProductOverviewCard = ({
         <Box
           sx={{ display: "flex", justifyContent: "center", padding: "5px 0px" }}
         >
-          <ButtonStyled elevation="3" variant="contained">
+          <ButtonStyled
+            elevation="3"
+            variant="contained"
+            onClick={() => {
+              dispatch(
+                postingModalActions.showPostingModal({
+                  tab: 0,
+                })
+              );
+            }}
+          >
             <PlaylistAddOutlinedIcon
               sx={{ color: theme.palette.productRateCard.addPlaylistIconColor }}
             ></PlaylistAddOutlinedIcon>

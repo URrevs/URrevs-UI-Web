@@ -9,7 +9,9 @@ const ROUTES_NAMES = {
   ALL_PRODUCTS: "all-products",
   ADMIN_PANEL: "admin-panel",
   SETTINGS: "settings",
-
+  PRIVACY_POLICY: "privacy-policy",
+  TERMS_AND_CONDITIONS: "terms-and-conditions",
+  ABOUT_US: "about-us",
   // level 2
   USER_PROFILE: "user-profile",
   EXACT_PHONE_REVIEW: "phone-review",
@@ -18,6 +20,8 @@ const ROUTES_NAMES = {
   EXACT_COMPANY_QUESTION: "company-question",
   PHONE_PROFILE: "phone",
   COMPANY_PROFILE: "company",
+  SPECS: "specs",
+
   //level 3
   // ADD_COMPETITION: "add-competition",
   OWNED_PHONES: "owned-phones",

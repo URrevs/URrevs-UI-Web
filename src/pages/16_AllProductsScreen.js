@@ -19,14 +19,13 @@ import {
   WindowScroller,
 } from "react-virtualized";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
+import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import { PAPER_BORDER_RADIUS_DESKTOP } from "../constants";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetAllCompaniesQuery,
   useGetAllPhonesQuery,
-  useGetExactCompanyPhonesQuery,
 } from "../services/phones";
 import { productListActions } from "../store/allProductsSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -55,6 +54,11 @@ export function AllProductsScreen() {
   useEffect(() => {
     console.log("clear reviews");
     clearProductsList();
+    return () => {
+      console.log("clear reviews");
+      clearProductsList();
+      maxIndex = 0;
+    };
   }, []);
 
   const clearProductsList = () => {
@@ -76,10 +80,15 @@ export function AllProductsScreen() {
     selectedCompany: { index: -1, id: null },
   });
 
-  const { data, isLoading, isFetching, error } = useGetAllPhonesQuery({
-    round: queryParams.page,
-    companyId: queryParams.selectedCompany.id,
-  });
+  const { data, isLoading, isFetching, error } = useGetAllPhonesQuery(
+    {
+      round: queryParams.page,
+      companyId: queryParams.selectedCompany.id,
+    },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   const {
     data: companiesData,
@@ -184,6 +193,7 @@ export function AllProductsScreen() {
         <ListItemButton
           sx={{
             padding: 0,
+
             "&:hover": {
               backgroundColor: "transparent",
             },
@@ -224,6 +234,7 @@ export function AllProductsScreen() {
         dense
         key={title}
         style={{
+          borderRadius: 10,
           backgroundColor:
             queryParams.selectedCompany.index === index
               ? alpha(
@@ -252,7 +263,7 @@ export function AllProductsScreen() {
         >
           <Avatar
             sx={{
-              margin: "18px 17px 10px 13px",
+              margin: "10px 14px 10px 14px",
             }}
           >
             <img
@@ -314,32 +325,44 @@ export function AllProductsScreen() {
     const item = productsList[index];
     return (
       <div key={key}>
-        {data.length === 0 ? (
-          <div>No data</div>
-        ) : index >= productsList.length ? (
-          <div>Loading...</div>
-        ) : (
+        <CellMeasurer
+          cache={productCache}
+          parent={parent}
+          columnIndex={0}
+          rowIndex={index}
+        >
           <div style={{ ...style, direction: theme.direction }}>
-            <CellMeasurer
-              cache={productCache}
-              parent={parent}
-              columnIndex={0}
-              rowIndex={index}
-            >
-              {theme.isMobile
-                ? renderProduct(
-                    item.name,
-                    "",
-                    `/${ROUTES_NAMES.PHONE_PROFILE}?pid=${item._id}`
-                  )
-                : renderProductOnDesktop(
-                    item.name,
-                    "",
-                    `/${ROUTES_NAMES.PHONE_PROFILE}?pid=${item._id}`
-                  )}
-            </CellMeasurer>
+            {index >= productsList.length ? (
+              data.length === 0 ? (
+                <div>لا يوجد عناصر</div>
+              ) : (
+                [...Array(1)].map((a, index) => (
+                  <div
+                    style={{
+                      padding: "8px",
+                    }}
+                  >
+                    <LoadingSpinner />
+                  </div>
+                ))
+              )
+            ) : (
+              <Fragment>
+                {theme.isMobile
+                  ? renderProduct(
+                      item.name,
+                      "",
+                      `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${item._id}`
+                    )
+                  : renderProductOnDesktop(
+                      item.name,
+                      "",
+                      `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${item._id}`
+                    )}
+              </Fragment>
+            )}
           </div>
-        )}
+        </CellMeasurer>
       </div>
     );
   };
@@ -362,7 +385,7 @@ export function AllProductsScreen() {
     return (
       <div key={key}>
         {companiesData.length === 0 ? (
-          <div>No data</div>
+          <div>لا يوجد عناصر</div>
         ) : index >= companiesList.length ? (
           <div>Loading...</div>
         ) : (
@@ -383,16 +406,18 @@ export function AllProductsScreen() {
 
   return (
     <div>
+      <div style={{ height: "20px" }} />
       {/* company list */}
       {/* Right grid */}
       {!theme.isMobile && (
         <div
           style={{
             position: "fixed",
+            top: "64px",
             maxHeight: "100vh",
             overflow: "scroll",
             background: "#FFF",
-            padding: "12px",
+            padding: "0 12px 0 6px",
           }}
         >
           <Typography variant="S16W700C050505">الفلاتر:</Typography>

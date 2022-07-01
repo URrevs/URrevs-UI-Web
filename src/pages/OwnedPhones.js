@@ -1,28 +1,23 @@
 import { useTheme } from "@emotion/react";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   AutoSizer,
   CellMeasurer,
   CellMeasurerCache,
   List,
-  WindowScroller,
+  WindowScroller
 } from "react-virtualized";
-import LoadingReviewSkeleton, {
-  loadingSkeletonHeight,
-} from "../Components/Loaders/LoadingReviewSkeleton";
+import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
+import PhoneListItem from "../Components/PhoneItemList";
 import { useGetOthersOwnedPhonesQuery } from "../services/users";
 import { useAppSelector } from "../store/hooks";
-import PhoneListItem from "../Components/PhoneItemList";
-import { FixedGrid } from "../Components/Grid/FixedGrid";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
   fixedHeight: false,
-  defaultHeight: loadingSkeletonHeight,
+  defaultHeight: 15,
 });
 
 let maxIndex = 0;
@@ -64,7 +59,7 @@ function OwnedPhonesPage({ query }) {
     return (
       <div>
         {[...Array(2)].map((a, index) => (
-          <LoadingReviewSkeleton key={index} />
+          <div>Loading...</div>
         ))}
       </div>
     );
@@ -104,9 +99,9 @@ function OwnedPhonesPage({ query }) {
           <div style={{ ...style, direction: theme.direction }}>
             {index >= phonesList.length ? (
               queryResult.data.length === 0 ? (
-                <div></div>
+                <div>لا يوجد عناصر</div>
               ) : (
-                [...Array(1)].map((a, index) => <div>Loading</div>)
+                [...Array(1)].map((a, index) => <div>Loading...</div>)
               )
             ) : (
               <PhoneListItem

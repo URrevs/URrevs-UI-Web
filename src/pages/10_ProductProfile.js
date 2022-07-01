@@ -1,37 +1,50 @@
-import { Box } from "@mui/material";
-import React, { useEffect } from "react";
+import { useTheme } from "@emotion/react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import { Tabbar } from "../Components/Tabbar/Tabbar";
+import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
+import { PathTabbar } from "../Components/Tabbar/PathTabbar";
+import ROUTES_NAMES from "../RoutesNames";
 
-import {
-  useGetPhoneSpecsQuery,
-  useGetSimilarPhonesQuery,
-} from "../services/phones";
-import { ProductSpecsScreen } from "./ProductProfileTabs/10_ProductSpecs";
-import { ProductReviews } from "./ProductProfileTabs/12_ProductReviews";
-import { ProductQuestions } from "./ProductProfileTabs/13_ProductQuestions";
+import { useGetPhoneSpecsQuery } from "../services/phones";
 
 export const ProductProfile = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const paramId = searchParams.get("pid");
 
+  const isMobile = useTheme().isMobile;
+
   let { isLoading, error, isFetching, data } = useGetPhoneSpecsQuery(paramId);
 
   const textContainer = useSelector((state) => state.language.textContainer);
-  const [value, setValue] = React.useState(1);
+
   const pageDictionary = {
     reviews: textContainer.tabBarReviews,
     specs: textContainer.tabBarSpecs,
     QnA: textContainer.tabBarQuestionsAndAnswers,
   };
 
-  const tabBarArray = [
-    pageDictionary.reviews,
-    pageDictionary.specs,
-    pageDictionary.QnA,
+  const pageDictionry = {
+    reviews: pageDictionary.reviews,
+    specs: pageDictionary.specs,
+    qAnda: pageDictionary.QnA,
+  };
+
+  const listOfItems = [
+    {
+      title: pageDictionry.reviews,
+      to: `${ROUTES_NAMES.REVIEWS}?pid=${paramId}`,
+    },
+    {
+      title: pageDictionry.specs,
+      to: `${ROUTES_NAMES.SPECS}?pid=${paramId}`,
+    },
+    {
+      title: pageDictionry.qAnda,
+      to: `${ROUTES_NAMES.QUESTIONS}?pid=${paramId}`,
+    },
   ];
 
   return (
@@ -46,27 +59,20 @@ export const ProductProfile = () => {
           label={data.name}
           showSearch
           showProfile
-          tabBar={
-            <Tabbar
-              arrayOfTabs={tabBarArray}
-              value={value}
-              setValue={setValue}
-            />
-          }
+          // tabBar={<PathTabbar />}
         >
-          <Box
-            sx={{
-              padding: "0px 6px",
-            }}
-          >
-            {value === 0 ? (
-              <ProductReviews />
-            ) : value === 1 ? (
-              <ProductSpecsScreen data={data}></ProductSpecsScreen>
+          <Fragment>
+            {!isMobile ? (
+              <StickyTabbar
+                hasParent={false}
+                arrayOfTabs={listOfItems}
+                userName={data.name}
+              />
             ) : (
-              <ProductQuestions />
+              <PathTabbar arrayOfTabs={listOfItems} />
             )}
-          </Box>
+            <Outlet context={{ phoneName: data.name }} />
+          </Fragment>
         </CustomAppBar>
       )}
     </React.Fragment>

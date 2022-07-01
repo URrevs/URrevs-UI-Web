@@ -1,30 +1,40 @@
 import { useTheme } from "@emotion/react";
-import { Button, Card, Typography } from "@mui/material";
+import { Box, Button, Card, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { FILTER_BUTTON_BORDER_RADIUS } from "../../constants";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 
-export const FilterTabbar = ({ value = 0, setValue }) => {
+export const FilterTabbar = ({
+  value = 0,
+  setValue,
+  withBackground = true,
+}) => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const theme = useTheme();
   return (
     <React.Fragment>
-      <Card
+      <Box
         elevation={3}
         sx={{
-          padding: "6px 0px 5px 17px",
+          background: withBackground && theme.palette.filterTabbar.tabbarBg,
+          padding: "6px 0px 5px 0px",
           minHeight: "45px",
           borderRadius: "0px 0px 10px 10px",
           margin: "0",
+          paddingLeft: withBackground && "17px",
         }}
       >
         <Button
           sx={{
-            border: `0.5px solid ${theme.palette.filterTabbar.borderColor}`,
+            border: `0.5px solid ${
+              value === 0
+                ? theme.palette.filterTabbar.buttonBgActive
+                : theme.palette.filterTabbar.borderColor
+            }`,
             backgroundColor:
               value === 0
-                ? theme.palette.filterTabbar.borderColor
+                ? theme.palette.filterTabbar.buttonBgActive
                 : theme.palette.filterTabbar.buttonBg,
             borderRadius: FILTER_BUTTON_BORDER_RADIUS,
             textTransform: "none",
@@ -62,7 +72,11 @@ export const FilterTabbar = ({ value = 0, setValue }) => {
 
         <Button
           sx={{
-            border: "0.5px solid #606266",
+            border: `0.5px solid ${
+              value === 1
+                ? theme.palette.filterTabbar.buttonBgActive
+                : theme.palette.filterTabbar.borderColor
+            }`,
             textTransform: "none",
             backgroundColor:
               value === 1
@@ -100,7 +114,7 @@ export const FilterTabbar = ({ value = 0, setValue }) => {
             {textContainer.companies}
           </Typography>
         </Button>
-      </Card>
+      </Box>
     </React.Fragment>
   );
 };

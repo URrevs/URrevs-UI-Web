@@ -1,5 +1,6 @@
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
+import { useShareSnackbar } from "../../hooks/useShareSnackbar";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
   useIdontLikeThisCompanyQuestionMutation,
@@ -23,9 +24,12 @@ export default function CompanyQuestion({
   fullScreen,
   isExpanded,
   acceptedAnswerWidget,
+  stateShare,
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisCompanyQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenCompanyQuestionMutation();
+
+  const showShareSnackbar = useShareSnackbar();
 
   const actionBtnFunction = async () => {
     try {
@@ -67,7 +71,9 @@ export default function CompanyQuestion({
   };
 
   const shareBtnHandler = () => {
+    stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
+    showShareSnackbar(`/company-question?id=${reviewDetails._id}`);
   };
 
   return (

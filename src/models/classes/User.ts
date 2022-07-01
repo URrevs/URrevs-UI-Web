@@ -12,6 +12,7 @@ export default class User {
   email: string = "";
   points: number = 0;
   isAdmin: boolean = false;
+  expiration: string;
 
   constructor(data: APIUser) {
     this.uid = data._id;
@@ -19,5 +20,6 @@ export default class User {
     this.photo = data.picture;
     this.name = data.name;
     this.points = data.points;
+    this.expiration = data.exp;
   }
 }

@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Card, Divider, Grid, Typography } from "@mui/material";
+import { Box, Card, Divider, Grid, Typography } from "@mui/material";
 import React from "react";
 import { TABCARD_BORDER_RADIUS } from "../../constants";
 import { useAppSelector } from "../../store/hooks";
@@ -9,6 +9,7 @@ export const Tabbar = ({
   setValue,
   isVertical = true,
   value,
+  children,
 }) => {
   const theme = useTheme();
   const language = useAppSelector((state) => state.language.language);
@@ -19,7 +20,7 @@ export const Tabbar = ({
   const isAr = language === "ar";
 
   const [translation, setTranslation] = React.useState(
-    isAr ? (isVertical ? fscale : fscale * 2 + 100) : 0
+    isAr ? (isVertical ? fscale - 100 * value : fscale * 2 + 100) : 100 * 0
   );
   const handleTranslation = (id) => {
     if (isAr) {
@@ -64,6 +65,12 @@ export const Tabbar = ({
                   justifyContent: "center",
                   alignItems: "center",
                   textAlign: "center",
+                  cursor: "pointer",
+                  "&:hover": {
+                    backgroundColor: theme.palette.hover,
+                  },
+                  transition: "all 0.7s ease",
+
                   // borderBottom: value === id ? "3px solid #22CBF4" : null,
                 }}
               >
@@ -113,6 +120,7 @@ export const Tabbar = ({
           }}
         ></div>
       </Card>
+      <Box>{children}</Box>
     </React.Fragment>
   );
 };

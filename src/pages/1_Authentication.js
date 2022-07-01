@@ -17,7 +17,6 @@ import { logout, signIn } from "../Authentication/auth";
 import { FacebookButton } from "../Components/Authentication/FacebookButton";
 import { GoogleButton } from "../Components/Authentication/GoogleButton";
 import {
-  useAuthenticateMutation,
   useGetCurrentUserProfileMutation,
   useLogoutFromAllDevicesMutation,
 } from "../services/users";
@@ -56,7 +55,6 @@ const Registeration = ({}) => {
   const [signingError, setSigningError] = useState(null);
   const [signOutError, setSignOutError] = useState(null);
 
-  const [getApiToken] = useAuthenticateMutation();
   const [getProfile] = useGetCurrentUserProfileMutation();
   const [logoutFromAllDevices] = useLogoutFromAllDevicesMutation();
 
@@ -71,24 +69,10 @@ const Registeration = ({}) => {
     try {
       setIsLoading(true);
 
-      const { token: apiToken, admin: isAdmin } = await getApiToken(
-        user.accessToken
-      ).unwrap();
-      const userProfile = await getProfile(apiToken).unwrap();
-
       dispatch(
         authActions.login({
           isLoggedIn: true,
-          uid: userProfile.uid,
-          refCode: userProfile.refCode,
-          photo: userProfile.photo,
-          apiToken: apiToken,
-          name: userProfile.name,
           accessToken: user.accessToken,
-          refreshToken: user.refreshToken,
-          email: user.email,
-          points: userProfile.points,
-          isAdmin: isAdmin,
         })
       );
       setIsLoading(false);

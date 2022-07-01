@@ -7,9 +7,15 @@ import { useAppSelector } from "../../../../store/hooks";
 export const MenuSideBar = ({ drawerRef }) => {
   const theme = useTheme();
   const menuOpen = useAppSelector((state) => state.menu.show);
+
   return (
     <React.Fragment>
-      <Slide direction="left" in={menuOpen} mountOnEnter unmountOnExit>
+      <Slide
+        direction={theme.direction === "rtl" ? "left" : "right"}
+        in={menuOpen}
+        mountOnEnter
+        unmountOnExit
+      >
         <Paper
           sx={{
             position: "fixed",
@@ -19,7 +25,7 @@ export const MenuSideBar = ({ drawerRef }) => {
               : "10px",
             width: "400px",
             height: "93vh",
-            zIndex: 1,
+            zIndex: 10,
             overflow: "auto",
           }}
         >
