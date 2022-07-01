@@ -65,8 +65,8 @@ export default function Menu({ isDesktop = false, drawerRef }) {
     adminPanel: textContainer.adminPanel,
     settings: textContainer.settings,
     aboutUs: textContainer.aboutUs,
-    contactUs: "تواصل معنا",
-    followUs: "تابعنا",
+    contactUs: textContainer.contactUs,
+    followUs: textContainer.followUs,
     logOut: textContainer.logOut,
     termsAndAgreements: textContainer.termsOfUse,
     privacyPolicy: textContainer.privacyPolicy,
@@ -123,7 +123,8 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       to: `../../${ROUTES_NAMES.SETTINGS}`,
       authenticate: true,
       onClick: () => {
-        setSettingsSlide(!settingsSlide);
+        if (theme.isMobile) navigate(`../../${ROUTES_NAMES.SETTINGS}`);
+        else setSettingsSlide(!settingsSlide);
       },
       endIcon: isDesktop ? (
         language === "ar" ? (
@@ -315,7 +316,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
             // width: "95%",
           }}
         >
-          <Typography variant="S22W500C050505">{`${pageDictionry.followUs}:`}</Typography>
+          <Typography variant="S22W500C050505">{`${pageDictionry.followUs}`}</Typography>
           <Box
             sx={{
               display: "flex",

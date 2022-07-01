@@ -91,12 +91,7 @@ export default function Layout(props) {
             isSearchBarFocused={searchBarFocused}
           /> */}
 
-          <AppBarActions
-            showSearch={true}
-            showLanguage={true}
-            showDark={true}
-            showProfile={true}
-          />
+          <AppBarActions showSearch={true} showProfile={true} />
         </Toolbar>
       </MyAppBar>
     );

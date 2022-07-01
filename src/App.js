@@ -64,6 +64,7 @@ function App() {
   const theme = createTheme(
     {
       isMobile: isMobile,
+      isDark: isDark,
       direction: `${direction}`,
       typography: fonts,
       MuiButton: {

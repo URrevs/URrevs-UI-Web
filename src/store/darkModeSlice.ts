@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
 
 interface DarkState {
@@ -15,6 +15,10 @@ const isDarkSlice = createSlice({
   reducers: {
     switchMode: (state) => {
       state.isDark = !state.isDark;
+      localStorage.setItem("isDark", state.isDark.toString());
+    },
+    changeMode: (state, actions) => {
+      state.isDark = actions.payload;
       localStorage.setItem("isDark", state.isDark.toString());
     },
   },

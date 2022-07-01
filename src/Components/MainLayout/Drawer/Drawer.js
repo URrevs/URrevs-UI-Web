@@ -238,7 +238,11 @@ export const MyDrawer = (props) => {
         <List>
           {drawerTiles.map((item, i) => (
             <ListItem
-              style={{ padding: 0, justifyContent: "center" }}
+              style={{
+                padding: 0,
+                justifyContent: "center",
+                minHeight: "85px",
+              }}
               onClick={item.onClick}
               button
               key={item.title}

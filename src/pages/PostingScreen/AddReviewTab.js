@@ -238,7 +238,6 @@ export const AddReviewTab = ({ ...props }) => {
           isControlled={false}
         />
         {/* Submit Button */}
-        {console.log(props)}
         <FormSubmitButton
           loading={props.isSubmitting}
           submitLabel={pageDictionary.postReview}
