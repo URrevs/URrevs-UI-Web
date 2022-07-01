@@ -19,10 +19,10 @@ const PostingScreen = ({
 }) => {
   const isPhone = initValues.type === "phone";
   const checkSignedIn = useCheckSignedIn();
-  const [addReview] = useAddPhoneReviewMutation();
+  const [addReview, { isLoading: isAddphoneLoading }] =
+    useAddPhoneReviewMutation();
   const theme = useTheme();
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  const dispatch = useAppDispatch();
   const pageDictionary = {
     tabbar: [textContainer.tabBarReview, textContainer.tabBarQuestion],
     likedAboutProductErrorMsg: textContainer.likedAboutProductErrorMsg,
@@ -120,7 +120,7 @@ const PostingScreen = ({
             }
           }}
         >
-          {(props) => <AddReviewTab {...props} />}
+          {(props) => <AddReviewTab {...props} isLoading={false} />}
         </Formik>
       ) : (
         <QuestionsTab initValues={initValues} />

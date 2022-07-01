@@ -11,6 +11,7 @@ import FormikTextField from "../Form/FormikTextField";
 import { useAddCompetetionMutation } from "../../services/competetion";
 import { useAppDispatch } from "../../store/hooks";
 import { snackbarActions } from "../../store/uiSnackbarSlice";
+import { FormSubmitButton } from "../../pages/PostingScreen/FormSubmitButton";
 
 export const CompetitionBody = ({ button, handleClose }) => {
   const [addCompetitionRequest] = useAddCompetetionMutation();
@@ -170,18 +171,10 @@ export const CompetitionBody = ({ button, handleClose }) => {
                   margin: "10px 0px",
                 }}
               />
-
-              <OrangeGradientButton
-                type="submit"
-                disabled={isSubmitting}
-                color="red"
-                // startIcon={<AddOutlinedIcon sx={{ fontSize: "28px" }} />} not used because size is not applied
-              >
-                <Typography variant="S18W700Cffffff">
-                  {textContainer.addCompetition}
-                </Typography>
-                <AddOutlinedIcon sx={{ fontSize: "28px" }} />
-              </OrangeGradientButton>
+              <FormSubmitButton
+                submitLabel={textContainer.addCompetition}
+                loading={isSubmitting}
+              />
             </Box>
           </form>
         )}

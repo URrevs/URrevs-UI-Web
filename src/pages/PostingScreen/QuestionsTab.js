@@ -134,7 +134,7 @@ export const QuestionsTab = ({ initValues }) => {
             {renderSearch(formik.values.spoc.label)}
             {renderField()}
             <FormSubmitButton
-              loading={addCompanyLoading || addPhoneLoading}
+              loading={formik.isSubmitting}
               submitLabel={pageDictionary.postQuestion}
             />
           </Form>

@@ -23,11 +23,11 @@ import { useGetManufacturingCompanyMutation } from "../../services/phones";
   3-If user input is gibberish:Err3
 }
 */
-const handleInitialValues = (fieldName, empty = "") => {
-  return sessionStorage.getItem(fieldName)
-    ? sessionStorage.getItem(fieldName)
-    : empty;
-};
+// const handleInitialValues = (fieldName, empty = "") => {
+//   return sessionStorage.getItem(fieldName)
+//     ? sessionStorage.getItem(fieldName)
+//     : empty;
+// };
 export const AddReviewTab = ({ ...props }) => {
   const textContainer = useAppSelector((state) => {
     return state.language.textContainer;
@@ -100,6 +100,7 @@ export const AddReviewTab = ({ ...props }) => {
   };
   /*RTK */
   const [searchFn] = useSearchPhonesOnlyMutation();
+  //To initialize companyId
   const [getManufacturingCompany] = useGetManufacturingCompanyMutation();
   const handleManufacturingCompany = async () => {
     const companyId = await getManufacturingCompany(
@@ -237,7 +238,11 @@ export const AddReviewTab = ({ ...props }) => {
           isControlled={false}
         />
         {/* Submit Button */}
-        <FormSubmitButton submitLabel={pageDictionary.postReview} />
+        {console.log(props)}
+        <FormSubmitButton
+          loading={props.isSubmitting}
+          submitLabel={pageDictionary.postReview}
+        />
       </form>
     </React.Fragment>
   );

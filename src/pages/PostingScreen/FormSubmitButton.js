@@ -9,7 +9,7 @@ import OrangeGradientButton from "../../Components/Buttons/OrangeGradientButton"
 
 export const FormSubmitButton = ({
   submitLabel,
-  error = false,
+
   loading = false,
 }) => {
   const theme = useTheme();
