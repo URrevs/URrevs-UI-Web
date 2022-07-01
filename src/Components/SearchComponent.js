@@ -172,7 +172,7 @@ export default function SearchComponent({
                         setSearchQuery("");
                         setResults([]);
                         dispatch(
-                          postingModalActions.showPostingModal({
+                          postingModalActions.initializePostingModal({
                             tab: tab,
                             id: "",
                             name: "",

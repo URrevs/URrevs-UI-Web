@@ -27,11 +27,20 @@ const postingModalSlice = createSlice({
       state.name = action.payload.name;
       state.type = action.payload.type;
     },
+    initializePostingModal(state, action) {
+      state.tab = action.payload.tab;
+      state.id = action.payload.id;
+      state.name = action.payload.name;
+      state.type = action.payload.type;
+    },
     switchTab(state, action) {
       state.tab = action.payload.tab;
     },
     hidePostingModal(state) {
       state.show = false;
+    },
+    togglePostingModal(state, action) {
+      state.show = !state.show;
     },
   },
 });
