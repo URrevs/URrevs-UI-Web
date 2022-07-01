@@ -210,7 +210,7 @@ export const Leaderboard = () => {
               userRank={myRankData.rank}
               points={myRankData.points}
               userPicture={myRankData.picture}
-
+              isSameUser={false}
               // isWinner={true}
             />
           )}

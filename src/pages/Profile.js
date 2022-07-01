@@ -22,6 +22,8 @@ export default function Profile() {
     myReviews: textContainer.myReviews,
     myQuestions: textContainer.myQuestions,
     ownedProducts: textContainer.ownedProducts,
+    reviews: textContainer.reviews,
+    questions: textContainer.askedQuestions,
     referalCode: textContainer.yourInvitationCode,
     askedQuestions: textContainer.questionsOnMyProducts,
     inviteFriends: textContainer.inviteYourFriendsToWriteTheirReviews,
@@ -30,11 +32,17 @@ export default function Profile() {
 
   const listItems = [
     {
-      title: pageDictionry.myReviews,
+      title:
+        paramId === currentUserId
+          ? pageDictionry.myReviews
+          : pageDictionry.reviews,
       to: `${ROUTES_NAMES.REVIEWS}?userId=${paramId}`,
     },
     {
-      title: pageDictionry.myQuestions,
+      title:
+        paramId === currentUserId
+          ? pageDictionry.myQuestions
+          : pageDictionry.questions,
       to: `${ROUTES_NAMES.QUESTIONS}?userId=${paramId}`,
     },
     {
@@ -58,7 +66,7 @@ export default function Profile() {
           arrayOfTabs={[listItems[0], listItems[1], listItems[2], listItems[4]]}
         ></ProfileTabbar>
         <AlonePostsGrid>
-          <Outlet />
+          <Outlet context={{ isCurrentUser: paramId === currentUserId }} />
         </AlonePostsGrid>
       </Fragment>
     ) : (
@@ -73,7 +81,7 @@ export default function Profile() {
           arrayOfTabs={[listItems[0], listItems[1], listItems[2]]}
         ></ProfileTabbar>
         <AlonePostsGrid>
-          <Outlet />
+          <Outlet context={{ isCurrentUser: paramId === currentUserId }} />
         </AlonePostsGrid>
       </Fragment>
     ) : (

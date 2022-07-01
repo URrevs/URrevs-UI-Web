@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGift } from "@fortawesome/free-solid-svg-icons";
 import { CARD_BORDER_RADIUS } from "../../constants";
 import StarWithCount from "./StarWithCount";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LeaderboardEntryCard = styled(
   Card,
@@ -58,6 +58,7 @@ const LeaderboardEntry = ({
   points = 0,
   prizeClick = () => {},
   isWinner = false,
+  isSameUser = false,
 }) => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -140,30 +141,34 @@ const LeaderboardEntry = ({
     </Fragment>
   );
   return isBody ? (
-    <div
-      onClick={() => {
-        navigate(userProfilePath);
-      }}
+    <Link
       style={{
-        // backgroundColor: theme.palette.leaderBoard.entryCard,
-        minHeight: 60,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0px 12px",
+        textDecoration: "none",
       }}
+      to={userProfilePath}
     >
-      {entryBody()}
-    </div>
+      <div
+        style={{
+          // backgroundColor: theme.palette.leaderBoard.entryCard,
+          minHeight: 60,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0px 12px",
+        }}
+      >
+        {entryBody()}
+      </div>
+    </Link>
   ) : (
-    <LeaderboardEntryCard
-      onClick={() => {
-        navigate(userProfilePath);
+    <Link
+      style={{
+        textDecoration: "none",
       }}
-      elevation={3}
+      to={userProfilePath}
     >
-      {entryBody()}
-    </LeaderboardEntryCard>
+      <LeaderboardEntryCard elevation={3}>{entryBody()}</LeaderboardEntryCard>
+    </Link>
   );
 };
 
