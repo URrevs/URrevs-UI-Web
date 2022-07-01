@@ -7,7 +7,8 @@ import FormikTextField from "../../Components/Form/FormikTextField";
 import { useAddCompanyQuestionMutation } from "../../services/company_questions";
 import { useAddPhoneQuestionMutation } from "../../services/phone_questions";
 import { useSearchAllMutation } from "../../services/search";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { postingModalActions } from "../../store/uiPostingModalSlice";
 import { FastFormikTextField } from "./FastFormikTextField";
 import { FormSubmitButton } from "./FormSubmitButton";
 
@@ -45,6 +46,7 @@ export const QuestionsTab = ({ initValues }) => {
   };
   // RTK:
   const [searchFn] = useSearchAllMutation();
+  const dispatch = useAppDispatch();
   const [addPhoneQuestion] = useAddPhoneQuestionMutation();
   const [addCompanyQuestion] = useAddCompanyQuestionMutation();
   // const [addQuestionError, setAddQuestionError] = React.useState(null);
@@ -67,6 +69,7 @@ export const QuestionsTab = ({ initValues }) => {
     } catch (e) {
       console.log(e);
     }
+    dispatch(postingModalActions.hidePostingModal());
   };
   // Validation:
   const QuestionValidationSchema = Yup.object().shape({

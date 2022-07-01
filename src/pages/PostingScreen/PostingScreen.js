@@ -1,9 +1,10 @@
 import { useTheme } from "@emotion/react";
 import { Formik } from "formik";
 import React from "react";
-import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import { useAddPhoneReviewMutation } from "../../services/phone_reviews";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { regDialogActions } from "../../store/uiRegisterDialogSlice";
 import { AddReviewTab } from "./AddReviewTab";
 import { QuestionsTab } from "./QuestionsTab";
 
@@ -16,10 +17,11 @@ const PostingScreen = ({
   },
 }) => {
   const isPhone = initValues.type === "phone";
-
+  const currentUser = useAppSelector((state) => state.auth);
   const [addReview] = useAddPhoneReviewMutation();
   const theme = useTheme();
-  const textContainer = useSelector((state) => state.language.textContainer);
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+  const dispatch = useAppDispatch();
   const pageDictionary = {
     tabbar: [textContainer.tabBarReview, textContainer.tabBarQuestion],
     likedAboutProductErrorMsg: textContainer.likedAboutProductErrorMsg,
@@ -86,32 +88,36 @@ const PostingScreen = ({
           }}
           validationSchema={BasicValidationSchema}
           onSubmit={async (values, { setSubmitting }) => {
-            sessionStorage.clear();
-            const reviewPost = {
-              phoneId: values.chooseProduct.id,
-              companyId: values.companyId._id,
-              ownedDate: values.purchaseDate,
-              generalRating: values.overAllExp,
-              uiRating: values.userInterface,
-              manQuality: values.manufacturingQuality,
-              valFMon: values.priceQuality,
-              camera: values.camera,
-              callQuality: values.callsQuality,
-              battery: values.battery,
-              pros: values.likeAboutProduct,
-              cons: values.hateAboutProduct,
-              refCode: values.invitationCode,
-              companyRating: values.rateManufacturer,
-              compPros: values.likeAbout,
-              compCons: values.hateAbout,
-            };
-            // console.log(JSON.stringify(reviewPost, null, 2));
-            try {
-              const response = await addReview(reviewPost).unwrap();
-            } catch (e) {
-              console.log("asd askjd bhasb", e);
+            if (!currentUser.isLoggedIn) {
+              dispatch(regDialogActions.toggleRegistration());
+            } else {
+              const reviewPost = {
+                phoneId: values.chooseProduct.id,
+                companyId: values.companyId._id,
+                ownedDate: values.purchaseDate,
+                generalRating: values.overAllExp,
+                uiRating: values.userInterface,
+                manQuality: values.manufacturingQuality,
+                valFMon: values.priceQuality,
+                camera: values.camera,
+                callQuality: values.callsQuality,
+                battery: values.battery,
+                pros: values.likeAboutProduct,
+                cons: values.hateAboutProduct,
+                refCode: values.invitationCode,
+                companyRating: values.rateManufacturer,
+                compPros: values.likeAbout,
+                compCons: values.hateAbout,
+              };
+              // console.log(JSON.stringify(reviewPost, null, 2));
+              try {
+                const response = await addReview(reviewPost).unwrap();
+                sessionStorage.clear();
+              } catch (e) {
+                console.log("asd askjd bhasb", e);
+              }
+              setSubmitting(false);
             }
-            setSubmitting(false);
           }}
         >
           {(props) => <AddReviewTab {...props} />}
