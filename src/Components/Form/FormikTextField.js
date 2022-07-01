@@ -28,6 +28,7 @@ const FormikTextField = ({
           <StyledTextField
             defaultValue={""}
             placeholder={label}
+            autoComplete={"off"}
             // required={isRequired}
             error={meta.touched && meta.error && true}
             helperText={meta.touched && meta.error}

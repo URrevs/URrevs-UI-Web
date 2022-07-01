@@ -7,6 +7,8 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { snackbarActions } from "../store/uiSnackbarSlice";
 import { Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import ROUTES_NAMES from "../RoutesNames";
+import { useLocation } from "react-router-dom";
 
 export default function CustomizedSnackbar() {
   const theme = useTheme();
@@ -18,6 +20,23 @@ export default function CustomizedSnackbar() {
   const actionFn = useAppSelector((state) => state.snackbar.actionBtnFunction);
   const actionText = useAppSelector((state) => state.snackbar.actionBtnText);
   const showActionBtn = useAppSelector((state) => state.snackbar.showActionBtn);
+
+  // for snackbar not to be hidden under bottom nav bar
+  const navbarRoutes = [
+    ROUTES_NAMES.PRODUCTS,
+    ROUTES_NAMES.ADD_REVIEW,
+    ROUTES_NAMES.HOME,
+    ROUTES_NAMES.LEADERBOARD,
+    ROUTES_NAMES.MENU,
+  ];
+
+  const location = useLocation();
+  const marginBottom =
+    theme.isMobile &&
+    navbarRoutes.find((element) => `/${element}` === location.pathname) !=
+      undefined
+      ? "70px"
+      : 0;
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -59,6 +78,7 @@ export default function CustomizedSnackbar() {
             borderRadius: "12px",
             ...theme.typography.S16W500C050505,
             lineHeight: 1,
+            marginBottom: marginBottom,
           },
         }}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}

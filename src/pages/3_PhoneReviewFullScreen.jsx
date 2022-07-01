@@ -22,6 +22,7 @@ import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkelet
 import { reviewsActions } from "../store/reviewsSlice";
 import PhoneReview from "../Components/ReviewCard/PhoneReview";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
+import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -31,8 +32,6 @@ const cache = new CellMeasurerCache({
 
 export default function PhoneReviewFullScreen() {
   const dispatch = useAppDispatch();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     return () => {
@@ -266,8 +265,10 @@ export default function PhoneReviewFullScreen() {
 
   const deleteReviewFromStore = (id) => {};
 
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(reviewsActions.increaseShareCounter({ id: id }));
+
   const reviewCard = () => {
-    console.log(currentReviewData);
     return (
       <div>
         {reviewLoading ? (
@@ -284,10 +285,11 @@ export default function PhoneReviewFullScreen() {
               clearIndexCache={clearCache}
               reviewDetails={currentReviewData}
               isPhoneReview={true}
-              targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${currentReviewData.targetId}`}
+              targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.REVIEWS}?pid=${currentReviewData.targetId}`}
               userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${currentReviewData.userId}`}
               stateLikeFn={stateLikePhoneReview}
               stateUnLikeFn={stateUnLikePhoneReview}
+              stateShare={stateIncreaseShareCounter}
               showActionBtn={true}
               deleteReviewFromStore={deleteReviewFromStore}
             />
@@ -299,46 +301,48 @@ export default function PhoneReviewFullScreen() {
 
   return (
     <FixedGrid>
-      <Box>
-        {reviewLoading ? (
-          <div>Loading review...</div>
-        ) : reviewError ? (
-          <div>Error</div>
-        ) : (
-          <CommentsList
-            reviewCard={reviewCard}
-            commentsList={commentsList}
-            page={page}
-            data={data}
-            error={error}
-            isLoading={isLoading}
-            isFetching={isFetching}
-            commentLike={likeCommentRequest}
-            commentUnlike={unLikeCommentRequest}
-            replyLike={likeReplyRequest}
-            replyUnlike={unLikeReplyRequest}
-            addToReviewsList={addToLoadedComments}
-            increasePage={increasePage}
-            cache={cache}
-            clearCache={clearCache}
-            submitReplyHandler={submitReplyHandler}
-          />
-        )}
+      <AlonePostsGrid>
+        <Box>
+          {reviewLoading ? (
+            <div>Loading review...</div>
+          ) : reviewError ? (
+            <div>Error</div>
+          ) : (
+            <CommentsList
+              reviewCard={reviewCard}
+              commentsList={commentsList}
+              page={page}
+              data={data}
+              error={error}
+              isLoading={isLoading}
+              isFetching={isFetching}
+              commentLike={likeCommentRequest}
+              commentUnlike={unLikeCommentRequest}
+              replyLike={likeReplyRequest}
+              replyUnlike={unLikeReplyRequest}
+              addToReviewsList={addToLoadedComments}
+              increasePage={increasePage}
+              cache={cache}
+              clearCache={clearCache}
+              submitReplyHandler={submitReplyHandler}
+            />
+          )}
 
-        <div
-          style={{
-            position: "fixed",
-            zIndex: 1000,
-            bottom: 0,
-          }}
-        >
-          <div>
-            <form onSubmit={submitCommentHandler}>
-              <input id="comment" />
-            </form>
+          <div
+            style={{
+              position: "fixed",
+              zIndex: 1000,
+              bottom: 0,
+            }}
+          >
+            <div>
+              <form onSubmit={submitCommentHandler}>
+                <input id="comment" />
+              </form>
+            </div>
           </div>
-        </div>
-      </Box>
+        </Box>
+      </AlonePostsGrid>
     </FixedGrid>
   );
 }

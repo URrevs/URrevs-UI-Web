@@ -23,6 +23,7 @@ export const MobileSearchBar = () => {
     <Fragment>
       <TextField
         disabled
+        autoComplete="off"
         inputProps={{
           style: {
             width: "27vw",

@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import {
   AutoSizer,
   CellMeasurer,
@@ -47,13 +47,19 @@ export default function VirtualReviewList({
   };
 
   useEffect(() => {
-    console.log(data);
     if (data) {
       addToReviewsList();
       if (page < 2 && !isLoading && !isFetching) {
-        increasePage();
+        // console.log('first increase')
+        // increasePage();
       }
     }
+
+    return () => {
+      console.log("clear max index");
+      maxIndex = 0;
+      cache.clearAll();
+    };
   }, [data]);
 
   if (isLoading) {
@@ -79,15 +85,16 @@ export default function VirtualReviewList({
   const renderRow = ({ index, key, style, parent }) => {
     if (
       maxIndex !== 0 &&
-      page >= 2 &&
+      // page >= 2 &&
       !isLoading &&
       !isFetching &&
-      maxIndex === reviewsList.length &&
+      maxIndex === reviewsList.length - 1 &&
       data.length !== 0
     ) {
-      maxIndex = 0;
       increasePage();
+      maxIndex = 0;
     }
+
     maxIndex = Math.max(index, maxIndex);
     return (
       <div key={key}>
@@ -98,17 +105,13 @@ export default function VirtualReviewList({
           rowIndex={index}
         >
           <div style={{ ...style, direction: theme.direction }}>
-            {index >= reviewsList.length ? (
-              data.length === 0 ? (
-                <div></div>
-              ) : (
-                [...Array(1)].map((a, index) => (
-                  <LoadingReviewSkeleton key={index} />
-                ))
-              )
-            ) : (
-              reviewCard(index, clearCache)
-            )}
+            {index >= reviewsList.length
+              ? data.length - 1 <= 0
+                ? reviewsList.length === 0 && <div>لا يوجد عناصر</div>
+                : [...Array(1)].map((a, index) => (
+                    <LoadingReviewSkeleton key={index} />
+                  ))
+              : reviewCard(index, clearCache)}
           </div>
         </CellMeasurer>
       </div>

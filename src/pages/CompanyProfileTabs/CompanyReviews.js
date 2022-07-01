@@ -1,11 +1,12 @@
 import { useTheme } from "@emotion/react";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CompanyOverviewCard } from "../../Components/OverviewCard/CompanyOverviewCard";
 import CompanyReview from "../../Components/ReviewCard/CompanyReview";
 import ROUTES_NAMES from "../../RoutesNames";
+import { useGetCompanyStatsInfoQuery } from "../../services/companies";
 import { useGetCompanyReviewsQuery } from "../../services/company_reviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
@@ -17,12 +18,12 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
 
   useEffect(() => {
     console.log("clear reviews");
-
     dispatch(reviewsActions.clearReviews());
   }, []);
 
   let reviewsList = useAppSelector((state) => state.reviews.newReviews);
   const [page, setPage] = useState(1);
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const cid = searchParams.get("cid");
@@ -31,6 +32,13 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
     round: page,
     cid: cid,
   });
+
+  const {
+    isLoading: companyStatsIsLoading,
+    error: companyStatsError,
+    isFetching: companyStatsIsFetching,
+    data: companyStatsData,
+  } = useGetCompanyStatsInfoQuery(cid);
 
   const stateLike = (id) =>
     dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
@@ -59,6 +67,9 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
     );
   };
 
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(reviewsActions.increaseShareCounter({ id: id }));
+
   const reviewCard = (index, clearCache) => {
     return (
       <CompanyReview
@@ -69,10 +80,11 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
         clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
         isPhoneReview={true}
-        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${reviewsList[index].targetId}`}
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
         stateUnLikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
+        stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
       />
@@ -80,22 +92,27 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
   };
 
   const companyOverView = () => {
-    return (
-      <CompanyOverviewCard
-        companyName={companyName}
-        companyRating={companyRating}
-        type="شركة"
-        viewer={viewer}
-      />
-    );
+    if (companyStatsIsLoading) {
+      return <div>Loading...</div>;
+    } else if (companyStatsError) {
+      return <div>Error</div>;
+    } else {
+      return (
+        <CompanyOverviewCard
+          companyName={companyStatsData.name}
+          type={textContainer.company}
+          companyRating={companyStatsData.rating.toPrecision(2)}
+          viewer={companyStatsData.views}
+        />
+      );
+    }
   };
 
   return (
     <Box>
-      <Grid container>
-        <Grid item xl={2} lg={0.5} md={0.5} sm={0}></Grid>
-        <Grid item xl={6} lg={7} md={7} sm={12}>
-          {theme.isMobile && companyOverView()}
+      {theme.isMobile ? (
+        <Fragment>
+          {companyOverView()}
           <VirtualReviewList
             reviewCard={reviewCard}
             reviewsList={reviewsList}
@@ -107,39 +124,58 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
             addToReviewsList={addToReviewsList}
             increasePage={increasePage}
           />
-        </Grid>
+        </Fragment>
+      ) : (
+        <Grid container>
+          <Grid item xl={2} lg={0.5} md={0.5} sm={0} xs={0}></Grid>
+          <Grid item xl={6} lg={7} md={7} sm={12} xs={12}>
+            {theme.isMobile && companyOverView()}
+            <VirtualReviewList
+              reviewCard={reviewCard}
+              reviewsList={reviewsList}
+              page={page}
+              data={data}
+              error={error}
+              isLoading={isLoading}
+              isFetching={isFetching}
+              addToReviewsList={addToReviewsList}
+              increasePage={increasePage}
+            />
+          </Grid>
 
-        {!theme.isMobile && (
-          <Grid
-            item
-            xl={4}
-            lg={4.5}
-            md={4.5}
-            sm={0}
-            sx={{
-              [theme.breakpoints.up("xl")]: {
-                width: "30%",
-              },
-              [theme.breakpoints.up("lg")]: {
-                width: "36%",
-              },
-              [theme.breakpoints.up("md")]: {
-                width: "35%",
-              },
-            }}
-          >
-            <Box
+          {!theme.isMobile && (
+            <Grid
+              item
+              xl={4}
+              lg={4.5}
+              md={4.5}
+              sm={0}
+              xs={0}
               sx={{
-                position: "fixed",
-                padding: "0 12px",
-                width: "inherit",
+                [theme.breakpoints.up("xl")]: {
+                  width: "30%",
+                },
+                [theme.breakpoints.up("lg")]: {
+                  width: "36%",
+                },
+                [theme.breakpoints.up("md")]: {
+                  width: "35%",
+                },
               }}
             >
-              {companyOverView()}
-            </Box>
-          </Grid>
-        )}
-      </Grid>
+              <Box
+                sx={{
+                  position: "fixed",
+                  padding: "0 12px",
+                  width: "inherit",
+                }}
+              >
+                {companyOverView()}
+              </Box>
+            </Grid>
+          )}
+        </Grid>
+      )}
     </Box>
   );
 }

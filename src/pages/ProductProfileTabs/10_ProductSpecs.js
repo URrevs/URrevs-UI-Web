@@ -3,8 +3,9 @@ import CompareOutlinedIcon from "@mui/icons-material/CompareOutlined";
 import HelpIcon from "@mui/icons-material/Help";
 import { Box, Card, Grid, IconButton, Modal, Typography } from "@mui/material";
 import { styled } from "@mui/styles";
-import React from "react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import ButtonPage from "../../Components/Buttons/ButtonPage";
 import { CompareDialog } from "../../Components/Dialogs/CompareDialog/CompareDialog";
 import { CompareItem } from "../../Components/Dialogs/CompareDialog/CompareItem";
@@ -14,6 +15,7 @@ import { ProductOverviewCard } from "../../Components/OverviewCard/ProductOvervi
 import ProductDetailsTable from "../../Components/ProductDetailsTable";
 import { CARD_BORDER_RADIUS } from "../../constants";
 import {
+  useGetPhoneSpecsQuery,
   useGetSimilarPhonesQuery,
   useGetStatisticalInfoQuery,
 } from "../../services/phones";
@@ -29,8 +31,14 @@ const CardStyled = styled(
   justifyContent: "center",
 }));
 
-export const ProductSpecsScreen = ({ data }) => {
+export const ProductSpecsScreen = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramId = searchParams.get("pid");
+
+  let { isLoading, error, isFetching, data } = useGetPhoneSpecsQuery(paramId);
+
   const componentDictionary = {
     productImage: textContainer.productImage,
     specs: textContainer.tabBarSpecs,
@@ -62,6 +70,7 @@ export const ProductSpecsScreen = ({ data }) => {
       <CompareItem item={item} />
     </CardStyled>
   );
+
   const overviewCard = () =>
     statisticalLoading ? (
       <LoadingSpinner />
@@ -90,6 +99,7 @@ export const ProductSpecsScreen = ({ data }) => {
         />
       </div>
     );
+
   const compareWithOtherProducts = () => (
     <Box
       sx={{
@@ -121,27 +131,31 @@ export const ProductSpecsScreen = ({ data }) => {
       </Modal>
     </Box>
   );
+
   const similarPhonesComponent = () => (
     <div>
-      <Typography variant="S18W700C050505">
-        {componentDictionary.similarPhones + ":"}
-      </Typography>
       {similarPhoneLoading ? (
         <LoadingSpinner />
       ) : similarPhoneError ? (
         <div>{similarPhoneError.data.status}</div>
       ) : (
-        <HorizontalPhoneList items={similarPhones} />
+        <Fragment>
+          <Typography variant="S18W700C050505">
+            {componentDictionary.similarPhones + ":"}
+          </Typography>
+          <HorizontalPhoneList items={similarPhones} />
+        </Fragment>
       )}
     </div>
   );
+
   return (
     <React.Fragment>
       <Grid container>
         {/* Right Grid */}
-        <Grid item xl={2} lg={1} md={0.5}></Grid>
+        <Grid item xl={1} lg={1} md={0.5} xs={0}></Grid>
         {/* Center Grid */}
-        <Grid item xl={5} lg={5} md={5.5}>
+        <Grid item xl={5} lg={5} md={5} xs={12}>
           {theme.isMobile ? overviewCard() : null}
           <Typography variant="S18W700C050505">
             {componentDictionary.productImage + ":"}
@@ -177,14 +191,14 @@ export const ProductSpecsScreen = ({ data }) => {
           {theme.isMobile ? similarPhonesComponent() : null}
           {theme.isMobile ? compareWithOtherProducts() : null}
         </Grid>
-        <Grid item xl={1} lg={0} md={0.5}></Grid>
+        <Grid item xl={1} lg={1} md={0.5} xs={0}></Grid>
         {/* Left Grid*/}
-        <Grid item xl={4} lg={5} md={4.5}>
+        <Grid item xl={5} lg={5} md={6} xs={0}>
           {theme.isMobile ? null : (
             <div
               style={{
                 height: "100%",
-                margin: "-50px 50px 0px 0px",
+                // margin: "-50px 50px 0px 0px",
               }}
             >
               <div

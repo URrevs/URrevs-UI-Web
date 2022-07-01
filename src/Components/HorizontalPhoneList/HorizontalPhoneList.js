@@ -32,7 +32,8 @@ export const HorizontalPhoneList = ({ items = [] }) => {
     return (
       <ListItemButton
         onClick={() => {
-          navigate(`/phone?pid=${id}`);
+          // TODO: add routes names here
+          navigate(`/phone/specs?pid=${id}`);
           window.scrollTo(0, 0);
         }}
         key={id}

@@ -79,6 +79,23 @@ const homePageSlice = createSlice({
           : state.newReviews[targetReview].upvotes--;
       }
     },
+
+    increaseShareCounter(
+      state,
+      action: PayloadAction<{
+        id: string;
+      }>
+    ) {
+      const targetReview = state.newReviews.findIndex((element) => {
+        return element._id.toString() === action.payload.id.toString();
+      });
+
+      console.log(targetReview);
+
+      if (targetReview != -1) {
+        state.newReviews[targetReview].shares++;
+      }
+    },
   },
 });
 

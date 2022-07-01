@@ -87,6 +87,9 @@ export function PostedCompanyQuestions() {
     });
   };
 
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(questionsActions.increaseShareCounter({ id: id }));
+
   // add accepted answer if found
   const acceptedAnswerWidget = (index) => {
     if (reviewsList[index].acceptedAns) {
@@ -124,10 +127,11 @@ export function PostedCompanyQuestions() {
         clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
         isPhoneReview={false}
-        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.QUESTIONS}?cid=${reviewsList[index].targetId}`}
         userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
+        stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
         acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}

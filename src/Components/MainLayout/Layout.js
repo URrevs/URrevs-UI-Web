@@ -1,8 +1,5 @@
 import { useTheme } from "@emotion/react";
-import MenuIcon from "@mui/icons-material/Menu";
-import { useMediaQuery } from "@mui/material";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import * as React from "react";
@@ -10,15 +7,14 @@ import { animated, useSpring } from "react-spring";
 import { MyAppBar } from "./AppBar/AppBar";
 import { AppBarActions } from "./AppBar/AppBarActions";
 import { MyDrawer } from "./Drawer/Drawer";
-import { SearchBar } from "./Search/SearchBar";
 
-import { drawerWidth } from "./Drawer/Drawer";
-import { useAppSelector } from "../../store/hooks";
-import Registeration from "../../pages/1_Authentication";
-import BottomNavBar from "./BottomNavBar/BottomNavBar";
-import { CustomAppBar } from "./AppBar/CustomAppBar";
-import CustomizedSnackbar from "../Snackbar";
 import { Link } from "react-router-dom";
+import Registeration from "../../pages/1_Authentication";
+import { useAppSelector } from "../../store/hooks";
+import { PostingModal } from "../PostingComponents/PostingModal";
+import CustomizedSnackbar from "../Snackbar";
+import { CustomAppBar } from "./AppBar/CustomAppBar";
+import BottomNavBar from "./BottomNavBar/BottomNavBar";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -118,6 +114,7 @@ export default function Layout(props) {
       {theme.isMobile ? <></> : <MyDrawer open={open} setOpen={setOpen} />}
       <Registeration />
       <CustomizedSnackbar />
+      <PostingModal />
       {theme.isMobile ? <BottomNavBar /> : <></>}
       <Box
         component="main"

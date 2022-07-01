@@ -40,7 +40,7 @@ export const CompetitionBody = ({ button, handleClose }) => {
         }
   );
   // const theme = useTheme();
-  const renderFields = (text, fieldName, label, controlled = false) => {
+  const renderFields = (text, fieldName, label, controlled = true) => {
     return (
       <React.Fragment>
         <Typography sx={{}} variant="S18W500C050505">
@@ -113,6 +113,7 @@ export const CompetitionBody = ({ button, handleClose }) => {
                 </Typography>
                 <FormikDatePicker
                   isRequired={false}
+                  view={["year", "month", "day"]}
                   label={textContainer.competitionEndDate}
                   fieldName={"endDate"}
                   noFutureDate={false}

@@ -1,11 +1,16 @@
 import { Box, Typography } from "@mui/material";
 import React, { Fragment } from "react";
+import { useAppSelector } from "../../store/hooks";
 import { DialogTemplate } from "./DialogTemplate";
 
-export const PrizeDialog = ({ prize, prizeImgSrc }) => {
+export const PrizeDialog = ({ prize, prizeImgSrc, handleClose }) => {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
   return (
     <Fragment>
-      <DialogTemplate title="جائزة المسابقة:">
+      <DialogTemplate
+        handleClose={handleClose}
+        title={textContainer.competitionPrize}
+      >
         <Box
           sx={{
             display: "flex",

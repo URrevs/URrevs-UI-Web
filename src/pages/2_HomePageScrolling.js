@@ -22,21 +22,25 @@ import {
 import Banner from "../Components/Banners/Banner";
 import { Grid } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
+import { PostingComponent } from "../Components/PostingComponents/PostingComponent";
+import { postingModalActions } from "../store/uiPostingModalSlice";
 
 function Reviews() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     console.log("clear reviews");
-
     dispatch(homePageActions.clearReviews());
   }, []);
-
+  const textContainer = useAppSelector((state) => state.language.textContainer);
   const isMobile = useTheme().isMobile;
 
   const currentUser = useAppSelector((state) => state.auth);
 
   const reviewsList = useAppSelector((state) => state.homePage.newReviews);
+
   const [page, setPage] = useState(1);
+
   const { data, isLoading, isFetching, error } = useGetRecommendedQuery(page);
 
   const stateLikeReview = (id) =>
@@ -50,6 +54,9 @@ function Reviews() {
 
   const stateUnLikeQuestion = (id) =>
     dispatch(homePageActions.setQuestionIsLiked({ id: id, isLiked: false }));
+
+  const stateIncreaseShareCounter = (id) =>
+    dispatch(homePageActions.increaseShareCounter({ id: id }));
 
   const addToReviewsList = () =>
     dispatch(
@@ -95,10 +102,11 @@ function Reviews() {
           clearIndexCache={clearCache}
           reviewDetails={reviewsList[index]}
           isPhoneReview={true}
-          targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
+          targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.REVIEWS}?pid=${reviewsList[index].targetId}`}
           userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
           stateLikeFn={stateLikeReview}
           stateUnLikeFn={stateUnLikeReview}
+          stateShare={stateIncreaseShareCounter}
           fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewsList[index]._id}`}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
@@ -116,10 +124,11 @@ function Reviews() {
           clearIndexCache={clearCache}
           reviewDetails={reviewsList[index]}
           isPhoneReview={true}
-          targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+          targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${reviewsList[index].targetId}`}
           userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
           stateLikeFn={stateLikeReview}
           stateUnLikeFn={stateUnLikeReview}
+          stateShare={stateIncreaseShareCounter}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
         />
@@ -190,10 +199,11 @@ function Reviews() {
           clearIndexCache={clearCache}
           reviewDetails={reviewsList[index]}
           isPhoneReview={true}
-          targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}?pid=${reviewsList[index].targetId}`}
+          targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.QUESTIONS}?pid=${reviewsList[index].targetId}`}
           userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
           stateLikeFn={stateLikeQuestion}
           stateUnLikeFn={stateUnLikeQuestion}
+          stateShare={stateIncreaseShareCounter}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
           acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}
@@ -265,10 +275,11 @@ function Reviews() {
           clearIndexCache={clearCache}
           reviewDetails={reviewsList[index]}
           isPhoneReview={false}
-          targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}?cid=${reviewsList[index].targetId}`}
+          targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${reviewsList[index].targetId}`}
           userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
           stateLikeFn={stateLikeQuestion}
           stateUnLikeFn={stateUnLikeQuestion}
+          stateShare={stateIncreaseShareCounter}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
           acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}
@@ -279,11 +290,13 @@ function Reviews() {
 
   return (
     <CustomAppBar showLogo showSearch showProfile>
+      <div style={{ height: "20px" }}></div>
       {!isMobile ? (
         !currentUser.isLoggedIn && (
           <Grid container style={{ display: "flex" }}>
             <Grid item xl={2} md={1} xs={0}></Grid>
             <Grid item xl={8} md={10} xs={12}>
+              <div style={{ height: "20px" }} />
               <Banner></Banner>
             </Grid>
             <Grid item xl={2} md={1} xs={0}></Grid>
@@ -293,9 +306,27 @@ function Reviews() {
         <div></div>
       )}
 
-      <Grid container style={{ display: "flex" }}>
-        <Grid item xl={3} md={2} xs={0}></Grid>
-        <Grid item xl={6} md={8} xs={12}>
+      {!isMobile ? (
+        <AlonePostsGrid>
+          {currentUser.isLoggedIn ? (
+            <div>
+              <PostingComponent
+                label={textContainer.youCanWriteReviewOrAskAQuestion}
+                placeholder={textContainer.writeYourPost}
+                params={{
+                  disabled: true,
+                  onClick: () => {
+                    dispatch(
+                      postingModalActions.showPostingModal({
+                        tab: 0,
+                      })
+                    );
+                  },
+                }}
+              />
+              <div style={{ height: "25px" }}></div>
+            </div>
+          ) : null}
           <VirtualReviewList
             reviewCard={reviewCard}
             reviewsList={reviewsList}
@@ -307,9 +338,39 @@ function Reviews() {
             addToReviewsList={addToReviewsList}
             increasePage={increasePage}
           />
-        </Grid>
-        <Grid item xl={3} md={2} xs={0}></Grid>
-      </Grid>
+        </AlonePostsGrid>
+      ) : (
+        <FixedGrid>
+          <div>
+            <PostingComponent
+              label={textContainer.youCanWriteReviewOrAskAQuestion}
+              placeholder={textContainer.writeYourPost}
+              params={{
+                disabled: true,
+                onClick: () => {
+                  dispatch(
+                    postingModalActions.showPostingModal({
+                      tab: 0,
+                    })
+                  );
+                },
+              }}
+            />
+            <div style={{ height: "50px" }}></div>
+          </div>
+          <VirtualReviewList
+            reviewCard={reviewCard}
+            reviewsList={reviewsList}
+            page={page}
+            data={data}
+            error={error}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            addToReviewsList={addToReviewsList}
+            increasePage={increasePage}
+          />
+        </FixedGrid>
+      )}
     </CustomAppBar>
   );
 }

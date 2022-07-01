@@ -17,7 +17,7 @@ import {
   ListItemButton,
   ListItemText,
   Modal,
-  Typography
+  Typography,
 } from "@mui/material";
 import { List } from "@mui/material/";
 import React from "react";
@@ -140,7 +140,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       title: pageDictionry.aboutUs,
       icon: <ErrorOutlineOutlinedIcon sx={{ fontSize: 40 }} />,
       subtitle: "",
-      to: "",
+      to: `../../${ROUTES_NAMES.ABOUT_US}`,
       authenticate: true,
     },
     {
@@ -334,7 +334,13 @@ export default function Menu({ isDesktop = false, drawerRef }) {
               justifyContent: "center",
             }}
           >
-            <Link to="/">
+            <Link
+              to={`../../${ROUTES_NAMES.TERMS_AND_CONDITIONS}/${language}`}
+              target="_blank"
+              onClick={() => {
+                dispatch(menuActions.hideMenu());
+              }}
+            >
               <Typography underline="always">
                 {pageDictionry.termsAndAgreements}
               </Typography>
@@ -342,7 +348,13 @@ export default function Menu({ isDesktop = false, drawerRef }) {
             <Typography sx={{ padding: "0px 3px" }} variant="S16W400C050505">
               |
             </Typography>
-            <Link to="/">
+            <Link
+              to={`../../${ROUTES_NAMES.PRIVACY_POLICY}/${language}`}
+              target="_blank"
+              onClick={() => {
+                dispatch(menuActions.hideMenu());
+              }}
+            >
               <Typography underline="always">
                 {pageDictionry.privacyPolicy}
               </Typography>

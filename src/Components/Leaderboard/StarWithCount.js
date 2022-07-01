@@ -4,16 +4,34 @@ import React from "react";
 import { useConvertNumberToHumanLanguage } from "../../hooks/useMillify";
 import { RoundedStar } from "../Icons/star";
 
-export default function StarWithCount({ value, textStyle, starSize }) {
+export default function StarWithCount({
+  value,
+  textStyle,
+  starSize,
+  prizeIcon = null,
+}) {
   const theme = useTheme();
 
   return (
-    <div style={{ display: "flex", alignItems: "end" }}>
+    <div
+      style={{
+        display: "flex",
+        // justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {prizeIcon}
       <RoundedStar
         color={theme.palette.reviewCard.filledStarColor}
         size={starSize}
       />
-      <Typography variant={textStyle}>
+
+      <Typography
+        sx={{
+          minWidth: "20px",
+        }}
+        variant={textStyle}
+      >
         {useConvertNumberToHumanLanguage(value)}
       </Typography>
     </div>

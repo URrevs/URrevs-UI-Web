@@ -1,26 +1,25 @@
-import { Box } from "@mui/material";
-import React from "react";
+import { useTheme } from "@emotion/react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import { CompanyOverviewCard } from "../Components/OverviewCard/CompanyOverviewCard";
-import { Tabbar } from "../Components/Tabbar/Tabbar";
+import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
+import { PathTabbar } from "../Components/Tabbar/PathTabbar";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetCompanyStatsInfoQuery } from "../services/companies";
-import { CompanyQuestions } from "./CompanyProfileTabs/CompanyQuestions";
-import { CompanyReviews } from "./CompanyProfileTabs/CompanyReviews";
 export const CompanyProfile = () => {
-  const [value, setValue] = React.useState(0);
+  const isMobile = useTheme().isMobile;
 
   const [searchParams, setSearchParams] = useSearchParams();
   const companyId = searchParams.get("cid");
-  const { isLoading, error, isFetching, data } = useGetCompanyStatsInfoQuery(
-    companyId,
-    {
-      refetchOnMountOrArgChange: true,
-    }
-  );
+
+  const {
+    isLoading: companyStatsIsLoading,
+    error: companyStatsError,
+    isFetching: companyStatsIsFetching,
+    data: companyStatsData,
+  } = useGetCompanyStatsInfoQuery(companyId);
 
   const textContainer = useSelector((state) => state.language.textContainer);
   const pageDictionary = {
@@ -28,39 +27,51 @@ export const CompanyProfile = () => {
     tabBarQuestionsAndAnswers: textContainer.tabBarQuestionsAndAnswers,
     company: textContainer.company,
   };
+
+  const pageDictionry = {
+    reviews: textContainer.tabBarReviews,
+    questions: textContainer.tabBarQuestionsAndAnswers,
+  };
+
+  const listOfItems = [
+    {
+      title: pageDictionry.reviews,
+      to: `${ROUTES_NAMES.REVIEWS}?cid=${companyId}`,
+    },
+    {
+      title: pageDictionry.questions,
+      to: `${ROUTES_NAMES.QUESTIONS}?cid=${companyId}`,
+    },
+  ];
+
   return (
     <React.Fragment>
-      {isLoading ? (
+      {companyStatsIsLoading ? (
         <LoadingSpinner />
+      ) : companyStatsError ? (
+        <div>{companyStatsError.data.status}</div>
       ) : (
         <CustomAppBar
-          label={data.name}
+          label={companyStatsData.name}
           showLabel
           showBackBtn
           showProfile
           englishName
           showSearch
-          tabBar={
-            <Tabbar
-              arrayOfTabs={[
-                pageDictionary.tabBarReviews,
-                pageDictionary.tabBarQuestionsAndAnswers,
-              ]}
-              value={value}
-              setValue={setValue}
-            />
-          }
         >
-          {value === 0 ? (
-            <CompanyReviews
-              viewer={data.views}
-              companyRating={data.rating.toPrecision(2)}
-              companyName={data.name}
-              type={pageDictionary.company}
-            />
-          ) : (
-            <CompanyQuestions />
-          )}
+          {
+            <Fragment>
+              {!isMobile ? (
+                <StickyTabbar
+                  arrayOfTabs={listOfItems}
+                  userName={companyStatsData.name}
+                ></StickyTabbar>
+              ) : (
+                <PathTabbar arrayOfTabs={listOfItems} />
+              )}
+              <Outlet context={{ companyName: companyStatsData.name }} />
+            </Fragment>
+          }
         </CustomAppBar>
       )}
     </React.Fragment>

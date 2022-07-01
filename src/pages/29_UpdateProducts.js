@@ -20,6 +20,7 @@ export const UpdateProducts = () => {
     refetchOnMountOrArgChange: true,
   });
 
+
   const [updateProductsList] = useUpdateMutation();
   const [buttonLoading, setButtonLoading] = useState(false);
   const [updateError, setUpdateError] = useState(null);
@@ -106,7 +107,7 @@ export const UpdateProducts = () => {
             <Box
               style={{
                 bottom: 0,
-                marginTop: 16,
+                marginTop: 22,
               }}
             >
               <OrangeGradientButton

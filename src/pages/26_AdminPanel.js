@@ -15,19 +15,28 @@ import { convertDateToString } from "../functions/convertDateToString";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetLatestCompetetionQuery } from "../services/competetion";
 import { useGetLastUpdateInfoQuery } from "../services/update";
+import { useAppDispatch } from "../store/hooks";
+import { snackbarActions } from "../store/uiSnackbarSlice";
 import { UpdateProducts } from "./29_UpdateProducts";
 
 export const AdminPanel = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const language = useSelector((state) => state.language.language);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const theme = useTheme();
-  const { data, latestUpdateError, isLoading } = useGetLastUpdateInfoQuery();
+  const { data, latestUpdateError, isLoading } = useGetLastUpdateInfoQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
   const {
     data: lastCompetetionData,
     error: latestCompetetionError,
     isLoading: latestCompetetionIsLoading,
   } = useGetLatestCompetetionQuery();
+
+  console.log(lastCompetetionData);
 
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(0);
@@ -68,9 +77,10 @@ export const AdminPanel = () => {
 
   useEffect(() => {
     if (data) {
-      setLastUpdateDate(convertDateToString(data.lastUpdateDate, language));
+      setLastUpdateDate(convertDateToString(data.date, language));
     }
   }, [data]);
+
   const renderAdminOption = () =>
     isLoading ? (
       <LoadingSpinner />
@@ -93,12 +103,26 @@ export const AdminPanel = () => {
           key={listItems[1].title}
           title={listItems[1].title}
           subTitle={
-            lastCompetetionData &&
-            listItems[1].subtitle +
-              " " +
-              convertDateToString(lastCompetetionData.createdAt, language)
+            latestCompetetionError &&
+            latestCompetetionError.data.status === "not yet"
+              ? "لا يوجد مسابقات بعد"
+              : lastCompetetionData &&
+                new Date(lastCompetetionData.deadline) - new Date() > 0
+              ? "هناك مسابقة قائمة الان"
+              : listItems[1].subtitle + " "
           }
-          onClick={listItems[1].onClick}
+          onClick={
+            lastCompetetionData &&
+            new Date(lastCompetetionData.deadline) - new Date() > 0
+              ? () => {
+                  dispatch(
+                    snackbarActions.showSnackbar({
+                      message: "يوجد مسابقة قائمة بالفعل",
+                    })
+                  );
+                }
+              : listItems[1].onClick
+          }
           icon={listItems[1].icon}
         />
       </React.Fragment>
@@ -106,7 +130,7 @@ export const AdminPanel = () => {
   const desktopView = () => (
     <Grid container>
       {/* Right Grid => On Arabic Language */}
-      <Grid item lg={2.6}>
+      <Grid item xl={3} lg={3.5} md={4}>
         <Paper
           style={{
             padding: "65px 8px",
@@ -125,15 +149,16 @@ export const AdminPanel = () => {
         </Paper>
       </Grid>
       {/* Remove the  page * 2 later it's just for show */}
-      <Grid item lg={1.9}></Grid>
-
+      <Grid item xl={2} lg={1} md={0.5}></Grid>
       <Grid
+        item
+        xl={5}
+        lg={6.5}
+        md={7}
         sx={{
           marginTop: "39px",
           marginBottom: "65px",
         }}
-        item
-        lg={5.6 - page * 2}
       >
         {page === 0 ? (
           <UpdateProducts />
@@ -150,7 +175,7 @@ export const AdminPanel = () => {
           </Paper>
         )}
       </Grid>
-      <Grid item lg={1.9}></Grid>
+      <Grid item xl={2} lg={1} md={0.5}></Grid>
     </Grid>
   );
   return (
