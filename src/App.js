@@ -10,7 +10,7 @@ import { arEG } from "@mui/material/locale";
 import { getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useXauthenticateQuery } from "../src/services/users";
 import "./App.css";
 import Layout from "./Components/MainLayout/Layout";
@@ -280,7 +280,10 @@ function App() {
                     <Routes>
                       {/* not found handling */}
                       <Route path="/404" element={<NotFoundPage />} />
-                      {/* <Route path="*" element={<Navigate to="/404" replace />} /> */}
+                      <Route
+                        path="*"
+                        element={<Navigate to="/404" replace />}
+                      />
 
                       {/* review full review */}
                       <Route
@@ -303,6 +306,10 @@ function App() {
                       />
                       <Route path={ROUTES_NAMES.HOME}>
                         <Route index element={<Reviews />} />
+                        <Route
+                          path={ROUTES_NAMES.ADD_REVIEW}
+                          element={<ReviewPostingScreen />}
+                        />
                         <Route path={ROUTES_NAMES.MENU}>
                           <Route index element={<Menu />} />
                         </Route>
@@ -324,12 +331,26 @@ function App() {
                         <Route path={ROUTES_NAMES.ALL_PRODUCTS}>
                           <Route index element={<AllProductsScreen />} />
                         </Route>
+                        <Route
+                          path={ROUTES_NAMES.SEARCH}
+                          element={<SearchScreen />}
+                        />
+                        <Route
+                          path={ROUTES_NAMES.LEADERBOARD}
+                          element={<Leaderboard />}
+                        />
+                        <Route
+                          path={ROUTES_NAMES.SETTINGS}
+                          element={<SettingsScreen />}
+                        />
+                        {/* {storeUser.isAdmin && ( */}
                         <Route path={ROUTES_NAMES.ADMIN_PANEL}>
                           <Route index element={<AdminPanel />} />
                           <Route path={ROUTES_NAMES.UPDATE}>
                             <Route index element={<UpdateProducts />} />
                           </Route>
                         </Route>
+                        {/* )} */}
                         {/* profile */}
                         {!isMobile ? (
                           <Route
@@ -412,38 +433,6 @@ function App() {
                           element={<ComparisonScreen />}
                         />
                       </Route>
-                      <Route path={ROUTES_NAMES.HOME}>
-                        <Route
-                          path={ROUTES_NAMES.ADD_REVIEW}
-                          element={<ReviewPostingScreen />}
-                        />
-                      </Route>
-                      <Route
-                        path={ROUTES_NAMES.SEARCH}
-                        element={<SearchScreen />}
-                      />
-                      <Route
-                        path={ROUTES_NAMES.LEADERBOARD}
-                        element={<Leaderboard />}
-                      />
-                      <Route path={ROUTES_NAMES.MENU}>
-                        <Route index element={<Menu />} />
-                      </Route>
-                      <Route
-                        path={ROUTES_NAMES.SETTINGS}
-                        element={<SettingsScreen />}
-                      />
-                      <Route path={ROUTES_NAMES.ADMIN_PANEL}>
-                        <Route index element={<AdminPanel />} />
-                        <Route path={ROUTES_NAMES.UPDATE}>
-                          <Route index element={<UpdateProducts />} />
-                        </Route>
-                      </Route>
-
-                      <Route
-                        path={ROUTES_NAMES.PRODUCTS}
-                        element={<AllProductsScreen />}
-                      />
 
                       {/* testing routes */}
                       <Route path="/test" element={<AddReview />} />
