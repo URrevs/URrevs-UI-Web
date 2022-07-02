@@ -307,5 +307,7 @@
   "phoneAnswerReply": "رد على إجابة سؤال على هاتف",
   "companyAnswerReply": "رد على إجابة سؤال على شركة",
   "letThisContentBeViewed": "إتاحة عرض هذا المحتوى",
-  "unblockThisUsersAccount": "إعادة تشغيل حساب هذا المستخدم"
+  "unblockThisUsersAccount": "إعادة تشغيل حساب هذا المستخدم",
+  "suggestedResults": "النتائج المقترحة",
+  "noItems": "لا يوجد عناصر"
 }
