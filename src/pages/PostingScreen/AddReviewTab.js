@@ -85,7 +85,13 @@ export const AddReviewTab = ({ ...props }) => {
     },
   ];
 
-  const renderFields = (text, fieldName, label, controlled = true) => {
+  const renderFields = (
+    text,
+    fieldName,
+    label,
+    multiline = true,
+    controlled = true
+  ) => {
     return (
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Typography sx={{}} variant="S18W500C050505">
@@ -94,6 +100,7 @@ export const AddReviewTab = ({ ...props }) => {
         <FormikTextField
           fieldName={fieldName}
           label={label}
+          multiline={multiline}
           isControlled={controlled}
         />
       </Stack>
@@ -232,11 +239,12 @@ export const AddReviewTab = ({ ...props }) => {
           </IconButton>
         </Typography>
         <br />
-        {/* Invitation Code*/}
+        {/* Invitation Code */}
         <FormikTextField
           fieldName={"invitationCode"}
           label={pageDictionary.invitationCode}
           isControlled={false}
+          multiline={false}
         />
         {/* Submit Button */}
         <FormSubmitButton

@@ -49,18 +49,18 @@ const PostingScreen = ({
     battery: Yup.number().integer().min(1, "Select Stars"),
     overAllExp: Yup.number().integer().min(1, "Select Stars"),
     rateManufacturer: Yup.number().integer().min(1, "Select Stars"),
-    likeAboutProduct: Yup.string().required(
-      pageDictionary.likedAboutProductErrorMsg
-    ),
-    hateAboutProduct: Yup.string().required(
-      pageDictionary.hateAboutProductErrorMsg
-    ),
-    likeAbout: Yup.string().required(
-      pageDictionary.likedAboutManufacturerErrorMsg
-    ),
-    hateAbout: Yup.string().required(
-      pageDictionary.hatedAboutManufacturerErrorMsg
-    ),
+    likeAboutProduct: Yup.string()
+      .trim()
+      .required(pageDictionary.likedAboutProductErrorMsg),
+    hateAboutProduct: Yup.string()
+      .trim()
+      .required(pageDictionary.hateAboutProductErrorMsg),
+    likeAbout: Yup.string()
+      .trim()
+      .required(pageDictionary.likedAboutManufacturerErrorMsg),
+    hateAbout: Yup.string()
+      .trim()
+      .required(pageDictionary.hatedAboutManufacturerErrorMsg),
     // invitationCode: Yup.string().required("Required"),
   });
   return (

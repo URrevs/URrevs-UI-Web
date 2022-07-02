@@ -1,10 +1,7 @@
 import { useTheme } from "@emotion/react";
 import { TextField } from "@mui/material";
 import React from "react";
-import {
-  TEXT_FIELD_BORDER_RADIUS,
-  TEXT_FIELD_BORDER_THICKNESS,
-} from "../../constants";
+import { TEXT_FIELD_BORDER_THICKNESS } from "../../constants";
 
 export const StyledTextField = (props) => {
   const theme = useTheme();
@@ -22,15 +19,18 @@ export const StyledTextField = (props) => {
               ...theme.typography.S16W300C050505,
             },
           },
+          borderRadius: "5px",
+          background: theme.palette.textField.inputFieldBackground,
+          ".MuiInputBase-inputMultiline": {
+            "&::placeholder": {
+              opacity: 1,
+              ...theme.typography.S16W300C050505,
+            },
+          },
         }}
         inputProps={{
           style: {
-            fontWeight: 300,
-            fontSize: 16,
             ...theme.typography.S16W500C050505,
-            background: theme.palette.textField.inputFieldBackground,
-            borderRadius: TEXT_FIELD_BORDER_RADIUS,
-            border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,
           },
         }}
       />

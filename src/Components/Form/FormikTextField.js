@@ -14,16 +14,15 @@ const FormikTextField = ({
   fieldName,
   isRequired = false,
   isControlled = false,
+  multiline = true,
 }) => {
-  const theme = useTheme();
   return (
     <FastField name={fieldName}>
       {({ field: { value }, form: { setFieldValue }, meta }) => (
         <React.Fragment>
           <StyledTextField
-            defaultValue={""}
+            multiline={multiline}
             placeholder={label}
-            autoComplete={"off"}
             // required={isRequired}
             error={meta.touched && meta.error && true}
             helperText={meta.touched && meta.error}
@@ -44,36 +43,22 @@ const FormikTextField = ({
                   }
             }
           />
-          {/* <TextField
-            // sx={{ display: "flex", pb: "10px" }}
-            inputProps={{
-              style: {
-                fontWeight: 300,
-                fontSize: 16,
-                color: theme.palette.textField.inputFieldText,
-                background: theme.palette.textField.inputFieldBackground,
-                borderRadius: TEXT_FIELD_BORDER_RADIUS,
-                border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,
-              },
+          {/* <div
+            style={{
+              margin: "50px",
             }}
-            InputLabelProps={{
-              style: {
-                fontWeight: 300,
-                fontSize: 16,
-                color: theme.palette.textField.inputFieldText,
-              }, //Doesn't look any different
-            }}
-            defaultValue={sessionStorage.getItem(fieldName)}
-            placeholder={label}
-            multiline
-            required={isRequired}
-            error={meta.touched && meta.error && true}
-            helperText={meta.touched && meta.error}
-            onBlur={(e) => {
-              setFieldValue(fieldName, e.target.value);
-              sessionStorage.setItem(fieldName, e.target.value);
-            }}
-          /> */}
+          >
+            <p
+              style={{
+                color: "#d32f2f",
+                fontSize: "12px",
+                fontFamily: "Tajawal",
+                fontWeight: "400",
+              }}
+            >
+              {meta.touched && meta.error}
+            </p>
+          </div> */}
         </React.Fragment>
       )}
     </FastField>
