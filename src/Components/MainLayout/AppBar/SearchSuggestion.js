@@ -85,12 +85,14 @@ export const SearchSuggestion = () => {
             // setResults([...results, { _id: id, name: title, type }]);
 
             // add recent search to server
+            setSearchQuery("");
             setSearchSuggestion(false);
             addRecentSearch({ type, id });
             setRecentResults([
               { name: title, type: type, _id: id },
               ...recentResults,
             ]);
+
             type === "phone"
               ? navigate(
                   `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${id}`
@@ -134,6 +136,7 @@ export const SearchSuggestion = () => {
           }}
           onClick={() => {
             //Navigate to that phone
+            setSearchQuery("");
             setSearchSuggestion(false);
             type === "phone"
               ? navigate(
@@ -254,6 +257,7 @@ export const SearchSuggestion = () => {
             onClick={() => {
               setSearchSuggestion(true);
             }}
+            value={searchQuery}
             onChange={async (e) => {
               if (e.target.value.trim() === "") {
                 setResults(recentResults);
