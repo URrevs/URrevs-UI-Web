@@ -31,6 +31,7 @@ export const ProductOverviewCard = ({
   viewer,
   phone,
   type,
+  owned = false,
   paramId = "",
   productRating,
   companyRating,
@@ -51,8 +52,12 @@ export const ProductOverviewCard = ({
           sx={{ display: "flex", justifyContent: "center", padding: "5px 0px" }}
         >
           <ButtonStyled
+            sx={{
+              filter: owned && "grayscale(1)",
+            }}
             elevation="3"
             variant="contained"
+            disabled={owned}
             onClick={() => {
               dispatch(
                 postingModalActions.showPostingModal({

@@ -86,6 +86,7 @@ export const ProductSpecsScreen = () => {
           productRating={statistical.generalRating}
           companyRating={statistical.companyRating}
           viewer={statistical.views}
+          owned={statistical.owned}
           ratings={[
             statistical.uiRating,
             statistical.manufacturingQuality,
@@ -110,7 +111,9 @@ export const ProductSpecsScreen = () => {
       }}
     >
       <ButtonPage
-        sx={{ background: theme.palette.defaultPageBtn }}
+        sx={{
+          background: theme.palette.defaultPageBtn,
+        }}
         onClick={handleOpen}
       >
         <Box
