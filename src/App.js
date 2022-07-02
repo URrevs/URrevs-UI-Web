@@ -217,10 +217,11 @@ function App() {
   const { data, isLoading, error } = useXauthenticateQuery(
     storeUser.isLoggedIn ? storeUser.accessToken : "",
     {
-      skip: !storeUser.isLoggedIn || storeUser.accessToken == "",
+      skip: !storeUser.accessToken,
     }
   );
 
+  console.log(storeUser);
   const [firebaseIsLoading, setFirebaseIsLoading] = useState(true);
 
   useEffect(() => {
@@ -228,7 +229,7 @@ function App() {
       if (user) {
         dispatch(
           authActions.login({
-            isLoggedIn: true,
+            isLoggedIn: false,
             accessToken: user.accessToken,
           })
         );
@@ -247,6 +248,8 @@ function App() {
     if (data) {
       dispatch(
         authActions.login({
+          isLoggedIn: true,
+          accessToken: storeUser.accessToken,
           expiration: data.exp,
           apiToken: data.token,
           isAdmin: data.admin,
@@ -307,14 +310,9 @@ function App() {
                           path={ROUTES_NAMES.ABOUT_US}
                           element={<AboutUsScreen />}
                         />
-                        <Route
-                          path={ROUTES_NAMES.PRIVACY_POLICY + "/ar"}
-                          element={<PrivacyPolicyScreen />}
-                        />
-                        <Route
-                          path={ROUTES_NAMES.PRIVACY_POLICY + "/en"}
-                          element={<PrivacyPolicyScreen />}
-                        />
+                        <Route path={ROUTES_NAMES.PRIVACY_POLICY}>
+                          <Route path="ar" element={<PrivacyPolicyScreen />} />
+                        </Route>
                         <Route
                           path={ROUTES_NAMES.TERMS_AND_CONDITIONS + "/ar"}
                           element={<TermsAndConditionsScreen />}
@@ -332,7 +330,6 @@ function App() {
                             <Route index element={<UpdateProducts />} />
                           </Route>
                         </Route>
-
                         {/* profile */}
                         {!isMobile ? (
                           <Route
@@ -378,7 +375,6 @@ function App() {
                             />
                           </Route>
                         )}
-
                         {/* company profile */}
                         <Route
                           path={`${ROUTES_NAMES.COMPANY_PROFILE}`}
@@ -393,7 +389,6 @@ function App() {
                             element={<CompanyQuestions />}
                           />
                         </Route>
-
                         {/* phone profile */}
                         <Route
                           path={ROUTES_NAMES.PHONE_PROFILE}
@@ -411,7 +406,6 @@ function App() {
                             element={<ProductQuestions />}
                           />
                         </Route>
-
                         {/* comparison screen */}
                         <Route
                           path={ROUTES_NAMES.COMPARISON}
