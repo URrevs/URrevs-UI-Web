@@ -1,11 +1,6 @@
 import { useTheme } from "@emotion/react";
-import { Box, Typography, TextField } from "@mui/material";
-import { Field } from "formik";
+import { FastField } from "formik";
 import React from "react";
-import {
-  TEXT_FIELD_BORDER_RADIUS,
-  TEXT_FIELD_BORDER_THICKNESS,
-} from "../../constants";
 import { StyledTextField } from "./StyledTextField";
 // const InputLabelProps={{
 //   style: {
@@ -22,7 +17,7 @@ const FormikTextField = ({
 }) => {
   const theme = useTheme();
   return (
-    <Field name={fieldName}>
+    <FastField name={fieldName}>
       {({ field: { value }, form: { setFieldValue }, meta }) => (
         <React.Fragment>
           <StyledTextField
@@ -81,7 +76,7 @@ const FormikTextField = ({
           /> */}
         </React.Fragment>
       )}
-    </Field>
+    </FastField>
   );
 };
 export default FormikTextField;
