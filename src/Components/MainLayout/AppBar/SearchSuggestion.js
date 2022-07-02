@@ -50,7 +50,7 @@ export const SearchSuggestion = () => {
   } = useGetMyRecentSearchesQuery(
     {},
     {
-      skip: !user.isLoggedIn,
+      skip: !user.apiToken,
       refetchOnMountOrArgChange: true,
     }
   );

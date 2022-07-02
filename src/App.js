@@ -248,8 +248,8 @@ function App() {
     if (data) {
       dispatch(
         authActions.login({
-          isLoggedIn: true,
           accessToken: storeUser.accessToken,
+          isLoggedIn: true,
           expiration: data.exp,
           apiToken: data.token,
           isAdmin: data.admin,
@@ -264,7 +264,7 @@ function App() {
     }
   }, [data, dispatch, setFirebaseIsLoading]);
 
-  if (firebaseIsLoading) {
+  if (firebaseIsLoading || isLoading) {
     return <SplashScreen />;
   } else {
     return (
