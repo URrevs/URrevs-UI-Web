@@ -319,6 +319,10 @@ export const ComponentsTest = () => {
             ? "dark mode"
             : "light mode"}
         </Typography>
+        <Typography>{navigator.platform}</Typography>
+        <Typography>
+          {navigator.userLanguage || window.navigator.language}
+        </Typography>
       </AlonePostsGrid>
     </React.Fragment>
   );

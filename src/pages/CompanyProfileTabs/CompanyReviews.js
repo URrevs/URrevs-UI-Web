@@ -98,12 +98,15 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
       return <div>Error</div>;
     } else {
       return (
-        <CompanyOverviewCard
-          companyName={companyStatsData.name}
-          type={textContainer.company}
-          companyRating={companyStatsData.rating.toPrecision(2)}
-          viewer={companyStatsData.views}
-        />
+        <div>
+          <div style={{ height: "15px" }}></div>
+          <CompanyOverviewCard
+            companyName={companyStatsData.name}
+            type={textContainer.company}
+            companyRating={companyStatsData.rating.toPrecision(2)}
+            viewer={companyStatsData.views}
+          />
+        </div>
       );
     }
   };

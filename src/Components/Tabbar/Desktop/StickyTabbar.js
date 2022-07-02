@@ -47,10 +47,11 @@ export const StickyTabbar = ({
   return (
     <Card
       sx={{
-        position: smallPfpVisible ? "fixed" : "sticky",
+        position: smallPfpVisible && hasParent ? "fixed" : "sticky",
         justifyContent: "space-between",
         display: "flex",
-        top: hasParent && "64px",
+        // top: hasParent && "64px",
+        top: "64px",
         padding: "0px 200px",
         [theme.breakpoints.down("xl")]: {
           padding: "0px 150px",
@@ -70,7 +71,7 @@ export const StickyTabbar = ({
           // </Link>
         ))}
       </Tabs>
-      {smallPfpVisible ? (
+      {smallPfpVisible || !hasParent ? (
         <div
           style={{
             display: "flex",
