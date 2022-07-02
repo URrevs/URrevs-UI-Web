@@ -63,9 +63,10 @@ export const CompanyProfile = () => {
             <Fragment>
               {!isMobile ? (
                 <StickyTabbar
+                  hasParent={false}
                   arrayOfTabs={listOfItems}
                   userName={companyStatsData.name}
-                ></StickyTabbar>
+                />
               ) : (
                 <PathTabbar arrayOfTabs={listOfItems} />
               )}

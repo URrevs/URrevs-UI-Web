@@ -64,14 +64,18 @@ export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
         direction={theme.direction}
         onClose={handleClose}
       >
-        <LanguageDialog handleClose={handleClose} />
+        <div>
+          <LanguageDialog handleClose={handleClose} />
+        </div>
       </Modal>
       <Modal
         open={modal === "theme"}
         direction={theme.direction}
         onClose={handleClose}
       >
-        <ThemeDialog handleClose={handleClose} />
+        <div>
+          <ThemeDialog handleClose={handleClose} />
+        </div>
       </Modal>
     </div>
   );
