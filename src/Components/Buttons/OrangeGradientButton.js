@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
-
+import LoadingButton from "@mui/lab/LoadingButton";
 // eslint-disable-next-line no-unused-vars
-const OrangeGradientButton = styled(Button, {
+const OrangeGradientButton = styled(LoadingButton, {
   shouldForwardProp: (prop) => prop !== "color",
 })(({ theme, color }) => ({
   background:

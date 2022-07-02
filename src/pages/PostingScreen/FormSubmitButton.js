@@ -36,6 +36,7 @@ export const FormSubmitButton = ({
       <OrangeGradientButton
         type="submit"
         disabled={loading}
+        loading={loading}
         color="red"
         sx={{
           width: "100%",
@@ -43,7 +44,7 @@ export const FormSubmitButton = ({
           marginTop: "20px",
         }}
       >
-        {loading ? <LoadingSpinner size={15} /> : renderBtnContent()}
+        {!loading && renderBtnContent()}
       </OrangeGradientButton>
     </div>
   );
