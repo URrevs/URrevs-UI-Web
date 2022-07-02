@@ -15,7 +15,7 @@ export const ThemeDialog = ({ handleClose }) => {
 
   const dispatch = useAppDispatch();
   const theme = useTheme();
-  const mode = theme.isDark ? "dark" : "light";
+  const mode = useAppSelector((state) => state.darkMode.theme);
   //Talk to fady about it first
   //   if (
   //     window.matchMedia &&
@@ -32,11 +32,11 @@ export const ThemeDialog = ({ handleClose }) => {
       >
         <DialogTemplate handleClose={handleClose} title={textContainer.theme}>
           <FormControl>
-            <RadioGroup defaultValue={mode}>
+            <RadioGroup value={mode}>
               <FormControlLabel
                 value={"light"}
                 onChange={() => {
-                  dispatch(isDarkActions.changeMode(false));
+                  dispatch(isDarkActions.changeMode("light"));
                 }}
                 control={<Radio />}
                 label={textContainer.lightTheme}
@@ -44,19 +44,19 @@ export const ThemeDialog = ({ handleClose }) => {
               <FormControlLabel
                 value="dark"
                 onChange={() => {
-                  dispatch(isDarkActions.changeMode(true));
+                  dispatch(isDarkActions.changeMode("dark"));
                 }}
                 control={<Radio />}
                 label={textContainer.darkTheme}
               />
-              {/* <FormControlLabel
+              <FormControlLabel
                 value="system"
                 onChange={() => {
-                  dispatch(isDarkActions.changeMode(true));
+                  dispatch(isDarkActions.changeMode("system"));
                 }}
                 control={<Radio />}
-                label={textContainer.english}
-              /> */}
+                label={textContainer.systemTheme}
+              />
             </RadioGroup>
           </FormControl>
         </DialogTemplate>

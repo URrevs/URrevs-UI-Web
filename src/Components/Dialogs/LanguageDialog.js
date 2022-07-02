@@ -28,7 +28,7 @@ export const LanguageDialog = ({ handleClose }) => {
           title={textContainer.language}
         >
           <FormControl>
-            <RadioGroup defaultValue={language}>
+            <RadioGroup value={language}>
               <FormControlLabel
                 value={"arabic"}
                 onChange={() => {
