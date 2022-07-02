@@ -179,6 +179,7 @@ export function AllProductsScreen() {
         dense
         key={title}
         style={{
+          padding: "9px 0",
           "&:hover": {
             backgroundColor: theme.palette.hover,
           },
@@ -201,12 +202,12 @@ export function AllProductsScreen() {
         >
           <Avatar
             sx={{
-              margin: "18px 17px 10px 13px",
+              margin: "0px 17px 0px 13px",
             }}
           >
             <img
               alt=""
-              objectfit="cover"
+              objectFit="contain"
               width="40px"
               height="40px"
               src={imgSrc}
@@ -271,7 +272,7 @@ export function AllProductsScreen() {
               objectfit="cover"
               width="40px"
               height="40px"
-              src="./images/logos/nvidia.png"
+              src={imgSrc}
             />
           </Avatar>
           <ListItemText
@@ -351,12 +352,12 @@ export function AllProductsScreen() {
                 {theme.isMobile
                   ? renderProduct(
                       item.name,
-                      "",
+                      item.companyLogo,
                       `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${item._id}`
                     )
                   : renderProductOnDesktop(
                       item.name,
-                      "",
+                      item.companyLogo,
                       `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${item._id}`
                     )}
               </Fragment>
@@ -373,7 +374,7 @@ export function AllProductsScreen() {
       !companiesIsLoading &&
       !companiesIsFetching &&
       companyPage >= 1 &&
-      maxCompanyIndex === companiesList.length &&
+      maxCompanyIndex === companiesList.length - 1 &&
       companiesData.length !== 0
     ) {
       maxCompanyIndex = 0;
@@ -384,10 +385,20 @@ export function AllProductsScreen() {
     const item = companiesList[index];
     return (
       <div key={key}>
-        {companiesData.length === 0 ? (
-          <div>لا يوجد عناصر</div>
-        ) : index >= companiesList.length ? (
-          <div>Loading...</div>
+        {index >= companiesList.length ? (
+          companiesData.length === 0 ? (
+            <div>لا يوجد عناصر</div>
+          ) : (
+            [...Array(1)].map((a, index) => (
+              <div
+                style={{
+                  padding: "8px",
+                }}
+              >
+                <LoadingSpinner />
+              </div>
+            ))
+          )
         ) : (
           <div style={{ ...style, direction: theme.direction }}>
             <CellMeasurer
@@ -396,7 +407,7 @@ export function AllProductsScreen() {
               columnIndex={0}
               rowIndex={index}
             >
-              {renderCompany(item.name, "", index, item._id)}
+              {renderCompany(item.name, item.logo, index, item._id)}
             </CellMeasurer>
           </div>
         )}
@@ -406,7 +417,7 @@ export function AllProductsScreen() {
 
   return (
     <div>
-      <div style={{ height: "20px" }} />
+      {!theme.isMobile && <div style={{ height: "20px" }} />}
       {/* company list */}
       {/* Right grid */}
       {!theme.isMobile && (
@@ -421,7 +432,7 @@ export function AllProductsScreen() {
           }}
         >
           <Typography variant="S16W700C050505">الفلاتر:</Typography>
-          <div style={{ height: "calc(100vh)", margin: "0px 0" }}>
+          <div style={{ height: "calc(85vh)" }}>
             <div>
               <List
                 ref={listRef}
@@ -441,9 +452,9 @@ export function AllProductsScreen() {
       <div>
         {/* CustomAppBar appears only on mobile */}
         <CustomAppBar
-          showLabel
-          label="مراجعاتي"
-          showBackBtn
+          showLogo
+          showProfile
+          showSearch
           tabBar={
             <React.Fragment>
               <CompanyHorizontalList

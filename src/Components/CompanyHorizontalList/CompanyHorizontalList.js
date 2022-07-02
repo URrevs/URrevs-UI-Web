@@ -42,12 +42,6 @@ export const CompanyHorizontalList = ({
 }) => {
   const theme = useTheme();
 
-  let srcs = [
-    "./images/logos/acer.png",
-    "./images/logos/alcatel.jpg",
-    "./images/logos/apple.jpg",
-  ];
-
   const listItem = (title, imgSrc, index, id) => {
     return (
       <CompanyButton
@@ -71,7 +65,7 @@ export const CompanyHorizontalList = ({
               height: "50px",
               objectFit: "contain",
             }}
-            src={srcs[index % srcs.length]}
+            src={imgSrc}
           ></Avatar>
         </ListItemAvatar>
         <ListItemText
@@ -98,7 +92,7 @@ export const CompanyHorizontalList = ({
       }}
     >
       {companiesList.map((item, index) =>
-        listItem(item.name, "", index, item._id)
+        listItem(item.name, item.logo, index, item._id)
       )}
     </List>
   );
