@@ -36,7 +36,13 @@ const answersList = createSlice({
       action: { payload: { acceptedAnswer: APIAnswer } }
     ) {
       const answer = { ...action.payload.acceptedAnswer, isAccepted: true };
-      state.newComments = [answer, ...state.newComments];
+      console.log(answer);
+      let answerReplies: any = [];
+      answer.replies.forEach((reply, i) => {
+        answerReplies.push({ ...reply, isReply: true });
+      });
+
+      state.newComments = [answer, ...answerReplies, ...state.newComments];
     },
 
     addNewCommentLocally(
@@ -70,13 +76,12 @@ const answersList = createSlice({
         isLiked: boolean;
       }>
     ) {
-      
       const targetReview = state.newComments.findIndex((element) => {
         return element._id.toString() === action.payload.id.toString();
       });
-      
+
       console.log(action.payload);
-      
+
       if (targetReview != -1) {
         if (state.newComments[targetReview].isReply) {
           state.newComments[targetReview].liked = action.payload.isLiked;

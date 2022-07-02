@@ -13,7 +13,7 @@ import { useAppDispatch } from "../store/hooks";
 
 let maxIndex = 0;
 
-export default function CommentsList({
+export function AnswersList({
   commentsList,
   page,
   data,
@@ -125,6 +125,7 @@ export default function CommentsList({
                   acceptAnswer={acceptAnswer}
                   rejectAnswer={rejectAnswer}
                   acceptedAnswer={commentsList[index].isAccepted}
+                  showReply={true}
                 />
               )}
             </div>
