@@ -154,7 +154,7 @@ export const ProductSpecsScreen = () => {
     <React.Fragment>
       <Grid container>
         {/* Right Grid */}
-        <Grid item xl={1} lg={1} md={0.5} xs={0}></Grid>
+        <Grid item xl={2} lg={1} md={0.5} xs={0}></Grid>
         {/* Center Grid */}
         <Grid item xl={5} lg={5} md={5} xs={12}>
           {theme.isMobile ? overviewCard() : null}
@@ -192,9 +192,9 @@ export const ProductSpecsScreen = () => {
           {theme.isMobile ? similarPhonesComponent() : null}
           {theme.isMobile ? compareWithOtherProducts() : null}
         </Grid>
-        <Grid item xl={1} lg={1} md={0.5} xs={0}></Grid>
+        <Grid item xl={0.5} lg={0.5} md={0.5} xs={0}></Grid>
         {/* Left Grid*/}
-        <Grid item xl={5} lg={5} md={6} xs={0}>
+        <Grid item xl={4} lg={5} md={6} xs={0}>
           {theme.isMobile ? null : (
             <div
               style={{
@@ -211,6 +211,7 @@ export const ProductSpecsScreen = () => {
                   overflowY: "auto",
                 }}
               >
+                <div style={{ height: "17px" }}></div>
                 {overviewCard()}
                 {similarPhonesComponent()}
                 {ComparePaper(data)}
@@ -218,6 +219,7 @@ export const ProductSpecsScreen = () => {
             </div>
           )}
         </Grid>
+        <Grid item xl={0.5} lg={0.5} md={0.5} xs={0}></Grid>
       </Grid>
     </React.Fragment>
   );
