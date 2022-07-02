@@ -116,7 +116,7 @@ export default function CompanyReviewFullScreen() {
 
   useEffect(() => {
     if (currentReview) {
-      // dispatch(reviewsActions.clearReviews());
+      dispatch(reviewsActions.clearReviews());
       dispatch(
         reviewsActions.addToLoaddedReviews({ newReviews: [currentReview] })
       );
@@ -306,22 +306,22 @@ export default function CompanyReviewFullScreen() {
 
   const commentField = () => {
     return (
-      <div
-        style={{
-          position: "fixed",
-          zIndex: 1000,
-          bottom: 0,
-          padding: "12px",
-          background: "#fff",
-          width: "100%",
-        }}
-      >
-        <PostingField
-          avatar={false}
-          placeholder="اكتب تعليقا"
-          onSubmit={(comment) => submitCommentHandler(comment)}
-        />
-      </div>
+        <div
+          style={{
+            position: "fixed",
+            zIndex: 1000,
+            bottom: 0,
+            padding: "12px",
+            background: "#fff",
+            width: "100%",
+          }}
+        >
+          <PostingField
+            avatar={false}
+            placeholder="اكتب تعليقا"
+            onSubmit={(comment) => submitCommentHandler(comment)}
+          />
+        </div>
     );
   };
 
@@ -354,8 +354,8 @@ export default function CompanyReviewFullScreen() {
                   clearCache={clearCache}
                   clearAllCache={clearAllCache}
                   submitReplyHandler={submitReplyHandler}
-                />
-                {commentField()}
+                  />
+                  {commentField()}
               </Fragment>
             )
           )}
