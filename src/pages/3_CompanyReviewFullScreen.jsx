@@ -8,6 +8,7 @@ import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkelet
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { PostingField } from "../Components/PostingComponents/PostingField";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
+import { useShowSnackbar } from "../hooks/useShowSnackbar";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useAddCommentOnCompanyReviewMutation,
@@ -22,6 +23,7 @@ import {
 import { commentsListActions } from "../store/commentsListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
+import { snackbarActions } from "../store/uiSnackbarSlice";
 import CommentsList from "./CommentsList";
 
 const cache = new CellMeasurerCache({
@@ -32,6 +34,7 @@ const cache = new CellMeasurerCache({
 
 export default function CompanyReviewFullScreen() {
   const dispatch = useAppDispatch();
+  const showSnackbar = useShowSnackbar();
 
   const navigate = useNavigate();
 
@@ -181,24 +184,29 @@ export default function CompanyReviewFullScreen() {
       })
     );
 
-  const addOneCommentToLoadedComments = (comment, index) => {
+  const addOneCommentToLoadedComments = (comment) => {
     dispatch(
       commentsListActions.addNewCommentLocally({
         newComment: comment,
       })
     );
-    // clear 0 cache
+    // clear all comments cache
     cache.clearAll();
   };
 
-  const addOneReplyToLoadedComments = (comment) => {
+  const addOneReplyToLoadedComments = (index, comment) => {
     dispatch(
       commentsListActions.addNewReplyLocally({
         newComment: comment,
       })
     );
-    // clear 0 cache
-    cache.clearAll();
+    const keys = Object.keys(cache._rowHeightCache);
+    keys.forEach((key, i) => {
+      if (i === 0) {
+      } else {
+        cache.clear(i);
+      }
+    });
   };
 
   const increasePage = () => setPage(page + 1);
@@ -232,12 +240,11 @@ export default function CompanyReviewFullScreen() {
       addOneCommentToLoadedComments(comment);
     } catch (e) {
       setAddCommentLoading(false);
-      setAddCommentError(e);
-      console.log(e);
+      showSnackbar(e.data.status);
     }
   };
 
-  const submitReplyHandler = async (text, commentId) => {
+  const submitReplyHandler = async (index, text, commentId) => {
     try {
       const response = await addReplyOnPhoneReview({
         commentId: commentId,
@@ -258,7 +265,7 @@ export default function CompanyReviewFullScreen() {
         isReply: true,
       };
 
-      addOneReplyToLoadedComments(reply);
+      addOneReplyToLoadedComments(index, reply);
     } catch (e) {
       console.log(e);
     }
@@ -328,29 +335,31 @@ export default function CompanyReviewFullScreen() {
             <div>Error</div>
           ) : (
             currentReviewData && (
-              <CommentsList
-                reviewCard={reviewCard}
-                commentsList={commentsList}
-                page={page}
-                data={data}
-                error={error}
-                isLoading={isLoading}
-                isFetching={isFetching}
-                commentLike={likeCommentRequest}
-                commentUnlike={unLikeCommentRequest}
-                replyLike={likeReplyRequest}
-                replyUnlike={unLikeReplyRequest}
-                addToReviewsList={addToLoadedComments}
-                increasePage={increasePage}
-                cache={cache}
-                clearCache={clearCache}
-                clearAllCache={clearAllCache}
-                submitReplyHandler={submitReplyHandler}
-              />
+              <Fragment>
+                <CommentsList
+                  reviewCard={reviewCard}
+                  commentsList={commentsList}
+                  page={page}
+                  data={data}
+                  error={error}
+                  isLoading={isLoading}
+                  isFetching={isFetching}
+                  commentLike={likeCommentRequest}
+                  commentUnlike={unLikeCommentRequest}
+                  replyLike={likeReplyRequest}
+                  replyUnlike={unLikeReplyRequest}
+                  addToReviewsList={addToLoadedComments}
+                  increasePage={increasePage}
+                  cache={cache}
+                  clearCache={clearCache}
+                  clearAllCache={clearAllCache}
+                  submitReplyHandler={submitReplyHandler}
+                />
+                {commentField()}
+              </Fragment>
             )
           )}
         </Box>
-        {commentField()}
       </AlonePostsGrid>
     </FixedGrid>
   );

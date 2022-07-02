@@ -63,6 +63,7 @@ export const Comment = ({
       <PostingField
         avatar={true}
         placeholder="اكتب رد"
+        reply
         onSubmit={(text) => submitReplyHandler(text, commentId)}
       />
     </div>

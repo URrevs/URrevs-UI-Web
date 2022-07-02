@@ -259,7 +259,7 @@ export default function PhoneQuestionFullScreen() {
 
       // add comment to store
       const comment = {
-        _id: response.data.comment,
+        _id: response.data.answer,
         ownedAt: response.data.ownedAt,
         userId: currentUser.uid,
         userName: currentUser.name,
