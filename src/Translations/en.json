@@ -304,5 +304,7 @@
   "phoneAnswerReply": "phone question answer reply",
   "companyAnswerReply": "company question answer reply",
   "letThisContentBeViewed": "Let this content be viewed",
-  "unblockThisUsersAccount": "Unblock this user's account"
+  "unblockThisUsersAccount": "Unblock this user's account",
+  "suggestedResults": "Suggested Results",
+  "noItems": "No Items"
 }
