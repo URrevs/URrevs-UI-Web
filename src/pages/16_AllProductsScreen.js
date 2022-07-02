@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   AutoSizer,
   CellMeasurer,
@@ -171,59 +171,58 @@ export function AllProductsScreen() {
 
   const renderProduct = (title, imgSrc, to) => {
     return (
-      <ListItem
-        onClick={() => {
-          navigate(to);
-        }}
-        disablePadding
-        dense
-        key={title}
-        style={{
-          padding: "9px 0",
-          "&:hover": {
-            backgroundColor: theme.palette.hover,
-          },
-          "&:active": {
-            backgroundColor: theme.palette.hover,
-          },
-          "&:focus": {
-            backgroundColor: theme.palette.hover,
-          },
-        }}
-      >
-        <ListItemButton
-          sx={{
-            padding: 0,
-
+      <Link style={{ textDecoration: "none" }} to={to}>
+        <ListItem
+          disablePadding
+          dense
+          key={title}
+          style={{
+            padding: "9px 0",
             "&:hover": {
-              backgroundColor: "transparent",
+              backgroundColor: theme.palette.hover,
+            },
+            "&:active": {
+              backgroundColor: theme.palette.hover,
+            },
+            "&:focus": {
+              backgroundColor: theme.palette.hover,
             },
           }}
         >
-          <Avatar
+          <ListItemButton
             sx={{
-              margin: "0px 17px 0px 13px",
+              padding: 0,
+
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
             }}
           >
-            <img
-              alt=""
-              objectFit="contain"
-              width="40px"
-              height="40px"
-              src={imgSrc}
+            <Avatar
+              sx={{
+                margin: "0px 17px 0px 13px",
+              }}
+            >
+              <img
+                alt=""
+                objectFit="contain"
+                width="40px"
+                height="40px"
+                src={imgSrc}
+              />
+            </Avatar>
+            <ListItemText
+              primaryTypographyProps={{
+                ...theme.typography.S20W700C050505,
+                lineHeight: 1,
+              }}
+              primary={title}
+              secondaryTypographyProps={{ ...theme.typography.S16W400C65676B }}
+              secondary={textContainer.smartphone}
             />
-          </Avatar>
-          <ListItemText
-            primaryTypographyProps={{
-              ...theme.typography.S20W700C050505,
-              lineHeight: 1,
-            }}
-            primary={title}
-            secondaryTypographyProps={{ ...theme.typography.S16W400C65676B }}
-            secondary={textContainer.smartphone}
-          />
-        </ListItemButton>
-      </ListItem>
+          </ListItemButton>
+        </ListItem>
+      </Link>
     );
   };
 
