@@ -85,7 +85,18 @@ export default function CommentsList({
 
     return (
       <div key={key}>
-        {
+        {index >= commentsList.length + 2 ? (
+          // for spacing bottom of last of items
+          <div style={{ height: "100px" }}></div>
+        ) : index >= commentsList.length + 1 ? (
+          data.length === 0 ? (
+            // لا يوجد عناصر
+            commentsList.length === 0 && <div></div>
+          ) : (
+            // Loading...
+            <div style={{ height: "166px" }}>Loading...</div>
+          )
+        ) : (
           <CellMeasurer
             cache={cache}
             parent={parent}
@@ -95,14 +106,6 @@ export default function CommentsList({
             <div style={{ ...style, direction: theme.direction }}>
               {index === 0 ? (
                 reviewCard()
-              ) : index >= commentsList.length ? (
-                data.length === 0 ? (
-                  <div>لا يوجد عناصر</div>
-                ) : (
-                  [...Array(1)].map((a, index) => (
-                    <div style={{ height: "166px" }}>Loading...</div>
-                  ))
-                )
               ) : (
                 <Fragment>
                   {commentsList[index - 1].isReply ? (
@@ -129,7 +132,7 @@ export default function CommentsList({
                       liked={commentsList[index - 1].liked}
                       commentLike={commentLike}
                       commentUnlike={commentUnlike}
-                      submitReplyHandler={submitReplyHandler}
+                      submitReplyHandler={submitReplyHandler.bind(this, index)}
                       avatar={commentsList[index - 1].userPicture}
                       userId={commentsList[index - 1].userId}
                     />
@@ -138,21 +141,18 @@ export default function CommentsList({
               )}
             </div>
           </CellMeasurer>
-        }
+        )}
       </div>
     );
   };
-
-  console.log(cache._rowHeightCache);
 
   return (
     <Fragment>
       <CustomAppBar showBackBtn showProfile>
         <div
           style={{
-            height: "calc(100vh)",
+            // height: "calc(100vh)",
             marginTop: "55px",
-            marginBottom: "670px",
           }}
         >
           <AutoSizer>
@@ -171,7 +171,7 @@ export default function CommentsList({
                         height={height}
                         deferredMeasurementCache={cache}
                         rowHeight={cache.rowHeight}
-                        rowCount={commentsList.length + 2}
+                        rowCount={commentsList.length + 3}
                         rowRenderer={renderRow}
                       />
                     </div>
@@ -180,6 +180,7 @@ export default function CommentsList({
               );
             }}
           </AutoSizer>
+          <div style={{ height: "130px" }}></div>
         </div>
       </CustomAppBar>
     </Fragment>
