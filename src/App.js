@@ -221,7 +221,6 @@ function App() {
     }
   );
 
-  console.log(storeUser);
   const [firebaseIsLoading, setFirebaseIsLoading] = useState(true);
 
   useEffect(() => {
@@ -229,7 +228,7 @@ function App() {
       if (user) {
         dispatch(
           authActions.login({
-            isLoggedIn: false,
+            isLoggedIn: true,
             accessToken: user.accessToken,
           })
         );
@@ -262,7 +261,7 @@ function App() {
       );
       setFirebaseIsLoading(false);
     }
-  }, [data, dispatch, setFirebaseIsLoading]);
+  }, [data, dispatch, setFirebaseIsLoading, storeUser.photo]);
 
   if (firebaseIsLoading || isLoading) {
     return <SplashScreen />;
