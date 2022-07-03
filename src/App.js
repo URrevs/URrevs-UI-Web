@@ -53,6 +53,7 @@ import { COLORS } from "./Styles/main_light_colors";
 import { AboutUsScreen } from "./pages/23_AboutUsScreen";
 import { PrivacyPolicyScreen } from "./pages/25_PrivacyPolicyScreen";
 import { TermsAndConditionsScreen } from "./pages/24_TermsAndConditionsScreen";
+import { VR } from "./pages/VR";
 
 function App() {
   const language = useSelector((state) => state.language.language);
@@ -250,7 +251,7 @@ function App() {
     return () => {
       unregisterObserver();
     };
-  }, [dispatch, setFirebaseIsLoading]);
+  }, []);
 
   if (firebaseIsLoading || isLoading) {
     return <SplashScreen />;
@@ -428,6 +429,7 @@ function App() {
                         path="/Components-test"
                         element={<ComponentsTest />}
                       />
+                      <Route path="/vr" element={<VR />} />
                     </Routes>
                   </Grid>
                   <Grid item md={0} sm={0} xs={0.5}></Grid>
