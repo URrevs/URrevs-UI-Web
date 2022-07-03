@@ -80,7 +80,7 @@ export const usersApi = createApi({
 });
 //auto-generated hooks
 export const {
-  useXauthenticateQuery,
+  useLazyXauthenticateQuery,
   useGetCurrentUserProfileMutation,
   useLogoutFromAllDevicesMutation,
   useGetMyOwnedPhonesMutation,

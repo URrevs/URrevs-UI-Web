@@ -11,7 +11,7 @@ import { getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { useXauthenticateQuery } from "../src/services/users";
+import { useLazyXauthenticateQuery } from "../src/services/users";
 import "./App.css";
 import Layout from "./Components/MainLayout/Layout";
 import RTL from "./Components/RTL";
@@ -53,6 +53,7 @@ import { COLORS } from "./Styles/main_light_colors";
 import { AboutUsScreen } from "./pages/23_AboutUsScreen";
 import { PrivacyPolicyScreen } from "./pages/25_PrivacyPolicyScreen";
 import { TermsAndConditionsScreen } from "./pages/24_TermsAndConditionsScreen";
+import { VR } from "./pages/VR";
 
 function App() {
   const language = useSelector((state) => state.language.language);
@@ -214,25 +215,33 @@ function App() {
 
   const storeUser = useAppSelector((state) => state.auth);
 
-  const { data, isLoading, error } = useXauthenticateQuery(
-    storeUser.isLoggedIn ? storeUser.accessToken : "",
-    {
-      skip: !storeUser.accessToken,
-    }
-  );
+  const [getUserProfile, { data, isLoading, error }] =
+    useLazyXauthenticateQuery();
 
-  console.log(storeUser);
   const [firebaseIsLoading, setFirebaseIsLoading] = useState(true);
 
-  useEffect(() => {
-    const unregisterObserver = getAuth().onAuthStateChanged((user) => {
+  useEffect(async () => {
+    const unregisterObserver = getAuth().onAuthStateChanged(async (user) => {
       if (user) {
-        dispatch(
-          authActions.login({
-            isLoggedIn: false,
-            accessToken: user.accessToken,
-          })
-        );
+        const { data } = await getUserProfile(user.accessToken);
+
+        if (data) {
+          dispatch(
+            authActions.login({
+              accessToken: storeUser.accessToken,
+              isLoggedIn: true,
+              expiration: data.exp,
+              apiToken: data.token,
+              isAdmin: data.admin,
+              uid: data.profile._id,
+              refCode: data.profile.refCode,
+              photo: data.profile.picture,
+              name: data.profile.name,
+              points: data.profile.points,
+            })
+          );
+          setFirebaseIsLoading(false);
+        }
       } else {
         dispatch(authActions.logout());
         setFirebaseIsLoading(false);
@@ -242,27 +251,7 @@ function App() {
     return () => {
       unregisterObserver();
     };
-  }, [dispatch, setFirebaseIsLoading]);
-
-  useEffect(() => {
-    if (data) {
-      dispatch(
-        authActions.login({
-          accessToken: storeUser.accessToken,
-          isLoggedIn: true,
-          expiration: data.exp,
-          apiToken: data.token,
-          isAdmin: data.admin,
-          uid: data.profile._id,
-          refCode: data.profile.refCode,
-          photo: data.profile.picture,
-          name: data.profile.name,
-          points: data.profile.points,
-        })
-      );
-      setFirebaseIsLoading(false);
-    }
-  }, [data, dispatch, setFirebaseIsLoading]);
+  }, []);
 
   if (firebaseIsLoading || isLoading) {
     return <SplashScreen />;
@@ -440,6 +429,7 @@ function App() {
                         path="/Components-test"
                         element={<ComponentsTest />}
                       />
+                      <Route path="/vr" element={<VR />} />
                     </Routes>
                   </Grid>
                   <Grid item md={0} sm={0} xs={0.5}></Grid>

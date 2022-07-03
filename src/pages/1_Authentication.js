@@ -18,6 +18,7 @@ import { FacebookButton } from "../Components/Authentication/FacebookButton";
 import { GoogleButton } from "../Components/Authentication/GoogleButton";
 import {
   useGetCurrentUserProfileMutation,
+  useLazyXauthenticateQuery,
   useLogoutFromAllDevicesMutation,
 } from "../services/users";
 import { authActions } from "../store/authSlice";
@@ -50,8 +51,6 @@ const Registeration = ({}) => {
   const openRegistration = useAppSelector(
     (state) => state.regDialog.registration
   );
-  const [isLoading, setIsLoading] = useState(false);
-
   const [signingError, setSigningError] = useState(null);
   const [signOutError, setSignOutError] = useState(null);
 
@@ -60,28 +59,36 @@ const Registeration = ({}) => {
 
   const theme = useTheme();
 
+  const [getUserProfile, { data, isLoading, error }] =
+    useLazyXauthenticateQuery();
+
   const signInHandler = async (provider) => {
     // firebase sign-in
     const { user, error } = await signIn(provider);
     setSigningError(error);
 
     // auth api user
-    try {
-      setIsLoading(true);
 
+    const { data } = await getUserProfile(user.accessToken);
+
+    if (data) {
       dispatch(
         authActions.login({
-          isLoggedIn: true,
           accessToken: user.accessToken,
+          isLoggedIn: true,
+          expiration: data.exp,
+          apiToken: data.token,
+          isAdmin: data.admin,
+          uid: data.profile._id,
+          refCode: data.profile.refCode,
+          photo: data.profile.picture,
+          name: data.profile.name,
+          points: data.profile.points,
         })
       );
-      setIsLoading(false);
-      handleRegistrationClose();
-    } catch (error) {
-      setIsLoading(false);
-      handleRegistrationClose();
-      console.log(error);
     }
+
+    handleRegistrationClose();
   };
 
   const signout = () => {

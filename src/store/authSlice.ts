@@ -6,7 +6,7 @@ const initialAuthState: User = {
   isLoggedIn: false,
   photo: "",
   accessToken: "",
-  apiToken:  "",
+  apiToken: "",
   name: "",
   refreshToken: "",
   email: "",
