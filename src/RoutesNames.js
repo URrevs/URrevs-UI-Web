@@ -1,6 +1,5 @@
 const ROUTES_NAMES = {
   // level 1
-  PRODUCTS: "products",
   LEADERBOARD: "leaderboard",
   HOME: "",
   ADD_REVIEW: "add-review",

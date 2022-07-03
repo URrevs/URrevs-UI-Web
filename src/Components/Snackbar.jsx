@@ -23,7 +23,7 @@ export default function CustomizedSnackbar() {
 
   // for snackbar not to be hidden under bottom nav bar
   const navbarRoutes = [
-    ROUTES_NAMES.PRODUCTS,
+    ROUTES_NAMES.ALL_PRODUCTS,
     ROUTES_NAMES.ADD_REVIEW,
     ROUTES_NAMES.HOME,
     ROUTES_NAMES.LEADERBOARD,

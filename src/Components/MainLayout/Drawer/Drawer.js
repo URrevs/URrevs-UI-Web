@@ -82,7 +82,7 @@ export const MyDrawer = (props) => {
   // <page_path> : <number>
   const map = {
     [ROUTES_NAMES.HOME]: 0,
-    [ROUTES_NAMES.PRODUCTS]: 1,
+    [ROUTES_NAMES.ALL_PRODUCTS]: 1,
     [ROUTES_NAMES.LEADERBOARD]: 2,
   };
   // change current page onClick
@@ -157,9 +157,9 @@ export const MyDrawer = (props) => {
       itemValue: 1,
       onClick: () => {
         setValue(1);
-        navigate(ROUTES_NAMES.PRODUCTS);
+        navigate(ROUTES_NAMES.ALL_PRODUCTS);
       },
-      path: ROUTES_NAMES.PRODUCTS,
+      path: ROUTES_NAMES.ALL_PRODUCTS,
     },
 
     //Leaderboard
