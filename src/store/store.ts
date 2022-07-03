@@ -25,6 +25,8 @@ import menuSlice from "./uiMenuSlice";
 import regDialogSlice from "./uiRegisterDialogSlice";
 import snackbarSlice from "./uiSnackbarSlice";
 import postingModalSlice from "./uiPostingModalSlice";
+import { rtkQueryErrorLogger } from "./authenticationMiddleware";
+import { snackbarErrorHandle } from "./errorSnackbarHandle";
 
 export const store = configureStore({
   reducer: {
@@ -58,6 +60,8 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     })
+      .concat(snackbarErrorHandle)
+      .concat(rtkQueryErrorLogger)
       .concat(phoneReviewsApi.middleware)
       .concat(companyReviewsApi.middleware)
       .concat(phoneQuestionsApi.middleware)

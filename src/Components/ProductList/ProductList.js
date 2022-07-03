@@ -3,7 +3,9 @@ import SmartphoneRoundedIcon from "@mui/icons-material/SmartphoneRounded";
 import { Card, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { CARD_BORDER_RADIUS } from "../../constants";
+import ROUTES_NAMES from "../../RoutesNames";
 import { useAppSelector } from "../../store/hooks";
 import ListItemNavigator from "../Shared/ListItemNavigator";
 import { GenericList } from "./GenericList";
@@ -31,21 +33,24 @@ export default function ProductList({ list = [] }) {
     >
       {list.map((item, index) => (
         <React.Fragment key={index}>
-          <ListItemNavigator
-            title={item.name}
-            subTitle={textContainer.smartphone}
-            icon={
-              <SmartphoneRoundedIcon
-                sx={{
-                  marginRight: "17px",
-                  fontSize: "40px",
-                  color: theme.palette.productList.mobileColor,
-                }}
-              />
-            }
-            to={`/phone?pid=${item._id}`}
-          />
-
+          <Link
+            style={{ textDecoration: "none" }}
+            to={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${item._id}`}
+          >
+            <ListItemNavigator
+              title={item.name}
+              subTitle={textContainer.smartphone}
+              icon={
+                <SmartphoneRoundedIcon
+                  sx={{
+                    marginRight: "17px",
+                    fontSize: "40px",
+                    color: theme.palette.productList.mobileColor,
+                  }}
+                />
+              }
+            />
+          </Link>
           <Divider></Divider>
         </React.Fragment>
       ))}

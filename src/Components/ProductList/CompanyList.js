@@ -3,7 +3,9 @@ import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import { Card, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { CARD_BORDER_RADIUS } from "../../constants";
+import ROUTES_NAMES from "../../RoutesNames";
 import { useAppSelector } from "../../store/hooks";
 import ListItemNavigator from "../Shared/ListItemNavigator";
 import { GenericList } from "./GenericList";
@@ -32,20 +34,24 @@ export default function CompanyList({ list = [] }) {
     >
       {list.map((item, index) => (
         <React.Fragment key={index}>
-          <ListItemNavigator
-            title={item.name}
-            subTitle={textContainer.company}
-            icon={
-              <BusinessOutlinedIcon
-                sx={{
-                  marginRight: "17px",
-                  fontSize: "40px",
-                  color: theme.palette.productList.mobileColor,
-                }}
-              />
-            }
-            to={`/company?cid=${item._id}`}
-          />
+          <Link
+            style={{ textDecoration: "none" }}
+            to={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${item._id}`}
+          >
+            <ListItemNavigator
+              title={item.name}
+              subTitle={textContainer.company}
+              icon={
+                <BusinessOutlinedIcon
+                  sx={{
+                    marginRight: "17px",
+                    fontSize: "40px",
+                    color: theme.palette.productList.mobileColor,
+                  }}
+                />
+              }
+            />
+          </Link>
           <Divider></Divider>
         </React.Fragment>
       ))}
