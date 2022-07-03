@@ -37,8 +37,9 @@ const FormikDatePicker = ({
             locale={localeDate}
           >
             <MobileDatePicker
-              maxDate={noFutureDate ? new Date() : null}
-              minDate={noFutureDate ? null : minDate}
+              disableHighlightToday
+              disableFuture={noFutureDate}
+              minDate={noFutureDate && new Date(2007, 8, 1)}
               value={value}
               views={view}
               onChange={(newValue) => {
