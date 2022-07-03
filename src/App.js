@@ -11,7 +11,7 @@ import { getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { useXauthenticateQuery } from "../src/services/users";
+import { useLazyXauthenticateQuery } from "../src/services/users";
 import "./App.css";
 import Layout from "./Components/MainLayout/Layout";
 import RTL from "./Components/RTL";
@@ -214,24 +214,33 @@ function App() {
 
   const storeUser = useAppSelector((state) => state.auth);
 
-  const { data, isLoading, error } = useXauthenticateQuery(
-    storeUser.isLoggedIn ? storeUser.accessToken : "",
-    {
-      skip: !storeUser.accessToken,
-    }
-  );
+  const [getUserProfile, { data, isLoading, error }] =
+    useLazyXauthenticateQuery();
 
   const [firebaseIsLoading, setFirebaseIsLoading] = useState(true);
 
-  useEffect(() => {
-    const unregisterObserver = getAuth().onAuthStateChanged((user) => {
+  useEffect(async () => {
+    const unregisterObserver = getAuth().onAuthStateChanged(async (user) => {
       if (user) {
-        dispatch(
-          authActions.login({
-            isLoggedIn: true,
-            accessToken: user.accessToken,
-          })
-        );
+        const { data } = await getUserProfile(user.accessToken);
+
+        if (data) {
+          dispatch(
+            authActions.login({
+              accessToken: storeUser.accessToken,
+              isLoggedIn: true,
+              expiration: data.exp,
+              apiToken: data.token,
+              isAdmin: data.admin,
+              uid: data.profile._id,
+              refCode: data.profile.refCode,
+              photo: data.profile.picture,
+              name: data.profile.name,
+              points: data.profile.points,
+            })
+          );
+          setFirebaseIsLoading(false);
+        }
       } else {
         dispatch(authActions.logout());
         setFirebaseIsLoading(false);
@@ -242,26 +251,6 @@ function App() {
       unregisterObserver();
     };
   }, [dispatch, setFirebaseIsLoading]);
-
-  useEffect(() => {
-    if (data) {
-      dispatch(
-        authActions.login({
-          accessToken: storeUser.accessToken,
-          isLoggedIn: true,
-          expiration: data.exp,
-          apiToken: data.token,
-          isAdmin: data.admin,
-          uid: data.profile._id,
-          refCode: data.profile.refCode,
-          photo: data.profile.picture,
-          name: data.profile.name,
-          points: data.profile.points,
-        })
-      );
-      setFirebaseIsLoading(false);
-    }
-  }, [data, dispatch, setFirebaseIsLoading, storeUser.photo]);
 
   if (firebaseIsLoading || isLoading) {
     return <SplashScreen />;
