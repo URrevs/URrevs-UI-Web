@@ -31,7 +31,7 @@ export const PathTabbar = ({
   const isAr = language === "ar";
 
   const [translation, setTranslation] = React.useState(
-    isAr ? (isVertical ? fscale - 100 * value : fscale * 2 + 100) : 100 * 0
+    isAr ? (isVertical ? fscale - 100 * value : fscale * 2 + 100) : 100 * value
   );
   const handleTranslation = (id) => {
     if (isAr) {
