@@ -4,7 +4,7 @@ import {
   createTheme,
   CssBaseline,
   Grid,
-  useMediaQuery,
+  useMediaQuery
 } from "@mui/material";
 import { arEG } from "@mui/material/locale";
 import { getAuth } from "firebase/auth";
@@ -24,6 +24,9 @@ import PhoneQuestionFullScreen from "./pages/17_PhoneQuestionFullScreen";
 import ReviewPostingScreen from "./pages/18_ReviewPostingScreen";
 import Menu from "./pages/20_Menu";
 import { SettingsScreen } from "./pages/21_SettingsScreen";
+import { AboutUsScreen } from "./pages/23_AboutUsScreen";
+import { TermsAndConditionsScreen } from "./pages/24_TermsAndConditionsScreen";
+import { PrivacyPolicyScreen } from "./pages/25_PrivacyPolicyScreen";
 import { AdminPanel } from "./pages/26_AdminPanel";
 import { UpdateProducts } from "./pages/29_UpdateProducts";
 import Reviews from "./pages/2_HomePageScrolling";
@@ -50,10 +53,6 @@ import { authActions } from "./store/authSlice";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { fonts } from "./Styles/fonts";
 import { COLORS } from "./Styles/main_light_colors";
-import { AboutUsScreen } from "./pages/23_AboutUsScreen";
-import { PrivacyPolicyScreen } from "./pages/25_PrivacyPolicyScreen";
-import { TermsAndConditionsScreen } from "./pages/24_TermsAndConditionsScreen";
-import { VR } from "./pages/VR";
 
 function App() {
   const language = useSelector((state) => state.language.language);
@@ -430,7 +429,6 @@ function App() {
                         path="/Components-test"
                         element={<ComponentsTest />}
                       />
-                      <Route path="/vr" element={<VR />} />
                     </Routes>
                   </Grid>
                   <Grid item md={0} sm={0} xs={0.5}></Grid>
