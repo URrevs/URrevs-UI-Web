@@ -60,6 +60,8 @@ export const Leaderboard = () => {
   const pageDictionary = {
     usersRanking: textContainer.usersRanking,
     yourRanking: textContainer.yourRanking,
+    usersRankingInCurrentCompetetion:
+      textContainer.usersRankingInCurrentCompetetion,
   };
   const [modal, setModal] = React.useState("");
   const handleCloseDialog = () => {
@@ -139,7 +141,7 @@ export const Leaderboard = () => {
     <Fragment>
       <Typography variant="S20W700C050505">
         {latestCompetitionData &&
-        new Date(latestCompetitionData.deadline) - new Date() < 0
+        new Date(latestCompetitionData.deadline) - new Date() > 0
           ? pageDictionary.usersRankingInCurrentCompetetion
           : pageDictionary.usersRanking}
       </Typography>
