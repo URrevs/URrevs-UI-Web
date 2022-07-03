@@ -7,6 +7,7 @@ import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import ButtonPage from "../../Components/Buttons/ButtonPage";
+import { FaButton } from "../../Components/Buttons/FaButton";
 import { CompareDialog } from "../../Components/Dialogs/CompareDialog/CompareDialog";
 import { CompareItem } from "../../Components/Dialogs/CompareDialog/CompareItem";
 import { HorizontalPhoneList } from "../../Components/HorizontalPhoneList/HorizontalPhoneList";
@@ -110,10 +111,10 @@ export const ProductSpecsScreen = () => {
         alignItems: "center",
       }}
     >
-      <ButtonPage
-        sx={{
-          background: theme.palette.defaultPageBtn,
-        }}
+      <FaButton
+        icon={
+          <CompareOutlinedIcon sx={{ fontSize: "28px", color: "#FFFFFF" }} />
+        }
         onClick={handleOpen}
       >
         <Box
@@ -124,12 +125,11 @@ export const ProductSpecsScreen = () => {
             textAlign: "center",
           }}
         >
-          <CompareOutlinedIcon sx={{ fontSize: "28px", color: "#FFFFFF" }} />
           <Typography variant="S14W700Cffffff">
             {componentDictionary.compareWithAnotherProduct}
           </Typography>
         </Box>
-      </ButtonPage>
+      </FaButton>
       <Modal open={open} onClose={handleClose}>
         <CompareDialog item={data} handleClose={handleClose} />
       </Modal>

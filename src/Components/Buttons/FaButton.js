@@ -2,13 +2,15 @@ import Fab from "@mui/material/Fab";
 import React from "react";
 export const FaButton = ({ children, icon, onClick }) => {
   const [variant, setVariant] = React.useState("extended");
+  const [scroll, setScroll] = React.useState(0);
   React.useEffect(() => {
     const handleScroll = () => {
       const scrolled = window.scrollY;
-      console.log(window.scrollY);
-      if (scrolled > 10) setVariant("circular");
+      if (scrolled > scroll) setVariant("circular");
       else setVariant("extended");
+      setScroll(scrolled);
     };
+
     window.addEventListener("scroll", handleScroll);
     //On window scroll set pfp true or false
     return (_) => {
