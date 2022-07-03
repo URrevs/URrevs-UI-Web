@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { APIQuestion } from "../models/interfaces/APIQuestion.model";
-import { APIReview } from "../models/interfaces/APIReview.model";
 
 interface InitialState {
   newReviews: any[];
@@ -53,7 +51,7 @@ const homePageSlice = createSlice({
         return element._id.toString() === action.payload.id.toString();
       });
 
-      if (targetReview != -1) {
+      if (targetReview !== -1) {
         state.newReviews[targetReview].liked = action.payload.isLiked;
         action.payload.isLiked
           ? state.newReviews[targetReview].likes++
@@ -72,7 +70,7 @@ const homePageSlice = createSlice({
         return element._id.toString() === action.payload.id.toString();
       });
 
-      if (targetReview != -1) {
+      if (targetReview !== -1) {
         state.newReviews[targetReview].upvoted = action.payload.isLiked;
         action.payload.isLiked
           ? state.newReviews[targetReview].upvotes++
@@ -92,7 +90,7 @@ const homePageSlice = createSlice({
 
       console.log(targetReview);
 
-      if (targetReview != -1) {
+      if (targetReview !== -1) {
         state.newReviews[targetReview].shares++;
       }
     },

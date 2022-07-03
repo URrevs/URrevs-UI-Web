@@ -6,7 +6,7 @@ const ProsConsText = ({ croppedText, prosTitle, consTitle }) => {
     <div>
       <BodyCardText title={prosTitle} text={croppedText.pros} />
 
-      {croppedText.cons.length != 0 && (
+      {croppedText.cons.length !== 0 && (
         <BodyCardText title={consTitle} text={croppedText.cons} />
       )}
     </div>

@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext, useSearchParams } from "react-router-dom";
 
 import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
-import { CustomAppBar } from "../../Components/MainLayout/AppBar/CustomAppBar";
 import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
-import { PostingModal } from "../../Components/PostingComponents/PostingModal";
 import PhoneReview from "../../Components/ReviewCard/PhoneReview";
-import ReviewCard from "../../Components/ReviewCard/ReviewCard";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
-  useGetAllReviewsQuery,
-  useGetPhoneReviewsQuery,
+  useGetPhoneReviewsQuery
 } from "../../services/phone_reviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";

@@ -1,19 +1,14 @@
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import BeachAccessIcon from "@mui/icons-material/BeachAccess";
-import ImageIcon from "@mui/icons-material/Image";
-import WorkIcon from "@mui/icons-material/Work";
-import { alpha, Button, Container } from "@mui/material";
+import { alpha } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
-import * as React from "react";
 import classes from "./list.module.css";
 
 const CompanyButton = styled("div", {
-  shouldForwardProp: (prop) => prop !== "backgroundColor",
+  shouldForwardProp: (prop) => prop != "backgroundColor",
 })(({ theme, backgroundColor }) => ({
   textTransform: "none",
   variant: "contained",

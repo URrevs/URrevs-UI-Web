@@ -6,7 +6,6 @@ import { styled } from "@mui/styles";
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import ButtonPage from "../../Components/Buttons/ButtonPage";
 import { FaButton } from "../../Components/Buttons/FaButton";
 import { CompareDialog } from "../../Components/Dialogs/CompareDialog/CompareDialog";
 import { CompareItem } from "../../Components/Dialogs/CompareDialog/CompareItem";
@@ -18,7 +17,7 @@ import { CARD_BORDER_RADIUS } from "../../constants";
 import {
   useGetPhoneSpecsQuery,
   useGetSimilarPhonesQuery,
-  useGetStatisticalInfoQuery,
+  useGetStatisticalInfoQuery
 } from "../../services/phones";
 
 const CardStyled = styled(

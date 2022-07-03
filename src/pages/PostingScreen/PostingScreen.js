@@ -1,11 +1,9 @@
 import { useTheme } from "@emotion/react";
 import { Formik } from "formik";
-import React from "react";
 import * as Yup from "yup";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useAddPhoneReviewMutation } from "../../services/phone_reviews";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { regDialogActions } from "../../store/uiRegisterDialogSlice";
+import { useAppSelector } from "../../store/hooks";
 import { AddReviewTab } from "./AddReviewTab";
 import { QuestionsTab } from "./QuestionsTab";
 

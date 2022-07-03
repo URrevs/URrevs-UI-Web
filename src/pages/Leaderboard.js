@@ -1,16 +1,9 @@
 import { useTheme } from "@emotion/react";
 import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  Grid,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Modal,
+  Box, Divider,
+  Grid, Modal,
   Paper,
-  Typography,
+  Typography
 } from "@mui/material";
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,12 +14,11 @@ import { PrizeDialog } from "../Components/Dialogs/PrizeDialog";
 import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { CARD_BORDER_RADIUS } from "../constants";
-import { subtractDate } from "../functions/subtractDate";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetLatestCompetetionQuery,
   useGetMyCurrentRankQuery,
-  useGetTopCompetetionUsersQuery,
+  useGetTopCompetetionUsersQuery
 } from "../services/competetion";
 import { useAppSelector } from "../store/hooks";
 
@@ -161,7 +153,7 @@ export const Leaderboard = () => {
 
   const competetionBanner = () => {
     if (latestCompetetionError) {
-      if (latestCompetetionError.data.status != "not yet") {
+      if (latestCompetetionError.data.status !== "not yet") {
         return <div>Error</div>;
       } else {
         if (latestCompetetionError.data.status === "not yet") {

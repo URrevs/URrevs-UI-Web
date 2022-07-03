@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import APIComment from "../models/interfaces/APIComment.model";
 import { APIReview } from "../models/interfaces/APIReview.model";
-import { useAppSelector } from "../store/hooks";
 import { RootState } from "../store/store";
 import { postingModalActions } from "../store/uiPostingModalSlice";
 import { snackbarActions } from "../store/uiSnackbarSlice";

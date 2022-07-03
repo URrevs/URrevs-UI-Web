@@ -1,6 +1,5 @@
 import { Stack, Typography } from "@mui/material";
 import { Form, Formik } from "formik";
-import React from "react";
 import * as Yup from "yup";
 import FormikSearchComponent from "../../Components/Form/FormikSearchComponent";
 import FormikTextField from "../../Components/Form/FormikTextField";
@@ -9,7 +8,6 @@ import { useAddPhoneQuestionMutation } from "../../services/phone_questions";
 import { useSearchAllMutation } from "../../services/search";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
-import { FastFormikTextField } from "./FastFormikTextField";
 import { FormSubmitButton } from "./FormSubmitButton";
 
 /* DOCUMENTATION */
@@ -47,14 +45,8 @@ export const QuestionsTab = ({ initValues }) => {
   // RTK:
   const [searchFn] = useSearchAllMutation();
   const dispatch = useAppDispatch();
-  const [
-    addPhoneQuestion,
-    { isError: addPhoneError, isLoading: addPhoneLoading },
-  ] = useAddPhoneQuestionMutation();
-  const [
-    addCompanyQuestion,
-    { isError: addCompanyError, isLoading: addCompanyLoading },
-  ] = useAddCompanyQuestionMutation();
+  const [addPhoneQuestion] = useAddPhoneQuestionMutation();
+  const [addCompanyQuestion] = useAddCompanyQuestionMutation();
   // const [addQuestionError, setAddQuestionError] = React.useState(null);
   //Handle Submit
   const handleSubmit = async (values) => {
