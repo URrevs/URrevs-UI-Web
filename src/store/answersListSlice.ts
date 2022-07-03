@@ -82,7 +82,7 @@ const answersList = createSlice({
 
       console.log(action.payload);
 
-      if (targetReview != -1) {
+      if (targetReview !== -1) {
         if (state.newComments[targetReview].isReply) {
           state.newComments[targetReview].liked = action.payload.isLiked;
           action.payload.isLiked
@@ -115,7 +115,7 @@ const answersList = createSlice({
         return element._id.toString() === action.payload.id.toString();
       });
 
-      if (targetReview != -1) {
+      if (targetReview !== -1) {
         state.newComments[targetReview].isAccepted = action.payload.isAccepted;
         // upvotes
         // action.payload.isAccepted

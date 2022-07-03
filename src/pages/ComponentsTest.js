@@ -1,27 +1,23 @@
+import CompareOutlinedIcon from "@mui/icons-material/CompareOutlined";
+import { TextField, Typography } from "@mui/material";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { arEG } from "date-fns/locale";
 import React from "react";
-import { Footer } from "../Components/Banners/Footer";
 import Banner from "../Components/Banners/Banner";
+import { Footer } from "../Components/Banners/Footer";
+import { FaButton } from "../Components/Buttons/FaButton";
+import { CompetitionBody } from "../Components/CompetitionPrompt/CompetitionBody";
+import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
+import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
+import { PostingComponent } from "../Components/PostingComponents/PostingComponent";
+import { PostingField } from "../Components/PostingComponents/PostingField";
+import { PostingModal } from "../Components/PostingComponents/PostingModal";
 import { ProfileTabbar } from "../Components/Tabbar/Desktop/ProfileTabbar";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { FixedGrid } from "../Components/Grid/FixedGrid";
-import CompareOutlinedIcon from "@mui/icons-material/CompareOutlined";
-import { Card, TextField, Typography } from "@mui/material";
-import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
-import { QuestionsTab } from "./PostingScreen/QuestionsTab";
-import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
-import { PostingComponent } from "../Components/PostingComponents/PostingComponent";
-import { PostingModal } from "../Components/PostingComponents/PostingModal";
-import { PostingField } from "../Components/PostingComponents/PostingField";
-import { Comment } from "../Components/Interactions/Comment";
-import { CommentReply } from "../Components/Interactions/CommentReply";
 import { postingModalActions } from "../store/uiPostingModalSlice";
-import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
-import { FaButton } from "../Components/Buttons/FaButton";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { arEG, enUS } from "date-fns/locale";
-import { CompetitionBody } from "../Components/CompetitionPrompt/CompetitionBody";
+import { QuestionsTab } from "./PostingScreen/QuestionsTab";
 
 export const ComponentsTest = () => {
   /* Footer */

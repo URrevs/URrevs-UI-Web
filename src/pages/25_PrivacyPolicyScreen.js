@@ -1,5 +1,4 @@
 import { Link, Stack, Typography } from "@mui/material";
-import React from "react";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ROUTES_NAMES from "../RoutesNames";

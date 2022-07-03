@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import Review from "../models/classes/Review";
 import { APIReview } from "../models/interfaces/APIReview.model";
 
 interface InitialState {
@@ -54,7 +53,7 @@ const reviewsSlice = createSlice({
         return element._id.toString() === action.payload.id.toString();
       });
 
-      if (targetReview != -1) {
+      if (targetReview !== -1) {
         state.newReviews[targetReview].liked = action.payload.isLiked;
         action.payload.isLiked
           ? state.newReviews[targetReview].likes++
@@ -72,7 +71,7 @@ const reviewsSlice = createSlice({
         return element._id.toString() === action.payload.id.toString();
       });
 
-      if (targetReview != -1) {
+      if (targetReview !== -1) {
         state.newReviews[targetReview].shares++;
       }
     },

@@ -55,7 +55,7 @@ const questionsSlice = createSlice({
         return element._id.toString() === action.payload.id.toString();
       });
 
-      if (targetReview != -1) {
+      if (targetReview !== -1) {
         state.newReviews[targetReview].upvoted = action.payload.isLiked;
         action.payload.isLiked
           ? state.newReviews[targetReview].upvotes++
@@ -78,7 +78,7 @@ const questionsSlice = createSlice({
 
       console.log(targetReview);
 
-      if (targetReview != -1) {
+      if (targetReview !== -1) {
         state.newReviews[targetReview].acceptedAns.upvoted =
           action.payload.isLiked;
         action.payload.isLiked
@@ -97,7 +97,7 @@ const questionsSlice = createSlice({
         return element._id.toString() === action.payload.id.toString();
       });
 
-      if (targetReview != -1) {
+      if (targetReview !== -1) {
         state.newReviews[targetReview].shares++;
       }
     },

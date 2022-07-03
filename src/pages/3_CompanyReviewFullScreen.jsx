@@ -1,11 +1,9 @@
 import { Box } from "@mui/material";
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
-import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { PostingField } from "../Components/PostingComponents/PostingField";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
 import { useShowSnackbar } from "../hooks/useShowSnackbar";
@@ -18,12 +16,11 @@ import {
   useLikeCompanyReviewCommentMutation,
   useLikeCompanyReviewReplyMutation,
   useUnLikeCompanyReviewCommentMutation,
-  useUnLikeCompanyReviewReplyMutation,
+  useUnLikeCompanyReviewReplyMutation
 } from "../services/company_reviews";
 import { commentsListActions } from "../store/commentsListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
-import { snackbarActions } from "../store/uiSnackbarSlice";
 import CommentsList from "./CommentsList";
 
 const cache = new CellMeasurerCache({
@@ -306,22 +303,22 @@ export default function CompanyReviewFullScreen() {
 
   const commentField = () => {
     return (
-        <div
-          style={{
-            position: "fixed",
-            zIndex: 1000,
-            bottom: 0,
-            padding: "12px",
-            background: "#fff",
-            width: "100%",
-          }}
-        >
-          <PostingField
-            avatar={false}
-            placeholder="اكتب تعليقا"
-            onSubmit={(comment) => submitCommentHandler(comment)}
-          />
-        </div>
+      <div
+        style={{
+          position: "fixed",
+          zIndex: 1000,
+          bottom: 0,
+          padding: "12px",
+          background: "#fff",
+          width: "100%",
+        }}
+      >
+        <PostingField
+          avatar={false}
+          placeholder="اكتب تعليقا"
+          onSubmit={(comment) => submitCommentHandler(comment)}
+        />
+      </div>
     );
   };
 
@@ -354,8 +351,8 @@ export default function CompanyReviewFullScreen() {
                   clearCache={clearCache}
                   clearAllCache={clearAllCache}
                   submitReplyHandler={submitReplyHandler}
-                  />
-                  {commentField()}
+                />
+                {commentField()}
               </Fragment>
             )
           )}

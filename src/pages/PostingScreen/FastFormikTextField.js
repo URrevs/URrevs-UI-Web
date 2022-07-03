@@ -1,4 +1,3 @@
-import React from "react";
 import { useField } from "formik";
 export const FastFormikTextField = ({ label, ...props }) => {
   const [field, meta] = useField(props);

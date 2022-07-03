@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
-import React, { useState } from "react";
-import { useOutletContext, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { PostingComponent } from "../Components/PostingComponents/PostingComponent";

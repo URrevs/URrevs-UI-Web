@@ -1,7 +1,7 @@
 import { useTheme } from "@emotion/react";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CompanyOverviewCard } from "../../Components/OverviewCard/CompanyOverviewCard";
 import CompanyReview from "../../Components/ReviewCard/CompanyReview";

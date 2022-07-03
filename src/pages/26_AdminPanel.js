@@ -4,7 +4,6 @@ import UpdateOutlinedIcon from "@mui/icons-material/UpdateOutlined";
 import { Box, Grid, Modal, Paper, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { CompetitionBody } from "../Components/CompetitionPrompt/CompetitionBody";
 import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
@@ -22,7 +21,6 @@ import { UpdateProducts } from "./29_UpdateProducts";
 export const AdminPanel = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const language = useSelector((state) => state.language.language);
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const theme = useTheme();

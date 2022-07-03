@@ -174,7 +174,7 @@ export const SearchSuggestion = () => {
         <IconButton
           onClick={() => {
             let temp = recentResults;
-            temp = temp.filter((result) => result._id !== id);
+            temp = temp.filter((result) => result._id != id);
             setRecentResults(temp);
             deleteRecentSearch({ id: id });
           }}

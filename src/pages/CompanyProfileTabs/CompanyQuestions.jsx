@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { Answer } from "../../Components/Interactions/Answer";
@@ -9,7 +9,7 @@ import ROUTES_NAMES from "../../RoutesNames";
 import {
   useGetCompanyQuestionsQuery,
   useLikeCompanyQuestionCommentMutation,
-  useUnLikeCompanyQuestionCommentMutation,
+  useUnLikeCompanyQuestionCommentMutation
 } from "../../services/company_questions";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { questionsActions } from "../../store/questionsSlice";
