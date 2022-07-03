@@ -17,7 +17,7 @@ const FormikDateTimePicker = ({ label, fieldName }) => {
   const [openDate, setOpenDate] = useState(false);
   const theme = useTheme();
   const textContainer = useSelector((state) => state.language.textContainer);
-  const purchaseDateErrorMsg = textContainer.purchaseDateErrorMsg;
+  const competitionEndDateErrorMsg = textContainer.competitionEndDateErrorMsg;
   const localeDate = theme.direction === "rtl" ? arEG : enUS;
   return (
     <Field name={fieldName}>
@@ -75,7 +75,7 @@ const FormikDateTimePicker = ({ label, fieldName }) => {
                     onClick={() => setOpenDate(true)}
                     error={meta.touched && meta.error && true}
                     helperText={
-                      meta.touched && meta.error && purchaseDateErrorMsg
+                      meta.touched && meta.error && competitionEndDateErrorMsg
                     }
                   />
                 );

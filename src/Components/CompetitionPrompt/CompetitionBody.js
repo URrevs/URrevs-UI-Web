@@ -26,21 +26,15 @@ export const CompetitionBody = ({ button, handleClose }) => {
   const theme = useTheme();
   const language = useSelector((state) => state.language.language);
   useEffect(() => {}, [language]);
-  const PromptValidationScheme = Yup.object().shape(
-    language === "ar"
-      ? {
-          endDate: Yup.date().required("أختر تاريخ"),
-          winners: Yup.string().required("ضروري"),
-          prize: Yup.string().required("لازم"),
-          imgLink: Yup.string().required("لازم لينك يا صاحبي"),
-        }
-      : {
-          endDate: Yup.date().required("Select a Date"),
-          winners: Yup.string().required("Required"),
-          prize: Yup.string().required("Required"),
-          imgLink: Yup.string().url("entry must be link").required("Required"),
-        }
-  );
+  const PromptValidationScheme = Yup.object().shape({
+    endDate: Yup.date().required(textContainer.competitionEndDateErrorMsg),
+    winners: Yup.number()
+      .required(textContainer.enterNumberOfWinnersErrorMsg)
+      .positive(textContainer.enterNumberOfWinnersErrorMsg)
+      .typeError(textContainer.enterNumberOfWinnersErrorMsg),
+    prize: Yup.string().required(textContainer.AddPrizeNameErrorMsg),
+    imgLink: Yup.string().required(textContainer.prizeImageUrlErrorMsg),
+  });
   // const theme = useTheme();
   const renderFields = (text, fieldName, label, controlled = true) => {
     return (
