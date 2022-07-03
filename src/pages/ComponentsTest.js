@@ -17,6 +17,11 @@ import { CommentReply } from "../Components/Interactions/CommentReply";
 import { postingModalActions } from "../store/uiPostingModalSlice";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FaButton } from "../Components/Buttons/FaButton";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { arEG, enUS } from "date-fns/locale";
+import { CompetitionBody } from "../Components/CompetitionPrompt/CompetitionBody";
 
 export const ComponentsTest = () => {
   /* Footer */
@@ -528,6 +533,7 @@ export const ComponentsTest = () => {
   const renderCommentSection = () => (
     <PostingField comment placeholder="اكتب تعليق" />
   );
+  /* Floating Action Button*/
   const FAB = () => (
     <FaButton
       icon={<CompareOutlinedIcon sx={{ color: "white", fontSize: "28px" }} />}
@@ -536,10 +542,30 @@ export const ComponentsTest = () => {
       <Typography variant="S14W700Cffffff">قارن مع منتج اخر</Typography>
     </FaButton>
   );
+  /*DateTimePicker */
+  const testDateTimePicker = () => (
+    <LocalizationProvider locale={arEG} dateAdapter={AdapterDateFns}>
+      <DateTimePicker
+        renderInput={(params) => <TextField {...params} />}
+        value={value}
+        disableFuture
+        minDate={new Date(2007, 8, 1)}
+        maxDate={new Date()}
+        open={true}
+        onChange={setValue}
+        label="Date desktop"
+        inputFormat="MM/dd/yyyy"
+      />
+    </LocalizationProvider>
+  );
+  /*Competition Body */
+  const testCompetitionBody = () => <CompetitionBody />;
   //---RETURN---
   return (
     <React.Fragment>
       <AlonePostsGrid>
+        <div style={{ height: "20px" }}> </div>
+        {testCompetitionBody()}
         <div style={{ height: "20px" }}> </div>
         {renderPostingComponent()}
         <div style={{ height: "20px" }}> </div>

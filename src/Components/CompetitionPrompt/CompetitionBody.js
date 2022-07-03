@@ -6,12 +6,13 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
-import FormikDatePicker from "../Form/FormikDatePicker";
+import FormikDatePicker from "../Form/DatePicker/FormikDatePicker";
 import FormikTextField from "../Form/FormikTextField";
 import { useAddCompetetionMutation } from "../../services/competetion";
 import { useAppDispatch } from "../../store/hooks";
 import { snackbarActions } from "../../store/uiSnackbarSlice";
 import { FormSubmitButton } from "../../pages/PostingScreen/FormSubmitButton";
+import FormikDateTimePicker from "../Form/DatePicker/FormikDateTimePicker";
 
 export const CompetitionBody = ({ button, handleClose }) => {
   const [addCompetitionRequest] = useAddCompetetionMutation();
@@ -60,10 +61,10 @@ export const CompetitionBody = ({ button, handleClose }) => {
     <React.Fragment>
       <Formik
         initialValues={{
-          endDate: handleInitialValues("endDate", ""),
-          winners: handleInitialValues("winners", ""),
-          prize: handleInitialValues("prize", ""),
-          imgLink: handleInitialValues("imgLink", ""),
+          endDate: "",
+          winners: "",
+          prize: "",
+          imgLink: "",
         }}
         validationSchema={PromptValidationScheme}
         onSubmit={async (values, { setSubmitting }) => {
@@ -112,12 +113,9 @@ export const CompetitionBody = ({ button, handleClose }) => {
                 <Typography sx={{}} variant="S18W500C050505">
                   {textContainer.enterCompetitionFinishingDate}
                 </Typography>
-                <FormikDatePicker
-                  isRequired={false}
-                  view={["year", "month", "day"]}
+                <FormikDateTimePicker
                   label={textContainer.competitionEndDate}
                   fieldName={"endDate"}
-                  noFutureDate={false}
                 />
               </div>
               <div

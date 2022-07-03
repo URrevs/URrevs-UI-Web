@@ -1,6 +1,5 @@
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import { arEG, enUS } from "date-fns/locale";
 import { useSelector } from "react-redux";
@@ -11,23 +10,15 @@ import { useTheme } from "@emotion/react";
 import {
   TEXT_FIELD_BORDER_RADIUS,
   TEXT_FIELD_BORDER_THICKNESS,
-} from "../../constants";
+} from "../../../constants";
+import { DesktopDateTimePicker } from "@mui/lab";
 
-const FormikDatePicker = ({
-  label,
-  view = ["year", "month"],
-  fieldName,
-  isRequired = true,
-  noFutureDate = true,
-}) => {
-  let minDate = new Date();
-  minDate = minDate.setDate(minDate.getDate() + 1);
+const FormikDateTimePicker = ({ label, fieldName }) => {
   const [openDate, setOpenDate] = useState(false);
   const theme = useTheme();
-  const language = useSelector((state) => state.language.language);
   const textContainer = useSelector((state) => state.language.textContainer);
   const purchaseDateErrorMsg = textContainer.purchaseDateErrorMsg;
-  const localeDate = language === "ar" ? arEG : enUS;
+  const localeDate = theme.direction === "rtl" ? arEG : enUS;
   return (
     <Field name={fieldName}>
       {({ field: { value }, form: { setFieldValue }, meta }) => (
@@ -36,12 +27,10 @@ const FormikDatePicker = ({
             dateAdapter={AdapterDateFns}
             locale={localeDate}
           >
-            <MobileDatePicker
+            <DesktopDateTimePicker
               disableHighlightToday
-              disableFuture={noFutureDate}
-              minDate={noFutureDate && new Date(2007, 8, 1)}
+              minDate={new Date()}
               value={value}
-              views={view}
               onChange={(newValue) => {
                 setFieldValue(fieldName, newValue);
                 if (newValue) sessionStorage.setItem(fieldName, newValue);
@@ -70,6 +59,7 @@ const FormikDatePicker = ({
                 };
                 return (
                   <TextField
+                    autoComplete="off"
                     sx={{
                       input: {
                         "&::placeholder": {
@@ -77,8 +67,12 @@ const FormikDatePicker = ({
                         },
                       },
                     }}
-                    placeholder={label}
                     {...params}
+                    inputProps={{
+                      ...params.inputProps,
+                      placeholder: label,
+                    }}
+                    onClick={() => setOpenDate(true)}
                     error={meta.touched && meta.error && true}
                     helperText={
                       meta.touched && meta.error && purchaseDateErrorMsg
@@ -93,4 +87,4 @@ const FormikDatePicker = ({
     </Field>
   );
 };
-export default FormikDatePicker;
+export default FormikDateTimePicker;

@@ -2,7 +2,7 @@ import { useTheme } from "@emotion/react";
 import { Box, IconButton, Modal, Stack, Typography } from "@mui/material";
 import React from "react";
 import { DialogText } from "../../Components/Dialogs/DialogText";
-import FormikDatePicker from "../../Components/Form/FormikDatePicker";
+import FormikDatePicker from "../../Components/Form/DatePicker/FormikDatePicker";
 import FormikSearchComponent from "../../Components/Form/FormikSearchComponent";
 import FormikStar from "../../Components/Form/FormikStar";
 import FormikTextField from "../../Components/Form/FormikTextField";
