@@ -223,15 +223,16 @@ function App() {
   useEffect(async () => {
     const unregisterObserver = getAuth().onAuthStateChanged(async (user) => {
       if (user) {
-        const { data } = await getUserProfile(user.accessToken);
+        console.log(storeUser);
 
+        const { data } = await getUserProfile(user.accessToken);
         if (data) {
           dispatch(
             authActions.login({
-              accessToken: storeUser.accessToken,
               isLoggedIn: true,
-              expiration: data.exp,
+              accessToken: user.accessToken,
               apiToken: data.token,
+              expiration: data.exp,
               isAdmin: data.admin,
               uid: data.profile._id,
               refCode: data.profile.refCode,
@@ -251,7 +252,7 @@ function App() {
     return () => {
       unregisterObserver();
     };
-  }, []);
+  }, [dispatch]);
 
   if (firebaseIsLoading || isLoading) {
     return <SplashScreen />;
