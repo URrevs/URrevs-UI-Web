@@ -38,6 +38,9 @@ const correspondingErrorMessage = (
     case "bad request":
       error.message = textContainer.badRequest;
       break;
+    case "already reviewed":
+      error.message = textContainer.youHaveAlreadyReviewedThisPhoneBefore;
+      break;
     //TO DO : WRITE TRANSLATIONS AND FIND MORE ERRORS
     // case "track internal server error":
     //   error.message = textContainer.trackInternalServerError;

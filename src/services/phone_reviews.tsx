@@ -58,12 +58,17 @@ export const phoneReviewsApi = createApi({
         };
       },
 
-      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
         try {
           const response = await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
           dispatch(
             snackbarActions.showSnackbar({
-              message: `Success, earned ${response.data.earnedPoints}`,
+              message: `${textContainer.postedSuccessfully}. ${textContainer.youHaveEarned} ${response.data.earnedPoints} ${textContainer.point}`,
+              showActionBtn: true,
+              actionBtnText: textContainer.seePost,
+              actionNavPath: `../phone-review?id=${response.review._id}`,
             })
           );
           dispatch(postingModalActions.hidePostingModal());
