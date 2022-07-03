@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
 import AddIcon from "@mui/icons-material/Add";
-import { Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import LoadingSpinner from "../../Components/Loaders/LoadingSpinner";
 import { Box } from "@mui/system";
 import React from "react";
@@ -21,30 +21,35 @@ export const FormSubmitButton = ({
         justifyContent: "center",
         textAlign: "center",
       }}
-    >
-      <AddIcon
-        sx={{
-          color: theme.palette.defaultRedBtnIconColor,
-          fontSize: "28px",
-        }}
-      />
-      <Typography variant="S18W700Cffffff">{submitLabel}</Typography>
-    </Box>
+    ></Box>
   );
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+        textAlign: "center",
+        marginTop: "20px",
+      }}
+    >
       <OrangeGradientButton
+        style={{ width: "100%" }}
         type="submit"
         disabled={loading}
-        loading={loading}
+        startIcon={
+          loading ? (
+            <CircularProgress size={20} sx={{ color: "#fff" }} />
+          ) : (
+            <AddIcon
+              sx={{
+                color: theme.palette.defaultRedBtnIconColor,
+                fontSize: "28px",
+              }}
+            />
+          )
+        }
         color="red"
-        sx={{
-          width: "100%",
-          textAlign: "center",
-          marginTop: "20px",
-        }}
       >
-        {!loading && renderBtnContent()}
+        <Typography variant="S18W700Cffffff">{submitLabel}</Typography>
       </OrangeGradientButton>
     </div>
   );
