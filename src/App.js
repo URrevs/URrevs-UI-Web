@@ -77,6 +77,14 @@ function App() {
             },
           },
         },
+        MuiFormHelperText: {
+          styleOverrides: {
+            root: {
+              //Edit the font size for helperText here
+              fontSize: "15px",
+            },
+          },
+        },
         MuiTabs: {
           styleOverrides: {
             indicator: {
@@ -97,7 +105,6 @@ function App() {
         MuiButton: {
           styleOverrides: {
             root: {
-              lineHeight: 0,
               fontFamily: "Tajawal",
               fontWeight: "800",
               fontSize: "16px",

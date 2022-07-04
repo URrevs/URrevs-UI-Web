@@ -3,8 +3,8 @@ import {
   Typography,
   Box,
   ThemeProvider,
-  createMuiTheme,
   CssBaseline,
+  createTheme,
 } from "@mui/material";
 import React from "react";
 import { RoundedStar, RoundedOutlinedStar } from "../Icons/star";
@@ -21,7 +21,7 @@ const StarRating = ({
   starSize = "",
 }) => {
   const globalTheme = useTheme();
-  const theme = createMuiTheme({ direction: globalTheme.direction });
+  const theme = createTheme({ direction: globalTheme.direction });
 
   return (
     <>

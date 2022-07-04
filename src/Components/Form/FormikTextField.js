@@ -1,4 +1,5 @@
 import { useTheme } from "@emotion/react";
+import { FormHelperText, Stack } from "@mui/material";
 import { FastField } from "formik";
 import React from "react";
 import { StyledTextField } from "./StyledTextField";
@@ -20,29 +21,45 @@ const FormikTextField = ({
     <FastField name={fieldName}>
       {({ field: { value }, form: { setFieldValue }, meta }) => (
         <React.Fragment>
-          <StyledTextField
-            multiline={multiline}
-            placeholder={label}
-            // required={isRequired}
-            error={meta.touched && meta.error && true}
-            helperText={meta.touched && meta.error}
-            onChange={
-              isControlled
-                ? (e) => {
-                    setFieldValue(fieldName, e.target.value);
-                    sessionStorage.setItem(fieldName, e.target.value);
-                  }
-                : () => {}
-            }
-            onBlur={
-              isControlled
-                ? () => {}
-                : (e) => {
-                    setFieldValue(fieldName, e.target.value);
-                    sessionStorage.setItem(fieldName, e.target.value);
-                  }
-            }
-          />
+          <Stack
+            spacing={0}
+            sx={{
+              width: fieldName === "invitationCode" ? "50%" : "100%",
+            }}
+          >
+            <StyledTextField
+              multiline={multiline}
+              placeholder={label}
+              // required={isRequired}
+              error={meta.touched && meta.error}
+              onChange={
+                isControlled
+                  ? (e) => {
+                      setFieldValue(fieldName, e.target.value);
+                      sessionStorage.setItem(fieldName, e.target.value);
+                    }
+                  : () => {}
+              }
+              onBlur={
+                isControlled
+                  ? () => {}
+                  : (e) => {
+                      setFieldValue(fieldName, e.target.value);
+                      sessionStorage.setItem(fieldName, e.target.value);
+                    }
+              }
+            />
+            {meta.touched && meta.error && (
+              <FormHelperText
+                error
+                sx={{
+                  margin: "0px 15px",
+                }}
+              >
+                {meta.touched && meta.error}
+              </FormHelperText>
+            )}
+          </Stack>
           {/* <div
             style={{
               margin: "50px",
