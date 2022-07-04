@@ -7,12 +7,7 @@ interface DarkState {
 }
 
 const initialDarkState: DarkState = {
-  theme:
-    localStorage.getItem("theme") ??
-    (window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ? "dark"
-      : "light",
+  theme: localStorage.getItem("theme") ?? "system",
   isDark: localStorage.getItem("isDark") === "true",
 };
 
