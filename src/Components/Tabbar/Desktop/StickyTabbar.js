@@ -67,7 +67,12 @@ export const StickyTabbar = ({
       <Tabs value={value} onChange={handleChange}>
         {arrayOfTabs.map((tab, i) => (
           // <Link style={{ textDecoration: "none" }} to={tab.to}>
-          <Tab value={i} label={tab.title} onClick={() => navigate(tab.to)} />
+          <Tab
+            value={i}
+            key={tab.title + i}
+            label={tab.title}
+            onClick={() => navigate(tab.to)}
+          />
           // </Link>
         ))}
       </Tabs>

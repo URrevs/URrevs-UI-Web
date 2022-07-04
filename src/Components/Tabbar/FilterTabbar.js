@@ -37,7 +37,6 @@ export const FilterTabbar = ({
                 ? theme.palette.filterTabbar.buttonBgActive
                 : theme.palette.filterTabbar.buttonBg,
             borderRadius: FILTER_BUTTON_BORDER_RADIUS,
-            textTransform: "none",
             padding: "3px 3px",
             mr: "20px",
             "&:active": {

@@ -188,6 +188,11 @@ export const fonts = {
     fontSize: 18,
     color: "#050505",
   },
+  S18W400C050505: {
+    fontWeight: 400,
+    fontSize: 18,
+    color: "#050505",
+  },
   // pros cons titles
   S18W500C050505: {
     fontWeight: 500,

@@ -17,4 +17,5 @@ export const COLORS = {
   c2196F314: "#2196F314",
   cBADEFB: "#BADEFB",
   c22cbf4: "#22CBF4",
+  ce41d1d: "#E41D1D",
 };

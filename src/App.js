@@ -67,13 +67,53 @@ function App() {
       isDark: isDark,
       direction: `${direction}`,
       typography: fonts,
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            lineHeight: 0,
+      colors: COLORS,
+      components: {
+        MuiTab: {
+          styleOverrides: {
+            root: {
+              textTransform: "none",
+              ...fonts.S18W400C050505,
+            },
+          },
+        },
+        MuiFormHelperText: {
+          styleOverrides: {
+            root: {
+              //Edit the font size for helperText here
+              fontSize: "15px",
+            },
+          },
+        },
+        MuiTabs: {
+          styleOverrides: {
+            indicator: {
+              backgroundColor: COLORS.c22cbf4,
+            },
+          },
+        },
+        MuiFormControlLabel: {
+          styleOverrides: {
+            label: {
+              ...fonts.S16W500C050505,
+              // fontWeight: "500",
+              // fontSize: "16px",
+              // color: COLORS.c050505,
+            },
+          },
+        },
+        MuiButton: {
+          styleOverrides: {
+            root: {
+              fontFamily: "Tajawal",
+              fontWeight: "800",
+              fontSize: "16px",
+              textTransform: "none",
+            },
           },
         },
       },
+
       breakpoints: {
         values: {
           xs: 0,

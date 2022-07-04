@@ -3,7 +3,11 @@ import BodyCardText from "./BodyCardText";
 
 const ProsConsText = ({ croppedText, prosTitle, consTitle }) => {
   return (
-    <div>
+    <div
+      style={{
+        whiteSpace: "pre",
+      }}
+    >
       <BodyCardText title={prosTitle} text={croppedText.pros} />
 
       {croppedText.cons.length !== 0 && (
