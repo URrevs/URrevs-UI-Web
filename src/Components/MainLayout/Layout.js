@@ -76,7 +76,7 @@ export default function Layout(props) {
               }}
             >
               <img
-                src="./images/logo.png"
+                src="/images/logo.png"
                 width={logoWidth}
                 height={logoHeight}
                 alt="URrevs"

@@ -90,7 +90,7 @@ export const CustomAppBar = ({
                       width={logoWidth}
                       height={logoHeight}
                       alt="URrevs"
-                      src="./images/logo.png"
+                      src="/images/logo.png"
                     />
                   )}
                 </Fragment>

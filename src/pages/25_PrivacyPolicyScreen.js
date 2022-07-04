@@ -86,7 +86,7 @@ export const PrivacyPolicyScreen = () => {
               height="auto"
               width="60%"
               alt="URrevs"
-              src="./images/full_logo.png"
+              src="/images/full_logo.png"
             />
             <Typography>
               {pageDictionary[language].paragraph}
