@@ -41,16 +41,20 @@ export const AdminPanel = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   // CLEAN CODE
-  const pageDictionry = {
+  const pageDictionary = {
     adminPanel: textContainer.adminPanel,
     updateProductsList: textContainer.updateProductsList,
     addingCompetition: textContainer.addingCompetition,
+    lastUpdatedIn: textContainer.lastUpdatedIn,
+    theLastCompetitionTookPlaceIn: textContainer.theLastCompetitionTookPlaceIn,
+    noCompetitionsYet: textContainer.noCompetitionsYet,
+    noUpdateOperationsYet: textContainer.noUpdateOperationsYet,
   };
   const listItems = [
     {
-      title: pageDictionry.updateProductsList,
+      title: pageDictionary.updateProductsList,
       icon: <UpdateOutlinedIcon sx={{ fontSize: 40 }} />,
-      subtitle: "اخر تحديث تم في",
+      subtitle: pageDictionary.lastUpdatedIn,
       to: theme.isMobile ? `../${ROUTES_NAMES.UPDATE}` : null,
       onClick: theme.isMobile
         ? null
@@ -59,9 +63,19 @@ export const AdminPanel = () => {
           },
     },
     {
-      title: pageDictionry.addingCompetition,
+      title: pageDictionary.addingCompetition,
       icon: <EmojiEventsOutlinedIcon sx={{ fontSize: 40 }} />,
-      subtitle: "اخر مسابقة تمت في",
+      subtitle: pageDictionary.theLastCompetitionTookPlaceIn,
+      onClick: theme.isMobile
+        ? handleOpen
+        : () => {
+            setPage(1);
+          },
+    },
+    {
+      title: pageDictionary.addingCompetition,
+      icon: <EmojiEventsOutlinedIcon sx={{ fontSize: 40 }} />,
+      subtitle: pageDictionary.theLastCompetitionTookPlaceIn,
       onClick: theme.isMobile
         ? handleOpen
         : () => {
@@ -70,8 +84,9 @@ export const AdminPanel = () => {
     },
   ];
 
-  const [lastUpdateDate, setLastUpdateDate] =
-    React.useState("لا يوجد تحديث بعد");
+  const [lastUpdateDate, setLastUpdateDate] = React.useState(
+    pageDictionary.noUpdateOperationsYet
+  );
 
   useEffect(() => {
     if (data) {
@@ -141,7 +156,7 @@ export const AdminPanel = () => {
           }}
         >
           <Typography variant="S22W700C050505">
-            {pageDictionry.adminPanel + ":"}
+            {pageDictionary.adminPanel + ":"}
           </Typography>
           {renderAdminOption()}
         </Paper>
@@ -179,7 +194,7 @@ export const AdminPanel = () => {
   return (
     <React.Fragment>
       {theme.isMobile ? (
-        <CustomAppBar showBackBtn showLabel label={pageDictionry.adminPanel}>
+        <CustomAppBar showBackBtn showLabel label={pageDictionary.adminPanel}>
           {renderAdminOption()}
 
           <Modal open={open} onClose={handleClose}>
