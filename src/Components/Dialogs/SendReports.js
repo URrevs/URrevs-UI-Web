@@ -17,21 +17,6 @@ import { DialogTemplate } from "./DialogTemplate";
 
 export const SendReports = ({ handleClose = () => {} }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  const fieldNames = {
-    radioGroup: "radio group",
-    additionalInfoTxtField: "additional info textfield",
-  };
-  const formValidation = Yup.object().shape({
-    [fieldNames.radioGroup]: Yup.number().min(1).max(6).required(),
-  });
-  const radioValues = {
-    option1: 1, // Spam
-    option2: 2, // Violent Content
-    option3: 3, // Harassment
-    option4: 4, // Nudity
-    option5: 5, // Hate Content
-    option6: 6, // Other
-  };
   const pageDictionary = {
     title: textContainer.report,
     subTitle: textContainer.selectTheReasonForTheComplaint,
@@ -47,6 +32,29 @@ export const SendReports = ({ handleClose = () => {} }) => {
     send: textContainer.send,
     cancel: textContainer.cancel,
   };
+  const fieldNames = {
+    radioGroup: "radio group",
+    additionalInfoTxtField: "additional info textfield",
+  };
+  const formValidation = Yup.object().shape({
+    [fieldNames.radioGroup]: Yup.number().min(1).max(6).required(),
+    [fieldNames.additionalInfoTxtField]: Yup.string().when(
+      [fieldNames.radioGroup],
+      {
+        is: 6,
+        then: Yup.string().required(pageDictionary.additionalInfoTxtFieldLabel),
+      }
+    ),
+  });
+  const radioValues = {
+    option1: 1, // Spam
+    option2: 2, // Violent Content
+    option3: 3, // Harassment
+    option4: 4, // Nudity
+    option5: 5, // Hate Content
+    option6: 6, // Other
+  };
+
   return (
     <div>
       <DialogTemplate handleClose={handleClose} title={textContainer.report}>
