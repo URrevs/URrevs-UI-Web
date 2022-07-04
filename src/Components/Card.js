@@ -11,17 +11,23 @@ const StyledCard = styled(
 )(({ theme }) => ({
   margin: "10px 0px",
   padding: "0",
-  borderRadius: "10px",
   backgroundColor: theme.palette.reviewCard.reviewCardColor,
 }));
 
-const Card = ({ children, reviewIcon, tooltipTitle }) => {
+const Card = ({ children, reviewIcon, tooltipTitle, disableElevation }) => {
   const theme = useTheme();
   const indicatorIconRadius = 20;
 
   return (
     <div style={{ position: "sticky" }}>
-      <StyledCard sx={{ boxShadow: 3 }}>{children}</StyledCard>
+      <StyledCard
+        sx={{
+          boxShadow: disableElevation ? "none" : 3,
+          borderRadius: disableElevation ? 0 : "10px",
+        }}
+      >
+        {children}
+      </StyledCard>
       {/* outer */}
       <div
         style={

@@ -40,6 +40,7 @@ export default function ReviewCard({
   fullScreenFn,
   seeMoreFn,
   shareBtnFn,
+  disableElevation,
 }) {
   const isReview = true;
   const navigate = useNavigate();
@@ -179,6 +180,7 @@ export default function ReviewCard({
           ? textContainer.productReview
           : textContainer.companyReview
       }
+      disableElevation
     >
       <CardHeader
         userAvatar={reviewDetails.picture}
@@ -292,7 +294,6 @@ export default function ReviewCard({
             firstButtonPressedText={textContainer.liked}
             navigateToFullScreen={navigateToFullScreen}
             shareBtnHandler={shareBtnFn}
-
           />
         </Box>
       </CardContent>

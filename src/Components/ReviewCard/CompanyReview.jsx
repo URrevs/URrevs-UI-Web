@@ -27,6 +27,7 @@ const CompanyReview = ({
   fullScreen,
   isExpanded,
   stateShare,
+  disableElevation,
 }) => {
   const [dontLikeThisRequest] = useIdontLikeThisCompanyReviewMutation();
   const [fullScreenRequest] = useUserPressFullScreenMutation();
@@ -86,6 +87,7 @@ const CompanyReview = ({
 
   return (
     <ReviewCard
+      disableElevation
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}

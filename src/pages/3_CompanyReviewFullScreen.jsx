@@ -1,9 +1,11 @@
+import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
+import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
 import { PostingField } from "../Components/PostingComponents/PostingField";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
 import { useShowSnackbar } from "../hooks/useShowSnackbar";
@@ -16,7 +18,7 @@ import {
   useLikeCompanyReviewCommentMutation,
   useLikeCompanyReviewReplyMutation,
   useUnLikeCompanyReviewCommentMutation,
-  useUnLikeCompanyReviewReplyMutation
+  useUnLikeCompanyReviewReplyMutation,
 } from "../services/company_reviews";
 import { commentsListActions } from "../store/commentsListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -26,12 +28,14 @@ import CommentsList from "./CommentsList";
 const cache = new CellMeasurerCache({
   fixedWidth: true,
   fixedHeight: false,
-  defaultHeight: 15,
+  defaultHeight: loadingSkeletonHeight,
 });
 
 export default function CompanyReviewFullScreen() {
   const dispatch = useAppDispatch();
   const showSnackbar = useShowSnackbar();
+
+  const isMobile = useTheme().isMobile;
 
   const navigate = useNavigate();
 
@@ -87,6 +91,7 @@ export default function CompanyReviewFullScreen() {
 
   const [ex, setEx] = useState(false);
   const clearCache = (index) => {
+    console.log("cleared", index);
     setEx(!ex);
     if (index === 0) {
       cache.clear(0);
@@ -283,6 +288,7 @@ export default function CompanyReviewFullScreen() {
     } else if (currentReview) {
       return (
         <CompanyReview
+          disableElevation
           key={currentReviewData._id}
           reviewDetails={currentReviewData}
           index={0}
@@ -303,22 +309,24 @@ export default function CompanyReviewFullScreen() {
 
   const commentField = () => {
     return (
-      <div
-        style={{
-          position: "fixed",
-          zIndex: 1000,
-          bottom: 0,
-          padding: "12px",
-          background: "#fff",
-          width: "100%",
-        }}
-      >
-        <PostingField
-          avatar={false}
-          placeholder="اكتب تعليقا"
-          onSubmit={(comment) => submitCommentHandler(comment)}
-        />
-      </div>
+      isMobile && (
+        <div
+          style={{
+            position: "fixed",
+            zIndex: 1000,
+            bottom: 0,
+            padding: "12px",
+            background: "#fff",
+            width: "100%",
+          }}
+        >
+          <PostingField
+            avatar={false}
+            placeholder="اكتب تعليقا"
+            onSubmit={(comment) => submitCommentHandler(comment)}
+          />
+        </div>
+      )
     );
   };
 
@@ -351,6 +359,7 @@ export default function CompanyReviewFullScreen() {
                   clearCache={clearCache}
                   clearAllCache={clearAllCache}
                   submitReplyHandler={submitReplyHandler}
+                  submitCommentHandler={submitCommentHandler}
                 />
                 {commentField()}
               </Fragment>

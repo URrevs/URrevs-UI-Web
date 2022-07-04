@@ -16,6 +16,7 @@ import { useAppDispatch } from "../store/hooks";
 import { Comment } from "../Components/Interactions/Comment";
 import { CommentReply } from "../Components/Interactions/CommentReply";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import { PostingField } from "../Components/PostingComponents/PostingField";
 
 let maxIndex = 0;
 
@@ -37,6 +38,7 @@ export default function CommentsList({
   clearAllCache,
   clearCache,
   submitReplyHandler,
+  submitCommentHandler,
 }) {
   const dispatch = useAppDispatch();
   const theme = useTheme();
@@ -69,6 +71,12 @@ export default function CommentsList({
     );
   }
 
+  const desktopTheme = !theme.isMobile && {
+    background: "#fff",
+    padding: "0px 4px 4px 4px",
+    borderRadius: "10px",
+  };
+
   const renderRow = ({ index, key, style, parent }) => {
     if (
       maxIndex !== 0 &&
@@ -83,65 +91,82 @@ export default function CommentsList({
     }
     maxIndex = Math.max(index, maxIndex);
 
+    const newIndex = index - 2;
+
     return (
       <div key={key}>
-        {index >= commentsList.length + 2 ? (
-          // for spacing bottom of last of items
-          <div style={{ height: "100px" }}></div>
-        ) : index >= commentsList.length + 1 ? (
-          data.length === 0 ? (
-            // لا يوجد عناصر
-            commentsList.length === 0 && <div></div>
-          ) : (
-            // Loading...
-            <div style={{ height: "166px" }}>Loading...</div>
-          )
-        ) : (
-          <CellMeasurer
-            cache={cache}
-            parent={parent}
-            columnIndex={0}
-            rowIndex={index}
+        <CellMeasurer
+          cache={cache}
+          parent={parent}
+          columnIndex={0}
+          rowIndex={index}
+        >
+          <div
+            style={{
+              ...style,
+              direction: theme.direction,
+            }}
           >
-            <div style={{ ...style, direction: theme.direction }}>
-              {index === 0 ? (
-                reviewCard()
+            {index === 0 ? (
+              reviewCard()
+            ) : index === 1 ? (
+              <PostingField
+                avatar={true}
+                placeholder="اكتب تعليقا"
+                onSubmit={(comment) => submitCommentHandler(comment)}
+              />
+            ) : index >= commentsList.length + 3 ? (
+              // for spacing bottom of last of items
+              <div style={{ height: "100px" }}></div>
+            ) : index >= commentsList.length + 2 ? (
+              data.length === 0 ? (
+                commentsList.length === 0 && <div> لا يوجد عناصر</div>
               ) : (
-                <Fragment>
-                  {commentsList[index - 1].isReply ? (
-                    <CommentReply
-                      replyId={commentsList[index - 1]._id}
-                      date={commentsList[index - 1].createdAt}
-                      user={commentsList[index - 1].userName}
-                      likes={commentsList[index - 1].likes}
-                      text={commentsList[index - 1].content}
-                      liked={commentsList[index - 1].liked}
-                      replyLike={replyLike}
-                      replyUnlike={replyUnlike}
-                      commentId={commentsList[index - 1].commentId}
-                      avatar={commentsList[index - 1].userPicture}
-                      userId={commentsList[index - 1].userId}
-                    />
-                  ) : (
-                    <Comment
-                      commentId={commentsList[index - 1]._id}
-                      date={commentsList[index - 1].createdAt}
-                      user={commentsList[index - 1].userName}
-                      likes={commentsList[index - 1].likes}
-                      text={commentsList[index - 1].content}
-                      liked={commentsList[index - 1].liked}
-                      commentLike={commentLike}
-                      commentUnlike={commentUnlike}
-                      submitReplyHandler={submitReplyHandler.bind(this, index)}
-                      avatar={commentsList[index - 1].userPicture}
-                      userId={commentsList[index - 1].userId}
-                    />
-                  )}
-                </Fragment>
-              )}
-            </div>
-          </CellMeasurer>
-        )}
+                <LoadingReviewSkeleton
+                  clear={() => {
+                    clearCache(index - 2);
+                    clearCache(index - 1);
+                    clearCache(index);
+                    clearCache(index + 1);
+                    clearCache(index + 2);
+                  }}
+                />
+              )
+            ) : (
+              <Fragment>
+                {commentsList[newIndex].isReply ? (
+                  <CommentReply
+                    replyId={commentsList[newIndex]._id}
+                    date={commentsList[newIndex].createdAt}
+                    user={commentsList[newIndex].userName}
+                    likes={commentsList[newIndex].likes}
+                    text={commentsList[newIndex].content}
+                    liked={commentsList[newIndex].liked}
+                    replyLike={replyLike}
+                    replyUnlike={replyUnlike}
+                    commentId={commentsList[newIndex].commentId}
+                    avatar={commentsList[newIndex].userPicture}
+                    userId={commentsList[newIndex].userId}
+                  />
+                ) : (
+                  <Comment
+                    commentId={commentsList[newIndex]._id}
+                    date={commentsList[newIndex].createdAt}
+                    user={commentsList[newIndex].userName}
+                    likes={commentsList[newIndex].likes}
+                    text={commentsList[newIndex].content}
+                    liked={commentsList[newIndex].liked}
+                    commentLike={commentLike}
+                    commentUnlike={commentUnlike}
+                    submitReplyHandler={submitReplyHandler.bind(this, index)}
+                    avatar={commentsList[newIndex].userPicture}
+                    userId={commentsList[newIndex].userId}
+                  />
+                )}
+              </Fragment>
+            )}
+          </div>
+        </CellMeasurer>
       </div>
     );
   };
@@ -162,6 +187,7 @@ export default function CommentsList({
                   {({ height, isScrolling, registerChild, scrollTop }) => (
                     <div ref={registerChild}>
                       <List
+                        style={{ ...desktopTheme }}
                         ref={listRef}
                         autoHeight
                         overscanRowCount={10}
@@ -171,7 +197,7 @@ export default function CommentsList({
                         height={height}
                         deferredMeasurementCache={cache}
                         rowHeight={cache.rowHeight}
-                        rowCount={commentsList.length + 3}
+                        rowCount={commentsList.length + 4}
                         rowRenderer={renderRow}
                       />
                     </div>
