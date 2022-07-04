@@ -1,3 +1,4 @@
+import { generateLink } from "../../functions/dynamicLinkGenerator";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
@@ -7,7 +8,7 @@ import {
   useIncreaseShareCounterMutation,
   useLikeCompanyQuestionMutation,
   useUnLikeCompanyQuestionMutation,
-  useUserPressesFullScreenCompanyQuestionMutation,
+  useUserPressesFullScreenCompanyQuestionMutation
 } from "../../services/company_questions";
 import QuestionCard from "./QuestionCard";
 
@@ -28,6 +29,13 @@ export default function CompanyQuestion({
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisCompanyQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenCompanyQuestionMutation();
+
+  const generateShareLink = generateLink(
+    "company-question",
+    reviewDetails._id,
+    "companyQuestion",
+    reviewDetails.userId
+  );
 
   const showShareSnackbar = useShareSnackbar();
 
@@ -73,7 +81,9 @@ export default function CompanyQuestion({
   const shareBtnHandler = () => {
     stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
-    showShareSnackbar(`/company-question?id=${reviewDetails._id}`);
+    generateShareLink().then((data) => {
+      showShareSnackbar(data.data.shortLink);
+    });
   };
 
   return (

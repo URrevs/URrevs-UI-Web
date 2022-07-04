@@ -1,17 +1,17 @@
+import { generateLink } from "../../functions/dynamicLinkGenerator";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
   useIdontLikeThisCompanyReviewMutation,
+  useIncreaseShareCounterMutation,
+  useIncreaseViewCounterMutation,
   useLikeCompanyReviewMutation,
   useUnLikeCompanyReviewMutation,
   useUserPressFullScreenMutation,
-  useUserPressSeeMoreMutation,
-  useIncreaseViewCounterMutation,
-  useIncreaseShareCounterMutation,
+  useUserPressSeeMoreMutation
 } from "../../services/company_reviews";
-import { useAppSelector } from "../../store/hooks";
 import ReviewCard from "./ReviewCard";
 
 const CompanyReview = ({
@@ -34,6 +34,13 @@ const CompanyReview = ({
   const [seeMoreRequest] = useUserPressSeeMoreMutation();
   const [increaseViewCounterRequest] = useIncreaseViewCounterMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
+
+  const generateShareLink = generateLink(
+    "company-review",
+    reviewDetails._id,
+    "companyReview",
+    reviewDetails.userId
+  );
 
   const checkIsSignedIn = useCheckSignedIn();
   const checkOwnerShip = useCheckOwnership({
@@ -82,7 +89,10 @@ const CompanyReview = ({
   const shareBtnHandler = () => {
     stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
-    showShareSnackbar(`/company-review?id=${reviewDetails._id}`);
+
+    generateShareLink().then((data) => {
+      showShareSnackbar(data.data.shortLink);
+    });
   };
 
   return (

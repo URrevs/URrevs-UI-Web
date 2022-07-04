@@ -7,8 +7,7 @@ export const useShareSnackbar = (endpoint) => {
   const showSnackbar = useShowSnackbar();
 
   function showShareSnackbar(endpoint) {
-    const hostname = window.location.hostname;
-    navigator.clipboard.writeText(`${hostname}${endpoint}`);
+    navigator.clipboard.writeText(endpoint);
 
     showSnackbar("تم نسخ رابط المنشور");
   }
