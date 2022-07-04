@@ -32,6 +32,7 @@ const FormikTextField = ({
               placeholder={label}
               // required={isRequired}
               error={meta.touched && meta.error}
+              value={value}
               onChange={
                 isControlled
                   ? (e) => {

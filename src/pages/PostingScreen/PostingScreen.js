@@ -1,5 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Formik } from "formik";
+import { useSearchParams } from "react-router-dom";
 import * as Yup from "yup";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useAddPhoneReviewMutation } from "../../services/phone_reviews";
@@ -15,6 +16,8 @@ const PostingScreen = ({
     type: "",
   },
 }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramId = searchParams.get("refCode");
   const isPhone = initValues.type === "phone";
   const checkSignedIn = useCheckSignedIn();
   const [addReview, { isLoading: isAddphoneLoading }] =
@@ -83,7 +86,7 @@ const PostingScreen = ({
             hateAboutProduct: "",
             likeAbout: "",
             hateAbout: "",
-            invitationCode: "",
+            invitationCode: paramId ?? "",
           }}
           validationSchema={BasicValidationSchema}
           onSubmit={async (values, { setSubmitting }) => {
