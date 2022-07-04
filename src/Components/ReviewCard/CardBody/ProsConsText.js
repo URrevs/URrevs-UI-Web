@@ -1,11 +1,10 @@
-import React from "react";
 import BodyCardText from "./BodyCardText";
 
 const ProsConsText = ({ croppedText, prosTitle, consTitle }) => {
   return (
     <div
       style={{
-        whiteSpace: "pre",
+        whiteSpace: "pre-line",
       }}
     >
       <BodyCardText title={prosTitle} text={croppedText.pros} />

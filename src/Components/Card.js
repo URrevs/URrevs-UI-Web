@@ -24,8 +24,6 @@ const Card = ({
   const theme = useTheme();
   const indicatorIconRadius = 20;
 
-  console.log(disableElevation);
-
   return (
     <div style={{ position: "sticky" }}>
       <StyledCard

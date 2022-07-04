@@ -8,12 +8,13 @@ import {
 } from "@mui/material";
 import { arEG } from "@mui/material/locale";
 import { getAuth } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { useLazyXauthenticateQuery } from "../src/services/users";
 import "./App.css";
 import Layout from "./Components/MainLayout/Layout";
+import { PostingModal } from "./Components/PostingComponents/PostingModal";
 import RTL from "./Components/RTL";
 import { ProductProfile } from "./pages/10_ProductProfile";
 import { ComparisonScreen } from "./pages/11_ComparisonScreen";
@@ -32,7 +33,6 @@ import { UpdateProducts } from "./pages/29_UpdateProducts";
 import Reviews from "./pages/2_HomePageScrolling";
 import CompanyReviewFullScreen from "./pages/3_CompanyReviewFullScreen";
 import PhoneReviewFullScreen from "./pages/3_PhoneReviewFullScreen";
-import { NotFoundPage } from "./pages/404/404";
 import { PostedReviews } from "./pages/5_PostedReviews";
 import { PostedQuestions } from "./pages/7_PostedQuestions";
 import { SearchScreen } from "./pages/8_SearchScreen";
@@ -262,7 +262,7 @@ function App() {
   useEffect(async () => {
     const unregisterObserver = getAuth().onAuthStateChanged(async (user) => {
       if (user) {
-        console.log(storeUser);
+        // console.log(storeUser);
 
         const { data } = await getUserProfile(user.accessToken);
         if (data) {
@@ -308,11 +308,11 @@ function App() {
                   <Grid item md={12} sm={12} xs={11}>
                     <Routes>
                       {/* not found handling */}
-                      <Route path="/404" element={<NotFoundPage />} />
+                      {/* <Route path="/404" element={<NotFoundPage />} />
                       <Route
                         path="*"
                         element={<Navigate to="/404" replace />}
-                      />
+                      /> */}
 
                       {/* review full review */}
                       <Route
@@ -333,8 +333,24 @@ function App() {
                         path={ROUTES_NAMES.EXACT_COMPANY_QUESTION}
                         element={<CompanyQuestionFullScreen />}
                       />
+
                       <Route path={ROUTES_NAMES.HOME}>
-                        <Route index element={<Reviews />} />
+                        <Route
+                          path="/"
+                          element={
+                            <Fragment>
+                              <Reviews />
+                              <Outlet />
+                            </Fragment>
+                          }
+                        >
+                          {!isMobile && (
+                            <Route
+                              path="/add-review"
+                              element={<PostingModal linkShow={true} />}
+                            />
+                          )}
+                        </Route>
                         <Route
                           path={ROUTES_NAMES.ADD_REVIEW}
                           element={<ReviewPostingScreen />}
