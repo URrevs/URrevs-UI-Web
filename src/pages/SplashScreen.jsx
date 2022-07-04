@@ -14,7 +14,12 @@ export const SplashScreen = () => {
     >
       <div style={{ textAlign: "center" }}>
         <Box>
-          <img width="197" height="94" src="./images/full_logo.png" />
+          <img
+            width="197"
+            height="94"
+            alt="splace screen"
+            src="/images/full_logo.png"
+          />
         </Box>
         <br />
         <Box>
