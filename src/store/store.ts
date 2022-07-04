@@ -25,8 +25,8 @@ import menuSlice from "./uiMenuSlice";
 import regDialogSlice from "./uiRegisterDialogSlice";
 import snackbarSlice from "./uiSnackbarSlice";
 import postingModalSlice from "./uiPostingModalSlice";
-import { rtkQueryErrorLogger } from "./authenticationMiddleware";
-import { snackbarErrorHandle } from "./errorSnackbarHandle";
+import { rtkQueryErrorLogger } from "./middlewares/authenticationMiddleware";
+import { snackbarErrorHandle } from "./middlewares/errorSnackbarHandleMiddleware";
 
 export const store = configureStore({
   reducer: {

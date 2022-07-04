@@ -40,7 +40,7 @@ export default function ReviewCard({
   fullScreenFn,
   seeMoreFn,
   shareBtnFn,
-  disableElevation,
+  disableElevation = false,
 }) {
   const isReview = true;
   const navigate = useNavigate();
@@ -180,7 +180,7 @@ export default function ReviewCard({
           ? textContainer.productReview
           : textContainer.companyReview
       }
-      disableElevation
+      disableElevation={disableElevation}
     >
       <CardHeader
         userAvatar={reviewDetails.picture}

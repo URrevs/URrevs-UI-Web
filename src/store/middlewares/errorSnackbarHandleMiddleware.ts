@@ -1,8 +1,8 @@
 import { isRejectedWithValue } from "@reduxjs/toolkit";
 import type { MiddlewareAPI, Middleware } from "@reduxjs/toolkit";
-import { snackbarActions } from "./uiSnackbarSlice";
-import { RootState } from "./store";
-import Dictionary from "../Dictionary";
+import { snackbarActions } from "../uiSnackbarSlice";
+import { RootState } from "../store";
+import Dictionary from "../../Dictionary";
 import { createSecureServer } from "http2";
 
 interface Error {
@@ -45,24 +45,29 @@ const correspondingErrorMessage = (
     // case "track internal server error":
     //   error.message = textContainer.trackInternalServerError;
     //   break;
-    // case "already liked":
-    //   error.message = textContainer.alreadyLiked;
-    //   break;
-    // case "already unliked":
-    //   error.message = textContainer.alreadyUnliked;
-    //   break;
-    // case "no likes":
-    //   error.message = textContainer.noLikes;
-    //   break;
-    // case "not found":
-    //   error.message = textContainer.notFound;
-    //   break;
+    case "already liked":
+      error.message = "textContainer.alreadyLiked";
+      error.isError = false;
+      break;
+    case "already unliked":
+      error.message = "textContainer.alreadyUnliked";
+      error.isError = false;
+      break;
+    case "no likes":
+      error.message = "textContainer.noLikes";
+      error.isError = false;
+      break;
+    case "not found":
+      error.message = "textContainer.notFound";
+      error.isError = false;
+      break;
     // case "not owned":
     //   error.message = textContainer.notOwned;
     //   break;
-    // case "not yet":
-    //   error.message = textContainer.notYet;
-    //   break;
+    case "not yet":
+      error.message = "textContainer.notYet";
+      error.isError = false;
+      break;
     // case "not accepted":
     //   error.message = textContainer.notAccepted;
     //   break;
@@ -78,9 +83,10 @@ const correspondingErrorMessage = (
     // case "blocked":
     //   error.message = textContainer.blocked;
     //   break;
-    // case "already accepted":
-    //   error.message = textContainer.alreadyAccepted;
-    //   break;
+    case "already accepted":
+      error.message = "textContainer.alreadyAccepted";
+      error.isError = false;
+      break;
     default:
       error.message = textContainer.internalServerError;
   }

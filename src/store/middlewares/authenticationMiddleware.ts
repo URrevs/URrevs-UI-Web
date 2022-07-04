@@ -1,7 +1,7 @@
 import { isRejectedWithValue } from "@reduxjs/toolkit";
 import type { MiddlewareAPI, Middleware } from "@reduxjs/toolkit";
-import { snackbarActions } from "./uiSnackbarSlice";
-import { RootState } from "./store";
+import { snackbarActions } from "../uiSnackbarSlice";
+import { RootState } from "../store";
 
 export const rtkQueryErrorLogger: Middleware =
   (api: MiddlewareAPI) => (next) => (action) => {
