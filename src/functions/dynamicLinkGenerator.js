@@ -7,16 +7,22 @@ export const generateLink = ({
   postType,
   ownerId,
   linkType,
+  refCode,
 }) => {
   const uriPrefix = "https://urevs.page.link";
   const packageName = "com.example.urrevs_ui_mobile";
 
   const shortLinksApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${config.apiKey}`;
 
-  const webLink = new URL("https://urrevstest.netlify.app" + "/" + webPath);
+  // todo
+  //const host = "https://" + window.location.host";
+
+  const host = "https://urrevstest.netlify.app";
+
+  const webLink = new URL(host + "/" + webPath);
   webLink.searchParams.append("id", postId);
 
-  const androidLink = new URL("https://urrevstest.netlify.app" + "/" + webPath);
+  const androidLink = new URL(host + "/" + webPath);
   // link type is post or refCode
   androidLink.searchParams.append("linkType", linkType);
 
@@ -27,6 +33,8 @@ export const generateLink = ({
     // postType
     androidLink.searchParams.append("postType", postType);
     androidLink.searchParams.append("postId", postId);
+  } else if (linkType === "refCode") {
+    androidLink.searchParams.append("refCode", refCode);
   }
 
   const requestBody = {
