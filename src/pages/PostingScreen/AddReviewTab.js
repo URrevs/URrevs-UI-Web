@@ -255,7 +255,7 @@ export const AddReviewTab = ({ ...props }) => {
         <FormikTextField
           fieldName={"invitationCode"}
           label={pageDictionary.invitationCode}
-          isControlled={false}
+          isControlled={true}
           multiline={false}
         />
         {/* Submit Button */}

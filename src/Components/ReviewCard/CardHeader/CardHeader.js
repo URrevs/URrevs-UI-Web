@@ -19,6 +19,7 @@ const CardHeader = ({
   userProfilePath,
   targetProfilePath,
   actionBtnFunction,
+  reportFunction,
 }) => {
   const theme = useTheme();
 
@@ -32,7 +33,10 @@ const CardHeader = ({
       }
       action={
         actionBtnFunction && (
-          <ActionButton actionBtnFunction={actionBtnFunction} />
+          <ActionButton
+            actionBtnFunction={actionBtnFunction}
+            reportFunction={reportFunction}
+          />
         )
       }
       title={

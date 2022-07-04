@@ -309,5 +309,8 @@
   "letThisContentBeViewed": "إتاحة عرض هذا المحتوى",
   "unblockThisUsersAccount": "إعادة تشغيل حساب هذا المستخدم",
   "suggestedResults": "النتائج المقترحة",
-  "noItems": "لا يوجد عناصر"
+  "noItems": "لا يوجد عناصر",
+  "hideContent": "اخفِ المحتوى",
+  "additionalInfoShallBeEntered": "يجب ادخال معلومات اضافية عند اختيار \"أخرى\" كسبب للشكوى",
+  "successfullyReported": "تم الإبلاغ بنجاح"
 }

@@ -27,9 +27,12 @@ import snackbarSlice from "./uiSnackbarSlice";
 import postingModalSlice from "./uiPostingModalSlice";
 import { rtkQueryErrorLogger } from "./middlewares/authenticationMiddleware";
 import { snackbarErrorHandle } from "./middlewares/errorSnackbarHandleMiddleware";
+import { reportsApi } from "../services/reports";
+import sendReportSlice from "./uiSendReportSlice";
 
 export const store = configureStore({
   reducer: {
+    [reportsApi.reducerPath]: reportsApi.reducer,
     [phoneApi.reducerPath]: phoneApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
     [searchApi.reducerPath]: searchApi.reducer,
@@ -54,6 +57,7 @@ export const store = configureStore({
     [regDialogSlice.name]: regDialogSlice.reducer,
     [snackbarSlice.name]: snackbarSlice.reducer,
     [postingModalSlice.name]: postingModalSlice.reducer,
+    [sendReportSlice.name]: sendReportSlice.reducer,
     [menuSlice.name]: menuSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -69,7 +73,8 @@ export const store = configureStore({
       .concat(companyQuestionsApi.middleware)
       .concat(homeApi.middleware)
       .concat(competetionApi.middleware)
-      .concat(usersApi.middleware),
+      .concat(usersApi.middleware)
+      .concat(reportsApi.middleware),
 });
 
 setupListeners(store.dispatch);

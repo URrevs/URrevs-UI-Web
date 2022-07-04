@@ -220,6 +220,7 @@ export default interface Dictionary {
   youHaveEarned: string;
   point: string;
   seePost: string;
+  successfullyReported: string;
 }
 
 interface FullDictionary {

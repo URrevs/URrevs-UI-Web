@@ -15,6 +15,7 @@ import { PostingModal } from "../PostingComponents/PostingModal";
 import CustomizedSnackbar from "../Snackbar";
 import { CustomAppBar } from "./AppBar/CustomAppBar";
 import BottomNavBar from "./BottomNavBar/BottomNavBar";
+import { SendReports } from "../Dialogs/SendReports";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -110,6 +111,7 @@ export default function Layout(props) {
       <Registeration />
       <CustomizedSnackbar />
       <PostingModal />
+      <SendReports />
       {theme.isMobile ? <BottomNavBar /> : <></>}
       <Box
         component="main"

@@ -27,6 +27,7 @@ export default function QuestionCard({
   userProfilePath,
   fullScreenRoute,
   actionBtnFunction,
+  reportFunction,
   likeBtnHandler,
   acceptedAnswerWidget,
   fullScreenFn,
@@ -156,6 +157,7 @@ export default function QuestionCard({
         targetProfilePath={targetProfilePath}
         userProfilePath={userProfilePath}
         actionBtnFunction={actionBtnFunction}
+        reportFunction={reportFunction}
       />
       <CardContent style={{ padding: 0 }}>
         <ButtonBase

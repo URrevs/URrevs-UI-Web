@@ -9,8 +9,11 @@ import {
   useLikePhoneReviewMutation,
   useUnLikePhoneReviewMutation,
   useUserPressFullScreenMutation,
-  useUserPressSeeMoreMutation
+  useUserPressSeeMoreMutation,
 } from "../../services/phone_reviews";
+import { useReportPhoneReviewMutation } from "../../services/reports";
+import { useAppDispatch } from "../../store/hooks";
+import { sendReportActions } from "../../store/uiSendReportSlice";
 import ReviewCard from "./ReviewCard";
 
 export default function PhoneReview({
@@ -27,13 +30,29 @@ export default function PhoneReview({
   isExpanded,
   stateShare,
 }) {
+  /*RTK Queries */
   const [dontLikeThisRequest] = useIdontLikeThisPhoneReviewMutation();
   const [fullScreenRequest] = useUserPressFullScreenMutation();
   const [seeMoreRequest] = useUserPressSeeMoreMutation();
   const [increaseViewCounterRequest] = useIncreaseViewCounterMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
-
+  const [reportPhoneReview] = useReportPhoneReviewMutation();
   const showShareSnackbar = useShareSnackbar();
+
+  const dispatch = useAppDispatch();
+
+  const reportFunction = () => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) => {
+          return reportPhoneReview({
+            reportId: reviewDetails._id,
+            reportContent: reportContent,
+          });
+        },
+      })
+    );
+  };
 
   const actionBtnFunction = async () => {
     try {
@@ -97,6 +116,7 @@ export default function PhoneReview({
       fullScreenFn={fullScreenHandler}
       seeMoreFn={seeMoreHandler}
       actionBtnFunction={showActionBtn && actionBtnFunction}
+      reportFunction={reportFunction}
       likeBtnHandler={likeBtnHandler}
       shareBtnFn={shareBtnHandler}
     />

@@ -306,5 +306,8 @@
   "letThisContentBeViewed": "Let this content be viewed",
   "unblockThisUsersAccount": "Unblock this user's account",
   "suggestedResults": "Suggested Results",
-  "noItems": "No Items"
+  "noItems": "No Items",
+  "hideContent": "Hide content",
+  "additionalInfoShallBeEntered": "Additional Info shall be entered when choosing \"other\" as a complaint reason",
+  "successfullyReported": "Successfully reported"
 }

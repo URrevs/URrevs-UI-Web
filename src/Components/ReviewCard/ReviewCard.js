@@ -36,6 +36,7 @@ export default function ReviewCard({
   userProfilePath,
   fullScreenRoute,
   actionBtnFunction,
+  reportFunction,
   likeBtnHandler,
   fullScreenFn,
   seeMoreFn,
@@ -196,6 +197,7 @@ export default function ReviewCard({
         targetProfilePath={targetProfilePath}
         userProfilePath={userProfilePath}
         actionBtnFunction={actionBtnFunction}
+        reportFunction={reportFunction}
       />
       <CardContent style={{ padding: 0 }}>
         <ButtonBase

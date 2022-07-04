@@ -3,6 +3,7 @@ import {
   FormControl,
   FormControlLabel,
   FormHelperText,
+  Modal,
   Radio,
   RadioGroup,
   Stack,
@@ -11,12 +12,25 @@ import {
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import React from "react";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import FormikTextField from "../Form/FormikTextField";
 import { DialogTemplate } from "./DialogTemplate";
+import { useTheme } from "@emotion/react";
+import { sendReportActions } from "../../store/uiSendReportSlice";
 
-export const SendReports = ({ handleClose = () => {} }) => {
+export const SendReports = () => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const show = useAppSelector((state) => state.sendReport.show);
+  const onSubmitAction = useAppSelector(
+    (state) => state.sendReport.reportAction
+  );
+  const theme = useTheme();
+
+  const dispatch = useAppDispatch();
+
+  const handleClose = () => {
+    dispatch(sendReportActions.hideSendReport());
+  };
   const pageDictionary = {
     title: textContainer.report,
     subTitle: textContainer.selectTheReasonForTheComplaint,
@@ -32,10 +46,12 @@ export const SendReports = ({ handleClose = () => {} }) => {
     send: textContainer.send,
     cancel: textContainer.cancel,
   };
+
   const fieldNames = {
     radioGroup: "radio group",
     additionalInfoTxtField: "additional info textfield",
   };
+
   const formValidation = Yup.object().shape({
     [fieldNames.radioGroup]: Yup.number().min(1).max(6).required(),
     [fieldNames.additionalInfoTxtField]: Yup.string().when(
@@ -46,6 +62,7 @@ export const SendReports = ({ handleClose = () => {} }) => {
       }
     ),
   });
+
   const radioValues = {
     option1: 1, // Spam
     option2: 2, // Violent Content
@@ -56,115 +73,119 @@ export const SendReports = ({ handleClose = () => {} }) => {
   };
 
   return (
-    <div>
-      <DialogTemplate handleClose={handleClose} title={textContainer.report}>
-        <Typography>{pageDictionary.subTitle}</Typography>
-        <Formik
-          initialValues={{
-            [fieldNames.radioGroup]: "",
-            [fieldNames.additionalInfoTxtField]: "",
-          }}
-          validationSchema={formValidation}
-          onSubmit={async (values, { setSubmitting }) => {
-            const request = {
-              reason: values[fieldNames.radioGroup],
-              info: values[fieldNames.additionalInfoTxtField],
-            };
-            // alert(JSON.stringify(request));
-            setSubmitting(false);
-          }}
-        >
-          {({ values, setFieldValue, errors }) => (
-            <Form>
-              <Stack
-                spacing={2}
-                style={{ display: "flex", flexDirection: "column" }}
-              >
-                {/* {console.log(errors)} */}
-                <FormControl>
-                  <RadioGroup
-                    name={fieldNames.radioGroup}
-                    value={values[fieldNames.radioGroup]}
-                    onChange={(event) =>
-                      setFieldValue(
-                        fieldNames.radioGroup,
-                        event.currentTarget.value
-                      )
-                    }
-                  >
-                    <FormControlLabel
-                      value={radioValues.option1}
-                      control={<Radio />}
-                      label={pageDictionary.option1}
-                    />
-                    <FormControlLabel
-                      value={radioValues.option2}
-                      control={<Radio />}
-                      label={pageDictionary.option2}
-                    />
-                    <FormControlLabel
-                      value={radioValues.option3}
-                      control={<Radio />}
-                      label={pageDictionary.option3}
-                    />
-                    <FormControlLabel
-                      value={radioValues.option4}
-                      control={<Radio />}
-                      label={pageDictionary.option4}
-                    />
-                    <FormControlLabel
-                      value={radioValues.option5}
-                      control={<Radio />}
-                      label={pageDictionary.option5}
-                    />
-                    <FormControlLabel
-                      value={radioValues.option6}
-                      control={<Radio />}
-                      label={pageDictionary.option6}
-                    />
-                  </RadioGroup>
-                  {errors[fieldNames.radioGroup] && (
-                    <FormHelperText error>
-                      {pageDictionary.groupErrorMsg}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-                <FormikTextField
-                  multiline
-                  fieldName={fieldNames.additionalInfoTxtField}
-                  label={pageDictionary.additionalInfoTxtFieldLabel}
-                />
-
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    paddingBottom: "12px",
-                  }}
+    <Modal open={show} onClose={handleClose} dir={theme.direction}>
+      <div>
+        <DialogTemplate handleClose={handleClose} title={textContainer.report}>
+          <Typography>{pageDictionary.subTitle}</Typography>
+          <Formik
+            initialValues={{
+              [fieldNames.radioGroup]: "",
+              [fieldNames.additionalInfoTxtField]: "",
+            }}
+            validationSchema={formValidation}
+            onSubmit={async (values, { setSubmitting }) => {
+              const reportContent = {
+                reason: parseInt(values[fieldNames.radioGroup]),
+                info: values[fieldNames.additionalInfoTxtField],
+              };
+              const response = await onSubmitAction(reportContent);
+              setSubmitting(false);
+            }}
+          >
+            {({ values, setFieldValue, errors }) => (
+              <Form>
+                <Stack
+                  spacing={2}
+                  style={{ display: "flex", flexDirection: "column" }}
                 >
-                  <Button
-                    variant="text"
-                    sx={{
-                      color: "#050505",
+                  {/* {console.log(errors)} */}
+                  <FormControl>
+                    <RadioGroup
+                      name={fieldNames.radioGroup}
+                      value={values[fieldNames.radioGroup]}
+                      onChange={(event) =>
+                        setFieldValue(
+                          fieldNames.radioGroup,
+                          event.currentTarget.value
+                        )
+                      }
+                    >
+                      <FormControlLabel
+                        value={radioValues.option1}
+                        control={<Radio />}
+                        label={pageDictionary.option1}
+                      />
+                      <FormControlLabel
+                        value={radioValues.option2}
+                        control={<Radio />}
+                        label={pageDictionary.option2}
+                      />
+                      <FormControlLabel
+                        value={radioValues.option3}
+                        control={<Radio />}
+                        label={pageDictionary.option3}
+                      />
+                      <FormControlLabel
+                        value={radioValues.option4}
+                        control={<Radio />}
+                        label={pageDictionary.option4}
+                      />
+                      <FormControlLabel
+                        value={radioValues.option5}
+                        control={<Radio />}
+                        label={pageDictionary.option5}
+                      />
+                      <FormControlLabel
+                        value={radioValues.option6}
+                        control={<Radio />}
+                        label={pageDictionary.option6}
+                      />
+                    </RadioGroup>
+                    {errors[fieldNames.radioGroup] && (
+                      <FormHelperText error>
+                        {pageDictionary.groupErrorMsg}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                  <FormikTextField
+                    multiline
+                    isControlled={true}
+                    fieldName={fieldNames.additionalInfoTxtField}
+                    label={pageDictionary.additionalInfoTxtFieldLabel}
+                  />
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      paddingBottom: "12px",
                     }}
                   >
-                    {pageDictionary.cancel}
-                  </Button>
-                  <Button
-                    variant="text"
-                    type="submit"
-                    sx={{
-                      color: "#2196F3",
-                    }}
-                  >
-                    {pageDictionary.send}
-                  </Button>
-                </div>
-              </Stack>
-            </Form>
-          )}
-        </Formik>
-      </DialogTemplate>
-    </div>
+                    <Button
+                      variant="text"
+                      sx={{
+                        color: "#050505",
+                      }}
+                      onClick={handleClose}
+                    >
+                      {pageDictionary.cancel}
+                    </Button>
+                    <Button
+                      variant="text"
+                      type="submit"
+                      sx={{
+                        color: "#2196F3",
+                      }}
+                    >
+                      {pageDictionary.send}
+                    </Button>
+                  </div>
+                </Stack>
+              </Form>
+            )}
+          </Formik>
+        </DialogTemplate>
+      </div>
+    </Modal>
   );
 };
