@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Box, Checkbox, Typography } from "@mui/material";
+import { Box, Button, Checkbox, Typography } from "@mui/material";
 import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutlineBlankRounded";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
@@ -88,20 +88,16 @@ export const SignoutDialog = ({ handleClose }) => {
             paddingBottom: "12px",
           }}
         >
-          <BasicButton
+          <Button
             onClick={() => (checked ? logOutFromAllDevices() : signout())}
-            sx={{ marginLeft: "22px" }}
+            sx={{ marginLeft: "22px", color: theme.colors.ce41d1d }}
           >
-            <Typography variant="S16W800CE41D1D">
-              {textContainer.logOut}
-            </Typography>
-          </BasicButton>
+            {textContainer.logOut}
+          </Button>
           <Box sx={{ width: 12 }}></Box>
-          <BasicButton>
-            <Typography onClick={handleClose} variant="S16W800C050505">
-              {textContainer.cancel}
-            </Typography>
-          </BasicButton>
+          <Button sx={{ color: theme.colors.c050505 }} onClick={handleClose}>
+            {textContainer.cancel}
+          </Button>
         </Box>
       </DialogTemplate>
     </React.Fragment>
