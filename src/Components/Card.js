@@ -5,26 +5,32 @@ import { styled } from "@mui/material";
 import { default as Paper } from "@mui/material/Paper";
 import Tooltip from "@mui/material/Tooltip";
 
-const StyledCard = styled(
-  Paper,
-  {}
-)(({ theme }) => ({
+const StyledCard = styled(Paper, {
+  shouldForwardProp: (prop) => prop !== "disableElevation",
+})(({ theme, disableElevation }) => ({
   margin: "10px 0px",
   padding: "0",
   backgroundColor: theme.palette.reviewCard.reviewCardColor,
+  boxShadow: disableElevation ? 0 : 3,
+  borderRadius: disableElevation ? 0 : 10,
 }));
 
-const Card = ({ children, reviewIcon, tooltipTitle, disableElevation }) => {
+const Card = ({
+  children,
+  reviewIcon,
+  tooltipTitle,
+  disableElevation = false,
+}) => {
   const theme = useTheme();
   const indicatorIconRadius = 20;
+
+  console.log(disableElevation);
 
   return (
     <div style={{ position: "sticky" }}>
       <StyledCard
-        sx={{
-          boxShadow: disableElevation ? "none" : 3,
-          borderRadius: disableElevation ? 0 : "10px",
-        }}
+        sx={{ boxShadow: disableElevation && 0 }}
+        disableElevation={disableElevation}
       >
         {children}
       </StyledCard>
