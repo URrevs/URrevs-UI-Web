@@ -4,7 +4,7 @@ import {
   createTheme,
   CssBaseline,
   Grid,
-  useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
 import { arEG } from "@mui/material/locale";
 import { getAuth } from "firebase/auth";
@@ -306,9 +306,14 @@ function App() {
                           path={ROUTES_NAMES.ABOUT_US}
                           element={<AboutUsScreen />}
                         />
-                        <Route path={ROUTES_NAMES.PRIVACY_POLICY}>
-                          <Route path="ar" element={<PrivacyPolicyScreen />} />
-                        </Route>
+                        <Route
+                          path={ROUTES_NAMES.PRIVACY_POLICY + "/ar"}
+                          element={<PrivacyPolicyScreen />}
+                        ></Route>
+                        <Route
+                          path={ROUTES_NAMES.PRIVACY_POLICY + "/en"}
+                          element={<PrivacyPolicyScreen />}
+                        ></Route>
                         <Route
                           path={ROUTES_NAMES.TERMS_AND_CONDITIONS + "/ar"}
                           element={<TermsAndConditionsScreen />}
