@@ -2,12 +2,14 @@ import {
   Button,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   Radio,
   RadioGroup,
   Stack,
   Typography,
 } from "@mui/material";
 import { Form, Formik } from "formik";
+import * as Yup from "yup";
 import React from "react";
 import { useAppSelector } from "../../store/hooks";
 import FormikTextField from "../Form/FormikTextField";
@@ -19,13 +21,16 @@ export const SendReports = ({ handleClose = () => {} }) => {
     radioGroup: "radio group",
     additionalInfoTxtField: "additional info textfield",
   };
+  const formValidation = Yup.object().shape({
+    [fieldNames.radioGroup]: Yup.number().min(1).max(6).required(),
+  });
   const radioValues = {
-    option1: "spam",
-    option2: "violent content",
-    option3: "harassment",
-    option4: "nudity",
-    option5: "hate content",
-    option6: "other",
+    option1: 1, // Spam
+    option2: 2, // Violent Content
+    option3: 3, // Harassment
+    option4: 4, // Nudity
+    option5: 5, // Hate Content
+    option6: 6, // Other
   };
   const pageDictionary = {
     title: textContainer.report,
@@ -36,6 +41,7 @@ export const SendReports = ({ handleClose = () => {} }) => {
     option4: textContainer.nudity,
     option5: textContainer.hateContent,
     option6: textContainer.other,
+    groupErrorMsg: textContainer.theReasonForTheComplaintMustBeSelectd,
     additionalInfoTxtFieldLabel:
       textContainer.enterAdditionalInformationRegardingTheComplaint,
     send: textContainer.send,
@@ -50,13 +56,23 @@ export const SendReports = ({ handleClose = () => {} }) => {
             [fieldNames.radioGroup]: "",
             [fieldNames.additionalInfoTxtField]: "",
           }}
+          validationSchema={formValidation}
+          onSubmit={async (values, { setSubmitting }) => {
+            const request = {
+              reason: values[fieldNames.radioGroup],
+              info: values[fieldNames.additionalInfoTxtField],
+            };
+            // alert(JSON.stringify(request));
+            setSubmitting(false);
+          }}
         >
-          {({ values, setFieldValue }) => (
+          {({ values, setFieldValue, errors }) => (
             <Form>
               <Stack
                 spacing={2}
                 style={{ display: "flex", flexDirection: "column" }}
               >
+                {/* {console.log(errors)} */}
                 <FormControl>
                   <RadioGroup
                     name={fieldNames.radioGroup}
@@ -69,10 +85,6 @@ export const SendReports = ({ handleClose = () => {} }) => {
                     }
                   >
                     <FormControlLabel
-                      sx={{
-                        fontWeight: "500",
-                        fontSize: "50px",
-                      }}
                       value={radioValues.option1}
                       control={<Radio />}
                       label={pageDictionary.option1}
@@ -103,12 +115,18 @@ export const SendReports = ({ handleClose = () => {} }) => {
                       label={pageDictionary.option6}
                     />
                   </RadioGroup>
+                  {errors[fieldNames.radioGroup] && (
+                    <FormHelperText error>
+                      {pageDictionary.groupErrorMsg}
+                    </FormHelperText>
+                  )}
                 </FormControl>
                 <FormikTextField
                   multiline
                   fieldName={fieldNames.additionalInfoTxtField}
                   label={pageDictionary.additionalInfoTxtFieldLabel}
                 />
+
                 <div
                   style={{
                     display: "flex",
@@ -126,6 +144,7 @@ export const SendReports = ({ handleClose = () => {} }) => {
                   </Button>
                   <Button
                     variant="text"
+                    type="submit"
                     sx={{
                       color: "#2196F3",
                     }}
