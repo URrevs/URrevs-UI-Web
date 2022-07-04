@@ -22,7 +22,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-export const StarCounter = ({ value }) => {
+export const StarCounter = ({ value = 0 }) => {
   const theme = useTheme();
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>

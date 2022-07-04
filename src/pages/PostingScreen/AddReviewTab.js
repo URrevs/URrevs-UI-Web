@@ -1,5 +1,12 @@
 import { useTheme } from "@emotion/react";
-import { Box, IconButton, Modal, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Modal,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { DialogText } from "../../Components/Dialogs/DialogText";
 import FormikDatePicker from "../../Components/Form/DatePicker/FormikDatePicker";
@@ -12,6 +19,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import { FormSubmitButton } from "./FormSubmitButton";
 import { useGetManufacturingCompanyMutation } from "../../services/phones";
 import { FastField } from "formik";
+import { StarCounter } from "../../Components/StarCounter/StarCounter";
 
 /*Documentation */
 /*
@@ -122,6 +130,10 @@ export const AddReviewTab = ({ ...props }) => {
   }, []);
   return (
     <React.Fragment>
+      {/* <Stack spacing={1}>
+          <StarCounter />
+          <Divider />
+        </Stack> */}
       <Modal open={open} onClose={handleClose} dir={theme.direction}>
         <Box>
           <DialogText text={pageDictionary.referralCodeHelpPrompt} />
