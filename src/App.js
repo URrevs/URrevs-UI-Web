@@ -73,7 +73,10 @@ function App() {
           styleOverrides: {
             root: {
               textTransform: "none",
-              ...fonts.S18W400C050505,
+              ...fonts.S14W400C050505,
+              "&.Mui-selected": {
+                ...fonts.S14W800C050505,
+              },
             },
           },
         },

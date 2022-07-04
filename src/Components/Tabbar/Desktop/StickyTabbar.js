@@ -52,12 +52,12 @@ export const StickyTabbar = ({
         display: "flex",
         // top: hasParent && "64px",
         top: "64px",
-        padding: "0px 200px",
+        padding: "0px 0px 0px 200px",
         [theme.breakpoints.down("xl")]: {
-          padding: "0px 150px",
+          padding: "0px 0px 0px 150px",
         },
         [theme.breakpoints.down("lg")]: {
-          padding: "0px 50px",
+          padding: "0px 0px 0px 50px",
         },
         // padding: "0px 150px 0px 150px",
         width: "100%",
@@ -75,29 +75,29 @@ export const StickyTabbar = ({
           />
           // </Link>
         ))}
+        {smallPfpVisible || !hasParent ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {userPhoto && (
+              <Avatar
+                src={userPhoto}
+                alt="User profile picture"
+                sx={{
+                  mr: "8px",
+                  // height: `${height}px`,
+                  // width: `${width}px`,
+                  transition: "0.1s",
+                }}
+              />
+            )}
+            <Typography variant="S18W700C050505">{userName}</Typography>
+          </div>
+        ) : null}
       </Tabs>
-      {smallPfpVisible || !hasParent ? (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          {userPhoto && (
-            <Avatar
-              src={userPhoto}
-              alt="User profile picture"
-              sx={{
-                mr: "8px",
-                // height: `${height}px`,
-                // width: `${width}px`,
-                transition: "0.1s",
-              }}
-            />
-          )}
-          <Typography variant="S18W700C050505">{userName}</Typography>
-        </div>
-      ) : null}
     </Card>
   );
 };
