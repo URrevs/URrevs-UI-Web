@@ -10,7 +10,7 @@ import {
   useLikePhoneReviewMutation,
   useUnLikePhoneReviewMutation,
   useUserPressFullScreenMutation,
-  useUserPressSeeMoreMutation
+  useUserPressSeeMoreMutation,
 } from "../../services/phone_reviews";
 import ReviewCard from "./ReviewCard";
 
@@ -34,12 +34,13 @@ export default function PhoneReview({
   const [increaseViewCounterRequest] = useIncreaseViewCounterMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
 
-  const generateShareLink = generateLink(
-    "phone-review",
-    reviewDetails._id,
-    "phoneReview",
-    reviewDetails.userId
-  );
+  const generateShareLink = generateLink({
+    webPath: "phone-review",
+    postId: reviewDetails._id,
+    postType: "phoneReview",
+    ownerId: reviewDetails.userId,
+    linkType: "post",
+  });
 
   const showShareSnackbar = useShareSnackbar();
 

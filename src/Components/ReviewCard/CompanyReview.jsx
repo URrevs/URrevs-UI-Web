@@ -10,7 +10,7 @@ import {
   useLikeCompanyReviewMutation,
   useUnLikeCompanyReviewMutation,
   useUserPressFullScreenMutation,
-  useUserPressSeeMoreMutation
+  useUserPressSeeMoreMutation,
 } from "../../services/company_reviews";
 import ReviewCard from "./ReviewCard";
 
@@ -35,12 +35,13 @@ const CompanyReview = ({
   const [increaseViewCounterRequest] = useIncreaseViewCounterMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
 
-  const generateShareLink = generateLink(
-    "company-review",
-    reviewDetails._id,
-    "companyReview",
-    reviewDetails.userId
-  );
+  const generateShareLink = generateLink({
+    webPath: "company-review",
+    postId: reviewDetails._id,
+    postType: "companyReview",
+    ownerId: reviewDetails.userId,
+    linkType: "post",
+  });
 
   const checkIsSignedIn = useCheckSignedIn();
   const checkOwnerShip = useCheckOwnership({

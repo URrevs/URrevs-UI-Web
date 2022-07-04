@@ -31,12 +31,13 @@ export default function PhoneQuestion({
   const [fullScreenRequest] = useUserPressesFullScreenPhoneQuestionMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
 
-  const generateShareLink = generateLink(
-    "phone-question",
-    reviewDetails._id,
-    "phoneQuestion",
-    reviewDetails.userId
-  );
+  const generateShareLink = generateLink({
+    webPath: "phone-question",
+    postId: reviewDetails._id,
+    postType: "phoneQuestion",
+    ownerId: reviewDetails.userId,
+    linkType: "post",
+  });
 
   const showShareSnackbar = useShareSnackbar();
 

@@ -1,7 +1,13 @@
 import config from "../firebase-config.json";
 
 // webPath is the post type in camel-case
-export const generateLink = (webPath, postId, postType, ownerId) => {
+export const generateLink = ({
+  webPath,
+  postId,
+  postType,
+  ownerId,
+  linkType,
+}) => {
   const uriPrefix = "https://urevs.page.link";
   const packageName = "com.example.urrevs_ui_mobile";
 
@@ -11,14 +17,17 @@ export const generateLink = (webPath, postId, postType, ownerId) => {
   webLink.searchParams.append("id", postId);
 
   const androidLink = new URL("https://urrevstest.netlify.app" + "/" + webPath);
-  androidLink.searchParams.append("id", postId);
   // link type is post or refCode
-  androidLink.searchParams.append("linkType", "post");
-  // owner id
-  androidLink.searchParams.append("userId", ownerId);
-  // postType
-  androidLink.searchParams.append("postType", postType);
-  androidLink.searchParams.append("postId", postId);
+  androidLink.searchParams.append("linkType", linkType);
+
+  if (linkType === "post") {
+    androidLink.searchParams.append("id", postId);
+    // owner id
+    androidLink.searchParams.append("userId", ownerId);
+    // postType
+    androidLink.searchParams.append("postType", postType);
+    androidLink.searchParams.append("postId", postId);
+  }
 
   const requestBody = {
     dynamicLinkInfo: {

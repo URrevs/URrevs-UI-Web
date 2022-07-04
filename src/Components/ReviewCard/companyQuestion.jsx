@@ -8,7 +8,7 @@ import {
   useIncreaseShareCounterMutation,
   useLikeCompanyQuestionMutation,
   useUnLikeCompanyQuestionMutation,
-  useUserPressesFullScreenCompanyQuestionMutation
+  useUserPressesFullScreenCompanyQuestionMutation,
 } from "../../services/company_questions";
 import QuestionCard from "./QuestionCard";
 
@@ -30,12 +30,13 @@ export default function CompanyQuestion({
   const [dontLikeThisRequest] = useIdontLikeThisCompanyQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenCompanyQuestionMutation();
 
-  const generateShareLink = generateLink(
-    "company-question",
-    reviewDetails._id,
-    "companyQuestion",
-    reviewDetails.userId
-  );
+  const generateShareLink = generateLink({
+    webPath: "company-question",
+    postId: reviewDetails._id,
+    postType: "companyQuestion",
+    ownerId: reviewDetails.userId,
+    linkType: "post",
+  });
 
   const showShareSnackbar = useShareSnackbar();
 
