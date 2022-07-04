@@ -10,6 +10,9 @@ import {
   useUnLikePhoneQuestionMutation,
   useUserPressesFullScreenPhoneQuestionMutation,
 } from "../../services/phone_questions";
+import { useReportPhoneQuestionMutation } from "../../services/reports";
+import { useAppDispatch } from "../../store/hooks";
+import { sendReportActions } from "../../store/uiSendReportSlice";
 import QuestionCard from "./QuestionCard";
 
 export default function PhoneQuestion({
@@ -30,7 +33,7 @@ export default function PhoneQuestion({
   const [dontLikeThisRequest] = useIdontLikeThisPhoneQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenPhoneQuestionMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
-
+  const [reportPhoneQuestion] = useReportPhoneQuestionMutation();
   const generateShareLink = generateLink({
     webPath: "phone-question",
     postId: reviewDetails._id,
@@ -40,6 +43,21 @@ export default function PhoneQuestion({
   });
 
   const showShareSnackbar = useShareSnackbar();
+
+  const dispatch = useAppDispatch();
+
+  const reportFunction = () => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) => {
+          return reportPhoneQuestion({
+            reportId: reviewDetails._id,
+            reportContent: reportContent,
+          });
+        },
+      })
+    );
+  };
 
   const actionBtnFunction = async () => {
     try {
@@ -100,6 +118,7 @@ export default function PhoneQuestion({
       fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_QUESTION}?id=${reviewDetails._id}`}
       fullScreenFn={fullScreenHandler}
       actionBtnFunction={showActionBtn && actionBtnFunction}
+      reportFunction={reportFunction}
       likeBtnHandler={likeBtnHandler}
       acceptedAnswerWidget={acceptedAnswerWidget}
       shareBtnFn={shareBtnHandler}

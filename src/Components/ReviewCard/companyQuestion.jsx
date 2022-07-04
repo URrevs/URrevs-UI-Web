@@ -10,6 +10,9 @@ import {
   useUnLikeCompanyQuestionMutation,
   useUserPressesFullScreenCompanyQuestionMutation,
 } from "../../services/company_questions";
+import { useReportCompanyQuestionMutation } from "../../services/reports";
+import { useAppDispatch } from "../../store/hooks";
+import { sendReportActions } from "../../store/uiSendReportSlice";
 import QuestionCard from "./QuestionCard";
 
 export default function CompanyQuestion({
@@ -29,6 +32,8 @@ export default function CompanyQuestion({
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisCompanyQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenCompanyQuestionMutation();
+
+  const dispatch = useAppDispatch();
 
   const generateShareLink = generateLink({
     webPath: "company-question",
@@ -52,6 +57,20 @@ export default function CompanyQuestion({
   const [likeCompanyReview] = useLikeCompanyQuestionMutation();
   const [unLikeCompanyReview] = useUnLikeCompanyQuestionMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
+  const [reportCompanyQuestion] = useReportCompanyQuestionMutation();
+
+  const reportFunction = () => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) => {
+          return reportCompanyQuestion({
+            reportId: reviewDetails._id,
+            reportContent: reportContent,
+          });
+        },
+      })
+    );
+  };
 
   const checkIsSignedIn = useCheckSignedIn();
   const checkOwnerShip = useCheckOwnership({
@@ -100,6 +119,7 @@ export default function CompanyQuestion({
       fullScreenRoute={`/${ROUTES_NAMES.EXACT_COMPANY_QUESTION}?id=${reviewDetails._id}`}
       fullScreenFn={fullScreenHandler}
       actionBtnFunction={showActionBtn && actionBtnFunction}
+      reportFunction={reportFunction}
       likeBtnHandler={likeBtnHandler}
       acceptedAnswerWidget={acceptedAnswerWidget}
       shareBtnFn={shareBtnHandler}

@@ -47,8 +47,85 @@ export const reportsApi = createApi({
         }
       },
     }),
+    reportCompanyReview: builder.mutation({
+      query: ({ reportId, reportContent }) => {
+        return {
+          url: `/review/company/${reportId}`,
+          method: "POST",
+          body: { reason: reportContent.reason, info: reportContent.info },
+        };
+      },
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
+        try {
+          const response = await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: textContainer.successfullyReported,
+            })
+          );
+          dispatch(sendReportActions.hideSendReport());
+        } catch (e: any) {
+          console.error(e);
+        }
+      },
+    }),
+    reportPhoneQuestion: builder.mutation({
+      query: ({ reportId, reportContent }) => {
+        return {
+          url: `/question/phone/${reportId}`,
+          method: "POST",
+          body: { reason: reportContent.reason, info: reportContent.info },
+        };
+      },
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
+        try {
+          const response = await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: textContainer.successfullyReported,
+            })
+          );
+          dispatch(sendReportActions.hideSendReport());
+        } catch (e: any) {
+          console.error(e);
+        }
+      },
+    }),
+    reportCompanyQuestion: builder.mutation({
+      query: ({ reportId, reportContent }) => {
+        return {
+          url: `/question/company/${reportId}`,
+          method: "POST",
+          body: { reason: reportContent.reason, info: reportContent.info },
+        };
+      },
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
+        try {
+          const response = await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: textContainer.successfullyReported,
+            })
+          );
+          dispatch(sendReportActions.hideSendReport());
+        } catch (e: any) {
+          console.error(e);
+        }
+      },
+    }),
   }),
 });
 
 //auto-generated hooks
-export const { useReportPhoneReviewMutation } = reportsApi;
+export const {
+  useReportPhoneReviewMutation,
+  useReportCompanyReviewMutation,
+  useReportPhoneQuestionMutation,
+  useReportCompanyQuestionMutation,
+} = reportsApi;

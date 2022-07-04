@@ -2,6 +2,8 @@ import { generateLink } from "../../functions/dynamicLinkGenerator";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
+import { useAppDispatch } from "../../store/hooks";
+
 import ROUTES_NAMES from "../../RoutesNames";
 import {
   useIdontLikeThisCompanyReviewMutation,
@@ -13,6 +15,8 @@ import {
   useUserPressSeeMoreMutation,
 } from "../../services/company_reviews";
 import ReviewCard from "./ReviewCard";
+import { sendReportActions } from "../../store/uiSendReportSlice";
+import { useReportCompanyReviewMutation } from "../../services/reports";
 
 const CompanyReview = ({
   reviewDetails,
@@ -34,6 +38,9 @@ const CompanyReview = ({
   const [seeMoreRequest] = useUserPressSeeMoreMutation();
   const [increaseViewCounterRequest] = useIncreaseViewCounterMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
+  const [reportCompanyReview] = useReportCompanyReviewMutation();
+
+  const dispatch = useAppDispatch();
 
   const generateShareLink = generateLink({
     webPath: "company-review",
@@ -50,6 +57,19 @@ const CompanyReview = ({
   });
 
   const showShareSnackbar = useShareSnackbar();
+
+  const reportFunction = () => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) => {
+          return reportCompanyReview({
+            reportId: reviewDetails._id,
+            reportContent: reportContent,
+          });
+        },
+      })
+    );
+  };
 
   const actionBtnFunction = async () => {
     try {
@@ -109,6 +129,7 @@ const CompanyReview = ({
       userProfilePath={userProfilePath}
       fullScreenRoute={`/${ROUTES_NAMES.EXACT_COMPANY_REVIEW}?id=${reviewDetails._id}`}
       actionBtnFunction={showActionBtn && actionBtnFunction}
+      reportFunction={reportFunction}
       likeBtnHandler={likeBtnHandler}
       fullScreenFn={fullScreenHandler}
       seeMoreFn={seeMoreHandler}
