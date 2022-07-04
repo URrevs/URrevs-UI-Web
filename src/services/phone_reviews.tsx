@@ -67,14 +67,12 @@ export const phoneReviewsApi = createApi({
               message: `${textContainer.postedSuccessfully}. ${textContainer.youHaveEarned} ${response.data.earnedPoints} ${textContainer.point}`,
               showActionBtn: true,
               actionBtnText: textContainer.seePost,
-              actionNavPath: `../phone-review?id=${response.review._id}`,
+              actionNavPath: `../phone-review?id=${response.data.review._id}`,
             })
           );
           dispatch(postingModalActions.hidePostingModal());
         } catch (e: any) {
-          dispatch(
-            snackbarActions.showSnackbar({ message: e.error.data.status })
-          );
+          console.error(e);
         }
       },
     }),

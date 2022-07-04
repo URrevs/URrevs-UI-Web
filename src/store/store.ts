@@ -61,7 +61,7 @@ export const store = configureStore({
       serializableCheck: false,
     })
       .concat(snackbarErrorHandle)
-      .concat(rtkQueryErrorLogger)
+      // .concat(rtkQueryErrorLogger)
       .concat(phoneReviewsApi.middleware)
       .concat(companyReviewsApi.middleware)
       .concat(phoneQuestionsApi.middleware)

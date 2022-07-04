@@ -215,6 +215,11 @@ export default interface Dictionary {
   termsOfUse: string;
   privacyPolicy: string;
   postedQuestions: string;
+  youHaveAlreadyReviewedThisPhoneBefore: string;
+  postedSuccessfully: string;
+  youHaveEarned: string;
+  point: string;
+  seePost: string;
 }
 
 interface FullDictionary {
