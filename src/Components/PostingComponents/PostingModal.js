@@ -26,7 +26,7 @@ export const PostingModal = ({ linkShow = false }) => {
 
   const handleClose = () => {
     // if modal was up because of route
-    if (linkShow) navigate(-1);
+    if (linkShow) navigate("/");
 
     dispatch(postingModalActions.hidePostingModal());
   };
