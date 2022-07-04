@@ -1,3 +1,4 @@
+import { generateLink } from "../../functions/dynamicLinkGenerator";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
@@ -28,6 +29,14 @@ export default function CompanyQuestion({
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisCompanyQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenCompanyQuestionMutation();
+
+  const generateShareLink = generateLink({
+    webPath: "company-question",
+    postId: reviewDetails._id,
+    postType: "companyQuestion",
+    ownerId: reviewDetails.userId,
+    linkType: "post",
+  });
 
   const showShareSnackbar = useShareSnackbar();
 
@@ -73,7 +82,9 @@ export default function CompanyQuestion({
   const shareBtnHandler = () => {
     stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
-    showShareSnackbar(`/company-question?id=${reviewDetails._id}`);
+    generateShareLink().then((data) => {
+      showShareSnackbar(data.data.shortLink);
+    });
   };
 
   return (

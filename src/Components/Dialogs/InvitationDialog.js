@@ -3,12 +3,12 @@ import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import { Box, Grid, IconButton, TextField, Typography } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
 import {
   TEXT_FIELD_BORDER_RADIUS,
   TEXT_FIELD_BORDER_THICKNESS,
 } from "../../constants";
-import ROUTES_NAMES from "../../RoutesNames";
+import { generateLink } from "../../functions/dynamicLinkGenerator";
+import { useShareSnackbar } from "../../hooks/useShareSnackbar";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { snackbarActions } from "../../store/uiSnackbarSlice";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
@@ -25,6 +25,14 @@ export const InvitationDialog = ({ handleClose }) => {
     codeCopyWasSuccessful: "تم نسخ كود الدعوة",
     linkCopyWasSuccessful: "تم نسخ رابط الدعوة",
   };
+
+  const showShareSnackbar = useShareSnackbar();
+
+  const generateShareLink = generateLink({
+    refCode: currentUserProfile.refCode,
+    linkType: "refCode",
+    webPath: "add-review",
+  });
 
   const theme = useTheme();
   return (
@@ -109,14 +117,9 @@ export const InvitationDialog = ({ handleClose }) => {
         <OrangeGradientButton
           color="red"
           onClick={() => {
-            dispatch(
-              snackbarActions.showSnackbar({
-                message: pageDictionary.linkCopyWasSuccessful,
-              })
-            );
-            navigator.clipboard.writeText(
-              `${window.location.hostname}/add-review?refCode=${currentUserProfile.refCode}`
-            );
+            generateShareLink().then((data) => {
+              showShareSnackbar(data.data.shortLink);
+            });
           }}
         >
           <ShareOutlinedIcon sx={{ fontSize: "25px" }} />

@@ -1,3 +1,4 @@
+import { generateLink } from "../../functions/dynamicLinkGenerator";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
@@ -29,6 +30,14 @@ export default function PhoneQuestion({
   const [dontLikeThisRequest] = useIdontLikeThisPhoneQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenPhoneQuestionMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
+
+  const generateShareLink = generateLink({
+    webPath: "phone-question",
+    postId: reviewDetails._id,
+    postType: "phoneQuestion",
+    ownerId: reviewDetails.userId,
+    linkType: "post",
+  });
 
   const showShareSnackbar = useShareSnackbar();
 
@@ -73,7 +82,9 @@ export default function PhoneQuestion({
   const shareBtnHandler = () => {
     stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
-    showShareSnackbar(`/phone-question?id=${reviewDetails._id}`);
+    generateShareLink().then((data) => {
+      showShareSnackbar(data.data.shortLink);
+    });
   };
 
   return (

@@ -1,3 +1,4 @@
+import { generateLink } from "../../functions/dynamicLinkGenerator";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
@@ -37,6 +38,15 @@ export default function PhoneReview({
   const [increaseViewCounterRequest] = useIncreaseViewCounterMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
   const [reportPhoneReview] = useReportPhoneReviewMutation();
+
+  const generateShareLink = generateLink({
+    webPath: "phone-review",
+    postId: reviewDetails._id,
+    postType: "phoneReview",
+    ownerId: reviewDetails.userId,
+    linkType: "post",
+  });
+
   const showShareSnackbar = useShareSnackbar();
 
   const dispatch = useAppDispatch();
@@ -99,7 +109,10 @@ export default function PhoneReview({
   const shareBtnHandler = () => {
     stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
-    showShareSnackbar(`/phone-review?id=${reviewDetails._id}`);
+
+    generateShareLink().then((data) => {
+      showShareSnackbar(data.data.shortLink);
+    });
   };
 
   return (
