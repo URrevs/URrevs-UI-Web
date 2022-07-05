@@ -16,7 +16,7 @@ import {
   ListItemText,
   Paper,
   TextField,
-  Typography,
+  Typography
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ import {
   useAddToMyRecentSearchesMutation,
   useDeleteRecentSearchesMutation,
   useGetMyRecentSearchesQuery,
-  useSearchAllMutation,
+  useSearchAllMutation
 } from "../../../services/search";
 import { useAppSelector } from "../../../store/hooks";
 import LoadingSpinner from "../../Loaders/LoadingSpinner";
@@ -50,6 +50,7 @@ export const SearchSuggestion = () => {
     }
   );
 
+  // update recent search when request is done
   React.useEffect(() => {
     console.log("a");
     if (fetchedRecentResults) {
@@ -57,6 +58,7 @@ export const SearchSuggestion = () => {
     }
   }, [fetchedRecentResults, user.apiToken]);
 
+  // clear recent search when user logout
   React.useEffect(() => {
     if (user.apiToken === "" || user.apiToken === null) {
       setRecentResults([]);
@@ -151,7 +153,7 @@ export const SearchSuggestion = () => {
           />
         </ListItemButton>
       </ListItem>
-      {recentResults.length - 1 !== index && (
+      {results.length - 1 !== index && (
         <Divider sx={{ padding: 0, color: theme.palette.divider }} />
       )}
     </React.Fragment>
