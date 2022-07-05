@@ -9,7 +9,7 @@ import ROUTES_NAMES from "../../RoutesNames";
 import {
   useGetCompanyQuestionsQuery,
   useLikeCompanyQuestionCommentMutation,
-  useUnLikeCompanyQuestionCommentMutation
+  useUnLikeCompanyQuestionCommentMutation,
 } from "../../services/company_questions";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { questionsActions } from "../../store/questionsSlice";
@@ -149,6 +149,7 @@ export function CompanyQuestions() {
 
   return (
     <AlonePostsGrid>
+      <div style={{ height: "20px" }}></div>
       <PostingComponent
         label={textContainer.youCanAddQuestion}
         placeholder={textContainer.writeYourQuestionP}
@@ -166,6 +167,7 @@ export function CompanyQuestions() {
           },
         }}
       />
+      <div style={{ height: "36px" }}></div>
 
       <VirtualReviewList
         reviewCard={reviewCard}

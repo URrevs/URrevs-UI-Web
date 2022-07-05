@@ -30,22 +30,25 @@ export function PostedReviews() {
       tabBar={<FilterTabbar value={filter} setValue={setFilter} />}
     >
       <FixedGrid>
-        <div style={{ marginTop: "12px" }}>
+        <div style={{ marginTop: "20px" }}>
           {currentUserId === paramId && (
-            <PostingComponent
-              label={textContainer.youCanAddReview}
-              placeholder={textContainer.writeYourReview}
-              params={{
-                disabled: true,
-                onClick: () => {
-                  dispatch(
-                    postingModalActions.showPostingModal({
-                      tab: 0, //AddReview Tab
-                    })
-                  );
-                },
-              }}
-            />
+            <div>
+              <PostingComponent
+                label={textContainer.youCanAddReview}
+                placeholder={textContainer.writeYourReview}
+                params={{
+                  disabled: true,
+                  onClick: () => {
+                    dispatch(
+                      postingModalActions.showPostingModal({
+                        tab: 0, //AddReview Tab
+                      })
+                    );
+                  },
+                }}
+              />
+              <div style={{ marginTop: "18px" }}></div>
+            </div>
           )}
         </div>
         {!isMobile && (

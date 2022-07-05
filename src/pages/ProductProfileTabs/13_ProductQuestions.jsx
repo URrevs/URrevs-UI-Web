@@ -147,6 +147,8 @@ export function ProductQuestions() {
 
   return (
     <AlonePostsGrid>
+      <div style={{ height: "20px" }} />
+
       <PostingComponent
         label={textContainer.youCanAddQuestion}
         placeholder={textContainer.writeYourQuestionP}
@@ -164,6 +166,8 @@ export function ProductQuestions() {
           },
         }}
       />
+      <div style={{ height: "18px" }} />
+
       <VirtualReviewList
         reviewCard={reviewCard}
         reviewsList={reviewsList}

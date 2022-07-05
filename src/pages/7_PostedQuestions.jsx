@@ -29,22 +29,25 @@ export function PostedQuestions() {
       tabBar={<FilterTabbar value={filter} setValue={setFilter} />}
     >
       <FixedGrid>
-        <div style={{ marginTop: "12px" }}>
+        <div style={{ marginTop: "20px" }}>
           {currentUserId === paramId && (
-            <PostingComponent
-              label={textContainer.youCanAddQuestion}
-              placeholder={textContainer.writeYourQuestionP}
-              params={{
-                disabled: true,
-                onClick: () => {
-                  dispatch(
-                    postingModalActions.showPostingModal({
-                      tab: 0, //AddReview Tab
-                    })
-                  );
-                },
-              }}
-            />
+            <div>
+              <PostingComponent
+                label={textContainer.youCanAddQuestion}
+                placeholder={textContainer.writeYourQuestionP}
+                params={{
+                  disabled: true,
+                  onClick: () => {
+                    dispatch(
+                      postingModalActions.showPostingModal({
+                        tab: 1, //Question Tab
+                      })
+                    );
+                  },
+                }}
+              />
+              <div style={{ marginTop: "18px" }}></div>
+            </div>
           )}
         </div>
         {!isMobile && (

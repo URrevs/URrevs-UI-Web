@@ -5,9 +5,7 @@ import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
 import PhoneReview from "../../Components/ReviewCard/PhoneReview";
 import ROUTES_NAMES from "../../RoutesNames";
-import {
-  useGetPhoneReviewsQuery
-} from "../../services/phone_reviews";
+import { useGetPhoneReviewsQuery } from "../../services/phone_reviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
@@ -91,7 +89,7 @@ export function ProductReviews() {
 
   return (
     <AlonePostsGrid>
-      {/* <div style={{ height: "20px" }} /> */}
+      <div style={{ height: "20px" }} />
       <PostingComponent
         label={textContainer.youCanAddReview}
         placeholder={textContainer.writeYourReview}
@@ -109,6 +107,7 @@ export function ProductReviews() {
           },
         }}
       />
+      <div style={{ marginTop: "18px" }}></div>
 
       <VirtualReviewList
         reviewCard={reviewCard}
