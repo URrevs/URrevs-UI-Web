@@ -80,7 +80,8 @@ export const SearchSuggestion = () => {
     smartphone: textContainer.smartphone,
     company: textContainer.company,
   };
-  const renderSearchItems = (title, type, id) => (
+
+  const renderSearchItems = (title, type, id, index) => (
     <React.Fragment key={id}>
       <ListItem sx={{ padding: 0, margin: 0, lineHeight: 0 }}>
         <ListItemButton
@@ -147,11 +148,13 @@ export const SearchSuggestion = () => {
           />
         </ListItemButton>
       </ListItem>
-      <Divider sx={{ padding: 0, color: theme.palette.divider }} />
+      {recentResults.length - 1 !== index && (
+        <Divider sx={{ padding: 0, color: theme.palette.divider }} />
+      )}
     </React.Fragment>
   );
 
-  const renderRecentItems = (title, type, id) => (
+  const renderRecentItems = (title, type, id, index) => (
     <React.Fragment key={id}>
       <ListItem sx={{ padding: 0, margin: 0, lineHeight: 0 }}>
         <ListItemButton
@@ -221,9 +224,12 @@ export const SearchSuggestion = () => {
           />
         </IconButton>
       </ListItem>
-      <Divider sx={{ padding: 0, color: theme.palette.divider }} />
+      {recentResults.length - 1 !== index && (
+        <Divider sx={{ padding: 0, color: theme.palette.divider }} />
+      )}
     </React.Fragment>
   );
+
   React.useEffect(() => {
     if (searchQuery === "" && recentResults) setResults(recentResults);
   }, [searchQuery, recentResults]);
@@ -336,8 +342,8 @@ export const SearchSuggestion = () => {
                     {pageDictionary.oldResults}
                   </Typography>
                   <List>
-                    {recentResults.map((item) =>
-                      renderRecentItems(item.name, item.type, item._id)
+                    {recentResults.map((item, index) =>
+                      renderRecentItems(item.name, item.type, item._id, index)
                     )}
                   </List>
                 </Box>
@@ -347,8 +353,8 @@ export const SearchSuggestion = () => {
                     {pageDictionary.suggestedResults}
                   </Typography>
                   <List>
-                    {results.map((item) =>
-                      renderSearchItems(item.name, item.type, item._id)
+                    {results.map((item, index) =>
+                      renderSearchItems(item.name, item.type, item._id, index)
                     )}
                   </List>
                 </Box>
