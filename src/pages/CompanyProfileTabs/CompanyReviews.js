@@ -99,7 +99,7 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
     } else {
       return (
         <div>
-          <div style={{ height: "15px" }}></div>
+          <div style={{ height: "20px" }}></div>
           <CompanyOverviewCard
             companyName={companyStatsData.name}
             type={textContainer.company}
@@ -133,6 +133,8 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
           <Grid item xl={2} lg={0.5} md={0.5} sm={0} xs={0}></Grid>
           <Grid item xl={6} lg={7} md={7} sm={12} xs={12}>
             {theme.isMobile && companyOverView()}
+            <div style={{ height: "5px" }}></div>
+
             <VirtualReviewList
               reviewCard={reviewCard}
               reviewsList={reviewsList}

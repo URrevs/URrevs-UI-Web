@@ -1,3 +1,4 @@
+import { Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
@@ -35,11 +36,20 @@ export const ComparisonScreen = () => {
       ) : compError || productError ? (
         <div>{compError.data.status + productError.data.status}</div>
       ) : (
-        <ProductDetailsTable
-          comparedPhoneData={compData}
-          phoneData={productData}
-          isComparison={true}
-        />
+        <Grid container>
+          {/* Right */}
+          <Grid item xl={2} lg={2} md={2}></Grid>
+          {/* Center Grid */}
+          <Grid item xl={8} lg={8} md={8} xs={12}>
+            <ProductDetailsTable
+              comparedPhoneData={compData}
+              phoneData={productData}
+              isComparison={true}
+            />
+          </Grid>
+          {/* Left */}
+          <Grid item xl={2} lg={2} md={2}></Grid>
+        </Grid>
       )}
     </CustomAppBar>
   );
