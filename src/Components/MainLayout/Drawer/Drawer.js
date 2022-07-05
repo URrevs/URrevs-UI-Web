@@ -74,6 +74,7 @@ const PerDrawer = styled(
 
 export const MyDrawer = (props) => {
   const menuShow = useAppSelector((state) => state.menu.show);
+  const showPosting = useAppSelector((state) => state.postingModal.show);
   const dispatch = useAppDispatch();
   const drawerRef = React.useRef("10px");
   const language = useAppSelector((state) => state.language.language);
@@ -91,7 +92,9 @@ export const MyDrawer = (props) => {
   );
   // Change Icon Color based on pathname
   const iconColor = (val) =>
-    currentPage === val && !menuShow ? focusedColor : unFocusedColor;
+    currentPage === val && !menuShow && !showPosting
+      ? focusedColor
+      : unFocusedColor;
   const theme = useTheme();
   // const backgroundColor = theme.palette.bottomNavigationBar.backgroundColor;
   const focusedColor = theme.palette.bottomNavigationBar.selectedTap;
@@ -127,9 +130,9 @@ export const MyDrawer = (props) => {
       icon: (
         <AddIcon
           sx={{
-            fontSize: currentPage === 5 ? focusedIconSize : unfocusedIconSize,
+            fontSize: showPosting ? focusedIconSize : unfocusedIconSize,
           }}
-          htmlColor={unFocusedColor}
+          htmlColor={showPosting && !menuShow ? focusedColor : unFocusedColor}
         />
       ),
       title: textContainer.AddNavBarItem,
@@ -252,7 +255,7 @@ export const MyDrawer = (props) => {
                   {item.icon}
                 </ListItemIcon>
 
-                {currentPage === item.itemValue && !menuShow ? (
+                {currentPage === item.itemValue && !menuShow && !showPosting ? (
                   <Typography
                     // variant="S14W700C2196f3"
                     sx={{
@@ -272,7 +275,21 @@ export const MyDrawer = (props) => {
                   >
                     {item.title}
                   </Typography>
-                ) : null}
+                ) : (
+                  item.itemValue === 4 &&
+                  showPosting &&
+                  !menuShow && (
+                    <Typography
+                      // variant="S14W700C2196f3"
+                      sx={{
+                        textAlign: "center",
+                        ...theme.typography.S14W700C2196f3,
+                      }}
+                    >
+                      {item.title}
+                    </Typography>
+                  )
+                )}
               </div>
             </ListItem>
           ))}
