@@ -289,6 +289,7 @@ export const companyReviewsApi = createApi({
 //auto-generated hooks
 export const {
   useGetCertainCompanyReviewQuery,
+  useLazyGetCertainCompanyReviewQuery,
   useGetCompanyReviewsQuery,
   useLikeCompanyReviewMutation,
   useUnLikeCompanyReviewMutation,
@@ -296,6 +297,7 @@ export const {
   useGetOtherUserCompanyReviewsQuery,
   useAddCommentOnCompanyReviewMutation,
   useGetCompanyReviewCommentsQuery,
+  useLazyGetCompanyReviewCommentsQuery,
   useAddReplyOnCompanyReviewMutation,
   useLikeCompanyReviewCommentMutation,
   useUnLikeCompanyReviewCommentMutation,

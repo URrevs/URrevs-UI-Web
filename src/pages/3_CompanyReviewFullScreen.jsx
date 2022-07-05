@@ -1,10 +1,13 @@
 import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { CellMeasurerCache } from "react-virtualized";
+import { Virtuoso } from "react-virtuoso";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
+import { Comment } from "../Components/Interactions/Comment";
+import { CommentReply } from "../Components/Interactions/CommentReply";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
 import { PostingField } from "../Components/PostingComponents/PostingField";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
@@ -14,16 +17,15 @@ import {
   useAddCommentOnCompanyReviewMutation,
   useAddReplyOnCompanyReviewMutation,
   useGetCertainCompanyReviewQuery,
-  useGetCompanyReviewCommentsQuery,
+  useLazyGetCompanyReviewCommentsQuery,
   useLikeCompanyReviewCommentMutation,
   useLikeCompanyReviewReplyMutation,
   useUnLikeCompanyReviewCommentMutation,
-  useUnLikeCompanyReviewReplyMutation
+  useUnLikeCompanyReviewReplyMutation,
 } from "../services/company_reviews";
 import { commentsListActions } from "../store/commentsListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
-import CommentsList from "./CommentsList";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -62,11 +64,8 @@ export default function CompanyReviewFullScreen() {
     (state) => state.reviews.newReviews
   )[0];
 
-  const { data, isLoading, isFetching, error } =
-    useGetCompanyReviewCommentsQuery(
-      { reviewId, round: page },
-      { skip: !currentReviewData }
-    );
+  const [getComments, { isLoading, isFetching, error }] =
+    useLazyGetCompanyReviewCommentsQuery();
 
   // add comment
   const [addCommentLoading, setAddCommentLoading] = useState(false);
@@ -179,7 +178,7 @@ export default function CompanyReviewFullScreen() {
     });
   };
 
-  const addToLoadedComments = () =>
+  const addToLoadedComments = (data) =>
     dispatch(
       commentsListActions.addToLoaddedComments({
         newComments: data,
@@ -211,7 +210,10 @@ export default function CompanyReviewFullScreen() {
     });
   };
 
-  const increasePage = () => setPage(page + 1);
+  const increasePage = () => {
+    setPage((page) => page + 1);
+    console.log(page);
+  };
 
   const submitCommentHandler = async (text) => {
     try {
@@ -288,7 +290,7 @@ export default function CompanyReviewFullScreen() {
     } else if (currentReview) {
       return (
         <CompanyReview
-          disableElevation
+          disableElevation={!isMobile}
           key={currentReviewData._id}
           reviewDetails={currentReviewData}
           index={0}
@@ -330,6 +332,34 @@ export default function CompanyReviewFullScreen() {
     );
   };
 
+  const [newList, setNewList] = useState([]);
+  const [endOfData, setEndOfData] = useState(false);
+
+  let p = 1;
+  const loadMore = useCallback(() => {
+    getComments({ reviewId, round: p }).then((data) => {
+      if (data.data.length === 0) {
+        setEndOfData(true);
+      } else {
+        addToLoadedComments(data.data);
+        p++;
+      }
+    });
+  }, [setNewList]);
+
+  useEffect(() => {
+    const timeout = loadMore();
+    return () => clearTimeout(timeout);
+  }, []);
+
+  const desktopTheme = !isMobile
+    ? {
+        background: "#fff",
+        padding: "0px 4px 4px 4px",
+        borderRadius: "10px",
+      }
+    : {};
+
   return (
     <FixedGrid>
       <AlonePostsGrid>
@@ -340,29 +370,59 @@ export default function CompanyReviewFullScreen() {
             <div>Error</div>
           ) : (
             currentReviewData && (
-              <Fragment>
-                <CommentsList
-                  reviewCard={reviewCard}
-                  commentsList={commentsList}
-                  page={page}
-                  data={data}
-                  error={error}
-                  isLoading={isLoading}
-                  isFetching={isFetching}
-                  commentLike={likeCommentRequest}
-                  commentUnlike={unLikeCommentRequest}
-                  replyLike={likeReplyRequest}
-                  replyUnlike={unLikeReplyRequest}
-                  addToReviewsList={addToLoadedComments}
-                  increasePage={increasePage}
-                  cache={cache}
-                  clearCache={clearCache}
-                  clearAllCache={clearAllCache}
-                  submitReplyHandler={submitReplyHandler}
-                  submitCommentHandler={submitCommentHandler}
+              <div style={desktopTheme}>
+                {reviewCard()}
+                {!isMobile && (
+                  <PostingField
+                    avatar={true}
+                    placeholder="اكتب تعليقا"
+                    onSubmit={(comment) => submitCommentHandler(comment)}
+                  />
+                )}
+                <Virtuoso
+                  useWindowScroll
+                  context={{ endOfData }}
+                  data={commentsList}
+                  endReached={loadMore}
+                  increaseViewportBy={{ top: 2500, bottom: 2500 }}
+                  overscan={20}
+                  itemContent={(index, comment) => {
+                    return comment.isReply ? (
+                      <CommentReply
+                        replyId={comment._id}
+                        date={comment.createdAt}
+                        user={comment.userName}
+                        likes={comment.likes}
+                        text={comment.content}
+                        liked={comment.liked}
+                        replyLike={likeReplyRequest}
+                        replyUnlike={unLikeReplyRequest}
+                        commentId={comment.commentId}
+                        avatar={comment.userPicture}
+                        userId={comment.userId}
+                      />
+                    ) : (
+                      <Comment
+                        commentId={comment._id}
+                        date={comment.createdAt}
+                        user={comment.userName}
+                        likes={comment.likes}
+                        text={comment.content}
+                        liked={comment.liked}
+                        commentLike={likeCommentRequest}
+                        commentUnlike={unLikeCommentRequest}
+                        submitReplyHandler={submitReplyHandler.bind(
+                          this,
+                          index
+                        )}
+                        avatar={comment.userPicture}
+                        userId={comment.userId}
+                      />
+                    );
+                  }}
+                  components={{ Footer }}
                 />
-                {commentField()}
-              </Fragment>
+              </div>
             )
           )}
         </Box>
@@ -370,3 +430,20 @@ export default function CompanyReviewFullScreen() {
     </FixedGrid>
   );
 }
+
+const Footer = ({ context }) => {
+  const end = context.endOfData;
+  return (
+    !end && (
+      <div
+        style={{
+          padding: "2rem",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        Loading...
+      </div>
+    )
+  );
+};
