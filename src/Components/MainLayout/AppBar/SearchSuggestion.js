@@ -1,8 +1,11 @@
 import { useTheme } from "@emotion/react";
+import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import SearchIcon from "@mui/icons-material/Search";
+import SmartphoneRoundedIcon from "@mui/icons-material/SmartphoneRounded";
 import {
   Box,
   ClickAwayListener,
-  Collapse,
   Divider,
   IconButton,
   InputAdornment,
@@ -12,27 +15,21 @@ import {
   ListItemIcon,
   ListItemText,
   Paper,
-  Slide,
   TextField,
   Typography,
-  Zoom,
 } from "@mui/material";
 import React from "react";
-import SearchIcon from "@mui/icons-material/Search";
-import SmartphoneRoundedIcon from "@mui/icons-material/SmartphoneRounded";
-import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { useAppSelector } from "../../../store/hooks";
+import { useNavigate } from "react-router-dom";
+import ROUTES_NAMES from "../../../RoutesNames";
 import {
   useAddToMyRecentSearchesMutation,
   useDeleteRecentSearchesMutation,
   useGetMyRecentSearchesQuery,
+  useLazyGetMyRecentSearchesQuery,
   useSearchAllMutation,
 } from "../../../services/search";
-import { useNavigate } from "react-router-dom";
-import ROUTES_NAMES from "../../../RoutesNames";
+import { useAppSelector } from "../../../store/hooks";
 import LoadingSpinner from "../../Loaders/LoadingSpinner";
-import { SEARCH_INPUT_DELAY } from "../../../constants";
 
 export const SearchSuggestion = () => {
   const [searchSuggestion, setSearchSuggestion] = React.useState(false);
@@ -54,9 +51,15 @@ export const SearchSuggestion = () => {
       refetchOnMountOrArgChange: true,
     }
   );
+
+  const [getUserRecentSearch, {}] = useLazyGetMyRecentSearchesQuery();
+
   React.useEffect(() => {
-    setRecentResults(fetchedRecentResults);
-  }, []);
+    if (fetchedRecentResults) {
+      setRecentResults(fetchedRecentResults);
+    }
+  }, [fetchedRecentResults]);
+
   const [search] = useSearchAllMutation();
   const [addRecentSearch] = useAddToMyRecentSearchesMutation();
   const [deleteRecentSearch] = useDeleteRecentSearchesMutation();
@@ -64,6 +67,7 @@ export const SearchSuggestion = () => {
   const [results, setResults] = React.useState([]);
   const navigate = useNavigate();
   const theme = useTheme();
+
   /* Dictionary */
   const pageDictionary = {
     search: textContainer.search,
@@ -76,7 +80,8 @@ export const SearchSuggestion = () => {
     smartphone: textContainer.smartphone,
     company: textContainer.company,
   };
-  const renderSearchItems = (title, type, id) => (
+
+  const renderSearchItems = (title, type, id, index) => (
     <React.Fragment key={id}>
       <ListItem sx={{ padding: 0, margin: 0, lineHeight: 0 }}>
         <ListItemButton
@@ -91,10 +96,26 @@ export const SearchSuggestion = () => {
             setSearchQuery("");
             setSearchSuggestion(false);
             addRecentSearch({ type, id });
-            setRecentResults([
-              { name: title, type: type, _id: id },
-              ...recentResults,
-            ]);
+
+            const toBeAdded = recentResults.findIndex(
+              (item) => item._id === id
+            );
+
+            if (toBeAdded > -1) {
+              const newRecents = [...recentResults];
+              console.log(toBeAdded);
+              newRecents.splice(toBeAdded, 1);
+
+              setRecentResults([
+                { name: title, type: type, _id: id },
+                ...newRecents,
+              ]);
+            } else {
+              setRecentResults([
+                { name: title, type: type, _id: id },
+                ...recentResults.slice(0, 4),
+              ]);
+            }
 
             type === "phone"
               ? navigate(
@@ -127,10 +148,13 @@ export const SearchSuggestion = () => {
           />
         </ListItemButton>
       </ListItem>
-      <Divider sx={{ padding: 0, color: theme.palette.divider }} />
+      {recentResults.length - 1 !== index && (
+        <Divider sx={{ padding: 0, color: theme.palette.divider }} />
+      )}
     </React.Fragment>
   );
-  const renderRecentItems = (title, type, id) => (
+
+  const renderRecentItems = (title, type, id, index) => (
     <React.Fragment key={id}>
       <ListItem sx={{ padding: 0, margin: 0, lineHeight: 0 }}>
         <ListItemButton
@@ -141,6 +165,22 @@ export const SearchSuggestion = () => {
             //Navigate to that phone
             setSearchQuery("");
             setSearchSuggestion(false);
+
+            const toBeAdded = recentResults.findIndex(
+              (item) => item._id === id
+            );
+
+            if (toBeAdded > -1) {
+              const newRecents = [...recentResults];
+              console.log(toBeAdded);
+              newRecents.splice(toBeAdded, 1);
+
+              setRecentResults([
+                { name: title, type: type, _id: id },
+                ...newRecents,
+              ]);
+            }
+
             type === "phone"
               ? navigate(
                   `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${id}`
@@ -184,9 +224,12 @@ export const SearchSuggestion = () => {
           />
         </IconButton>
       </ListItem>
-      <Divider sx={{ padding: 0, color: theme.palette.divider }} />
+      {recentResults.length - 1 !== index && (
+        <Divider sx={{ padding: 0, color: theme.palette.divider }} />
+      )}
     </React.Fragment>
   );
+
   React.useEffect(() => {
     if (searchQuery === "" && recentResults) setResults(recentResults);
   }, [searchQuery, recentResults]);
@@ -299,8 +342,8 @@ export const SearchSuggestion = () => {
                     {pageDictionary.oldResults}
                   </Typography>
                   <List>
-                    {recentResults.map((item) =>
-                      renderRecentItems(item.name, item.type, item._id)
+                    {recentResults.map((item, index) =>
+                      renderRecentItems(item.name, item.type, item._id, index)
                     )}
                   </List>
                 </Box>
@@ -310,8 +353,8 @@ export const SearchSuggestion = () => {
                     {pageDictionary.suggestedResults}
                   </Typography>
                   <List>
-                    {results.map((item) =>
-                      renderSearchItems(item.name, item.type, item._id)
+                    {results.map((item, index) =>
+                      renderSearchItems(item.name, item.type, item._id, index)
                     )}
                   </List>
                 </Box>

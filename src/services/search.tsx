@@ -84,6 +84,7 @@ export const searchApi = createApi({
 export const {
   useSearchAllMutation,
   useGetMyRecentSearchesQuery,
+  useLazyGetMyRecentSearchesQuery,
   useSearchPhonesOnlyMutation,
   useSearchProductsOnlyMutation,
   useAddToMyRecentSearchesMutation,
