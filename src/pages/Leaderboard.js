@@ -1,11 +1,7 @@
 import { useTheme } from "@emotion/react";
-import {
-  Box, Divider,
-  Grid, Modal,
-  Paper,
-  Typography
-} from "@mui/material";
-import React, { Fragment } from "react";
+import { Box, Divider, Grid, Modal, Paper, Typography } from "@mui/material";
+import React, { Fragment, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CompetitionBanner } from "../Components/CompetitionBanner/CompetitionBanner";
 import { HowToWinDialog } from "../Components/Dialogs/HowToWinDialog";
@@ -18,7 +14,7 @@ import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetLatestCompetetionQuery,
   useGetMyCurrentRankQuery,
-  useGetTopCompetetionUsersQuery
+  useGetTopCompetetionUsersQuery,
 } from "../services/competetion";
 import { useAppSelector } from "../store/hooks";
 
@@ -59,6 +55,19 @@ export const Leaderboard = () => {
   const handleCloseDialog = () => {
     setModal("");
   };
+
+  const [isCurrentlyHeld, setIsCurrentlyHeld] = useState(false);
+  useEffect(() => {
+    if (
+      latestCompetitionData &&
+      new Date(latestCompetitionData.deadline) - new Date() > 0
+    ) {
+      setIsCurrentlyHeld(true);
+    } else {
+      setIsCurrentlyHeld(false);
+    }
+  }, [latestCompetitionData]);
+
   const ModalMananger = () => (
     <React.Fragment>
       <Modal
@@ -116,7 +125,10 @@ export const Leaderboard = () => {
               setModal("prize");
             }}
             isWinner={
-              latestCompetitionData && latestCompetitionData.numWinners >= i + 1
+              isCurrentlyHeld
+                ? latestCompetitionData &&
+                  latestCompetitionData.numWinners >= i + 1
+                : false
             }
           />
           {theme.isMobile ? (
@@ -132,8 +144,7 @@ export const Leaderboard = () => {
   const leaderboardList = () => (
     <Fragment>
       <Typography variant="S20W700C050505">
-        {latestCompetitionData &&
-        new Date(latestCompetitionData.deadline) - new Date() > 0
+        {latestCompetitionData && isCurrentlyHeld
           ? pageDictionary.usersRankingInCurrentCompetetion
           : pageDictionary.usersRanking}
       </Typography>
@@ -163,10 +174,7 @@ export const Leaderboard = () => {
     } else {
       if (latestCompetetionIsLoading) {
         return <div>Loading...</div>;
-      } else if (
-        latestCompetitionData &&
-        new Date(latestCompetitionData.deadline) - new Date() < 0
-      ) {
+      } else if (!isCurrentlyHeld) {
         return (
           <div>
             <CompetitionBanner setModal={setModal} prize="" daysLeft="" />
@@ -205,7 +213,12 @@ export const Leaderboard = () => {
               points={myRankData.points}
               userPicture={myRankData.picture}
               isSameUser={false}
-              // isWinner={true}
+              isWinner={
+                isCurrentlyHeld
+                  ? latestCompetitionData &&
+                    latestCompetitionData.numWinners >= myRankData.rank + 1
+                  : false
+              }
             />
           )}
         </div>
