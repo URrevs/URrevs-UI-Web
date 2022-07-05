@@ -111,7 +111,7 @@ export default function PhoneReview({
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
 
     generateShareLink().then((data) => {
-      showShareSnackbar(data.data.shortLink);
+      showShareSnackbar(data.data.shortLink, "تم نسخ رابط المنشور");
     });
   };
 
