@@ -90,7 +90,7 @@ const PostingScreen = ({
           }}
           validationSchema={BasicValidationSchema}
           onSubmit={async (values, { setSubmitting }) => {
-            if (checkSignedIn) {
+            if (checkSignedIn()) {
               const reviewPost = {
                 phoneId: values.chooseProduct.id,
                 companyId: values.companyId._id,

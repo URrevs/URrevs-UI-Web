@@ -312,5 +312,6 @@
   "noItems": "لا يوجد عناصر",
   "hideContent": "اخفِ المحتوى",
   "additionalInfoShallBeEntered": "يجب ادخال معلومات اضافية عند اختيار \"أخرى\" كسبب للشكوى",
-  "successfullyReported": "تم الإبلاغ بنجاح"
+  "successfullyReported": "تم الإبلاغ بنجاح",
+  "youHaveSelectedDateBeforePhoneRelease": "لقد ادخلت تاريخ قبل صدور الهاتف"
 }

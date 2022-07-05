@@ -105,6 +105,7 @@ export const QuestionsTab = ({ initValues }) => {
         <FormikTextField
           fieldName={"question"}
           label={pageDictionary.question}
+          isControlled={true}
         />
         <div></div>
       </Stack>

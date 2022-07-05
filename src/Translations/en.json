@@ -309,5 +309,6 @@
   "noItems": "No Items",
   "hideContent": "Hide content",
   "additionalInfoShallBeEntered": "Additional Info shall be entered when choosing \"other\" as a complaint reason",
-  "successfullyReported": "Successfully reported"
+  "successfullyReported": "Successfully reported",
+  "youHaveSelectedDateBeforePhoneRelease": "You have entered a date before the phone release."
 }

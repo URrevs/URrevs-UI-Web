@@ -38,6 +38,9 @@ const correspondingErrorMessage = (
     case "bad request":
       error.message = textContainer.badRequest;
       break;
+    case "past date":
+      error.message = textContainer.youHaveSelectedDateBeforePhoneRelease;
+      break;
     case "already reviewed":
       error.message = textContainer.youHaveAlreadyReviewedThisPhoneBefore;
       break;
@@ -77,9 +80,9 @@ const correspondingErrorMessage = (
     // case "invalid referral code":
     //   error.message = textContainer.invalidReferralCode;
     //   break;
-    // case "already reported":
-    //   error.message = textContainer.alreadyReported;
-    //   break;
+    case "already reported":
+      error.message = textContainer.youHaveAlreadyReportedThisElement;
+      break;
     // case "blocked":
     //   error.message = textContainer.blocked;
     //   break;
