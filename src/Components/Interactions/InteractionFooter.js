@@ -26,6 +26,7 @@ export const InteractionFooter = ({
   condition,
   reply,
   ownerId,
+  showReplyField,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -52,7 +53,7 @@ export const InteractionFooter = ({
         </Typography>
       </CommentButton>
       {!reply ? (
-        <CommentButton sx={{ marginLeft: "8px" }}>
+        <CommentButton sx={{ marginLeft: "8px" }} onClick={showReplyField}>
           <Typography variant={"S13W700C050505"}>
             {textContainer.reply}
           </Typography>
