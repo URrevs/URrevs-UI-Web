@@ -91,7 +91,7 @@ const correspondingErrorMessage = (
       error.isError = false;
       break;
     default:
-      error.message = textContainer.internalServerError;
+      error.message = textContainer.unknownNetworkError;
   }
   return error;
 };

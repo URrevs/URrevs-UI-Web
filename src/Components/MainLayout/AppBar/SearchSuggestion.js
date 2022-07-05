@@ -16,7 +16,7 @@ import {
   ListItemText,
   Paper,
   TextField,
-  Typography,
+  Typography
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -25,8 +25,7 @@ import {
   useAddToMyRecentSearchesMutation,
   useDeleteRecentSearchesMutation,
   useGetMyRecentSearchesQuery,
-  useLazyGetMyRecentSearchesQuery,
-  useSearchAllMutation,
+  useSearchAllMutation
 } from "../../../services/search";
 import { useAppSelector } from "../../../store/hooks";
 import LoadingSpinner from "../../Loaders/LoadingSpinner";
@@ -43,22 +42,28 @@ export const SearchSuggestion = () => {
     isLoading,
     error,
     isFetching,
-    data: fetchedRecentResults = [],
+    data: fetchedRecentResults,
   } = useGetMyRecentSearchesQuery(
     {},
     {
       skip: !user.apiToken,
-      refetchOnMountOrArgChange: true,
     }
   );
 
-  const [getUserRecentSearch, {}] = useLazyGetMyRecentSearchesQuery();
-
+  // update recent search when request is done
   React.useEffect(() => {
+    console.log("a");
     if (fetchedRecentResults) {
       setRecentResults(fetchedRecentResults);
     }
-  }, [fetchedRecentResults]);
+  }, [fetchedRecentResults, user.apiToken]);
+
+  // clear recent search when user logout
+  React.useEffect(() => {
+    if (user.apiToken === "" || user.apiToken === null) {
+      setRecentResults([]);
+    }
+  }, [user.apiToken]);
 
   const [search] = useSearchAllMutation();
   const [addRecentSearch] = useAddToMyRecentSearchesMutation();
@@ -148,7 +153,7 @@ export const SearchSuggestion = () => {
           />
         </ListItemButton>
       </ListItem>
-      {recentResults.length - 1 !== index && (
+      {results.length - 1 !== index && (
         <Divider sx={{ padding: 0, color: theme.palette.divider }} />
       )}
     </React.Fragment>

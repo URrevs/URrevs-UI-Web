@@ -118,7 +118,10 @@ export const InvitationDialog = ({ handleClose }) => {
           color="red"
           onClick={() => {
             generateShareLink().then((data) => {
-              showShareSnackbar(data.data.shortLink);
+              showShareSnackbar(
+                data.data.shortLink,
+                pageDictionary.linkCopyWasSuccessful
+              );
             });
           }}
         >
