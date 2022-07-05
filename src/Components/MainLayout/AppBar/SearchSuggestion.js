@@ -25,7 +25,6 @@ import {
   useAddToMyRecentSearchesMutation,
   useDeleteRecentSearchesMutation,
   useGetMyRecentSearchesQuery,
-  useLazyGetMyRecentSearchesQuery,
   useSearchAllMutation,
 } from "../../../services/search";
 import { useAppSelector } from "../../../store/hooks";
@@ -43,22 +42,26 @@ export const SearchSuggestion = () => {
     isLoading,
     error,
     isFetching,
-    data: fetchedRecentResults = [],
+    data: fetchedRecentResults,
   } = useGetMyRecentSearchesQuery(
     {},
     {
       skip: !user.apiToken,
-      refetchOnMountOrArgChange: true,
     }
   );
 
-  const [getUserRecentSearch, {}] = useLazyGetMyRecentSearchesQuery();
-
   React.useEffect(() => {
+    console.log("a");
     if (fetchedRecentResults) {
       setRecentResults(fetchedRecentResults);
     }
-  }, [fetchedRecentResults]);
+  }, [fetchedRecentResults, user.apiToken]);
+
+  React.useEffect(() => {
+    if (user.apiToken === "" || user.apiToken === null) {
+      setRecentResults([]);
+    }
+  }, [user.apiToken]);
 
   const [search] = useSearchAllMutation();
   const [addRecentSearch] = useAddToMyRecentSearchesMutation();
