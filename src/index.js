@@ -9,7 +9,7 @@ import { store } from "./store/store";
 import {
   browserLocalPersistence,
   getAuth,
-  setPersistence,
+  setPersistence
 } from "firebase/auth";
 
 import config from "./firebase-config.json";
