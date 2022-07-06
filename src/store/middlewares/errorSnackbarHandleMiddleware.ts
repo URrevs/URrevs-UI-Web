@@ -43,6 +43,9 @@ const correspondingErrorMessage = (
     case "already reviewed":
       error.message = textContainer.youHaveAlreadyReviewedThisPhoneBefore;
       break;
+    case "not owned":
+      error.message = "not owned";
+      break;
     //TO DO : WRITE TRANSLATIONS AND FIND MORE ERRORS
     // case "track internal server error":
     //   error.message = textContainer.trackInternalServerError;

@@ -16,11 +16,12 @@ export default function CommentsList({
   likeReplyRequest,
   unLikeReplyRequest,
 }) {
-  const isMobile = useTheme().isMobile;
+  const theme = useTheme();
+  const isMobile = theme.isMobile;
 
   const desktopTheme = !isMobile
     ? {
-        background: "#fff",
+        background: theme.palette.reviewCard.reviewCardColor,
         padding: "0px 4px 4px 4px",
         borderRadius: "10px",
       }

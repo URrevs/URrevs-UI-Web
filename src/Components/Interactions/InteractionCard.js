@@ -18,7 +18,9 @@ const InteractionCardStyle = styled(
   overflow: "unset",
   padding: "5px 12px 15px 12px",
   borderRadius: "12px",
-  backgroundColor: theme.palette.interactionCard.backgroundColor,
+  backgroundColor: theme.isMobile
+    ? theme.palette.interactionCard.backgroundMobileColor
+    : theme.palette.interactionCard.backgroundColor,
 }));
 const LikeCounterStyle = styled(
   Card,
@@ -29,6 +31,9 @@ const LikeCounterStyle = styled(
   padding: "0px 3px 0px 3px",
   minHeight: "15px",
   minWidth: "33px",
+  backgroundColor: theme.isMobile
+    ? theme.palette.interactionCard.backgroundMobileColor
+    : theme.palette.interactionCard.backgroundColor,
   borderRadius: "50px",
   position: "absolute",
   alignItems: "center",

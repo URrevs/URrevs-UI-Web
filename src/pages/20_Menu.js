@@ -76,32 +76,52 @@ export default function Menu({ isDesktop = false, drawerRef }) {
   const listItems = [
     {
       title: pageDictionry.myReviews,
-      icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <RateReviewOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}?userId=${currentUserProfile.uid}`,
       authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.myQuestions,
-      icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <ForumOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}?userId=${currentUserProfile.uid}`,
       authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.ownedProducts,
-      icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <DevicesOtherOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?userId=${profileData.uid}`,
       authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.askedQuestions,
-      icon: <HelpCenterOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <HelpCenterOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       subtitle: pageDictionry.helpOthers,
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.MY_QUESTIONS}?userId=${profileData.uid}`,
       authenticate: currentUserProfile.isLoggedIn,
     },
     {
       title: pageDictionry.referalCode,
-      icon: <GroupsOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <GroupsOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       onClick: () => {
         handleInvitationOpen();
       },
@@ -111,7 +131,11 @@ export default function Menu({ isDesktop = false, drawerRef }) {
     //Admin panel
     {
       title: pageDictionry.adminPanel,
-      icon: <AdminPanelSettingsOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <AdminPanelSettingsOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       subtitle: "",
       to: `../../${ROUTES_NAMES.ADMIN_PANEL}`,
       authenticate: currentUserProfile.isAdmin,
@@ -119,7 +143,11 @@ export default function Menu({ isDesktop = false, drawerRef }) {
     //Settings
     {
       title: pageDictionry.settings,
-      icon: <SettingsOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <SettingsOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       subtitle: "",
       to: `../../${ROUTES_NAMES.SETTINGS}`,
       authenticate: true,
@@ -129,9 +157,13 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       },
       endIcon: isDesktop ? (
         language === "ar" ? (
-          <KeyboardArrowLeftOutlinedIcon sx={{ fontSize: 40 }} />
+          <KeyboardArrowLeftOutlinedIcon
+            sx={{ fontSize: 40, color: theme.palette.iconColor }}
+          />
         ) : (
-          <KeyboardArrowRightOutlined sx={{ fontSize: 40 }} />
+          <KeyboardArrowRightOutlined
+            sx={{ fontSize: 40, color: theme.palette.iconColor }}
+          />
         )
       ) : (
         ""
@@ -140,21 +172,33 @@ export default function Menu({ isDesktop = false, drawerRef }) {
     //Aboutus
     {
       title: pageDictionry.aboutUs,
-      icon: <ErrorOutlineOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <ErrorOutlineOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       subtitle: "",
       to: `../../${ROUTES_NAMES.ABOUT_US}`,
       authenticate: true,
     },
     {
       title: pageDictionry.contactUs,
-      icon: <ContactMailOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <ContactMailOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       subtitle: "",
       to: "",
       authenticate: true,
     },
     {
       title: pageDictionry.logOut,
-      icon: <LogoutOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <LogoutOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       subtitle: "",
       onClick: () => {
         handleSignOutOpen();

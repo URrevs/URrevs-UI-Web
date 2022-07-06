@@ -67,8 +67,18 @@ function App() {
   const language = useSelector((state) => state.language.language);
   const direction = language === "ar" ? "rtl" : "ltr";
   const isDark = useSelector((state) => state.darkMode.isDark);
-
   const isMobile = useMediaQuery(`(max-width:768px)`);
+
+  const darkThemeColors = {
+    textFieldBackground: "#3A3B3C",
+    negativeSpaceBackground: "#18191A",
+    cardsColor: "#242526",
+    interactionCardDesktop: "#3A3B3C",
+    fontsColor: "#E4E6EB",
+    iconsColor: "#B0B3B8",
+    subtitles: "#B0B3B8",
+    hintText: "#B0B3B8 ",
+  };
 
   const theme = createTheme(
     {
@@ -78,14 +88,6 @@ function App() {
       typography: fonts,
       colors: COLORS,
       components: {
-        MuiTypography: {
-          styleOverrides: {
-            root: {
-              color: "#E4E6EB",
-            },
-          },
-        },
-
         MuiTab: {
           styleOverrides: {
             root: {
@@ -97,21 +99,18 @@ function App() {
             },
           },
         },
-        MuiDrawer: {
+        //is seen in review cards
+        MuiPaper: {
           styleOverrides: {
             root: {
-              border: "1px solid transparent",
-              backgroundColor: isDark && "#242526",
-              "&.MuiDrawer-Paper": {
-                border: "1px solid transparent",
-              },
+              background: isDark && darkThemeColors.cardsColor,
             },
           },
         },
         MuiCard: {
           styleOverrides: {
             root: {
-              backgroundColor: isDark && "#242526",
+              backgroundColor: isDark && darkThemeColors.cardsColor,
             },
           },
         },
@@ -186,13 +185,13 @@ function App() {
         mode: isDark ? "dark" : "light",
         modalColor: isDark ? "#18191A" : COLORS.cffffff,
         appBar: {
-          appBarColor: isDark ? "#242526" : COLORS.cffffff,
+          appBarColor: isDark ? darkThemeColors.cardsColor : COLORS.cffffff,
           appBarIconBackgroundColor: isDark ? "000" : COLORS.ce5e5e7,
           appBarIcon: isDark ? "#B0B3B8" : COLORS.c050505,
           backButton: isDark ? COLORS.cffffff : COLORS.c050505,
         },
         reviewCard: {
-          reviewCardColor: isDark ? "#242526" : COLORS.cffffff,
+          reviewCardColor: isDark ? darkThemeColors.cardsColor : COLORS.cffffff,
           actionBtnIcon: isDark ? "#B0B3B8" : COLORS.c606266,
           actionBtnIconHighlight: isDark ? "#2196F3" : COLORS.c2196f3,
           actionBtnHover: isDark ? COLORS.c000000 : COLORS.c000000,
@@ -205,8 +204,8 @@ function App() {
           indicatorColor: isDark ? COLORS.c65676b : COLORS.c2196f3,
         },
         drawer: {
-          drawerColor: isDark ? "#242526" : COLORS.cffffff,
-          drawerIcon: isDark ? COLORS.cffffff : COLORS.c050505,
+          drawerColor: isDark ? darkThemeColors.cardsColor : COLORS.cffffff,
+          drawerIcon: isDark ? darkThemeColors.iconsColor : COLORS.c050505,
           activePage: isDark ? "#383838" : COLORS.cdbdbdb,
           tileText: isDark ? COLORS.cffffff : COLORS.c000000,
         },
@@ -219,12 +218,17 @@ function App() {
           searchIcon: isDark ? "#B0B3B8" : COLORS.c65676b,
         },
         interactionCard: {
-          backgroundColor: isDark ? "#242526" : COLORS.cffffff,
-          iconColor: isDark ? "#B0B3B8" : COLORS.c2196f3,
+          backgroundColor: isDark
+            ? darkThemeColors.interactionCardDesktop
+            : "#f0f2f5",
+          backgroundMobileColor: isDark
+            ? darkThemeColors.cardsColor
+            : COLORS.cffffff,
+          iconColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
           buttonActiveColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
         },
         productList: {
-          backgroundColor: isDark ? "#242526" : COLORS.cffffff,
+          backgroundColor: isDark ? darkThemeColors.cardsColor : COLORS.cffffff,
           mobileColor: isDark ? COLORS.cffffff : COLORS.c606266,
         },
         progressBar: {
@@ -237,7 +241,7 @@ function App() {
           facebookButtonColor: isDark ? COLORS.cffffff : COLORS.c2196f3,
         },
         leaderBoard: {
-          entryCard: isDark ? "#242526" : COLORS.cffffff,
+          entryCard: isDark ? darkThemeColors.cardsColor : COLORS.cffffff,
           rankCircle: isDark ? COLORS.cffffff : COLORS.cf0f2f5,
         },
         bottomNavigationBar: {
@@ -264,7 +268,7 @@ function App() {
           brandHover: isDark ? "#18191A" : COLORS.c2196f3,
         },
         dialogs: {
-          textFieldInput: isDark ? "#242526" : COLORS.c050505,
+          textFieldInput: isDark ? darkThemeColors.cardsColor : COLORS.c050505,
         },
         filterTabbar: {
           buttonBgActive: isDark ? "#FFFFFF" : COLORS.c22cbf4,
@@ -272,8 +276,9 @@ function App() {
           borderColor: isDark ? "#FFFFFF" : COLORS.c606266,
           tabbarBg: isDark ? COLORS.c050505 : COLORS.cffffff,
         },
-        sendIconColor: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
-        blackIconColor: isDark ? COLORS.cCED0D4 : COLORS.c050505,
+        iconColor: isDark ? darkThemeColors.iconsColor : COLORS.c606266, // Menu Icons
+        sendIconColor: isDark ? darkThemeColors.iconsColor : COLORS.c2196f3, // Comment Icon
+        blackIconColor: isDark ? darkThemeColors.iconsColor : COLORS.c050505, // X button
         defaultRedBtnIconColor: isDark ? COLORS.cCED0D4 : COLORS.cffffff,
         defaultIconColor: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
         cancel: isDark ? COLORS.cCED0D4 : COLORS.c050505,
@@ -281,7 +286,7 @@ function App() {
         defaultPageBtn: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
         hover: isDark ? COLORS.cCED0D4 : alpha(COLORS.c65676b, 0.1),
         background: {
-          default: isDark ? "#18191A" : COLORS.cf0f2f5,
+          default: isDark ? "#18191a" : COLORS.cf0f2f5,
         },
       },
     },

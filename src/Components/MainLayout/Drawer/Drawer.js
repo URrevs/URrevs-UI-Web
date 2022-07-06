@@ -34,6 +34,9 @@ const openedMixin = (theme) => ({
 
 const closedMixin = (theme) => ({
   backgroundColor: theme.palette.drawer.drawerColor,
+  borderColor: theme.palette.drawer.drawerColor,
+  overflow: "none",
+  textOverflow: "ellipsis",
   transition: theme.transitions.create(["width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -61,6 +64,7 @@ const PerDrawer = styled(
 )(({ theme, open }) => ({
   zIndex: theme.drawer.zIndex,
   whiteSpace: "nowrap",
+  backgroundColor: "#FFF",
   boxSizing: "border-box",
 
   ...(open && {
@@ -230,9 +234,6 @@ export const MyDrawer = (props) => {
       <PerDrawer
         ref={drawerRef}
         variant="permanent"
-        sx={{
-          border: "1px solid transparent",
-        }}
         open={open}
         onClose={handleDrawerClose}
       >
