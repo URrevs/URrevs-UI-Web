@@ -114,7 +114,7 @@ export const snackbarErrorHandle: Middleware =
 
     // RTK Query uses `createAsyncThunk` from redux-toolkit under the hood, so we're able to utilize these matchers!
     if (isRejectedWithValue(action)) {
-      // console.log(action);
+      console.log(action);
       const serverMessage: string = action.payload.data.status;
       const message: Error = correspondingErrorMessage(
         serverMessage,
@@ -128,18 +128,17 @@ export const snackbarErrorHandle: Middleware =
             message: message.message,
             showActionBtn: message.path !== "",
             actionBtnText: textContainer.reviewNow,
-            //Edit Here Fady !!
-            // actionBtnFunction: () => {
-            //   dispatch(
-            //     postingModalActions.showPostingModal({
-            //       tab: 0, //Question Tab
-            //       type:"phone",
-            //       id:action.meta.arg.originalArgs.phoneId,
-            //       name:""// Phone name
-            //     })
-            //   );
-            // },
-            actionNavPath: message.path,
+            actionBtnFunction: () => {
+              dispatch(
+                postingModalActions.showPostingModal({
+                  tab: 0, //Review Tab
+                  type: "phone",
+                  id: action.meta.arg.originalArgs.phoneId,
+                  name: action.meta.arg.originalArgs.phoneName, // Phone name
+                })
+              );
+            },
+            // actionNavPath: message.path,
           })
         );
       }

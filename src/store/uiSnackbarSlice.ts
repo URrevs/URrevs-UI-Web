@@ -27,7 +27,7 @@ const snackbarSlice = createSlice({
       state.message = action.payload.message;
       state.showActionBtn = action.payload.showActionBtn;
       state.actionBtnText = action.payload.actionBtnText;
-      state.actionBtnFunction = action.payload.actionBtnFunctoin;
+      state.actionBtnFunction = action.payload.actionBtnFunction;
       state.actionNavPath = action.payload.actionNavPath;
     },
     hideSnackbar(state) {
