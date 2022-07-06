@@ -223,6 +223,9 @@ export default interface Dictionary {
   seePost: string;
   successfullyReported: string;
   youHaveSelectedDateBeforePhoneRelease: string;
+  youHaventReviewedThatPhone: string;
+  youCantAnswerAQuestionMessage: string;
+  reviewNow: string;
 }
 
 interface FullDictionary {
