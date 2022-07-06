@@ -9,7 +9,7 @@ interface initialState {
   reportAction: () => void;
 }
 
-const initialState: initialState = {
+const initialSendReportState: initialState = {
   show: false,
   //   message: "",
   //   showActionBtn: false,
@@ -20,7 +20,7 @@ const initialState: initialState = {
 
 const sendReportSlice = createSlice({
   name: "sendReport",
-  initialState: initialState,
+  initialState: initialSendReportState,
   reducers: {
     showSendReport(state, action) {
       state.show = true;

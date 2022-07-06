@@ -25,7 +25,7 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
   const [page, setPage] = useState(1);
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const cid = searchParams.get("cid");
 
   const { data, isLoading, isFetching, error } = useGetCompanyReviewsQuery({
@@ -36,7 +36,6 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
   const {
     isLoading: companyStatsIsLoading,
     error: companyStatsError,
-    isFetching: companyStatsIsFetching,
     data: companyStatsData,
   } = useGetCompanyStatsInfoQuery(cid);
 

@@ -18,7 +18,7 @@ export function PostedQuestions() {
 
   const currentUserId = useAppSelector((state) => state.auth.uid);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const paramId = searchParams.get("userId");
 
   return (

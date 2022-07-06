@@ -1,9 +1,8 @@
 import { useTheme } from "@emotion/react";
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import { FILTER_BUTTON_BORDER_RADIUS } from "../../constants";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 
 export const FilterTabbar = ({
   value = 0,

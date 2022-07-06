@@ -1,5 +1,3 @@
-import { useAppSelector, useAppDispatch } from "../store/hooks";
-import { snackbarActions } from "../store/uiSnackbarSlice";
 import { useShowSnackbar } from "./useShowSnackbar";
 
 export const useShareSnackbar = (endpoint) => {

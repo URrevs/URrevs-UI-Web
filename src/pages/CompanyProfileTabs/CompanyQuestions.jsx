@@ -1,4 +1,3 @@
-import { useTheme } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { useOutletContext, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
@@ -20,7 +19,7 @@ export function CompanyQuestions() {
   const dispatch = useAppDispatch();
   const { companyName } = useOutletContext();
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  const theme = useTheme();
+
   useEffect(() => {
     return () => {
       console.log("clear questions");
@@ -31,7 +30,7 @@ export function CompanyQuestions() {
   const reviewsList = useAppSelector((state) => state.questions.newReviews);
   const [page, setPage] = useState(1);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const cid = searchParams.get("cid");
 
   const { data, isLoading, isFetching, error } = useGetCompanyQuestionsQuery({

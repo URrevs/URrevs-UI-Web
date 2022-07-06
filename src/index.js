@@ -9,13 +9,13 @@ import { store } from "./store/store";
 import {
   browserLocalPersistence,
   getAuth,
-  setPersistence
+  setPersistence,
 } from "firebase/auth";
 
 import config from "./firebase-config.json";
 import "./index";
 
-const app = firebase.initializeApp(config);
+firebase.initializeApp(config);
 const auth = getAuth();
 
 setPersistence(auth, browserLocalPersistence).then((user) => {});

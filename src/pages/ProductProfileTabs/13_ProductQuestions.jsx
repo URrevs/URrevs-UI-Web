@@ -24,12 +24,12 @@ export function ProductQuestions() {
       console.log("clear questions");
       dispatch(questionsActions.clearReviews());
     };
-  }, []);
+  }, [dispatch]);
 
   const reviewsList = useAppSelector((state) => state.questions.newReviews);
   const [page, setPage] = useState(1);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const pid = searchParams.get("pid");
 
   const { data, isLoading, isFetching, error } = useGetPhoneQuestionsQuery({

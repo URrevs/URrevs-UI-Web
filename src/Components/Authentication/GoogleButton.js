@@ -1,9 +1,7 @@
-import { AuthenticationButton } from "./AuthenticationButton";
-import { styled } from "@mui/styles";
-import React from "react";
 import { useTheme } from "@emotion/react";
-import GoogleIcon from "../Icons/GoogleIcon";
 import { useAppSelector } from "../../store/hooks";
+import GoogleIcon from "../Icons/GoogleIcon";
+import { AuthenticationButton } from "./AuthenticationButton";
 
 export const GoogleButton = ({ onClick }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);

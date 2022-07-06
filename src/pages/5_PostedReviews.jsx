@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
-import { Fragment, useState } from "react";
-import { useOutletContext, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
@@ -19,7 +19,7 @@ export function PostedReviews() {
 
   const currentUserId = useAppSelector((state) => state.auth.uid);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const paramId = searchParams.get("userId");
 
   return (

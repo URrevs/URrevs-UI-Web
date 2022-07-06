@@ -10,7 +10,7 @@ import { StickyTabbar } from "./StickyTabbar";
 export const ProfileTabbar = ({ children, arrayOfTabs }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const theme = useTheme();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const uid = searchParams.get("userId");
 
   const storeUser = useAppSelector((state) => state.auth);

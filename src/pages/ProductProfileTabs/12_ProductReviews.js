@@ -5,9 +5,7 @@ import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
 import PhoneReview from "../../Components/ReviewCard/PhoneReview";
 import ROUTES_NAMES from "../../RoutesNames";
-import {
-  useGetPhoneReviewsQuery
-} from "../../services/phone_reviews";
+import { useGetPhoneReviewsQuery } from "../../services/phone_reviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
@@ -21,12 +19,12 @@ export function ProductReviews() {
     console.log("clear reviews");
 
     dispatch(reviewsActions.clearReviews());
-  }, []);
+  }, [dispatch]);
 
   const reviewsList = useAppSelector((state) => state.reviews.newReviews);
   const [page, setPage] = useState(1);
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const phoneId = searchParams.get("pid");
 
   const { data, isLoading, isFetching, error } = useGetPhoneReviewsQuery({
