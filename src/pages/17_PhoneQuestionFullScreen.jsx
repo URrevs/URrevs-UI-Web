@@ -27,12 +27,6 @@ import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
 
-const cache = new CellMeasurerCache({
-  fixedWidth: true,
-  fixedHeight: false,
-  defaultHeight: loadingSkeletonHeight,
-});
-
 export default function PhoneQuestionFullScreen() {
   const dispatch = useAppDispatch();
 

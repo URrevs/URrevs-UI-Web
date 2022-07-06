@@ -5,11 +5,8 @@ import { Answer } from "../Components/Interactions/Answer";
 import { CommentReply } from "../Components/Interactions/CommentReply";
 import { PostingField } from "../Components/PostingComponents/PostingField";
 
-let maxIndex = 0;
-
 export function AnswersList({
   commentsList,
-
   commentLike,
   commentUnlike,
   replyLike,
