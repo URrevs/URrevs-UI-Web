@@ -1,7 +1,8 @@
-import { Box, ButtonBase, Typography } from "@mui/material";
+import { useTheme } from "@emotion/react";
+import { Box, ButtonBase, Divider, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND,
   MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND,
@@ -29,11 +30,16 @@ export default function QuestionCard({
   actionBtnFunction,
   reportFunction,
   likeBtnHandler,
-  acceptedAnswerWidget,
+  acceptedAnswerWidget = null,
   fullScreenFn,
   shareBtnFn,
+  disableElevation,
+  showBottomLine,
 }) {
   const isReview = true;
+
+  const theme = useTheme();
+
   const navigate = useNavigate();
 
   const isLiked = reviewDetails.upvoted;
@@ -137,6 +143,7 @@ export default function QuestionCard({
 
   return (
     <Card
+      disableElevation={disableElevation}
       key={ukey}
       reviewIcon={false}
       tooltipTitle={
@@ -221,6 +228,15 @@ export default function QuestionCard({
             commentsCounter={reviewDetails.ansCount}
           />
 
+          <Divider
+            variant="fullWidth"
+            sx={{
+              padding: 0,
+              margin: 0,
+              backgroundColor: theme.palette.divider,
+            }}
+          />
+
           <CardActionButtons
             isReview={false}
             textContainer={textContainer}
@@ -231,8 +247,25 @@ export default function QuestionCard({
             navigateToFullScreen={navigateToFullScreen}
             shareBtnHandler={shareBtnFn}
           />
+
+          {(showBottomLine || acceptedAnswerWidget) && (
+            // divider
+            <Divider
+              variant="fullWidth"
+              sx={{
+                padding: 0,
+                margin: 0,
+                backgroundColor: theme.palette.divider,
+                marginBottom: "16px",
+              }}
+            />
+          )}
         </Box>
-        {acceptedAnswerWidget && acceptedAnswerWidget()}
+        {acceptedAnswerWidget && (
+          <Link to={fullScreenRoute} style={{ textDecoration: "none" }}>
+            {acceptedAnswerWidget()}
+          </Link>
+        )}
       </CardContent>
     </Card>
   );

@@ -16,6 +16,8 @@ import { sendReportActions } from "../../store/uiSendReportSlice";
 import QuestionCard from "./QuestionCard";
 
 export default function PhoneQuestion({
+  disableElevation,
+  showBottomLine,
   reviewDetails,
   index,
   clearIndexCache,
@@ -28,6 +30,7 @@ export default function PhoneQuestion({
   fullScreen,
   isExpanded,
   acceptedAnswerWidget,
+  showAcceptedAnswer,
   stateShare,
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisPhoneQuestionMutation();
@@ -101,12 +104,15 @@ export default function PhoneQuestion({
     stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
     generateShareLink().then((data) => {
-      showShareSnackbar(data.data.shortLink,"تم نسخ رابط المنشور");
+      showShareSnackbar(data.data.shortLink, "تم نسخ رابط المنشور");
     });
   };
 
   return (
     <QuestionCard
+      showAcceptedAnswer={showAcceptedAnswer}
+      disableElevation={disableElevation}
+      showBottomLine={showBottomLine}
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}

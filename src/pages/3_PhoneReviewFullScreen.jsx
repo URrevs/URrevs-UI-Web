@@ -164,9 +164,6 @@ export default function PhoneReviewFullScreen() {
 
   const submitCommentHandler = async (text) => {
     try {
-      // scroll to top
-      // window.scrollTo(0, 0);
-
       const response = await addCommentOnPhoneReview({
         reviewId: reviewId,
         comment: text,
