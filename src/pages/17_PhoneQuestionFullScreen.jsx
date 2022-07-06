@@ -2,10 +2,8 @@ import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { CellMeasurerCache } from "react-virtualized";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
-import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
 import { useShowSnackbar } from "../hooks/useShowSnackbar";
@@ -21,7 +19,7 @@ import {
   useMarkAnswerAsAcceptedMutation,
   useUnLikePhoneQuestionCommentMutation,
   useUnLikePhoneQuestionReplyMutation,
-  useUnmarkAnswerAsAcceptedMutation,
+  useUnmarkAnswerAsAcceptedMutation
 } from "../services/phone_questions";
 import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -168,8 +166,6 @@ export default function PhoneQuestionFullScreen() {
     dispatch(answersListActions.setIsAccepted({ id: id, isAccepted: false }));
 
   const acceptAnswerRequest = (questionId, answerId) => {
-    console.log("aa");
-
     acceptAnswer({
       questionId: questionId,
       answerId: answerId,
