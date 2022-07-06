@@ -20,6 +20,7 @@ const CardActionButtons = ({
   navigateToFullScreen: commentButtonOnClick,
   shareBtnHandler,
   showBottomLine,
+  isQuestion,
 }) => {
   const activeFirstIcon = isReview ? (
     <ThumbUpIcon fontSize="medium" />
@@ -58,7 +59,7 @@ const CardActionButtons = ({
 
         <BottomCardActionBtn
           onClickAction={commentButtonOnClick}
-          title={textContainer.comment}
+          title={isReview ? textContainer.comment : textContainer.answer}
           icon={<ChatBubbleOutlineOutlinedIcon fontSize="medium" />}
         />
 
