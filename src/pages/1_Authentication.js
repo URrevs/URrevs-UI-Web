@@ -1,47 +1,42 @@
 import { useTheme } from "@emotion/react";
-import { getAuth } from "@firebase/auth";
 import {
   Backdrop,
-  Box,
-  Button,
   CircularProgress,
   Fade,
   List,
   ListItem,
   Modal,
-  styled,
-  Typography,
+  Typography
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { logout, signIn } from "../Authentication/auth";
+import { useState } from "react";
+import { signIn } from "../Authentication/auth";
 import { FacebookButton } from "../Components/Authentication/FacebookButton";
 import { GoogleButton } from "../Components/Authentication/GoogleButton";
+import { DialogTemplate } from "../Components/Dialogs/DialogTemplate";
 import {
-  useGetCurrentUserProfileMutation,
-  useLogoutFromAllDevicesMutation,
+  useLazyXauthenticateQuery
 } from "../services/users";
 import { authActions } from "../store/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { regDialogActions } from "../store/uiRegisterDialogSlice";
-import { DialogTemplate } from "../Components/Dialogs/DialogTemplate";
 
-const ModalBox = styled(
-  Box,
-  {}
-)(({ theme }) => ({
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "80%",
-  [theme.breakpoints.down("md")]: {
-    width: "calc(100% - 32px)",
-  },
-  boxShadow: 24,
-  padding: 16,
-  borderRadius: 15,
-  background: theme.palette.modalColor,
-}));
+// const ModalBox = styled(
+//   Box,
+//   {}
+// )(({ theme }) => ({
+//   position: "absolute",
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   width: "80%",
+//   [theme.breakpoints.down("md")]: {
+//     width: "calc(100% - 32px)",
+//   },
+//   boxShadow: 24,
+//   padding: 16,
+//   borderRadius: 15,
+//   background: theme.palette.modalColor,
+// }));
 
 const Registeration = ({}) => {
   const dispatch = useAppDispatch();
@@ -50,15 +45,12 @@ const Registeration = ({}) => {
   const openRegistration = useAppSelector(
     (state) => state.regDialog.registration
   );
-  const [isLoading, setIsLoading] = useState(false);
-
   const [signingError, setSigningError] = useState(null);
   const [signOutError, setSignOutError] = useState(null);
 
-  const [getProfile] = useGetCurrentUserProfileMutation();
-  const [logoutFromAllDevices] = useLogoutFromAllDevicesMutation();
-
   const theme = useTheme();
+
+  const [getUserProfile, { isLoading }] = useLazyXauthenticateQuery();
 
   const signInHandler = async (provider) => {
     // firebase sign-in
@@ -66,37 +58,27 @@ const Registeration = ({}) => {
     setSigningError(error);
 
     // auth api user
-    try {
-      setIsLoading(true);
 
+    const { data } = await getUserProfile(user.accessToken);
+
+    if (data) {
       dispatch(
         authActions.login({
-          isLoggedIn: true,
           accessToken: user.accessToken,
+          isLoggedIn: true,
+          expiration: data.exp,
+          apiToken: data.token,
+          isAdmin: data.admin,
+          uid: data.profile._id,
+          refCode: data.profile.refCode,
+          photo: data.profile.picture,
+          name: data.profile.name,
+          points: data.profile.points,
         })
       );
-      setIsLoading(false);
-      handleRegistrationClose();
-    } catch (error) {
-      setIsLoading(false);
-      handleRegistrationClose();
-      console.log(error);
     }
-  };
 
-  const signout = () => {
-    setSignOutError(logout());
-    dispatch(authActions.logout());
-  };
-
-  const logOutFromAllDevices = async () => {
-    try {
-      await logoutFromAllDevices();
-      await setSignOutError(logout());
-      dispatch(authActions.logout());
-    } catch (error) {
-      console.log(error);
-    }
+    handleRegistrationClose();
   };
 
   const handleRegistrationClose = () => {

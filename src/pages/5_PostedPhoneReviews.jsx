@@ -19,7 +19,7 @@ export function PostedPhoneReviews() {
   const reviewsList = useAppSelector((state) => state.reviews.newReviews);
   const [page, setPage] = useState(1);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const userId = searchParams.get("userId");
 
   const { data, isLoading, isFetching, error } =

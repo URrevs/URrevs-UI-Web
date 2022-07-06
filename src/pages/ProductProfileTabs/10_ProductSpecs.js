@@ -6,7 +6,7 @@ import { styled } from "@mui/styles";
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import ButtonPage from "../../Components/Buttons/ButtonPage";
+import { FaButton } from "../../Components/Buttons/FaButton";
 import { CompareDialog } from "../../Components/Dialogs/CompareDialog/CompareDialog";
 import { CompareItem } from "../../Components/Dialogs/CompareDialog/CompareItem";
 import { HorizontalPhoneList } from "../../Components/HorizontalPhoneList/HorizontalPhoneList";
@@ -23,7 +23,7 @@ import {
 const CardStyled = styled(
   Card,
   {}
-)((theme) => ({
+)(() => ({
   borderRadius: `${CARD_BORDER_RADIUS}px`,
   marginBottom: "15px",
   padding: "16px",
@@ -34,10 +34,10 @@ const CardStyled = styled(
 export const ProductSpecsScreen = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const paramId = searchParams.get("pid");
 
-  let { isLoading, error, isFetching, data } = useGetPhoneSpecsQuery(paramId);
+  let { data } = useGetPhoneSpecsQuery(paramId);
 
   const componentDictionary = {
     productImage: textContainer.productImage,
@@ -86,6 +86,7 @@ export const ProductSpecsScreen = () => {
           productRating={statistical.generalRating}
           companyRating={statistical.companyRating}
           viewer={statistical.views}
+          owned={statistical.owned}
           ratings={[
             statistical.uiRating,
             statistical.manufacturingQuality,
@@ -94,6 +95,7 @@ export const ProductSpecsScreen = () => {
             statistical.callQuality,
             statistical.battery,
           ]}
+          paramId={paramId}
           phone={data.name}
           type="هاتف ذكي"
         />
@@ -108,8 +110,10 @@ export const ProductSpecsScreen = () => {
         alignItems: "center",
       }}
     >
-      <ButtonPage
-        sx={{ background: theme.palette.defaultPageBtn }}
+      <FaButton
+        icon={
+          <CompareOutlinedIcon sx={{ fontSize: "28px", color: "#FFFFFF" }} />
+        }
         onClick={handleOpen}
       >
         <Box
@@ -120,12 +124,11 @@ export const ProductSpecsScreen = () => {
             textAlign: "center",
           }}
         >
-          <CompareOutlinedIcon sx={{ fontSize: "28px", color: "#FFFFFF" }} />
           <Typography variant="S14W700Cffffff">
             {componentDictionary.compareWithAnotherProduct}
           </Typography>
         </Box>
-      </ButtonPage>
+      </FaButton>
       <Modal open={open} onClose={handleClose}>
         <CompareDialog item={data} handleClose={handleClose} />
       </Modal>
@@ -153,16 +156,20 @@ export const ProductSpecsScreen = () => {
     <React.Fragment>
       <Grid container>
         {/* Right Grid */}
-        <Grid item xl={1} lg={1} md={0.5} xs={0}></Grid>
+        <Grid item xl={2} lg={1} md={0.5} xs={0}></Grid>
         {/* Center Grid */}
-        <Grid item xl={5} lg={5} md={5} xs={12}>
-          {theme.isMobile ? overviewCard() : null}
+        <Grid item xl={5.2} lg={5} md={5} xs={12}>
+          {!theme.isMobile && <div style={{ height: "20px" }}></div>}
+
+          {theme.isMobile && overviewCard()}
           <Typography variant="S18W700C050505">
             {componentDictionary.productImage + ":"}
           </Typography>
           <CardStyled elevation={3}>
             <img alt="im" src={data.picture}></img>
           </CardStyled>
+          {/* Padding on Desktop 32px  */}
+          {!theme.isMobile && <div style={{ height: "32px" }}></div>}
           <Typography
             sx={{
               display: "flex",
@@ -191,9 +198,9 @@ export const ProductSpecsScreen = () => {
           {theme.isMobile ? similarPhonesComponent() : null}
           {theme.isMobile ? compareWithOtherProducts() : null}
         </Grid>
-        <Grid item xl={1} lg={1} md={0.5} xs={0}></Grid>
+        <Grid item xl={0.5} lg={0.5} md={0.5} xs={0}></Grid>
         {/* Left Grid*/}
-        <Grid item xl={5} lg={5} md={6} xs={0}>
+        <Grid item xl={3.8} lg={5} md={6} xs={0}>
           {theme.isMobile ? null : (
             <div
               style={{
@@ -210,13 +217,17 @@ export const ProductSpecsScreen = () => {
                   overflowY: "auto",
                 }}
               >
+                <div style={{ height: "36.5px" }}></div>
                 {overviewCard()}
+                <div style={{ height: "19px" }}></div>
                 {similarPhonesComponent()}
+                <div style={{ height: "23px" }}></div>
                 {ComparePaper(data)}
               </div>
             </div>
           )}
         </Grid>
+        <Grid item xl={0.5} lg={0.5} md={0.5} xs={0}></Grid>
       </Grid>
     </React.Fragment>
   );

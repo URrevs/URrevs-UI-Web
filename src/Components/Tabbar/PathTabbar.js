@@ -1,4 +1,3 @@
-import { useTheme } from "@emotion/react";
 import { Box, Card, Divider, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -22,7 +21,6 @@ export const PathTabbar = ({
   console.log(currentPath, arrayOfTabs[0].to.split("?")[0], pathValue);
   const [value, setValue] = React.useState(pathValue === -1 ? 0 : pathValue);
 
-  const theme = useTheme();
   const language = useAppSelector((state) => state.language.language);
   const adjust = isVertical ? 1 : 0.5; //
   const space = (12 * adjust) / arrayOfTabs.length;
@@ -31,7 +29,7 @@ export const PathTabbar = ({
   const isAr = language === "ar";
 
   const [translation, setTranslation] = React.useState(
-    isAr ? (isVertical ? fscale - 100 * value : fscale * 2 + 100) : 100 * 0
+    isAr ? (isVertical ? fscale - 100 * value : fscale * 2 + 100) : 100 * value
   );
   const handleTranslation = (id) => {
     if (isAr) {

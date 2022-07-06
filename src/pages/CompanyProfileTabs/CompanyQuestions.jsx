@@ -1,5 +1,4 @@
-import { useTheme } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { Answer } from "../../Components/Interactions/Answer";
@@ -20,7 +19,7 @@ export function CompanyQuestions() {
   const dispatch = useAppDispatch();
   const { companyName } = useOutletContext();
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  const theme = useTheme();
+
   useEffect(() => {
     return () => {
       console.log("clear questions");
@@ -31,7 +30,7 @@ export function CompanyQuestions() {
   const reviewsList = useAppSelector((state) => state.questions.newReviews);
   const [page, setPage] = useState(1);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const cid = searchParams.get("cid");
 
   const { data, isLoading, isFetching, error } = useGetCompanyQuestionsQuery({
@@ -149,6 +148,7 @@ export function CompanyQuestions() {
 
   return (
     <AlonePostsGrid>
+      <div style={{ height: "20px" }}></div>
       <PostingComponent
         label={textContainer.youCanAddQuestion}
         placeholder={textContainer.writeYourQuestionP}
@@ -166,6 +166,7 @@ export function CompanyQuestions() {
           },
         }}
       />
+      <div style={{ height: "36px" }}></div>
 
       <VirtualReviewList
         reviewCard={reviewCard}

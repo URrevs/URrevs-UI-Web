@@ -1,5 +1,4 @@
-import { CircularProgress, LinearProgress } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, LinearProgress } from "@mui/material";
 
 export const SplashScreen = () => {
   return (
@@ -14,7 +13,12 @@ export const SplashScreen = () => {
     >
       <div style={{ textAlign: "center" }}>
         <Box>
-          <img width="197" height="94" src="./images/full_logo.png" />
+          <img
+            width="197"
+            height="94"
+            alt="splace screen"
+            src="/images/full_logo.png"
+          />
         </Box>
         <br />
         <Box>

@@ -1,11 +1,7 @@
 import { useTheme } from "@emotion/react";
-import { Box, Typography, TextField } from "@mui/material";
-import { Field } from "formik";
+import { FormHelperText, Stack } from "@mui/material";
+import { FastField } from "formik";
 import React from "react";
-import {
-  TEXT_FIELD_BORDER_RADIUS,
-  TEXT_FIELD_BORDER_THICKNESS,
-} from "../../constants";
 import { StyledTextField } from "./StyledTextField";
 // const InputLabelProps={{
 //   style: {
@@ -19,69 +15,71 @@ const FormikTextField = ({
   fieldName,
   isRequired = false,
   isControlled = false,
+  multiline = true,
 }) => {
-  const theme = useTheme();
   return (
-    <Field name={fieldName}>
+    <FastField name={fieldName}>
       {({ field: { value }, form: { setFieldValue }, meta }) => (
         <React.Fragment>
-          <StyledTextField
-            defaultValue={""}
-            placeholder={label}
-            autoComplete={"off"}
-            // required={isRequired}
-            error={meta.touched && meta.error && true}
-            helperText={meta.touched && meta.error}
-            onChange={
-              isControlled
-                ? (e) => {
-                    setFieldValue(fieldName, e.target.value);
-                    sessionStorage.setItem(fieldName, e.target.value);
-                  }
-                : () => {}
-            }
-            onBlur={
-              isControlled
-                ? () => {}
-                : (e) => {
-                    setFieldValue(fieldName, e.target.value);
-                    sessionStorage.setItem(fieldName, e.target.value);
-                  }
-            }
-          />
-          {/* <TextField
-            // sx={{ display: "flex", pb: "10px" }}
-            inputProps={{
-              style: {
-                fontWeight: 300,
-                fontSize: 16,
-                color: theme.palette.textField.inputFieldText,
-                background: theme.palette.textField.inputFieldBackground,
-                borderRadius: TEXT_FIELD_BORDER_RADIUS,
-                border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,
-              },
+          <Stack
+            spacing={0}
+            sx={{
+              width: fieldName === "invitationCode" ? "50%" : "100%",
             }}
-            InputLabelProps={{
-              style: {
-                fontWeight: 300,
-                fontSize: 16,
-                color: theme.palette.textField.inputFieldText,
-              }, //Doesn't look any different
+          >
+            <StyledTextField
+              multiline={multiline}
+              placeholder={label}
+              // required={isRequired}
+              error={meta.touched && meta.error}
+              value={value}
+              onChange={
+                isControlled
+                  ? (e) => {
+                      setFieldValue(fieldName, e.target.value);
+                      sessionStorage.setItem(fieldName, e.target.value);
+                    }
+                  : () => {}
+              }
+              onBlur={
+                isControlled
+                  ? () => {}
+                  : (e) => {
+                      setFieldValue(fieldName, e.target.value);
+                      sessionStorage.setItem(fieldName, e.target.value);
+                    }
+              }
+            />
+            {meta.touched && meta.error && (
+              <FormHelperText
+                error
+                sx={{
+                  margin: "0px 15px",
+                }}
+              >
+                {meta.touched && meta.error}
+              </FormHelperText>
+            )}
+          </Stack>
+          {/* <div
+            style={{
+              margin: "50px",
             }}
-            defaultValue={sessionStorage.getItem(fieldName)}
-            placeholder={label}
-            multiline
-            required={isRequired}
-            error={meta.touched && meta.error && true}
-            helperText={meta.touched && meta.error}
-            onBlur={(e) => {
-              setFieldValue(fieldName, e.target.value);
-              sessionStorage.setItem(fieldName, e.target.value);
-            }}
-          /> */}
+          >
+            <p
+              style={{
+                color: "#d32f2f",
+                fontSize: "12px",
+                fontFamily: "Tajawal",
+                fontWeight: "400",
+              }}
+            >
+              {meta.touched && meta.error}
+            </p>
+          </div> */}
         </React.Fragment>
       )}
-    </Field>
+    </FastField>
   );
 };
 export default FormikTextField;

@@ -17,6 +17,7 @@ export const PostingField = ({
   avatar = true,
   onSubmit = () => {},
   params = {}, //Adding new textfield params or overwriting existing ones
+  reply = false,
 }) => {
   const userProfile = useAppSelector((state) => state.auth);
   const [value, setValue] = React.useState("");
@@ -80,7 +81,13 @@ export const PostingField = ({
     ...params,
   };
   return (
-    <div>
+    <div
+      style={{
+        marginTop: "10px",
+        marginLeft: 0,
+        marginRight: reply ? "56px" : "0",
+      }}
+    >
       <Box
         sx={{
           //FlexBox
@@ -99,8 +106,8 @@ export const PostingField = ({
             alt="User profile picture"
             sx={{
               mr: "8px",
-              height: `45px`,
-              width: `45px`,
+              height: reply ? "32px" : `45px`,
+              width: reply ? "32px" : `45px`,
               transition: "0.1s",
             }}
           />

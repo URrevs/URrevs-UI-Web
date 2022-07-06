@@ -65,8 +65,8 @@ export default function Menu({ isDesktop = false, drawerRef }) {
     adminPanel: textContainer.adminPanel,
     settings: textContainer.settings,
     aboutUs: textContainer.aboutUs,
-    contactUs: "تواصل معنا",
-    followUs: "تابعنا",
+    contactUs: textContainer.contactUs,
+    followUs: textContainer.followUs,
     logOut: textContainer.logOut,
     termsAndAgreements: textContainer.termsOfUse,
     privacyPolicy: textContainer.privacyPolicy,
@@ -123,7 +123,8 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       to: `../../${ROUTES_NAMES.SETTINGS}`,
       authenticate: true,
       onClick: () => {
-        setSettingsSlide(!settingsSlide);
+        if (theme.isMobile) navigate(`../../${ROUTES_NAMES.SETTINGS}`);
+        else setSettingsSlide(!settingsSlide);
       },
       endIcon: isDesktop ? (
         language === "ar" ? (
@@ -315,7 +316,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
             // width: "95%",
           }}
         >
-          <Typography variant="S22W500C050505">{`${pageDictionry.followUs}:`}</Typography>
+          <Typography variant="S22W500C050505">{`${pageDictionry.followUs}`}</Typography>
           <Box
             sx={{
               display: "flex",
@@ -324,8 +325,33 @@ export default function Menu({ isDesktop = false, drawerRef }) {
             }}
           >
             <Box sx={{ display: "flex" }}>
-              <FacebookIcon />
-              <LinkedIn />
+              <div
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                <a
+                  href={"https://www.facebook.com/URrevs/"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FacebookIcon />
+                </a>
+              </div>
+              <div
+                style={{
+                  padding: "0px 5px",
+                  cursor: "pointer",
+                }}
+              >
+                <a
+                  href={"https://www.linkedin.com/company/urrevs/about/"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <LinkedIn />
+                </a>
+              </div>
             </Box>
           </Box>
           <Box
@@ -337,6 +363,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
             <Link
               to={`../../${ROUTES_NAMES.TERMS_AND_CONDITIONS}/${language}`}
               target="_blank"
+              rel="noopener noreferrer"
               onClick={() => {
                 dispatch(menuActions.hideMenu());
               }}
@@ -351,6 +378,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
             <Link
               to={`../../${ROUTES_NAMES.PRIVACY_POLICY}/${language}`}
               target="_blank"
+              rel="noopener noreferrer"
               onClick={() => {
                 dispatch(menuActions.hideMenu());
               }}

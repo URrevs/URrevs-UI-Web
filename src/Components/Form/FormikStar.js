@@ -1,4 +1,4 @@
-import { Field } from "formik";
+import { FastField } from "formik";
 import React from "react";
 import { useAppSelector } from "../../store/hooks";
 import StarRating from "./StarRating";
@@ -15,7 +15,7 @@ const FormikStar = ({
   const textContainer = useAppSelector((state) => state.language.textContainer);
   return (
     <>
-      <Field name={fieldName}>
+      <FastField name={fieldName}>
         {({ field: { value }, form: { setFieldValue }, meta }) => (
           <>
             <div style={{ textAlign: "center" }}>
@@ -51,7 +51,7 @@ const FormikStar = ({
             </div>
           </>
         )}
-      </Field>
+      </FastField>
     </>
   );
 };

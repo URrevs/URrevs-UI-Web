@@ -1,9 +1,10 @@
 import { useTheme } from "@emotion/react";
 import { Formik } from "formik";
-import React from "react";
-import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import * as Yup from "yup";
+import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useAddPhoneReviewMutation } from "../../services/phone_reviews";
+import { useAppSelector } from "../../store/hooks";
 import { AddReviewTab } from "./AddReviewTab";
 import { QuestionsTab } from "./QuestionsTab";
 
@@ -15,11 +16,13 @@ const PostingScreen = ({
     type: "",
   },
 }) => {
+  const [searchParams] = useSearchParams();
+  const paramId = searchParams.get("refCode");
   const isPhone = initValues.type === "phone";
-
+  const checkSignedIn = useCheckSignedIn();
   const [addReview] = useAddPhoneReviewMutation();
   const theme = useTheme();
-  const textContainer = useSelector((state) => state.language.textContainer);
+  const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionary = {
     tabbar: [textContainer.tabBarReview, textContainer.tabBarQuestion],
     likedAboutProductErrorMsg: textContainer.likedAboutProductErrorMsg,
@@ -46,18 +49,18 @@ const PostingScreen = ({
     battery: Yup.number().integer().min(1, "Select Stars"),
     overAllExp: Yup.number().integer().min(1, "Select Stars"),
     rateManufacturer: Yup.number().integer().min(1, "Select Stars"),
-    likeAboutProduct: Yup.string().required(
-      pageDictionary.likedAboutProductErrorMsg
-    ),
-    hateAboutProduct: Yup.string().required(
-      pageDictionary.hateAboutProductErrorMsg
-    ),
-    likeAbout: Yup.string().required(
-      pageDictionary.likedAboutManufacturerErrorMsg
-    ),
-    hateAbout: Yup.string().required(
-      pageDictionary.hatedAboutManufacturerErrorMsg
-    ),
+    likeAboutProduct: Yup.string()
+      .trim()
+      .required(pageDictionary.likedAboutProductErrorMsg),
+    hateAboutProduct: Yup.string()
+      .trim()
+      .required(pageDictionary.hateAboutProductErrorMsg),
+    likeAbout: Yup.string()
+      .trim()
+      .required(pageDictionary.likedAboutManufacturerErrorMsg),
+    hateAbout: Yup.string()
+      .trim()
+      .required(pageDictionary.hatedAboutManufacturerErrorMsg),
     // invitationCode: Yup.string().required("Required"),
   });
   return (
@@ -82,39 +85,42 @@ const PostingScreen = ({
             hateAboutProduct: "",
             likeAbout: "",
             hateAbout: "",
-            invitationCode: "",
+            invitationCode: paramId ?? "",
           }}
           validationSchema={BasicValidationSchema}
           onSubmit={async (values, { setSubmitting }) => {
-            sessionStorage.clear();
-            const reviewPost = {
-              phoneId: values.chooseProduct.id,
-              companyId: values.companyId._id,
-              ownedDate: values.purchaseDate,
-              generalRating: values.overAllExp,
-              uiRating: values.userInterface,
-              manQuality: values.manufacturingQuality,
-              valFMon: values.priceQuality,
-              camera: values.camera,
-              callQuality: values.callsQuality,
-              battery: values.battery,
-              pros: values.likeAboutProduct,
-              cons: values.hateAboutProduct,
-              refCode: values.invitationCode,
-              companyRating: values.rateManufacturer,
-              compPros: values.likeAbout,
-              compCons: values.hateAbout,
-            };
-            // console.log(JSON.stringify(reviewPost, null, 2));
-            try {
-              const response = await addReview(reviewPost).unwrap();
-            } catch (e) {
-              console.log("asd askjd bhasb", e);
+            if (checkSignedIn()) {
+              const reviewPost = {
+                phoneId: values.chooseProduct.id,
+                companyId: values.companyId._id,
+                ownedDate: values.purchaseDate,
+                generalRating: values.overAllExp,
+                uiRating: values.userInterface,
+                manQuality: values.manufacturingQuality,
+                valFMon: values.priceQuality,
+                camera: values.camera,
+                callQuality: values.callsQuality,
+                battery: values.battery,
+                pros: values.likeAboutProduct,
+                cons: values.hateAboutProduct,
+                refCode: values.invitationCode,
+                companyRating: values.rateManufacturer,
+                compPros: values.likeAbout,
+                compCons: values.hateAbout,
+              };
+              // console.log(JSON.stringify(reviewPost, null, 2));
+              try {
+                await addReview(reviewPost).unwrap();
+                //Success Message
+                sessionStorage.clear();
+              } catch (e) {
+                console.log("asd askjd bhasb", e);
+              }
+              setSubmitting(false);
             }
-            setSubmitting(false);
           }}
         >
-          {(props) => <AddReviewTab {...props} />}
+          {(props) => <AddReviewTab {...props} isLoading={false} />}
         </Formik>
       ) : (
         <QuestionsTab initValues={initValues} />

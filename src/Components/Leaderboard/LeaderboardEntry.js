@@ -93,43 +93,52 @@ const LeaderboardEntry = ({
 
   const entryBody = () => (
     <Fragment>
-      <div
+      <Link
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "start",
-          "&:hover": {
-            backgroundColor: theme.palette.hover,
-          },
-          "&:active": {
-            backgroundColor: theme.palette.hover,
-          },
-          "&:focus": {
-            backgroundColor: theme.palette.hover,
-          },
+          width: "100%",
+
+          textDecoration: "none",
         }}
+        to={userProfilePath}
       >
-        <RankCircle>
-          <div
-            ref={ref}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              ...theme.typography.S18W700C050505,
-              fontSize,
-              width: 30,
-              height: 30,
-            }}
-          >
-            {userRank}
-          </div>
-        </RankCircle>
-        <div style={{ width: "18px" }}></div>
-        <UserAvatar src={userPicture}></UserAvatar>
-        <div style={{ width: "18px" }}></div>
-        <Typography variant="S20W700C050505">{userName}</Typography>
-      </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "start",
+            "&:hover": {
+              backgroundColor: theme.palette.hover,
+            },
+            "&:active": {
+              backgroundColor: theme.palette.hover,
+            },
+            "&:focus": {
+              backgroundColor: theme.palette.hover,
+            },
+          }}
+        >
+          <RankCircle>
+            <div
+              ref={ref}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                ...theme.typography.S18W700C050505,
+                fontSize,
+                width: 30,
+                height: 30,
+              }}
+            >
+              {userRank}
+            </div>
+          </RankCircle>
+          <div style={{ width: "18px" }}></div>
+          <UserAvatar src={userPicture}></UserAvatar>
+          <div style={{ width: "18px" }}></div>
+          <Typography variant="S20W700C050505">{userName}</Typography>
+        </div>
+      </Link>
 
       <StarWithCount
         value={points}
@@ -141,34 +150,20 @@ const LeaderboardEntry = ({
     </Fragment>
   );
   return isBody ? (
-    <Link
+    <div
       style={{
-        textDecoration: "none",
+        // backgroundColor: theme.palette.leaderBoard.entryCard,
+        minHeight: 60,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "0px 12px",
       }}
-      to={userProfilePath}
     >
-      <div
-        style={{
-          // backgroundColor: theme.palette.leaderBoard.entryCard,
-          minHeight: 60,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0px 12px",
-        }}
-      >
-        {entryBody()}
-      </div>
-    </Link>
+      {entryBody()}
+    </div>
   ) : (
-    <Link
-      style={{
-        textDecoration: "none",
-      }}
-      to={userProfilePath}
-    >
-      <LeaderboardEntryCard elevation={3}>{entryBody()}</LeaderboardEntryCard>
-    </Link>
+    <LeaderboardEntryCard elevation={3}>{entryBody()}</LeaderboardEntryCard>
   );
 };
 

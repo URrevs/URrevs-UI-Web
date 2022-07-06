@@ -46,7 +46,6 @@ export const SearchScreen = () => {
   let {
     isLoading,
     error,
-    isFetching,
     data: fetchedRecentResults = [],
   } = useGetMyRecentSearchesQuery(
     {},

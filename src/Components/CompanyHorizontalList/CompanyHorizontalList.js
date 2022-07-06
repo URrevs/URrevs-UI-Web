@@ -1,19 +1,14 @@
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import BeachAccessIcon from "@mui/icons-material/BeachAccess";
-import ImageIcon from "@mui/icons-material/Image";
-import WorkIcon from "@mui/icons-material/Work";
-import { alpha, Button, Container } from "@mui/material";
+import { alpha } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
-import * as React from "react";
 import classes from "./list.module.css";
 
 const CompanyButton = styled("div", {
-  shouldForwardProp: (prop) => prop !== "backgroundColor",
+  shouldForwardProp: (prop) => prop != "backgroundColor",
 })(({ theme, backgroundColor }) => ({
   textTransform: "none",
   variant: "contained",
@@ -42,12 +37,6 @@ export const CompanyHorizontalList = ({
 }) => {
   const theme = useTheme();
 
-  let srcs = [
-    "./images/logos/acer.png",
-    "./images/logos/alcatel.jpg",
-    "./images/logos/apple.jpg",
-  ];
-
   const listItem = (title, imgSrc, index, id) => {
     return (
       <CompanyButton
@@ -71,7 +60,7 @@ export const CompanyHorizontalList = ({
               height: "50px",
               objectFit: "contain",
             }}
-            src={srcs[index % srcs.length]}
+            src={imgSrc}
           ></Avatar>
         </ListItemAvatar>
         <ListItemText
@@ -98,7 +87,7 @@ export const CompanyHorizontalList = ({
       }}
     >
       {companiesList.map((item, index) =>
-        listItem(item.name, "", index, item._id)
+        listItem(item.name, item.logo, index, item._id)
       )}
     </List>
   );

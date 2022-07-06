@@ -1,3 +1,4 @@
+import { generateLink } from "../../functions/dynamicLinkGenerator";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
@@ -9,6 +10,9 @@ import {
   useUnLikePhoneQuestionMutation,
   useUserPressesFullScreenPhoneQuestionMutation,
 } from "../../services/phone_questions";
+import { useReportPhoneQuestionMutation } from "../../services/reports";
+import { useAppDispatch } from "../../store/hooks";
+import { sendReportActions } from "../../store/uiSendReportSlice";
 import QuestionCard from "./QuestionCard";
 
 export default function PhoneQuestion({
@@ -29,8 +33,31 @@ export default function PhoneQuestion({
   const [dontLikeThisRequest] = useIdontLikeThisPhoneQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenPhoneQuestionMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
+  const [reportPhoneQuestion] = useReportPhoneQuestionMutation();
+  const generateShareLink = generateLink({
+    webPath: "phone-question",
+    postId: reviewDetails._id,
+    postType: "phoneQuestion",
+    ownerId: reviewDetails.userId,
+    linkType: "post",
+  });
 
   const showShareSnackbar = useShareSnackbar();
+
+  const dispatch = useAppDispatch();
+
+  const reportFunction = () => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) => {
+          return reportPhoneQuestion({
+            reportId: reviewDetails._id,
+            reportContent: reportContent,
+          });
+        },
+      })
+    );
+  };
 
   const actionBtnFunction = async () => {
     try {
@@ -73,7 +100,9 @@ export default function PhoneQuestion({
   const shareBtnHandler = () => {
     stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
-    showShareSnackbar(`/phone-question?id=${reviewDetails._id}`);
+    generateShareLink().then((data) => {
+      showShareSnackbar(data.data.shortLink,"تم نسخ رابط المنشور");
+    });
   };
 
   return (
@@ -89,6 +118,7 @@ export default function PhoneQuestion({
       fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_QUESTION}?id=${reviewDetails._id}`}
       fullScreenFn={fullScreenHandler}
       actionBtnFunction={showActionBtn && actionBtnFunction}
+      reportFunction={reportFunction}
       likeBtnHandler={likeBtnHandler}
       acceptedAnswerWidget={acceptedAnswerWidget}
       shareBtnFn={shareBtnHandler}

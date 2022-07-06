@@ -47,16 +47,18 @@ export const StickyTabbar = ({
   return (
     <Card
       sx={{
-        position: smallPfpVisible ? "fixed" : "sticky",
+        position: smallPfpVisible && hasParent ? "fixed" : "sticky",
         justifyContent: "space-between",
         display: "flex",
-        top: hasParent && "64px",
-        padding: "0px 200px",
+
+        // top: hasParent && "64px",
+        top: "64px",
+        padding: "0px 100px 0px 200px",
         [theme.breakpoints.down("xl")]: {
-          padding: "0px 150px",
+          padding: "0px 100px 0px 150px",
         },
         [theme.breakpoints.down("lg")]: {
-          padding: "0px 50px",
+          padding: "0px 100px 0px 50px",
         },
         // padding: "0px 150px 0px 150px",
         width: "100%",
@@ -66,15 +68,24 @@ export const StickyTabbar = ({
       <Tabs value={value} onChange={handleChange}>
         {arrayOfTabs.map((tab, i) => (
           // <Link style={{ textDecoration: "none" }} to={tab.to}>
-          <Tab value={i} label={tab.title} onClick={() => navigate(tab.to)} />
+          <Tab
+            value={i}
+            key={tab.title + i}
+            label={tab.title}
+            onClick={() => navigate(tab.to)}
+          />
           // </Link>
         ))}
       </Tabs>
-      {smallPfpVisible ? (
+      {smallPfpVisible || !hasParent ? (
         <div
           style={{
             display: "flex",
             alignItems: "center",
+            //Textover flow find solution here
+            whiteSpace: "nowrap",
+            // overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
         >
           {userPhoto && (

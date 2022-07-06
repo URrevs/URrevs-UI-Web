@@ -1,36 +1,53 @@
 import { useTheme } from "@emotion/react";
 import AddIcon from "@mui/icons-material/Add";
-import { Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import React from "react";
+import { CircularProgress, Typography } from "@mui/material";
+
 import OrangeGradientButton from "../../Components/Buttons/OrangeGradientButton";
 
+export const FormSubmitButton = ({
+  submitLabel,
 
-
-export const FormSubmitButton = ({ submitLabel }) => {
+  loading = false,
+}) => {
   const theme = useTheme();
+  // const renderBtnContent = () => (
+  //   <Box
+  //     sx={{
+  //       display: "flex",
+  //       alignItems: "center",
+  //       justifyContent: "center",
+  //       textAlign: "center",
+  //     }}
+  //   ></Box>
+  // );
   return (
-    <OrangeGradientButton
-      type="submit"
-      color="red"
-      sx={{ width: "100%", textAlign: "center", marginTop: "20px" }}
+    <div
+      style={{
+        width: "100%",
+        textAlign: "center",
+        marginTop: "20px",
+      }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-        }}
+      <OrangeGradientButton
+        style={{ width: "100%" }}
+        type="submit"
+        disabled={loading}
+        startIcon={
+          loading ? (
+            <CircularProgress size={20} sx={{ color: "#fff" }} />
+          ) : (
+            <AddIcon
+              sx={{
+                color: theme.palette.defaultRedBtnIconColor,
+                fontSize: "28px",
+              }}
+            />
+          )
+        }
+        color="red"
       >
-        <AddIcon
-          sx={{
-            color: theme.palette.defaultRedBtnIconColor,
-            fontSize: "28px",
-          }}
-        />
         <Typography variant="S18W700Cffffff">{submitLabel}</Typography>
-      </Box>
-    </OrangeGradientButton>
+      </OrangeGradientButton>
+    </div>
   );
 };

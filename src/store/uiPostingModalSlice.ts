@@ -8,7 +8,7 @@ interface initialState {
   type: string;
 }
 
-const initialState: initialState = {
+const initialPostingSliceState: initialState = {
   show: false,
   tab: 0,
   id: "",
@@ -18,10 +18,16 @@ const initialState: initialState = {
 
 const postingModalSlice = createSlice({
   name: "postingModal",
-  initialState: initialState,
+  initialState: initialPostingSliceState,
   reducers: {
     showPostingModal(state, action) {
       state.show = true;
+      state.tab = action.payload.tab;
+      state.id = action.payload.id;
+      state.name = action.payload.name;
+      state.type = action.payload.type;
+    },
+    initializePostingModal(state, action) {
       state.tab = action.payload.tab;
       state.id = action.payload.id;
       state.name = action.payload.name;
@@ -32,6 +38,9 @@ const postingModalSlice = createSlice({
     },
     hidePostingModal(state) {
       state.show = false;
+    },
+    togglePostingModal(state, action) {
+      state.show = !state.show;
     },
   },
 });

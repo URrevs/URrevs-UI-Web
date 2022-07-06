@@ -4,7 +4,6 @@ import UpdateOutlinedIcon from "@mui/icons-material/UpdateOutlined";
 import { Box, Grid, Modal, Paper, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { CompetitionBody } from "../Components/CompetitionPrompt/CompetitionBody";
 import { CompetitionPrompt } from "../Components/CompetitionPrompt/CompetitionPrompt";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
@@ -22,19 +21,15 @@ import { UpdateProducts } from "./29_UpdateProducts";
 export const AdminPanel = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const language = useSelector((state) => state.language.language);
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const theme = useTheme();
-  const { data, latestUpdateError, isLoading } = useGetLastUpdateInfoQuery(
+  const { data, isLoading } = useGetLastUpdateInfoQuery(
     {},
     { refetchOnMountOrArgChange: true }
   );
-  const {
-    data: lastCompetetionData,
-    error: latestCompetetionError,
-    isLoading: latestCompetetionIsLoading,
-  } = useGetLatestCompetetionQuery();
+  const { data: lastCompetetionData, error: latestCompetetionError } =
+    useGetLatestCompetetionQuery();
 
   console.log(lastCompetetionData);
 
@@ -43,16 +38,20 @@ export const AdminPanel = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   // CLEAN CODE
-  const pageDictionry = {
+  const pageDictionary = {
     adminPanel: textContainer.adminPanel,
     updateProductsList: textContainer.updateProductsList,
     addingCompetition: textContainer.addingCompetition,
+    lastUpdatedIn: textContainer.lastUpdatedIn,
+    theLastCompetitionTookPlaceIn: textContainer.theLastCompetitionTookPlaceIn,
+    noCompetitionsYet: textContainer.noCompetitionsYet,
+    noUpdateOperationsYet: textContainer.noUpdateOperationsYet,
   };
   const listItems = [
     {
-      title: pageDictionry.updateProductsList,
+      title: pageDictionary.updateProductsList,
       icon: <UpdateOutlinedIcon sx={{ fontSize: 40 }} />,
-      subtitle: "اخر تحديث تم في",
+      subtitle: pageDictionary.lastUpdatedIn,
       to: theme.isMobile ? `../${ROUTES_NAMES.UPDATE}` : null,
       onClick: theme.isMobile
         ? null
@@ -61,9 +60,19 @@ export const AdminPanel = () => {
           },
     },
     {
-      title: pageDictionry.addingCompetition,
+      title: pageDictionary.addingCompetition,
       icon: <EmojiEventsOutlinedIcon sx={{ fontSize: 40 }} />,
-      subtitle: "اخر مسابقة تمت في",
+      subtitle: pageDictionary.theLastCompetitionTookPlaceIn,
+      onClick: theme.isMobile
+        ? handleOpen
+        : () => {
+            setPage(1);
+          },
+    },
+    {
+      title: pageDictionary.addingCompetition,
+      icon: <EmojiEventsOutlinedIcon sx={{ fontSize: 40 }} />,
+      subtitle: pageDictionary.theLastCompetitionTookPlaceIn,
       onClick: theme.isMobile
         ? handleOpen
         : () => {
@@ -72,8 +81,9 @@ export const AdminPanel = () => {
     },
   ];
 
-  const [lastUpdateDate, setLastUpdateDate] =
-    React.useState("لا يوجد تحديث بعد");
+  const [lastUpdateDate, setLastUpdateDate] = React.useState(
+    pageDictionary.noUpdateOperationsYet
+  );
 
   useEffect(() => {
     if (data) {
@@ -143,7 +153,7 @@ export const AdminPanel = () => {
           }}
         >
           <Typography variant="S22W700C050505">
-            {pageDictionry.adminPanel + ":"}
+            {pageDictionary.adminPanel + ":"}
           </Typography>
           {renderAdminOption()}
         </Paper>
@@ -181,7 +191,7 @@ export const AdminPanel = () => {
   return (
     <React.Fragment>
       {theme.isMobile ? (
-        <CustomAppBar showBackBtn showLabel label={pageDictionry.adminPanel}>
+        <CustomAppBar showBackBtn showLabel label={pageDictionary.adminPanel}>
           {renderAdminOption()}
 
           <Modal open={open} onClose={handleClose}>

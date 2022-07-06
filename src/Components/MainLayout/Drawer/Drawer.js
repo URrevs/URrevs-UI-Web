@@ -17,6 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ROUTES_NAMES from "../../../RoutesNames";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { menuActions } from "../../../store/uiMenuSlice";
+import { postingModalActions } from "../../../store/uiPostingModalSlice";
 import { MenuSideBar } from "./Sidebar/MenuSideBar";
 
 export const drawerWidth = 240;
@@ -73,6 +74,7 @@ const PerDrawer = styled(
 
 export const MyDrawer = (props) => {
   const menuShow = useAppSelector((state) => state.menu.show);
+  const showPosting = useAppSelector((state) => state.postingModal.show);
   const dispatch = useAppDispatch();
   const drawerRef = React.useRef("10px");
   const language = useAppSelector((state) => state.language.language);
@@ -81,7 +83,7 @@ export const MyDrawer = (props) => {
   // <page_path> : <number>
   const map = {
     [ROUTES_NAMES.HOME]: 0,
-    [ROUTES_NAMES.PRODUCTS]: 1,
+    [ROUTES_NAMES.ALL_PRODUCTS]: 1,
     [ROUTES_NAMES.LEADERBOARD]: 2,
   };
   // change current page onClick
@@ -90,7 +92,9 @@ export const MyDrawer = (props) => {
   );
   // Change Icon Color based on pathname
   const iconColor = (val) =>
-    currentPage === val && !menuShow ? focusedColor : unFocusedColor;
+    currentPage === val && !menuShow && !showPosting
+      ? focusedColor
+      : unFocusedColor;
   const theme = useTheme();
   // const backgroundColor = theme.palette.bottomNavigationBar.backgroundColor;
   const focusedColor = theme.palette.bottomNavigationBar.selectedTap;
@@ -126,16 +130,19 @@ export const MyDrawer = (props) => {
       icon: (
         <AddIcon
           sx={{
-            fontSize: currentPage === 5 ? focusedIconSize : unfocusedIconSize,
+            fontSize: showPosting ? focusedIconSize : unfocusedIconSize,
           }}
-          htmlColor={unFocusedColor}
+          htmlColor={showPosting && !menuShow ? focusedColor : unFocusedColor}
         />
       ),
       title: textContainer.AddNavBarItem,
       itemValue: 4,
       onClick: () => {
-        setValue(5);
-        navigate(ROUTES_NAMES.ADD_REVIEW);
+        dispatch(
+          postingModalActions.showPostingModal({
+            tab: 0,
+          })
+        );
       },
     },
 
@@ -153,9 +160,9 @@ export const MyDrawer = (props) => {
       itemValue: 1,
       onClick: () => {
         setValue(1);
-        navigate(ROUTES_NAMES.PRODUCTS);
+        navigate(ROUTES_NAMES.ALL_PRODUCTS);
       },
-      path: ROUTES_NAMES.PRODUCTS,
+      path: ROUTES_NAMES.ALL_PRODUCTS,
     },
 
     //Leaderboard
@@ -234,7 +241,11 @@ export const MyDrawer = (props) => {
         <List>
           {drawerTiles.map((item, i) => (
             <ListItem
-              style={{ padding: 0, justifyContent: "center" }}
+              style={{
+                padding: 0,
+                justifyContent: "center",
+                minHeight: "85px",
+              }}
               onClick={item.onClick}
               button
               key={item.title}
@@ -244,7 +255,7 @@ export const MyDrawer = (props) => {
                   {item.icon}
                 </ListItemIcon>
 
-                {currentPage === item.itemValue && !menuShow ? (
+                {currentPage === item.itemValue && !menuShow && !showPosting ? (
                   <Typography
                     // variant="S14W700C2196f3"
                     sx={{
@@ -264,7 +275,21 @@ export const MyDrawer = (props) => {
                   >
                     {item.title}
                   </Typography>
-                ) : null}
+                ) : (
+                  item.itemValue === 4 &&
+                  showPosting &&
+                  !menuShow && (
+                    <Typography
+                      // variant="S14W700C2196f3"
+                      sx={{
+                        textAlign: "center",
+                        ...theme.typography.S14W700C2196f3,
+                      }}
+                    >
+                      {item.title}
+                    </Typography>
+                  )
+                )}
               </div>
             </ListItem>
           ))}

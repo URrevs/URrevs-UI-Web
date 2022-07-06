@@ -24,7 +24,7 @@ export const AboutUsScreen = () => {
             height="auto"
             width="60%"
             alt="URrevs"
-            src="./images/full_logo.png"
+            src="/images/full_logo.png"
           />
           <Typography variant="S22W500C050505">
             {textContainer.aboutUsContent}

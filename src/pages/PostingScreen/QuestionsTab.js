@@ -1,14 +1,13 @@
 import { Stack, Typography } from "@mui/material";
 import { Form, Formik } from "formik";
-import React from "react";
 import * as Yup from "yup";
 import FormikSearchComponent from "../../Components/Form/FormikSearchComponent";
 import FormikTextField from "../../Components/Form/FormikTextField";
 import { useAddCompanyQuestionMutation } from "../../services/company_questions";
 import { useAddPhoneQuestionMutation } from "../../services/phone_questions";
 import { useSearchAllMutation } from "../../services/search";
-import { useAppSelector } from "../../store/hooks";
-import { FastFormikTextField } from "./FastFormikTextField";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { postingModalActions } from "../../store/uiPostingModalSlice";
 import { FormSubmitButton } from "./FormSubmitButton";
 
 /* DOCUMENTATION */
@@ -45,6 +44,7 @@ export const QuestionsTab = ({ initValues }) => {
   };
   // RTK:
   const [searchFn] = useSearchAllMutation();
+  const dispatch = useAppDispatch();
   const [addPhoneQuestion] = useAddPhoneQuestionMutation();
   const [addCompanyQuestion] = useAddCompanyQuestionMutation();
   // const [addQuestionError, setAddQuestionError] = React.useState(null);
@@ -67,6 +67,7 @@ export const QuestionsTab = ({ initValues }) => {
     } catch (e) {
       console.log(e);
     }
+    dispatch(postingModalActions.hidePostingModal());
   };
   // Validation:
   const QuestionValidationSchema = Yup.object().shape({
@@ -104,6 +105,7 @@ export const QuestionsTab = ({ initValues }) => {
         <FormikTextField
           fieldName={"question"}
           label={pageDictionary.question}
+          isControlled={true}
         />
         <div></div>
       </Stack>
@@ -124,7 +126,10 @@ export const QuestionsTab = ({ initValues }) => {
           <Form>
             {renderSearch(formik.values.spoc.label)}
             {renderField()}
-            <FormSubmitButton submitLabel={pageDictionary.postQuestion} />
+            <FormSubmitButton
+              loading={formik.isSubmitting}
+              submitLabel={pageDictionary.postQuestion}
+            />
           </Form>
         </div>
       )}

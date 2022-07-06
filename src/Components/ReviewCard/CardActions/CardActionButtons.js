@@ -19,6 +19,7 @@ const CardActionButtons = ({
   isReview,
   navigateToFullScreen: commentButtonOnClick,
   shareBtnHandler,
+  showBottomLine,
 }) => {
   const activeFirstIcon = isReview ? (
     <ThumbUpIcon fontSize="medium" />

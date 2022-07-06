@@ -1,18 +1,22 @@
+import { generateLink } from "../../functions/dynamicLinkGenerator";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
+import { useAppDispatch } from "../../store/hooks";
+
 import ROUTES_NAMES from "../../RoutesNames";
 import {
   useIdontLikeThisCompanyReviewMutation,
+  useIncreaseShareCounterMutation,
+  useIncreaseViewCounterMutation,
   useLikeCompanyReviewMutation,
   useUnLikeCompanyReviewMutation,
   useUserPressFullScreenMutation,
   useUserPressSeeMoreMutation,
-  useIncreaseViewCounterMutation,
-  useIncreaseShareCounterMutation,
 } from "../../services/company_reviews";
-import { useAppSelector } from "../../store/hooks";
 import ReviewCard from "./ReviewCard";
+import { sendReportActions } from "../../store/uiSendReportSlice";
+import { useReportCompanyReviewMutation } from "../../services/reports";
 
 const CompanyReview = ({
   reviewDetails,
@@ -27,12 +31,25 @@ const CompanyReview = ({
   fullScreen,
   isExpanded,
   stateShare,
+  disableElevation = false,
+  showBottomLine,
 }) => {
   const [dontLikeThisRequest] = useIdontLikeThisCompanyReviewMutation();
   const [fullScreenRequest] = useUserPressFullScreenMutation();
   const [seeMoreRequest] = useUserPressSeeMoreMutation();
   const [increaseViewCounterRequest] = useIncreaseViewCounterMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
+  const [reportCompanyReview] = useReportCompanyReviewMutation();
+
+  const dispatch = useAppDispatch();
+
+  const generateShareLink = generateLink({
+    webPath: "company-review",
+    postId: reviewDetails._id,
+    postType: "companyReview",
+    ownerId: reviewDetails.userId,
+    linkType: "post",
+  });
 
   const checkIsSignedIn = useCheckSignedIn();
   const checkOwnerShip = useCheckOwnership({
@@ -41,6 +58,19 @@ const CompanyReview = ({
   });
 
   const showShareSnackbar = useShareSnackbar();
+
+  const reportFunction = () => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) => {
+          return reportCompanyReview({
+            reportId: reviewDetails._id,
+            reportContent: reportContent,
+          });
+        },
+      })
+    );
+  };
 
   const actionBtnFunction = async () => {
     try {
@@ -81,11 +111,16 @@ const CompanyReview = ({
   const shareBtnHandler = () => {
     stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
-    showShareSnackbar(`/company-review?id=${reviewDetails._id}`);
+
+    generateShareLink().then((data) => {
+      showShareSnackbar(data.data.shortLink, "تم نسخ رابط المنشور");
+    });
   };
 
   return (
     <ReviewCard
+      showBottomLine={showBottomLine}
+      disableElevation={disableElevation}
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}
@@ -96,6 +131,7 @@ const CompanyReview = ({
       userProfilePath={userProfilePath}
       fullScreenRoute={`/${ROUTES_NAMES.EXACT_COMPANY_REVIEW}?id=${reviewDetails._id}`}
       actionBtnFunction={showActionBtn && actionBtnFunction}
+      reportFunction={reportFunction}
       likeBtnHandler={likeBtnHandler}
       fullScreenFn={fullScreenHandler}
       seeMoreFn={seeMoreHandler}

@@ -7,16 +7,16 @@ import {
   ListItemButton,
   ListItemText,
   Paper,
-  Typography,
+  Typography
 } from "@mui/material";
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   AutoSizer,
   CellMeasurer,
   CellMeasurerCache,
   List,
-  WindowScroller,
+  WindowScroller
 } from "react-virtualized";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
@@ -25,7 +25,7 @@ import { PAPER_BORDER_RADIUS_DESKTOP } from "../constants";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetAllCompaniesQuery,
-  useGetAllPhonesQuery,
+  useGetAllPhonesQuery
 } from "../services/phones";
 import { productListActions } from "../store/allProductsSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -47,7 +47,6 @@ let maxCompanyIndex = 0;
 
 export function AllProductsScreen() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -64,8 +63,6 @@ export function AllProductsScreen() {
   const clearProductsList = () => {
     dispatch(productListActions.clearProducts());
   };
-
-  const currentUser = useAppSelector((state) => state.auth);
 
   const productsList = useAppSelector((state) => state.productList.newProducts);
 
@@ -94,7 +91,6 @@ export function AllProductsScreen() {
     data: companiesData,
     isLoading: companiesIsLoading,
     isFetching: companiesIsFetching,
-    error: companiesError,
   } = useGetAllCompaniesQuery(companyPage);
 
   const addToProductsList = () =>
@@ -171,58 +167,58 @@ export function AllProductsScreen() {
 
   const renderProduct = (title, imgSrc, to) => {
     return (
-      <ListItem
-        onClick={() => {
-          navigate(to);
-        }}
-        disablePadding
-        dense
-        key={title}
-        style={{
-          "&:hover": {
-            backgroundColor: theme.palette.hover,
-          },
-          "&:active": {
-            backgroundColor: theme.palette.hover,
-          },
-          "&:focus": {
-            backgroundColor: theme.palette.hover,
-          },
-        }}
-      >
-        <ListItemButton
-          sx={{
-            padding: 0,
-
+      <Link style={{ textDecoration: "none" }} to={to}>
+        <ListItem
+          disablePadding
+          dense
+          key={title}
+          style={{
+            padding: "9px 0",
             "&:hover": {
-              backgroundColor: "transparent",
+              backgroundColor: theme.palette.hover,
+            },
+            "&:active": {
+              backgroundColor: theme.palette.hover,
+            },
+            "&:focus": {
+              backgroundColor: theme.palette.hover,
             },
           }}
         >
-          <Avatar
+          <ListItemButton
             sx={{
-              margin: "18px 17px 10px 13px",
+              padding: 0,
+
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
             }}
           >
-            <img
-              alt=""
-              objectfit="cover"
-              width="40px"
-              height="40px"
-              src={imgSrc}
+            <Avatar
+              sx={{
+                margin: "0px 17px 0px 13px",
+              }}
+            >
+              <img
+                alt=""
+                objectFit="contain"
+                width="40px"
+                height="40px"
+                src={imgSrc}
+              />
+            </Avatar>
+            <ListItemText
+              primaryTypographyProps={{
+                ...theme.typography.S20W700C050505,
+                lineHeight: 1,
+              }}
+              primary={title}
+              secondaryTypographyProps={{ ...theme.typography.S16W400C65676B }}
+              secondary={textContainer.smartphone}
             />
-          </Avatar>
-          <ListItemText
-            primaryTypographyProps={{
-              ...theme.typography.S20W700C050505,
-              lineHeight: 1,
-            }}
-            primary={title}
-            secondaryTypographyProps={{ ...theme.typography.S16W400C65676B }}
-            secondary={textContainer.smartphone}
-          />
-        </ListItemButton>
-      </ListItem>
+          </ListItemButton>
+        </ListItem>
+      </Link>
     );
   };
 
@@ -271,7 +267,7 @@ export function AllProductsScreen() {
               objectfit="cover"
               width="40px"
               height="40px"
-              src="./images/logos/nvidia.png"
+              src={imgSrc}
             />
           </Avatar>
           <ListItemText
@@ -351,12 +347,12 @@ export function AllProductsScreen() {
                 {theme.isMobile
                   ? renderProduct(
                       item.name,
-                      "",
+                      item.companyLogo,
                       `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${item._id}`
                     )
                   : renderProductOnDesktop(
                       item.name,
-                      "",
+                      item.companyLogo,
                       `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${item._id}`
                     )}
               </Fragment>
@@ -373,7 +369,7 @@ export function AllProductsScreen() {
       !companiesIsLoading &&
       !companiesIsFetching &&
       companyPage >= 1 &&
-      maxCompanyIndex === companiesList.length &&
+      maxCompanyIndex === companiesList.length - 1 &&
       companiesData.length !== 0
     ) {
       maxCompanyIndex = 0;
@@ -384,10 +380,20 @@ export function AllProductsScreen() {
     const item = companiesList[index];
     return (
       <div key={key}>
-        {companiesData.length === 0 ? (
-          <div>لا يوجد عناصر</div>
-        ) : index >= companiesList.length ? (
-          <div>Loading...</div>
+        {index >= companiesList.length ? (
+          companiesData.length === 0 ? (
+            <div>لا يوجد عناصر</div>
+          ) : (
+            [...Array(1)].map((a, index) => (
+              <div
+                style={{
+                  padding: "8px",
+                }}
+              >
+                <LoadingSpinner />
+              </div>
+            ))
+          )
         ) : (
           <div style={{ ...style, direction: theme.direction }}>
             <CellMeasurer
@@ -396,7 +402,7 @@ export function AllProductsScreen() {
               columnIndex={0}
               rowIndex={index}
             >
-              {renderCompany(item.name, "", index, item._id)}
+              {renderCompany(item.name, item.logo, index, item._id)}
             </CellMeasurer>
           </div>
         )}
@@ -406,7 +412,7 @@ export function AllProductsScreen() {
 
   return (
     <div>
-      <div style={{ height: "20px" }} />
+      {!theme.isMobile && <div style={{ height: "20px" }} />}
       {/* company list */}
       {/* Right grid */}
       {!theme.isMobile && (
@@ -421,7 +427,7 @@ export function AllProductsScreen() {
           }}
         >
           <Typography variant="S16W700C050505">الفلاتر:</Typography>
-          <div style={{ height: "calc(100vh)", margin: "0px 0" }}>
+          <div style={{ height: "calc(85vh)" }}>
             <div>
               <List
                 ref={listRef}
@@ -441,9 +447,9 @@ export function AllProductsScreen() {
       <div>
         {/* CustomAppBar appears only on mobile */}
         <CustomAppBar
-          showLabel
-          label="مراجعاتي"
-          showBackBtn
+          showLogo
+          showProfile
+          showSearch
           tabBar={
             <React.Fragment>
               <CompanyHorizontalList

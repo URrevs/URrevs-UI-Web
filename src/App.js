@@ -8,12 +8,13 @@ import {
 } from "@mui/material";
 import { arEG } from "@mui/material/locale";
 import { getAuth } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useXauthenticateQuery } from "../src/services/users";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { useLazyXauthenticateQuery } from "../src/services/users";
 import "./App.css";
 import Layout from "./Components/MainLayout/Layout";
+import { PostingModal } from "./Components/PostingComponents/PostingModal";
 import RTL from "./Components/RTL";
 import { ProductProfile } from "./pages/10_ProductProfile";
 import { ComparisonScreen } from "./pages/11_ComparisonScreen";
@@ -24,12 +25,14 @@ import PhoneQuestionFullScreen from "./pages/17_PhoneQuestionFullScreen";
 import ReviewPostingScreen from "./pages/18_ReviewPostingScreen";
 import Menu from "./pages/20_Menu";
 import { SettingsScreen } from "./pages/21_SettingsScreen";
+import { AboutUsScreen } from "./pages/23_AboutUsScreen";
+import { TermsAndConditionsScreen } from "./pages/24_TermsAndConditionsScreen";
+import { PrivacyPolicyScreen } from "./pages/25_PrivacyPolicyScreen";
 import { AdminPanel } from "./pages/26_AdminPanel";
 import { UpdateProducts } from "./pages/29_UpdateProducts";
 import Reviews from "./pages/2_HomePageScrolling";
 import CompanyReviewFullScreen from "./pages/3_CompanyReviewFullScreen";
 import PhoneReviewFullScreen from "./pages/3_PhoneReviewFullScreen";
-import { NotFoundPage } from "./pages/404/404";
 import { PostedReviews } from "./pages/5_PostedReviews";
 import { PostedQuestions } from "./pages/7_PostedQuestions";
 import { SearchScreen } from "./pages/8_SearchScreen";
@@ -47,14 +50,20 @@ import Profile from "./pages/Profile";
 import { SplashScreen } from "./pages/SplashScreen";
 import ROUTES_NAMES from "./RoutesNames";
 import { authActions } from "./store/authSlice";
-import { useAppDispatch, useAppSelector } from "./store/hooks";
+import { useAppDispatch } from "./store/hooks";
 import { fonts } from "./Styles/fonts";
 import { COLORS } from "./Styles/main_light_colors";
-import { AboutUsScreen } from "./pages/23_AboutUsScreen";
-import { PrivacyPolicyScreen } from "./pages/25_PrivacyPolicyScreen";
-import { TermsAndConditionsScreen } from "./pages/24_TermsAndConditionsScreen";
+// OUR_TRACKING_ID
+import ReactGA from "react-ga";
+const TRACKING_ID = "UA-165221874-4";
 
 function App() {
+  ReactGA.initialize(TRACKING_ID);
+  // for google analitycs to track all site pages
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
   const language = useSelector((state) => state.language.language);
   const direction = language === "ar" ? "rtl" : "ltr";
   const isDark = useSelector((state) => state.darkMode.isDark);
@@ -64,15 +73,59 @@ function App() {
   const theme = createTheme(
     {
       isMobile: isMobile,
+      isDark: isDark,
       direction: `${direction}`,
       typography: fonts,
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            lineHeight: 0,
+      colors: COLORS,
+      components: {
+        MuiTab: {
+          styleOverrides: {
+            root: {
+              textTransform: "none",
+              ...fonts.S14W400C050505,
+              "&.Mui-selected": {
+                ...fonts.S14W800C050505,
+              },
+            },
+          },
+        },
+        MuiFormHelperText: {
+          styleOverrides: {
+            root: {
+              //Edit the font size for helperText here
+              fontSize: "15px",
+            },
+          },
+        },
+        MuiTabs: {
+          styleOverrides: {
+            indicator: {
+              backgroundColor: COLORS.c22cbf4,
+            },
+          },
+        },
+        MuiFormControlLabel: {
+          styleOverrides: {
+            label: {
+              ...fonts.S16W500C050505,
+              // fontWeight: "500",
+              // fontSize: "16px",
+              // color: COLORS.c050505,
+            },
+          },
+        },
+        MuiButton: {
+          styleOverrides: {
+            root: {
+              fontFamily: "Tajawal",
+              fontWeight: "800",
+              fontSize: "16px",
+              textTransform: "none",
+            },
           },
         },
       },
+
       breakpoints: {
         values: {
           xs: 0,
@@ -211,26 +264,33 @@ function App() {
 
   const dispatch = useAppDispatch();
 
-  const storeUser = useAppSelector((state) => state.auth);
-
-  const { data, isLoading, error } = useXauthenticateQuery(
-    storeUser.isLoggedIn ? storeUser.accessToken : "",
-    {
-      skip: !storeUser.isLoggedIn || storeUser.accessToken == "",
-    }
-  );
+  const [getUserProfile, { isLoading }] = useLazyXauthenticateQuery();
 
   const [firebaseIsLoading, setFirebaseIsLoading] = useState(true);
 
-  useEffect(() => {
-    const unregisterObserver = getAuth().onAuthStateChanged((user) => {
+  useEffect(async () => {
+    const unregisterObserver = getAuth().onAuthStateChanged(async (user) => {
       if (user) {
-        dispatch(
-          authActions.login({
-            isLoggedIn: true,
-            accessToken: user.accessToken,
-          })
-        );
+        // console.log(storeUser);
+
+        const { data } = await getUserProfile(user.accessToken);
+        if (data) {
+          dispatch(
+            authActions.login({
+              isLoggedIn: true,
+              accessToken: user.accessToken,
+              apiToken: data.token,
+              expiration: data.exp,
+              isAdmin: data.admin,
+              uid: data.profile._id,
+              refCode: data.profile.refCode,
+              photo: data.profile.picture,
+              name: data.profile.name,
+              points: data.profile.points,
+            })
+          );
+          setFirebaseIsLoading(false);
+        }
       } else {
         dispatch(authActions.logout());
         setFirebaseIsLoading(false);
@@ -240,27 +300,9 @@ function App() {
     return () => {
       unregisterObserver();
     };
-  }, [dispatch, setFirebaseIsLoading]);
+  }, [dispatch]);
 
-  useEffect(() => {
-    if (data) {
-      dispatch(
-        authActions.login({
-          expiration: data.exp,
-          apiToken: data.token,
-          isAdmin: data.admin,
-          uid: data.profile._id,
-          refCode: data.profile.refCode,
-          photo: data.profile.picture,
-          name: data.profile.name,
-          points: data.profile.points,
-        })
-      );
-      setFirebaseIsLoading(false);
-    }
-  }, [data, dispatch, setFirebaseIsLoading]);
-
-  if (firebaseIsLoading) {
+  if (firebaseIsLoading || isLoading) {
     return <SplashScreen />;
   } else {
     return (
@@ -275,8 +317,11 @@ function App() {
                   <Grid item md={12} sm={12} xs={11}>
                     <Routes>
                       {/* not found handling */}
-                      <Route path="/404" element={<NotFoundPage />} />
-                      {/* <Route path="*" element={<Navigate to="/404" replace />} /> */}
+                      {/* <Route path="/404" element={<NotFoundPage />} />
+                      <Route
+                        path="*"
+                        element={<Navigate to="/404" replace />}
+                      /> */}
 
                       {/* review full review */}
                       <Route
@@ -297,8 +342,28 @@ function App() {
                         path={ROUTES_NAMES.EXACT_COMPANY_QUESTION}
                         element={<CompanyQuestionFullScreen />}
                       />
+
                       <Route path={ROUTES_NAMES.HOME}>
-                        <Route index element={<Reviews />} />
+                        <Route
+                          path="/"
+                          element={
+                            <Fragment>
+                              <Reviews />
+                              <Outlet />
+                            </Fragment>
+                          }
+                        >
+                          {!isMobile && (
+                            <Route
+                              path="/add-review"
+                              element={<PostingModal linkShow={true} />}
+                            />
+                          )}
+                        </Route>
+                        <Route
+                          path={ROUTES_NAMES.ADD_REVIEW}
+                          element={<ReviewPostingScreen />}
+                        />
                         <Route path={ROUTES_NAMES.MENU}>
                           <Route index element={<Menu />} />
                         </Route>
@@ -309,11 +374,11 @@ function App() {
                         <Route
                           path={ROUTES_NAMES.PRIVACY_POLICY + "/ar"}
                           element={<PrivacyPolicyScreen />}
-                        />
+                        ></Route>
                         <Route
                           path={ROUTES_NAMES.PRIVACY_POLICY + "/en"}
                           element={<PrivacyPolicyScreen />}
-                        />
+                        ></Route>
                         <Route
                           path={ROUTES_NAMES.TERMS_AND_CONDITIONS + "/ar"}
                           element={<TermsAndConditionsScreen />}
@@ -325,13 +390,26 @@ function App() {
                         <Route path={ROUTES_NAMES.ALL_PRODUCTS}>
                           <Route index element={<AllProductsScreen />} />
                         </Route>
+                        <Route
+                          path={ROUTES_NAMES.SEARCH}
+                          element={<SearchScreen />}
+                        />
+                        <Route
+                          path={ROUTES_NAMES.LEADERBOARD}
+                          element={<Leaderboard />}
+                        />
+                        <Route
+                          path={ROUTES_NAMES.SETTINGS}
+                          element={<SettingsScreen />}
+                        />
+                        {/* {storeUser.isAdmin && ( */}
                         <Route path={ROUTES_NAMES.ADMIN_PANEL}>
                           <Route index element={<AdminPanel />} />
                           <Route path={ROUTES_NAMES.UPDATE}>
                             <Route index element={<UpdateProducts />} />
                           </Route>
                         </Route>
-
+                        {/* )} */}
                         {/* profile */}
                         {!isMobile ? (
                           <Route
@@ -377,7 +455,6 @@ function App() {
                             />
                           </Route>
                         )}
-
                         {/* company profile */}
                         <Route
                           path={`${ROUTES_NAMES.COMPANY_PROFILE}`}
@@ -392,7 +469,6 @@ function App() {
                             element={<CompanyQuestions />}
                           />
                         </Route>
-
                         {/* phone profile */}
                         <Route
                           path={ROUTES_NAMES.PHONE_PROFILE}
@@ -410,45 +486,12 @@ function App() {
                             element={<ProductQuestions />}
                           />
                         </Route>
-
                         {/* comparison screen */}
                         <Route
                           path={ROUTES_NAMES.COMPARISON}
                           element={<ComparisonScreen />}
                         />
                       </Route>
-                      <Route path={ROUTES_NAMES.HOME}>
-                        <Route
-                          path={ROUTES_NAMES.ADD_REVIEW}
-                          element={<ReviewPostingScreen />}
-                        />
-                      </Route>
-                      <Route
-                        path={ROUTES_NAMES.SEARCH}
-                        element={<SearchScreen />}
-                      />
-                      <Route
-                        path={ROUTES_NAMES.LEADERBOARD}
-                        element={<Leaderboard />}
-                      />
-                      <Route path={ROUTES_NAMES.MENU}>
-                        <Route index element={<Menu />} />
-                      </Route>
-                      <Route
-                        path={ROUTES_NAMES.SETTINGS}
-                        element={<SettingsScreen />}
-                      />
-                      <Route path={ROUTES_NAMES.ADMIN_PANEL}>
-                        <Route index element={<AdminPanel />} />
-                        <Route path={ROUTES_NAMES.UPDATE}>
-                          <Route index element={<UpdateProducts />} />
-                        </Route>
-                      </Route>
-
-                      <Route
-                        path={ROUTES_NAMES.PRODUCTS}
-                        element={<AllProductsScreen />}
-                      />
 
                       {/* testing routes */}
                       <Route path="/test" element={<AddReview />} />

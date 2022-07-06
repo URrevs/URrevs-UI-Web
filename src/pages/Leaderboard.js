@@ -1,19 +1,6 @@
 import { useTheme } from "@emotion/react";
-import {
-  Avatar,
-  Box,
-  Button,
-  Divider,
-  Grid,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Modal,
-  Paper,
-  Typography,
-} from "@mui/material";
-import React, { Fragment } from "react";
-import { useNavigate } from "react-router-dom";
+import { Box, Divider, Grid, Modal, Paper, Typography } from "@mui/material";
+import React, { Fragment, useEffect, useState } from "react";
 import { CompetitionBanner } from "../Components/CompetitionBanner/CompetitionBanner";
 import { HowToWinDialog } from "../Components/Dialogs/HowToWinDialog";
 import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
@@ -21,12 +8,11 @@ import { PrizeDialog } from "../Components/Dialogs/PrizeDialog";
 import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { CARD_BORDER_RADIUS } from "../constants";
-import { subtractDate } from "../functions/subtractDate";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetLatestCompetetionQuery,
   useGetMyCurrentRankQuery,
-  useGetTopCompetetionUsersQuery,
+  useGetTopCompetetionUsersQuery
 } from "../services/competetion";
 import { useAppSelector } from "../store/hooks";
 
@@ -55,16 +41,31 @@ export const Leaderboard = () => {
   // console.log(latestCompetitionData);
 
   const theme = useTheme();
-  const navigate = useNavigate();
+
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionary = {
     usersRanking: textContainer.usersRanking,
     yourRanking: textContainer.yourRanking,
+    usersRankingInCurrentCompetetion:
+      textContainer.usersRankingInCurrentCompetetion,
   };
   const [modal, setModal] = React.useState("");
   const handleCloseDialog = () => {
     setModal("");
   };
+
+  const [isCurrentlyHeld, setIsCurrentlyHeld] = useState(false);
+  useEffect(() => {
+    if (
+      latestCompetitionData &&
+      new Date(latestCompetitionData.deadline) - new Date() > 0
+    ) {
+      setIsCurrentlyHeld(true);
+    } else {
+      setIsCurrentlyHeld(false);
+    }
+  }, [latestCompetitionData]);
+
   const ModalMananger = () => (
     <React.Fragment>
       <Modal
@@ -122,7 +123,10 @@ export const Leaderboard = () => {
               setModal("prize");
             }}
             isWinner={
-              latestCompetitionData && latestCompetitionData.numWinners >= i + 1
+              isCurrentlyHeld
+                ? latestCompetitionData &&
+                  latestCompetitionData.numWinners >= i + 1
+                : false
             }
           />
           {theme.isMobile ? (
@@ -138,8 +142,7 @@ export const Leaderboard = () => {
   const leaderboardList = () => (
     <Fragment>
       <Typography variant="S20W700C050505">
-        {latestCompetitionData &&
-        new Date(latestCompetitionData.deadline) - new Date() < 0
+        {latestCompetitionData && isCurrentlyHeld
           ? pageDictionary.usersRankingInCurrentCompetetion
           : pageDictionary.usersRanking}
       </Typography>
@@ -159,7 +162,7 @@ export const Leaderboard = () => {
 
   const competetionBanner = () => {
     if (latestCompetetionError) {
-      if (latestCompetetionError.data.status != "not yet") {
+      if (latestCompetetionError.data.status !== "not yet") {
         return <div>Error</div>;
       } else {
         if (latestCompetetionError.data.status === "not yet") {
@@ -169,10 +172,7 @@ export const Leaderboard = () => {
     } else {
       if (latestCompetetionIsLoading) {
         return <div>Loading...</div>;
-      } else if (
-        latestCompetitionData &&
-        new Date(latestCompetitionData.deadline) - new Date() < 0
-      ) {
+      } else if (!isCurrentlyHeld) {
         return (
           <div>
             <CompetitionBanner setModal={setModal} prize="" daysLeft="" />
@@ -211,7 +211,12 @@ export const Leaderboard = () => {
               points={myRankData.points}
               userPicture={myRankData.picture}
               isSameUser={false}
-              // isWinner={true}
+              isWinner={
+                isCurrentlyHeld
+                  ? latestCompetitionData &&
+                    latestCompetitionData.numWinners >= myRankData.rank + 1
+                  : false
+              }
             />
           )}
         </div>

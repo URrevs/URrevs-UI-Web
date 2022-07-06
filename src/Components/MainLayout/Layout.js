@@ -11,6 +11,7 @@ import { MyDrawer } from "./Drawer/Drawer";
 import { Link } from "react-router-dom";
 import Registeration from "../../pages/1_Authentication";
 import { useAppSelector } from "../../store/hooks";
+import { SendReports } from "../Dialogs/SendReports";
 import { PostingModal } from "../PostingComponents/PostingModal";
 import CustomizedSnackbar from "../Snackbar";
 import { CustomAppBar } from "./AppBar/CustomAppBar";
@@ -33,30 +34,30 @@ export default function Layout(props) {
   const appBarHeight = theme.isMobile ? 0 : 64;
   const drawerWidth = theme.isMobile ? 0 : theme.drawer.width;
 
-  const dictionary = useAppSelector((state) => state.language.textContainer);
+  // const dictionary = useAppSelector((state) => state.language.textContainer);
 
   // modal
-  const openReg = useAppSelector((state) => state.regDialog.registration);
+  // const openReg = useAppSelector((state) => state.regDialog.registration);
 
   const [open, setOpen] = React.useState(false);
   const [searchBarFocused, setSearchBarFocused] = React.useState(false);
 
-  const onSearchBarFocus = () => {
-    setSearchBarFocused(true);
-  };
+  // const onSearchBarFocus = () => {
+  //   setSearchBarFocused(true);
+  // };
 
-  const onSearchBarBlur = () => {
-    setSearchBarFocused(false);
-  };
+  // const onSearchBarBlur = () => {
+  //   setSearchBarFocused(false);
+  // };
 
   const logoAnimationStyles = useSpring({
     width: searchBarFocused ? 0 : logoWidth,
     opacity: searchBarFocused ? 0 : 1,
   });
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+  // const handleDrawerOpen = () => {
+  //   setOpen(true);
+  // };
 
   const appBar = () => {
     return (
@@ -76,7 +77,7 @@ export default function Layout(props) {
               }}
             >
               <img
-                src="./images/logo.png"
+                src="/images/logo.png"
                 width={logoWidth}
                 height={logoHeight}
                 alt="URrevs"
@@ -91,22 +92,17 @@ export default function Layout(props) {
             isSearchBarFocused={searchBarFocused}
           /> */}
 
-          <AppBarActions
-            showSearch={true}
-            showLanguage={true}
-            showDark={true}
-            showProfile={true}
-          />
+          <AppBarActions showSearch={true} showProfile={true} />
         </Toolbar>
       </MyAppBar>
     );
   };
 
-  const customAppBar = () => {
-    return (
-      <CustomAppBar showLabel={false} showLogo={true} showProfile showSearch />
-    );
-  };
+  // const customAppBar = () => {
+  //   return (
+  //     <CustomAppBar showLabel={false} showLogo={true} showProfile showSearch />
+  //   );
+  // };
 
   return (
     <Box sx={{}}>
@@ -115,6 +111,7 @@ export default function Layout(props) {
       <Registeration />
       <CustomizedSnackbar />
       <PostingModal />
+      <SendReports />
       {theme.isMobile ? <BottomNavBar /> : <></>}
       <Box
         component="main"
@@ -130,6 +127,7 @@ export default function Layout(props) {
         {/* div for spacing between app bar and whole pages */}
         {/* <div style={{ marginTop: `${appBarHeight + 30}px` }}> */}
         {props.children}
+        {theme.isMobile ? <div style={{ height: "75px" }}></div> : <></>}
         {/* </div> */}
       </Box>
     </Box>

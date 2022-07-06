@@ -6,7 +6,7 @@ import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
 import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
-import AnswersList from "../pages/AnswersList";
+import {AnswersList} from "../pages/AnswersList";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useAddCommentOnCompanyQuestionMutation,
@@ -47,7 +47,7 @@ export default function CompanyQuestionFullScreen() {
 
   const commentsList = useAppSelector((state) => state.answersList.newComments);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const reviewId = searchParams.get("id");
 
   const [page, setPage] = useState(1);

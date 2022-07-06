@@ -141,11 +141,11 @@ const ProductDetailsTable = ({
 
   const titleCell = (index, key) => {
     return (
-      key != "id" && (
+      key !== "id" && (
         <TableCell
           sx={{
             borderBottom:
-              index != productEntries.length - 1 ? borderBottom : "none",
+              index !== productEntries.length - 1 ? borderBottom : "none",
             borderRight: borderRight,
           }}
           align={isComparison ? "center" : "left"}
@@ -165,7 +165,7 @@ const ProductDetailsTable = ({
         : dataRow[key];
 
     return (
-      key != "id" && (
+      key !== "id" && (
         <TableCell
           sx={{
             borderBottom:
@@ -176,7 +176,7 @@ const ProductDetailsTable = ({
         >
           <Button
             variant="text"
-            disabled={key != "manufacturingCompany"}
+            disabled={key !== "manufacturingCompany"}
             sx={{
               textTransform: "none",
             }}

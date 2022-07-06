@@ -15,7 +15,12 @@ export const SettingsSideBar = ({
   const textContainer = useSelector((state) => state.language.textContainer);
   return (
     <React.Fragment>
-      <Slide direction="left" in={settingsSlide} mountOnEnter unmountOnExit>
+      <Slide
+        direction={theme.direction === "rtl" ? "left" : "right"}
+        in={settingsSlide}
+        mountOnEnter
+        unmountOnExit
+      >
         <Paper
           sx={{
             position: "fixed",
@@ -48,7 +53,7 @@ export const SettingsSideBar = ({
               />
             </IconButton>
             <Typography sx={{ marginLeft: "10px" }} variant="S20W700C050505">
-              {"الاعدادات:"}
+              {textContainer.settings}
             </Typography>
           </Box>
           <SettingsScreen isDesktop={true} />

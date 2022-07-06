@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { FixedGrid } from "../Components/Grid/FixedGrid";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
-import { FilterTabbar } from "../Components/Tabbar/FilterTabbar";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetOtherUserCompanyReviewsQuery } from "../services/company_reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -24,7 +21,7 @@ export function PostedCompanyReviews() {
   const reviewsList = useAppSelector((state) => state.reviews.newReviews);
   const [page, setPage] = useState(1);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const userId = searchParams.get("userId");
 
   const { data, isLoading, isFetching, error } =

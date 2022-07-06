@@ -6,7 +6,7 @@ import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
 import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
-import AnswersList from "../pages/AnswersList";
+import { AnswersList } from "../pages/AnswersList";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useAddCommentOnPhoneQuestionMutation,
@@ -47,7 +47,7 @@ export default function PhoneQuestionFullScreen() {
 
   const commentsList = useAppSelector((state) => state.answersList.newComments);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const reviewId = searchParams.get("id");
 
   const [page, setPage] = useState(1);
@@ -259,7 +259,7 @@ export default function PhoneQuestionFullScreen() {
 
       // add comment to store
       const comment = {
-        _id: response.data.comment,
+        _id: response.data.answer,
         ownedAt: response.data.ownedAt,
         userId: currentUser.uid,
         userName: currentUser.name,
