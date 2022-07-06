@@ -325,6 +325,7 @@ export const {
   useGetOtherUserPhoneReviewsQuery,
   useAddCommentOnPhoneReviewMutation,
   useGetPhoneReviewCommentsQuery,
+  useLazyGetPhoneReviewCommentsQuery,
   useAddReplyOnPhoneReviewMutation,
   useLikePhoneReviewCommentMutation,
   useUnLikePhoneReviewCommentMutation,

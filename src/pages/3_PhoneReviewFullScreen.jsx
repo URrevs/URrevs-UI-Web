@@ -1,37 +1,35 @@
-import React, { useEffect, useState } from "react";
+import { useTheme } from "@emotion/react";
+import { Box } from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
+import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import PhoneReview from "../Components/ReviewCard/PhoneReview";
+import { useShowSnackbar } from "../hooks/useShowSnackbar";
+import ROUTES_NAMES from "../RoutesNames";
 import {
-  useGetCertainPhoneReviewQuery,
-  useGetPhoneReviewCommentsQuery,
   useAddCommentOnPhoneReviewMutation,
   useAddReplyOnPhoneReviewMutation,
+  useGetCertainPhoneReviewQuery,
+  useLazyGetPhoneReviewCommentsQuery,
   useLikePhoneReviewCommentMutation,
-  useUnLikePhoneReviewCommentMutation,
   useLikePhoneReviewReplyMutation,
+  useUnLikePhoneReviewCommentMutation,
   useUnLikePhoneReviewReplyMutation,
 } from "../services/phone_reviews";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { commentsListActions } from "../store/commentsListSlice";
-import CommentsList from "./CommentsList";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import ReviewCard from "../Components/ReviewCard/ReviewCard";
-import ROUTES_NAMES from "../RoutesNames";
-import { Box } from "@mui/material";
-import { CellMeasurerCache } from "react-virtualized";
-import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
-import PhoneReview from "../Components/ReviewCard/PhoneReview";
-import { FixedGrid } from "../Components/Grid/FixedGrid";
-import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
-
-const cache = new CellMeasurerCache({
-  fixedWidth: true,
-  fixedHeight: false,
-  defaultHeight: loadingSkeletonHeight,
-});
+import CommentsList from "./CommentsList";
 
 export default function PhoneReviewFullScreen() {
   const dispatch = useAppDispatch();
+  const showSnackbar = useShowSnackbar();
+
+  const isMobile = useTheme().isMobile;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     return () => {
@@ -46,23 +44,19 @@ export default function PhoneReviewFullScreen() {
     (state) => state.commentsList.newComments
   );
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const reviewId = searchParams.get("id");
 
-  const [page, setPage] = useState(1);
+  const currentReviewData = useAppSelector(
+    (state) => state.reviews.newReviews
+  )[0];
 
-  const { data, isLoading, isFetching, error } = useGetPhoneReviewCommentsQuery(
-    { reviewId, round: page }
-  );
+  const [getComments, {}] = useLazyGetPhoneReviewCommentsQuery();
 
   // add comment
-  const [addCommentLoading, setAddCommentLoading] = useState(false);
-  const [addCommentError, setAddCommentError] = useState(null);
   const [addCommentOnPhoneReview] = useAddCommentOnPhoneReviewMutation();
 
   // add reply
-  const [addReplyLoading, setAddReplyLoading] = useState(false);
-  const [addReplyError, setAddReplyError] = useState(null);
   const [addReplyOnPhoneReview] = useAddReplyOnPhoneReviewMutation();
 
   // like comment
@@ -76,23 +70,6 @@ export default function PhoneReviewFullScreen() {
   // unlike reply
   const [unLikeReply] = useUnLikePhoneReviewReplyMutation();
 
-  const [ex, setEx] = useState(false);
-  const clearCache = (index) => {
-    setEx(!ex);
-    if (index === 0) {
-      cache.clear(0);
-    } else {
-      cache.clear(index);
-    }
-  };
-
-  // // get this review from store
-  // const currentReview = useAppSelector((state) => state.reviews.newReviews).find(
-  //   (element) => {
-  //     return element._id === reviewId;
-  //   }
-  // );
-
   // get review from server
   const {
     data: currentReview,
@@ -100,21 +77,14 @@ export default function PhoneReviewFullScreen() {
     error: reviewError,
   } = useGetCertainPhoneReviewQuery(reviewId);
 
-  const currentReviewData = useAppSelector(
-    (state) => state.reviews.newReviews
-  )[0];
-
   useEffect(() => {
-    console.log(reviewLoading);
     if (!reviewLoading) {
-      console.log("currentReview", currentReview);
-
       dispatch(reviewsActions.clearReviews());
       dispatch(
         reviewsActions.addToLoaddedReviews({ newReviews: [currentReview] })
       );
     }
-  }, [reviewLoading]);
+  }, [currentReview, dispatch]);
 
   const stateLikePhoneReview = (id) =>
     dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
@@ -170,21 +140,19 @@ export default function PhoneReviewFullScreen() {
     });
   };
 
-  const addToLoadedComments = () =>
+  const addToLoadedComments = (data) =>
     dispatch(
       commentsListActions.addToLoaddedComments({
         newComments: data,
       })
     );
 
-  const addOneCommentToLoadedComments = (comment, index) => {
+  const addOneCommentToLoadedComments = (comment) => {
     dispatch(
       commentsListActions.addNewCommentLocally({
         newComment: comment,
       })
     );
-    // clear 0 cache
-    cache.clearAll();
   };
   const addOneReplyToLoadedComments = (comment) => {
     dispatch(
@@ -192,27 +160,17 @@ export default function PhoneReviewFullScreen() {
         newComment: comment,
       })
     );
-    // clear 0 cache
-    cache.clearAll();
   };
 
-  const increasePage = () => setPage(page + 1);
-
-  const submitCommentHandler = async (e) => {
-    e.preventDefault();
-
+  const submitCommentHandler = async (text) => {
     try {
       // scroll to top
       window.scrollTo(0, 0);
 
-      setAddCommentLoading(true);
-
       const response = await addCommentOnPhoneReview({
         reviewId: reviewId,
-        comment: e.target.comment.value,
+        comment: text,
       });
-
-      setAddCommentLoading(false);
 
       // add comment to store
       const comment = {
@@ -220,7 +178,7 @@ export default function PhoneReviewFullScreen() {
         userId: currentUser.uid,
         userName: currentUser.name,
         userPicture: currentUser.photo,
-        content: e.target.comment.value,
+        content: text,
         createdAt: new Date(),
         likes: 0,
         liked: false,
@@ -228,19 +186,15 @@ export default function PhoneReviewFullScreen() {
 
       addOneCommentToLoadedComments(comment);
     } catch (e) {
-      setAddCommentLoading(false);
-      setAddCommentError(e);
-      console.log(e);
+      showSnackbar(e.data.status);
     }
   };
 
-  const submitReplyHandler = async (e, commentId) => {
-    e.preventDefault();
-
+  const submitReplyHandler = async (text, commentId) => {
     try {
       const response = await addReplyOnPhoneReview({
         commentId: commentId,
-        reply: e.target.comment.value,
+        reply: text,
       });
 
       // add reply to store
@@ -249,7 +203,7 @@ export default function PhoneReviewFullScreen() {
         userId: currentUser.uid,
         userName: currentUser.name,
         userPicture: currentUser.photo,
-        content: e.target.comment.value,
+        content: text,
         createdAt: new Date(),
         likes: 0,
         liked: false,
@@ -263,7 +217,9 @@ export default function PhoneReviewFullScreen() {
     }
   };
 
-  const deleteReviewFromStore = (id) => {};
+  const deleteReviewFromStore = (id) => {
+    navigate(-1);
+  };
 
   const stateIncreaseShareCounter = (id) =>
     dispatch(reviewsActions.increaseShareCounter({ id: id }));
@@ -278,11 +234,12 @@ export default function PhoneReviewFullScreen() {
         ) : (
           currentReviewData && (
             <PhoneReview
+              disableElevation={!isMobile}
+              showBottomLine={true}
               key={currentReviewData._id}
               index={0}
               fullScreen={true}
               isExpanded={true}
-              clearIndexCache={clearCache}
               reviewDetails={currentReviewData}
               isPhoneReview={true}
               targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.REVIEWS}?pid=${currentReviewData.targetId}`}
@@ -299,50 +256,57 @@ export default function PhoneReviewFullScreen() {
     );
   };
 
-  return (
-    <FixedGrid>
-      <AlonePostsGrid>
-        <Box>
-          {reviewLoading ? (
-            <div>Loading review...</div>
-          ) : reviewError ? (
-            <div>Error</div>
-          ) : (
-            <CommentsList
-              reviewCard={reviewCard}
-              commentsList={commentsList}
-              page={page}
-              data={data}
-              error={error}
-              isLoading={isLoading}
-              isFetching={isFetching}
-              commentLike={likeCommentRequest}
-              commentUnlike={unLikeCommentRequest}
-              replyLike={likeReplyRequest}
-              replyUnlike={unLikeReplyRequest}
-              addToReviewsList={addToLoadedComments}
-              increasePage={increasePage}
-              cache={cache}
-              clearCache={clearCache}
-              submitReplyHandler={submitReplyHandler}
-            />
-          )}
+  const [endOfData, setEndOfData] = useState(false);
 
-          <div
-            style={{
-              position: "fixed",
-              zIndex: 1000,
-              bottom: 0,
-            }}
-          >
-            <div>
-              <form onSubmit={submitCommentHandler}>
-                <input id="comment" />
-              </form>
-            </div>
-          </div>
-        </Box>
-      </AlonePostsGrid>
-    </FixedGrid>
+  // first page
+  let p = 1;
+
+  // function loads additional comments
+  const loadMore = useCallback(() => {
+    getComments({ reviewId, round: p }).then((data) => {
+      if (data.data.length === 0) {
+        setEndOfData(true);
+      } else {
+        addToLoadedComments(data.data);
+        p++;
+      }
+    });
+  }, []);
+
+  // to load for the first time
+  useEffect(() => {
+    const timeout = loadMore();
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return (
+    <CustomAppBar showBackBtn showProfile>
+      <FixedGrid>
+        <AlonePostsGrid>
+          <Box>
+            {reviewLoading ? (
+              <div>Loading review...</div>
+            ) : reviewError ? (
+              <div>Error</div>
+            ) : (
+              currentReviewData && (
+                <CommentsList
+                  commentsList={commentsList}
+                  reviewCard={reviewCard}
+                  submitReplyHandler={submitReplyHandler}
+                  submitCommentHandler={submitCommentHandler}
+                  endOfData={endOfData}
+                  loadMore={loadMore}
+                  likeCommentRequest={likeCommentRequest}
+                  unLikeCommentRequest={unLikeCommentRequest}
+                  likeReplyRequest={likeReplyRequest}
+                  unLikeReplyRequest={unLikeReplyRequest}
+                />
+              )
+            )}
+          </Box>
+        </AlonePostsGrid>
+      </FixedGrid>
+    </CustomAppBar>
   );
 }

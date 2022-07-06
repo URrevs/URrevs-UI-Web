@@ -16,7 +16,7 @@ import {
   useLikeCompanyReviewCommentMutation,
   useLikeCompanyReviewReplyMutation,
   useUnLikeCompanyReviewCommentMutation,
-  useUnLikeCompanyReviewReplyMutation
+  useUnLikeCompanyReviewReplyMutation,
 } from "../services/company_reviews";
 import { commentsListActions } from "../store/commentsListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -34,7 +34,6 @@ export default function CompanyReviewFullScreen() {
   useEffect(() => {
     return () => {
       console.log("clear comments");
-      // TODO:
       dispatch(commentsListActions.clearComments());
     };
   }, []);
