@@ -330,7 +330,7 @@ export const ComponentsTest = () => {
       <div style={{ height: "20px" }}> </div>
       {renderPostingComponent()}
       <div style={{ height: "20px" }}> </div>
-      <Typography>{navigator.userAgent}</Typography>
+      {/* <Typography>{navigator.userAgent}</Typography> */}
       <div style={{ height: "20px" }}> </div>
       <Typography variant="S18W700C050505">
         System mode is{" "}
@@ -339,9 +339,9 @@ export const ComponentsTest = () => {
           ? "dark mode"
           : "light mode"}
       </Typography>
-      <Typography>{navigator.platform}</Typography>
+      {/* <Typography>{navigator.platform}</Typography> */}
       <Typography>
-        {navigator.userLanguage || window.navigator.language}
+        {/* {navigator.userLanguage || window.navigator.language} */}
       </Typography>
       <div
         onScroll={() => {
