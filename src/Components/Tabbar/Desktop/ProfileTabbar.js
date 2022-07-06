@@ -91,7 +91,9 @@ export const ProfileTabbar = ({ children, arrayOfTabs }) => {
             },
           }}
         >
+          <div style={{ height: "20px" }}></div>
           {userProfileFn()}
+          <div style={{ height: "6px" }}></div>
           <Divider />
         </Paper>
 

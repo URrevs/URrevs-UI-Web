@@ -158,14 +158,18 @@ export const ProductSpecsScreen = () => {
         {/* Right Grid */}
         <Grid item xl={2} lg={1} md={0.5} xs={0}></Grid>
         {/* Center Grid */}
-        <Grid item xl={5} lg={5} md={5} xs={12}>
-          {theme.isMobile ? overviewCard() : null}
+        <Grid item xl={5.2} lg={5} md={5} xs={12}>
+          {!theme.isMobile && <div style={{ height: "20px" }}></div>}
+
+          {theme.isMobile && overviewCard()}
           <Typography variant="S18W700C050505">
             {componentDictionary.productImage + ":"}
           </Typography>
           <CardStyled elevation={3}>
             <img alt="im" src={data.picture}></img>
           </CardStyled>
+          {/* Padding on Desktop 32px  */}
+          {!theme.isMobile && <div style={{ height: "32px" }}></div>}
           <Typography
             sx={{
               display: "flex",
@@ -196,7 +200,7 @@ export const ProductSpecsScreen = () => {
         </Grid>
         <Grid item xl={0.5} lg={0.5} md={0.5} xs={0}></Grid>
         {/* Left Grid*/}
-        <Grid item xl={4} lg={5} md={6} xs={0}>
+        <Grid item xl={3.8} lg={5} md={6} xs={0}>
           {theme.isMobile ? null : (
             <div
               style={{
@@ -213,9 +217,11 @@ export const ProductSpecsScreen = () => {
                   overflowY: "auto",
                 }}
               >
-                <div style={{ height: "17px" }}></div>
+                <div style={{ height: "36.5px" }}></div>
                 {overviewCard()}
+                <div style={{ height: "19px" }}></div>
                 {similarPhonesComponent()}
+                <div style={{ height: "23px" }}></div>
                 {ComparePaper(data)}
               </div>
             </div>

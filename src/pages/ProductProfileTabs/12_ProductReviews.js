@@ -89,7 +89,7 @@ export function ProductReviews() {
 
   return (
     <AlonePostsGrid>
-      {/* <div style={{ height: "20px" }} /> */}
+      <div style={{ height: "20px" }} />
       <PostingComponent
         label={textContainer.youCanAddReview}
         placeholder={textContainer.writeYourReview}
@@ -107,6 +107,7 @@ export function ProductReviews() {
           },
         }}
       />
+      <div style={{ marginTop: "18px" }}></div>
 
       <VirtualReviewList
         reviewCard={reviewCard}
