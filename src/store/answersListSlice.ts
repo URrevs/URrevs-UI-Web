@@ -39,7 +39,8 @@ const answersList = createSlice({
       console.log(answer);
       let answerReplies: any = [];
       answer.replies.forEach((reply, i) => {
-        answerReplies.push({ ...reply, isReply: true });
+        console.log(reply);
+        answerReplies.push({ ...reply, commentId: answer._id, isReply: true });
       });
 
       state.newComments = [answer, ...answerReplies, ...state.newComments];

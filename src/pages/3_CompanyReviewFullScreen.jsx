@@ -267,7 +267,7 @@ export default function CompanyReviewFullScreen() {
         p++;
       }
     });
-  }, []);
+  }, [p, endOfData]);
 
   // to load for the first time
   useEffect(() => {

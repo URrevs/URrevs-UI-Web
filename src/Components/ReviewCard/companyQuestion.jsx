@@ -29,6 +29,8 @@ export default function CompanyQuestion({
   isExpanded,
   acceptedAnswerWidget,
   stateShare,
+  disableElevation,
+  showBottomLine,
 }) {
   const [dontLikeThisRequest] = useIdontLikeThisCompanyQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenCompanyQuestionMutation();
@@ -102,12 +104,14 @@ export default function CompanyQuestion({
     stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
     generateShareLink().then((data) => {
-      showShareSnackbar(data.data.shortLink,"تم نسخ رابط المنشور");
+      showShareSnackbar(data.data.shortLink, "تم نسخ رابط المنشور");
     });
   };
 
   return (
     <QuestionCard
+      disableElevation={disableElevation}
+      showBottomLine={showBottomLine}
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}

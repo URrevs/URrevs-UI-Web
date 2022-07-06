@@ -1,5 +1,6 @@
 export default interface APIAnswer {
   _id: string;
+  id: string;
   userId: string;
   userName: string;
   picture: string;
