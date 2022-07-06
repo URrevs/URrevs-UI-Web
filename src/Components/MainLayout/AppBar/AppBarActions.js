@@ -48,7 +48,6 @@ export const AppBarActions = ({
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [searchSuggestion, setSearchSuggestion] = React.useState(false);
 
   const language = useAppSelector((state) => state.language.language);
   const isDark = useAppSelector((state) => state.darkMode.isDark);
@@ -124,16 +123,15 @@ export const AppBarActions = ({
             {language !== "en" ? "En" : "ع"}
           </CircleBtn>
         )}
+        {/* TODO: add the condition */}
         {/* // darkMode */}
-        {showDark && (
-          <CircleBtn
-            onClick={() => {
-              dispatch(isDarkActions.switchMode());
-            }}
-          >
-            {isDark ? <DarkModeIcon /> : <LightModeIcon />}
-          </CircleBtn>
-        )}
+        <CircleBtn
+          onClick={() => {
+            dispatch(isDarkActions.changeMode(isDark ? "light" : "dark"));
+          }}
+        >
+          {isDark ? <DarkModeIcon /> : <LightModeIcon />}
+        </CircleBtn>
       </Box>
       {/* {theme.isMobile ? null : <SearchSuggestion />} */}
     </Fragment>
