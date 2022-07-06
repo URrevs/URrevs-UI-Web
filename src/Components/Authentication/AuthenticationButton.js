@@ -1,5 +1,4 @@
 import { Button, styled, Typography } from "@mui/material";
-import React, { Fragment } from "react";
 
 const LoginButton = styled(Button, {
   shouldForwardProp: (prop) => prop !== "color",
