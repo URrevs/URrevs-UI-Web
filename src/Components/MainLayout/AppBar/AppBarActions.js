@@ -125,13 +125,13 @@ export const AppBarActions = ({
         )}
         {/* TODO: add the condition */}
         {/* // darkMode */}
-        <CircleBtn
+        {/* <CircleBtn
           onClick={() => {
             dispatch(isDarkActions.changeMode(isDark ? "light" : "dark"));
           }}
         >
           {isDark ? <DarkModeIcon /> : <LightModeIcon />}
-        </CircleBtn>
+        </CircleBtn> */}
       </Box>
       {/* {theme.isMobile ? null : <SearchSuggestion />} */}
     </Fragment>
