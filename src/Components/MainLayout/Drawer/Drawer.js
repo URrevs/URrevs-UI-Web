@@ -50,6 +50,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
+
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
@@ -61,6 +62,7 @@ const PerDrawer = styled(
   zIndex: theme.drawer.zIndex,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
+
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
@@ -228,6 +230,9 @@ export const MyDrawer = (props) => {
       <PerDrawer
         ref={drawerRef}
         variant="permanent"
+        sx={{
+          border: "1px solid transparent",
+        }}
         open={open}
         onClose={handleDrawerClose}
       >

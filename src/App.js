@@ -78,6 +78,14 @@ function App() {
       typography: fonts,
       colors: COLORS,
       components: {
+        MuiTypography: {
+          styleOverrides: {
+            root: {
+              color: "#E4E6EB",
+            },
+          },
+        },
+
         MuiTab: {
           styleOverrides: {
             root: {
@@ -86,6 +94,24 @@ function App() {
               "&.Mui-selected": {
                 ...fonts.S14W800C050505,
               },
+            },
+          },
+        },
+        MuiDrawer: {
+          styleOverrides: {
+            root: {
+              border: "1px solid transparent",
+              backgroundColor: "#242526",
+              "&.MuiDrawer-Paper": {
+                border: "1px solid transparent",
+              },
+            },
+          },
+        },
+        MuiCard: {
+          styleOverrides: {
+            root: {
+              backgroundColor: isDark && "#242526",
             },
           },
         },
@@ -166,12 +192,12 @@ function App() {
           backButton: isDark ? COLORS.cffffff : COLORS.c050505,
         },
         reviewCard: {
-          reviewCardColor: isDark ? "#18191A" : COLORS.cffffff,
+          reviewCardColor: isDark ? "#242526" : COLORS.cffffff,
           actionBtnIcon: isDark ? "#B0B3B8" : COLORS.c606266,
           actionBtnIconHighlight: isDark ? "#2196F3" : COLORS.c2196f3,
           actionBtnHover: isDark ? COLORS.c000000 : COLORS.c000000,
           actionBtnBG: isDark ? COLORS.c000000 : COLORS.c000000,
-          expandIcon: isDark ? "#B0B3B8" : COLORS.c4ed5f6,
+          expandIcon: COLORS.c4ed5f6,
           filledStarColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
           outlinedStarColor: isDark ? COLORS.c65676b : COLORS.c050505,
           emptyStarColor: isDark ? COLORS.c65676b : COLORS.c65676b,
@@ -193,12 +219,12 @@ function App() {
           searchIcon: isDark ? "#B0B3B8" : COLORS.c65676b,
         },
         interactionCard: {
-          backgroundColor: isDark ? COLORS.cffffff : COLORS.cffffff,
-          iconColor: isDark ? COLORS.cffffff : COLORS.c2196f3,
-          buttonActiveColor: isDark ? COLORS.cffffff : COLORS.c2196f3,
+          backgroundColor: isDark ? "#242526" : COLORS.cffffff,
+          iconColor: isDark ? "#B0B3B8" : COLORS.c2196f3,
+          buttonActiveColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
         },
         productList: {
-          backgroundColor: isDark ? COLORS.cffffff : COLORS.cffffff,
+          backgroundColor: isDark ? "#242526" : COLORS.cffffff,
           mobileColor: isDark ? COLORS.cffffff : COLORS.c606266,
         },
         progressBar: {
@@ -211,7 +237,7 @@ function App() {
           facebookButtonColor: isDark ? COLORS.cffffff : COLORS.c2196f3,
         },
         leaderBoard: {
-          entryCard: isDark ? COLORS.cffffff : COLORS.cffffff,
+          entryCard: isDark ? "#242526" : COLORS.cffffff,
           rankCircle: isDark ? COLORS.cffffff : COLORS.cf0f2f5,
         },
         bottomNavigationBar: {
@@ -220,9 +246,9 @@ function App() {
           unselectedTap: isDark ? "#606266" : COLORS.c606266,
         },
         textField: {
-          inputFieldBackground: isDark ? "#18191A" : COLORS.cf9f9f9,
+          inputFieldBackground: isDark ? "#3A3B3C" : COLORS.cf9f9f9,
           inputFieldText: isDark ? "#18191A" : COLORS.c050505,
-          postingFieldBackground: isDark ? "#18191A" : COLORS.cf0f2f5,
+          postingFieldBackground: isDark ? "#3A3B3C" : COLORS.cf0f2f5,
           borderColor: isDark ? "#18191A" : COLORS.c606266,
         },
         checkbox: {
@@ -238,7 +264,7 @@ function App() {
           brandHover: isDark ? "#18191A" : COLORS.c2196f3,
         },
         dialogs: {
-          textFieldInput: isDark ? "#18191A" : COLORS.c050505,
+          textFieldInput: isDark ? "#242526" : COLORS.c050505,
         },
         filterTabbar: {
           buttonBgActive: isDark ? "#FFFFFF" : COLORS.c22cbf4,
