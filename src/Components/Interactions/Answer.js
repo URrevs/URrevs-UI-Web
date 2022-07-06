@@ -105,11 +105,15 @@ export const Answer = ({
           ></InteractionFooter>
         </InteractionBody>
         {showReply && (
-          <PostingField
-            avatar={true}
-            placeholder="اكتب اجابة"
-            onSubmit={(text) => submitReplyHandler(text, commentId)}
-          />
+          <div>
+            <form
+              onSubmit={(e) => {
+                submitReplyHandler(e, commentId);
+              }}
+            >
+              <input id="comment" />
+            </form>
+          </div>
         )}
       </div>
     </div>

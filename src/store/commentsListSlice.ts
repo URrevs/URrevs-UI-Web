@@ -65,7 +65,7 @@ const commentsList = createSlice({
         return element._id.toString() === action.payload.id.toString();
       });
 
-      if (targetReview != -1) {
+      if (targetReview !== -1) {
         state.newComments[targetReview].liked = action.payload.isLiked;
         action.payload.isLiked
           ? state.newComments[targetReview].likes++

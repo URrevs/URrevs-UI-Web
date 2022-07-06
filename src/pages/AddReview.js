@@ -48,7 +48,7 @@ const AddReview = () => {
   const photo = useSelector((state) => state.auth.photo);
   const name = useSelector((state) => state.auth.name);
   const email = useSelector((state) => state.auth.email);
-  const [error, setError] = useState({
+  const [error] = useState({
     purchaseDate: false,
     productGeneralRating: false,
     productBuildRating: false,

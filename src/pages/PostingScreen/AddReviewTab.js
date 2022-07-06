@@ -1,16 +1,21 @@
 import { useTheme } from "@emotion/react";
-import { Box, IconButton, Modal, Stack, Typography } from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
+import {
+  Box, IconButton,
+  Modal,
+  Stack,
+  Typography
+} from "@mui/material";
 import React from "react";
 import { DialogText } from "../../Components/Dialogs/DialogText";
-import FormikDatePicker from "../../Components/Form/FormikDatePicker";
+import FormikDatePicker from "../../Components/Form/DatePicker/FormikDatePicker";
 import FormikSearchComponent from "../../Components/Form/FormikSearchComponent";
 import FormikStar from "../../Components/Form/FormikStar";
 import FormikTextField from "../../Components/Form/FormikTextField";
+import { useGetManufacturingCompanyMutation } from "../../services/phones";
 import { useSearchPhonesOnlyMutation } from "../../services/search";
 import { useAppSelector } from "../../store/hooks";
-import HelpIcon from "@mui/icons-material/Help";
 import { FormSubmitButton } from "./FormSubmitButton";
-import { useGetManufacturingCompanyMutation } from "../../services/phones";
 
 /*Documentation */
 /*
@@ -23,11 +28,11 @@ import { useGetManufacturingCompanyMutation } from "../../services/phones";
   3-If user input is gibberish:Err3
 }
 */
-const handleInitialValues = (fieldName, empty = "") => {
-  return sessionStorage.getItem(fieldName)
-    ? sessionStorage.getItem(fieldName)
-    : empty;
-};
+// const handleInitialValues = (fieldName, empty = "") => {
+//   return sessionStorage.getItem(fieldName)
+//     ? sessionStorage.getItem(fieldName)
+//     : empty;
+// };
 export const AddReviewTab = ({ ...props }) => {
   const textContainer = useAppSelector((state) => {
     return state.language.textContainer;
@@ -84,7 +89,13 @@ export const AddReviewTab = ({ ...props }) => {
     },
   ];
 
-  const renderFields = (text, fieldName, label, controlled = true) => {
+  const renderFields = (
+    text,
+    fieldName,
+    label,
+    multiline = true,
+    controlled = true
+  ) => {
     return (
       <Stack spacing={2} sx={{ width: "100%" }}>
         <Typography sx={{}} variant="S18W500C050505">
@@ -93,6 +104,7 @@ export const AddReviewTab = ({ ...props }) => {
         <FormikTextField
           fieldName={fieldName}
           label={label}
+          multiline={multiline}
           isControlled={controlled}
         />
       </Stack>
@@ -100,6 +112,7 @@ export const AddReviewTab = ({ ...props }) => {
   };
   /*RTK */
   const [searchFn] = useSearchPhonesOnlyMutation();
+  //To initialize companyId
   const [getManufacturingCompany] = useGetManufacturingCompanyMutation();
   const handleManufacturingCompany = async () => {
     const companyId = await getManufacturingCompany(
@@ -113,6 +126,10 @@ export const AddReviewTab = ({ ...props }) => {
   }, []);
   return (
     <React.Fragment>
+      {/* <Stack spacing={1}>
+          <StarCounter />
+          <Divider />
+        </Stack> */}
       <Modal open={open} onClose={handleClose} dir={theme.direction}>
         <Box>
           <DialogText text={pageDictionary.referralCodeHelpPrompt} />
@@ -230,14 +247,18 @@ export const AddReviewTab = ({ ...props }) => {
           </IconButton>
         </Typography>
         <br />
-        {/* Invitation Code*/}
+        {/* Invitation Code */}
         <FormikTextField
           fieldName={"invitationCode"}
           label={pageDictionary.invitationCode}
-          isControlled={false}
+          isControlled={true}
+          multiline={false}
         />
         {/* Submit Button */}
-        <FormSubmitButton submitLabel={pageDictionary.postReview} />
+        <FormSubmitButton
+          loading={props.isSubmitting}
+          submitLabel={pageDictionary.postReview}
+        />
       </form>
     </React.Fragment>
   );

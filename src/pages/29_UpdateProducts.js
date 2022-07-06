@@ -10,7 +10,7 @@ import ProductList from "../Components/ProductList/ProductList";
 import { convertDateToString } from "../functions/convertDateToString";
 import {
   useGetLastUpdateInfoQuery,
-  useUpdateMutation
+  useUpdateMutation,
 } from "../services/update";
 
 export const UpdateProducts = () => {
@@ -19,7 +19,6 @@ export const UpdateProducts = () => {
   const { data, error, isLoading } = useGetLastUpdateInfoQuery(refetch, {
     refetchOnMountOrArgChange: true,
   });
-
 
   const [updateProductsList] = useUpdateMutation();
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -30,14 +29,15 @@ export const UpdateProducts = () => {
 
   const pageDictionary = {
     updateProductsList: textContainer.updateProductsList,
-    lastUpdateDone: "اخر تحديث تم",
-    in: "في",
-    auto: "تلقائي",
-    manual: "يدوي",
-    completeSuccess: "اكتمل بنجاح",
-    updateFailed: "فشل التحديث",
-    updateProducts: textContainer.updateProducts,
+    lastUpdateDone: textContainer.lastUpdateWasDone,
     updating: textContainer.updating,
+    in: textContainer.inPreposition,
+    auto: textContainer.automatically,
+    manual: textContainer.manually,
+    completeSuccess: textContainer.successfullyCompleted,
+    noUpdateOperationsYet: textContainer.noUpdateOperationsYet,
+    updateFailed: textContainer.updateHasNotBeenCompleted,
+    updateProducts: textContainer.updateProducts,
   };
 
   const handleUpdateProducts = async () => {
@@ -68,7 +68,7 @@ export const UpdateProducts = () => {
       ) : (
         <div style={{ margin: "0px 14.6px" }}>
           {error ? (
-            <Box>لا توجد تحديثات بعد</Box>
+            <Box>{pageDictionary.noUpdateOperationsYet}</Box>
           ) : (
             <Box
               style={{
@@ -87,7 +87,7 @@ export const UpdateProducts = () => {
               </Typography>
               <Typography variant="S16W400C65676b">
                 {data.isUpdating
-                  ? "جاري التحديث"
+                  ? pageDictionary.updating
                   : data.failed
                   ? pageDictionary.updateFailed
                   : pageDictionary.completeSuccess}
@@ -117,12 +117,23 @@ export const UpdateProducts = () => {
                 }}
                 onClick={() => handleUpdateProducts()}
               >
-                <UpdateOutlinedIcon
-                  sx={{ fontSize: "28", marginRight: "5px" }}
-                />
-                <Typography variant="S18W700Cffffff">
-                  {pageDictionary.updateProducts}
-                </Typography>
+                {buttonLoading ? (
+                  <LoadingSpinner size={20} />
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <UpdateOutlinedIcon
+                      sx={{ fontSize: "28", marginRight: "5px" }}
+                    />
+                    <Typography variant="S18W700Cffffff">
+                      {pageDictionary.updateProducts}
+                    </Typography>
+                  </div>
+                )}
               </OrangeGradientButton>
             </Box>
           )}

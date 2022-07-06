@@ -3,11 +3,18 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import Skeleton from "@mui/material/Skeleton";
-import React from "react";
+import React, { useEffect } from "react";
 
 export const loadingSkeletonHeight = 320;
 
-const LoadingReviewSkeleton = () => {
+const LoadingReviewSkeleton = ({ clear }) => {
+  useEffect(() => {
+    return () => {
+      console.log("cleared");
+      clear();
+    };
+  }, []);
+
   const theme = useTheme();
   return (
     <div

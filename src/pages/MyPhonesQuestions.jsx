@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Answer } from "../Components/Interactions/Answer";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
 import ROUTES_NAMES from "../RoutesNames";
 import {
-  useGetPhoneQuestionsQuery,
+  useGetMyPhonesQuestionsQuery,
   useLikePhoneQuestionCommentMutation,
   useUnLikePhoneQuestionCommentMutation,
-  useGetMyPhonesQuestionsQuery,
 } from "../services/phone_questions";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";

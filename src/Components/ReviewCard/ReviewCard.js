@@ -1,4 +1,5 @@
-import { Box, ButtonBase, Typography } from "@mui/material";
+import { useTheme } from "@emotion/react";
+import { Box, ButtonBase, Divider, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import * as React from "react";
 import { useDispatch } from "react-redux";
@@ -36,14 +37,17 @@ export default function ReviewCard({
   userProfilePath,
   fullScreenRoute,
   actionBtnFunction,
+  reportFunction,
   likeBtnHandler,
   fullScreenFn,
   seeMoreFn,
   shareBtnFn,
+  disableElevation = false,
+  showBottomLine,
 }) {
   const isReview = true;
   const navigate = useNavigate();
-
+  const theme = useTheme();
   const dispatch = useAppDispatch();
 
   const isLiked = reviewDetails.liked;
@@ -179,6 +183,7 @@ export default function ReviewCard({
           ? textContainer.productReview
           : textContainer.companyReview
       }
+      disableElevation={disableElevation}
     >
       <CardHeader
         userAvatar={reviewDetails.picture}
@@ -194,6 +199,7 @@ export default function ReviewCard({
         targetProfilePath={targetProfilePath}
         userProfilePath={userProfilePath}
         actionBtnFunction={actionBtnFunction}
+        reportFunction={reportFunction}
       />
       <CardContent style={{ padding: 0 }}>
         <ButtonBase
@@ -282,7 +288,15 @@ export default function ReviewCard({
             likesCounter={reviewDetails.likes}
             commentsCounter={reviewDetails.commentsCount}
           />
-
+          {/* divider */}
+          <Divider
+            variant="fullWidth"
+            sx={{
+              padding: 0,
+              margin: 0,
+              backgroundColor: theme.palette.divider,
+            }}
+          />
           <CardActionButtons
             isReview={isReview}
             textContainer={textContainer}
@@ -292,8 +306,18 @@ export default function ReviewCard({
             firstButtonPressedText={textContainer.liked}
             navigateToFullScreen={navigateToFullScreen}
             shareBtnHandler={shareBtnFn}
-
           />
+          {showBottomLine && (
+            // divider
+            <Divider
+              variant="fullWidth"
+              sx={{
+                padding: 0,
+                margin: 0,
+                backgroundColor: theme.palette.divider,
+              }}
+            />
+          )}
         </Box>
       </CardContent>
     </Card>

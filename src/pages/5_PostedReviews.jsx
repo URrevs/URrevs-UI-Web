@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
-import { Fragment, useState } from "react";
-import { useOutletContext, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
@@ -19,7 +19,7 @@ export function PostedReviews() {
 
   const currentUserId = useAppSelector((state) => state.auth.uid);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const paramId = searchParams.get("userId");
 
   return (
@@ -30,22 +30,25 @@ export function PostedReviews() {
       tabBar={<FilterTabbar value={filter} setValue={setFilter} />}
     >
       <FixedGrid>
-        <div style={{ marginTop: "12px" }}>
+        <div style={{ marginTop: "20px" }}>
           {currentUserId === paramId && (
-            <PostingComponent
-              label={textContainer.youCanAddReview}
-              placeholder={textContainer.writeYourReview}
-              params={{
-                disabled: true,
-                onClick: () => {
-                  dispatch(
-                    postingModalActions.showPostingModal({
-                      tab: 0, //AddReview Tab
-                    })
-                  );
-                },
-              }}
-            />
+            <div>
+              <PostingComponent
+                label={textContainer.youCanAddReview}
+                placeholder={textContainer.writeYourReview}
+                params={{
+                  disabled: true,
+                  onClick: () => {
+                    dispatch(
+                      postingModalActions.showPostingModal({
+                        tab: 0, //AddReview Tab
+                      })
+                    );
+                  },
+                }}
+              />
+              <div style={{ marginTop: "18px" }}></div>
+            </div>
           )}
         </div>
         {!isMobile && (

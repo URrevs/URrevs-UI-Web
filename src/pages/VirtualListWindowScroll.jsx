@@ -5,13 +5,12 @@ import {
   CellMeasurer,
   CellMeasurerCache,
   List,
-  WindowScroller,
+  WindowScroller
 } from "react-virtualized";
 import LoadingReviewSkeleton, {
-  loadingSkeletonHeight,
+  loadingSkeletonHeight
 } from "../Components/Loaders/LoadingReviewSkeleton";
 
-import { useAppDispatch } from "../store/hooks";
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -32,7 +31,6 @@ export default function VirtualReviewList({
   increasePage,
   reviewCard,
 }) {
-  const dispatch = useAppDispatch();
   const theme = useTheme();
   const listRef = useRef();
   const [ex, setEx] = useState(false);

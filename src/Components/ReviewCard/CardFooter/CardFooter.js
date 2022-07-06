@@ -74,15 +74,7 @@ const CardFooter = ({
           />
         </div>
       </div>
-      {/* divider */}
-      <Divider
-        variant="fullWidth"
-        sx={{
-          padding: 0,
-          margin: 0,
-          backgroundColor: theme.palette.divider,
-        }}
-      />
+     
     </div>
   );
 };

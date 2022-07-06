@@ -1,19 +1,18 @@
 import { useTheme } from "@emotion/react";
-import React, { Fragment, useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import {
   AutoSizer,
   CellMeasurer,
   List,
-  WindowScroller,
+  WindowScroller
 } from "react-virtualized";
 import { Answer } from "../Components/Interactions/Answer";
 import { CommentReply } from "../Components/Interactions/CommentReply";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import { useAppDispatch } from "../store/hooks";
 
 let maxIndex = 0;
 
-export default function CommentsList({
+export function AnswersList({
   commentsList,
   page,
   data,
@@ -35,7 +34,6 @@ export default function CommentsList({
   questionOwnerId,
   questionId,
 }) {
-  const dispatch = useAppDispatch();
   const theme = useTheme();
   const listRef = useRef();
 
@@ -125,6 +123,7 @@ export default function CommentsList({
                   acceptAnswer={acceptAnswer}
                   rejectAnswer={rejectAnswer}
                   acceptedAnswer={commentsList[index].isAccepted}
+                  showReply={true}
                 />
               )}
             </div>

@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import APIComment from "../models/interfaces/APIComment.model";
 import { APIReview } from "../models/interfaces/APIReview.model";
 import { RootState } from "../store/store";
+import { postingModalActions } from "../store/uiPostingModalSlice";
 import { snackbarActions } from "../store/uiSnackbarSlice";
 
 export const phoneReviewsApi = createApi({
@@ -56,13 +57,22 @@ export const phoneReviewsApi = createApi({
         };
       },
 
-      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
         try {
-          await queryFulfilled;
-        } catch (e: any) {
+          const response = await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
           dispatch(
-            snackbarActions.showSnackbar({ message: e.error.data.status })
+            snackbarActions.showSnackbar({
+              message: `${textContainer.postedSuccessfully}. ${textContainer.youHaveEarned} ${response.data.earnedPoints} ${textContainer.point}`,
+              showActionBtn: true,
+              actionBtnText: textContainer.seePost,
+              actionNavPath: `../phone-review?id=${response.data.review._id}`,
+            })
           );
+          dispatch(postingModalActions.hidePostingModal());
+        } catch (e: any) {
+          console.error(e);
         }
       },
     }),
@@ -315,6 +325,7 @@ export const {
   useGetOtherUserPhoneReviewsQuery,
   useAddCommentOnPhoneReviewMutation,
   useGetPhoneReviewCommentsQuery,
+  useLazyGetPhoneReviewCommentsQuery,
   useAddReplyOnPhoneReviewMutation,
   useLikePhoneReviewCommentMutation,
   useUnLikePhoneReviewCommentMutation,

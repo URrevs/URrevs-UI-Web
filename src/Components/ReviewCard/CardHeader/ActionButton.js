@@ -11,7 +11,7 @@ import { IconButton, Typography } from "@mui/material";
 import { MoreVertOutlined } from "@mui/icons-material";
 import { useAppSelector } from "../../../store/hooks";
 
-export default function ActionButton({ actionBtnFunction }) {
+export default function ActionButton({ actionBtnFunction, reportFunction }) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const textContainer = useAppSelector((state) => state.language.textContainer);
@@ -95,6 +95,14 @@ export default function ActionButton({ actionBtnFunction }) {
                     >
                       <Typography variant="S16W700C050505">
                         {textContainer.iDontLikeThis}
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem
+                      sx={{ padding: "10px 28px", minHeight: 0 }}
+                      onClick={reportFunction}
+                    >
+                      <Typography variant="S16W700C050505">
+                        {textContainer.report}
                       </Typography>
                     </MenuItem>
                   </MenuList>

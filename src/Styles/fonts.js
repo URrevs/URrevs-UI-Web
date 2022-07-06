@@ -57,17 +57,24 @@ export const fonts = {
     fontSize: 14,
     color: "#65676B",
   },
+  S14W800C050505: {
+    fontWeight: 800,
+    fontSize: 14,
+    color: "#050505",
+  },
   S14W700C050505: {
     fontWeight: 700,
     fontSize: 14,
     color: "#050505",
   },
+
   // review card stars
   S14W500C050505: {
     fontWeight: 500,
     fontSize: 14,
     color: "#050505",
   },
+
   // review card date
   S14W400C65676B: {
     fontWeight: 400,
@@ -185,6 +192,11 @@ export const fonts = {
   },
   S18W300C050505: {
     fontWeight: 300,
+    fontSize: 18,
+    color: "#050505",
+  },
+  S18W400C050505: {
+    fontWeight: 400,
     fontSize: 18,
     color: "#050505",
   },

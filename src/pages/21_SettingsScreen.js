@@ -1,36 +1,48 @@
-import React from "react";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import { useTheme } from "@emotion/react";
 import LanguageIcon from "@mui/icons-material/Language";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import { Box, List, Modal } from "@mui/material";
+import React from "react";
+import { LanguageDialog } from "../Components/Dialogs/LanguageDialog";
+import { ThemeDialog } from "../Components/Dialogs/ThemeDialog";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ListItemNavigator from "../Components/Shared/ListItemNavigator";
-import { useSelector } from "react-redux";
-import { Box, List } from "@mui/material";
+import { useAppSelector } from "../store/hooks";
 
 export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
-  const textContainer = useSelector((state) => state.language.textContainer);
-  const language = useSelector((state) => state.language.language);
-
-  const pageDictionary = {
-    appbarLabel: "الاعدادات",
-    language: "اللغة",
-    color: "اللون",
-    languageSub: language === "ar" ? "العربية" : "English",
-    theme: "الابيض",
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+  const language = useAppSelector((state) => state.language.language);
+  const isDark = useAppSelector((state) => state.darkMode.isDark);
+  const theme = useTheme();
+  const [modal, setModal] = React.useState("");
+  const handleClose = () => {
+    setModal("");
   };
-
+  const pageDictionary = {
+    appbarLabel: textContainer.settings,
+    language: textContainer.language,
+    color: textContainer.theme,
+    languageSub: language === "ar" ? "العربية" : "English",
+    theme: isDark ? textContainer.darkTheme : textContainer.lightTheme,
+  };
+  //window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  //use this to check if the current browser theme is dark.
   const listItems = [
     {
       title: pageDictionary.language,
       icon: <LanguageIcon sx={{ fontSize: 45 }} />,
-      onClick: () => {},
+      onClick: () => {
+        setModal("language");
+      },
       subTitle: pageDictionary.languageSub,
     },
 
     {
       title: pageDictionary.color,
       icon: <LightModeOutlinedIcon sx={{ fontSize: 45 }} />,
-      onClick: () => {},
+      onClick: () => {
+        setModal("theme");
+      },
       subTitle: pageDictionary.theme,
     },
   ];
@@ -45,11 +57,38 @@ export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
       />
     );
   };
+  const ModalMananger = () => (
+    <div>
+      <Modal
+        open={modal === "language"}
+        direction={theme.direction}
+        onClose={handleClose}
+      >
+        <div>
+          <LanguageDialog handleClose={handleClose} />
+        </div>
+      </Modal>
+      <Modal
+        open={modal === "theme"}
+        direction={theme.direction}
+        onClose={handleClose}
+      >
+        <div>
+          <ThemeDialog handleClose={handleClose} />
+        </div>
+      </Modal>
+    </div>
+  );
 
   return (
     <React.Fragment>
+      <ModalMananger />
       {isDesktop ? null : (
-        <CustomAppBar showBackBtn showLabel label="الاعدادات" />
+        <CustomAppBar
+          showBackBtn
+          showLabel
+          label={pageDictionary.appbarLabel}
+        />
       )}
       <List>
         <Box>

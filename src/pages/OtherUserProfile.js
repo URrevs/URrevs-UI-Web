@@ -1,36 +1,21 @@
+import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
+import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
+import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import { Avatar, Box, Typography } from "@mui/material";
-import React from "react";
+import List from "@mui/material/List";
+import { FixedGrid } from "../Components/Grid/FixedGrid";
 import StarWithCount from "../Components/Leaderboard/StarWithCount";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-import { useAppSelector } from "../store/hooks";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-import InboxIcon from "@mui/icons-material/Inbox";
-import { useTheme } from "@emotion/react";
-import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
-import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
-import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
-import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
-import { Link, Outlet } from "react-router-dom";
+import ListItemNavigator from "../Components/Shared/ListItemNavigator";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetOtherUserProfileQuery } from "../services/users";
-import ListItemNavigator from "../Components/Shared/ListItemNavigator";
+import { useAppSelector } from "../store/hooks";
 import ErrorScreen from "./ErrorScreen";
-import { FixedGrid } from "../Components/Grid/FixedGrid";
 
 export default function OtherUserProfilePage({ uid }) {
-  const theme = useTheme();
-
   const {
     isLoading,
-    isFetching,
     isError,
-    error,
     data: profileData,
   } = useGetOtherUserProfileQuery(uid);
 

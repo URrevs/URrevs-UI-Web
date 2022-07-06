@@ -9,8 +9,8 @@ export const PostingComponent = ({
   label = "",
   params = {},
 }) => {
-  /*Edit Text Field here */
   const theme = useTheme();
+  /*Edit Text Field here */
   return (
     <Card
       elevation={3}
@@ -25,7 +25,21 @@ export const PostingComponent = ({
         <Typography variant="S14W500C050505">{label}</Typography>
       </div>
       <div style={{ padding: "19px 8px 29px 6px" }}>
-        <PostingField placeholder={placeholder} params={params} />
+        <Card
+          elevation={0}
+          sx={{
+            background: theme.palette.textField.postingFieldBackground,
+            height: "46px",
+            borderRadius: "30px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            padding: "0px 15px",
+          }}
+          onClick={params.onClick}
+        >
+          <Typography variant="S16W300C050505">{placeholder}</Typography>
+        </Card>
       </div>
     </Card>
   );

@@ -5,11 +5,10 @@ import {
   Box,
   IconButton,
   Toolbar,
-  Typography,
-  useMediaQuery,
+  Typography
 } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppBarActions } from "./AppBarActions";
 
@@ -90,7 +89,7 @@ export const CustomAppBar = ({
                       width={logoWidth}
                       height={logoHeight}
                       alt="URrevs"
-                      src="./images/logo.png"
+                      src="/images/logo.png"
                     />
                   )}
                 </Fragment>

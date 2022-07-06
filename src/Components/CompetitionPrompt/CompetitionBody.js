@@ -6,11 +6,13 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
-import FormikDatePicker from "../Form/FormikDatePicker";
+import FormikDatePicker from "../Form/DatePicker/FormikDatePicker";
 import FormikTextField from "../Form/FormikTextField";
 import { useAddCompetetionMutation } from "../../services/competetion";
 import { useAppDispatch } from "../../store/hooks";
 import { snackbarActions } from "../../store/uiSnackbarSlice";
+import { FormSubmitButton } from "../../pages/PostingScreen/FormSubmitButton";
+import FormikDateTimePicker from "../Form/DatePicker/FormikDateTimePicker";
 
 export const CompetitionBody = ({ button, handleClose }) => {
   const [addCompetitionRequest] = useAddCompetetionMutation();
@@ -24,21 +26,15 @@ export const CompetitionBody = ({ button, handleClose }) => {
   const theme = useTheme();
   const language = useSelector((state) => state.language.language);
   useEffect(() => {}, [language]);
-  const PromptValidationScheme = Yup.object().shape(
-    language === "ar"
-      ? {
-          endDate: Yup.date().required("أختر تاريخ"),
-          winners: Yup.string().required("ضروري"),
-          prize: Yup.string().required("لازم"),
-          imgLink: Yup.string().required("لازم لينك يا صاحبي"),
-        }
-      : {
-          endDate: Yup.date().required("Select a Date"),
-          winners: Yup.string().required("Required"),
-          prize: Yup.string().required("Required"),
-          imgLink: Yup.string().url("entry must be link").required("Required"),
-        }
-  );
+  const PromptValidationScheme = Yup.object().shape({
+    endDate: Yup.date().required(textContainer.competitionEndDateErrorMsg),
+    winners: Yup.number()
+      .required(textContainer.enterNumberOfWinnersErrorMsg)
+      .positive(textContainer.enterNumberOfWinnersErrorMsg)
+      .typeError(textContainer.enterNumberOfWinnersErrorMsg),
+    prize: Yup.string().required(textContainer.AddPrizeNameErrorMsg),
+    imgLink: Yup.string().required(textContainer.prizeImageUrlErrorMsg),
+  });
   // const theme = useTheme();
   const renderFields = (text, fieldName, label, controlled = true) => {
     return (
@@ -59,10 +55,10 @@ export const CompetitionBody = ({ button, handleClose }) => {
     <React.Fragment>
       <Formik
         initialValues={{
-          endDate: handleInitialValues("endDate", ""),
-          winners: handleInitialValues("winners", ""),
-          prize: handleInitialValues("prize", ""),
-          imgLink: handleInitialValues("imgLink", ""),
+          endDate: "",
+          winners: "",
+          prize: "",
+          imgLink: "",
         }}
         validationSchema={PromptValidationScheme}
         onSubmit={async (values, { setSubmitting }) => {
@@ -111,12 +107,9 @@ export const CompetitionBody = ({ button, handleClose }) => {
                 <Typography sx={{}} variant="S18W500C050505">
                   {textContainer.enterCompetitionFinishingDate}
                 </Typography>
-                <FormikDatePicker
-                  isRequired={false}
-                  view={["year", "month", "day"]}
+                <FormikDateTimePicker
                   label={textContainer.competitionEndDate}
                   fieldName={"endDate"}
-                  noFutureDate={false}
                 />
               </div>
               <div
@@ -170,18 +163,10 @@ export const CompetitionBody = ({ button, handleClose }) => {
                   margin: "10px 0px",
                 }}
               />
-
-              <OrangeGradientButton
-                type="submit"
-                disabled={isSubmitting}
-                color="red"
-                // startIcon={<AddOutlinedIcon sx={{ fontSize: "28px" }} />} not used because size is not applied
-              >
-                <Typography variant="S18W700Cffffff">
-                  {textContainer.addCompetition}
-                </Typography>
-                <AddOutlinedIcon sx={{ fontSize: "28px" }} />
-              </OrangeGradientButton>
+              <FormSubmitButton
+                submitLabel={textContainer.addCompetition}
+                loading={isSubmitting}
+              />
             </Box>
           </form>
         )}

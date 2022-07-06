@@ -16,7 +16,7 @@ import ROUTES_NAMES from "../../../RoutesNames";
 //TODO: when width is so low make height larger
 
 const map = {
-  [ROUTES_NAMES.PRODUCTS]: 0,
+  [ROUTES_NAMES.ALL_PRODUCTS]: 0,
   [ROUTES_NAMES.ADD_REVIEW]: 1,
   [ROUTES_NAMES.HOME]: 2,
   [ROUTES_NAMES.LEADERBOARD]: 3,
@@ -56,7 +56,7 @@ export default function BottomNavBar() {
       ),
       label: dictionary.categoryNavBarItem,
       itemValue: 0,
-      path: ROUTES_NAMES.PRODUCTS,
+      path: ROUTES_NAMES.ALL_PRODUCTS,
     },
     {
       itemValue: 1,

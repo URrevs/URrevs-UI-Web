@@ -7,7 +7,7 @@ const GoogleBadge = () => {
         padding: 0,
       }}
       alt="googlebadge"
-      src="./images/Google_Play_Store_badge_EN.svg"
+      src="/images/Google_Play_Store_badge_EN.svg"
     />
   );
 };

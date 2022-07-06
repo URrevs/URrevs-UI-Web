@@ -1,3 +1,4 @@
+import { generateLink } from "../../functions/dynamicLinkGenerator";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
@@ -9,11 +10,16 @@ import {
   useLikePhoneReviewMutation,
   useUnLikePhoneReviewMutation,
   useUserPressFullScreenMutation,
-  useUserPressSeeMoreMutation
+  useUserPressSeeMoreMutation,
 } from "../../services/phone_reviews";
+import { useReportPhoneReviewMutation } from "../../services/reports";
+import { useAppDispatch } from "../../store/hooks";
+import { sendReportActions } from "../../store/uiSendReportSlice";
 import ReviewCard from "./ReviewCard";
 
 export default function PhoneReview({
+  disableElevation,
+  showBottomLine,
   reviewDetails,
   index,
   clearIndexCache,
@@ -27,13 +33,38 @@ export default function PhoneReview({
   isExpanded,
   stateShare,
 }) {
+  /*RTK Queries */
   const [dontLikeThisRequest] = useIdontLikeThisPhoneReviewMutation();
   const [fullScreenRequest] = useUserPressFullScreenMutation();
   const [seeMoreRequest] = useUserPressSeeMoreMutation();
   const [increaseViewCounterRequest] = useIncreaseViewCounterMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
+  const [reportPhoneReview] = useReportPhoneReviewMutation();
+
+  const generateShareLink = generateLink({
+    webPath: "phone-review",
+    postId: reviewDetails._id,
+    postType: "phoneReview",
+    ownerId: reviewDetails.userId,
+    linkType: "post",
+  });
 
   const showShareSnackbar = useShareSnackbar();
+
+  const dispatch = useAppDispatch();
+
+  const reportFunction = () => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) => {
+          return reportPhoneReview({
+            reportId: reviewDetails._id,
+            reportContent: reportContent,
+          });
+        },
+      })
+    );
+  };
 
   const actionBtnFunction = async () => {
     try {
@@ -80,11 +111,16 @@ export default function PhoneReview({
   const shareBtnHandler = () => {
     stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
-    showShareSnackbar(`/phone-review?id=${reviewDetails._id}`);
+
+    generateShareLink().then((data) => {
+      showShareSnackbar(data.data.shortLink, "تم نسخ رابط المنشور");
+    });
   };
 
   return (
     <ReviewCard
+      disableElevation={disableElevation}
+      showBottomLine={showBottomLine}
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}
@@ -97,6 +133,7 @@ export default function PhoneReview({
       fullScreenFn={fullScreenHandler}
       seeMoreFn={seeMoreHandler}
       actionBtnFunction={showActionBtn && actionBtnFunction}
+      reportFunction={reportFunction}
       likeBtnHandler={likeBtnHandler}
       shareBtnFn={shareBtnHandler}
     />

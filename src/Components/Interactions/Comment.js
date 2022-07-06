@@ -39,6 +39,10 @@ export const Comment = ({
     );
   };
 
+  const [showReplyField, setShowReplyField] = useState(false);
+
+  const toggleReplyField = () => setShowReplyField((show) => !show);
+
   return (
     <div style={{ maxWidth: "calc(100% - 20px)", padding: "4px 0px" }}>
       <InteractionBody
@@ -57,14 +61,18 @@ export const Comment = ({
           buttonName={buttonName}
           onClickHandler={onLikeClickHandler}
           ownerId={userId}
+          showReplyField={toggleReplyField}
         ></InteractionFooter>
       </InteractionBody>
 
-      <PostingField
-        avatar={true}
-        placeholder="اكتب رد"
-        onSubmit={(text) => submitReplyHandler(text, commentId)}
-      />
+      {showReplyField && (
+        <PostingField
+          avatar={true}
+          placeholder="اكتب رد"
+          reply
+          onSubmit={(text) => submitReplyHandler(text, commentId)}
+        />
+      )}
     </div>
   );
 };

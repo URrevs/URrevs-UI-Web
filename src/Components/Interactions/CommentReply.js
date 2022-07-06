@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import { InteractionBody } from "./InteractionBody";
 import { useTheme } from "@emotion/react";
-import { InteractionFooter } from "./InteractionFooter";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { useAppSelector } from "../../store/hooks";
+import { InteractionBody } from "./InteractionBody";
+import { InteractionFooter } from "./InteractionFooter";
 
 export const CommentReply = ({
   date,

@@ -1,7 +1,7 @@
 import { useTheme } from "@emotion/react";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CompanyOverviewCard } from "../../Components/OverviewCard/CompanyOverviewCard";
 import CompanyReview from "../../Components/ReviewCard/CompanyReview";
@@ -25,7 +25,7 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
   const [page, setPage] = useState(1);
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const cid = searchParams.get("cid");
 
   const { data, isLoading, isFetching, error } = useGetCompanyReviewsQuery({
@@ -36,7 +36,6 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
   const {
     isLoading: companyStatsIsLoading,
     error: companyStatsError,
-    isFetching: companyStatsIsFetching,
     data: companyStatsData,
   } = useGetCompanyStatsInfoQuery(cid);
 
@@ -98,12 +97,15 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
       return <div>Error</div>;
     } else {
       return (
-        <CompanyOverviewCard
-          companyName={companyStatsData.name}
-          type={textContainer.company}
-          companyRating={companyStatsData.rating.toPrecision(2)}
-          viewer={companyStatsData.views}
-        />
+        <div>
+          <div style={{ height: "20px" }}></div>
+          <CompanyOverviewCard
+            companyName={companyStatsData.name}
+            type={textContainer.company}
+            companyRating={companyStatsData.rating.toPrecision(2)}
+            viewer={companyStatsData.views}
+          />
+        </div>
       );
     }
   };
@@ -130,6 +132,8 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
           <Grid item xl={2} lg={0.5} md={0.5} sm={0} xs={0}></Grid>
           <Grid item xl={6} lg={7} md={7} sm={12} xs={12}>
             {theme.isMobile && companyOverView()}
+            <div style={{ height: "5px" }}></div>
+
             <VirtualReviewList
               reviewCard={reviewCard}
               reviewsList={reviewsList}

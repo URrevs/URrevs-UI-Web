@@ -1,7 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Modal, Stack } from "@mui/material";
-import React from "react";
-import ReviewPostingScreen from "../../pages/18_ReviewPostingScreen";
+import { useNavigate } from "react-router-dom";
 import PostingScreen from "../../pages/PostingScreen/PostingScreen";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
@@ -9,12 +8,16 @@ import { DialogTemplate } from "../Dialogs/DialogTemplate";
 import { Tabbar } from "../Tabbar/Tabbar";
 
 //This should go into Layout
-export const PostingModal = () => {
+export const PostingModal = ({ linkShow = false }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const navigate = useNavigate();
+
   /* uiPostingModalSlice */
 
   const dispatch = useAppDispatch();
+
   const show = useAppSelector((state) => state.postingModal.show);
+
   const tab = useAppSelector((state) => state.postingModal.tab);
 
   const id = useAppSelector((state) => state.postingModal.id);
@@ -22,6 +25,9 @@ export const PostingModal = () => {
   const type = useAppSelector((state) => state.postingModal.type);
 
   const handleClose = () => {
+    // if modal was up because of route
+    if (linkShow) navigate("/");
+
     dispatch(postingModalActions.hidePostingModal());
   };
 
@@ -41,7 +47,7 @@ export const PostingModal = () => {
   ];
 
   return (
-    <Modal open={show} onClose={handleClose} dir={theme.direction}>
+    <Modal open={show || linkShow} onClose={handleClose} dir={theme.direction}>
       <Stack spacing={1}>
         <DialogTemplate title={textContainer.addPost}>
           <div></div>
