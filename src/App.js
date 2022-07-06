@@ -51,13 +51,14 @@ import { SplashScreen } from "./pages/SplashScreen";
 import ROUTES_NAMES from "./RoutesNames";
 import { authActions } from "./store/authSlice";
 import { useAppDispatch } from "./store/hooks";
-import { fonts } from "./Styles/fonts";
 import { COLORS } from "./Styles/main_light_colors";
 // OUR_TRACKING_ID
 import ReactGA from "react-ga";
+import { getFonts } from "./Styles/fonts";
 const TRACKING_ID = "UA-165221874-4";
 
 function App() {
+  // GOOGLE ANALITYCS
   ReactGA.initialize(TRACKING_ID);
   // for google analitycs to track all site pages
   useEffect(() => {
@@ -79,6 +80,7 @@ function App() {
     subtitles: "#B0B3B8",
     hintText: "#B0B3B8 ",
   };
+  const fonts = getFonts(isDark);
 
   const theme = createTheme(
     {
