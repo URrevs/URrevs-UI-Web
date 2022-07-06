@@ -246,6 +246,7 @@ export default function QuestionCard({
             firstButtonPressedText={textContainer.vote}
             navigateToFullScreen={navigateToFullScreen}
             shareBtnHandler={shareBtnFn}
+            isReview={false}
           />
 
           {(showBottomLine || acceptedAnswerWidget) && (

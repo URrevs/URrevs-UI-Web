@@ -13,7 +13,11 @@ export const InteractionBody = ({
   avatarSize = "44px",
 }) => {
   return (
-    <div>
+    <div
+      style={{
+        whiteSpace: "pre-line",
+      }}
+    >
       <Box sx={{ display: "flex" }}>
         <Avatar
           src={avatar}
