@@ -127,7 +127,10 @@ export default function Layout(props) {
         {/* div for spacing between app bar and whole pages */}
         {/* <div style={{ marginTop: `${appBarHeight + 30}px` }}> */}
         {props.children}
-        {theme.isMobile ? <div style={{ height: "75px" }}></div> : <></>}
+        {/* Don't add margin in the add-review page */}
+        {theme.isMobile && window.location.pathname !== "/add-review" && (
+          <div style={{ height: "75px" }}></div>
+        )}
         {/* </div> */}
       </Box>
     </Box>
