@@ -35,8 +35,10 @@ export const PostingField = ({
               bottom: 0,
             }}
             onClick={() => {
-              onSubmit(value);
-              setValue("");
+              if (value.trim() !== "") {
+                onSubmit(value);
+                setValue("");
+              }
             }}
           >
             <SendIcon
@@ -118,8 +120,10 @@ export const PostingField = ({
           value={value}
           onKeyDown={(e) => {
             if (e.code === "Enter" && !e.shiftKey) {
-              onSubmit(value);
-              setValue("");
+              if (value.trim() !== "") {
+                onSubmit(value);
+                setValue("");
+              }
               e.preventDefault();
             }
           }}
