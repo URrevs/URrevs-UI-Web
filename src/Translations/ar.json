@@ -313,5 +313,6 @@
   "hideContent": "اخفِ المحتوى",
   "additionalInfoShallBeEntered": "يجب ادخال معلومات اضافية عند اختيار \"أخرى\" كسبب للشكوى",
   "successfullyReported": "تم الإبلاغ بنجاح",
-  "youHaveSelectedDateBeforePhoneRelease": "لقد ادخلت تاريخ قبل صدور الهاتف"
+  "youHaveSelectedDateBeforePhoneRelease": "لقد ادخلت تاريخ قبل صدور الهاتف",
+  "reviewNow": "راجع الاَن"
 }
