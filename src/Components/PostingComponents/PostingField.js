@@ -27,7 +27,7 @@ export const PostingField = ({
     // maxRows: 3,
     variant: "standard",
     InputProps: {
-      endAdornment: theme.isMobile && comment && (
+      endAdornment: theme.isMobile && (
         <InputAdornment sx={{ position: "relative" }} position="end">
           <IconButton
             sx={{
@@ -54,8 +54,7 @@ export const PostingField = ({
       disableUnderline: true,
       style: {
         width: "100%",
-        height: reply ? "35px" : "50px",
-        padding: "13px",
+        padding: reply ? "5px 13px 5px 13px" : "13px",
         "&::placeholder": {
           color: "#000",
         },
