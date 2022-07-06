@@ -1,11 +1,13 @@
-import { Box, LinearProgress } from "@mui/material";
+import { Box, LinearProgress, useTheme } from "@mui/material";
 
 export const SplashScreen = () => {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
         width: "100vw",
-        height: "90vh",
+        height: "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
