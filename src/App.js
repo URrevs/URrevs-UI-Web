@@ -335,14 +335,14 @@ function App() {
     };
   }, [dispatch]);
 
-  if (firebaseIsLoading || isLoading) {
-    return <SplashScreen />;
-  } else {
-    return (
-      <ThemeProvider theme={theme}>
-        <div dir={direction}>
-          <CssBaseline enableColorScheme />
-          <RTL direction={theme.direction}>
+  return (
+    <ThemeProvider theme={theme}>
+      <div dir={direction}>
+        <CssBaseline enableColorScheme />
+        <RTL direction={theme.direction}>
+          {firebaseIsLoading || isLoading ? (
+            <SplashScreen />
+          ) : (
             <BrowserRouter>
               <Layout>
                 <Grid container style={{}}>
@@ -538,11 +538,11 @@ function App() {
                 </Grid>
               </Layout>
             </BrowserRouter>
-          </RTL>
-        </div>
-      </ThemeProvider>
-    );
-  }
+          )}
+        </RTL>
+      </div>
+    </ThemeProvider>
+  );
 }
 
 export default App;

@@ -164,9 +164,6 @@ export default function PhoneReviewFullScreen() {
 
   const submitCommentHandler = async (text) => {
     try {
-      // scroll to top
-      window.scrollTo(0, 0);
-
       const response = await addCommentOnPhoneReview({
         reviewId: reviewId,
         comment: text,
@@ -260,18 +257,19 @@ export default function PhoneReviewFullScreen() {
 
   // first page
   let p = 1;
-
   // function loads additional comments
   const loadMore = useCallback(() => {
-    getComments({ reviewId, round: p }).then((data) => {
-      if (data.data.length === 0) {
-        setEndOfData(true);
-      } else {
-        addToLoadedComments(data.data);
-        p++;
-      }
-    });
-  }, []);
+    if (!endOfData) {
+      getComments({ reviewId, round: p }).then((data) => {
+        if (data.data.length === 0) {
+          setEndOfData(true);
+        } else {
+          addToLoadedComments(data.data);
+          p++;
+        }
+      });
+    }
+  }, [p, endOfData]);
 
   // to load for the first time
   useEffect(() => {
