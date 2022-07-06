@@ -1,9 +1,8 @@
+import type { Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
 import { isRejectedWithValue } from "@reduxjs/toolkit";
-import type { MiddlewareAPI, Middleware } from "@reduxjs/toolkit";
-import { snackbarActions } from "../uiSnackbarSlice";
-import { RootState } from "../store";
 import Dictionary from "../../Dictionary";
-import { createSecureServer } from "http2";
+import { RootState } from "../store";
+import { snackbarActions } from "../uiSnackbarSlice";
 
 interface Error {
   message: string;

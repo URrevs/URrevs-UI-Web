@@ -10,24 +10,16 @@ import { StickyTabbar } from "./StickyTabbar";
 export const ProfileTabbar = ({ children, arrayOfTabs }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const theme = useTheme();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const uid = searchParams.get("userId");
 
-  const storeUser = useAppSelector((state) => state.auth);
-
-  const {
-    data: userProfile,
-    isLoading,
-    isFetching,
-    isError,
-    error,
-  } = useGetOtherUserProfileQuery(uid);
+  const { data: userProfile } = useGetOtherUserProfileQuery(uid);
 
   // userProfile = useAppSelector((state) => state.auth);
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
   };
-  const [smallPfpVisible, setSmallPfpVisible] = React.useState(false);
+  const [smallPfpVisible] = React.useState(false);
 
   // const observer = new IntersectionObserver(
   //   (entries) => {

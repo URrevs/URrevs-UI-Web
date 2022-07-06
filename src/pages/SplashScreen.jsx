@@ -1,5 +1,4 @@
-import { CircularProgress, LinearProgress } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, LinearProgress } from "@mui/material";
 
 export const SplashScreen = () => {
   return (

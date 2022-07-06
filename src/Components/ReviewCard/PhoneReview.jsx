@@ -18,6 +18,8 @@ import { sendReportActions } from "../../store/uiSendReportSlice";
 import ReviewCard from "./ReviewCard";
 
 export default function PhoneReview({
+  disableElevation,
+  showBottomLine,
   reviewDetails,
   index,
   clearIndexCache,
@@ -117,6 +119,8 @@ export default function PhoneReview({
 
   return (
     <ReviewCard
+      disableElevation={disableElevation}
+      showBottomLine={showBottomLine}
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}

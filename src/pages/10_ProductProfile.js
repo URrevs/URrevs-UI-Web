@@ -11,12 +11,12 @@ import ROUTES_NAMES from "../RoutesNames";
 import { useGetPhoneSpecsQuery } from "../services/phones";
 
 export const ProductProfile = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const paramId = searchParams.get("pid");
 
   const isMobile = useTheme().isMobile;
 
-  let { isLoading, error, isFetching, data } = useGetPhoneSpecsQuery(paramId);
+  let { isLoading, data } = useGetPhoneSpecsQuery(paramId);
 
   const textContainer = useSelector((state) => state.language.textContainer);
 

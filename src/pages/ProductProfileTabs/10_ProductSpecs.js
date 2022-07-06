@@ -23,7 +23,7 @@ import {
 const CardStyled = styled(
   Card,
   {}
-)((theme) => ({
+)(() => ({
   borderRadius: `${CARD_BORDER_RADIUS}px`,
   marginBottom: "15px",
   padding: "16px",
@@ -34,10 +34,10 @@ const CardStyled = styled(
 export const ProductSpecsScreen = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const paramId = searchParams.get("pid");
 
-  let { isLoading, error, isFetching, data } = useGetPhoneSpecsQuery(paramId);
+  let { data } = useGetPhoneSpecsQuery(paramId);
 
   const componentDictionary = {
     productImage: textContainer.productImage,

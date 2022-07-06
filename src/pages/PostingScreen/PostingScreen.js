@@ -16,12 +16,11 @@ const PostingScreen = ({
     type: "",
   },
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const paramId = searchParams.get("refCode");
   const isPhone = initValues.type === "phone";
   const checkSignedIn = useCheckSignedIn();
-  const [addReview, { isLoading: isAddphoneLoading }] =
-    useAddPhoneReviewMutation();
+  const [addReview] = useAddPhoneReviewMutation();
   const theme = useTheme();
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionary = {
@@ -111,7 +110,7 @@ const PostingScreen = ({
               };
               // console.log(JSON.stringify(reviewPost, null, 2));
               try {
-                const response = await addReview(reviewPost).unwrap();
+                await addReview(reviewPost).unwrap();
                 //Success Message
                 sessionStorage.clear();
               } catch (e) {

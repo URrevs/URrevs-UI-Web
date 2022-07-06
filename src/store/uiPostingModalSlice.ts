@@ -8,7 +8,7 @@ interface initialState {
   type: string;
 }
 
-const initialState: initialState = {
+const initialPostingSliceState: initialState = {
   show: false,
   tab: 0,
   id: "",
@@ -18,7 +18,7 @@ const initialState: initialState = {
 
 const postingModalSlice = createSlice({
   name: "postingModal",
-  initialState: initialState,
+  initialState: initialPostingSliceState,
   reducers: {
     showPostingModal(state, action) {
       state.show = true;

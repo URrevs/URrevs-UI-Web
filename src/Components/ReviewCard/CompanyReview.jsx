@@ -32,6 +32,7 @@ const CompanyReview = ({
   isExpanded,
   stateShare,
   disableElevation = false,
+  showBottomLine,
 }) => {
   const [dontLikeThisRequest] = useIdontLikeThisCompanyReviewMutation();
   const [fullScreenRequest] = useUserPressFullScreenMutation();
@@ -112,12 +113,13 @@ const CompanyReview = ({
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
 
     generateShareLink().then((data) => {
-      showShareSnackbar(data.data.shortLink,"تم نسخ رابط المنشور");
+      showShareSnackbar(data.data.shortLink, "تم نسخ رابط المنشور");
     });
   };
 
   return (
     <ReviewCard
+      showBottomLine={showBottomLine}
       disableElevation={disableElevation}
       index={index}
       fullScreen={fullScreen}

@@ -9,7 +9,7 @@ interface initialState {
   actionBtnFunction: () => void;
 }
 
-const initialState: initialState = {
+const initialSnackbarSliceState: initialState = {
   show: false,
   message: "",
   showActionBtn: false,
@@ -20,7 +20,7 @@ const initialState: initialState = {
 
 const snackbarSlice = createSlice({
   name: "snackbar",
-  initialState: initialState,
+  initialState: initialSnackbarSliceState,
   reducers: {
     showSnackbar(state, action) {
       state.show = true;

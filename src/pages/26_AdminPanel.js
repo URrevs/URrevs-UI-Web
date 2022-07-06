@@ -24,15 +24,12 @@ export const AdminPanel = () => {
   const dispatch = useAppDispatch();
 
   const theme = useTheme();
-  const { data, latestUpdateError, isLoading } = useGetLastUpdateInfoQuery(
+  const { data, isLoading } = useGetLastUpdateInfoQuery(
     {},
     { refetchOnMountOrArgChange: true }
   );
-  const {
-    data: lastCompetetionData,
-    error: latestCompetetionError,
-    isLoading: latestCompetetionIsLoading,
-  } = useGetLatestCompetetionQuery();
+  const { data: lastCompetetionData, error: latestCompetetionError } =
+    useGetLatestCompetetionQuery();
 
   console.log(lastCompetetionData);
 

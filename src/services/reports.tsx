@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store/store";
 import {
-  sendReportActions,
-  sendReportSliceName,
+  sendReportActions
 } from "../store/uiSendReportSlice";
 import { snackbarActions } from "../store/uiSnackbarSlice";
 
@@ -33,7 +32,7 @@ export const reportsApi = createApi({
       },
       async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
         try {
-          const response = await queryFulfilled;
+          await queryFulfilled;
           const state = getState();
           const textContainer = (state as RootState).language.textContainer;
           dispatch(
@@ -57,7 +56,7 @@ export const reportsApi = createApi({
       },
       async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
         try {
-          const response = await queryFulfilled;
+          await queryFulfilled;
           const state = getState();
           const textContainer = (state as RootState).language.textContainer;
           dispatch(
@@ -81,7 +80,7 @@ export const reportsApi = createApi({
       },
       async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
         try {
-          const response = await queryFulfilled;
+          await queryFulfilled;
           const state = getState();
           const textContainer = (state as RootState).language.textContainer;
           dispatch(
@@ -105,7 +104,7 @@ export const reportsApi = createApi({
       },
       async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
         try {
-          const response = await queryFulfilled;
+          await queryFulfilled;
           const state = getState();
           const textContainer = (state as RootState).language.textContainer;
           dispatch(
