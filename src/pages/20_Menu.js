@@ -17,6 +17,7 @@ import {
   ListItemButton,
   ListItemText,
   Modal,
+  Stack,
   Typography,
 } from "@mui/material";
 import { List } from "@mui/material/";
@@ -287,24 +288,25 @@ export default function Menu({ isDesktop = false, drawerRef }) {
           </Box>
         </Modal>
         <List>
-          {currentUserProfile.isLoggedIn ? userProfileButton() : null}
-          <Box style={{ height: 12 }}></Box>
-          {listItems.map((item, index) => {
-            if (item.authenticate)
-              return (
-                <div key={item.title + index}>
-                  {listItem(
-                    item.title,
-                    item.subtitle,
-                    item.icon,
-                    item.to,
-                    item.onClick,
-                    item.endIcon
-                  )}
-                </div>
-              );
-            else return null;
-          })}
+          <Stack spacing={1}>
+            {currentUserProfile.isLoggedIn ? userProfileButton() : null}
+            {listItems.map((item, index) => {
+              if (item.authenticate)
+                return (
+                  <div key={item.title + index}>
+                    {listItem(
+                      item.title,
+                      item.subtitle,
+                      item.icon,
+                      item.to,
+                      item.onClick,
+                      item.endIcon
+                    )}
+                  </div>
+                );
+              else return null;
+            })}
+          </Stack>
         </List>
         <Box
           sx={{
