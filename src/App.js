@@ -101,7 +101,7 @@ function App() {
           styleOverrides: {
             root: {
               border: "1px solid transparent",
-              backgroundColor: "#242526",
+              backgroundColor: isDark && "#242526",
               "&.MuiDrawer-Paper": {
                 border: "1px solid transparent",
               },
