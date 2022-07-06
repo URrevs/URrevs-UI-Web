@@ -55,7 +55,6 @@ export function AnswersList({
           increaseViewportBy={{ top: 2500, bottom: 2500 }}
           overscan={20}
           itemContent={(index, comment) => {
-            console.log(comment);
             return comment.isReply ? (
               <CommentReply
                 replyId={comment._id}
@@ -69,6 +68,7 @@ export function AnswersList({
                 commentId={comment.commentId}
                 avatar={comment.userPicture}
                 userId={comment.userId}
+                acceptedAnswerReply={comment.acceptedReply}
               />
             ) : (
               <Answer

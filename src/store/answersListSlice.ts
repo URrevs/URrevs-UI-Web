@@ -40,7 +40,12 @@ const answersList = createSlice({
       let answerReplies: any = [];
       answer.replies.forEach((reply, i) => {
         console.log(reply);
-        answerReplies.push({ ...reply, commentId: answer._id, isReply: true });
+        answerReplies.push({
+          ...reply,
+          commentId: answer._id,
+          isReply: true,
+          acceptedReply: true,
+        });
       });
 
       state.newComments = [answer, ...answerReplies, ...state.newComments];
@@ -108,7 +113,6 @@ const answersList = createSlice({
       state.newComments.forEach((element) => {
         if (element.isAccepted && element._id !== action.payload.id) {
           element.isAccepted = false;
-          // element.upvotes--;
         }
       });
 
@@ -118,6 +122,12 @@ const answersList = createSlice({
 
       if (targetReview !== -1) {
         state.newComments[targetReview].isAccepted = action.payload.isAccepted;
+
+        state.newComments[targetReview].replies.forEach((reply, i) => {
+          console.log(state.newComments[targetReview]);
+          state.newComments[targetReview].replies[i].acceptedReply =
+            action.payload.isAccepted;
+        });
         // upvotes
         // action.payload.isAccepted
         //   ? state.newComments[targetReview].upvotes++

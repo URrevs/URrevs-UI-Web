@@ -15,5 +15,6 @@ export default interface APIAnswer {
   liked: boolean;
   commentId: string;
   isReply: boolean;
+  acceptedReply: boolean;
   replies: APIAnswer[];
 }
