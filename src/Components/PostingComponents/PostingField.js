@@ -54,7 +54,11 @@ export const PostingField = ({
       disableUnderline: true,
       style: {
         width: "100%",
+        height: reply ? "35px" : "50px",
         padding: "13px",
+        "&::placeholder": {
+          color: "#000",
+        },
         ...theme.typography.S16W500C050505,
         alignContent: "center",
         background: theme.palette.textField.postingFieldBackground,
