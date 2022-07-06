@@ -88,7 +88,7 @@ export const SendReports = () => {
                 reason: parseInt(values[fieldNames.radioGroup]),
                 info: values[fieldNames.additionalInfoTxtField],
               };
-              const response = await onSubmitAction(reportContent);
+              await onSubmitAction(reportContent);
               setSubmitting(false);
             }}
           >

@@ -52,7 +52,6 @@ export const SearchSuggestion = () => {
 
   // update recent search when request is done
   React.useEffect(() => {
-    console.log("a");
     if (fetchedRecentResults) {
       setRecentResults(fetchedRecentResults);
     }

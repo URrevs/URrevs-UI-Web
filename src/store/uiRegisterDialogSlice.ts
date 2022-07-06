@@ -4,13 +4,13 @@ interface initialState {
   registration: boolean;
 }
 
-const initialState: initialState = {
+const initialRegState: initialState = {
   registration: false,
 };
 
 const regDialogSlice = createSlice({
   name: "regDialog",
-  initialState: initialState,
+  initialState: initialRegState,
   reducers: {
     toggleRegistration(state) {
       state.registration = !state.registration;

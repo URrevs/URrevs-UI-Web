@@ -1,7 +1,6 @@
 import { useTheme } from "@emotion/react";
 import AddIcon from "@mui/icons-material/Add";
 import { CircularProgress, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 
 import OrangeGradientButton from "../../Components/Buttons/OrangeGradientButton";
 
@@ -11,16 +10,16 @@ export const FormSubmitButton = ({
   loading = false,
 }) => {
   const theme = useTheme();
-  const renderBtnContent = () => (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-      }}
-    ></Box>
-  );
+  // const renderBtnContent = () => (
+  //   <Box
+  //     sx={{
+  //       display: "flex",
+  //       alignItems: "center",
+  //       justifyContent: "center",
+  //       textAlign: "center",
+  //     }}
+  //   ></Box>
+  // );
   return (
     <div
       style={{

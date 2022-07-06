@@ -50,7 +50,7 @@ import Profile from "./pages/Profile";
 import { SplashScreen } from "./pages/SplashScreen";
 import ROUTES_NAMES from "./RoutesNames";
 import { authActions } from "./store/authSlice";
-import { useAppDispatch, useAppSelector } from "./store/hooks";
+import { useAppDispatch } from "./store/hooks";
 import { fonts } from "./Styles/fonts";
 import { COLORS } from "./Styles/main_light_colors";
 // OUR_TRACKING_ID
@@ -264,10 +264,7 @@ function App() {
 
   const dispatch = useAppDispatch();
 
-  const storeUser = useAppSelector((state) => state.auth);
-
-  const [getUserProfile, { data, isLoading, error }] =
-    useLazyXauthenticateQuery();
+  const [getUserProfile, { isLoading }] = useLazyXauthenticateQuery();
 
   const [firebaseIsLoading, setFirebaseIsLoading] = useState(true);
 

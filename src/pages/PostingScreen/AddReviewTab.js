@@ -1,11 +1,10 @@
 import { useTheme } from "@emotion/react";
+import HelpIcon from "@mui/icons-material/Help";
 import {
-  Box,
-  Divider,
-  IconButton,
+  Box, IconButton,
   Modal,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import React from "react";
 import { DialogText } from "../../Components/Dialogs/DialogText";
@@ -13,13 +12,10 @@ import FormikDatePicker from "../../Components/Form/DatePicker/FormikDatePicker"
 import FormikSearchComponent from "../../Components/Form/FormikSearchComponent";
 import FormikStar from "../../Components/Form/FormikStar";
 import FormikTextField from "../../Components/Form/FormikTextField";
+import { useGetManufacturingCompanyMutation } from "../../services/phones";
 import { useSearchPhonesOnlyMutation } from "../../services/search";
 import { useAppSelector } from "../../store/hooks";
-import HelpIcon from "@mui/icons-material/Help";
 import { FormSubmitButton } from "./FormSubmitButton";
-import { useGetManufacturingCompanyMutation } from "../../services/phones";
-import { FastField } from "formik";
-import { StarCounter } from "../../Components/StarCounter/StarCounter";
 
 /*Documentation */
 /*

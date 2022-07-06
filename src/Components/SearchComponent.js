@@ -9,7 +9,6 @@ import * as React from "react";
 import { SEARCH_INPUT_BORDER_RADIUS, SEARCH_INPUT_DELAY } from "../constants";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { postingModalActions } from "../store/uiPostingModalSlice";
-import { COLORS } from "../Styles/main_light_colors";
 
 // const Search = styled("div")(({ theme }) => ({
 //   position: "relative",

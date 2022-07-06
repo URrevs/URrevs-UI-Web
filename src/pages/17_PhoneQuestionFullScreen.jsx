@@ -47,7 +47,7 @@ export default function PhoneQuestionFullScreen() {
 
   const commentsList = useAppSelector((state) => state.answersList.newComments);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const reviewId = searchParams.get("id");
 
   const [page, setPage] = useState(1);

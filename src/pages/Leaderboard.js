@@ -1,8 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Box, Divider, Grid, Modal, Paper, Typography } from "@mui/material";
-import React, { Fragment, useEffect } from "react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
 import { CompetitionBanner } from "../Components/CompetitionBanner/CompetitionBanner";
 import { HowToWinDialog } from "../Components/Dialogs/HowToWinDialog";
 import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
@@ -14,7 +12,7 @@ import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetLatestCompetetionQuery,
   useGetMyCurrentRankQuery,
-  useGetTopCompetetionUsersQuery,
+  useGetTopCompetetionUsersQuery
 } from "../services/competetion";
 import { useAppSelector } from "../store/hooks";
 
@@ -43,7 +41,7 @@ export const Leaderboard = () => {
   // console.log(latestCompetitionData);
 
   const theme = useTheme();
-  const navigate = useNavigate();
+
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionary = {
     usersRanking: textContainer.usersRanking,

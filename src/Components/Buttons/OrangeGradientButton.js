@@ -1,11 +1,9 @@
-import React from "react";
-import { Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { styled } from "@mui/material/styles";
 // eslint-disable-next-line no-unused-vars
 const OrangeGradientButton = styled(LoadingButton, {
   shouldForwardProp: (prop) => prop !== "color",
-})(({ theme, color }) => ({
+})(({ color }) => ({
   background:
     color === "red"
       ? "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)"

@@ -7,16 +7,16 @@ import {
   ListItemButton,
   ListItemText,
   Paper,
-  Typography,
+  Typography
 } from "@mui/material";
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   AutoSizer,
   CellMeasurer,
   CellMeasurerCache,
   List,
-  WindowScroller,
+  WindowScroller
 } from "react-virtualized";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
@@ -25,7 +25,7 @@ import { PAPER_BORDER_RADIUS_DESKTOP } from "../constants";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetAllCompaniesQuery,
-  useGetAllPhonesQuery,
+  useGetAllPhonesQuery
 } from "../services/phones";
 import { productListActions } from "../store/allProductsSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -47,7 +47,6 @@ let maxCompanyIndex = 0;
 
 export function AllProductsScreen() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -64,8 +63,6 @@ export function AllProductsScreen() {
   const clearProductsList = () => {
     dispatch(productListActions.clearProducts());
   };
-
-  const currentUser = useAppSelector((state) => state.auth);
 
   const productsList = useAppSelector((state) => state.productList.newProducts);
 
@@ -94,7 +91,6 @@ export function AllProductsScreen() {
     data: companiesData,
     isLoading: companiesIsLoading,
     isFetching: companiesIsFetching,
-    error: companiesError,
   } = useGetAllCompaniesQuery(companyPage);
 
   const addToProductsList = () =>

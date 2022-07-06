@@ -11,11 +11,11 @@ import { MyDrawer } from "./Drawer/Drawer";
 import { Link } from "react-router-dom";
 import Registeration from "../../pages/1_Authentication";
 import { useAppSelector } from "../../store/hooks";
+import { SendReports } from "../Dialogs/SendReports";
 import { PostingModal } from "../PostingComponents/PostingModal";
 import CustomizedSnackbar from "../Snackbar";
 import { CustomAppBar } from "./AppBar/CustomAppBar";
 import BottomNavBar from "./BottomNavBar/BottomNavBar";
-import { SendReports } from "../Dialogs/SendReports";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -34,30 +34,30 @@ export default function Layout(props) {
   const appBarHeight = theme.isMobile ? 0 : 64;
   const drawerWidth = theme.isMobile ? 0 : theme.drawer.width;
 
-  const dictionary = useAppSelector((state) => state.language.textContainer);
+  // const dictionary = useAppSelector((state) => state.language.textContainer);
 
   // modal
-  const openReg = useAppSelector((state) => state.regDialog.registration);
+  // const openReg = useAppSelector((state) => state.regDialog.registration);
 
   const [open, setOpen] = React.useState(false);
   const [searchBarFocused, setSearchBarFocused] = React.useState(false);
 
-  const onSearchBarFocus = () => {
-    setSearchBarFocused(true);
-  };
+  // const onSearchBarFocus = () => {
+  //   setSearchBarFocused(true);
+  // };
 
-  const onSearchBarBlur = () => {
-    setSearchBarFocused(false);
-  };
+  // const onSearchBarBlur = () => {
+  //   setSearchBarFocused(false);
+  // };
 
   const logoAnimationStyles = useSpring({
     width: searchBarFocused ? 0 : logoWidth,
     opacity: searchBarFocused ? 0 : 1,
   });
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+  // const handleDrawerOpen = () => {
+  //   setOpen(true);
+  // };
 
   const appBar = () => {
     return (
@@ -98,11 +98,11 @@ export default function Layout(props) {
     );
   };
 
-  const customAppBar = () => {
-    return (
-      <CustomAppBar showLabel={false} showLogo={true} showProfile showSearch />
-    );
-  };
+  // const customAppBar = () => {
+  //   return (
+  //     <CustomAppBar showLabel={false} showLogo={true} showProfile showSearch />
+  //   );
+  // };
 
   return (
     <Box sx={{}}>

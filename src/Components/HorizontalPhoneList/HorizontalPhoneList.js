@@ -1,4 +1,4 @@
-import { Box, ListItemButton, Stack, List, Typography } from "@mui/material";
+import { List, ListItemButton, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import CardStyled from "../CardStyled";

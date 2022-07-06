@@ -1,18 +1,17 @@
+import { useTheme } from "@emotion/react";
+import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
+import { DesktopDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import MobileDatePicker from "@mui/lab/MobileDatePicker";
-import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
-import { arEG, enUS } from "date-fns/locale";
-import { useSelector } from "react-redux";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { arEG, enUS } from "date-fns/locale";
 import { Field } from "formik";
 import React, { useState } from "react";
-import { useTheme } from "@emotion/react";
+import { useSelector } from "react-redux";
 import {
   TEXT_FIELD_BORDER_RADIUS,
   TEXT_FIELD_BORDER_THICKNESS,
 } from "../../../constants";
-import { DesktopDatePicker } from "@mui/lab";
 
 const FormikDatePicker = ({ label, fieldName }) => {
   const [openDate, setOpenDate] = useState(false);

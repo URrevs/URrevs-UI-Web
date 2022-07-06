@@ -11,22 +11,17 @@ import { useGetCompanyStatsInfoQuery } from "../services/companies";
 export const CompanyProfile = () => {
   const isMobile = useTheme().isMobile;
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const companyId = searchParams.get("cid");
 
   const {
     isLoading: companyStatsIsLoading,
     error: companyStatsError,
-    isFetching: companyStatsIsFetching,
     data: companyStatsData,
   } = useGetCompanyStatsInfoQuery(companyId);
 
   const textContainer = useSelector((state) => state.language.textContainer);
-  const pageDictionary = {
-    tabBarReviews: textContainer.tabBarReviews,
-    tabBarQuestionsAndAnswers: textContainer.tabBarQuestionsAndAnswers,
-    company: textContainer.company,
-  };
+
 
   const pageDictionry = {
     reviews: textContainer.tabBarReviews,

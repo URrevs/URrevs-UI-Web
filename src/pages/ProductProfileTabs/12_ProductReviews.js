@@ -19,12 +19,12 @@ export function ProductReviews() {
     console.log("clear reviews");
 
     dispatch(reviewsActions.clearReviews());
-  }, []);
+  }, [dispatch]);
 
   const reviewsList = useAppSelector((state) => state.reviews.newReviews);
   const [page, setPage] = useState(1);
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const phoneId = searchParams.get("pid");
 
   const { data, isLoading, isFetching, error } = useGetPhoneReviewsQuery({
