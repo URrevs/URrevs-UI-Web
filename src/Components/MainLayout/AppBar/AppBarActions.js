@@ -10,6 +10,7 @@ import ROUTES_NAMES from "../../../RoutesNames";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { languageActions } from "../../../store/languageSlice";
 import { regDialogActions } from "../../../store/uiRegisterDialogSlice";
+import { ConditionalLink } from "../../ConditionalLink";
 import { SearchSuggestion } from "./SearchSuggestion";
 
 const circleWidth = 35;
@@ -83,8 +84,16 @@ export const AppBarActions = ({
             )}
         {/* user account */}
         {showProfile && (
-          <Link to={`/${ROUTES_NAMES.USER_PROFILE}?userId=${user.uid}`}>
-            <CircleBtn>
+          <ConditionalLink
+            to={`/${ROUTES_NAMES.USER_PROFILE}?userId=${user.uid}`}
+            condition={isLoggedIn}
+          >
+            <CircleBtn
+              onClick={
+                // !isLoggedIn && handleRegestrationOpen
+                () => {}
+              }
+            >
               {!isLoggedIn ? (
                 <AccountCircle />
               ) : (
@@ -94,7 +103,7 @@ export const AppBarActions = ({
                 />
               )}
             </CircleBtn>
-          </Link>
+          </ConditionalLink>
         )}
         {/* // language */}
         {showLanguage && (
