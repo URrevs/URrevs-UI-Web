@@ -235,7 +235,7 @@ function App() {
         },
         progressBar: {
           backgroundColor: isDark ? COLORS.cffffff : COLORS.cffffff,
-          barColor: isDark ? COLORS.cffffff : COLORS.c2196f3,
+          barColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
           barBorder: isDark ? COLORS.cffffff : COLORS.c050505,
         },
         authenticationButtons: {
