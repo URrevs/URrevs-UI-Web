@@ -66,24 +66,42 @@ export function ProductReviews() {
   const stateIncreaseShareCounter = (id) =>
     dispatch(reviewsActions.increaseShareCounter({ id: id }));
 
-  const reviewCard = (index, clearCache) => {
+  const reviewCard = (review) => {
     return (
       <PhoneReview
-        key={reviewsList[index]._id}
-        index={index}
+        key={review._id}
         fullScreen={false}
         isExpanded={false}
-        reviewDetails={reviewsList[index]}
+        reviewDetails={review}
         isPhoneReview={true}
-        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.REVIEWS}?pid=${reviewsList[index].targetId}`}
-        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
-        stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
-        stateUnLikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
+        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.REVIEWS}?pid=${review.targetId}`}
+        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${review.userId}`}
+        stateLikeFn={stateLike.bind(null, review._id)}
+        stateUnLikeFn={stateUnLike.bind(null, review._id)}
         stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
       />
     );
+  };
+
+  useEffect(() => {
+    if (data) {
+      addToReviewsList(data);
+
+      if (data.length === 0) {
+        setEndOfData(true);
+      }
+    }
+  }, [data]);
+
+  const [endOfData, setEndOfData] = useState(false);
+
+  // function loads additional comments
+  const loadMore = () => {
+    if (!endOfData && !isFetching) {
+      increasePage();
+    }
   };
 
   return (
@@ -109,17 +127,10 @@ export function ProductReviews() {
       <div style={{ marginTop: "18px" }}></div>
 
       <VirtualReviewList
+        endOfData={endOfData}
+        loadMore={loadMore}
         reviewCard={reviewCard}
         reviewsList={reviewsList}
-        page={page}
-        data={data}
-        error={error}
-        isLoading={isLoading}
-        isFetching={isFetching}
-        stateLike={stateLike}
-        stateUnLike={stateUnLike}
-        addToReviewsList={addToReviewsList}
-        increasePage={increasePage}
       />
     </AlonePostsGrid>
   );

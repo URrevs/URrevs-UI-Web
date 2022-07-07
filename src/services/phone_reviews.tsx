@@ -323,6 +323,7 @@ export const {
   useUnLikePhoneReviewMutation,
   useGetUserPhoneReviewsQuery,
   useGetOtherUserPhoneReviewsQuery,
+  useLazyGetOtherUserPhoneReviewsQuery,
   useAddCommentOnPhoneReviewMutation,
   useGetPhoneReviewCommentsQuery,
   useLazyGetPhoneReviewCommentsQuery,

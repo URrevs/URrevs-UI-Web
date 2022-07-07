@@ -12,9 +12,11 @@ export function PostedCompanyReviews() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log("clear reviews");
-
-    dispatch(reviewsActions.clearReviews());
+    return () => {
+      console.log("clear reviews");
+      p = 1;
+      dispatch(reviewsActions.clearReviews());
+    };
   }, []);
 
   const currentUser = useAppSelector((state) => state.auth);
@@ -89,13 +91,13 @@ export function PostedCompanyReviews() {
         }
       });
     }
-  }, [p, endOfData]);
+  }, [p, endOfData, userId]);
 
   // to load for the first time
   useEffect(() => {
     const timeout = loadMore();
     return () => clearTimeout(timeout);
-  }, []);
+  }, [userId]);
 
   return (
     <CustomAppBar showBackBtn showLogo showSearch showProfile>

@@ -295,6 +295,7 @@ export const {
   useUnLikeCompanyReviewMutation,
   useGetUserCompanyReviewsQuery,
   useGetOtherUserCompanyReviewsQuery,
+  useLazyGetOtherUserCompanyReviewsQuery,
   useAddCommentOnCompanyReviewMutation,
   useGetCompanyReviewCommentsQuery,
   useLazyGetCompanyReviewCommentsQuery,
