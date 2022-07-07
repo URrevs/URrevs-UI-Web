@@ -308,7 +308,6 @@ function App() {
         // console.log(storeUser);
 
         if (refetchToken) {
-          console.log(user.accessToken);
           const { data } = await getUserProfile(user.accessToken);
 
           dispatch(

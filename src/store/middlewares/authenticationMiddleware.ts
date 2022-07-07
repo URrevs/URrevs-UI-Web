@@ -11,8 +11,17 @@ export const rtkQueryErrorLogger: Middleware =
 
     const state = getState();
 
+    // TODO:
+    // update token if expiry date is soon
+    // new Date(expiryDate) - new Date() < 900 000 (15 min)
+    // to get new token
+    // dispatch(authActions.toggleRefetch());
+
     // RTK Query uses `createAsyncThunk` from redux-toolkit under the hood, so we're able to utilize these matchers!
     if (isRejectedWithValue(action)) {
+      const expirationDate = (state as RootState).auth.expiration;
+      console.log(expirationDate);
+
       console.warn(action);
       const serverMessage: string = action.payload.data.status;
 
