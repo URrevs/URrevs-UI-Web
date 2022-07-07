@@ -70,20 +70,18 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
   const stateIncreaseShareCounter = (id) =>
     dispatch(reviewsActions.increaseShareCounter({ id: id }));
 
-  const reviewCard = (index, clearCache) => {
+  const reviewCard = (review) => {
     return (
       <CompanyReview
-        key={reviewsList[index]._id}
-        index={index}
+        key={review._id}
         fullScreen={false}
         isExpanded={false}
-        clearIndexCache={clearCache}
-        reviewDetails={reviewsList[index]}
+        reviewDetails={review}
         isPhoneReview={true}
-        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${reviewsList[index].targetId}`}
-        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
-        stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
-        stateUnLikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
+        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${review.targetId}`}
+        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${review.userId}`}
+        stateLikeFn={stateLike.bind(null, review._id)}
+        stateUnLikeFn={stateUnLike.bind(null, review._id)}
         stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
@@ -110,21 +108,35 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
     }
   };
 
+  useEffect(() => {
+    if (data) {
+      addToReviewsList(data);
+
+      if (data.length === 0) {
+        setEndOfData(true);
+      }
+    }
+  }, [data]);
+
+  const [endOfData, setEndOfData] = useState(false);
+
+  // function loads additional comments
+  const loadMore = () => {
+    if (!endOfData && !isFetching) {
+      increasePage();
+    }
+  };
+
   return (
     <Box>
       {theme.isMobile ? (
         <Fragment>
           {companyOverView()}
           <VirtualReviewList
+            endOfData={endOfData}
+            loadMore={loadMore}
             reviewCard={reviewCard}
             reviewsList={reviewsList}
-            page={page}
-            data={data}
-            error={error}
-            isLoading={isLoading}
-            isFetching={isFetching}
-            addToReviewsList={addToReviewsList}
-            increasePage={increasePage}
           />
         </Fragment>
       ) : (
@@ -135,15 +147,10 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
             <div style={{ height: "5px" }}></div>
 
             <VirtualReviewList
+              endOfData={endOfData}
+              loadMore={loadMore}
               reviewCard={reviewCard}
               reviewsList={reviewsList}
-              page={page}
-              data={data}
-              error={error}
-              isLoading={isLoading}
-              isFetching={isFetching}
-              addToReviewsList={addToReviewsList}
-              increasePage={increasePage}
             />
           </Grid>
 

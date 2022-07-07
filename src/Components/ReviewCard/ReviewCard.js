@@ -27,7 +27,6 @@ import CardHeader from "./CardHeader/CardHeader";
 
 export default function ReviewCard({
   ukey,
-  clearIndexCache,
   index,
   reviewDetails,
   isPhoneReview,
@@ -103,7 +102,6 @@ export default function ReviewCard({
           MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND
         )
       );
-      clearIndexCache(index);
     } else {
       setCroppedText({ pros: pros, cons: cons, endOfText: true });
     }
@@ -115,7 +113,6 @@ export default function ReviewCard({
   };
 
   const handleSeeMoreExpansion = () => {
-    clearIndexCache(index);
     if (croppedText.endOfText) {
       // shrink
       setExpanded(false);
@@ -147,7 +144,6 @@ export default function ReviewCard({
   };
 
   const handleExpandClick = () => {
-    clearIndexCache(index);
     if (expanded) {
       // shrink
       setExpanded(false);
@@ -233,7 +229,6 @@ export default function ReviewCard({
               <FullStars
                 starsRatingTextContainer={starsRatingTextContainer}
                 expanded={expanded}
-                clearIndexCache={clearIndexCache}
                 index={index}
                 ratings={ratings}
               />

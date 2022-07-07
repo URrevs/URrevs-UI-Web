@@ -22,7 +22,6 @@ export default function PhoneReview({
   showBottomLine,
   reviewDetails,
   index,
-  clearIndexCache,
   targetProfilePath,
   userProfilePath,
   stateLikeFn,
@@ -124,7 +123,6 @@ export default function PhoneReview({
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}
-      clearIndexCache={clearIndexCache}
       reviewDetails={reviewDetails}
       isPhoneReview={true}
       targetProfilePath={targetProfilePath}
