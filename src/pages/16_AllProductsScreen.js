@@ -7,7 +7,7 @@ import {
   ListItemButton,
   ListItemText,
   Paper,
-  Typography
+  Typography,
 } from "@mui/material";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -16,7 +16,7 @@ import {
   CellMeasurer,
   CellMeasurerCache,
   List,
-  WindowScroller
+  WindowScroller,
 } from "react-virtualized";
 import { CompanyHorizontalList } from "../Components/CompanyHorizontalList/CompanyHorizontalList";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
@@ -25,7 +25,7 @@ import { PAPER_BORDER_RADIUS_DESKTOP } from "../constants";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetAllCompaniesQuery,
-  useGetAllPhonesQuery
+  useGetAllPhonesQuery,
 } from "../services/phones";
 import { productListActions } from "../store/allProductsSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -167,7 +167,7 @@ export function AllProductsScreen() {
 
   const renderProduct = (title, imgSrc, to) => {
     return (
-      <Link style={{ textDecoration: "none" }} to={to}>
+      <Link style={{ textDecoration: "inherit", color: "inherit" }} to={to}>
         <ListItem
           disablePadding
           dense
