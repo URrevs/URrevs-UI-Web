@@ -11,7 +11,6 @@ import { InteractionFooter } from "./InteractionFooter";
 export const Answer = ({
   commentId,
   date,
-  user,
   likes,
   text,
   upvoted,
@@ -26,6 +25,8 @@ export const Answer = ({
   acceptedAnswer,
   avatar,
   ownedAt,
+  userId,
+  userName,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const currentUserId = useAppSelector((state) => state.auth).uid;
@@ -86,7 +87,8 @@ export const Answer = ({
       ) : null}
       <div>
         <InteractionBody
-          user={user}
+          userName={userName}
+          userId={userId}
           likes={likes}
           date={date}
           text={text}

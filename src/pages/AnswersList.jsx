@@ -59,7 +59,6 @@ export function AnswersList({
               <CommentReply
                 replyId={comment._id}
                 date={comment.createdAt}
-                user={comment.userName}
                 likes={comment.likes}
                 text={comment.content}
                 liked={comment.liked}
@@ -67,15 +66,15 @@ export function AnswersList({
                 replyUnlike={replyUnlike}
                 commentId={comment.commentId}
                 avatar={comment.userPicture}
-                userId={comment.userId}
                 acceptedAnswerReply={comment.acceptedReply}
+                userName={comment.userName}
+                userId={comment.userId}
               />
             ) : (
               <Answer
                 commentId={comment._id}
                 text={comment.content}
                 date={comment.createdAt}
-                user={comment.userName}
                 likes={comment.upvotes}
                 upvoted={comment.upvoted}
                 commentLike={commentLike}
@@ -90,6 +89,8 @@ export function AnswersList({
                 rejectAnswer={rejectAnswer}
                 acceptedAnswer={comment.isAccepted}
                 showReply={true}
+                userName={comment.userName}
+                userId={comment.userId}
               />
             );
           }}
