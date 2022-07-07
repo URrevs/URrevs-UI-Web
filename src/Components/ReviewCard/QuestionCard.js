@@ -18,7 +18,6 @@ import CardHeader from "./CardHeader/CardHeader";
 
 export default function QuestionCard({
   ukey,
-  clearIndexCache,
   index,
   reviewDetails,
   isPhoneReview,
@@ -71,7 +70,6 @@ export default function QuestionCard({
           MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND
         )
       );
-      clearIndexCache(index);
     } else {
       setCroppedText({ pros: content, cons: "", endOfText: true });
     }
@@ -83,7 +81,6 @@ export default function QuestionCard({
   };
 
   const handleSeeMoreExpansion = () => {
-    clearIndexCache(index);
     if (croppedText.endOfText) {
       // shrink
       setExpanded(false);
@@ -115,7 +112,6 @@ export default function QuestionCard({
   };
 
   const handleExpandClick = () => {
-    clearIndexCache(index);
     if (expanded) {
       // shrink
       setExpanded(false);

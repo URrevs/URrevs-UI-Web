@@ -5,12 +5,12 @@ import {
   CellMeasurer,
   CellMeasurerCache,
   List,
-  WindowScroller
+  WindowScroller,
 } from "react-virtualized";
+import { Virtuoso } from "react-virtuoso";
 import LoadingReviewSkeleton, {
-  loadingSkeletonHeight
+  loadingSkeletonHeight,
 } from "../Components/Loaders/LoadingReviewSkeleton";
-
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -22,129 +22,46 @@ let maxIndex = 0;
 
 export default function VirtualReviewList({
   reviewsList,
-  page,
-  data,
-  error,
-  isLoading,
-  isFetching,
-  addToReviewsList,
-  increasePage,
   reviewCard,
+  endOfData,
+  loadMore,
 }) {
-  const theme = useTheme();
-  const listRef = useRef();
-  const [ex, setEx] = useState(false);
-
-  const clearCache = (index) => {
-    setEx(!ex);
-    if (index === 0) {
-      cache.clear(0);
-    } else {
-      cache.clear(index);
-    }
-  };
-
-  useEffect(() => {
-    if (data) {
-      addToReviewsList();
-      if (page < 2 && !isLoading && !isFetching) {
-        // console.log('first increase')
-        // increasePage();
-      }
-    }
-
-    return () => {
-      console.log("clear max index");
-      maxIndex = 0;
-      cache.clearAll();
-    };
-  }, [data]);
-
-  if (isLoading) {
-    return (
-      <div>
-        {[...Array(2)].map((a, index) => (
-          <LoadingReviewSkeleton key={index} />
-        ))}
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div>
-        {error.status}
-        {error.code}
-        {error.message}
-      </div>
-    );
-  }
-
-  const renderRow = ({ index, key, style, parent }) => {
-    if (
-      maxIndex !== 0 &&
-      // page >= 2 &&
-      !isLoading &&
-      !isFetching &&
-      maxIndex === reviewsList.length - 1 &&
-      data.length !== 0
-    ) {
-      increasePage();
-      maxIndex = 0;
-    }
-
-    maxIndex = Math.max(index, maxIndex);
-    return (
-      <div key={key}>
-        <CellMeasurer
-          cache={cache}
-          parent={parent}
-          columnIndex={0}
-          rowIndex={index}
-        >
-          <div style={{ ...style, direction: theme.direction }}>
-            {index >= reviewsList.length
-              ? data.length - 1 <= 0
-                ? reviewsList.length === 0 && <div>لا يوجد عناصر</div>
-                : [...Array(1)].map((a, index) => (
-                    <LoadingReviewSkeleton key={index} />
-                  ))
-              : reviewCard(index, clearCache)}
-          </div>
-        </CellMeasurer>
-      </div>
-    );
-  };
-
   return (
     <Fragment>
-      <div style={{ height: "calc(100vh)", margin: "0px 0" }}>
-        <AutoSizer>
-          {({ height, width }) => {
-            return (
-              <WindowScroller>
-                {({ height, isScrolling, registerChild, scrollTop }) => (
-                  <div ref={registerChild}>
-                    <List
-                      ref={listRef}
-                      autoHeight
-                      overscanRowCount={10}
-                      isScrolling={isScrolling}
-                      scrollTop={scrollTop}
-                      width={width}
-                      height={height}
-                      deferredMeasurementCache={cache}
-                      rowHeight={cache.rowHeight}
-                      rowCount={reviewsList.length + 1}
-                      rowRenderer={renderRow}
-                    />
-                  </div>
-                )}
-              </WindowScroller>
-            );
-          }}
-        </AutoSizer>
-      </div>
+      <Virtuoso
+        useWindowScroll
+        context={{ endOfData }}
+        data={reviewsList}
+        endReached={loadMore}
+        increaseViewportBy={{ top: 4000, bottom: 4000 }}
+        overscan={100}
+        itemContent={(index, review) => {
+          return (
+            <Fragment>
+              <div style={{ height: "10px" }}></div>
+              {reviewCard(review)}
+              <div style={{ height: "10px" }}></div>
+            </Fragment>
+          );
+        }}
+        components={{ Footer }}
+      />
     </Fragment>
   );
 }
+
+const Footer = ({ context }) => {
+  const end = context.endOfData;
+  return (
+    !end && (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <LoadingReviewSkeleton />
+      </div>
+    )
+  );
+};

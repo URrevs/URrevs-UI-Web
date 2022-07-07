@@ -82,4 +82,4 @@ export const homeApi = createApi({
   }),
 });
 //auto-generated hooks
-export const { useGetRecommendedQuery } = homeApi;
+export const { useGetRecommendedQuery, useLazyGetRecommendedQuery } = homeApi;

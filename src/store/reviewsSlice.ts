@@ -5,12 +5,14 @@ interface InitialState {
   newReviews: APIReview[];
   page: number;
   currentIndex: number;
+  reset: boolean;
 }
 
 const initialState: InitialState = {
   newReviews: [],
   page: 1,
   currentIndex: 0,
+  reset: false,
 };
 
 const reviewsSlice = createSlice({
@@ -22,8 +24,8 @@ const reviewsSlice = createSlice({
       state.newReviews.push(...loadedReviews);
     },
     clearReviews(state) {
-      console.log("clear");
       state.newReviews = [];
+      state.reset = !state.reset;
     },
     // setIsExpanded(
     //   state,

@@ -30,7 +30,7 @@ export default function CommentsList({
     : {};
 
   return (
-    <div style={desktopTheme}>
+    <div style={{ ...desktopTheme, marginTop: "16px" }}>
       {reviewCard()}
       <div style={{ padding: "0 12px" }}>
         {!isMobile && (

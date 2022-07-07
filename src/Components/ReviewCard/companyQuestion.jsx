@@ -18,7 +18,6 @@ import QuestionCard from "./QuestionCard";
 export default function CompanyQuestion({
   reviewDetails,
   index,
-  clearIndexCache,
   targetProfilePath,
   userProfilePath,
   stateLikeFn,
@@ -115,7 +114,6 @@ export default function CompanyQuestion({
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}
-      clearIndexCache={clearIndexCache}
       reviewDetails={reviewDetails}
       isPhoneReview={false}
       targetProfilePath={targetProfilePath}

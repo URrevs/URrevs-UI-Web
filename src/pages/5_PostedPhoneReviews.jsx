@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import PhoneReview from "../Components/ReviewCard/PhoneReview";
 import ROUTES_NAMES from "../RoutesNames";
 import { useGetOtherUserPhoneReviewsQuery } from "../services/phone_reviews";
@@ -18,8 +19,9 @@ export function PostedPhoneReviews() {
 
   useEffect(() => {
     return () => {
-      console.log("clear reviews");
       setPage(1);
+      setEndOfData(false);
+      console.log("clear reviews");
       dispatch(reviewsActions.clearReviews());
     };
   }, [userId]);
@@ -27,7 +29,7 @@ export function PostedPhoneReviews() {
   const { data, isLoading, isFetching, error } =
     useGetOtherUserPhoneReviewsQuery(
       { round: page, uid: userId },
-      { refetchOnMountOrArgChange: true, refetchOnFocus: true }
+      { refetchOnMountOrArgChange: true }
     );
 
   const stateLike = (id) =>
@@ -36,14 +38,17 @@ export function PostedPhoneReviews() {
   const stateUnLike = (id) =>
     dispatch(reviewsActions.setIsLiked({ id: id, isLiked: false }));
 
-  const addToReviewsList = () =>
+  const addToReviewsList = (data) => {
+    console.log(data);
+
     dispatch(
       reviewsActions.addToLoaddedReviews({
         newReviews: data,
       })
     );
+  };
 
-  const increasePage = () => setPage(page + 1);
+  const increasePage = () => setPage((page) => page + 1);
 
   const deleteReviewFromStore = (id) => {
     dispatch(reviewsActions.clearReviews());
@@ -59,39 +64,53 @@ export function PostedPhoneReviews() {
   const stateIncreaseShareCounter = (id) =>
     dispatch(reviewsActions.increaseShareCounter({ id: id }));
 
-  const reviewCard = (index, clearCache) => {
+  const reviewCard = (review) => {
     return (
       <PhoneReview
-        key={reviewsList[index]._id}
-        index={index}
+        key={review._id}
         fullScreen={false}
         isExpanded={false}
-        clearIndexCache={clearCache}
-        reviewDetails={reviewsList[index]}
+        reviewDetails={review}
         isPhoneReview={true}
-        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.REVIEWS}?pid=${reviewsList[index].targetId}`}
-        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.REVIEWS}?pid=${review.targetId}`}
+        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${review.userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
         stateShare={stateIncreaseShareCounter}
-        fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewsList[index]._id}`}
+        fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${review._id}`}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
       />
     );
   };
 
+  useEffect(() => {
+    if (data) {
+      addToReviewsList(data);
+
+      if (data.length === 0) {
+        setEndOfData(true);
+      }
+    }
+  }, [data]);
+
+  const [endOfData, setEndOfData] = useState(false);
+
+  // function loads additional comments
+  const loadMore = () => {
+    if (!endOfData && !isFetching) {
+      increasePage();
+    }
+  };
+
   return (
-    <VirtualReviewList
-      reviewCard={reviewCard}
-      reviewsList={reviewsList}
-      page={page}
-      data={data}
-      error={error}
-      isLoading={isLoading}
-      isFetching={isFetching}
-      addToReviewsList={addToReviewsList}
-      increasePage={increasePage}
-    />
+    <CustomAppBar showBackBtn showLogo showSearch showProfile>
+      <VirtualReviewList
+        endOfData={endOfData}
+        loadMore={loadMore}
+        reviewCard={reviewCard}
+        reviewsList={reviewsList}
+      />
+    </CustomAppBar>
   );
 }

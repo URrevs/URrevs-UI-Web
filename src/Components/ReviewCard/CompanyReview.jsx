@@ -21,7 +21,6 @@ import { useReportCompanyReviewMutation } from "../../services/reports";
 const CompanyReview = ({
   reviewDetails,
   index,
-  clearIndexCache,
   targetProfilePath,
   userProfilePath,
   stateLikeFn,
@@ -124,7 +123,6 @@ const CompanyReview = ({
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}
-      clearIndexCache={clearIndexCache}
       reviewDetails={reviewDetails}
       isPhoneReview={false}
       targetProfilePath={targetProfilePath}
