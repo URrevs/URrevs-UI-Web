@@ -33,10 +33,16 @@ export default function VirtualReviewList({
         context={{ endOfData }}
         data={reviewsList}
         endReached={loadMore}
-        increaseViewportBy={{ top: 5000, bottom: 5000 }}
-        overscan={200}
+        increaseViewportBy={{ top: 4000, bottom: 4000 }}
+        overscan={100}
         itemContent={(index, review) => {
-          return reviewCard(review);
+          return (
+            <Fragment>
+              <div style={{ height: "10px" }}></div>
+              {reviewCard(review)}
+              <div style={{ height: "10px" }}></div>
+            </Fragment>
+          );
         }}
         components={{ Footer }}
       />
@@ -54,7 +60,7 @@ const Footer = ({ context }) => {
           justifyContent: "center",
         }}
       >
-        <LoadingReviewSkeleton />
+        {/* <LoadingReviewSkeleton /> */}
       </div>
     )
   );
