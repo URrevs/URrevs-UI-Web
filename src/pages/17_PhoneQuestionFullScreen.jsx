@@ -19,7 +19,7 @@ import {
   useMarkAnswerAsAcceptedMutation,
   useUnLikePhoneQuestionCommentMutation,
   useUnLikePhoneQuestionReplyMutation,
-  useUnmarkAnswerAsAcceptedMutation
+  useUnmarkAnswerAsAcceptedMutation,
 } from "../services/phone_questions";
 import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -279,7 +279,7 @@ export default function PhoneQuestionFullScreen() {
           currentReviewData && (
             <PhoneQuestion
               disableElevation={!isMobile}
-              showBottomLine={true}
+              showBottomLine={!isMobile}
               key={currentReviewData._id}
               index={0}
               fullScreen={true}

@@ -234,7 +234,7 @@ export default function CompanyReviewFullScreen() {
       return (
         <CompanyReview
           disableElevation={!isMobile}
-          showBottomLine={true}
+          showBottomLine={!isMobile}
           key={currentReviewData._id}
           reviewDetails={currentReviewData}
           index={0}

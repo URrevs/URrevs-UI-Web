@@ -232,7 +232,7 @@ export default function PhoneReviewFullScreen() {
           currentReviewData && (
             <PhoneReview
               disableElevation={!isMobile}
-              showBottomLine={true}
+              showBottomLine={!isMobile}
               key={currentReviewData._id}
               index={0}
               fullScreen={true}

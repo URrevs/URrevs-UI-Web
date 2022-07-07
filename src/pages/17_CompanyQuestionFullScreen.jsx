@@ -279,7 +279,7 @@ export default function CompanyQuestionFullScreen() {
           currentReviewData && (
             <CompanyQuestion
               disableElevation={!isMobile}
-              showBottomLine={true}
+              showBottomLine={!isMobile}
               key={currentReviewData._id}
               index={0}
               fullScreen={true}
