@@ -1,10 +1,13 @@
 import { useTheme } from "@emotion/react";
 import HelpIcon from "@mui/icons-material/Help";
 import {
-  Box, IconButton,
+  Box,
+  Card,
+  Divider,
+  IconButton,
   Modal,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import React from "react";
 import { DialogText } from "../../Components/Dialogs/DialogText";
@@ -12,6 +15,7 @@ import FormikDatePicker from "../../Components/Form/DatePicker/FormikDatePicker"
 import FormikSearchComponent from "../../Components/Form/FormikSearchComponent";
 import FormikStar from "../../Components/Form/FormikStar";
 import FormikTextField from "../../Components/Form/FormikTextField";
+import { StarCounter } from "../../Components/StarCounter/StarCounter";
 import { useGetManufacturingCompanyMutation } from "../../services/phones";
 import { useSearchPhonesOnlyMutation } from "../../services/search";
 import { useAppSelector } from "../../store/hooks";
@@ -38,6 +42,8 @@ export const AddReviewTab = ({ ...props }) => {
     return state.language.textContainer;
   });
   const [open, setOpen] = React.useState(false);
+  const [count, setCount] = React.useState(0);
+  const [contribution, setContribution] = React.useState(0);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const theme = useTheme();
@@ -124,12 +130,29 @@ export const AddReviewTab = ({ ...props }) => {
   React.useEffect(() => {
     if (props.values.chooseProduct.id !== "") handleManufacturingCompany();
   }, []);
+  // Star Counter Use Effect
+  // Search Component
+
+  // Can be easily done with measuring contributions instead
+  React.useEffect(() => {
+    let sum = 0;
+    const search = props.values.chooseProduct.label.length > 1 ? sum++ : 0;
+    const refCode = props.values.invitaionCode ? sum++ : 0;
+    const date = props.values.purchaseDate.length > 1 ? sum++ : 0;
+    const battery = props.values.battery > 1 ? sum++ : 0;
+    const callsQuality = props.values.callsQuality > 1 ? sum++ : 0;
+    const camera = props.values.camera > 1 ? sum++ : 0;
+    const manufacturingQuality =
+      props.values.manufacturingQuality > 1 ? sum++ : 0;
+    const overAllExp = props.values.overAllExp > 1 ? sum++ : 0;
+    const priceQuality = props.values.priceQuality > 1 ? sum++ : 0;
+    const rateManufacturer = props.values.rateManufacturer > 1 ? sum++ : 0;
+    const userInterface = props.values.userInterface > 1 ? sum++ : 0;
+
+    console.log(sum);
+  }, [props.values]);
   return (
     <React.Fragment>
-      {/* <Stack spacing={1}>
-          <StarCounter />
-          <Divider />
-        </Stack> */}
       <Modal open={open} onClose={handleClose} dir={theme.direction}>
         <Box>
           <DialogText text={pageDictionary.referralCodeHelpPrompt} />
@@ -145,6 +168,22 @@ export const AddReviewTab = ({ ...props }) => {
           Fix: add validation to companyId probably
   
           */}
+        {/* Star Counter */}
+        <div
+          style={{
+            position: "sticky",
+            zIndex: 1000,
+            border:
+              theme.isMobile && `2px solid ${theme.palette.background.default}`,
+            backgroundColor: theme.isMobile
+              ? theme.palette.background.default
+              : theme.palette.modalColor,
+            top: theme.isMobile ? "45px" : 0,
+          }}
+        >
+          <StarCounter value={count} />
+        </div>
+        <Divider />
         <Typography variant="S18W500C050505">
           {pageDictionary.chooseProduct + ":"}
         </Typography>

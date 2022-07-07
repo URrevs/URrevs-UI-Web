@@ -19,7 +19,7 @@ const PromptStyled = styled(
   maxHeight: "77%",
   maxWidth: "450px",
   boxShadow: 24,
-  padding: 16,
+  padding: "0px 16px 16px 16px",
   borderRadius: 15,
   overflowY: "auto",
   background: theme.palette.modalColor,
@@ -46,7 +46,9 @@ export const DialogTemplate = ({ title, children, handleClose = null }) => {
               // top: 0,
             }}
           >
-            <Typography variant="S16W700C050505">{title}</Typography>
+            <Typography sx={{ paddingTop: "16px" }} variant="S16W700C050505">
+              {title}
+            </Typography>
             {handleClose ? (
               <IconButton
                 sx={{
