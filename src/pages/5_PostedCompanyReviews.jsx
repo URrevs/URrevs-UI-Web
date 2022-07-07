@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
 import ROUTES_NAMES from "../RoutesNames";
-import { useGetOtherUserCompanyReviewsQuery } from "../services/company_reviews";
+import { useLazyGetOtherUserCompanyReviewsQuery } from "../services/company_reviews";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";
@@ -19,13 +20,12 @@ export function PostedCompanyReviews() {
   const currentUser = useAppSelector((state) => state.auth);
 
   const reviewsList = useAppSelector((state) => state.reviews.newReviews);
-  const [page, setPage] = useState(1);
 
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("userId");
 
-  const { data, isLoading, isFetching, error } =
-    useGetOtherUserCompanyReviewsQuery({ round: page, uid: userId });
+  const [getReviews, { isLoading, isFetching, error }] =
+    useLazyGetOtherUserCompanyReviewsQuery();
 
   const stateLike = (id) =>
     dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
@@ -33,14 +33,12 @@ export function PostedCompanyReviews() {
   const stateUnLike = (id) =>
     dispatch(reviewsActions.setIsLiked({ id: id, isLiked: false }));
 
-  const addToReviewsList = () =>
+  const addToReviewsList = (data) =>
     dispatch(
       reviewsActions.addToLoaddedReviews({
         newReviews: data,
       })
     );
-
-  const increasePage = () => setPage(page + 1);
 
   const deleteReviewFromStore = (id) => {
     dispatch(reviewsActions.clearReviews());
@@ -56,17 +54,16 @@ export function PostedCompanyReviews() {
   const stateIncreaseShareCounter = (id) =>
     dispatch(reviewsActions.increaseShareCounter({ id: id }));
 
-  const reviewCard = (index, clearCache) => {
+  const reviewCard = (review) => {
     return (
       <CompanyReview
-        key={reviewsList[index]._id}
-        index={index}
+        key={review._id}
         fullScreen={false}
         isExpanded={false}
-        reviewDetails={reviewsList[index]}
+        reviewDetails={review}
         isPhoneReview={true}
-        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${reviewsList[index].targetId}`}
-        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+        targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${review.targetId}`}
+        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${review.userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
         stateShare={stateIncreaseShareCounter}
@@ -76,17 +73,38 @@ export function PostedCompanyReviews() {
     );
   };
 
+  const [endOfData, setEndOfData] = useState(false);
+
+  // first page
+  let p = 1;
+  // function loads additional comments
+  const loadMore = useCallback(() => {
+    if (!endOfData) {
+      getReviews({ round: p, uid: userId }).then((data) => {
+        if (data.data.length === 0) {
+          setEndOfData(true);
+        } else {
+          addToReviewsList(data.data);
+          p++;
+        }
+      });
+    }
+  }, [p, endOfData]);
+
+  // to load for the first time
+  useEffect(() => {
+    const timeout = loadMore();
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
-    <VirtualReviewList
-      reviewCard={reviewCard}
-      reviewsList={reviewsList}
-      page={page}
-      data={data}
-      error={error}
-      isLoading={isLoading}
-      isFetching={isFetching}
-      addToReviewsList={addToReviewsList}
-      increasePage={increasePage}
-    />
+    <CustomAppBar showBackBtn showLogo showSearch showProfile>
+      <VirtualReviewList
+        endOfData={endOfData}
+        loadMore={loadMore}
+        reviewCard={reviewCard}
+        reviewsList={reviewsList}
+      />
+    </CustomAppBar>
   );
 }

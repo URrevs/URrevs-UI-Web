@@ -345,10 +345,6 @@ function Reviews() {
             loadMore={loadMore}
             reviewCard={reviewCard}
             reviewsList={reviewsList}
-            error={error}
-            isLoading={isLoading}
-            isFetching={isFetching}
-            addToReviewsList={addToReviewsList}
           />
         </AlonePostsGrid>
       ) : (
@@ -375,10 +371,6 @@ function Reviews() {
             loadMore={loadMore}
             reviewCard={reviewCard}
             reviewsList={reviewsList}
-            error={error}
-            isLoading={isLoading}
-            isFetching={isFetching}
-            addToReviewsList={addToReviewsList}
           />
         </FixedGrid>
       )}
