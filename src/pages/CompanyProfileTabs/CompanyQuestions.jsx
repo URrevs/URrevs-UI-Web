@@ -101,7 +101,8 @@ export function CompanyQuestions() {
         <Answer
           commentId={reviewsList[index].acceptedAns._id}
           date={reviewsList[index].acceptedAns.createdAt}
-          user={reviewsList[index].acceptedAns.userName}
+          userId={reviewsList[index].acceptedAns._id}
+          userName={reviewsList[index].acceptedAns.userName}
           likes={reviewsList[index].acceptedAns.upvotes}
           text={reviewsList[index].acceptedAns.content}
           commentLike={likeCommentRequest}

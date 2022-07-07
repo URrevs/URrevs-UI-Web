@@ -61,7 +61,17 @@ export const InteractionCard = ({
           style={{ textDecoration: "none" }}
           to={`../${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}
         >
-          <Typography variant="S14W700C050505">{userName}</Typography>
+          <Typography
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+                textDecoration: "underline",
+              },
+            }}
+            variant="S14W700C050505"
+          >
+            {userName}
+          </Typography>
         </Link>
         {ownedAt ? (
           <Typography variant="S12W400C65676b">

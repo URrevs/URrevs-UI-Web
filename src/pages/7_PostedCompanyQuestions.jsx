@@ -97,7 +97,8 @@ export function PostedCompanyQuestions() {
         <Answer
           commentId={reviewsList[index].acceptedAns._id}
           date={reviewsList[index].acceptedAns.createdAt}
-          user={reviewsList[index].acceptedAns.userName}
+          userId={reviewsList[index].acceptedAns._id}
+          userName={reviewsList[index].acceptedAns.userName}
           likes={reviewsList[index].acceptedAns.upvotes}
           text={reviewsList[index].acceptedAns.content}
           commentLike={likeCommentRequest}
@@ -134,7 +135,10 @@ export function PostedCompanyQuestions() {
         stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
-        acceptedAnswerWidget={ reviewsList[index].acceptedAns &&acceptedAnswerWidget.bind(null, index)}
+        acceptedAnswerWidget={
+          reviewsList[index].acceptedAns &&
+          acceptedAnswerWidget.bind(null, index)
+        }
       />
     );
   };

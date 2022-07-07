@@ -171,7 +171,8 @@ function Reviews() {
             <Answer
               commentId={currentElement.acceptedAns._id}
               date={currentElement.acceptedAns.createdAt}
-              user={currentElement.acceptedAns.userName}
+              userId={currentElement.acceptedAns._id}
+              userName={currentElement.acceptedAns.userName}
               likes={currentElement.acceptedAns.upvotes}
               text={currentElement.acceptedAns.content}
               commentLike={likeCommentRequest}
@@ -250,7 +251,8 @@ function Reviews() {
             <Answer
               commentId={currentElement.acceptedAns._id}
               date={currentElement.acceptedAns.createdAt}
-              user={currentElement.acceptedAns.userName}
+              userId={currentElement.acceptedAns._id}
+              userName={currentElement.acceptedAns.userName}
               likes={currentElement.acceptedAns.upvotes}
               text={currentElement.acceptedAns.content}
               commentLike={likeCommentRequest}
