@@ -85,28 +85,28 @@ export function MyPhonesQuestions() {
   };
 
   // add accepted answer if found
-  const acceptedAnswerWidget = (index) => {
-    if (reviewsList[index].acceptedAns) {
+  const acceptedAnswerWidget = (review) => {
+    if (review.acceptedAns) {
       return (
         <Answer
-          commentId={reviewsList[index].acceptedAns._id}
-          date={reviewsList[index].acceptedAns.createdAt}
-          userId={reviewsList[index].acceptedAns._id}
-          userName={reviewsList[index].acceptedAns.userName}
-          likes={reviewsList[index].acceptedAns.upvotes}
-          text={reviewsList[index].acceptedAns.content}
+          commentId={review.acceptedAns._id}
+          date={review.acceptedAns.createdAt}
+          userId={review.acceptedAns._id}
+          userName={review.acceptedAns.userName}
+          likes={review.acceptedAns.upvotes}
+          text={review.acceptedAns.content}
           commentLike={likeCommentRequest}
           commentUnlike={unLikeCommentRequest}
-          avatar={reviewsList[index].acceptedAns.picture}
-          ownerId={reviewsList[index].acceptedAns.userId}
-          ownedAt={reviewsList[index].acceptedAns.ownedAt}
-          questionOwnerId={reviewsList[index].userId}
-          questionId={reviewsList[index]._id}
+          avatar={review.acceptedAns.picture}
+          ownerId={review.acceptedAns.userId}
+          ownedAt={review.acceptedAns.ownedAt}
+          questionOwnerId={review.userId}
+          questionId={review._id}
           acceptAnswer={() => {}}
           rejectAnswer={() => {}}
           acceptedAnswer={true}
           showReply={false}
-          upvoted={reviewsList[index].acceptedAns.upvoted}
+          upvoted={review.acceptedAns.upvoted}
         />
       );
     }
@@ -115,42 +115,55 @@ export function MyPhonesQuestions() {
   const stateIncreaseShareCounter = (id) =>
     dispatch(questionsActions.increaseShareCounter({ id: id }));
 
-  const reviewCard = (index, clearCache) => {
+  const reviewCard = (review) => {
     return (
       <PhoneQuestion
-        key={reviewsList[index]._id}
+        key={review._id}
         index={0}
         fullScreen={false}
         isExpanded={false}
-        reviewDetails={reviewsList[index]}
+        reviewDetails={review}
         isPhoneReview={true}
-        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.QUESTIONS}?pid=${reviewsList[index].targetId}`}
-        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.QUESTIONS}?pid=${review.targetId}`}
+        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${review.userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
         stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
         acceptedAnswerWidget={
-          reviewsList[index].acceptedAns &&
-          acceptedAnswerWidget.bind(null, index)
+          review.acceptedAns && acceptedAnswerWidget.bind(null, review)
         }
       />
     );
   };
 
+  useEffect(() => {
+    if (data) {
+      addToReviewsList(data);
+
+      if (data.length === 0) {
+        setEndOfData(true);
+      }
+    }
+  }, [data]);
+
+  const [endOfData, setEndOfData] = useState(false);
+
+  // function loads additional comments
+  const loadMore = () => {
+    if (!endOfData && !isFetching) {
+      increasePage();
+    }
+  };
+
   return (
     <CustomAppBar showLabel label="الاسئلة المطروحة على منتجاتي" showBackBtn>
       <VirtualReviewList
+        endOfData={endOfData}
+        loadMore={loadMore}
         reviewCard={reviewCard}
         reviewsList={reviewsList}
-        page={page}
-        data={data}
-        isFetching={isFetching}
-        error={error}
-        isLoading={isLoading}
-        addToReviewsList={addToReviewsList}
-        increasePage={increasePage}
       />
     </CustomAppBar>
   );
