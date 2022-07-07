@@ -100,13 +100,11 @@ export function PostedCompanyReviews() {
   }, [userId]);
 
   return (
-    <CustomAppBar showBackBtn showLogo showSearch showProfile>
       <VirtualReviewList
         endOfData={endOfData}
         loadMore={loadMore}
         reviewCard={reviewCard}
         reviewsList={reviewsList}
       />
-    </CustomAppBar>
   );
 }

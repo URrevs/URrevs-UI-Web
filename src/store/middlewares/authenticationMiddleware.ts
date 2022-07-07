@@ -1,7 +1,9 @@
+import type { Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
 import { isRejectedWithValue } from "@reduxjs/toolkit";
-import type { MiddlewareAPI, Middleware } from "@reduxjs/toolkit";
-import { snackbarActions } from "../uiSnackbarSlice";
+import { getMutationCacheKey } from "@reduxjs/toolkit/dist/query/core/buildSlice";
+import { authActions } from "../authSlice";
 import { RootState } from "../store";
+import { snackbarActions } from "../uiSnackbarSlice";
 
 export const rtkQueryErrorLogger: Middleware =
   (api: MiddlewareAPI) => (next) => (action) => {
@@ -11,14 +13,13 @@ export const rtkQueryErrorLogger: Middleware =
 
     // RTK Query uses `createAsyncThunk` from redux-toolkit under the hood, so we're able to utilize these matchers!
     if (isRejectedWithValue(action)) {
+      console.warn(action);
       const serverMessage: string = action.payload.data.status;
 
-      dispatch(
-        snackbarActions.showSnackbar({
-          message: "message",
-        })
-      );
-      console.warn(action);
+      if (serverMessage === "invalid token") {
+        // to get new token
+        dispatch(authActions.toggleRefetch());
+      }
     }
 
     return next(action);

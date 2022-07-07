@@ -50,7 +50,7 @@ import Profile from "./pages/Profile";
 import { SplashScreen } from "./pages/SplashScreen";
 import ROUTES_NAMES from "./RoutesNames";
 import { authActions } from "./store/authSlice";
-import { useAppDispatch } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { COLORS } from "./Styles/main_light_colors";
 // OUR_TRACKING_ID
 import ReactGA from "react-ga";
@@ -296,6 +296,7 @@ function App() {
   );
 
   const dispatch = useAppDispatch();
+  const refetchToken = useAppSelector((state) => state.auth.refetch);
 
   const [getUserProfile, { isLoading }] = useLazyXauthenticateQuery();
 
@@ -306,8 +307,10 @@ function App() {
       if (user) {
         // console.log(storeUser);
 
-        const { data } = await getUserProfile(user.accessToken);
-        if (data) {
+        if (refetchToken) {
+          console.log(user.accessToken);
+          const { data } = await getUserProfile(user.accessToken);
+
           dispatch(
             authActions.login({
               isLoggedIn: true,
@@ -320,6 +323,7 @@ function App() {
               photo: data.profile.picture,
               name: data.profile.name,
               points: data.profile.points,
+              refetch: false,
             })
           );
           setFirebaseIsLoading(false);
@@ -333,7 +337,7 @@ function App() {
     return () => {
       unregisterObserver();
     };
-  }, [dispatch]);
+  }, [dispatch, refetchToken]);
 
   return (
     <ThemeProvider theme={theme}>

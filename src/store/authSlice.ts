@@ -15,6 +15,7 @@ const initialAuthState: User = {
   points: 0,
   isAdmin: false,
   expiration: "",
+  refetch: true,
 };
 
 const authSlice = createSlice({
@@ -38,6 +39,7 @@ const authSlice = createSlice({
       state.refCode = action.payload.refCode;
       state.points = action.payload.points;
       state.isAdmin = action.payload.isAdmin;
+      state.refetch = false;
     },
     logout: (state) => {
       state.isLoggedIn = false;
@@ -54,6 +56,10 @@ const authSlice = createSlice({
       state.refCode = "";
       state.points = 0;
       state.isAdmin = false;
+    },
+    toggleRefetch: (state) => {
+      state.refetch = true;
+      state.apiToken = "";
     },
   },
 });

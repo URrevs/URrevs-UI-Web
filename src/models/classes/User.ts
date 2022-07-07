@@ -13,6 +13,7 @@ export default class User {
   points: number = 0;
   isAdmin: boolean = false;
   expiration: string;
+  refetch: boolean = false;
 
   constructor(data: APIUser) {
     this.uid = data._id;
