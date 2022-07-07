@@ -352,6 +352,7 @@ export const {
   useGetOtherUserPhoneQuestionsQuery,
   useAddCommentOnPhoneQuestionMutation,
   useGetPhoneQuestionCommentsQuery,
+  useLazyGetPhoneQuestionCommentsQuery,
   useAddReplyOnPhoneQuestionMutation,
   useLikePhoneQuestionCommentMutation,
   useUnLikePhoneQuestionCommentMutation,

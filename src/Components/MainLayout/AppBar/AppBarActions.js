@@ -1,26 +1,16 @@
 import { useTheme } from "@emotion/react";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import LightModeIcon from "@mui/icons-material/LightMode";
 import SearchIcon from "@mui/icons-material/Search";
-import { styled } from "@mui/material/styles";
+import { Avatar, Box } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import { makeStyles } from "@mui/styles";
-import * as React from "react";
+import { styled } from "@mui/material/styles";
 import { Fragment } from "react";
-import { isDarkActions } from "../../../store/darkModeSlice";
+import { Link, useNavigate } from "react-router-dom";
+import ROUTES_NAMES from "../../../RoutesNames";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { languageActions } from "../../../store/languageSlice";
-import {
-  Avatar,
-  Box,
-  InputAdornment,
-  TextField,
-  useMediaQuery,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { regDialogActions } from "../../../store/uiRegisterDialogSlice";
-import ROUTES_NAMES from "../../../RoutesNames";
+import { ConditionalLink } from "../../ConditionalLink";
 import { SearchSuggestion } from "./SearchSuggestion";
 
 const circleWidth = 35;
@@ -48,7 +38,6 @@ export const AppBarActions = ({
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [searchSuggestion, setSearchSuggestion] = React.useState(false);
 
   const language = useAppSelector((state) => state.language.language);
   const isDark = useAppSelector((state) => state.darkMode.isDark);
@@ -61,7 +50,7 @@ export const AppBarActions = ({
   const isLoggedIn = user.isLoggedIn;
 
   const navigateToProfilePage = () => {
-    navigate(`/${ROUTES_NAMES.USER_PROFILE}?userId=${user.uid}`);
+    navigate();
   };
   const navigateToSearchPage = () => {
     navigate(`/${ROUTES_NAMES.SEARCH}`);
@@ -95,20 +84,26 @@ export const AppBarActions = ({
             )}
         {/* user account */}
         {showProfile && (
-          <CircleBtn
-            onClick={
-              !isLoggedIn ? handleRegestrationOpen : navigateToProfilePage
-            }
+          <ConditionalLink
+            to={`/${ROUTES_NAMES.USER_PROFILE}?userId=${user.uid}`}
+            condition={isLoggedIn}
           >
-            {!isLoggedIn ? (
-              <AccountCircle />
-            ) : (
-              <Avatar
-                sx={{ width: circleWidth, height: circleHeight }}
-                src={photo}
-              />
-            )}
-          </CircleBtn>
+            <CircleBtn
+              onClick={
+                // !isLoggedIn && handleRegestrationOpen
+                () => {}
+              }
+            >
+              {!isLoggedIn ? (
+                <AccountCircle />
+              ) : (
+                <Avatar
+                  sx={{ width: circleWidth, height: circleHeight }}
+                  src={photo}
+                />
+              )}
+            </CircleBtn>
+          </ConditionalLink>
         )}
         {/* // language */}
         {showLanguage && (
@@ -124,16 +119,15 @@ export const AppBarActions = ({
             {language !== "en" ? "En" : "ع"}
           </CircleBtn>
         )}
+        {/* TODO: add the condition */}
         {/* // darkMode */}
-        {showDark && (
-          <CircleBtn
-            onClick={() => {
-              dispatch(isDarkActions.switchMode());
-            }}
-          >
-            {isDark ? <DarkModeIcon /> : <LightModeIcon />}
-          </CircleBtn>
-        )}
+        {/* <CircleBtn
+          onClick={() => {
+            dispatch(isDarkActions.changeMode(isDark ? "light" : "dark"));
+          }}
+        >
+          {isDark ? <DarkModeIcon /> : <LightModeIcon />}
+        </CircleBtn> */}
       </Box>
       {/* {theme.isMobile ? null : <SearchSuggestion />} */}
     </Fragment>

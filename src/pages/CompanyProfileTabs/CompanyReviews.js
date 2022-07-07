@@ -98,7 +98,6 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
     } else {
       return (
         <div>
-          <div style={{ height: "20px" }}></div>
           <CompanyOverviewCard
             companyName={companyStatsData.name}
             type={textContainer.company}
@@ -174,6 +173,8 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
                   width: "inherit",
                 }}
               >
+                <div style={{ height: "20px" }}></div>
+
                 {companyOverView()}
               </Box>
             </Grid>

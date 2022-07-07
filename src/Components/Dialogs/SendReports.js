@@ -86,8 +86,9 @@ export const SendReports = () => {
             onSubmit={async (values, { setSubmitting }) => {
               const reportContent = {
                 reason: parseInt(values[fieldNames.radioGroup]),
-                info: values[fieldNames.additionalInfoTxtField],
               };
+              if (values[fieldNames.additionalInfoTxtField] !== "")
+                reportContent.info = values[fieldNames.additionalInfoTxtField];
               await onSubmitAction(reportContent);
               setSubmitting(false);
             }}

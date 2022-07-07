@@ -1,18 +1,19 @@
+import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { CellMeasurerCache } from "react-virtualized";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
-import { loadingSkeletonHeight } from "../Components/Loaders/LoadingReviewSkeleton";
+import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
+import { useShowSnackbar } from "../hooks/useShowSnackbar";
 import { AnswersList } from "../pages/AnswersList";
 import ROUTES_NAMES from "../RoutesNames";
 import {
   useAddCommentOnPhoneQuestionMutation,
   useAddReplyOnPhoneQuestionMutation,
   useGetCertainPhoneQuestionQuery,
-  useGetPhoneQuestionCommentsQuery,
+  useLazyGetPhoneQuestionCommentsQuery,
   useLikePhoneQuestionCommentMutation,
   useLikePhoneQuestionReplyMutation,
   useMarkAnswerAsAcceptedMutation,
@@ -24,14 +25,12 @@ import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
 
-const cache = new CellMeasurerCache({
-  fixedWidth: true,
-  fixedHeight: false,
-  defaultHeight: loadingSkeletonHeight,
-});
-
 export default function PhoneQuestionFullScreen() {
   const dispatch = useAppDispatch();
+
+  const showSnackbar = useShowSnackbar();
+
+  const isMobile = useTheme().isMobile;
 
   const navigate = useNavigate();
 
@@ -50,19 +49,16 @@ export default function PhoneQuestionFullScreen() {
   const [searchParams] = useSearchParams();
   const reviewId = searchParams.get("id");
 
-  const [page, setPage] = useState(1);
+  const currentReviewData = useAppSelector(
+    (state) => state.questions.newReviews
+  )[0];
 
-  const { data, isLoading, isFetching, error } =
-    useGetPhoneQuestionCommentsQuery({ reviewId, round: page });
+  const [getComments, {}] = useLazyGetPhoneQuestionCommentsQuery();
 
   // add comment
-  const [addCommentLoading, setAddCommentLoading] = useState(false);
-  const [addCommentError, setAddCommentError] = useState(null);
   const [addCommentOnPhoneReview] = useAddCommentOnPhoneQuestionMutation();
 
   // add reply
-  const [addReplyLoading, setAddReplyLoading] = useState(false);
-  const [addReplyError, setAddReplyError] = useState(null);
   const [addReplyOnPhoneReview] = useAddReplyOnPhoneQuestionMutation();
 
   // like comment
@@ -81,33 +77,12 @@ export default function PhoneQuestionFullScreen() {
   //reject answer
   const [rejectAnswer] = useUnmarkAnswerAsAcceptedMutation();
 
-  const [ex, setEx] = useState(false);
-  const clearCache = (index) => {
-    setEx(!ex);
-    if (index === 0) {
-      cache.clear(0);
-    } else {
-      cache.clear(index);
-    }
-  };
-
-  // get this review from store
-  // const currentReview = useAppSelector(
-  //   (state) => state.reviews.newReviews
-  // ).find((element) => {
-  //   return element._id === reviewId;
-  // });
-
   // get review from server
   const {
     data: currentReview,
     isLoading: reviewLoading,
     error: reviewError,
   } = useGetCertainPhoneQuestionQuery(reviewId);
-
-  const currentReviewData = useAppSelector(
-    (state) => state.questions.newReviews
-  )[0];
 
   useEffect(() => {
     if (currentReview && currentReview.acceptedAns) {
@@ -191,8 +166,6 @@ export default function PhoneQuestionFullScreen() {
     dispatch(answersListActions.setIsAccepted({ id: id, isAccepted: false }));
 
   const acceptAnswerRequest = (questionId, answerId) => {
-    console.log("aa");
-
     acceptAnswer({
       questionId: questionId,
       answerId: answerId,
@@ -202,7 +175,6 @@ export default function PhoneQuestionFullScreen() {
   };
 
   const rejectAnswerRequest = (questionId, answerId) => {
-    console.log("aa");
     rejectAnswer({
       questionId: questionId,
       answerId: answerId,
@@ -211,22 +183,20 @@ export default function PhoneQuestionFullScreen() {
     });
   };
 
-  const addToLoadedComments = () => {
+  const addToLoadedComments = (comment) => {
     dispatch(
       answersListActions.addToLoaddedComments({
-        newComments: data,
+        newComments: comment,
       })
     );
   };
 
-  const addOneCommentToLoadedComments = (comment, index) => {
+  const addOneCommentToLoadedComments = (comment) => {
     dispatch(
       answersListActions.addNewCommentLocally({
         newComment: comment,
       })
     );
-    // clear 0 cache
-    cache.clearAll();
   };
   const addOneReplyToLoadedComments = (comment) => {
     dispatch(
@@ -234,28 +204,16 @@ export default function PhoneQuestionFullScreen() {
         newComment: comment,
       })
     );
-    // clear 0 cache
-    cache.clearAll();
   };
 
-  const increasePage = () => setPage(page + 1);
-
   const submitCommentHandler = async (e) => {
-    e.preventDefault();
-
     try {
-      // scroll to top
-      window.scrollTo(0, 0);
-
-      setAddCommentLoading(true);
-
       const response = await addCommentOnPhoneReview({
         reviewId: reviewId,
-        content: e.target.comment.value,
+        content: e,
         phoneId: currentReviewData.targetId,
+        phoneName: currentReviewData.targetName,
       });
-
-      setAddCommentLoading(false);
 
       // add comment to store
       const comment = {
@@ -264,7 +222,7 @@ export default function PhoneQuestionFullScreen() {
         userId: currentUser.uid,
         userName: currentUser.name,
         picture: currentUser.photo,
-        content: e.target.comment.value,
+        content: e,
         createdAt: new Date(),
         likes: 0,
         liked: false,
@@ -272,19 +230,15 @@ export default function PhoneQuestionFullScreen() {
 
       addOneCommentToLoadedComments(comment);
     } catch (e) {
-      setAddCommentLoading(false);
-      setAddCommentError(e);
-      console.log(e);
+      showSnackbar(e.data.status);
     }
   };
 
   const submitReplyHandler = async (e, commentId) => {
-    e.preventDefault();
-
     try {
       const response = await addReplyOnPhoneReview({
         commentId: commentId,
-        reply: e.target.comment.value,
+        reply: e,
       });
 
       // add reply to store
@@ -293,7 +247,7 @@ export default function PhoneQuestionFullScreen() {
         userId: currentUser.uid,
         userName: currentUser.name,
         userPicture: currentUser.photo,
-        content: e.target.comment.value,
+        content: e,
         createdAt: new Date(),
         likes: 0,
         liked: false,
@@ -307,7 +261,9 @@ export default function PhoneQuestionFullScreen() {
     }
   };
 
-  const deleteReviewFromStore = (id) => {};
+  const deleteReviewFromStore = (id) => {
+    navigate(-1);
+  };
 
   const stateIncreaseShareCounter = (id) =>
     dispatch(questionsActions.increaseShareCounter({ id: id }));
@@ -322,11 +278,12 @@ export default function PhoneQuestionFullScreen() {
         ) : (
           currentReviewData && (
             <PhoneQuestion
+              disableElevation={!isMobile}
+              showBottomLine={!isMobile}
               key={currentReviewData._id}
               index={0}
               fullScreen={true}
               isExpanded={true}
-              clearIndexCache={clearCache}
               reviewDetails={currentReviewData}
               isPhoneReview={true}
               targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.QUESTIONS}?pid=${currentReviewData.targetId}`}
@@ -343,56 +300,63 @@ export default function PhoneQuestionFullScreen() {
     );
   };
 
-  return (
-    <FixedGrid>
-      <AlonePostsGrid>
-        <Box>
-          {reviewLoading ? (
-            <div>Loading review...</div>
-          ) : reviewError ? (
-            <div>Error</div>
-          ) : (
-            currentReviewData && (
-              <AnswersList
-                reviewCard={reviewCard}
-                commentsList={commentsList}
-                page={page}
-                data={data}
-                error={error}
-                isLoading={isLoading}
-                isFetching={isFetching}
-                commentLike={likeCommentRequest}
-                commentUnlike={unLikeCommentRequest}
-                replyLike={likeReplyRequest}
-                replyUnlike={unLikeReplyRequest}
-                addToReviewsList={addToLoadedComments}
-                increasePage={increasePage}
-                cache={cache}
-                clearCache={clearCache}
-                submitReplyHandler={submitReplyHandler}
-                acceptAnswer={acceptAnswerRequest}
-                rejectAnswer={rejectAnswerRequest}
-                questionOwnerId={currentReviewData.userId}
-                questionId={currentReviewData._id}
-              />
-            )
-          )}
+  const [endOfData, setEndOfData] = useState(false);
 
-          <div
-            style={{
-              position: "fixed",
-              zIndex: 1000,
-              bottom: 0,
-            }}
-          >
-            <div>
-              <form onSubmit={submitCommentHandler}>
-                <input id="comment" />
-              </form>
-            </div>
-          </div>
-        </Box>
-      </AlonePostsGrid>
-    </FixedGrid>
+  // first page
+  let p = 1;
+  // function loads additional comments
+  const loadMore = useCallback(() => {
+    if (!endOfData) {
+      getComments({ reviewId, round: p }).then((data) => {
+        if (data.data.length === 0) {
+          setEndOfData(true);
+        } else {
+          addToLoadedComments(data.data);
+          p++;
+        }
+      });
+    }
+  }, [p, endOfData]);
+
+  // to load for the first time
+  useEffect(() => {
+    const timeout = loadMore();
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return (
+    <CustomAppBar showBackBtn showProfile>
+      <FixedGrid>
+        <AlonePostsGrid>
+          <Box>
+            {reviewLoading ? (
+              <div>Loading review...</div>
+            ) : reviewError ? (
+              <div>Error</div>
+            ) : (
+              currentReviewData && (
+                <AnswersList
+                  reviewCard={reviewCard}
+                  commentsList={commentsList}
+                  commentLike={likeCommentRequest}
+                  commentUnlike={unLikeCommentRequest}
+                  replyLike={likeReplyRequest}
+                  replyUnlike={unLikeReplyRequest}
+                  addToReviewsList={addToLoadedComments}
+                  submitReplyHandler={submitReplyHandler}
+                  acceptAnswer={acceptAnswerRequest}
+                  rejectAnswer={rejectAnswerRequest}
+                  questionOwnerId={currentReviewData.userId}
+                  questionId={currentReviewData._id}
+                  endOfData={endOfData}
+                  loadMore={loadMore}
+                  submitCommentHandler={submitCommentHandler}
+                />
+              )
+            )}
+          </Box>
+        </AlonePostsGrid>
+      </FixedGrid>
+    </CustomAppBar>
   );
 }

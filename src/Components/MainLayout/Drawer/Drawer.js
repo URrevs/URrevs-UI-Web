@@ -34,6 +34,9 @@ const openedMixin = (theme) => ({
 
 const closedMixin = (theme) => ({
   backgroundColor: theme.palette.drawer.drawerColor,
+  borderColor: theme.palette.drawer.drawerColor,
+  overflow: "none",
+  textOverflow: "ellipsis",
   transition: theme.transitions.create(["width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -50,6 +53,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
+
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
@@ -60,7 +64,9 @@ const PerDrawer = styled(
 )(({ theme, open }) => ({
   zIndex: theme.drawer.zIndex,
   whiteSpace: "nowrap",
+  backgroundColor: "#FFF",
   boxSizing: "border-box",
+
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),

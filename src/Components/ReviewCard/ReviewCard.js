@@ -306,6 +306,7 @@ export default function ReviewCard({
             firstButtonPressedText={textContainer.liked}
             navigateToFullScreen={navigateToFullScreen}
             shareBtnHandler={shareBtnFn}
+            isReview={true}
           />
           {showBottomLine && (
             // divider

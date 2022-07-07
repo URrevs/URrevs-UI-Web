@@ -15,7 +15,7 @@
   "share": "Share",
   "userInterface": "User Interface",
   "iDontLikeThis": "I don't like this",
-  "reply": "reply",
+  "reply": "Reply",
   "moreComments": "More comments",
   "CPU": "CPU",
   "GPS": "GPS",
@@ -310,5 +310,6 @@
   "hideContent": "Hide content",
   "additionalInfoShallBeEntered": "Additional Info shall be entered when choosing \"other\" as a complaint reason",
   "successfullyReported": "Successfully reported",
-  "youHaveSelectedDateBeforePhoneRelease": "You have entered a date before the phone release."
+  "youHaveSelectedDateBeforePhoneRelease": "You have entered a date before the phone release.",
+  "reviewNow": "Review Now"
 }

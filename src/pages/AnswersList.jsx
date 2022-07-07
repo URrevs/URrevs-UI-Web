@@ -1,170 +1,119 @@
 import { useTheme } from "@emotion/react";
-import { Fragment, useEffect, useRef } from "react";
-import {
-  AutoSizer,
-  CellMeasurer,
-  List,
-  WindowScroller
-} from "react-virtualized";
+import { Fragment } from "react";
+import { Virtuoso } from "react-virtuoso";
 import { Answer } from "../Components/Interactions/Answer";
 import { CommentReply } from "../Components/Interactions/CommentReply";
-import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
-
-let maxIndex = 0;
+import { PostingField } from "../Components/PostingComponents/PostingField";
 
 export function AnswersList({
   commentsList,
-  page,
-  data,
-  error,
-  isLoading,
-  isFetching,
   commentLike,
   commentUnlike,
   replyLike,
   replyUnlike,
-  addToReviewsList,
-  increasePage,
   reviewCard,
-  cache,
-  clearCache,
   submitReplyHandler,
   acceptAnswer,
   rejectAnswer,
   questionOwnerId,
   questionId,
+  loadMore,
+  endOfData,
+  submitCommentHandler,
 }) {
   const theme = useTheme();
-  const listRef = useRef();
+  const isMobile = theme.isMobile;
 
-  useEffect(() => {
-    if (data) {
-      addToReviewsList();
-      if (page < 2 && !isLoading && !isFetching) {
-        increasePage();
+  const desktopTheme = !isMobile
+    ? {
+        background: theme.palette.reviewCard.reviewCardColor,
+        padding: "0px 4px 4px 4px",
+        borderRadius: "10px",
+        marginBottom: "10px",
       }
-    }
-  }, [data]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return (
-      <div>
-        {error.status}
-        {error.code}
-        {error.message}
-      </div>
-    );
-  }
-
-  const renderRow = ({ index, key, style, parent }) => {
-    if (
-      maxIndex !== 0 &&
-      page >= 2 &&
-      !isLoading &&
-      !isFetching &&
-      maxIndex === commentsList.length &&
-      data.length !== 0
-    ) {
-      maxIndex = 0;
-      increasePage();
-    }
-    maxIndex = Math.max(index, maxIndex);
-
-    return index < commentsList.length ? (
-      <div
-        key={key}
-        style={{
-          ...style,
-          direction: theme.direction,
-        }}
-      >
-        {
-          <CellMeasurer
-            cache={cache}
-            parent={parent}
-            columnIndex={0}
-            rowIndex={index}
-          >
-            <div>
-              {commentsList[index].isReply ? (
-                <CommentReply
-                  replyId={commentsList[index]._id}
-                  date={commentsList[index].createdAt}
-                  user={commentsList[index].userName}
-                  likes={commentsList[index].likes}
-                  text={commentsList[index].content}
-                  liked={commentsList[index].liked}
-                  replyLike={replyLike}
-                  replyUnlike={replyUnlike}
-                  commentId={commentsList[index].commentId}
-                  avatar={commentsList[index].userPicture}
-                  userId={commentsList[index].userId}
-                />
-              ) : (
-                <Answer
-                  commentId={commentsList[index]._id}
-                  date={commentsList[index].createdAt}
-                  user={commentsList[index].userName}
-                  likes={commentsList[index].upvotes}
-                  text={commentsList[index].content}
-                  upvoted={commentsList[index].upvoted}
-                  commentLike={commentLike}
-                  commentUnlike={commentUnlike}
-                  submitReplyHandler={submitReplyHandler}
-                  avatar={commentsList[index].picture}
-                  ownerId={commentsList[index].userId}
-                  ownedAt={commentsList[index].ownedAt}
-                  questionOwnerId={questionOwnerId}
-                  questionId={questionId}
-                  acceptAnswer={acceptAnswer}
-                  rejectAnswer={rejectAnswer}
-                  acceptedAnswer={commentsList[index].isAccepted}
-                  showReply={true}
-                />
-              )}
-            </div>
-          </CellMeasurer>
-        }
-      </div>
-    ) : null;
-  };
+    : {};
 
   return (
-    <Fragment>
-      <CustomAppBar showBackBtn showProfile>
-        <div style={{ height: "calc(100vh)", margin: "55px 0" }}>
-          {reviewCard()}
-          <AutoSizer>
-            {({ height, width }) => {
-              return (
-                <WindowScroller>
-                  {({ height, isScrolling, registerChild, scrollTop }) => (
-                    <div ref={registerChild}>
-                      <List
-                        ref={listRef}
-                        autoHeight
-                        overscanRowCount={10}
-                        isScrolling={isScrolling}
-                        scrollTop={scrollTop}
-                        width={width}
-                        height={height}
-                        deferredMeasurementCache={cache}
-                        rowHeight={cache.rowHeight}
-                        rowCount={commentsList.length + 1}
-                        rowRenderer={renderRow}
-                      />
-                    </div>
-                  )}
-                </WindowScroller>
-              );
-            }}
-          </AutoSizer>
-        </div>
-      </CustomAppBar>
-    </Fragment>
+    <div style={desktopTheme}>
+      {reviewCard()}
+      <div style={{ padding: "0 12px" }}>
+        {!isMobile && (
+          <Fragment>
+            <PostingField
+              avatar={true}
+              placeholder="اكتب اجابة"
+              onSubmit={(comment) => submitCommentHandler(comment)}
+            />
+            <br />
+          </Fragment>
+        )}
+        <Virtuoso
+          useWindowScroll
+          context={{ endOfData }}
+          data={commentsList}
+          endReached={loadMore}
+          increaseViewportBy={{ top: 2500, bottom: 2500 }}
+          overscan={20}
+          itemContent={(index, comment) => {
+            return comment.isReply ? (
+              <CommentReply
+                replyId={comment._id}
+                date={comment.createdAt}
+                likes={comment.likes}
+                text={comment.content}
+                liked={comment.liked}
+                replyLike={replyLike}
+                replyUnlike={replyUnlike}
+                commentId={comment.commentId}
+                avatar={comment.userPicture}
+                acceptedAnswerReply={comment.acceptedReply}
+                userName={comment.userName}
+                userId={comment.userId}
+              />
+            ) : (
+              <Answer
+                commentId={comment._id}
+                text={comment.content}
+                date={comment.createdAt}
+                likes={comment.upvotes}
+                upvoted={comment.upvoted}
+                commentLike={commentLike}
+                commentUnlike={commentUnlike}
+                submitReplyHandler={submitReplyHandler}
+                avatar={comment.picture}
+                ownerId={comment.userId}
+                ownedAt={comment.ownedAt}
+                questionOwnerId={questionOwnerId}
+                questionId={questionId}
+                acceptAnswer={acceptAnswer}
+                rejectAnswer={rejectAnswer}
+                acceptedAnswer={comment.isAccepted}
+                showReply={true}
+                userName={comment.userName}
+                userId={comment.userId}
+              />
+            );
+          }}
+          components={{ Footer }}
+        />
+      </div>
+    </div>
   );
 }
+
+const Footer = ({ context }) => {
+  const end = context.endOfData;
+  return (
+    !end && (
+      <div
+        style={{
+          padding: "2rem",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        Loading...
+      </div>
+    )
+  );
+};

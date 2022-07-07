@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Answer } from "../Components/Interactions/Answer";
 import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
 import ROUTES_NAMES from "../RoutesNames";
@@ -134,7 +134,10 @@ export function PostedPhoneQuestions() {
         stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
-        acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}
+        acceptedAnswerWidget={
+          reviewsList[index].acceptedAns &&
+          acceptedAnswerWidget.bind(null, index)
+        }
       />
     );
   };
