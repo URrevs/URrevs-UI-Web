@@ -16,17 +16,18 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    console.log("clear reviews");
-    dispatch(reviewsActions.clearReviews());
-  }, []);
-
   let reviewsList = useAppSelector((state) => state.reviews.newReviews);
   const [page, setPage] = useState(1);
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const [searchParams] = useSearchParams();
   const cid = searchParams.get("cid");
+
+  useEffect(() => {
+    console.log("clear reviews");
+    setPage(1);
+    dispatch(reviewsActions.clearReviews());
+  }, [cid]);
 
   const { data, isLoading, isFetching, error } = useGetCompanyReviewsQuery({
     round: page,

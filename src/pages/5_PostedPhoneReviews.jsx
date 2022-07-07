@@ -10,20 +10,25 @@ import VirtualReviewList from "./VirtualListWindowScroll";
 export function PostedPhoneReviews() {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    console.log("clear reviews");
-
-    dispatch(reviewsActions.clearReviews());
-  }, []);
-
   const reviewsList = useAppSelector((state) => state.reviews.newReviews);
   const [page, setPage] = useState(1);
 
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("userId");
 
+  useEffect(() => {
+    return () => {
+      console.log("clear reviews");
+      setPage(1);
+      dispatch(reviewsActions.clearReviews());
+    };
+  }, [userId]);
+
   const { data, isLoading, isFetching, error } =
-    useGetOtherUserPhoneReviewsQuery({ round: page, uid: userId });
+    useGetOtherUserPhoneReviewsQuery(
+      { round: page, uid: userId },
+      { refetchOnMountOrArgChange: true, refetchOnFocus: true }
+    );
 
   const stateLike = (id) =>
     dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));

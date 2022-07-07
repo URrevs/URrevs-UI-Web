@@ -260,7 +260,9 @@ export default function QuestionCard({
         </Box>
         {acceptedAnswerWidget && (
           <Link to={fullScreenRoute} style={{ textDecoration: "none" }}>
-            {acceptedAnswerWidget()}
+            <div style={{ zIndex: "2" }}>
+              <div style={{ zIndex: "1" }}>{acceptedAnswerWidget()}</div>
+            </div>
           </Link>
         )}
       </CardContent>
