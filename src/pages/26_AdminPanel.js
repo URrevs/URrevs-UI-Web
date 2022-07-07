@@ -69,16 +69,6 @@ export const AdminPanel = () => {
             setPage(1);
           },
     },
-    {
-      title: pageDictionary.addingCompetition,
-      icon: <EmojiEventsOutlinedIcon sx={{ fontSize: 40 }} />,
-      subtitle: pageDictionary.theLastCompetitionTookPlaceIn,
-      onClick: theme.isMobile
-        ? handleOpen
-        : () => {
-            setPage(1);
-          },
-    },
   ];
 
   const [lastUpdateDate, setLastUpdateDate] = React.useState(
@@ -119,7 +109,12 @@ export const AdminPanel = () => {
               : lastCompetetionData &&
                 new Date(lastCompetetionData.deadline) - new Date() > 0
               ? "هناك مسابقة قائمة الان"
-              : listItems[1].subtitle + " "
+              : listItems[1].subtitle +
+                " " +
+                convertDateToString(
+                  new Date(lastCompetetionData.createdAt),
+                  "ar"
+                )
           }
           onClick={
             lastCompetetionData &&
