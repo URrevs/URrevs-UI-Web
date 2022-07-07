@@ -76,7 +76,6 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
         index={index}
         fullScreen={false}
         isExpanded={false}
-        clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
         isPhoneReview={true}
         targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${reviewsList[index].targetId}`}

@@ -73,7 +73,6 @@ export function ProductReviews() {
         index={index}
         fullScreen={false}
         isExpanded={false}
-        clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
         isPhoneReview={true}
         targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.REVIEWS}?pid=${reviewsList[index].targetId}`}

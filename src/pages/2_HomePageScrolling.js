@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ROUTES_NAMES from "../RoutesNames";
-import { useGetRecommendedQuery } from "../services/homePage";
+import { useLazyGetRecommendedQuery } from "../services/homePage";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { homePageActions } from "../store/homePageSlice";
 import VirtualReviewList from "./VirtualListWindowScroll";
@@ -40,9 +40,8 @@ function Reviews() {
 
   const reviewsList = useAppSelector((state) => state.homePage.newReviews);
 
-  const [page, setPage] = useState(1);
-
-  const { data, isLoading, isFetching, error } = useGetRecommendedQuery(page);
+  const [getRecommendedReviews, { isLoading, isFetching, error }] =
+    useLazyGetRecommendedQuery();
 
   const stateLikeReview = (id) =>
     dispatch(homePageActions.setReviewIsLiked({ id: id, isLiked: true }));
@@ -59,14 +58,12 @@ function Reviews() {
   const stateIncreaseShareCounter = (id) =>
     dispatch(homePageActions.increaseShareCounter({ id: id }));
 
-  const addToReviewsList = () =>
+  const addToReviewsList = (data) =>
     dispatch(
       homePageActions.addToLoaddedReviews({
         newReviews: data,
       })
     );
-
-  const increasePage = () => setPage(page + 1);
 
   const deleteReviewFromStore = (id) => {
     dispatch(homePageActions.clearReviews());
@@ -91,42 +88,37 @@ function Reviews() {
   const [unlikeCompanyQuestionAnswer] =
     useUnLikeCompanyQuestionCommentMutation();
 
-  const reviewCard = (index, clearCache) => {
-    const currentElement = reviewsList[index];
-    if (currentElement.type === "phoneRev") {
+  const reviewCard = (review) => {
+    if (review.type === "phoneRev") {
       return (
         <PhoneReview
-          key={reviewsList[index]._id}
-          index={index}
+          key={review._id}
           fullScreen={false}
           isExpanded={false}
-          clearIndexCache={clearCache}
-          reviewDetails={reviewsList[index]}
+          reviewDetails={review}
           isPhoneReview={true}
-          targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.REVIEWS}?pid=${reviewsList[index].targetId}`}
-          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+          targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.REVIEWS}?pid=${review.targetId}`}
+          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${review.userId}`}
           stateLikeFn={stateLikeReview}
           stateUnLikeFn={stateUnLikeReview}
           stateShare={stateIncreaseShareCounter}
-          fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${reviewsList[index]._id}`}
+          fullScreenRoute={`/${ROUTES_NAMES.EXACT_PHONE_REVIEW}?id=${review._id}`}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
         />
       );
     }
 
-    if (currentElement.type === "companyRev") {
+    if (review.type === "companyRev") {
       return (
         <CompanyReview
-          key={reviewsList[index]._id}
-          index={index}
+          key={review._id}
           fullScreen={false}
           isExpanded={false}
-          clearIndexCache={clearCache}
-          reviewDetails={reviewsList[index]}
+          reviewDetails={review}
           isPhoneReview={true}
-          targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${reviewsList[index].targetId}`}
-          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+          targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${review.targetId}`}
+          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${review.userId}`}
           stateLikeFn={stateLikeReview}
           stateUnLikeFn={stateUnLikeReview}
           stateShare={stateIncreaseShareCounter}
@@ -136,7 +128,7 @@ function Reviews() {
       );
     }
 
-    if (currentElement.type === "phoneQuestion") {
+    if (review.type === "phoneQuestion") {
       // comment like and unlike
       const stateLikePhoneComment = (id) =>
         dispatch(
@@ -165,27 +157,27 @@ function Reviews() {
       };
 
       // add accepted answer if found
-      const acceptedAnswerWidget = (index) => {
-        if (currentElement.acceptedAns) {
+      const acceptedAnswerWidget = () => {
+        if (review.acceptedAns) {
           return (
             <Answer
-              commentId={currentElement.acceptedAns._id}
-              date={currentElement.acceptedAns.createdAt}
-              user={currentElement.acceptedAns.userName}
-              likes={currentElement.acceptedAns.upvotes}
-              text={currentElement.acceptedAns.content}
+              commentId={review.acceptedAns._id}
+              date={review.acceptedAns.createdAt}
+              user={review.acceptedAns.userName}
+              likes={review.acceptedAns.upvotes}
+              text={review.acceptedAns.content}
               commentLike={likeCommentRequest}
               commentUnlike={unLikeCommentRequest}
-              avatar={currentElement.acceptedAns.picture}
-              ownerId={currentElement.acceptedAns.userId}
-              ownedAt={currentElement.acceptedAns.ownedAt}
-              questionOwnerId={currentElement.userId}
-              questionId={currentElement._id}
+              avatar={review.acceptedAns.picture}
+              ownerId={review.acceptedAns.userId}
+              ownedAt={review.acceptedAns.ownedAt}
+              questionOwnerId={review.userId}
+              questionId={review._id}
               acceptAnswer={() => {}}
               rejectAnswer={() => {}}
               acceptedAnswer={true}
               showReply={false}
-              upvoted={currentElement.acceptedAns.upvoted}
+              upvoted={review.acceptedAns.upvoted}
             />
           );
         }
@@ -193,29 +185,24 @@ function Reviews() {
 
       return (
         <PhoneQuestion
-          key={reviewsList[index]._id}
-          index={0}
+          key={review._id}
           fullScreen={false}
           isExpanded={false}
-          clearIndexCache={clearCache}
-          reviewDetails={reviewsList[index]}
+          reviewDetails={review}
           isPhoneReview={true}
-          targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.QUESTIONS}?pid=${reviewsList[index].targetId}`}
-          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+          targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.QUESTIONS}?pid=${review.targetId}`}
+          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${review.userId}`}
           stateLikeFn={stateLikeQuestion}
           stateUnLikeFn={stateUnLikeQuestion}
           stateShare={stateIncreaseShareCounter}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
-          acceptedAnswerWidget={
-            reviewsList[index].acceptedAns &&
-            acceptedAnswerWidget.bind(null, index)
-          }
+          acceptedAnswerWidget={review.acceptedAns && acceptedAnswerWidget()}
         />
       );
     }
 
-    if (currentElement.type === "companyQuestion") {
+    if (review.type === "companyQuestion") {
       // comment like and unlike
       const stateLikePhoneComment = (id) =>
         dispatch(
@@ -244,27 +231,27 @@ function Reviews() {
       };
 
       // add accepted answer if found
-      const acceptedAnswerWidget = (index) => {
-        if (currentElement.acceptedAns) {
+      const acceptedAnswerWidget = () => {
+        if (review.acceptedAns) {
           return (
             <Answer
-              commentId={currentElement.acceptedAns._id}
-              date={currentElement.acceptedAns.createdAt}
-              user={currentElement.acceptedAns.userName}
-              likes={currentElement.acceptedAns.upvotes}
-              text={currentElement.acceptedAns.content}
+              commentId={review.acceptedAns._id}
+              date={review.acceptedAns.createdAt}
+              user={review.acceptedAns.userName}
+              likes={review.acceptedAns.upvotes}
+              text={review.acceptedAns.content}
               commentLike={likeCommentRequest}
               commentUnlike={unLikeCommentRequest}
-              avatar={currentElement.acceptedAns.picture}
-              ownerId={currentElement.acceptedAns.userId}
-              ownedAt={currentElement.acceptedAns.ownedAt}
-              questionOwnerId={currentElement.userId}
-              questionId={currentElement._id}
+              avatar={review.acceptedAns.picture}
+              ownerId={review.acceptedAns.userId}
+              ownedAt={review.acceptedAns.ownedAt}
+              questionOwnerId={review.userId}
+              questionId={review._id}
               acceptAnswer={() => {}}
               rejectAnswer={() => {}}
               acceptedAnswer={true}
               showReply={false}
-              upvoted={currentElement.acceptedAns.upvoted}
+              upvoted={review.acceptedAns.upvoted}
             />
           );
         }
@@ -272,28 +259,47 @@ function Reviews() {
 
       return (
         <CompanyQuestion
-          key={reviewsList[index]._id}
-          index={0}
+          key={review._id}
           fullScreen={false}
           isExpanded={false}
-          clearIndexCache={clearCache}
-          reviewDetails={reviewsList[index]}
+          reviewDetails={review}
           isPhoneReview={false}
-          targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${reviewsList[index].targetId}`}
-          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+          targetProfilePath={`/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${review.targetId}`}
+          userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${review.userId}`}
           stateLikeFn={stateLikeQuestion}
           stateUnLikeFn={stateUnLikeQuestion}
           stateShare={stateIncreaseShareCounter}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
-          acceptedAnswerWidget={
-            reviewsList[index].acceptedAns &&
-            acceptedAnswerWidget.bind(null, index)
-          }
+          acceptedAnswerWidget={review.acceptedAns && acceptedAnswerWidget}
         />
       );
     }
   };
+
+  const [endOfData, setEndOfData] = useState(false);
+
+  // first page
+  let p = 1;
+  // function loads additional comments
+  const loadMore = useCallback(() => {
+    if (!endOfData) {
+      getRecommendedReviews(p).then((data) => {
+        if (data.data.length === 0) {
+          setEndOfData(true);
+        } else {
+          addToReviewsList(data.data);
+          p++;
+        }
+      });
+    }
+  }, [p, endOfData]);
+
+  // to load for the first time
+  useEffect(() => {
+    const timeout = loadMore();
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <CustomAppBar showLogo showSearch showProfile>
@@ -335,15 +341,14 @@ function Reviews() {
             </div>
           ) : null}
           <VirtualReviewList
+            endOfData={endOfData}
+            loadMore={loadMore}
             reviewCard={reviewCard}
             reviewsList={reviewsList}
-            page={page}
-            data={data}
             error={error}
             isLoading={isLoading}
             isFetching={isFetching}
             addToReviewsList={addToReviewsList}
-            increasePage={increasePage}
           />
         </AlonePostsGrid>
       ) : (
@@ -366,15 +371,14 @@ function Reviews() {
             <div style={{ height: "50px" }}></div>
           </div>
           <VirtualReviewList
+            endOfData={endOfData}
+            loadMore={loadMore}
             reviewCard={reviewCard}
             reviewsList={reviewsList}
-            page={page}
-            data={data}
             error={error}
             isLoading={isLoading}
             isFetching={isFetching}
             addToReviewsList={addToReviewsList}
-            increasePage={increasePage}
           />
         </FixedGrid>
       )}

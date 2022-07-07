@@ -124,7 +124,6 @@ export function PostedPhoneQuestions() {
         index={0}
         fullScreen={false}
         isExpanded={false}
-        clearIndexCache={clearCache}
         reviewDetails={reviewsList[index]}
         isPhoneReview={true}
         targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.QUESTIONS}?pid=${reviewsList[index].targetId}`}
