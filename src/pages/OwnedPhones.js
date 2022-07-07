@@ -51,7 +51,7 @@ function OwnedPhonesPage() {
   );
 
   const phoneTile = (phone) => {
-    return theme.isMobile ? (
+    return !theme.isMobile ? (
       renderProductOnDesktop(phone)
     ) : (
       <PhoneListItem id={phone._id} title={phone.name} />

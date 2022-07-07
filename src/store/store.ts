@@ -20,6 +20,7 @@ import compareSlice from "./compareSlice";
 import isDarkSlice from "./darkModeSlice";
 import homePageSlice from "./homePageSlice";
 import languageSlice from "./languageSlice";
+import { rtkQueryErrorLogger } from "./middlewares/authenticationMiddleware";
 import { snackbarErrorHandle } from "./middlewares/errorSnackbarHandleMiddleware";
 import questionsSlice from "./questionsSlice";
 import reviewsSlice from "./reviewsSlice";
@@ -64,7 +65,7 @@ export const store = configureStore({
       serializableCheck: false,
     })
       .concat(snackbarErrorHandle)
-      // .concat(rtkQueryErrorLogger)
+      .concat(rtkQueryErrorLogger)
       .concat(phoneReviewsApi.middleware)
       .concat(phoneApi.middleware)
       .concat(searchApi.middleware)
