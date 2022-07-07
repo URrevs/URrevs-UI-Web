@@ -2,7 +2,6 @@ import { useTheme } from "@emotion/react";
 import { Card, Typography } from "@mui/material";
 import React from "react";
 import { CARD_BORDER_RADIUS } from "../../constants";
-import { PostingField } from "./PostingField";
 
 export const PostingComponent = ({
   placeholder = "",
@@ -16,6 +15,8 @@ export const PostingComponent = ({
       elevation={3}
       style={{
         borderRadius: `${CARD_BORDER_RADIUS}px`,
+        // backgroundColor: "#242526",
+
         //Just for styling
         //   minHeight: "129px",
         //   minWidth: "641px",

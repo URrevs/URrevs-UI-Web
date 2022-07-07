@@ -1,15 +1,10 @@
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
-import {
-  Box,
-  IconButton,
-  Toolbar,
-  Typography
-} from "@mui/material";
+import { Box, IconButton, Toolbar, Typography } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import { Fragment } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AppBarActions } from "./AppBarActions";
 
 const CustomAppBarStyled = styled(MuiAppBar, {
@@ -85,12 +80,14 @@ export const CustomAppBar = ({
                     </IconButton>
                   )}
                   {showLogo && (
-                    <img
-                      width={logoWidth}
-                      height={logoHeight}
-                      alt="URrevs"
-                      src="/images/logo.png"
-                    />
+                    <Link to="/">
+                      <img
+                        width={logoWidth}
+                        height={logoHeight}
+                        alt="URrevs"
+                        src="/images/logo.png"
+                      />
+                    </Link>
                   )}
                 </Fragment>
                 {englishName ? (

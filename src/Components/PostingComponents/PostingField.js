@@ -27,7 +27,7 @@ export const PostingField = ({
     // maxRows: 3,
     variant: "standard",
     InputProps: {
-      endAdornment: theme.isMobile && comment && (
+      endAdornment: theme.isMobile && (
         <InputAdornment sx={{ position: "relative" }} position="end">
           <IconButton
             sx={{
@@ -35,8 +35,10 @@ export const PostingField = ({
               bottom: 0,
             }}
             onClick={() => {
-              onSubmit(value);
-              setValue("");
+              if (value.trim() !== "") {
+                onSubmit(value);
+                setValue("");
+              }
             }}
           >
             <SendIcon
@@ -52,7 +54,10 @@ export const PostingField = ({
       disableUnderline: true,
       style: {
         width: "100%",
-        padding: "13px",
+        padding: reply ? "5px 13px 5px 13px" : "13px",
+        "&::placeholder": {
+          color: "#000",
+        },
         ...theme.typography.S16W500C050505,
         alignContent: "center",
         background: theme.palette.textField.postingFieldBackground,
@@ -85,7 +90,7 @@ export const PostingField = ({
       style={{
         marginTop: "10px",
         marginLeft: 0,
-        marginRight: reply ? "56px" : "0",
+        marginRight: reply ? "50px" : "0",
       }}
     >
       <Box
@@ -118,8 +123,10 @@ export const PostingField = ({
           value={value}
           onKeyDown={(e) => {
             if (e.code === "Enter" && !e.shiftKey) {
-              onSubmit(value);
-              setValue("");
+              if (value.trim() !== "") {
+                onSubmit(value);
+                setValue("");
+              }
               e.preventDefault();
             }
           }}

@@ -342,6 +342,7 @@ export const {
   useGetOtherUserCompanyQuestionsQuery,
   useAddCommentOnCompanyQuestionMutation,
   useGetCompanyQuestionCommentsQuery,
+  useLazyGetCompanyQuestionCommentsQuery,
   useAddReplyOnCompanyQuestionMutation,
   useLikeCompanyQuestionCommentMutation,
   useUnLikeCompanyQuestionCommentMutation,

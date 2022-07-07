@@ -234,7 +234,7 @@ export default function CompanyReviewFullScreen() {
       return (
         <CompanyReview
           disableElevation={!isMobile}
-          showBottomLine={true}
+          showBottomLine={!isMobile}
           key={currentReviewData._id}
           reviewDetails={currentReviewData}
           index={0}
@@ -256,18 +256,19 @@ export default function CompanyReviewFullScreen() {
 
   // first page
   let p = 1;
-
   // function loads additional comments
   const loadMore = useCallback(() => {
-    getComments({ reviewId, round: p }).then((data) => {
-      if (data.data.length === 0) {
-        setEndOfData(true);
-      } else {
-        addToLoadedComments(data.data);
-        p++;
-      }
-    });
-  }, []);
+    if (!endOfData) {
+      getComments({ reviewId, round: p }).then((data) => {
+        if (data.data.length === 0) {
+          setEndOfData(true);
+        } else {
+          addToLoadedComments(data.data);
+          p++;
+        }
+      });
+    }
+  }, [p, endOfData]);
 
   // to load for the first time
   useEffect(() => {

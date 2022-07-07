@@ -66,6 +66,7 @@ export const store = configureStore({
       .concat(snackbarErrorHandle)
       // .concat(rtkQueryErrorLogger)
       .concat(phoneReviewsApi.middleware)
+      .concat(phoneApi.middleware)
       .concat(searchApi.middleware)
       .concat(companyReviewsApi.middleware)
       .concat(phoneQuestionsApi.middleware)

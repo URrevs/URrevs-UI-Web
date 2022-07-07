@@ -25,6 +25,7 @@ import { useTheme } from "@emotion/react";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { PostingComponent } from "../Components/PostingComponents/PostingComponent";
 import { postingModalActions } from "../store/uiPostingModalSlice";
+import { Link } from "react-router-dom";
 
 function Reviews() {
   const dispatch = useAppDispatch();
@@ -206,7 +207,10 @@ function Reviews() {
           stateShare={stateIncreaseShareCounter}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
-          acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}
+          acceptedAnswerWidget={
+            reviewsList[index].acceptedAns &&
+            acceptedAnswerWidget.bind(null, index)
+          }
         />
       );
     }
@@ -282,7 +286,10 @@ function Reviews() {
           stateShare={stateIncreaseShareCounter}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
-          acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}
+          acceptedAnswerWidget={
+            reviewsList[index].acceptedAns &&
+            acceptedAnswerWidget.bind(null, index)
+          }
         />
       );
     }

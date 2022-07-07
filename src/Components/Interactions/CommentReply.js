@@ -1,5 +1,6 @@
 import { useTheme } from "@emotion/react";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { Fragment } from "react";
 import { useAppSelector } from "../../store/hooks";
 import { InteractionBody } from "./InteractionBody";
 import { InteractionFooter } from "./InteractionFooter";
@@ -8,7 +9,6 @@ export const CommentReply = ({
   date,
   likes,
   text,
-  user,
   replyLike,
   replyUnlike,
   liked,
@@ -16,6 +16,8 @@ export const CommentReply = ({
   commentId,
   avatar,
   userId,
+  userName,
+  acceptedAnswerReply = false,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -36,29 +38,38 @@ export const CommentReply = ({
     );
   };
   return (
-    <div style={{ margin: "0 56px 0 15px", padding: "4px 0px" }}>
-      <InteractionBody
-        user={user}
-        likes={likes}
-        date={date}
-        text={text}
-        avatarSize="32px"
-        buttonName={buttonName}
-        renderIcon={renderIcon}
-        avatar={avatar}
+    <Fragment>
+      <div
+        style={{
+          margin: "0 0px 0 15px",
+          marginRight: acceptedAnswerReply ? "96px" : "50px",
+          padding: "4px 0px",
+        }}
       >
-        <InteractionFooter
+        <InteractionBody
+          userName={userName}
+          userId={userId}
+          likes={likes}
           date={date}
-          condition={liked}
-          onClickHandler={onLikeClickHandler}
-          reply={true}
+          text={text}
+          avatarSize="32px"
           buttonName={buttonName}
-          commentLike={replyLike}
-          commentUnlike={replyUnlike}
-          commentId={commentId}
-          ownerId={userId}
-        ></InteractionFooter>
-      </InteractionBody>
-    </div>
+          renderIcon={renderIcon}
+          avatar={avatar}
+        >
+          <InteractionFooter
+            date={date}
+            condition={liked}
+            onClickHandler={onLikeClickHandler}
+            reply={true}
+            buttonName={buttonName}
+            commentLike={replyLike}
+            commentUnlike={replyUnlike}
+            commentId={commentId}
+            ownerId={userId}
+          ></InteractionFooter>
+        </InteractionBody>
+      </div>
+    </Fragment>
   );
 };

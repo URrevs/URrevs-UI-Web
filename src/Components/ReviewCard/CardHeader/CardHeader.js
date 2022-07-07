@@ -4,6 +4,7 @@ import ActionButton from "./ActionButton";
 import CardSubheader from "./CardHeader_Subheader";
 import CardHeaderTitle from "./CardHeader_Title";
 import CircleAvatar from "./CircleAvatar";
+import { Link } from "react-router-dom";
 
 const CardHeader = ({
   userAvatar,
@@ -29,7 +30,9 @@ const CardHeader = ({
         paddingBottom: 1,
       }}
       avatar={
-        <CircleAvatar userAvatar={userAvatar} avatarRadius={avatarRadius} />
+        <Link to={userProfilePath}>
+          <CircleAvatar userAvatar={userAvatar} avatarRadius={avatarRadius} />
+        </Link>
       }
       action={
         actionBtnFunction && (

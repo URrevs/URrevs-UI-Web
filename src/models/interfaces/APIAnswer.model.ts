@@ -1,5 +1,6 @@
 export default interface APIAnswer {
   _id: string;
+  id: string;
   userId: string;
   userName: string;
   picture: string;
@@ -14,5 +15,6 @@ export default interface APIAnswer {
   liked: boolean;
   commentId: string;
   isReply: boolean;
+  acceptedReply: boolean;
   replies: APIAnswer[];
 }

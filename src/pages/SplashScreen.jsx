@@ -5,7 +5,7 @@ export const SplashScreen = () => {
     <Box
       sx={{
         width: "100vw",
-        height: "90vh",
+        height: "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

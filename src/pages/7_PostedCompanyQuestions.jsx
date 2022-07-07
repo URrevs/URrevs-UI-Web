@@ -134,7 +134,7 @@ export function PostedCompanyQuestions() {
         stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
-        acceptedAnswerWidget={acceptedAnswerWidget.bind(null, index)}
+        acceptedAnswerWidget={ reviewsList[index].acceptedAns &&acceptedAnswerWidget.bind(null, index)}
       />
     );
   };

@@ -2,7 +2,7 @@ import { useTheme } from "@emotion/react";
 import { faUpLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CheckIcon from "@mui/icons-material/Check";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/hooks";
 import { PostingField } from "../PostingComponents/PostingField";
 import { InteractionBody } from "./InteractionBody";
@@ -10,26 +10,23 @@ import { InteractionFooter } from "./InteractionFooter";
 
 export const Answer = ({
   commentId,
-  answerId,
   date,
-  user,
   likes,
   text,
   upvoted,
   commentLike,
   commentUnlike,
   submitReplyHandler,
-  avatarm,
   ownerId,
   questionOwnerId,
   questionId,
-  subtitle,
   acceptAnswer,
   rejectAnswer,
   acceptedAnswer,
   avatar,
   ownedAt,
-  showReply = true,
+  userId,
+  userName,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const currentUserId = useAppSelector((state) => state.auth).uid;
@@ -72,6 +69,11 @@ export const Answer = ({
       />
     );
   };
+
+  const [showReplyField, setShowReplyField] = useState(false);
+
+  const toggleReplyField = () => setShowReplyField((show) => !show);
+
   return (
     <div style={{ display: "flex", padding: "4px 0px" }}>
       {acceptedAnswer ? (
@@ -85,7 +87,8 @@ export const Answer = ({
       ) : null}
       <div>
         <InteractionBody
-          user={user}
+          userName={userName}
+          userId={userId}
           likes={likes}
           date={date}
           text={text}
@@ -102,18 +105,16 @@ export const Answer = ({
             reply={false}
             buttonName={buttonName}
             ownerId={ownerId}
+            showReplyField={toggleReplyField}
           ></InteractionFooter>
         </InteractionBody>
-        {showReply && (
-          <div>
-            <form
-              onSubmit={(e) => {
-                submitReplyHandler(e, commentId);
-              }}
-            >
-              <input id="comment" />
-            </form>
-          </div>
+        {showReplyField && (
+          <PostingField
+            avatar={true}
+            placeholder="اكتب رد"
+            reply
+            onSubmit={(text) => submitReplyHandler(text, commentId)}
+          />
         )}
       </div>
     </div>

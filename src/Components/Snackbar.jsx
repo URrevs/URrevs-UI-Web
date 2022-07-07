@@ -54,11 +54,10 @@ export default function CustomizedSnackbar() {
         <Button
           onClick={
             //if path is given then onClick navigate to that path
-            navPath === ""
-              ? actionFn
-              : () => {
-                  navigate(navPath, { replace: true });
-                }
+            () => {
+              if (!navPath) actionFn();
+              else navigate(navPath, { replace: true });
+            }
           }
           sx={{
             textTransform: "none",
