@@ -9,7 +9,6 @@ export const CommentReply = ({
   date,
   likes,
   text,
-  user,
   replyLike,
   replyUnlike,
   liked,
@@ -17,6 +16,7 @@ export const CommentReply = ({
   commentId,
   avatar,
   userId,
+  userName,
   acceptedAnswerReply = false,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
@@ -47,7 +47,8 @@ export const CommentReply = ({
         }}
       >
         <InteractionBody
-          user={user}
+          userName={userName}
+          userId={userId}
           likes={likes}
           date={date}
           text={text}

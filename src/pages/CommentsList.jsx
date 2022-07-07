@@ -55,7 +55,6 @@ export default function CommentsList({
               <CommentReply
                 replyId={comment._id}
                 date={comment.createdAt}
-                user={comment.userName}
                 likes={comment.likes}
                 text={comment.content}
                 liked={comment.liked}
@@ -63,13 +62,13 @@ export default function CommentsList({
                 replyUnlike={unLikeReplyRequest}
                 commentId={comment.commentId}
                 avatar={comment.userPicture}
+                userName={comment.userName}
                 userId={comment.userId}
               />
             ) : (
               <Comment
                 commentId={comment._id}
                 date={comment.createdAt}
-                user={comment.userName}
                 likes={comment.likes}
                 text={comment.content}
                 liked={comment.liked}
@@ -77,6 +76,7 @@ export default function CommentsList({
                 commentUnlike={unLikeCommentRequest}
                 submitReplyHandler={submitReplyHandler}
                 avatar={comment.userPicture}
+                userName={comment.userName}
                 userId={comment.userId}
               />
             );

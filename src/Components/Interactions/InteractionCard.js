@@ -3,6 +3,8 @@ import { Card, styled, Typography } from "@mui/material";
 import { useConvertNumberToHumanLanguage } from "../../hooks/useMillify";
 import { useAppSelector } from "../../store/hooks";
 import { subtractDate } from "../../functions/subtractDate";
+import { Link } from "react-router-dom";
+import ROUTES_NAMES from "../../RoutesNames";
 
 const InteractionCardStyle = styled(
   Card,
@@ -41,14 +43,26 @@ const LikeCounterStyle = styled(
   right: "-10px",
 }));
 
-export const InteractionCard = ({ user, text, likes, ownedAt, renderIcon }) => {
+export const InteractionCard = ({
+  text,
+  likes,
+  ownedAt,
+  renderIcon,
+  userName,
+  userId,
+}) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const lang = useAppSelector((state) => state.language.language);
 
   return (
     <div>
       <InteractionCardStyle>
-        <Typography variant="S14W700C050505">{user}</Typography>
+        <Link
+          style={{ textDecoration: "none" }}
+          to={`../${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}
+        >
+          <Typography variant="S14W700C050505">{userName}</Typography>
+        </Link>
         {ownedAt ? (
           <Typography variant="S12W400C65676b">
             {`${textContainer.usedThisProductFor} ${subtractDate(

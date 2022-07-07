@@ -7,6 +7,7 @@ import * as React from "react";
 import BottomCardActionBtn from "./BottomCardActionBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpLong } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const CardActionButtons = ({
   textContainer,
@@ -19,8 +20,6 @@ const CardActionButtons = ({
   isReview,
   navigateToFullScreen: commentButtonOnClick,
   shareBtnHandler,
-  showBottomLine,
-  isQuestion,
 }) => {
   const activeFirstIcon = isReview ? (
     <ThumbUpIcon fontSize="medium" />
@@ -57,11 +56,11 @@ const CardActionButtons = ({
           icon={isLiked ? activeFirstIcon : nonActiveFirstIcon}
         />
 
-        <BottomCardActionBtn
-          onClickAction={commentButtonOnClick}
-          title={isReview ? textContainer.comment : textContainer.answer}
-          icon={<ChatBubbleOutlineOutlinedIcon fontSize="medium" />}
-        />
+          <BottomCardActionBtn
+            onClickAction={commentButtonOnClick}
+            title={isReview ? textContainer.comment : textContainer.answer}
+            icon={<ChatBubbleOutlineOutlinedIcon fontSize="medium" />}
+          />
 
         <BottomCardActionBtn
           onClickAction={shareBtnHandler}
