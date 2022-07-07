@@ -60,7 +60,7 @@ const Footer = ({ context }) => {
           justifyContent: "center",
         }}
       >
-        {/* <LoadingReviewSkeleton /> */}
+        <LoadingReviewSkeleton />
       </div>
     )
   );
