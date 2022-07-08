@@ -55,8 +55,13 @@ export default function CustomizedSnackbar() {
           onClick={
             //if path is given then onClick navigate to that path
             () => {
-              if (!navPath) actionFn();
-              else navigate(navPath, { replace: true });
+              if (!navPath) {
+                actionFn();
+                dispatch(snackbarActions.hideSnackbar());
+              } else {
+                navigate(navPath, { replace: true });
+                dispatch(snackbarActions.hideSnackbar());
+              }
             }
           }
           sx={{

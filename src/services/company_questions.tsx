@@ -49,49 +49,33 @@ export const companyQuestionsApi = createApi({
       },
     }),
 
-    addCompanyQuestion: builder.mutation(
-      {
-        query: (question) => {
-          return {
-            url: ``,
-            method: "POST",
-            body: question,
-          };
-        },
-        async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
-          try {
-            const response = await queryFulfilled;
-            const state = getState();
-            const textContainer = (state as RootState).language.textContainer;
-            dispatch(
-              snackbarActions.showSnackbar({
-                message: `${textContainer.postedSuccessfully}`,
-                showActionBtn: true,
-                actionBtnText: textContainer.seePost,
-                actionNavPath: `../company-question?id=${response.data.question._id}`,
-              })
-            );
-            dispatch(postingModalActions.hidePostingModal());
-          } catch (e: any) {
-            console.error(e);
-          }
-        },
-      }
-      //   async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-      //     try {
-      //       await queryFulfilled;
-
-      //       dispatch(
-      //         snackbarActions.showSnackbar({ message: "تم نشر سؤالك بنجاح" })
-      //       );
-      //     } catch (e: any) {
-      //       dispatch(
-      //         snackbarActions.showSnackbar({ message: e.error.data.status })
-      //       );
-      //     }
-      //   },
-      // }
-    ),
+    addCompanyQuestion: builder.mutation({
+      query: (question) => {
+        return {
+          url: ``,
+          method: "POST",
+          body: question,
+        };
+      },
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
+        try {
+          const response = await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: `${textContainer.postedSuccessfully}`,
+              showActionBtn: true,
+              actionBtnText: textContainer.seePost,
+              actionNavPath: `../company-question?id=${response.data.question._id}`,
+            })
+          );
+          dispatch(postingModalActions.hidePostingModal());
+        } catch (e: any) {
+          console.error(e);
+        }
+      },
+    }),
 
     likeCompanyQuestion: builder.mutation({
       query: ({ reviewId }) => {
