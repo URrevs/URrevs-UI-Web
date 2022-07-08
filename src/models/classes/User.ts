@@ -12,7 +12,7 @@ export default class User {
   email: string = "";
   points: number = 0;
   isAdmin: boolean = false;
-  expiration: string;
+  expiration: number;
   refetch: boolean = false;
 
   constructor(data: APIUser) {

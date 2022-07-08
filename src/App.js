@@ -303,6 +303,7 @@ function App() {
   const [firebaseIsLoading, setFirebaseIsLoading] = useState(true);
 
   useEffect(async () => {
+    dispatch(authActions.toggleRefetch({ refetch: false }));
     const unregisterObserver = getAuth().onAuthStateChanged(async (user) => {
       if (user) {
         // console.log(storeUser);

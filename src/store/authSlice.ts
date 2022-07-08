@@ -14,7 +14,7 @@ const initialAuthState: User = {
   refCode: "",
   points: 0,
   isAdmin: false,
-  expiration: "",
+  expiration: 0,
   refetch: true,
 };
 
@@ -30,7 +30,7 @@ const authSlice = createSlice({
       state.apiToken = action.payload.apiToken;
       localStorage.setItem("token", action.payload.apiToken);
       state.expiration = action.payload.expiration;
-      localStorage.setItem("expiration", action.payload.expiration);
+      localStorage.setItem("expiration", action.payload.expiration.toString());
 
       state.name = action.payload.name;
       state.refreshToken = action.payload.refreshToken;
@@ -57,8 +57,8 @@ const authSlice = createSlice({
       state.points = 0;
       state.isAdmin = false;
     },
-    toggleRefetch: (state) => {
-      state.refetch = true;
+    toggleRefetch: (state, action) => {
+      state.refetch = action.payload.refetch;
       state.apiToken = "";
     },
   },
