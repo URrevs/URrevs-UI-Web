@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import APIAnswer from "../models/interfaces/APIAnswer.model";
 import { APIQuestion } from "../models/interfaces/APIQuestion.model";
 import { RootState } from "../store/store";
+import { postingModalActions } from "../store/uiPostingModalSlice";
 import { snackbarActions } from "../store/uiSnackbarSlice";
 
 export const companyQuestionsApi = createApi({
@@ -48,28 +49,49 @@ export const companyQuestionsApi = createApi({
       },
     }),
 
-    addCompanyQuestion: builder.mutation({
-      query: (question) => {
-        return {
-          url: ``,
-          method: "POST",
-          body: question,
-        };
-      },
-      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
+    addCompanyQuestion: builder.mutation(
+      {
+        query: (question) => {
+          return {
+            url: ``,
+            method: "POST",
+            body: question,
+          };
+        },
+        async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
+          try {
+            const response = await queryFulfilled;
+            const state = getState();
+            const textContainer = (state as RootState).language.textContainer;
+            dispatch(
+              snackbarActions.showSnackbar({
+                message: `${textContainer.postedSuccessfully}`,
+                showActionBtn: true,
+                actionBtnText: textContainer.seePost,
+                actionNavPath: `../company-question?id=${response.data.question._id}`,
+              })
+            );
+            dispatch(postingModalActions.hidePostingModal());
+          } catch (e: any) {
+            console.error(e);
+          }
+        },
+      }
+      //   async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+      //     try {
+      //       await queryFulfilled;
 
-          dispatch(
-            snackbarActions.showSnackbar({ message: "تم نشر سؤالك بنجاح" })
-          );
-        } catch (e: any) {
-          dispatch(
-            snackbarActions.showSnackbar({ message: e.error.data.status })
-          );
-        }
-      },
-    }),
+      //       dispatch(
+      //         snackbarActions.showSnackbar({ message: "تم نشر سؤالك بنجاح" })
+      //       );
+      //     } catch (e: any) {
+      //       dispatch(
+      //         snackbarActions.showSnackbar({ message: e.error.data.status })
+      //       );
+      //     }
+      //   },
+      // }
+    ),
 
     likeCompanyQuestion: builder.mutation({
       query: ({ reviewId }) => {
@@ -179,7 +201,7 @@ export const companyQuestionsApi = createApi({
 
         try {
           await queryFulfilled;
-        }  catch (e: any) {
+        } catch (e: any) {
           if (
             e.error.data.status === "not found" ||
             e.error.data.status === "already liked"
@@ -229,8 +251,10 @@ export const companyQuestionsApi = createApi({
         try {
           await queryFulfilled;
         } catch (e: any) {
-          if (e.error.data.status === "not found" ||
-          e.error.data.status === "already liked") {
+          if (
+            e.error.data.status === "not found" ||
+            e.error.data.status === "already liked"
+          ) {
           } else {
             payload.unDoFn(payload.commentId);
           }

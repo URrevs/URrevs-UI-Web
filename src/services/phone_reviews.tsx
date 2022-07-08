@@ -54,6 +54,9 @@ export const phoneReviewsApi = createApi({
           url: `/phone`,
           method: "POST",
           body: review,
+          headers: {
+            "user-agent": navigator.userAgent,
+          },
         };
       },
 
