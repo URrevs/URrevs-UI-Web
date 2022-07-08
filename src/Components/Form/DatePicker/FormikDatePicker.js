@@ -20,6 +20,9 @@ const FormikDatePicker = ({ label, fieldName }) => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const purchaseDateErrorMsg = textContainer.purchaseDateErrorMsg;
   const localeDate = language === "ar" ? arEG : enUS;
+  const onKeyDown = (e) => {
+    e.preventDefault();
+  };
   return (
     <Field name={fieldName}>
       {({ field: { value }, form: { setFieldValue }, meta }) => (
@@ -82,9 +85,9 @@ const FormikDatePicker = ({ label, fieldName }) => {
                       ...params.inputProps,
                       placeholder: label,
                     }}
-                    value=""
                     onClick={() => setOpenDate(true)}
                     error={meta.touched && meta.error && true}
+                    onKeyDown={onKeyDown}
                     helperText={
                       meta.touched && meta.error && purchaseDateErrorMsg
                     }
