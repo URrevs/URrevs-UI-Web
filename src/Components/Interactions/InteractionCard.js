@@ -57,7 +57,10 @@ export const InteractionCard = ({
 
   //See more function
   const handleText = (text) => {
-    if (text.length > 300) return text.slice(0, cropTextLength) + " ...";
+    if (text.length > 300)
+      return `${text.slice(0, cropTextLength)} ${
+        cropTextLength === 300 ? "... " : ""
+      }`;
     else return text;
   };
 
