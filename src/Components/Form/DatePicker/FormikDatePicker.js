@@ -85,6 +85,7 @@ const FormikDatePicker = ({ label, fieldName }) => {
                       ...params.inputProps,
                       placeholder: label,
                     }}
+                    autoComplete="off"
                     onClick={() => setOpenDate(true)}
                     error={meta.touched && meta.error && true}
                     onKeyDown={onKeyDown}
