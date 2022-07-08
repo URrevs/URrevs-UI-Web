@@ -22,6 +22,7 @@ export function ProductQuestions() {
   useEffect(() => {
     return () => {
       console.log("clear questions");
+      setPage(1);
       dispatch(questionsActions.clearReviews());
     };
   }, [dispatch]);

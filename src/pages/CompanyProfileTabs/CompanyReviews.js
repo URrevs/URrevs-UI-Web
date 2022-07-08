@@ -24,9 +24,11 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
   const cid = searchParams.get("cid");
 
   useEffect(() => {
-    console.log("clear reviews");
-    setPage(1);
-    dispatch(reviewsActions.clearReviews());
+    return () => {
+      console.log("clear reviews");
+      setPage(1);
+      dispatch(reviewsActions.clearReviews());
+    };
   }, [cid]);
 
   const { data, isLoading, isFetching, error } = useGetCompanyReviewsQuery({

@@ -23,6 +23,7 @@ export function CompanyQuestions() {
   useEffect(() => {
     return () => {
       console.log("clear questions");
+      setPage(1)
       dispatch(questionsActions.clearReviews());
     };
   }, []);

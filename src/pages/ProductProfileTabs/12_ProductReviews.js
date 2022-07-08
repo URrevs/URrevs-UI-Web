@@ -16,9 +16,11 @@ export function ProductReviews() {
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    console.log("clear reviews");
-
-    dispatch(reviewsActions.clearReviews());
+    return () => {
+      console.log("clear reviews");
+      setPage(1);
+      dispatch(reviewsActions.clearReviews());
+    };
   }, [dispatch]);
 
   const reviewsList = useAppSelector((state) => state.reviews.newReviews);

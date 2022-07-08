@@ -30,8 +30,11 @@ import { Link } from "react-router-dom";
 function Reviews() {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    console.log("clear reviews");
-    dispatch(homePageActions.clearReviews());
+    return () => {
+      console.log("clear reviews");
+      p = 1;
+      dispatch(homePageActions.clearReviews());
+    };
   }, []);
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const isMobile = useTheme().isMobile;
