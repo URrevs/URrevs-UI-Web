@@ -72,6 +72,9 @@ const FormikDateTimePicker = ({ label, fieldName }) => {
                       ...params.inputProps,
                       placeholder: label,
                     }}
+                    onKeyDown={(e) => {
+                      e.preventDefault();
+                    }}
                     onClick={() => setOpenDate(true)}
                     error={meta.touched && meta.error && true}
                     helperText={

@@ -53,6 +53,10 @@ const correspondingErrorMessage = (
         error.path = `../phone/specs?pid=${action.meta.arg.originalArgs.phoneId}`;
       } else error.message = textContainer.youCantAnswerAQuestionMessage;
       break;
+    case "invalid referral code":
+      error.message = textContainer.enterAValidRefCode;
+
+      break;
     //TO DO : WRITE TRANSLATIONS AND FIND MORE ERRORS
     // case "track internal server error":
     //   error.message = textContainer.trackInternalServerError;

@@ -90,7 +90,6 @@ export const QuestionsTab = ({ initValues }) => {
         query={query}
         label={pageDictionary.searchForAProductOrACompany}
         searchFn={searchFn}
-        toGetManufacturingCompany={false}
       />
       <div></div>
     </Stack>

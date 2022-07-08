@@ -60,7 +60,9 @@ export const ProductSpecsScreen = () => {
     data: similarPhones,
     isLoading: similarPhoneLoading,
     error: similarPhoneError,
-  } = useGetSimilarPhonesQuery(data._id);
+  } = useGetSimilarPhonesQuery(data._id, {
+    // pollingInterval: 3000,
+  });
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

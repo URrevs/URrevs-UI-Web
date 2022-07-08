@@ -226,6 +226,7 @@ export default interface Dictionary {
   youHaventReviewedThatPhone: string;
   youCantAnswerAQuestionMessage: string;
   reviewNow: string;
+  enterAValidRefCode: string;
 }
 
 interface FullDictionary {

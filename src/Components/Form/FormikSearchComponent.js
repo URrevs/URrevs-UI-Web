@@ -27,6 +27,8 @@ const FormikSearchComponent = ({
               setFieldError(fieldName, bool);
             }}
             onResult={async (response) => {
+              //Magic solution >> Use Yup + RegExp to solve this if possible
+              await setTimeout(() => {}, 30); // Delay 0.03s for the error state to be changed
               setFieldValue(fieldName, response);
               // To fetch company for reviewposting
               if (toGetManufacturingCompany && response.id !== "") {
