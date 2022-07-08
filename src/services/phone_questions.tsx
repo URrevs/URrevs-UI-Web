@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import APIAnswer from "../models/interfaces/APIAnswer.model";
 import { APIQuestion } from "../models/interfaces/APIQuestion.model";
 import { RootState } from "../store/store";
+import { postingModalActions } from "../store/uiPostingModalSlice";
 import { snackbarActions } from "../store/uiSnackbarSlice";
 
 export const phoneQuestionsApi = createApi({
@@ -56,17 +57,22 @@ export const phoneQuestionsApi = createApi({
           body: question,
         };
       },
-      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
         try {
-          await queryFulfilled;
-
+          const response = await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
           dispatch(
-            snackbarActions.showSnackbar({ message: "تم نشر سؤالك بنجاح" })
+            snackbarActions.showSnackbar({
+              message: `${textContainer.postedSuccessfully}`,
+              showActionBtn: true,
+              actionBtnText: textContainer.seePost,
+              actionNavPath: `../phone-question?id=${response.data.question._id}`,
+            })
           );
+          dispatch(postingModalActions.hidePostingModal());
         } catch (e: any) {
-          dispatch(
-            snackbarActions.showSnackbar({ message: e.error.data.status })
-          );
+          console.error(e);
         }
       },
     }),

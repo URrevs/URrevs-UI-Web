@@ -133,23 +133,27 @@ export const AddReviewTab = ({ ...props }) => {
   // Star Counter Use Effect
   // Search Component
 
-  // Can be easily done with measuring contributions instead
+  // Can be easily done with measuring contributions
   React.useEffect(() => {
     let sum = 0;
-    const search = props.values.chooseProduct.label.length > 1 ? sum++ : 0;
-    const refCode = props.values.invitaionCode ? sum++ : 0;
-    const date = props.values.purchaseDate.length > 1 ? sum++ : 0;
-    const battery = props.values.battery > 1 ? sum++ : 0;
-    const callsQuality = props.values.callsQuality > 1 ? sum++ : 0;
-    const camera = props.values.camera > 1 ? sum++ : 0;
-    const manufacturingQuality =
-      props.values.manufacturingQuality > 1 ? sum++ : 0;
-    const overAllExp = props.values.overAllExp > 1 ? sum++ : 0;
-    const priceQuality = props.values.priceQuality > 1 ? sum++ : 0;
-    const rateManufacturer = props.values.rateManufacturer > 1 ? sum++ : 0;
-    const userInterface = props.values.userInterface > 1 ? sum++ : 0;
-
-    console.log(sum);
+    let sumChar = 0;
+    sum = props.values.chooseProduct.label ? ++sum : sum;
+    sum = props.values.invitationCode ? ++sum : sum;
+    sum = props.values.purchaseDate ? ++sum : sum;
+    sum = props.values.battery > 0 ? ++sum : sum;
+    sum = props.values.callsQuality > 0 ? ++sum : sum;
+    sum = props.values.camera > 0 ? ++sum : sum;
+    sum = props.values.manufacturingQuality > 0 ? ++sum : sum;
+    sum = props.values.overAllExp > 0 ? ++sum : sum;
+    sum = props.values.priceQuality > 0 ? ++sum : sum;
+    sum = props.values.rateManufacturer > 0 ? ++sum : sum;
+    sum = props.values.userInterface > 0 ? ++sum : sum;
+    sumChar += props.values.likeAboutProduct.length;
+    sumChar += props.values.hateAboutProduct.length;
+    sumChar += props.values.likeAbout.length; //Company
+    sumChar += props.values.hateAbout.length; //Company
+    sumChar = sumChar > 3000 ? 3000 : sumChar; // Not really necessary
+    setCount((sum * 50) / 11 + (sumChar * 50) / 3000);
   }, [props.values]);
   return (
     <React.Fragment>
