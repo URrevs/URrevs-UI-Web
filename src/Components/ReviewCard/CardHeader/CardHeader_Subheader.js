@@ -10,7 +10,6 @@ const CardSubheader = ({ reviewDate, buyDate, showViewsCounter, views }) => {
   const convert = useConvertNumberToHumanLanguage;
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const language = useAppSelector((state) => state.language.language);
-
   reviewDate = convertDateToString(reviewDate, language);
   if (buyDate) buyDate = subtractDate(buyDate, language);
 

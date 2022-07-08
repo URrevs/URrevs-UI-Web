@@ -36,7 +36,14 @@ const FormikDatePicker = ({ label, fieldName }) => {
               value={value}
               views={["year", "month"]}
               onChange={(newValue) => {
-                setFieldValue(fieldName, newValue);
+                try {
+                  let day = newValue.toString().replace(/[0-9]+/, "01");
+                  day = day.replace(/[0-9]+:[0-9]+:[0-9]+/, "00:00:00");
+                  setFieldValue(fieldName, day);
+                } catch (e) {
+                  // console.log(e);
+                }
+
                 if (newValue) sessionStorage.setItem(fieldName, newValue);
               }}
               open={openDate}
@@ -75,6 +82,7 @@ const FormikDatePicker = ({ label, fieldName }) => {
                       ...params.inputProps,
                       placeholder: label,
                     }}
+                    value=""
                     onClick={() => setOpenDate(true)}
                     error={meta.touched && meta.error && true}
                     helperText={

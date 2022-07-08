@@ -18,7 +18,6 @@ const FormikSearchComponent = ({
     <Field name={fieldName}>
       {({ field: { value }, form: { setFieldValue, setFieldError }, meta }) => (
         <React.Fragment>
-          {console.log(meta.touched)}
           <SearchComponent
             isFormik={true}
             query={query}
