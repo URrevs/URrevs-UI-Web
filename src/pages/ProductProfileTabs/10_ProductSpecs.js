@@ -1,7 +1,15 @@
 import { useTheme } from "@emotion/react";
 import CompareOutlinedIcon from "@mui/icons-material/CompareOutlined";
 import HelpIcon from "@mui/icons-material/Help";
-import { Box, Card, Grid, IconButton, Modal, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CircularProgress,
+  Grid,
+  IconButton,
+  Modal,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/styles";
 import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
@@ -19,6 +27,7 @@ import {
   useGetSimilarPhonesQuery,
   useGetStatisticalInfoQuery,
 } from "../../services/phones";
+import classes from "../../scrollbar.module.css";
 
 const CardStyled = styled(
   Card,
@@ -37,7 +46,7 @@ export const ProductSpecsScreen = () => {
   const [searchParams] = useSearchParams();
   const paramId = searchParams.get("pid");
 
-  let { data } = useGetPhoneSpecsQuery(paramId);
+  let { data, isLoading, error } = useGetPhoneSpecsQuery(paramId);
 
   const componentDictionary = {
     productImage: textContainer.productImage,
@@ -52,7 +61,7 @@ export const ProductSpecsScreen = () => {
     data: statistical,
     isLoading: statisticalLoading,
     error: statisticalError,
-  } = useGetStatisticalInfoQuery(data._id, {
+  } = useGetStatisticalInfoQuery(paramId, {
     refetchOnMountOrArgChange: true,
   });
 
@@ -60,18 +69,26 @@ export const ProductSpecsScreen = () => {
     data: similarPhones,
     isLoading: similarPhoneLoading,
     error: similarPhoneError,
-  } = useGetSimilarPhonesQuery(data._id, {
+  } = useGetSimilarPhonesQuery(paramId, {
     // pollingInterval: 3000,
   });
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const theme = useTheme();
-  const ComparePaper = (item) => (
-    <CardStyled>
-      <CompareItem item={item} />
-    </CardStyled>
-  );
+  const ComparePaper = (item) => {
+    if (isLoading) {
+      return <CircularProgress />;
+    } else if (error) {
+      return;
+    } else {
+      return (
+        <CardStyled>
+          <CompareItem item={item} />
+        </CardStyled>
+      );
+    }
+  };
 
   const overviewCard = () =>
     statisticalLoading ? (
@@ -98,44 +115,54 @@ export const ProductSpecsScreen = () => {
             statistical.battery,
           ]}
           paramId={paramId}
-          phone={data.name}
+          phone={statistical.name}
           type="هاتف ذكي"
         />
       </div>
     );
 
-  const compareWithOtherProducts = () => (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "end",
-        alignItems: "center",
-      }}
-    >
-      <FaButton
-        icon={
-          <CompareOutlinedIcon sx={{ fontSize: "28px", color: "#FFFFFF" }} />
-        }
-        onClick={handleOpen}
-      >
+  const compareWithOtherProducts = () => {
+    if (isLoading) {
+      return <CircularProgress />;
+    } else if (error) {
+      return <p>حدث خطأ</p>;
+    } else {
+      return (
         <Box
           sx={{
             display: "flex",
+            justifyContent: "end",
             alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
           }}
         >
-          <Typography variant="S14W700Cffffff">
-            {componentDictionary.compareWithAnotherProduct}
-          </Typography>
+          <FaButton
+            icon={
+              <CompareOutlinedIcon
+                sx={{ fontSize: "28px", color: "#FFFFFF" }}
+              />
+            }
+            onClick={handleOpen}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                textAlign: "center",
+              }}
+            >
+              <Typography variant="S14W700Cffffff">
+                {componentDictionary.compareWithAnotherProduct}
+              </Typography>
+            </Box>
+          </FaButton>
+          <Modal open={open} onClose={handleClose}>
+            <CompareDialog item={data} handleClose={handleClose} />
+          </Modal>
         </Box>
-      </FaButton>
-      <Modal open={open} onClose={handleClose}>
-        <CompareDialog item={data} handleClose={handleClose} />
-      </Modal>
-    </Box>
-  );
+      );
+    }
+  };
 
   const similarPhonesComponent = () => (
     <div>
@@ -154,6 +181,30 @@ export const ProductSpecsScreen = () => {
     </div>
   );
 
+  const productImageCard = () => {
+    if (isLoading) {
+      return <CircularProgress />;
+    } else if (error) {
+      return <p>حدث خطأ</p>;
+    } else {
+      return (
+        <CardStyled elevation={3}>
+          <img alt="im" src={data.picture}></img>
+        </CardStyled>
+      );
+    }
+  };
+
+  const productSpecsCard = () => {
+    if (isLoading) {
+      return <CircularProgress />;
+    } else if (error) {
+      return <p>حدث خطأ</p>;
+    } else {
+      return <ProductDetailsTable phoneData={data} />;
+    }
+  };
+
   return (
     <React.Fragment>
       <Grid container>
@@ -167,9 +218,7 @@ export const ProductSpecsScreen = () => {
           <Typography variant="S18W700C050505">
             {componentDictionary.productImage + ":"}
           </Typography>
-          <CardStyled elevation={3}>
-            <img alt="im" src={data.picture}></img>
-          </CardStyled>
+          {productImageCard()}
           {/* Padding on Desktop 32px  */}
           {!theme.isMobile && <div style={{ height: "32px" }}></div>}
           <Typography
@@ -196,13 +245,14 @@ export const ProductSpecsScreen = () => {
               />
             </IconButton>
           </Typography>
-          <ProductDetailsTable phoneData={data} />
+          {productSpecsCard()}
           {theme.isMobile ? similarPhonesComponent() : null}
           {theme.isMobile ? compareWithOtherProducts() : null}
         </Grid>
         <Grid item xl={0.5} lg={0.5} md={0.5} xs={0}></Grid>
+
         {/* Left Grid*/}
-        <Grid item xl={3.8} lg={5} md={6} xs={0}>
+        <Grid className={classes.scrollbar} item xl={3.8} lg={5} md={6} xs={0}>
           {theme.isMobile ? null : (
             <div
               style={{
@@ -229,6 +279,7 @@ export const ProductSpecsScreen = () => {
             </div>
           )}
         </Grid>
+
         <Grid item xl={0.5} lg={0.5} md={0.5} xs={0}></Grid>
       </Grid>
     </React.Fragment>

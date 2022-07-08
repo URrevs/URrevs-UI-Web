@@ -29,75 +29,78 @@ export function AnswersList({
         background: theme.palette.reviewCard.reviewCardColor,
         padding: "0px 4px 4px 4px",
         borderRadius: "10px",
-        marginBottom: "10px",
       }
     : {};
 
   return (
-    <div style={desktopTheme}>
-      {reviewCard()}
-      <div style={{ padding: "0 12px" }}>
-        {!isMobile && (
-          <Fragment>
-            <PostingField
-              avatar={true}
-              placeholder="اكتب اجابة"
-              onSubmit={(comment) => submitCommentHandler(comment)}
-            />
-            <br />
-          </Fragment>
-        )}
-        <Virtuoso
-          useWindowScroll
-          context={{ endOfData }}
-          data={commentsList}
-          endReached={loadMore}
-          increaseViewportBy={{ top: 2500, bottom: 2500 }}
-          overscan={20}
-          itemContent={(index, comment) => {
-            return comment.isReply ? (
-              <CommentReply
-                replyId={comment._id}
-                date={comment.createdAt}
-                likes={comment.likes}
-                text={comment.content}
-                liked={comment.liked}
-                replyLike={replyLike}
-                replyUnlike={replyUnlike}
-                commentId={comment.commentId}
-                avatar={comment.userPicture}
-                acceptedAnswerReply={comment.acceptedReply}
-                userName={comment.userName}
-                userId={comment.userId}
+    <Fragment>
+      <div style={{ height: "16px" }}></div>
+      <div style={{ ...desktopTheme }}>
+        {reviewCard()}
+        <div style={{ padding: "0 12px" }}>
+          {!isMobile && (
+            <Fragment>
+              <PostingField
+                avatar={true}
+                placeholder="اكتب اجابة"
+                onSubmit={(comment) => submitCommentHandler(comment)}
               />
-            ) : (
-              <Answer
-                commentId={comment._id}
-                text={comment.content}
-                date={comment.createdAt}
-                likes={comment.upvotes}
-                upvoted={comment.upvoted}
-                commentLike={commentLike}
-                commentUnlike={commentUnlike}
-                submitReplyHandler={submitReplyHandler}
-                avatar={comment.picture}
-                ownerId={comment.userId}
-                ownedAt={comment.ownedAt}
-                questionOwnerId={questionOwnerId}
-                questionId={questionId}
-                acceptAnswer={acceptAnswer}
-                rejectAnswer={rejectAnswer}
-                acceptedAnswer={comment.isAccepted}
-                showReply={true}
-                userName={comment.userName}
-                userId={comment.userId}
-              />
-            );
-          }}
-          components={{ Footer }}
-        />
+              <br />
+            </Fragment>
+          )}
+          <Virtuoso
+            useWindowScroll
+            context={{ endOfData }}
+            data={commentsList}
+            endReached={loadMore}
+            increaseViewportBy={{ top: 2500, bottom: 2500 }}
+            overscan={20}
+            itemContent={(index, comment) => {
+              return comment.isReply ? (
+                <CommentReply
+                  replyId={comment._id}
+                  date={comment.createdAt}
+                  likes={comment.likes}
+                  text={comment.content}
+                  liked={comment.liked}
+                  replyLike={replyLike}
+                  replyUnlike={replyUnlike}
+                  commentId={comment.commentId}
+                  avatar={comment.userPicture}
+                  acceptedAnswerReply={comment.acceptedReply}
+                  userName={comment.userName}
+                  userId={comment.userId}
+                />
+              ) : (
+                <Answer
+                  commentId={comment._id}
+                  text={comment.content}
+                  date={comment.createdAt}
+                  likes={comment.upvotes}
+                  upvoted={comment.upvoted}
+                  commentLike={commentLike}
+                  commentUnlike={commentUnlike}
+                  submitReplyHandler={submitReplyHandler}
+                  avatar={comment.picture}
+                  ownerId={comment.userId}
+                  ownedAt={comment.ownedAt}
+                  questionOwnerId={questionOwnerId}
+                  questionId={questionId}
+                  acceptAnswer={acceptAnswer}
+                  rejectAnswer={rejectAnswer}
+                  acceptedAnswer={comment.isAccepted}
+                  showReply={true}
+                  userName={comment.userName}
+                  userId={comment.userId}
+                />
+              );
+            }}
+            components={{ Footer }}
+          />
+        </div>
       </div>
-    </div>
+      <div style={{ height: "16px" }}></div>
+    </Fragment>
   );
 }
 

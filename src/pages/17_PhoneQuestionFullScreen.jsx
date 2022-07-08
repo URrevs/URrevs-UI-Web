@@ -337,7 +337,6 @@ export default function PhoneQuestionFullScreen() {
             ) : (
               currentReviewData && (
                 <React.Fragment>
-                  <div style={{ height: "25px" }}></div>
                   <AnswersList
                     reviewCard={reviewCard}
                     commentsList={commentsList}
