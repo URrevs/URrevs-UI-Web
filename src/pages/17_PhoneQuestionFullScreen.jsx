@@ -1,5 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
+import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
@@ -335,23 +336,26 @@ export default function PhoneQuestionFullScreen() {
               <div>Error</div>
             ) : (
               currentReviewData && (
-                <AnswersList
-                  reviewCard={reviewCard}
-                  commentsList={commentsList}
-                  commentLike={likeCommentRequest}
-                  commentUnlike={unLikeCommentRequest}
-                  replyLike={likeReplyRequest}
-                  replyUnlike={unLikeReplyRequest}
-                  addToReviewsList={addToLoadedComments}
-                  submitReplyHandler={submitReplyHandler}
-                  acceptAnswer={acceptAnswerRequest}
-                  rejectAnswer={rejectAnswerRequest}
-                  questionOwnerId={currentReviewData.userId}
-                  questionId={currentReviewData._id}
-                  endOfData={endOfData}
-                  loadMore={loadMore}
-                  submitCommentHandler={submitCommentHandler}
-                />
+                <React.Fragment>
+                  <div style={{ height: "25px" }}></div>
+                  <AnswersList
+                    reviewCard={reviewCard}
+                    commentsList={commentsList}
+                    commentLike={likeCommentRequest}
+                    commentUnlike={unLikeCommentRequest}
+                    replyLike={likeReplyRequest}
+                    replyUnlike={unLikeReplyRequest}
+                    addToReviewsList={addToLoadedComments}
+                    submitReplyHandler={submitReplyHandler}
+                    acceptAnswer={acceptAnswerRequest}
+                    rejectAnswer={rejectAnswerRequest}
+                    questionOwnerId={currentReviewData.userId}
+                    questionId={currentReviewData._id}
+                    endOfData={endOfData}
+                    loadMore={loadMore}
+                    submitCommentHandler={submitCommentHandler}
+                  />
+                </React.Fragment>
               )
             )}
           </Box>

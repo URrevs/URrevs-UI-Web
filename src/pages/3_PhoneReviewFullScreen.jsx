@@ -1,5 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
+import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
@@ -288,18 +289,21 @@ export default function PhoneReviewFullScreen() {
               <div>Error</div>
             ) : (
               currentReviewData && (
-                <CommentsList
-                  commentsList={commentsList}
-                  reviewCard={reviewCard}
-                  submitReplyHandler={submitReplyHandler}
-                  submitCommentHandler={submitCommentHandler}
-                  endOfData={endOfData}
-                  loadMore={loadMore}
-                  likeCommentRequest={likeCommentRequest}
-                  unLikeCommentRequest={unLikeCommentRequest}
-                  likeReplyRequest={likeReplyRequest}
-                  unLikeReplyRequest={unLikeReplyRequest}
-                />
+                <React.Fragment>
+                  <div style={{ height: "25px" }}></div>
+                  <CommentsList
+                    commentsList={commentsList}
+                    reviewCard={reviewCard}
+                    submitReplyHandler={submitReplyHandler}
+                    submitCommentHandler={submitCommentHandler}
+                    endOfData={endOfData}
+                    loadMore={loadMore}
+                    likeCommentRequest={likeCommentRequest}
+                    unLikeCommentRequest={unLikeCommentRequest}
+                    likeReplyRequest={likeReplyRequest}
+                    unLikeReplyRequest={unLikeReplyRequest}
+                  />
+                </React.Fragment>
               )
             )}
           </Box>
