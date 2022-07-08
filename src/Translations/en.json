@@ -311,5 +311,6 @@
   "additionalInfoShallBeEntered": "Additional Info shall be entered when choosing \"other\" as a complaint reason",
   "successfullyReported": "Successfully reported",
   "youHaveSelectedDateBeforePhoneRelease": "You have entered a date before the phone release.",
-  "reviewNow": "Review Now"
+  "reviewNow": "Review Now",
+  "enterAValidRefCode": "Enter a valid referral code"
 }

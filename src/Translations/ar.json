@@ -314,5 +314,6 @@
   "additionalInfoShallBeEntered": "يجب ادخال معلومات اضافية عند اختيار \"أخرى\" كسبب للشكوى",
   "successfullyReported": "تم الإبلاغ بنجاح",
   "youHaveSelectedDateBeforePhoneRelease": "لقد ادخلت تاريخ قبل صدور الهاتف",
-  "reviewNow": "راجع الاَن"
+  "reviewNow": "راجع الاَن",
+  "enterAValidRefCode": "ادخل كود دعوة صحيح"
 }

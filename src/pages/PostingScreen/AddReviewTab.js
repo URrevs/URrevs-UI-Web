@@ -7,6 +7,7 @@ import {
   IconButton,
   Modal,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import React from "react";
@@ -273,6 +274,16 @@ export const AddReviewTab = ({ ...props }) => {
           variant="S18W500C050505"
         >
           {pageDictionary.enterInvitationCode + ":"}
+          {/* <Tooltip title={pageDictionary.referralCodeHelpPrompt}>
+            <HelpIcon
+              sx={{
+                marginLeft: "4px",
+                padding: 0,
+                fontSize: "25px",
+                color: theme.palette.defaultIconColor,
+              }}
+            />
+          </Tooltip> */}
           <IconButton
             onClick={handleOpen}
             sx={{

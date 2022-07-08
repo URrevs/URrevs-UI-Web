@@ -32,6 +32,7 @@ const PostingScreen = ({
     hatedAboutManufacturerErrorMsg:
       textContainer.hatedAboutManufacturerErrorMsg,
     purchaseDateErrorMsg: textContainer.purchaseDateErrorMsg,
+    enterAValidRefCode: textContainer.enterAValidRefCode,
   };
   /* Form Validation */
   const BasicValidationSchema = Yup.object().shape({
@@ -61,7 +62,10 @@ const PostingScreen = ({
     hateAbout: Yup.string()
       .trim()
       .required(pageDictionary.hatedAboutManufacturerErrorMsg),
-    // invitationCode: Yup.string().required("Required"),
+    invitationCode: Yup.string().matches(
+      /^ur[1-9][0-9]*$/gi,
+      pageDictionary.enterAValidRefCode
+    ),
   });
   return (
     <div style={{ marginBottom: theme.isMobile ? "85px" : 0 }}>
