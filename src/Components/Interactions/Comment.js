@@ -20,6 +20,7 @@ export const Comment = ({
   avatar,
   userId,
   userName,
+  reportFunction,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -54,6 +55,7 @@ export const Comment = ({
         renderIcon={renderIcon}
         userId={userId}
         userName={userName}
+        reportFunction={reportFunction}
       >
         <InteractionFooter
           commentId={commentId}

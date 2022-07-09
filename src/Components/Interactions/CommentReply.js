@@ -18,6 +18,7 @@ export const CommentReply = ({
   userId,
   userName,
   acceptedAnswerReply = false,
+  reportFunction,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -56,6 +57,7 @@ export const CommentReply = ({
           buttonName={buttonName}
           renderIcon={renderIcon}
           avatar={avatar}
+          reportFunction={reportFunction}
         >
           <InteractionFooter
             date={date}

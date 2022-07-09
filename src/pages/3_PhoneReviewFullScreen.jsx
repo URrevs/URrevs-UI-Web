@@ -20,9 +20,14 @@ import {
   useUnLikePhoneReviewCommentMutation,
   useUnLikePhoneReviewReplyMutation,
 } from "../services/phone_reviews";
+import {
+  useReportAPhoneReviewCommentMutation,
+  useReportAPhoneReviewCommentReplyMutation,
+} from "../services/reports";
 import { commentsListActions } from "../store/commentsListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
+import { sendReportActions } from "../store/uiSendReportSlice";
 import CommentsList from "./CommentsList";
 
 export default function PhoneReviewFullScreen() {
@@ -72,7 +77,23 @@ export default function PhoneReviewFullScreen() {
   const [likeReply] = useLikePhoneReviewReplyMutation();
   // unlike reply
   const [unLikeReply] = useUnLikePhoneReviewReplyMutation();
-
+  // report a comment
+  const [reportAPhoneComment] = useReportAPhoneReviewCommentMutation();
+  // report a reply
+  const [reportACommentReply] = useReportAPhoneReviewCommentReplyMutation();
+  // Comment Report Function
+  const commentReportFunction = (commentId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportAPhoneComment({
+            revId: reviewId,
+            commentId: commentId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
   // get review from server
   const {
     data: currentReview,
@@ -303,6 +324,7 @@ export default function PhoneReviewFullScreen() {
                     unLikeCommentRequest={unLikeCommentRequest}
                     likeReplyRequest={likeReplyRequest}
                     unLikeReplyRequest={unLikeReplyRequest}
+                    commentReportFunction={commentReportFunction}
                   />
                 </React.Fragment>
               )

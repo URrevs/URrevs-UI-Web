@@ -1,10 +1,19 @@
-import { Avatar, Box, Grid, IconButton, Stack } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+  Stack,
+} from "@mui/material";
 import React from "react";
 import { InteractionCard } from "./InteractionCard";
 import { Link } from "react-router-dom";
 import ROUTES_NAMES from "../../RoutesNames";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useTheme } from "@emotion/react";
+import { useAppSelector } from "../../store/hooks";
 
 export const InteractionBody = ({
   text,
@@ -16,15 +25,22 @@ export const InteractionBody = ({
   avatarSize = "44px",
   userId,
   userName,
+  reportFunction = () => {
+    console.log("report");
+  },
 }) => {
   const [showReportMenu, setShowReportMenu] = React.useState(true);
+  const textContainer = useAppSelector((state) => state.language.textContainer);
   const theme = useTheme();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <div
-      style={{
-        whiteSpace: "pre-line",
-        wordBreak: "break-all",
-      }}
       onMouseEnter={() => {
         setShowReportMenu(true);
       }}
@@ -32,59 +48,81 @@ export const InteractionBody = ({
         setShowReportMenu(false);
       }}
     >
-      <Box sx={{ display: "flex" }}>
-        <Link to={`../${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}>
-          <Avatar
-            src={avatar}
-            sx={{ marginRight: "6px", height: avatarSize, width: avatarSize }}
-          ></Avatar>
-        </Link>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              position: "relative",
-            }}
-          >
-            <InteractionCard
-              userName={userName}
-              userId={userId}
-              text={text}
-              ownedAt={ownedAt}
-              likes={likes}
-              renderIcon={renderIcon}
-            />
-            <div style={{ position: "absolute", left: "-34px" }}>
-              {!theme.isMobile && showReportMenu && (
-                // <div>...</div>
-                <IconButton>
-                  <MoreHorizIcon
-                    sx={{
-                      fontSize: "16px",
-                    }}
-                  />
-                </IconButton>
-              )}
-            </div>
-          </div>
+      <div
+        style={{
+          maxWidth: "calc(100% - 20px)",
+          whiteSpace: "pre-line",
+          wordBreak: "break-word",
+        }}
+      >
+        <Box sx={{ display: "flex" }}>
+          <Link to={`../${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}>
+            <Avatar
+              src={avatar}
+              sx={{ marginRight: "6px", height: avatarSize, width: avatarSize }}
+            ></Avatar>
+          </Link>
           <Box
             sx={{
               display: "flex",
-              marginLeft: "8px",
-              paddingTop: "2px",
-              alignItems: "center",
+              flexDirection: "column",
             }}
           >
-            {children}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                position: "relative",
+              }}
+            >
+              <InteractionCard
+                userName={userName}
+                userId={userId}
+                text={text}
+                ownedAt={ownedAt}
+                likes={likes}
+                renderIcon={renderIcon}
+              />
+              {!theme.isMobile && showReportMenu && (
+                <div style={{ position: "absolute", left: "-34px" }}>
+                  <IconButton onClick={handleClick}>
+                    <MoreHorizIcon
+                      sx={{
+                        fontSize: "16px",
+                      }}
+                    />
+                  </IconButton>
+                  <Menu
+                    open={anchorEl !== null}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                  >
+                    <MenuItem
+                      onClick={() => {
+                        reportFunction();
+                        handleClose();
+                        setShowReportMenu(false);
+                      }}
+                    >
+                      {textContainer.report}
+                    </MenuItem>
+                  </Menu>
+                </div>
+              )}
+            </div>
+            <Box
+              sx={{
+                display: "flex",
+                marginLeft: "8px",
+                paddingTop: "2px",
+                alignItems: "center",
+              }}
+            >
+              {children}
+            </Box>
           </Box>
         </Box>
-      </Box>
+      </div>
     </div>
   );
 };

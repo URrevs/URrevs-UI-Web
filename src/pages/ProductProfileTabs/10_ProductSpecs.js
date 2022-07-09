@@ -157,7 +157,9 @@ export const ProductSpecsScreen = () => {
             </Box>
           </FaButton>
           <Modal open={open} onClose={handleClose}>
-            <CompareDialog item={data} handleClose={handleClose} />
+            <div>
+              <CompareDialog item={data} handleClose={handleClose} />
+            </div>
           </Modal>
         </Box>
       );
