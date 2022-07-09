@@ -308,16 +308,18 @@ export default function PhoneReviewFullScreen() {
               )
             )}
           </Box>
-          <div
-            style={{
-              width: "calc(100% - 41px)",
-              position: "fixed",
-              bottom: 0,
-              background: "#fff",
-            }}
-          >
-            <PostingField />
-          </div>
+          {isMobile && (
+            <div
+              style={{
+                width: "calc(100% - 41px)",
+                position: "fixed",
+                bottom: 0,
+                background: "#fff",
+              }}
+            >
+              <PostingField />
+            </div>
+          )}
         </AlonePostsGrid>
       </FixedGrid>
     </CustomAppBar>
