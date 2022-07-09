@@ -25,7 +25,11 @@ export function PostedReviews() {
   return (
     <CustomAppBar
       showLabel
-      label="مراجعاتي"
+      label={
+        currentUserId === paramId
+          ? textContainer.myReviews
+          : textContainer.reviews
+      }
       showBackBtn
       tabBar={<FilterTabbar value={filter} setValue={setFilter} />}
     >

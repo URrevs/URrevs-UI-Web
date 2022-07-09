@@ -24,7 +24,11 @@ export function PostedQuestions() {
   return (
     <CustomAppBar
       showLabel
-      label="الاسئلة"
+      label={
+        currentUserId === paramId
+          ? textContainer.myQuestions
+          : textContainer.askedQuestions
+      }
       showBackBtn
       tabBar={<FilterTabbar value={filter} setValue={setFilter} />}
     >
