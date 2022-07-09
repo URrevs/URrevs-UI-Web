@@ -1,13 +1,13 @@
 - Set As Owned should be locked the moment review is posted
 - Add Review confirmation <b>MODAL</b> before navigating out of add review.
-- Fab in add review, add question screens and in Owned products tab.
+- Fab in add review, add question screens and in Owned products tab.+ fix padding for mobile
 - Long Press comment/reply to report on mobile
 - Delete Account Feature
 - Phone verification
 
 = Postponed:
 
-- Upvoting then downvoting top answer in full question screen has weird effect.
+- Accepting answer then unaccepting it in full question screen has weird effect.
 - Collapsed replies
 - See previous comments
 - Reporting Admin Side
