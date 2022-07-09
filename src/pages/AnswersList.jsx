@@ -72,7 +72,7 @@ export function AnswersList({
                   acceptedAnswerReply={comment.acceptedReply}
                   userName={comment.userName}
                   userId={comment.userId}
-                  replyReportFunction={() => {
+                  reportFunction={() => {
                     replyReportFunction(comment.commentId, comment._id);
                   }}
                 />
@@ -97,7 +97,7 @@ export function AnswersList({
                   showReply={true}
                   userName={comment.userName}
                   userId={comment.userId}
-                  answerReportFunction={answerReportFunction}
+                  answerReportFunction={() => answerReportFunction(comment._id)}
                 />
               );
             }}
