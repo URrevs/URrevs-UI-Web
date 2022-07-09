@@ -78,6 +78,7 @@ export const Answer = ({
   return (
     <div
       style={{
+        display:'flex',
         maxWidth: "calc(100% - 20px)",
         padding: "4px 0px",
       }}
