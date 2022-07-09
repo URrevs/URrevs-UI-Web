@@ -1,5 +1,5 @@
 import { Box, Card, Divider, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { TABCARD_BORDER_RADIUS } from "../../constants";
 import { useAppSelector } from "../../store/hooks";
@@ -13,13 +13,22 @@ export const PathTabbar = ({
   const location = useLocation();
 
   // set tab indicator on current route
-  const currentPath = location.pathname.split("/").slice(-1)[0];
-  const pathValue = arrayOfTabs.findIndex(
+  let currentPath = location.pathname.split("/").slice(-1)[0];
+  let pathValue = arrayOfTabs.findIndex(
     (element) => element.to.split("?")[0] === currentPath
   );
 
-  console.log(currentPath, arrayOfTabs[0].to.split("?")[0], pathValue);
   const [value, setValue] = React.useState(pathValue === -1 ? 0 : pathValue);
+
+  React.useEffect(() => {
+    console.log('changed')
+    currentPath = location.pathname.split("/").slice(-1)[0];
+    pathValue = arrayOfTabs.findIndex(
+      (element) => element.to.split("?")[0] === currentPath
+    );
+
+    setValue(pathValue === -1 ? 0 : pathValue);
+  }, [location.pathname]);
 
   const language = useAppSelector((state) => state.language.language);
   const adjust = isVertical ? 1 : 0.5; //

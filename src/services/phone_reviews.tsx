@@ -190,7 +190,7 @@ export const phoneReviewsApi = createApi({
           await queryFulfilled;
         } catch (e: any) {
           if (
-            e.error.data.status === "not found" ||
+            // e.error.data.status === "not found" ||
             e.error.data.status === "already liked"
           ) {
           } else {
@@ -214,7 +214,7 @@ export const phoneReviewsApi = createApi({
           await queryFulfilled;
         } catch (e: any) {
           if (
-            e.error.data.status === "not found" ||
+            // e.error.data.status === "not found" ||
             e.error.data.status === "already liked"
           ) {
           } else {
@@ -239,7 +239,7 @@ export const phoneReviewsApi = createApi({
           await queryFulfilled;
         } catch (e: any) {
           if (
-            e.error.data.status === "not found" ||
+            // e.error.data.status === "not found" ||
             e.error.data.status === "already liked"
           ) {
           } else {
@@ -262,10 +262,10 @@ export const phoneReviewsApi = createApi({
         try {
           await queryFulfilled;
         } catch (e: any) {
-          if (e.error.data.status === "not found") {
-          } else {
+          // if (e.error.data.status === "not found") {
+          // } else {
             payload.unDoFn(payload.commentId);
-          }
+          // }
         }
       },
     }),
