@@ -43,6 +43,7 @@ export const AddReviewTab = ({ ...props }) => {
     return state.language.textContainer;
   });
   const [open, setOpen] = React.useState(false);
+  const [openStar, setOpenStar] = React.useState(false);
   const [count, setCount] = React.useState(0);
   const [contribution, setContribution] = React.useState(0);
   const handleOpen = () => setOpen(true);
@@ -136,6 +137,7 @@ export const AddReviewTab = ({ ...props }) => {
 
   // Can be easily done with measuring contributions
   React.useEffect(() => {
+    const limit = 1200;
     let sum = 0;
     let sumChar = 0;
     sum = props.values.chooseProduct.label ? ++sum : sum;
@@ -153,14 +155,25 @@ export const AddReviewTab = ({ ...props }) => {
     sumChar += props.values.hateAboutProduct.length;
     sumChar += props.values.likeAbout.length; //Company
     sumChar += props.values.hateAbout.length; //Company
-    sumChar = sumChar > 3000 ? 3000 : sumChar; // Not really necessary
-    setCount((sum * 50) / 11 + (sumChar * 50) / 3000);
+    sumChar = sumChar > limit ? limit : sumChar; // Not really necessary
+    setCount((sum * 50) / 11 + (sumChar * 50) / limit);
   }, [props.values]);
   return (
     <React.Fragment>
       <Modal open={open} onClose={handleClose} dir={theme.direction}>
         <Box>
           <DialogText text={pageDictionary.referralCodeHelpPrompt} />
+        </Box>
+      </Modal>
+      <Modal
+        open={openStar}
+        onClose={() => {
+          setOpenStar(false);
+        }}
+        dir={theme.direction}
+      >
+        <Box>
+          <DialogText text="بطاطس محمرة" />
         </Box>
       </Modal>
       <form onSubmit={props.handleSubmit}>
@@ -184,6 +197,9 @@ export const AddReviewTab = ({ ...props }) => {
               ? theme.palette.background.default
               : theme.palette.modalColor,
             top: theme.isMobile ? "45px" : 0,
+          }}
+          onClick={() => {
+            setOpenStar(true);
           }}
         >
           <StarCounter value={count} />

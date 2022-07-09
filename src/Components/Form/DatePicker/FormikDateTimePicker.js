@@ -19,6 +19,10 @@ const FormikDateTimePicker = ({ label, fieldName }) => {
   const textContainer = useSelector((state) => state.language.textContainer);
   const competitionEndDateErrorMsg = textContainer.competitionEndDateErrorMsg;
   const localeDate = theme.direction === "rtl" ? arEG : enUS;
+  const minIsoDate = new Date()
+    .toISOString()
+    .replace(/[0-9]+:[0-9]+:[0-9]{2}.[0-9]{3}/, "22:00:00.000");
+
   return (
     <Field name={fieldName}>
       {({ field: { value }, form: { setFieldValue }, meta }) => (
@@ -29,7 +33,7 @@ const FormikDateTimePicker = ({ label, fieldName }) => {
           >
             <DesktopDateTimePicker
               disableHighlightToday
-              minDate={new Date()}
+              minDate={new Date(minIsoDate)}
               value={value}
               onChange={(newValue) => {
                 setFieldValue(fieldName, newValue);

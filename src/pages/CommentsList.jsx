@@ -16,6 +16,8 @@ export default function CommentsList({
   unLikeCommentRequest,
   likeReplyRequest,
   unLikeReplyRequest,
+  replyReportFunction,
+  commentReportFunction,
 }) {
   const theme = useTheme();
   const isMobile = theme.isMobile;
@@ -54,6 +56,7 @@ export default function CommentsList({
             itemContent={(index, comment) => {
               return comment.isReply ? (
                 <CommentReply
+                  reportFunction={replyReportFunction}
                   replyId={comment._id}
                   date={comment.createdAt}
                   likes={comment.likes}
@@ -68,6 +71,7 @@ export default function CommentsList({
                 />
               ) : (
                 <Comment
+                  reportFunction={commentReportFunction}
                   commentId={comment._id}
                   date={comment.createdAt}
                   likes={comment.likes}
