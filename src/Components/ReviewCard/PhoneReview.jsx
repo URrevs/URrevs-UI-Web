@@ -1,4 +1,5 @@
 import { generateLink } from "../../functions/dynamicLinkGenerator";
+import { useCheckSignedInWithoutModal } from "../../hooks/useCheckIsSignedInWithoutModal";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
@@ -32,6 +33,8 @@ export default function PhoneReview({
   isExpanded,
   stateShare,
 }) {
+  const checkSignedInWithoutModal = useCheckSignedInWithoutModal();
+
   /*RTK Queries */
   const [dontLikeThisRequest] = useIdontLikeThisPhoneReviewMutation();
   const [fullScreenRequest] = useUserPressFullScreenMutation();
@@ -100,10 +103,14 @@ export default function PhoneReview({
   };
 
   const fullScreenHandler = () => {
-    fullScreenRequest({ reviewId: reviewDetails._id });
+    if (checkSignedInWithoutModal()) {
+      fullScreenRequest({ reviewId: reviewDetails._id });
+    }
   };
   const seeMoreHandler = () => {
-    seeMoreRequest({ reviewId: reviewDetails._id });
+    if (checkSignedInWithoutModal()) {
+      seeMoreRequest({ reviewId: reviewDetails._id });
+    }
     increaseViewCounterRequest({ reviewId: reviewDetails._id });
   };
 

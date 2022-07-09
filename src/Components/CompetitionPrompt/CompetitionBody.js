@@ -72,7 +72,9 @@ export const CompetitionBody = ({ button, handleClose }) => {
               prizePic: values.imgLink,
             }).unwrap();
             dispatch(
-              snackbarActions.showSnackbar({ message: "Competition added" })
+              snackbarActions.showSnackbar({
+                message: textContainer.competetionAdded,
+              })
             );
           } catch (e) {
             dispatch(snackbarActions.showSnackbar({ message: e.data.status }));

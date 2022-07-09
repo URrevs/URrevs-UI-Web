@@ -36,6 +36,7 @@ export default function CompanyReviewFullScreen() {
     return () => {
       console.log("clear comments");
       dispatch(commentsListActions.clearComments());
+      dispatch(reviewsActions.clearReviews());
     };
   }, []);
 

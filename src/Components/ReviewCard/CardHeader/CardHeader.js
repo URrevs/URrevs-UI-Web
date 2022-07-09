@@ -5,6 +5,7 @@ import CardSubheader from "./CardHeader_Subheader";
 import CardHeaderTitle from "./CardHeader_Title";
 import CircleAvatar from "./CircleAvatar";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../../store/hooks";
 
 const CardHeader = ({
   userAvatar,
@@ -22,7 +23,7 @@ const CardHeader = ({
   actionBtnFunction,
   reportFunction,
 }) => {
-  const theme = useTheme();
+  const currentUser = useAppSelector((state) => state.auth);
 
   return (
     <MUICardHeader
@@ -35,7 +36,9 @@ const CardHeader = ({
         </Link>
       }
       action={
-        actionBtnFunction && (
+        actionBtnFunction &&
+        currentUser.isLoggedIn &&
+        userId !== currentUser.uid && (
           <ActionButton
             actionBtnFunction={actionBtnFunction}
             reportFunction={reportFunction}

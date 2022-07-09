@@ -6,6 +6,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import { PostingField } from "../Components/PostingComponents/PostingField";
 import PhoneReview from "../Components/ReviewCard/PhoneReview";
 import { useShowSnackbar } from "../hooks/useShowSnackbar";
 import ROUTES_NAMES from "../RoutesNames";
@@ -36,6 +37,7 @@ export default function PhoneReviewFullScreen() {
     return () => {
       console.log("clear comments");
       dispatch(commentsListActions.clearComments());
+      dispatch(reviewsActions.clearReviews());
     };
   }, []);
 
@@ -306,6 +308,16 @@ export default function PhoneReviewFullScreen() {
               )
             )}
           </Box>
+          <div
+            style={{
+              width: "calc(100% - 41px)",
+              position: "fixed",
+              bottom: 0,
+              background: "#fff",
+            }}
+          >
+            <PostingField />
+          </div>
         </AlonePostsGrid>
       </FixedGrid>
     </CustomAppBar>
