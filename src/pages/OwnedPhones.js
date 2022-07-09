@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Paper } from "@mui/material";
+import { Paper, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
@@ -9,6 +9,7 @@ import { PAPER_BORDER_RADIUS_DESKTOP } from "../constants";
 import { useGetOthersOwnedPhonesQuery } from "../services/users";
 import { useAppSelector } from "../store/hooks";
 import VirtualReviewList from "./VirtualListWindowScroll";
+import CheckCircleSharpIcon from "@mui/icons-material/CheckCircleSharp";
 
 function OwnedPhonesPage() {
   const [phonesList, setphonesList] = useState([]);
@@ -29,6 +30,40 @@ function OwnedPhonesPage() {
     uid: userId,
   });
 
+  let verificationRatioText = "";
+  const getVerificationText = (ratio) => {
+    if (!isLoading && !error) {
+      if (ratio === 0) {
+        verificationRatioText = "";
+      } else if (ratio === -1) {
+        ratio = textContainer.thisReviewIsFromAnApplePhone;
+      } else {
+        verificationRatioText =
+          textContainer.thisReviewIsVerifiedBy + " " + ratio + "%";
+      }
+    }
+    return verificationRatioText;
+  };
+
+  const verifiedTooltip = (ratio) => {
+    const text = getVerificationText(ratio);
+    return text !== "" ? (
+      <Tooltip title={text}>
+        <CheckCircleSharpIcon
+          style={{
+            fontSize: "16",
+            verticalAlign: "middle",
+            margin: "0 2px",
+            marginTop: "-2px",
+            color: theme.palette.reviewCard.actionBtnIconHighlight,
+          }}
+        />
+      </Tooltip>
+    ) : (
+      <div></div>
+    );
+  };
+
   const renderProductOnDesktop = (phone) => (
     <div>
       <Paper
@@ -37,12 +72,17 @@ function OwnedPhonesPage() {
           margin: "0px 3px",
           borderRadius: `${PAPER_BORDER_RADIUS_DESKTOP}px`,
           boxShadow: 3,
-          "&:hover": {
-            backgroundColor: theme.palette.hover,
-          },
+          // "&:hover": {
+          //   backgroundColor: theme.palette.hover,
+          // },
         }}
       >
-        <PhoneListItem id={phone._id} title={phone.name} />
+        <PhoneListItem
+          id={phone._id}
+          title={phone.name}
+          verificationIcon={verifiedTooltip}
+          verificationRatio={phone.verificationRatio}
+        />
       </Paper>
       <div
         style={{
@@ -56,7 +96,12 @@ function OwnedPhonesPage() {
     return !theme.isMobile ? (
       renderProductOnDesktop(phone)
     ) : (
-      <PhoneListItem id={phone._id} title={phone.name} />
+      <PhoneListItem
+        id={phone._id}
+        title={phone.name}
+        verificationIcon={verifiedTooltip}
+        verificationRatio={phone.verificationRatio}
+      />
     );
   };
 
