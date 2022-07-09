@@ -5,8 +5,16 @@ import { useConvertNumberToHumanLanguage } from "../../../hooks/useMillify";
 import { useAppSelector } from "../../../store/hooks";
 import { convertDateToString } from "../../../functions/convertDateToString";
 import { subtractDate } from "../../../functions/subtractDate";
+import { IconButton, Tooltip } from "@mui/material";
+import CheckCircleSharpIcon from "@mui/icons-material/CheckCircleSharp";
 
-const CardSubheader = ({ reviewDate, buyDate, showViewsCounter, views }) => {
+const CardSubheader = ({
+  reviewDate,
+  buyDate,
+  showViewsCounter,
+  views,
+  verificationRatio,
+}) => {
   const convert = useConvertNumberToHumanLanguage;
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const language = useAppSelector((state) => state.language.language);
@@ -26,7 +34,6 @@ const CardSubheader = ({ reviewDate, buyDate, showViewsCounter, views }) => {
             </Typography>
           </Typography>
         )}
-
         {showViewsCounter && (
           <Typography variant="S14W400C65676b">
             <Typography variant="S14W700C050505"> •</Typography>
@@ -41,6 +48,9 @@ const CardSubheader = ({ reviewDate, buyDate, showViewsCounter, views }) => {
             {convert(views)}
           </Typography>
         )}
+        <Tooltip title="Delete">
+          <CheckCircleSharpIcon fontSize="16" />
+        </Tooltip>
       </div>
     </React.Fragment>
   );

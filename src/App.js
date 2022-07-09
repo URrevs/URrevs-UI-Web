@@ -298,7 +298,8 @@ function App() {
   const dispatch = useAppDispatch();
   const refetchToken = useAppSelector((state) => state.auth.refetch);
 
-  const [getUserProfile, { isLoading }] = useLazyXauthenticateQuery();
+  const [getUserProfile, { isLoading }] = useLazyXauthenticateQuery({
+  });
 
   const [firebaseIsLoading, setFirebaseIsLoading] = useState(true);
 

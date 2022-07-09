@@ -76,7 +76,13 @@ export const Answer = ({
   const toggleReplyField = () => setShowReplyField((show) => !show);
 
   return (
-    <div style={{ maxWidth: "calc(100% - 20px)", padding: "4px 0px" }}>
+    <div
+      style={{
+        display: "flex",
+        maxWidth: "calc(100% - 20px)",
+        padding: "4px 0px",
+      }}
+    >
       {acceptedAnswer ? (
         <CheckIcon
           sx={{
