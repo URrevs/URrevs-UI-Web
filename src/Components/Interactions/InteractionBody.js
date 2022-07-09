@@ -4,6 +4,7 @@ import { InteractionCard } from "./InteractionCard";
 import { Link } from "react-router-dom";
 import ROUTES_NAMES from "../../RoutesNames";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { useTheme } from "@emotion/react";
 
 export const InteractionBody = ({
   text,
@@ -17,11 +18,18 @@ export const InteractionBody = ({
   userName,
 }) => {
   const [showReportMenu, setShowReportMenu] = React.useState(true);
+  const theme = useTheme();
   return (
     <div
       style={{
         whiteSpace: "pre-line",
         wordBreak: "break-all",
+      }}
+      onMouseEnter={() => {
+        setShowReportMenu(true);
+      }}
+      onMouseLeave={() => {
+        setShowReportMenu(false);
       }}
     >
       <Box sx={{ display: "flex" }}>
@@ -41,13 +49,7 @@ export const InteractionBody = ({
             style={{
               display: "flex",
               alignItems: "center",
-              width: "100%",
-            }}
-            onMouseEnter={() => {
-              setShowReportMenu(true);
-            }}
-            onMouseLeave={() => {
-              setShowReportMenu(false);
+              position: "relative",
             }}
           >
             <InteractionCard
@@ -58,11 +60,15 @@ export const InteractionBody = ({
               likes={likes}
               renderIcon={renderIcon}
             />
-            <div>
-              {showReportMenu && (
+            <div style={{ position: "absolute", left: "-34px" }}>
+              {!theme.isMobile && showReportMenu && (
                 // <div>...</div>
                 <IconButton>
-                  <MoreHorizIcon />
+                  <MoreHorizIcon
+                    sx={{
+                      fontSize: "16px",
+                    }}
+                  />
                 </IconButton>
               )}
             </div>
