@@ -19,9 +19,14 @@ import {
   useUnLikeCompanyReviewCommentMutation,
   useUnLikeCompanyReviewReplyMutation,
 } from "../services/company_reviews";
+import {
+  useReportACompanyReviewCommentMutation,
+  useReportACompanyReviewCommentReplyMutation,
+} from "../services/reports";
 import { commentsListActions } from "../store/commentsListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
+import { sendReportActions } from "../store/uiSendReportSlice";
 import CommentsList from "./CommentsList";
 
 export default function CompanyReviewFullScreen() {
@@ -71,7 +76,37 @@ export default function CompanyReviewFullScreen() {
   const [likeReply] = useLikeCompanyReviewReplyMutation();
   // unlike reply
   const [unLikeReply] = useUnLikeCompanyReviewReplyMutation();
-
+  // report a comment
+  const [reportACompanyComment] = useReportACompanyReviewCommentMutation();
+  // report a reply
+  const [reportACommentReply] = useReportACompanyReviewCommentReplyMutation();
+  // Comment Report Function
+  const commentReportFunction = (commentId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportACompanyComment({
+            revId: reviewId,
+            commentId: commentId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
+  // Comment Reply Report Function
+  const replyReportFunction = (commentId, replyId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportACommentReply({
+            revId: reviewId,
+            commentId: commentId,
+            replyId: replyId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
   // get review from server
   const {
     data: currentReview,
@@ -302,6 +337,8 @@ export default function CompanyReviewFullScreen() {
                     unLikeCommentRequest={unLikeCommentRequest}
                     likeReplyRequest={likeReplyRequest}
                     unLikeReplyRequest={unLikeReplyRequest}
+                    commentReportFunction={commentReportFunction}
+                    replyReportFunction={replyReportFunction}
                   />
                 </React.Fragment>
               )

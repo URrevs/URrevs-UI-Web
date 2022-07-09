@@ -20,6 +20,8 @@ export function AnswersList({
   loadMore,
   endOfData,
   submitCommentHandler,
+  answerReportFunction,
+  replyReportFunction,
 }) {
   const theme = useTheme();
   const isMobile = theme.isMobile;
@@ -70,6 +72,9 @@ export function AnswersList({
                   acceptedAnswerReply={comment.acceptedReply}
                   userName={comment.userName}
                   userId={comment.userId}
+                  replyReportFunction={() => {
+                    replyReportFunction(comment.commentId, comment._id);
+                  }}
                 />
               ) : (
                 <Answer
@@ -92,6 +97,7 @@ export function AnswersList({
                   showReply={true}
                   userName={comment.userName}
                   userId={comment.userId}
+                  answerReportFunction={answerReportFunction}
                 />
               );
             }}

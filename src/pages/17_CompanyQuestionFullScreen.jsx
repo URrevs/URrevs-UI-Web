@@ -22,9 +22,14 @@ import {
   useUnLikeCompanyQuestionReplyMutation,
   useUnmarkAnswerAsAcceptedMutation,
 } from "../services/company_questions";
+import {
+  useReportACompanyQuestionAnswerMutation,
+  useReportACompanyQuestionAnswerReplyMutation,
+} from "../services/reports";
 import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
+import { sendReportActions } from "../store/uiSendReportSlice";
 
 export default function CompanyQuestionFullScreen() {
   const dispatch = useAppDispatch();
@@ -78,6 +83,37 @@ export default function CompanyQuestionFullScreen() {
   //reject answer
   const [rejectAnswer] = useUnmarkAnswerAsAcceptedMutation();
 
+  // report a comment
+  const [reportACompanyAnswer] = useReportACompanyQuestionAnswerMutation();
+  // report a reply
+  const [reportAnswerReply] = useReportACompanyQuestionAnswerReplyMutation();
+  // Comment Report Function
+  const answerReportFunction = (answerId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportACompanyAnswer({
+            quesId: reviewId,
+            answerId: answerId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
+  // Comment Reply Report Function
+  const replyReportFunction = (answerId, replyId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportAnswerReply({
+            quesId: reviewId,
+            answerId: answerId,
+            replyId: replyId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
   // get review from server
   const {
     data: currentReview,
@@ -352,6 +388,8 @@ export default function CompanyQuestionFullScreen() {
                     endOfData={endOfData}
                     loadMore={loadMore}
                     submitCommentHandler={submitCommentHandler}
+                    answerReportFunction={answerReportFunction}
+                    replyReportFunction={replyReportFunction}
                   />
                 </React.Fragment>
               )

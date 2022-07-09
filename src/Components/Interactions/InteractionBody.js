@@ -29,8 +29,9 @@ export const InteractionBody = ({
     console.log("report");
   },
 }) => {
-  const [showReportMenu, setShowReportMenu] = React.useState(true);
+  const [showReportMenu, setShowReportMenu] = React.useState(false);
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const uid = useAppSelector((state) => state.auth.uid);
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
@@ -83,7 +84,7 @@ export const InteractionBody = ({
                 likes={likes}
                 renderIcon={renderIcon}
               />
-              {!theme.isMobile && showReportMenu && (
+              {!theme.isMobile && showReportMenu && userId !== uid && (
                 <div style={{ position: "absolute", left: "-34px" }}>
                   <IconButton onClick={handleClick}>
                     <MoreHorizIcon

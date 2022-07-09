@@ -22,9 +22,15 @@ import {
   useUnLikePhoneQuestionReplyMutation,
   useUnmarkAnswerAsAcceptedMutation,
 } from "../services/phone_questions";
+import {
+  useReportAPhoneQuestionAnswerMutation,
+  useReportAPhoneQuestionAnswerReplyMutation,
+  useReportAPhoneReviewCommentMutation,
+} from "../services/reports";
 import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
+import { sendReportActions } from "../store/uiSendReportSlice";
 
 export default function PhoneQuestionFullScreen() {
   const dispatch = useAppDispatch();
@@ -78,6 +84,37 @@ export default function PhoneQuestionFullScreen() {
   //reject answer
   const [rejectAnswer] = useUnmarkAnswerAsAcceptedMutation();
 
+  // report a comment
+  const [reportAPhoneAnswer] = useReportAPhoneQuestionAnswerMutation();
+  // report a reply
+  const [reportAnswerReply] = useReportAPhoneQuestionAnswerReplyMutation();
+  // Comment Report Function
+  const answerReportFunction = (answerId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportAPhoneAnswer({
+            quesId: reviewId,
+            answerId: answerId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
+  // Comment Reply Report Function
+  const replyReportFunction = (answerId, replyId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportAnswerReply({
+            quesId: reviewId,
+            answerId: answerId,
+            replyId: replyId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
   // get review from server
   const {
     data: currentReview,
@@ -353,6 +390,8 @@ export default function PhoneQuestionFullScreen() {
                     endOfData={endOfData}
                     loadMore={loadMore}
                     submitCommentHandler={submitCommentHandler}
+                    answerReportFunction={answerReportFunction}
+                    replyReportFunction={replyReportFunction}
                   />
                 </React.Fragment>
               )

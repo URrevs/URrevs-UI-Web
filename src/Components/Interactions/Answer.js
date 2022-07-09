@@ -27,6 +27,7 @@ export const Answer = ({
   ownedAt,
   userId,
   userName,
+  answerReportFunction,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const currentUserId = useAppSelector((state) => state.auth).uid;
@@ -97,6 +98,7 @@ export const Answer = ({
           renderIcon={renderIcon}
           avatar={avatar}
           ownedAt={ownedAt}
+          reportFunction={answerReportFunction}
         >
           <InteractionFooter
             date={date}

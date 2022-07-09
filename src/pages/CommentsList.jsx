@@ -68,7 +68,7 @@ export default function CommentsList({
                   userName={comment.userName}
                   userId={comment.userId}
                   reportFunction={() => {
-                    replyReportFunction(comment._id);
+                    replyReportFunction(comment.commentId, comment._id);
                   }}
                 />
               ) : (
