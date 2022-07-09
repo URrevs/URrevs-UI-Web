@@ -56,7 +56,6 @@ export default function CommentsList({
             itemContent={(index, comment) => {
               return comment.isReply ? (
                 <CommentReply
-                  reportFunction={replyReportFunction}
                   replyId={comment._id}
                   date={comment.createdAt}
                   likes={comment.likes}
@@ -68,10 +67,12 @@ export default function CommentsList({
                   avatar={comment.userPicture}
                   userName={comment.userName}
                   userId={comment.userId}
+                  reportFunction={() => {
+                    replyReportFunction(comment._id);
+                  }}
                 />
               ) : (
                 <Comment
-                  reportFunction={commentReportFunction}
                   commentId={comment._id}
                   date={comment.createdAt}
                   likes={comment.likes}
@@ -83,6 +84,9 @@ export default function CommentsList({
                   avatar={comment.userPicture}
                   userName={comment.userName}
                   userId={comment.userId}
+                  reportFunction={() => {
+                    commentReportFunction(comment._id);
+                  }}
                 />
               );
             }}

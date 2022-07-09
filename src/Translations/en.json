@@ -314,5 +314,13 @@
   "reviewNow": "Review Now",
   "enterAValidRefCode": "Enter a valid referral code",
   "competetionAdded": "Competetion Added Successfully",
-  "unknown": "unknown"
+  "unknown": "unknown",
+  "itemsNotFound": "Items not found",
+  "noNewCompaniesFound": "No new companies found",
+  "noNewProductsFound": "No new products found",
+  "userIsAdminOrDoesntExist": "This user is an admin or doesn't exist",
+  "contentIsUnavailable": "Content is not available right now",
+  "dateOfOwnershipPrecedesDateOfIssue": "The date of ownership entered precedes the date of issue of the phone",
+  "rankingOfUsersInTheCompetition": "Ranking of users in the competition",
+  "youCannotReportYourContent": "You cannot report your own content"
 }

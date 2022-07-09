@@ -227,6 +227,7 @@ export default interface Dictionary {
   youCantAnswerAQuestionMessage: string;
   reviewNow: string;
   enterAValidRefCode: string;
+  youCannotReportYourContent: string;
 }
 
 interface FullDictionary {

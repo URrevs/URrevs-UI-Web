@@ -317,5 +317,13 @@
   "reviewNow": "راجع الاَن",
   "enterAValidRefCode": "ادخل كود دعوة صحيح",
   "competetionAdded": "تمت اضافة المسابقة بنجاح",
-  "unknown": "مجهول"
+  "unknown": "مجهول",
+  "itemsNotFound": "لم يتم العثور على العناصر",
+  "noNewCompaniesFound": "لم يتم العثور على شركات جديدة",
+  "noNewProductsFound": "لم يتم العثور على منتجات جديدة",
+  "userIsAdminOrDoesntExist": "هذا المستخدم إما مشرف أو غير موجود",
+  "contentIsUnavailable": "هذا المحتوى غير متاح حاليا",
+  "dateOfOwnershipPrecedesDateOfIssue": "تاريخ الامتلاك المدخل يسبق تاريخ اصدار الهاتف",
+  "rankingOfUsersInTheCompetition": "ترتيب المستخدمين في المسابقة",
+  "youCannotReportYourContent": "لا يمكنك الابلاغ عن المحتوى الخاص بك"
 }

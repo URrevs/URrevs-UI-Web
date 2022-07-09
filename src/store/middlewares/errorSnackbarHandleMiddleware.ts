@@ -55,7 +55,9 @@ const correspondingErrorMessage = (
       break;
     case "invalid referral code":
       error.message = textContainer.enterAValidRefCode;
-
+      break;
+    case "owned":
+      error.message = textContainer.youCannotReportYourContent;
       break;
     //TO DO : WRITE TRANSLATIONS AND FIND MORE ERRORS
     // case "track internal server error":

@@ -94,6 +94,20 @@ export default function PhoneReviewFullScreen() {
       })
     );
   };
+  // Comment Reply Report Function
+  const replyReportFunction = (commentId, replyId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportACommentReply({
+            revId: reviewId,
+            commentId: commentId,
+            replyId: replyId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
   // get review from server
   const {
     data: currentReview,
@@ -325,6 +339,7 @@ export default function PhoneReviewFullScreen() {
                     likeReplyRequest={likeReplyRequest}
                     unLikeReplyRequest={unLikeReplyRequest}
                     commentReportFunction={commentReportFunction}
+                    replyReportFunction={replyReportFunction}
                   />
                 </React.Fragment>
               )
