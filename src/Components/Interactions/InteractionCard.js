@@ -51,8 +51,18 @@ export const InteractionCard = ({
   userName,
   userId,
 }) => {
+  const [cropTextLength, setCropTextLength] = React.useState(300);
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const lang = useAppSelector((state) => state.language.language);
+
+  //See more function
+  const handleText = (text) => {
+    if (text.length > 300)
+      return `${text.slice(0, cropTextLength)} ${
+        cropTextLength === 300 ? "... " : ""
+      }`;
+    else return text;
+  };
 
   return (
     <div>
@@ -83,7 +93,24 @@ export const InteractionCard = ({
         ) : (
           <React.Fragment></React.Fragment>
         )}
-        <Typography variant="S14W400C050505">{text}</Typography>
+        <Typography variant="S14W400C050505">
+          {handleText(text)}
+          {text.length > 300 && text.length !== cropTextLength && (
+            <Typography
+              sx={{
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+              onClick={() => {
+                setCropTextLength(text.length);
+              }}
+              variant="S18W800C050505"
+            >
+              {textContainer.seeMore}
+            </Typography>
+          )}
+        </Typography>
+
         <LikeCounterStyle>
           {renderIcon()}
           <div style={{ width: "3px" }}></div>
