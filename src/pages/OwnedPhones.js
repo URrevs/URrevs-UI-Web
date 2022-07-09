@@ -7,6 +7,7 @@ import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import PhoneListItem from "../Components/PhoneItemList";
 import { PAPER_BORDER_RADIUS_DESKTOP } from "../constants";
 import { useGetOthersOwnedPhonesQuery } from "../services/users";
+import { useAppSelector } from "../store/hooks";
 import VirtualReviewList from "./VirtualListWindowScroll";
 
 function OwnedPhonesPage() {
@@ -14,6 +15,7 @@ function OwnedPhonesPage() {
   const [page, setPage] = useState(1);
 
   const theme = useTheme();
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const addToPhonesList = () => setphonesList([...data, ...phonesList]);
 
@@ -78,7 +80,7 @@ function OwnedPhonesPage() {
   };
 
   return (
-    <CustomAppBar showLabel label="المنتجات الممتلكة" showBackBtn>
+    <CustomAppBar showLabel label={textContainer.ownedProducts} showBackBtn>
       <FixedGrid>
         <VirtualReviewList
           endOfData={endOfData}
