@@ -33,9 +33,7 @@ export default function PhoneReview({
   isExpanded,
   stateShare,
 }) {
-
   const checkSignedInWithoutModal = useCheckSignedInWithoutModal();
-
 
   /*RTK Queries */
   const [dontLikeThisRequest] = useIdontLikeThisPhoneReviewMutation();
@@ -106,10 +104,13 @@ export default function PhoneReview({
 
   const fullScreenHandler = () => {
     if (checkSignedInWithoutModal()) {
-    fullScreenRequest({ reviewId: reviewDetails._id });}
+      fullScreenRequest({ reviewId: reviewDetails._id });
+    }
   };
   const seeMoreHandler = () => {
-    seeMoreRequest({ reviewId: reviewDetails._id });
+    if (checkSignedInWithoutModal()) {
+      seeMoreRequest({ reviewId: reviewDetails._id });
+    }
     increaseViewCounterRequest({ reviewId: reviewDetails._id });
   };
 

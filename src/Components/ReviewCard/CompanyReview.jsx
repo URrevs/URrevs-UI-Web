@@ -108,7 +108,9 @@ const CompanyReview = ({
     }
   };
   const seeMoreHandler = () => {
-    seeMoreRequest({ reviewId: reviewDetails._id });
+    if (checkSignedInWithoutModal()) {
+      seeMoreRequest({ reviewId: reviewDetails._id });
+    }
     increaseViewCounterRequest({ reviewId: reviewDetails._id });
   };
 
