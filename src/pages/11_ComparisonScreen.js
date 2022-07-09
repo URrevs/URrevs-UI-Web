@@ -1,12 +1,11 @@
 import { Grid } from "@mui/material";
+import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ProductDetailsTable from "../Components/ProductDetailsTable";
-import {
-  useGetPhoneSpecsQuery
-} from "../services/phones";
+import { useGetPhoneSpecsQuery } from "../services/phones";
 
 export const ComparisonScreen = () => {
   const textContainer = useSelector((state) => state.language.textContainer);
@@ -34,20 +33,23 @@ export const ComparisonScreen = () => {
       ) : compError || productError ? (
         <div>{compError.data.status + productError.data.status}</div>
       ) : (
-        <Grid container>
-          {/* Right */}
-          <Grid item xl={2} lg={2} md={2}></Grid>
-          {/* Center Grid */}
-          <Grid item xl={8} lg={8} md={8} xs={12}>
-            <ProductDetailsTable
-              comparedPhoneData={compData}
-              phoneData={productData}
-              isComparison={true}
-            />
+        <Fragment>
+          <div style={{ height: "16px" }}></div>
+          <Grid container>
+            {/* Right */}
+            <Grid item xl={2} lg={2} md={2}></Grid>
+            {/* Center Grid */}
+            <Grid item xl={8} lg={8} md={8} xs={12}>
+              <ProductDetailsTable
+                comparedPhoneData={compData}
+                phoneData={productData}
+                isComparison={true}
+              />
+            </Grid>
+            {/* Left */}
+            <Grid item xl={2} lg={2} md={2}></Grid>
           </Grid>
-          {/* Left */}
-          <Grid item xl={2} lg={2} md={2}></Grid>
-        </Grid>
+        </Fragment>
       )}
     </CustomAppBar>
   );
