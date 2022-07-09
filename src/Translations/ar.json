@@ -316,5 +316,6 @@
   "youHaveSelectedDateBeforePhoneRelease": "لقد ادخلت تاريخ قبل صدور الهاتف",
   "reviewNow": "راجع الاَن",
   "enterAValidRefCode": "ادخل كود دعوة صحيح",
-  "competetionAdded": "تمت اضافة المسابقة بنجاح"
+  "competetionAdded": "تمت اضافة المسابقة بنجاح",
+  "unknown": "مجهول"
 }
