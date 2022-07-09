@@ -131,10 +131,7 @@ export const PostingField = ({
           value={value}
           onKeyDown={(e) => {
             if (e.code === "Enter" && !e.shiftKey) {
-              if (value.trim() !== "") {
-                onSubmit(value);
-                setValue("");
-              }
+              submitComment();
               e.preventDefault();
             }
           }}

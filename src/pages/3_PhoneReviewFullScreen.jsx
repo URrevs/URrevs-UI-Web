@@ -32,8 +32,9 @@ import CommentsList from "./CommentsList";
 
 export default function PhoneReviewFullScreen() {
   const dispatch = useAppDispatch();
+  const theme = useTheme();
   const showSnackbar = useShowSnackbar();
-
+  const textContainer = useAppSelector((state) => state.language.textContainer);
   const isMobile = useTheme().isMobile;
 
   const navigate = useNavigate();
@@ -345,20 +346,22 @@ export default function PhoneReviewFullScreen() {
               )
             )}
           </Box>
-          {isMobile && (
-            <div
-              style={{
-                width: "calc(100% - 41px)",
-                position: "fixed",
-                bottom: 0,
-                background: "#fff",
-              }}
-            >
-              <PostingField />
-            </div>
-          )}
         </AlonePostsGrid>
       </FixedGrid>
+      {isMobile && (
+        <div
+          style={{
+            width: "100%",
+            position: "fixed",
+            padding: "6px",
+            bottom: -1,
+            left: 0,
+            background: theme.palette.interactionCard.backgroundMobileColor,
+          }}
+        >
+          <PostingField placeholder={textContainer.writeAComment} />
+        </div>
+      )}
     </CustomAppBar>
   );
 }

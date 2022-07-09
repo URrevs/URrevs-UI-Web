@@ -25,10 +25,13 @@ export const PostingModal = ({ linkShow = false }) => {
   const type = useAppSelector((state) => state.postingModal.type);
 
   const handleClose = () => {
-    // if modal was up because of route
-    if (linkShow) navigate("/");
+    const answer = window.confirm("Are you sure you want to close this?");
+    if (answer) {
+      // if modal was up because of route
+      if (linkShow) navigate("/");
 
-    dispatch(postingModalActions.hidePostingModal());
+      dispatch(postingModalActions.hidePostingModal());
+    }
   };
 
   const theme = useTheme();
