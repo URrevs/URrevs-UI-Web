@@ -279,7 +279,7 @@ function App() {
           tabbarBg: isDark ? COLORS.c050505 : COLORS.cffffff,
         },
         iconColor: isDark ? darkThemeColors.iconsColor : COLORS.c606266, // Menu Icons
-        sendIconColor: isDark ? darkThemeColors.iconsColor : COLORS.c2196f3, // Comment Icon
+        sendIconColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3, // Comment Icon
         blackIconColor: isDark ? darkThemeColors.iconsColor : COLORS.c050505, // X button
         defaultRedBtnIconColor: isDark ? COLORS.cCED0D4 : COLORS.cffffff,
         defaultIconColor: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,

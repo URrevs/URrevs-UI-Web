@@ -59,6 +59,9 @@ const correspondingErrorMessage = (
     case "owned":
       error.message = textContainer.youCannotReportYourContent;
       break;
+    case "too many unverified":
+      error.message = "شوف فتوح كتب too many unverified ولا لا";
+      break;
     //TO DO : WRITE TRANSLATIONS AND FIND MORE ERRORS
     // case "track internal server error":
     //   error.message = textContainer.trackInternalServerError;

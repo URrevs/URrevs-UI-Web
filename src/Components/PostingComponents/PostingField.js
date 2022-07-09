@@ -37,7 +37,7 @@ export const PostingField = ({
   const theme = useTheme();
   const textFieldParams = {
     multiline: true,
-    // maxRows: 3,
+    maxRows: 26,
     variant: "standard",
     InputProps: {
       endAdornment: theme.isMobile && (
