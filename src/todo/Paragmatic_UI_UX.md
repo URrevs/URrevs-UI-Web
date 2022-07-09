@@ -1,5 +1,3 @@
-- Text overflows out of card if no newline character was inserted by user!! Solution: whiteSpace: "pre-line",
- wordBreak: "break-word",
 - Reply field not indented in English (fix in posting field) ###
 - Remove Logo from mobile in ToS and Privacy policy
 - Logout red loader
@@ -15,17 +13,19 @@
 - Below Posting field should be total 30px
 - Why mobile view has posting field below it 50px?
 
+= Improvements:
 
-
-= Improvements: 
 - Authentication page.
 
 = Done:
-- Search Component Error doesn't go once a phone is selected!(x) if possible modify it to use Yup instead.
-- MoreHorizontal needs to stop jumping around when a comment is hovered
 
+- Search Component Error doesn't go once a phone is selected!(x) if possible modify it to use Yup instead.
+- MoreHorizontal needs to stop jumping around when a comment is hovered (x)
+- Text overflows out of card if no newline character was inserted by user!! Solution: whiteSpace: "pre-line",
+  wordBreak: "break-word", (x)
 
 = Translations:
+
 - Translate refCode validation and snackbar from fatouh
 - Translate hardcoded comments and replies
 - translate admin panel
@@ -33,7 +33,7 @@
 - no elemenets لا يوجد عناصر in All Products and Search Suggestion (?)
 
 =Report repeat parts
+
 - Possibly Authentication Page.
 - Add Review completely changed.
 - Fullscreens got padded.
-

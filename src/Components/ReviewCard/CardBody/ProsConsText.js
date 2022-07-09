@@ -5,6 +5,7 @@ const ProsConsText = ({ croppedText, prosTitle, consTitle }) => {
     <div
       style={{
         whiteSpace: "pre-line",
+        wordBreak: "break-word",
       }}
     >
       <BodyCardText title={prosTitle} text={croppedText.pros} />
