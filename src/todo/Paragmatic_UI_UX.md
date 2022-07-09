@@ -8,7 +8,7 @@
 - Posted Review and Posting Questions FULLSCREEN need padding above.
 - Tooltip vs Modal for help messages
 - Error HelperText for star rating on validation
-- Owned Products Tab needs some padding for each entry and padding top on the overall entries.
+- Owned Products Tab needs some fixing to look like desktop view All Products.
 - Linebreak in subtitle of review/question
 - Below Posting field should be total 30px
 - Why mobile view has posting field below it 50px?
