@@ -17,6 +17,7 @@ import {
 import ReviewCard from "./ReviewCard";
 import { sendReportActions } from "../../store/uiSendReportSlice";
 import { useReportCompanyReviewMutation } from "../../services/reports";
+import { useCheckSignedInWithoutModal } from "../../hooks/useCheckIsSignedInWithoutModal";
 
 const CompanyReview = ({
   reviewDetails,
@@ -33,6 +34,8 @@ const CompanyReview = ({
   disableElevation = false,
   showBottomLine,
 }) => {
+  const checkSignedInWithoutModal = useCheckSignedInWithoutModal();
+
   const [dontLikeThisRequest] = useIdontLikeThisCompanyReviewMutation();
   const [fullScreenRequest] = useUserPressFullScreenMutation();
   const [seeMoreRequest] = useUserPressSeeMoreMutation();
@@ -100,7 +103,9 @@ const CompanyReview = ({
   };
 
   const fullScreenHandler = () => {
-    fullScreenRequest({ reviewId: reviewDetails._id });
+    if (checkSignedInWithoutModal()) {
+      fullScreenRequest({ reviewId: reviewDetails._id });
+    }
   };
   const seeMoreHandler = () => {
     seeMoreRequest({ reviewId: reviewDetails._id });

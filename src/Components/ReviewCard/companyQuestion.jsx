@@ -1,4 +1,5 @@
 import { generateLink } from "../../functions/dynamicLinkGenerator";
+import { useCheckSignedInWithoutModal } from "../../hooks/useCheckIsSignedInWithoutModal";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
@@ -31,6 +32,10 @@ export default function CompanyQuestion({
   disableElevation,
   showBottomLine,
 }) {
+
+  const checkSignedInWithoutModal = useCheckSignedInWithoutModal();
+
+
   const [dontLikeThisRequest] = useIdontLikeThisCompanyQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenCompanyQuestionMutation();
 
@@ -96,7 +101,8 @@ export default function CompanyQuestion({
   };
 
   const fullScreenHandler = () => {
-    fullScreenRequest(reviewDetails._id);
+    if (checkSignedInWithoutModal()) {
+    fullScreenRequest(reviewDetails._id);}
   };
 
   const shareBtnHandler = () => {
