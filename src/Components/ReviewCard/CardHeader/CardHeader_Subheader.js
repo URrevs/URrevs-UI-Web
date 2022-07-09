@@ -7,19 +7,33 @@ import { convertDateToString } from "../../../functions/convertDateToString";
 import { subtractDate } from "../../../functions/subtractDate";
 import { IconButton, Tooltip } from "@mui/material";
 import CheckCircleSharpIcon from "@mui/icons-material/CheckCircleSharp";
+import { useTheme } from "@emotion/react";
 
 const CardSubheader = ({
   reviewDate,
   buyDate,
   showViewsCounter,
   views,
-  verificationRatio,
+  verificationRatio = 0,
 }) => {
   const convert = useConvertNumberToHumanLanguage;
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const language = useAppSelector((state) => state.language.language);
+  const theme = useTheme();
+
   reviewDate = convertDateToString(reviewDate, language);
   if (buyDate) buyDate = subtractDate(buyDate, language);
+
+  let verificationRatioText = "";
+
+  if (verificationRatio === 0) {
+    verificationRatioText = "placeholder";
+  } else if (verificationRatio === -1) {
+    verificationRatio = textContainer.thisReviewIsFromAnApplePhone;
+  } else {
+    verificationRatioText =
+      textContainer.thisReviewIsVerifiedBy + " " + verificationRatio + "%";
+  }
 
   return (
     <React.Fragment>
@@ -48,9 +62,22 @@ const CardSubheader = ({
             {convert(views)}
           </Typography>
         )}
-        <Tooltip title="Delete">
-          <CheckCircleSharpIcon fontSize="16" />
-        </Tooltip>
+        {verificationRatioText !== "" && (
+          <Typography variant="S14W400C65676b">
+            <Typography variant="S14W700C050505"> •</Typography>
+            <Tooltip title={verificationRatioText}>
+              <CheckCircleSharpIcon
+                style={{
+                  fontSize: "16",
+                  verticalAlign: "middle",
+                  margin: "0 2px",
+                  marginTop: "-2px",
+                  color: theme.palette.reviewCard.actionBtnIconHighlight,
+                }}
+              />
+            </Tooltip>
+          </Typography>
+        )}
       </div>
     </React.Fragment>
   );

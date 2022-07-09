@@ -1,3 +1,5 @@
+import { faUpLong } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -5,9 +7,6 @@ import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import CardActions from "@mui/material/CardActions";
 import * as React from "react";
 import BottomCardActionBtn from "./BottomCardActionBtn";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpLong } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 
 const CardActionButtons = ({
   textContainer,

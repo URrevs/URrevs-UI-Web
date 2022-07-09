@@ -43,6 +43,7 @@ export default function ReviewCard({
   shareBtnFn,
   disableElevation = false,
   showBottomLine,
+  verificationRatio,
 }) {
   const isReview = true;
   const navigate = useNavigate();
@@ -196,6 +197,7 @@ export default function ReviewCard({
         userProfilePath={userProfilePath}
         actionBtnFunction={actionBtnFunction}
         reportFunction={reportFunction}
+        verificationRatio={verificationRatio}
       />
       <CardContent style={{ padding: 0 }}>
         <ButtonBase

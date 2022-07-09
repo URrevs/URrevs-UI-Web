@@ -322,5 +322,7 @@
   "contentIsUnavailable": "Content is not available right now",
   "dateOfOwnershipPrecedesDateOfIssue": "The date of ownership entered precedes the date of issue of the phone",
   "rankingOfUsersInTheCompetition": "Ranking of users in the competition",
-  "youCannotReportYourContent": "You cannot report your own content"
+  "youCannotReportYourContent": "You cannot report your own content",
+  "thisReviewIsVerifiedBy": "This review is verified by",
+  "thisReviewIsFromAnApplePhone": "This review is from an Apple phone"
 }
