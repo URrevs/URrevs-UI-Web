@@ -313,5 +313,6 @@
   "youHaveSelectedDateBeforePhoneRelease": "You have entered a date before the phone release.",
   "reviewNow": "Review Now",
   "enterAValidRefCode": "Enter a valid referral code",
-  "competetionAdded": "Competetion Added Successfully"
+  "competetionAdded": "Competetion Added Successfully",
+  "unknown": "unknown"
 }

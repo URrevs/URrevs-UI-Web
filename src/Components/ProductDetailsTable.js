@@ -161,7 +161,9 @@ const ProductDetailsTable = ({
   const dataCell = (index, key, dataRow, compData) => {
     const data =
       key === "price"
-        ? dataRow[key] + " " + textContainer.egyptianPound
+        ? dataRow[key] === 0
+          ? textContainer.unknown
+          : dataRow[key] + " " + textContainer.egyptianPound
         : dataRow[key];
 
     return (
@@ -171,6 +173,7 @@ const ProductDetailsTable = ({
             borderBottom:
               index !== productEntries.length - 1 ? borderBottom : "none",
             borderRight: compData ? "none" : borderRight,
+            maxWidth: "20vw",
           }}
           align="center"
         >
@@ -197,7 +200,7 @@ const ProductDetailsTable = ({
                   key === "manufacturingCompany" ? "underline" : "none",
               }}
             >
-              {data ?? "مجهول"}
+              {data ?? textContainer.unknown}
             </Typography>
           </Button>
         </TableCell>

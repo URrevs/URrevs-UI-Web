@@ -17,14 +17,24 @@ export const StickyTabbar = ({
   const [smallPfpVisible, setSmallPfpVisible] = React.useState(false);
 
   // set tab indicator on current route
-  const currentPath = location.pathname.split("/").slice(-1)[0];
-  const pathValue = arrayOfTabs.findIndex(
+  let currentPath = location.pathname.split("/").slice(-1)[0];
+  let pathValue = arrayOfTabs.findIndex(
     (element) => element.to.split("?")[0] === currentPath
   );
 
   // console.log(currentPath, arrayOfTabs[0].to.split("?")[0], pathValue);
 
   const [value, setValue] = React.useState(pathValue === -1 ? 0 : pathValue);
+
+  React.useEffect(() => {
+    console.log("change");
+    currentPath = location.pathname.split("/").slice(-1)[0];
+    pathValue = arrayOfTabs.findIndex(
+      (element) => element.to.split("?")[0] === currentPath
+    );
+
+    setValue(pathValue === -1 ? 0 : pathValue);
+  }, [location.pathname]);
 
   React.useEffect(() => {
     const handleScroll = () => {

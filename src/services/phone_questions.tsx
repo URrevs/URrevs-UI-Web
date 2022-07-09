@@ -194,7 +194,7 @@ export const phoneQuestionsApi = createApi({
           await queryFulfilled;
         } catch (e: any) {
           if (
-            e.error.data.status === "not found" ||
+            // e.error.data.status === "not found" ||
             e.error.data.status === "already liked"
           ) {
           } else {
@@ -218,7 +218,7 @@ export const phoneQuestionsApi = createApi({
           await queryFulfilled;
         } catch (e: any) {
           if (
-            e.error.data.status === "not found" ||
+            // e.error.data.status === "not found" ||
             e.error.data.status === "already liked"
           ) {
           } else {
@@ -243,7 +243,7 @@ export const phoneQuestionsApi = createApi({
           await queryFulfilled;
         } catch (e: any) {
           if (
-            e.error.data.status === "not found" ||
+            // e.error.data.status === "not found" ||
             e.error.data.status === "already liked"
           ) {
           } else {
@@ -266,10 +266,10 @@ export const phoneQuestionsApi = createApi({
         try {
           await queryFulfilled;
         } catch (e: any) {
-          if (e.error.data.status === "not found") {
-          } else {
+          // if (e.error.data.status === "not found") {
+          // } else {
             payload.unDoFn(payload.replyId);
-          }
+          // }
         }
       },
     }),
