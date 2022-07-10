@@ -74,7 +74,7 @@ export const phoneReviewsApi = createApi({
             })
           );
           dispatch(postingModalActions.hidePostingModal());
-          
+
           if (response.data.review.verificationRatio === 0) {
             setTimeout(() => {
               dispatch(

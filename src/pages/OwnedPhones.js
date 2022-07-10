@@ -1,29 +1,17 @@
 import { useTheme } from "@emotion/react";
-import {
-  ClickAwayListener,
-  Grow,
-  IconButton,
-  MenuItem,
-  MenuList,
-  Paper,
-  Popper,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import React, { Fragment, useEffect, useState } from "react";
+import CheckCircleSharpIcon from "@mui/icons-material/CheckCircleSharp";
+import { Paper, Tooltip } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import PhoneListItem from "../Components/PhoneItemList";
 import { PAPER_BORDER_RADIUS_DESKTOP } from "../constants";
+import { useShowSnackbar } from "../hooks/useShowSnackbar";
+import { useVerifyOwnedPhoneMutation } from "../services/phones";
 import { useGetOthersOwnedPhonesQuery } from "../services/users";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { useAppSelector } from "../store/hooks";
 import VirtualReviewList from "./VirtualListWindowScroll";
-import CheckCircleSharpIcon from "@mui/icons-material/CheckCircleSharp";
-import { MoreVertOutlined } from "@mui/icons-material";
-import { detectDeviceType } from "../functions/detectDevice";
-import { snackbarActions } from "../store/uiSnackbarSlice";
 
 function OwnedPhonesPage() {
   const [phonesList, setphonesList] = useState([]);
@@ -43,6 +31,18 @@ function OwnedPhonesPage() {
     round: page,
     uid: userId,
   });
+
+  const showSnackbar = useShowSnackbar();
+
+  const [verifyRequest] = useVerifyOwnedPhoneMutation();
+  const verifyOwnedPhone = (id) => {
+    verifyRequest({ id }).then(({ data }) => {
+      console.log(data.verificationRatio);
+      if (data.verificationRatio === 0) {
+        showSnackbar(textContainer.youMustVerifyFromSameMobileDevice);
+      }
+    });
+  };
 
   let verificationRatioText = "";
   const getVerificationText = (ratio) => {
@@ -78,117 +78,6 @@ function OwnedPhonesPage() {
     );
   };
 
-  /////////////////////////////////////////////
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
-  const currentUser = useAppSelector((state) => state.auth);
-
-  const dispatch = useAppDispatch();
-
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  function handleListKeyDown(event) {
-    if (event.key === "Tab") {
-      event.preventDefault();
-      setOpen(false);
-    } else if (event.key === "Escape") {
-      setOpen(false);
-    }
-  }
-
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
-
-  const verifyMenu = () => {
-    return (
-      <Stack direction="row" spacing={1}>
-        <div>
-          <IconButton
-            ref={anchorRef}
-            id="composition-button"
-            aria-controls={open ? "composition-menu" : undefined}
-            aria-expanded={open ? "true" : undefined}
-            aria-haspopup="true"
-            onClick={handleToggle}
-            sx={{}}
-          >
-            <MoreVertOutlined />
-          </IconButton>
-          <Popper
-            open={open}
-            anchorEl={anchorRef.current}
-            role={undefined}
-            placement="bottom-start"
-            transition
-          >
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                style={{
-                  transformOrigin:
-                    placement === "bottom-start" ? "left top" : "left bottom",
-                }}
-              >
-                <Paper
-                  sx={{
-                    borderRadius: "15px",
-                  }}
-                >
-                  <ClickAwayListener onClickAway={handleClose}>
-                    <MenuList
-                      sx={{ padding: "0" }}
-                      autoFocusItem={open}
-                      id="composition-menu"
-                      aria-labelledby="composition-button"
-                      onKeyDown={handleListKeyDown}
-                    >
-                      <MenuItem
-                        sx={{ padding: "10px 28px", minHeight: 0 }}
-                        onClick={() => {
-                          if (detectDeviceType() !== "mobile") {
-                            dispatch(
-                              snackbarActions.showSnackbar({
-                                message:
-                                  textContainer.youMustVerifyFromSameMobileDevice,
-                              })
-                            );
-                          } else {
-                            console.log("a");
-                          }
-                        }}
-                      >
-                        <Typography variant="S16W700C050505">
-                          {textContainer.verify}
-                        </Typography>
-                      </MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
-        </div>
-      </Stack>
-    );
-  };
-
   const renderProductOnDesktop = (phone) => (
     <div>
       <Paper
@@ -207,7 +96,7 @@ function OwnedPhonesPage() {
           title={phone.name}
           verificationIcon={verifiedTooltip}
           verificationRatio={phone.verificationRatio}
-          actionButton={verifyMenu}
+          verifyPhone={verifyOwnedPhone}
         />
       </Paper>
       <div
@@ -227,7 +116,7 @@ function OwnedPhonesPage() {
         title={phone.name}
         verificationIcon={verifiedTooltip}
         verificationRatio={phone.verificationRatio}
-        actionButton={verifyMenu}
+        verifyPhone={verifyOwnedPhone}
       />
     );
   };
