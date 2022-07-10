@@ -1,20 +1,30 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
+import { MoreVertOutlined } from "@mui/icons-material";
+import { IconButton, Typography } from "@mui/material";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
-import Paper from "@mui/material/Paper";
-import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
 import Stack from "@mui/material/Stack";
-import { IconButton, Typography } from "@mui/material";
-import { MoreVertOutlined } from "@mui/icons-material";
-import { useAppSelector } from "../../../store/hooks";
+import * as React from "react";
+import { detectDeviceType } from "../../../functions/detectDevice";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { snackbarActions } from "../../../store/uiSnackbarSlice";
 
-export default function ActionButton({ actionBtnFunction, reportFunction }) {
+export default function ActionButton({
+  actionBtnFunction,
+  reportFunction,
+  verificationRatio,
+  userId,
+  verifyPhone,
+}) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const currentUser = useAppSelector((state) => state.auth);
+
+  const dispatch = useAppDispatch();
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -89,22 +99,47 @@ export default function ActionButton({ actionBtnFunction, reportFunction }) {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem
-                      sx={{ padding: "10px 28px", minHeight: 0 }}
-                      onClick={actionBtnFunction}
-                    >
-                      <Typography variant="S16W700C050505">
-                        {textContainer.iDontLikeThis}
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem
-                      sx={{ padding: "10px 28px", minHeight: 0 }}
-                      onClick={reportFunction}
-                    >
-                      <Typography variant="S16W700C050505">
-                        {textContainer.report}
-                      </Typography>
-                    </MenuItem>
+                    {/* i dont like this */}
+                    {currentUser.uid !== userId ? (
+                      <React.Fragment>
+                        <MenuItem
+                          sx={{ padding: "10px 28px", minHeight: 0 }}
+                          onClick={actionBtnFunction}
+                        >
+                          <Typography variant="S16W700C050505">
+                            {textContainer.iDontLikeThis}
+                          </Typography>
+                        </MenuItem>
+                        <MenuItem
+                          sx={{ padding: "10px 28px", minHeight: 0 }}
+                          onClick={reportFunction}
+                        >
+                          <Typography variant="S16W700C050505">
+                            {textContainer.report}
+                          </Typography>
+                        </MenuItem>
+                      </React.Fragment>
+                    ) : (
+                      <MenuItem
+                        sx={{ padding: "10px 28px", minHeight: 0 }}
+                        onClick={() => {
+                          if (detectDeviceType() !== "mobile") {
+                            dispatch(
+                              snackbarActions.showSnackbar({
+                                message:
+                                  textContainer.youMustVerifyFromSameMobileDevice,
+                              })
+                            );
+                          } else {
+                            verifyPhone();
+                          }
+                        }}
+                      >
+                        <Typography variant="S16W700C050505">
+                          {textContainer.verify}
+                        </Typography>
+                      </MenuItem>
+                    )}
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

@@ -74,8 +74,8 @@ export const phoneReviewsApi = createApi({
             })
           );
           dispatch(postingModalActions.hidePostingModal());
-
-          if (response.data.verificationRatio === 0) {
+          
+          if (response.data.review.verificationRatio === 0) {
             setTimeout(() => {
               dispatch(
                 snackbarActions.showSnackbar({
@@ -88,6 +88,15 @@ export const phoneReviewsApi = createApi({
         } catch (e: any) {
           console.error(e);
         }
+      },
+    }),
+
+    verifyPhoneReview: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/phone/${reviewId}/verify`,
+          method: "PUT",
+        };
       },
     }),
 
@@ -346,6 +355,7 @@ export const {
   useGetCertainPhoneReviewQuery,
   useGetPhoneReviewsQuery,
   useAddPhoneReviewMutation,
+  useVerifyPhoneReviewMutation,
   useLikePhoneReviewMutation,
   useUnLikePhoneReviewMutation,
   useGetUserPhoneReviewsQuery,

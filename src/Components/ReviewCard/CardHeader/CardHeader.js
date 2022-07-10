@@ -23,6 +23,7 @@ const CardHeader = ({
   actionBtnFunction,
   reportFunction,
   verificationRatio,
+  verifyPhone
 }) => {
   const currentUser = useAppSelector((state) => state.auth);
 
@@ -39,10 +40,13 @@ const CardHeader = ({
       action={
         actionBtnFunction &&
         currentUser.isLoggedIn &&
-        userId !== currentUser.uid && (
+        verificationRatio === 0 && (
           <ActionButton
             actionBtnFunction={actionBtnFunction}
             reportFunction={reportFunction}
+            verificationRatio={verificationRatio}
+            userId={userId}
+            verifyPhone={verifyPhone}
           />
         )
       }

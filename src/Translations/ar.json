@@ -327,5 +327,7 @@
   "rankingOfUsersInTheCompetition": "ترتيب المستخدمين في المسابقة",
   "youCannotReportYourContent": "لا يمكنك الابلاغ عن المحتوى الخاص بك",
   "thisReviewIsVerifiedBy": "هذه المراجعة موثقة بنسبة",
-  "thisReviewIsFromAnApplePhone": "هذه المراجعة من احدي هواتف أبل"
+  "thisReviewIsFromAnApplePhone": "هذه المراجعة من احدي هواتف أبل",
+  "verify": "توثيق",
+  "youMustVerifyFromSameMobileDevice": "يجب ان تقوم بفتح الموقع من خلال الجهاز الذي تريد توثيق مراجعته"
 }

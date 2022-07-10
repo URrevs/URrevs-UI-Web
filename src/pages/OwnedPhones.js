@@ -36,7 +36,7 @@ function OwnedPhonesPage() {
       if (ratio === 0) {
         verificationRatioText = "";
       } else if (ratio === -1) {
-        ratio = textContainer.thisReviewIsFromAnApplePhone;
+        verificationRatioText = textContainer.thisReviewIsFromAnApplePhone;
       } else {
         verificationRatioText =
           textContainer.thisReviewIsVerifiedBy + " " + ratio + "%";

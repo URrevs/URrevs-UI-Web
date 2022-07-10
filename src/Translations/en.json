@@ -324,5 +324,7 @@
   "rankingOfUsersInTheCompetition": "Ranking of users in the competition",
   "youCannotReportYourContent": "You cannot report your own content",
   "thisReviewIsVerifiedBy": "This review is verified by",
-  "thisReviewIsFromAnApplePhone": "This review is from an Apple phone"
+  "thisReviewIsFromAnApplePhone": "This review is from an Apple phone",
+  "verify": "Verify",
+  "youMustVerifyFromSameMobileDevice": "You must open the website from the device you want to verify your review on it"
 }
