@@ -18,6 +18,7 @@ export default function PhoneListItem({
   id,
   verificationIcon,
   verificationRatio,
+  actionButton,
 }) {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -25,7 +26,10 @@ export default function PhoneListItem({
 
   return (
     <React.Fragment key={id}>
-      <ListItem sx={{ padding: 0, margin: 0, lineHeight: 0 }}>
+      <ListItem
+        secondaryAction={actionButton()}
+        sx={{ padding: 0, margin: 0, lineHeight: 0 }}
+      >
         <ListItemButton
           sx={{
             padding: 0,

@@ -141,6 +141,7 @@ const CompanyReview = ({
       fullScreenFn={fullScreenHandler}
       seeMoreFn={seeMoreHandler}
       shareBtnFn={shareBtnHandler}
+      verificationRatio={reviewDetails.verificationRatio}
     />
   );
 };

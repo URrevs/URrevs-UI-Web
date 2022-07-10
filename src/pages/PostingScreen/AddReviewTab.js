@@ -10,7 +10,8 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DialogText } from "../../Components/Dialogs/DialogText";
 import FormikDatePicker from "../../Components/Form/DatePicker/FormikDatePicker";
 import FormikSearchComponent from "../../Components/Form/FormikSearchComponent";
@@ -39,6 +40,30 @@ import { FormSubmitButton } from "./FormSubmitButton";
 //     : empty;
 // };
 export const AddReviewTab = ({ ...props }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    return () => {
+      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+      const val = window.confirm("asdasdasd");
+      if (val) {
+        navigate("/add-review", { replace: true });
+      }
+    };
+  }, []);
+
+  // const handleUnload = (e) => {
+  //   console.log("hey");
+  //   alert("HEY");
+  // };
+
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", handleUnload);
+
+  //   return () => window.removeEventListener("beforeunload", handleUnload);
+  // }, [handleUnload]);
+
   const textContainer = useAppSelector((state) => {
     return state.language.textContainer;
   });
