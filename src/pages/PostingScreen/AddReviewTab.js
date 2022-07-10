@@ -134,8 +134,16 @@ export const AddReviewTab = ({ ...props }) => {
   }, []);
   // Star Counter Use Effect
   // Search Component
-
+  const beforeUnLoadFunction = () => {
+    console.log("Hell");
+  };
   // Can be easily done with measuring contributions
+  React.useEffect(() => {
+    window.addEventListener("beforeunload", beforeUnLoadFunction);
+    return (_) => {
+      window.removeEventListener("beforeunload", beforeUnLoadFunction);
+    };
+  }, []);
   React.useEffect(() => {
     const limit = 1200;
     let sum = 0;
