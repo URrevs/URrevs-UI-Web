@@ -136,6 +136,8 @@ export default function PhoneReview({
         console.log(data.verificationRatio);
         if (data.verificationRatio === 0) {
           showSnackbar(textContainer.youMustVerifyFromSameMobileDevice);
+        } else {
+          showSnackbar(textContainer.verifiedSuccessfully);
         }
       }
     );

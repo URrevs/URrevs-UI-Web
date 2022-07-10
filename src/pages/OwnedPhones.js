@@ -37,9 +37,19 @@ function OwnedPhonesPage() {
   const [verifyRequest] = useVerifyOwnedPhoneMutation();
   const verifyOwnedPhone = (id) => {
     verifyRequest({ id }).then(({ data }) => {
-      console.log(data.verificationRatio);
+      console.log(0);
+      const i = phonesList.findIndex((e) => e._id === id);
+
+      phonesList[i] = {
+        ...phonesList[i],
+        verificationRatio: data.verificationRatio,
+      };
+      setphonesList([...phonesList]);
+
       if (data.verificationRatio === 0) {
         showSnackbar(textContainer.youMustVerifyFromSameMobileDevice);
+      } else {
+        showSnackbar(textContainer.verifiedSuccessfully);
       }
     });
   };
