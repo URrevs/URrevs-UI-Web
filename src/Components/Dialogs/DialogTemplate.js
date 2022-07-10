@@ -1,6 +1,13 @@
 import { useTheme } from "@emotion/react";
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, Card, IconButton, styled, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  IconButton,
+  Stack,
+  styled,
+  Typography,
+} from "@mui/material";
 import React from "react";
 
 const PromptStyled = styled(
@@ -46,9 +53,11 @@ export const DialogTemplate = ({ title, children, handleClose = null }) => {
               // top: 0,
             }}
           >
-            <Typography sx={{ paddingTop: "16px" }} variant="S16W700C050505">
-              {title}
-            </Typography>
+            {/* Empty spacing to remove the padding from sticky starCounter */}
+            <Stack spacing={4}>
+              <div></div>
+              <Typography variant="S16W700C050505">{title}</Typography>
+            </Stack>
             {handleClose ? (
               <IconButton
                 sx={{

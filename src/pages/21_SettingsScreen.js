@@ -1,6 +1,7 @@
 import { useTheme } from "@emotion/react";
 import LanguageIcon from "@mui/icons-material/Language";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import DarkModeIconOutlined from "@mui/icons-material/DarkModeOutlined";
 import { Box, List, Modal } from "@mui/material";
 import React from "react";
 import { LanguageDialog } from "../Components/Dialogs/LanguageDialog";
@@ -39,7 +40,11 @@ export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
 
     {
       title: pageDictionary.color,
-      icon: <LightModeOutlinedIcon sx={{ fontSize: 45 }} />,
+      icon: isDark ? (
+        <DarkModeIconOutlined sx={{ fontSize: 45 }} />
+      ) : (
+        <LightModeOutlinedIcon sx={{ fontSize: 45 }} />
+      ),
       onClick: () => {
         setModal("theme");
       },

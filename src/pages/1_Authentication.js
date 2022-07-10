@@ -6,16 +6,14 @@ import {
   List,
   ListItem,
   Modal,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { signIn } from "../Authentication/auth";
 import { FacebookButton } from "../Components/Authentication/FacebookButton";
 import { GoogleButton } from "../Components/Authentication/GoogleButton";
 import { DialogTemplate } from "../Components/Dialogs/DialogTemplate";
-import {
-  useLazyXauthenticateQuery
-} from "../services/users";
+import { useLazyXauthenticateQuery } from "../services/users";
 import { authActions } from "../store/authSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { regDialogActions } from "../store/uiRegisterDialogSlice";
