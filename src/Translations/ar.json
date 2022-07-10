@@ -345,5 +345,8 @@
   "deleteTheAccountRequest": "طلب حذف الحساب",
   "cancelDeleteTheAccountRequest": "إلغاء طلب حذف الحساب",
   "areYouSure": "هل انت متأكد؟",
-  "thisWillDeleteYourAccountAndYouWillNeverBeAbleToRecoverIt": "سوف يتسبب هذا في مسح حسابك ولن تستطيع استرجاع بياناتك"
+  "thisWillDeleteYourAccountAndYouWillNeverBeAbleToRecoverIt": "سوف يتسبب هذا في مسح حسابك ولن تستطيع استرجاع بياناتك",
+  "verify": "توثيق",
+  "youMustVerifyFromSameMobileDevice": "يجب ان تقوم بفتح الموقع من خلال الجهاز الذي تريد توثيق مراجعته",
+  "verifiedSuccessfully": "تم التوثيق"
 }

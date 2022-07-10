@@ -3,6 +3,7 @@ import { useCheckSignedInWithoutModal } from "../../hooks/useCheckIsSignedInWith
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
+import { useShowSnackbar } from "../../hooks/useShowSnackbar";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
   useIdontLikeThisPhoneReviewMutation,
@@ -12,9 +13,10 @@ import {
   useUnLikePhoneReviewMutation,
   useUserPressFullScreenMutation,
   useUserPressSeeMoreMutation,
+  useVerifyPhoneReviewMutation,
 } from "../../services/phone_reviews";
 import { useReportPhoneReviewMutation } from "../../services/reports";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { sendReportActions } from "../../store/uiSendReportSlice";
 import ReviewCard from "./ReviewCard";
 
@@ -41,7 +43,11 @@ export default function PhoneReview({
   const [seeMoreRequest] = useUserPressSeeMoreMutation();
   const [increaseViewCounterRequest] = useIncreaseViewCounterMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
+  const [verifyPhoneReviewRequest] = useVerifyPhoneReviewMutation();
+
   const [reportPhoneReview] = useReportPhoneReviewMutation();
+
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const generateShareLink = generateLink({
     webPath: "phone-review",
@@ -52,6 +58,7 @@ export default function PhoneReview({
   });
 
   const showShareSnackbar = useShareSnackbar();
+  const showSnackbar = useShowSnackbar();
 
   const dispatch = useAppDispatch();
 
@@ -123,6 +130,19 @@ export default function PhoneReview({
     });
   };
 
+  const verifyPhone = () => {
+    verifyPhoneReviewRequest({ reviewId: reviewDetails._id }).then(
+      ({ data }) => {
+        console.log(data.verificationRatio);
+        if (data.verificationRatio === 0) {
+          showSnackbar(textContainer.youMustVerifyFromSameMobileDevice);
+        } else {
+          showSnackbar(textContainer.verifiedSuccessfully);
+        }
+      }
+    );
+  };
+
   return (
     <ReviewCard
       disableElevation={disableElevation}
@@ -142,6 +162,7 @@ export default function PhoneReview({
       likeBtnHandler={likeBtnHandler}
       shareBtnFn={shareBtnHandler}
       verificationRatio={reviewDetails.verificationRatio}
+      verifyPhone={verifyPhone}
     />
   );
 }

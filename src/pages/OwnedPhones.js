@@ -1,4 +1,5 @@
 import { useTheme } from "@emotion/react";
+import CheckCircleSharpIcon from "@mui/icons-material/CheckCircleSharp";
 import { Paper, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -6,10 +7,11 @@ import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import PhoneListItem from "../Components/PhoneItemList";
 import { PAPER_BORDER_RADIUS_DESKTOP } from "../constants";
+import { useShowSnackbar } from "../hooks/useShowSnackbar";
+import { useVerifyOwnedPhoneMutation } from "../services/phones";
 import { useGetOthersOwnedPhonesQuery } from "../services/users";
 import { useAppSelector } from "../store/hooks";
 import VirtualReviewList from "./VirtualListWindowScroll";
-import CheckCircleSharpIcon from "@mui/icons-material/CheckCircleSharp";
 
 function OwnedPhonesPage() {
   const [phonesList, setphonesList] = useState([]);
@@ -30,13 +32,35 @@ function OwnedPhonesPage() {
     uid: userId,
   });
 
+  const showSnackbar = useShowSnackbar();
+
+  const [verifyRequest] = useVerifyOwnedPhoneMutation();
+  const verifyOwnedPhone = (id) => {
+    verifyRequest({ id }).then(({ data }) => {
+      console.log(0);
+      const i = phonesList.findIndex((e) => e._id === id);
+
+      phonesList[i] = {
+        ...phonesList[i],
+        verificationRatio: data.verificationRatio,
+      };
+      setphonesList([...phonesList]);
+
+      if (data.verificationRatio === 0) {
+        showSnackbar(textContainer.youMustVerifyFromSameMobileDevice);
+      } else {
+        showSnackbar(textContainer.verifiedSuccessfully);
+      }
+    });
+  };
+
   let verificationRatioText = "";
   const getVerificationText = (ratio) => {
     if (!isLoading && !error) {
       if (ratio === 0) {
         verificationRatioText = "";
       } else if (ratio === -1) {
-        ratio = textContainer.thisReviewIsFromAnApplePhone;
+        verificationRatioText = textContainer.thisReviewIsFromAnApplePhone;
       } else {
         verificationRatioText =
           textContainer.thisReviewIsVerifiedBy + " " + ratio + "%";
@@ -82,6 +106,7 @@ function OwnedPhonesPage() {
           title={phone.name}
           verificationIcon={verifiedTooltip}
           verificationRatio={phone.verificationRatio}
+          verifyPhone={verifyOwnedPhone}
         />
       </Paper>
       <div
@@ -101,6 +126,7 @@ function OwnedPhonesPage() {
         title={phone.name}
         verificationIcon={verifiedTooltip}
         verificationRatio={phone.verificationRatio}
+        verifyPhone={verifyOwnedPhone}
       />
     );
   };
@@ -137,5 +163,4 @@ function OwnedPhonesPage() {
     </CustomAppBar>
   );
 }
-
 export default OwnedPhonesPage;

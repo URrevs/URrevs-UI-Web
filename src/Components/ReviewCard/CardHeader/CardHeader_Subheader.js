@@ -27,9 +27,9 @@ const CardSubheader = ({
   let verificationRatioText = "";
 
   if (verificationRatio === 0) {
-    verificationRatioText = "placeholder";
+    verificationRatioText = "";
   } else if (verificationRatio === -1) {
-    verificationRatio = textContainer.thisReviewIsFromAnApplePhone;
+    verificationRatioText = textContainer.thisReviewIsFromAnApplePhone;
   } else {
     verificationRatioText =
       textContainer.thisReviewIsVerifiedBy + " " + verificationRatio + "%";

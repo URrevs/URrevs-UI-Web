@@ -123,6 +123,15 @@ export const phoneApi = createApi({
         return response.company;
       },
     }),
+
+    verifyOwnedPhone: builder.mutation({
+      query: ({ id }) => {
+        return {
+          url: `/phones/${id}/verify`,
+          method: "PUT",
+        };
+      },
+    }),
   }),
 });
 
@@ -135,5 +144,6 @@ export const {
   useGetStatisticalInfoQuery,
   useIndicateUserComparingMutation,
   useGetAllCompaniesQuery,
+  useVerifyOwnedPhoneMutation,
   // useGetExactCompanyPhonesQuery,
 } = phoneApi;

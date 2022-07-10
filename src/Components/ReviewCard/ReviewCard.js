@@ -44,6 +44,7 @@ export default function ReviewCard({
   disableElevation = false,
   showBottomLine,
   verificationRatio,
+  verifyPhone
 }) {
   const isReview = true;
   const navigate = useNavigate();
@@ -198,6 +199,7 @@ export default function ReviewCard({
         actionBtnFunction={actionBtnFunction}
         reportFunction={reportFunction}
         verificationRatio={verificationRatio}
+        verifyPhone={verifyPhone}
       />
       <CardContent style={{ padding: 0 }}>
         <ButtonBase

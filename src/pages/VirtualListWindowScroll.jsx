@@ -1,24 +1,6 @@
-import { useTheme } from "@emotion/react";
-import { Fragment, useEffect, useRef, useState } from "react";
-import {
-  AutoSizer,
-  CellMeasurer,
-  CellMeasurerCache,
-  List,
-  WindowScroller,
-} from "react-virtualized";
+import { Fragment } from "react";
 import { Virtuoso } from "react-virtuoso";
-import LoadingReviewSkeleton, {
-  loadingSkeletonHeight,
-} from "../Components/Loaders/LoadingReviewSkeleton";
-
-const cache = new CellMeasurerCache({
-  fixedWidth: true,
-  fixedHeight: false,
-  defaultHeight: loadingSkeletonHeight,
-});
-
-let maxIndex = 0;
+import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
 
 export default function VirtualReviewList({
   reviewsList,

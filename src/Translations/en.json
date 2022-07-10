@@ -340,5 +340,9 @@
   "ownedPhone": "Owned phone",
   "myProducts": "My products",
   "cancelDeleteTheAccountRequest": "Cancel delete the account request",
-  "deleteTheAccountRequest": "Delete the account request"
+  "deleteTheAccountRequest": "Delete the account request",
+  "areYouSure": "Are you sure?",
+  "thisWillDeleteYourAccountAndYouWillNeverBeAbleToRecoverIt": "This will delete your account and you will never be able to recover you data",
+  "verify": "Verify",
+  "youMustVerifyFromSameMobileDevice": "You must open the website from the device you want to verify your review on it"
 }

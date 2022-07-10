@@ -116,6 +116,7 @@ const PostingScreen = ({
               try {
                 await addReview(reviewPost).unwrap();
                 //Success Message
+                // TODO uncomment
                 sessionStorage.clear();
               } catch (e) {
                 console.log("asd askjd bhasb", e);
