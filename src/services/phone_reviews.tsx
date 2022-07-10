@@ -74,6 +74,17 @@ export const phoneReviewsApi = createApi({
             })
           );
           dispatch(postingModalActions.hidePostingModal());
+
+          if (response.data.verificationRatio === 0) {
+            setTimeout(() => {
+              dispatch(
+                snackbarActions.showSnackbar({
+                  message:
+                    "حتى تتمكن من توثيق المراجعة عليك فتح الموقع باستخدام هذا الهاتف",
+                })
+              );
+            }, 3000);
+          }
         } catch (e: any) {
           console.error(e);
         }
@@ -91,7 +102,20 @@ export const phoneReviewsApi = createApi({
         payload.doFn();
 
         try {
-          await queryFulfilled;
+          const response = await queryFulfilled;
+
+          // dispatch(
+          //   snackbarActions.showSnackbar({
+          //     message: "asdas",
+          //   })
+          // );
+
+          // dispatch(
+          //   snackbarActions.showSnackbar({
+          //     message:
+          //       "حتى تتمكن من توثيق المراجعة عليك فتح الموقع باستخدام هذا الهاتف",
+          //   })
+          // );
         } catch (e: any) {
           if (e.error.data.status !== "already liked") {
             payload.unDoFn();
@@ -264,7 +288,7 @@ export const phoneReviewsApi = createApi({
         } catch (e: any) {
           // if (e.error.data.status === "not found") {
           // } else {
-            payload.unDoFn(payload.commentId);
+          payload.unDoFn(payload.commentId);
           // }
         }
       },

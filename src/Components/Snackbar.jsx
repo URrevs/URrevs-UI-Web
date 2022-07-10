@@ -9,6 +9,7 @@ import { Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import ROUTES_NAMES from "../RoutesNames";
 import { useLocation, useNavigate } from "react-router-dom";
+import { SnackbarProvider, useSnackbar } from "notistack";
 
 export default function CustomizedSnackbar() {
   const theme = useTheme();
