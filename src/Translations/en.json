@@ -323,6 +323,22 @@
   "dateOfOwnershipPrecedesDateOfIssue": "The date of ownership entered precedes the date of issue of the phone",
   "rankingOfUsersInTheCompetition": "Ranking of users in the competition",
   "youCannotReportYourContent": "You cannot report your own content",
+  "doYouReallyWantToLeave": "Do you really want to leave?",
+  "thisWillCauseTheDataYouEnteredToBeErased": "This will cause the data you entered to be erased",
+  "yes": "Yes",
+  "no": "No",
   "thisReviewIsVerifiedBy": "This review is verified by",
-  "thisReviewIsFromAnApplePhone": "This review is from an Apple phone"
+  "thisReviewIsFromAnApplePhone": "This review is from an Apple phone",
+  "verifyPhone": "Verify phone",
+  "verifyReview": "Verify review",
+  "thisPhoneHasBeenAddedToOwnedProductsThroughAnApplePhone": "This phone has been added to owned products through an Apple phone",
+  "youMustOpenTheApplicationFromTheDeviceYouWantToVerifyYourReviewOnIt": "You must open the application from the device you want to verify your review on it",
+  "youShouldVerifyYourOwnProductsByOpeningThePlatformThroughThePhoneYouWantToVerify": "You should verify your own products by opening the platform through the phone you want to verify",
+  "verifyYourProducts": "Verify your products",
+  "thisPhoneIsVerifiedBy": "This phone is verified by",
+  "thisElementIsAlreadyVerified": "This element is already verified",
+  "ownedPhone": "Owned phone",
+  "myProducts": "My products",
+  "cancelDeleteTheAccountRequest": "Cancel delete the account request",
+  "deleteTheAccountRequest": "Delete the account request"
 }

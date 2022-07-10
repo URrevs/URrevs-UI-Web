@@ -72,6 +72,7 @@ const Registeration = ({}) => {
           photo: data.profile.picture,
           name: data.profile.name,
           points: data.profile.points,
+          requestedDelete: data.profile.requestedDelete,
         })
       );
     }

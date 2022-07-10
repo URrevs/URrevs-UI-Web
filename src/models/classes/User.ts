@@ -14,6 +14,7 @@ export default class User {
   isAdmin: boolean = false;
   expiration: number;
   refetch: boolean = false;
+  requestedDelete: boolean = false;
 
   constructor(data: APIUser) {
     this.uid = data._id;

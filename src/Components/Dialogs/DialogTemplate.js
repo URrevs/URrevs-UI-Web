@@ -32,7 +32,11 @@ const PromptStyled = styled(
   background: theme.palette.modalColor,
 }));
 
-export const DialogTemplate = ({ title, children, handleClose = null }) => {
+export const DialogTemplate = ({
+  title = "",
+  children,
+  handleClose = null,
+}) => {
   return (
     <React.Fragment>
       <PromptStyled elevation={3}>
@@ -54,10 +58,17 @@ export const DialogTemplate = ({ title, children, handleClose = null }) => {
             }}
           >
             {/* Empty spacing to remove the padding from sticky starCounter */}
-            <Stack spacing={4}>
-              <div></div>
-              <Typography variant="S16W700C050505">{title}</Typography>
-            </Stack>
+            {title === "" ? (
+              <Stack spacing={5}>
+                <div></div>
+                <Typography variant="S16W700C050505">{title}</Typography>
+              </Stack>
+            ) : (
+              <Typography sx={{ paddingTop: "16px" }} variant="S16W700C050505">
+                {title}
+              </Typography>
+            )}
+
             {handleClose ? (
               <IconButton
                 sx={{
