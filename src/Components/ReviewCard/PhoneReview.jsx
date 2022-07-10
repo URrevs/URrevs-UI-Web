@@ -141,6 +141,7 @@ export default function PhoneReview({
       reportFunction={reportFunction}
       likeBtnHandler={likeBtnHandler}
       shareBtnFn={shareBtnHandler}
+      verificationRatio={reviewDetails.verificationRatio}
     />
   );
 }

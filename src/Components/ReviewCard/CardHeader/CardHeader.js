@@ -22,6 +22,7 @@ const CardHeader = ({
   targetProfilePath,
   actionBtnFunction,
   reportFunction,
+  verificationRatio,
 }) => {
   const currentUser = useAppSelector((state) => state.auth);
 
@@ -61,6 +62,7 @@ const CardHeader = ({
           buyDate={buyDate}
           showViewsCounter={showViewsCounter}
           views={views}
+          verificationRatio={verificationRatio}
         />
       }
     />

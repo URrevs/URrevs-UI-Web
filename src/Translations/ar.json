@@ -325,5 +325,7 @@
   "contentIsUnavailable": "هذا المحتوى غير متاح حاليا",
   "dateOfOwnershipPrecedesDateOfIssue": "تاريخ الامتلاك المدخل يسبق تاريخ اصدار الهاتف",
   "rankingOfUsersInTheCompetition": "ترتيب المستخدمين في المسابقة",
-  "youCannotReportYourContent": "لا يمكنك الابلاغ عن المحتوى الخاص بك"
+  "youCannotReportYourContent": "لا يمكنك الابلاغ عن المحتوى الخاص بك",
+  "thisReviewIsVerifiedBy": "هذه المراجعة موثقة بنسبة",
+  "thisReviewIsFromAnApplePhone": "هذه المراجعة من احدي هواتف أبل"
 }
