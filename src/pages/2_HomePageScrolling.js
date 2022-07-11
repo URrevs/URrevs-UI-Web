@@ -11,6 +11,8 @@ import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
 import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
 import { Answer } from "../Components/Interactions/Answer";
+import AddIcon from "@mui/icons-material/Add";
+
 import {
   useLikePhoneQuestionCommentMutation,
   useUnLikePhoneQuestionCommentMutation,
@@ -20,7 +22,7 @@ import {
   useUnLikeCompanyQuestionCommentMutation,
 } from "../services/company_questions";
 import Banner from "../Components/Banners/Banner";
-import { Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { PostingComponent } from "../Components/PostingComponents/PostingComponent";
@@ -28,6 +30,7 @@ import { postingModalActions } from "../store/uiPostingModalSlice";
 import { Link } from "react-router-dom";
 import { GAevent } from "../functions/gaEvents";
 import { GApageView } from "../functions/gaPageView";
+import { FaButton } from "../Components/Buttons/FaButton";
 
 function Reviews() {
   const dispatch = useAppDispatch();
@@ -45,7 +48,8 @@ function Reviews() {
   }, []);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  const isMobile = useTheme().isMobile;
+  const theme = useTheme();
+  const isMobile = theme.isMobile;
 
   const currentUser = useAppSelector((state) => state.auth);
 
@@ -315,6 +319,7 @@ function Reviews() {
   return (
     <CustomAppBar showLogo showSearch showProfile>
       <div style={{ height: "20px" }}></div>
+
       {!isMobile ? (
         !currentUser.isLoggedIn && (
           <Grid container style={{ display: "flex" }}>
@@ -334,6 +339,36 @@ function Reviews() {
         <AlonePostsGrid>
           {currentUser.isLoggedIn ? (
             <div>
+              {/* <FaButton
+                icon={
+                  <AddIcon
+                    sx={{
+                      color: theme.palette.defaultRedBtnIconColor,
+                      fontSize: "28px",
+                    }}
+                  />
+                }
+                onClick={() => {
+                  dispatch(
+                    postingModalActions.showPostingModal({
+                      tab: 0,
+                    })
+                  );
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <Typography variant="S14W700Cffffff">
+                    {textContainer.addReview}
+                  </Typography>
+                </Box>
+              </FaButton> */}
               <PostingComponent
                 label={textContainer.youCanWriteReviewOrAskAQuestion}
                 placeholder={textContainer.writeYourPost}
@@ -375,7 +410,7 @@ function Reviews() {
                 },
               }}
             />
-            <div style={{ height: "50px" }}></div>
+            <div style={{ height: "20px" }}></div>
           </div>
           <VirtualReviewList
             endOfData={endOfData}

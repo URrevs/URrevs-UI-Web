@@ -1,5 +1,8 @@
+import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useOutletContext, useSearchParams } from "react-router-dom";
+import { FaButton } from "../../Components/Buttons/FaButton";
+import AddIcon from "@mui/icons-material/Add";
 
 import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
@@ -10,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
+import { useTheme } from "@emotion/react";
 
 export function ProductReviews() {
   const { phoneName } = useOutletContext();
@@ -28,6 +32,7 @@ export function ProductReviews() {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const [searchParams] = useSearchParams();
   const phoneId = searchParams.get("pid");
+  const theme = useTheme();
 
   const { data, isLoading, isFetching, error } = useGetPhoneReviewsQuery({
     round: page,
@@ -109,6 +114,36 @@ export function ProductReviews() {
   return (
     <AlonePostsGrid>
       <div style={{ height: "20px" }} />
+      <FaButton
+        icon={
+          <AddIcon
+            sx={{
+              color: theme.palette.defaultRedBtnIconColor,
+              fontSize: "28px",
+            }}
+          />
+        }
+        onClick={() => {
+          dispatch(
+            postingModalActions.showPostingModal({
+              tab: 0,
+            })
+          );
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="S14W700Cffffff">
+            {textContainer.addReview}
+          </Typography>
+        </Box>
+      </FaButton>
       <PostingComponent
         label={textContainer.youCanAddReview}
         placeholder={textContainer.writeYourReview}

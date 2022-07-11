@@ -1,8 +1,8 @@
 - Add Review confirmation <b>MODAL</b> before navigating out of add review.
-- Fab in add review, add question screens and in Owned products tab.+ fix padding for mobile
+- Fab in add review, add question screens and in Owned products tab.+ fix padding for postingmodal mobile// extremely slow in infinite scrolling screens opt out of it
 - Long Press comment/reply to report on mobile
 - Phone verification
-- Set As Owned should be locked the moment review is posted
+- Add mobile posting field in all comments full screen
 
 = Postponed:
 
@@ -29,6 +29,7 @@
 
 = Done:
 
+- Set As Owned should be locked the moment review is posted (x)
 - Delete Account Feature USER (x)
 - Add Review Star Counter needs to be 1200 char instead of 3000(x)
 - Reporting User side:

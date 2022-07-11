@@ -1,6 +1,9 @@
 import { useTheme } from "@emotion/react";
+import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { FaButton } from "../Components/Buttons/FaButton";
+import AddIcon from "@mui/icons-material/Add";
 
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
@@ -15,7 +18,8 @@ export function PostedReviews() {
   const [filter, setFilter] = useState(0);
   const dispatch = useAppDispatch();
   const textContainer = useAppSelector((state) => state.language.textContainer);
-  const isMobile = useTheme().isMobile;
+  const theme = useTheme();
+  const isMobile = theme.isMobile;
 
   const currentUserId = useAppSelector((state) => state.auth.uid);
 
@@ -26,13 +30,46 @@ export function PostedReviews() {
     <CustomAppBar
       showLabel
       label={
-        currentUserId === paramId
-          ? textContainer.myReviews
-          : textContainer.reviews
+        currentUserId === paramId && (
+          <FaButton
+            icon={
+              <AddIcon
+                sx={{
+                  color: theme.palette.defaultRedBtnIconColor,
+                  fontSize: "28px",
+                }}
+              />
+            }
+            onClick={() => {
+              dispatch(
+                postingModalActions.showPostingModal({
+                  tab: 0,
+                })
+              );
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                textAlign: "center",
+              }}
+            >
+              <Typography variant="S14W700Cffffff">
+                {textContainer.addReview}
+              </Typography>
+            </Box>
+          </FaButton>
+        )
       }
       showBackBtn
       tabBar={<FilterTabbar value={filter} setValue={setFilter} />}
     >
+      {currentUserId === paramId
+        ? textContainer.myReviews
+        : textContainer.reviews}
+
       <FixedGrid>
         <div style={{ marginTop: "20px" }}>
           {currentUserId === paramId && (

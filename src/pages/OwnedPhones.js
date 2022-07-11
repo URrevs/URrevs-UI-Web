@@ -1,8 +1,9 @@
 import { useTheme } from "@emotion/react";
 import CheckCircleSharpIcon from "@mui/icons-material/CheckCircleSharp";
-import { Paper, Tooltip } from "@mui/material";
+import { Box, Paper, Tooltip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { FaButton } from "../Components/Buttons/FaButton";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import PhoneListItem from "../Components/PhoneItemList";
@@ -12,7 +13,10 @@ import { useShowSnackbar } from "../hooks/useShowSnackbar";
 import { useVerifyOwnedPhoneMutation } from "../services/phones";
 import { useGetOthersOwnedPhonesQuery } from "../services/users";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+import AddIcon from "@mui/icons-material/Add";
+
 import VirtualReviewList from "./VirtualListWindowScroll";
+import { postingModalActions } from "../store/uiPostingModalSlice";
 
 function OwnedPhonesPage() {
   const dispatch = useAppDispatch();
@@ -165,6 +169,36 @@ function OwnedPhonesPage() {
           reviewCard={phoneTile}
           reviewsList={phonesList}
         />
+        <FaButton
+          icon={
+            <AddIcon
+              sx={{
+                color: theme.palette.defaultRedBtnIconColor,
+                fontSize: "28px",
+              }}
+            />
+          }
+          onClick={() => {
+            dispatch(
+              postingModalActions.showPostingModal({
+                tab: 0,
+              })
+            );
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            <Typography variant="S14W700Cffffff">
+              {textContainer.addReview}
+            </Typography>
+          </Box>
+        </FaButton>
       </FixedGrid>
     </CustomAppBar>
   );

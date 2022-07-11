@@ -13,5 +13,6 @@ export const mainApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["phoneStats"],
   endpoints: () => ({}),
 });

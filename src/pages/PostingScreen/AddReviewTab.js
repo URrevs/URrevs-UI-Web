@@ -42,16 +42,10 @@ import { FormSubmitButton } from "./FormSubmitButton";
 export const AddReviewTab = ({ ...props }) => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    return () => {
-      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-      const val = window.confirm("asdasdasd");
-      if (val) {
-        navigate("/add-review", { replace: true });
-      }
-    };
-  }, []);
+  // window.addEventListener("beforeunload", (e) => {
+  //   console.log("UNLOAD:1");
+  //   e.returnValue = "";
+  // });
 
   // const handleUnload = (e) => {
   //   console.log("hey");
@@ -162,13 +156,14 @@ export const AddReviewTab = ({ ...props }) => {
   const beforeUnLoadFunction = () => {
     console.log("Hell");
   };
-  // Can be easily done with measuring contributions
   React.useEffect(() => {
     window.addEventListener("beforeunload", beforeUnLoadFunction);
     return (_) => {
       window.removeEventListener("beforeunload", beforeUnLoadFunction);
     };
   }, []);
+  // Can be easily done with measuring contributions
+
   React.useEffect(() => {
     const limit = 1200;
     let sum = 0;

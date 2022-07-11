@@ -1,5 +1,7 @@
+import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useOutletContext, useSearchParams } from "react-router-dom";
+import { FaButton } from "../../Components/Buttons/FaButton";
 import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { Answer } from "../../Components/Interactions/Answer";
 import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
@@ -14,6 +16,8 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { questionsActions } from "../../store/questionsSlice";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
+import AddIcon from "@mui/icons-material/Add";
+import { useTheme } from "@emotion/react";
 
 export function CompanyQuestions() {
   const dispatch = useAppDispatch();
@@ -23,14 +27,14 @@ export function CompanyQuestions() {
   useEffect(() => {
     return () => {
       console.log("clear questions");
-      setPage(1)
+      setPage(1);
       dispatch(questionsActions.clearReviews());
     };
   }, []);
 
   const reviewsList = useAppSelector((state) => state.questions.newReviews);
   const [page, setPage] = useState(1);
-
+  const theme = useTheme();
   const [searchParams] = useSearchParams();
   const cid = searchParams.get("cid");
 
@@ -171,6 +175,36 @@ export function CompanyQuestions() {
   return (
     <AlonePostsGrid>
       <div style={{ height: "20px" }}></div>
+      <FaButton
+        icon={
+          <AddIcon
+            sx={{
+              color: theme.palette.defaultRedBtnIconColor,
+              fontSize: "28px",
+            }}
+          />
+        }
+        onClick={() => {
+          dispatch(
+            postingModalActions.showPostingModal({
+              tab: 0,
+            })
+          );
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="S14W700Cffffff">
+            {textContainer.addReview}
+          </Typography>
+        </Box>
+      </FaButton>
       <PostingComponent
         label={textContainer.youCanAddQuestion}
         placeholder={textContainer.writeYourQuestionP}
