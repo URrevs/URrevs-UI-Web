@@ -75,7 +75,8 @@ export const homeApi = createApi({
         } else {
           // let sortedPosts = [];
           // sortedPosts = posts.sort((a, b) => 0.5 - Math.random());
-          return posts;
+          // return posts;
+          return [];
         }
       },
     }),

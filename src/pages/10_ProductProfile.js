@@ -1,11 +1,12 @@
 import { useTheme } from "@emotion/react";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Outlet, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
 import { PathTabbar } from "../Components/Tabbar/PathTabbar";
+import { GAevent } from "../functions/gaEvents";
 import ROUTES_NAMES from "../RoutesNames";
 
 import { useGetPhoneSpecsQuery } from "../services/phones";
@@ -17,6 +18,18 @@ export const ProductProfile = () => {
   const isMobile = useTheme().isMobile;
 
   let { isLoading, data } = useGetPhoneSpecsQuery(paramId);
+
+  // for google analitycs
+  useEffect(() => {
+    if (!isLoading) {
+      GAevent(
+        "User interaction",
+        `${data.name} profile visited`,
+        `${data.name} profile visited`,
+        true
+      );
+    }
+  }, [isLoading]);
 
   const textContainer = useSelector((state) => state.language.textContainer);
 

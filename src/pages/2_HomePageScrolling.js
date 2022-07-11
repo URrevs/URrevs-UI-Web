@@ -26,6 +26,7 @@ import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { PostingComponent } from "../Components/PostingComponents/PostingComponent";
 import { postingModalActions } from "../store/uiPostingModalSlice";
 import { Link } from "react-router-dom";
+import { GAevent } from "../functions/gaEvents";
 
 function Reviews() {
   const dispatch = useAppDispatch();
@@ -36,6 +37,12 @@ function Reviews() {
       dispatch(homePageActions.clearReviews());
     };
   }, []);
+
+  // for google analitycs
+  useEffect(() => {
+    GAevent("User interaction", "Home screen view", "Home screen view", true);
+  }, []);
+
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const isMobile = useTheme().isMobile;
 

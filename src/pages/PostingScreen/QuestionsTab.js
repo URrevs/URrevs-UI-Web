@@ -3,6 +3,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import FormikSearchComponent from "../../Components/Form/FormikSearchComponent";
 import FormikTextField from "../../Components/Form/FormikTextField";
+import { GAevent } from "../../functions/gaEvents";
 import { useAddCompanyQuestionMutation } from "../../services/company_questions";
 import { useAddPhoneQuestionMutation } from "../../services/phone_questions";
 import { useSearchAllMutation } from "../../services/search";
@@ -64,6 +65,7 @@ export const QuestionsTab = ({ initValues }) => {
           phone: values.spoc.id,
         });
       }
+      GAevent("User interaction", "Adding question", "Adding question", false);
     } catch (e) {
       console.log(e);
     }

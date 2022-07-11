@@ -8,6 +8,7 @@ import {
   TEXT_FIELD_BORDER_THICKNESS,
 } from "../../constants";
 import { generateLink } from "../../functions/dynamicLinkGenerator";
+import { GAevent } from "../../functions/gaEvents";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { snackbarActions } from "../../store/uiSnackbarSlice";
@@ -108,6 +109,12 @@ export const InvitationDialog = ({ handleClose }) => {
                   })
                 );
                 navigator.clipboard.writeText(currentUserProfile.refCode);
+                GAevent(
+                  "User interaction",
+                  "Sharing referral code",
+                  "Sharing referral code",
+                  false
+                );
               }}
             >
               <ContentCopyOutlinedIcon sx={{ fontSize: "40px" }} />
@@ -123,6 +130,12 @@ export const InvitationDialog = ({ handleClose }) => {
                 pageDictionary.linkCopyWasSuccessful
               );
             });
+            GAevent(
+              "User interaction",
+              "Sharing referral link",
+              "Sharing referral link",
+              false
+            );
           }}
         >
           <ShareOutlinedIcon sx={{ fontSize: "25px" }} />

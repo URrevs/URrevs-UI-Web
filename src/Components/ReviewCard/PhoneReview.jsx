@@ -1,4 +1,5 @@
 import { generateLink } from "../../functions/dynamicLinkGenerator";
+import { GAevent } from "../../functions/gaEvents";
 import { useCheckSignedInWithoutModal } from "../../hooks/useCheckIsSignedInWithoutModal";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
@@ -132,6 +133,8 @@ export default function PhoneReview({
   };
 
   const verifyPhone = () => {
+    GAevent("User interaction", "Verify review", "Verify review", false);
+
     verifyPhoneReviewRequest({ reviewId: reviewDetails._id }).then(
       ({ data }) => {
         console.log(data.verificationRatio);

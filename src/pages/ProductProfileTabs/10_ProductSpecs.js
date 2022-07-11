@@ -8,7 +8,7 @@ import {
   Grid,
   IconButton,
   Modal,
-  Typography,
+  Typography
 } from "@mui/material";
 import { styled } from "@mui/styles";
 import React, { Fragment } from "react";
@@ -22,12 +22,12 @@ import LoadingSpinner from "../../Components/Loaders/LoadingSpinner";
 import { ProductOverviewCard } from "../../Components/OverviewCard/ProductOverviewCard";
 import ProductDetailsTable from "../../Components/ProductDetailsTable";
 import { CARD_BORDER_RADIUS } from "../../constants";
+import classes from "../../scrollbar.module.css";
 import {
   useGetPhoneSpecsQuery,
   useGetSimilarPhonesQuery,
-  useGetStatisticalInfoQuery,
+  useGetStatisticalInfoQuery
 } from "../../services/phones";
-import classes from "../../scrollbar.module.css";
 
 const CardStyled = styled(
   Card,

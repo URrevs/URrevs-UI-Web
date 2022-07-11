@@ -2,6 +2,7 @@ import { useTheme } from "@emotion/react";
 import { Formik } from "formik";
 import { useSearchParams } from "react-router-dom";
 import * as Yup from "yup";
+import { GAevent } from "../../functions/gaEvents";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useAddPhoneReviewMutation } from "../../services/phone_reviews";
 import { useAppSelector } from "../../store/hooks";
@@ -118,6 +119,12 @@ const PostingScreen = ({
                 //Success Message
                 // TODO uncomment
                 sessionStorage.clear();
+                GAevent(
+                  "User interaction",
+                  "Adding review",
+                  "Adding review",
+                  false
+                );
               } catch (e) {
                 console.log("asd askjd bhasb", e);
               }
