@@ -7,6 +7,7 @@ import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { StickyTabbar } from "../Components/Tabbar/Desktop/StickyTabbar";
 import { PathTabbar } from "../Components/Tabbar/PathTabbar";
 import { GAevent } from "../functions/gaEvents";
+import { GApageView } from "../functions/gaPageView";
 import ROUTES_NAMES from "../RoutesNames";
 
 import { useGetPhoneSpecsQuery } from "../services/phones";
@@ -19,15 +20,22 @@ export const ProductProfile = () => {
 
   let { isLoading, data } = useGetPhoneSpecsQuery(paramId);
 
+  // // for google analitycs
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     GAevent(
+  //       "User interaction",
+  //       `${data.name} profile visited`,
+  //       `${data.name} profile visited`,
+  //       true
+  //     );
+  //   }
+  // }, [isLoading]);
+
   // for google analitycs
   useEffect(() => {
     if (!isLoading) {
-      GAevent(
-        "User interaction",
-        `${data.name} profile visited`,
-        `${data.name} profile visited`,
-        true
-      );
+      GApageView(`${data.name} profile visited`);
     }
   }, [isLoading]);
 

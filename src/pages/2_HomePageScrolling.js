@@ -27,6 +27,7 @@ import { PostingComponent } from "../Components/PostingComponents/PostingCompone
 import { postingModalActions } from "../store/uiPostingModalSlice";
 import { Link } from "react-router-dom";
 import { GAevent } from "../functions/gaEvents";
+import { GApageView } from "../functions/gaPageView";
 
 function Reviews() {
   const dispatch = useAppDispatch();
@@ -40,7 +41,7 @@ function Reviews() {
 
   // for google analitycs
   useEffect(() => {
-    GAevent("User interaction", "Home screen view", "Home screen view", true);
+    GApageView("Home Screen");
   }, []);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
