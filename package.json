@@ -19,6 +19,7 @@
     "firebase": "^9.6.6",
     "formik": "^2.2.9",
     "install": "^0.13.0",
+    "jquery": "^3.6.0",
     "jss-rtl": "^0.3.0",
     "millify": "^4.0.0",
     "netlify-cli": "^10.1.0",

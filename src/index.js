@@ -15,6 +15,25 @@ import {
 import config from "./firebase-config.json";
 import "./index";
 
+// TODO: Add only on production
+// disable right click
+document.onmousedown = disableclick;
+function disableclick(event) {
+  if (event.button == 2) {
+    return false;
+  }
+}
+
+// TODO: Add only on production
+// disable f12
+document.onkeydown = disableF12;
+function disableF12(event) {
+  console.log(event);
+  if (event.code == "F12") {
+    return false;
+  }
+}
+
 firebase.initializeApp(config);
 const auth = getAuth();
 
