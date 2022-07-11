@@ -298,9 +298,22 @@ function App() {
   const dispatch = useAppDispatch();
   const refetchToken = useAppSelector((state) => state.auth.refetch);
 
-  const [getUserProfile, { isLoading }] = useLazyXauthenticateQuery({});
+  const storeUser = useAppSelector((state) => state.auth);
+
+  const [getUserProfile, { isLoading }] = useLazyXauthenticateQuery();
 
   const [firebaseIsLoading, setFirebaseIsLoading] = useState(true);
+
+  // test for polling interval to update token
+  useEffect(() => {
+    const intervalGetToken = window.setInterval(() => {
+      dispatch(authActions.toggleRefetch({ refetch: true }));
+    }, 3000000);
+    return () => {
+      console.log("Refreshing");
+      clearInterval(intervalGetToken);
+    };
+  }, []);
 
   useEffect(async () => {
     dispatch(authActions.toggleRefetch({ refetch: false }));
