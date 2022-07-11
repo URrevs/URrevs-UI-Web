@@ -218,6 +218,7 @@ export default function PhoneReviewFullScreen() {
         createdAt: new Date(),
         likes: 0,
         liked: false,
+        replies: [],
       };
 
       addOneCommentToLoadedComments(comment);

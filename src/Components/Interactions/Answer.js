@@ -4,9 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CheckIcon from "@mui/icons-material/Check";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/hooks";
+import { TextButton } from "../Buttons/TextButton";
 import { PostingField } from "../PostingComponents/PostingField";
+import { CommentReply } from "./CommentReply";
 import { InteractionBody } from "./InteractionBody";
 import { InteractionFooter } from "./InteractionFooter";
+import { Virtuoso } from "react-virtuoso";
 
 export const Answer = ({
   commentId,
@@ -28,6 +31,10 @@ export const Answer = ({
   userId,
   userName,
   answerReportFunction,
+  replies = [],
+  likeReplyRequest,
+  unLikeReplyRequest,
+  replyReportFunction,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const currentUserId = useAppSelector((state) => state.auth).uid;
@@ -74,25 +81,25 @@ export const Answer = ({
   const [showReplyField, setShowReplyField] = useState(false);
 
   const toggleReplyField = () => setShowReplyField((show) => !show);
+  const [showReplies, setShowReplies] = useState(false);
 
   return (
     <div
       style={{
-        display:'flex',
         maxWidth: "calc(100% - 20px)",
         padding: "4px 0px",
       }}
     >
-      {acceptedAnswer ? (
-        <CheckIcon
-          sx={{
-            fontSize: "40px",
-            padding: 0,
-            color: theme.palette.interactionCard.iconColor,
-          }}
-        ></CheckIcon>
-      ) : null}
       <div>
+        {acceptedAnswer ? (
+          <CheckIcon
+            sx={{
+              fontSize: "40px",
+              padding: 0,
+              color: theme.palette.interactionCard.iconColor,
+            }}
+          ></CheckIcon>
+        ) : null}
         <InteractionBody
           userName={userName}
           userId={userId}
@@ -122,6 +129,42 @@ export const Answer = ({
             placeholder="اكتب رد"
             reply
             onSubmit={(text) => submitReplyHandler(text, commentId)}
+          />
+        )}
+      </div>
+      {/* replies list */}
+      <div style={{ marginRight: "54px" }}>
+        {replies.length !== 0 && !showReplies ? (
+          <TextButton
+            title={`${replies.length} ${textContainer.reply}`}
+            onClick={() => setShowReplies((show) => !show)}
+          />
+        ) : (
+          <Virtuoso
+            useWindowScroll
+            data={replies}
+            increaseViewportBy={{ top: 500, bottom: 500 }}
+            overscan={10}
+            itemContent={(index, reply) => {
+              return (
+                <CommentReply
+                  replyId={reply._id}
+                  date={reply.createdAt}
+                  likes={reply.likes}
+                  text={reply.content}
+                  liked={reply.liked}
+                  replyLike={likeReplyRequest}
+                  replyUnlike={unLikeReplyRequest}
+                  commentId={reply.commentId}
+                  avatar={reply.userPicture}
+                  userName={reply.userName}
+                  userId={reply.userId}
+                  reportFunction={() => {
+                    replyReportFunction(reply.commentId, reply._id);
+                  }}
+                />
+              );
+            }}
           />
         )}
       </div>

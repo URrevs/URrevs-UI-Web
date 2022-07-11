@@ -17,18 +17,9 @@ const answersList = createSlice({
   reducers: {
     addToLoaddedComments(state, action: PayloadAction<InitialState>) {
       // make list of comments and replies
-      let newList: APIAnswer[] = [];
       const loadedComments = action.payload.newComments;
 
-      loadedComments.forEach((comment) => {
-        newList.push({ ...comment, isReply: false });
-        if (comment.replies) {
-          comment.replies.forEach((reply) => {
-            newList.push({ ...reply, commentId: comment._id, isReply: true });
-          });
-        }
-      });
-      state.newComments.push(...newList);
+      state.newComments.push(...loadedComments);
     },
 
     addAcceptedAnswer(

@@ -6,6 +6,9 @@ import { InteractionFooter } from "./InteractionFooter";
 import { useAppSelector } from "../../store/hooks";
 import { comment } from "stylis";
 import { PostingField } from "../PostingComponents/PostingField";
+import { CommentReply } from "./CommentReply";
+import { Virtuoso } from "react-virtuoso";
+import { TextButton } from "../Buttons/TextButton";
 
 export const Comment = ({
   commentId,
@@ -21,6 +24,10 @@ export const Comment = ({
   userId,
   userName,
   reportFunction,
+  replies = [],
+  likeReplyRequest,
+  unLikeReplyRequest,
+  replyReportFunction,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -42,6 +49,7 @@ export const Comment = ({
   };
 
   const [showReplyField, setShowReplyField] = useState(false);
+  const [showReplies, setShowReplies] = useState(false);
 
   const toggleReplyField = () => setShowReplyField((show) => !show);
 
@@ -77,6 +85,42 @@ export const Comment = ({
           onSubmit={(text) => submitReplyHandler(text, commentId)}
         />
       )}
+      {/* replies list */}
+      <div style={{ marginRight: "54px" }}>
+        {replies.length !== 0 && !showReplies ? (
+          <TextButton
+            title={`${replies.length} ${textContainer.reply}`}
+            onClick={() => setShowReplies((show) => !show)}
+          />
+        ) : (
+          <Virtuoso
+            useWindowScroll
+            data={replies}
+            increaseViewportBy={{ top: 500, bottom: 500 }}
+            overscan={10}
+            itemContent={(index, reply) => {
+              return (
+                <CommentReply
+                  replyId={reply._id}
+                  date={reply.createdAt}
+                  likes={reply.likes}
+                  text={reply.content}
+                  liked={reply.liked}
+                  replyLike={likeReplyRequest}
+                  replyUnlike={unLikeReplyRequest}
+                  commentId={reply.commentId}
+                  avatar={reply.userPicture}
+                  userName={reply.userName}
+                  userId={reply.userId}
+                  reportFunction={() => {
+                    replyReportFunction(reply.commentId, reply._id);
+                  }}
+                />
+              );
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 };

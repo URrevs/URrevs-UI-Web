@@ -58,25 +58,7 @@ export function AnswersList({
             increaseViewportBy={{ top: 2500, bottom: 2500 }}
             overscan={20}
             itemContent={(index, comment) => {
-              return comment.isReply ? (
-                <CommentReply
-                  replyId={comment._id}
-                  date={comment.createdAt}
-                  likes={comment.likes}
-                  text={comment.content}
-                  liked={comment.liked}
-                  replyLike={replyLike}
-                  replyUnlike={replyUnlike}
-                  commentId={comment.commentId}
-                  avatar={comment.userPicture}
-                  acceptedAnswerReply={comment.acceptedReply}
-                  userName={comment.userName}
-                  userId={comment.userId}
-                  reportFunction={() => {
-                    replyReportFunction(comment.commentId, comment._id);
-                  }}
-                />
-              ) : (
+              return (
                 <Answer
                   commentId={comment._id}
                   text={comment.content}
@@ -98,6 +80,10 @@ export function AnswersList({
                   userName={comment.userName}
                   userId={comment.userId}
                   answerReportFunction={() => answerReportFunction(comment._id)}
+                  likeReplyRequest={replyLike}
+                  unLikeReplyRequest={replyUnlike}
+                  replies={comment.replies}
+                  replyReportFunction={replyReportFunction}
                 />
               );
             }}

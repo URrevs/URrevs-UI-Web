@@ -267,6 +267,7 @@ export default function PhoneQuestionFullScreen() {
         createdAt: new Date(),
         likes: 0,
         liked: false,
+        replies: [],
       };
 
       addOneCommentToLoadedComments(comment);

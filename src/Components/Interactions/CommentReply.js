@@ -43,7 +43,7 @@ export const CommentReply = ({
       <div
         style={{
           margin: "0 0px 0 15px",
-          marginRight: acceptedAnswerReply ? "96px" : "50px",
+          // marginRight: acceptedAnswerReply ? "96px" : "50px",
           padding: "4px 0px",
         }}
       >

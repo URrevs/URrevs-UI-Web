@@ -72,34 +72,10 @@ export default function CommentsList({
                     reportFunction={() => {
                       commentReportFunction(comment._id);
                     }}
-                  />
-                  <Virtuoso
-                    useWindowScroll
-                    context={{ endOfData }}
-                    data={commentsList[index].replies}
-                    endReached={loadMore}
-                    increaseViewportBy={{ top: 2500, bottom: 2500 }}
-                    overscan={20}
-                    itemContent={(index, reply) => {
-                      return (
-                        <CommentReply
-                          replyId={reply._id}
-                          date={reply.createdAt}
-                          likes={reply.likes}
-                          text={reply.content}
-                          liked={reply.liked}
-                          replyLike={likeReplyRequest}
-                          replyUnlike={unLikeReplyRequest}
-                          commentId={reply.commentId}
-                          avatar={reply.userPicture}
-                          userName={reply.userName}
-                          userId={reply.userId}
-                          reportFunction={() => {
-                            replyReportFunction(reply.commentId, reply._id);
-                          }}
-                        />
-                      );
-                    }}
+                    likeReplyRequest={likeReplyRequest}
+                    unLikeReplyRequest={unLikeReplyRequest}
+                    replies={comment.replies}
+                    replyReportFunction={replyReportFunction}
                   />
                 </Fragment>
               );
