@@ -23,14 +23,11 @@ const miscApi = mainApi.injectEndpoints({
               requestedDelete: true,
             })
           );
-          // dispatch(
-          //   snackbarActions.showSnackbar({
-          //     message: `${textContainer.postedSuccessfully}. ${textContainer.youHaveEarned} ${response.data.earnedPoints} ${textContainer.point}`,
-          //     showActionBtn: true,
-          //     actionBtnText: textContainer.seePost,
-          //     actionNavPath: `../phone-review?id=${response.data.review._id}`,
-          //   })
-          // );
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: `${textContainer.yourRequestWillBeReviewedAndProcessedAsSoonAsPossible}.`,
+            })
+          );
         } catch (e: any) {
           console.error(e);
         }
@@ -53,14 +50,11 @@ const miscApi = mainApi.injectEndpoints({
               requestedDelete: false,
             })
           );
-          // dispatch(
-          //   snackbarActions.showSnackbar({
-          //     message: `${textContainer.postedSuccessfully}. ${textContainer.youHaveEarned} ${response.data.earnedPoints} ${textContainer.point}`,
-          //     showActionBtn: true,
-          //     actionBtnText: textContainer.seePost,
-          //     actionNavPath: `../phone-review?id=${response.data.review._id}`,
-          //   })
-          // );
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: `${textContainer.deleteRequestIsCancelledSuccessfully}.`,
+            })
+          );
         } catch (e: any) {
           console.error(e);
         }
