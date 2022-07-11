@@ -1,11 +1,11 @@
 import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
-import React from "react";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import { PostingField } from "../Components/PostingComponents/PostingField";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
 import { useShowSnackbar } from "../hooks/useShowSnackbar";
 import ROUTES_NAMES from "../RoutesNames";
@@ -30,6 +30,9 @@ import { sendReportActions } from "../store/uiSendReportSlice";
 import CommentsList from "./CommentsList";
 
 export default function CompanyReviewFullScreen() {
+  const theme = useTheme();
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   const dispatch = useAppDispatch();
   const showSnackbar = useShowSnackbar();
 
@@ -346,6 +349,23 @@ export default function CompanyReviewFullScreen() {
           </Box>
         </AlonePostsGrid>
       </FixedGrid>
+      {isMobile && (
+        <div
+          style={{
+            width: "100%",
+            position: "fixed",
+            padding: "6px",
+            bottom: -1,
+            left: 0,
+            background: theme.palette.interactionCard.backgroundMobileColor,
+          }}
+        >
+          <PostingField
+            placeholder={textContainer.writeAComment}
+            onSubmit={(comment) => submitCommentHandler(comment)}
+          />
+        </div>
+      )}
     </CustomAppBar>
   );
 }

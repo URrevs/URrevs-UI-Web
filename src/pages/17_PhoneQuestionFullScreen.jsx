@@ -6,6 +6,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import { PostingField } from "../Components/PostingComponents/PostingField";
 import PhoneQuestion from "../Components/ReviewCard/phoneQuestion";
 import { useShowSnackbar } from "../hooks/useShowSnackbar";
 import { AnswersList } from "../pages/AnswersList";
@@ -34,6 +35,8 @@ import { sendReportActions } from "../store/uiSendReportSlice";
 
 export default function PhoneQuestionFullScreen() {
   const dispatch = useAppDispatch();
+  const theme = useTheme();
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const showSnackbar = useShowSnackbar();
 
@@ -399,6 +402,23 @@ export default function PhoneQuestionFullScreen() {
           </Box>
         </AlonePostsGrid>
       </FixedGrid>
+      {isMobile && (
+        <div
+          style={{
+            width: "100%",
+            position: "fixed",
+            padding: "6px",
+            bottom: -1,
+            left: 0,
+            background: theme.palette.interactionCard.backgroundMobileColor,
+          }}
+        >
+          <PostingField
+            placeholder={textContainer.writeAComment}
+            onSubmit={(comment) => submitCommentHandler(comment)}
+          />
+        </div>
+      )}
     </CustomAppBar>
   );
 }

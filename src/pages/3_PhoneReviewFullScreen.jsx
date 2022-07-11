@@ -359,7 +359,10 @@ export default function PhoneReviewFullScreen() {
             background: theme.palette.interactionCard.backgroundMobileColor,
           }}
         >
-          <PostingField placeholder={textContainer.writeAComment} />
+          <PostingField
+            placeholder={textContainer.writeAComment}
+            onSubmit={(comment) => submitCommentHandler(comment)}
+          />
         </div>
       )}
     </CustomAppBar>

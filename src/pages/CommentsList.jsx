@@ -54,40 +54,54 @@ export default function CommentsList({
             increaseViewportBy={{ top: 2500, bottom: 2500 }}
             overscan={20}
             itemContent={(index, comment) => {
-              return comment.isReply ? (
-                <CommentReply
-                  replyId={comment._id}
-                  date={comment.createdAt}
-                  likes={comment.likes}
-                  text={comment.content}
-                  liked={comment.liked}
-                  replyLike={likeReplyRequest}
-                  replyUnlike={unLikeReplyRequest}
-                  commentId={comment.commentId}
-                  avatar={comment.userPicture}
-                  userName={comment.userName}
-                  userId={comment.userId}
-                  reportFunction={() => {
-                    replyReportFunction(comment.commentId, comment._id);
-                  }}
-                />
-              ) : (
-                <Comment
-                  commentId={comment._id}
-                  date={comment.createdAt}
-                  likes={comment.likes}
-                  text={comment.content}
-                  liked={comment.liked}
-                  commentLike={likeCommentRequest}
-                  commentUnlike={unLikeCommentRequest}
-                  submitReplyHandler={submitReplyHandler}
-                  avatar={comment.userPicture}
-                  userName={comment.userName}
-                  userId={comment.userId}
-                  reportFunction={() => {
-                    commentReportFunction(comment._id);
-                  }}
-                />
+              return (
+                <Fragment>
+                  {" "}
+                  <Comment
+                    commentId={comment._id}
+                    date={comment.createdAt}
+                    likes={comment.likes}
+                    text={comment.content}
+                    liked={comment.liked}
+                    commentLike={likeCommentRequest}
+                    commentUnlike={unLikeCommentRequest}
+                    submitReplyHandler={submitReplyHandler}
+                    avatar={comment.userPicture}
+                    userName={comment.userName}
+                    userId={comment.userId}
+                    reportFunction={() => {
+                      commentReportFunction(comment._id);
+                    }}
+                  />
+                  <Virtuoso
+                    useWindowScroll
+                    context={{ endOfData }}
+                    data={commentsList[index].replies}
+                    endReached={loadMore}
+                    increaseViewportBy={{ top: 2500, bottom: 2500 }}
+                    overscan={20}
+                    itemContent={(index, reply) => {
+                      return (
+                        <CommentReply
+                          replyId={reply._id}
+                          date={reply.createdAt}
+                          likes={reply.likes}
+                          text={reply.content}
+                          liked={reply.liked}
+                          replyLike={likeReplyRequest}
+                          replyUnlike={unLikeReplyRequest}
+                          commentId={reply.commentId}
+                          avatar={reply.userPicture}
+                          userName={reply.userName}
+                          userId={reply.userId}
+                          reportFunction={() => {
+                            replyReportFunction(reply.commentId, reply._id);
+                          }}
+                        />
+                      );
+                    }}
+                  />
+                </Fragment>
               );
             }}
             components={{ Footer }}
