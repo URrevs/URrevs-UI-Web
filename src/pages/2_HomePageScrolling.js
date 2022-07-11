@@ -172,7 +172,7 @@ function Reviews() {
       };
 
       // add accepted answer if found
-      const acceptedAnswerWidget = () => {
+      const acceptedAnswerWidget = (review) => {
         if (review.acceptedAns) {
           return (
             <Answer
@@ -212,7 +212,9 @@ function Reviews() {
           stateShare={stateIncreaseShareCounter}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
-          acceptedAnswerWidget={review.acceptedAns && acceptedAnswerWidget()}
+          acceptedAnswerWidget={
+            review.acceptedAns && acceptedAnswerWidget.bind(null, review)
+          }
         />
       );
     }
@@ -246,7 +248,7 @@ function Reviews() {
       };
 
       // add accepted answer if found
-      const acceptedAnswerWidget = () => {
+      const acceptedAnswerWidget = (review) => {
         if (review.acceptedAns) {
           return (
             <Answer
@@ -286,7 +288,9 @@ function Reviews() {
           stateShare={stateIncreaseShareCounter}
           showActionBtn={true}
           deleteReviewFromStore={deleteReviewFromStore}
-          acceptedAnswerWidget={review.acceptedAns && acceptedAnswerWidget}
+          acceptedAnswerWidget={
+            review.acceptedAns && acceptedAnswerWidget.bind(null, review)
+          }
         />
       );
     }
