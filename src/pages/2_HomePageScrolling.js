@@ -44,7 +44,7 @@ function Reviews() {
 
   // for google analitycs
   useEffect(() => {
-    GApageView("Home Screen");
+    GAevent("User interaction", "Home screen view", "Home screen view", true);
   }, []);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);

@@ -70,7 +70,7 @@ export const store = configureStore({
     })
       .concat(snackbarErrorHandle)
       .concat(rtkQueryErrorLogger)
-      .concat(phoneReviewsApi.middleware)
+      // .concat(phoneReviewsApi.middleware)
       .concat(searchApi.middleware)
       .concat(companyReviewsApi.middleware)
       .concat(phoneQuestionsApi.middleware)

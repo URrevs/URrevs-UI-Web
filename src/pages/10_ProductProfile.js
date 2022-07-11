@@ -20,22 +20,15 @@ export const ProductProfile = () => {
 
   let { isLoading, data } = useGetPhoneSpecsQuery(paramId);
 
-  // // for google analitycs
-  // useEffect(() => {
-  //   if (!isLoading) {
-  //     GAevent(
-  //       "User interaction",
-  //       `${data.name} profile visited`,
-  //       `${data.name} profile visited`,
-  //       true
-  //     );
-  //   }
-  // }, [isLoading]);
-
   // for google analitycs
   useEffect(() => {
     if (!isLoading) {
-      GApageView(`${data.name} profile visited`);
+      GAevent(
+        "User interaction",
+        `${data.name} profile visited`,
+        `${data.name} profile visited`,
+        true
+      );
     }
   }, [isLoading]);
 
