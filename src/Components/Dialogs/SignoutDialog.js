@@ -29,9 +29,7 @@ export const SignoutDialog = ({ handleClose }) => {
       await setSignOutError(logout());
       dispatch(authActions.logout());
       handleClose();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const signout = async () => {

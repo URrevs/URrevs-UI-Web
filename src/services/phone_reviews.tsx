@@ -130,7 +130,6 @@ export const phoneReviewsApi = mainApi.injectEndpoints({
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
         payload.doFn();
-        console.log("a");
 
         try {
           await queryFulfilled;

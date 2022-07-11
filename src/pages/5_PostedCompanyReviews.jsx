@@ -13,7 +13,6 @@ export function PostedCompanyReviews() {
 
   useEffect(() => {
     return () => {
-      console.log("clear reviews");
       p = 1;
       dispatch(reviewsActions.clearReviews());
     };
@@ -100,11 +99,11 @@ export function PostedCompanyReviews() {
   }, [userId]);
 
   return (
-      <VirtualReviewList
-        endOfData={endOfData}
-        loadMore={loadMore}
-        reviewCard={reviewCard}
-        reviewsList={reviewsList}
-      />
+    <VirtualReviewList
+      endOfData={endOfData}
+      loadMore={loadMore}
+      reviewCard={reviewCard}
+      reviewsList={reviewsList}
+    />
   );
 }

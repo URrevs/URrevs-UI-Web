@@ -21,7 +21,6 @@ const correspondingErrorMessage = (
     isError: true,
     path: "",
   };
-  console.log(action);
   switch (serverMessage) {
     case "invalid token":
       error.message = textContainer.invalidToken;
@@ -123,14 +122,12 @@ export const snackbarErrorHandle: Middleware =
 
     // RTK Query uses `createAsyncThunk` from redux-toolkit under the hood, so we're able to utilize these matchers!
     if (isRejectedWithValue(action)) {
-      console.log(action);
       const serverMessage: string = action.payload.data.status;
       const message: Error = correspondingErrorMessage(
         serverMessage,
         textContainer,
         action
       );
-      // console.log(message.isError);
       if (message.isError) {
         dispatch(
           snackbarActions.showSnackbar({

@@ -51,7 +51,6 @@ export const QuestionsTab = ({ initValues }) => {
   // const [addQuestionError, setAddQuestionError] = React.useState(null);
   //Handle Submit
   const handleSubmit = async (values) => {
-    console.log(JSON.stringify(values));
     // alert(JSON.stringify(values));
     try {
       if (values.spoc.type === "company") {
@@ -66,9 +65,7 @@ export const QuestionsTab = ({ initValues }) => {
         });
       }
       GAevent("User interaction", "Adding question", "Adding question", false);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
     dispatch(postingModalActions.hidePostingModal());
   };
   // Validation:

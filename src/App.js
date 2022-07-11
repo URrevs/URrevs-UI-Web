@@ -319,8 +319,6 @@ function App() {
     dispatch(authActions.toggleRefetch({ refetch: false }));
     const unregisterObserver = getAuth().onAuthStateChanged(async (user) => {
       if (user) {
-        // console.log(storeUser);
-
         if (refetchToken) {
           const { data } = await getUserProfile(user.accessToken);
 

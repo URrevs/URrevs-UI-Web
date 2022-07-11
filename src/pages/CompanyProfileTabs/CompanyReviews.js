@@ -25,7 +25,6 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
 
   useEffect(() => {
     return () => {
-      console.log("clear reviews");
       setPage(1);
       dispatch(reviewsActions.clearReviews());
     };
@@ -60,7 +59,6 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
   const deleteReviewFromStore = (id) => {
     dispatch(reviewsActions.clearReviews());
     const n = reviewsList.filter((review) => review._id !== id);
-    console.log(n);
 
     dispatch(
       reviewsActions.addToLoaddedReviews({

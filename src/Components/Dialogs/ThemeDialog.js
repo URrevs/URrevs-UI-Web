@@ -17,7 +17,6 @@ export const ThemeDialog = ({ handleClose }) => {
   const theme = useTheme();
   const mode = useAppSelector((state) => state.darkMode.theme);
 
-  console.log(mode);
   //Talk to fady about it first
   //   if (
   //     window.matchMedia &&

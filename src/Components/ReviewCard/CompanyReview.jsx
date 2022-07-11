@@ -78,9 +78,7 @@ const CompanyReview = ({
     try {
       deleteReviewFromStore(reviewDetails._id);
       await dontLikeThisRequest({ reviewId: reviewDetails._id });
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const [likePhoneReview] = useLikeCompanyReviewMutation();

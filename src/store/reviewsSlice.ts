@@ -41,7 +41,6 @@ const reviewsSlice = createSlice({
       state.page = state.page + 1;
     },
     setIndex(state, action) {
-      console.log(action.payload.currentIndex);
       state.currentIndex = action.payload.currentIndex;
     },
     setIsLiked(

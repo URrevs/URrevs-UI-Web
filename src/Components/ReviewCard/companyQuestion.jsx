@@ -32,9 +32,7 @@ export default function CompanyQuestion({
   disableElevation,
   showBottomLine,
 }) {
-
   const checkSignedInWithoutModal = useCheckSignedInWithoutModal();
-
 
   const [dontLikeThisRequest] = useIdontLikeThisCompanyQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenCompanyQuestionMutation();
@@ -55,9 +53,7 @@ export default function CompanyQuestion({
     try {
       deleteReviewFromStore(reviewDetails._id);
       await dontLikeThisRequest({ reviewId: reviewDetails._id });
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const [likeCompanyReview] = useLikeCompanyQuestionMutation();
@@ -102,7 +98,8 @@ export default function CompanyQuestion({
 
   const fullScreenHandler = () => {
     if (checkSignedInWithoutModal()) {
-    fullScreenRequest(reviewDetails._id);}
+      fullScreenRequest(reviewDetails._id);
+    }
   };
 
   const shareBtnHandler = () => {

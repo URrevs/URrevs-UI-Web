@@ -5,7 +5,6 @@ export const useShowSnackbar = (message) => {
   const dispatch = useAppDispatch();
 
   function showSnackBar(message) {
-    console.log("show snackbar");
     dispatch(snackbarActions.showSnackbar({ message: message }));
   }
 

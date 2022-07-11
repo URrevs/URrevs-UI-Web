@@ -113,7 +113,6 @@ const PostingScreen = ({
                 compPros: values.likeAbout,
                 compCons: values.hateAbout,
               };
-              // console.log(JSON.stringify(reviewPost, null, 2));
               try {
                 await addReview(reviewPost).unwrap();
                 //Success Message
@@ -125,9 +124,7 @@ const PostingScreen = ({
                   "Adding review",
                   false
                 );
-              } catch (e) {
-                console.log("asd askjd bhasb", e);
-              }
+              } catch (e) {}
               setSubmitting(false);
             }
           }}

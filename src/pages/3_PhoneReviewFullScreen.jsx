@@ -41,7 +41,6 @@ export default function PhoneReviewFullScreen() {
 
   useEffect(() => {
     return () => {
-      console.log("clear comments");
       dispatch(commentsListActions.clearComments());
       dispatch(reviewsActions.clearReviews());
     };
@@ -249,9 +248,7 @@ export default function PhoneReviewFullScreen() {
       };
 
       addOneReplyToLoadedComments(reply);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const deleteReviewFromStore = (id) => {

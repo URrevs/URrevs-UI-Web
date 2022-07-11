@@ -53,7 +53,6 @@ export const UpdateProducts = () => {
     } catch (e) {
       setButtonLoading(false);
       setUpdateError(e.data.status);
-      console.log(e);
     }
   };
 

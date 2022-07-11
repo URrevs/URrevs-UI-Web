@@ -37,7 +37,6 @@ const homePageSlice = createSlice({
       state.page = state.page + 1;
     },
     setIndex(state, action) {
-      console.log(action.payload.currentIndex);
       state.currentIndex = action.payload.currentIndex;
     },
     setReviewIsLiked(
@@ -87,8 +86,6 @@ const homePageSlice = createSlice({
       const targetReview = state.newReviews.findIndex((element) => {
         return element._id.toString() === action.payload.id.toString();
       });
-
-      console.log(targetReview);
 
       if (targetReview !== -1) {
         state.newReviews[targetReview].shares++;

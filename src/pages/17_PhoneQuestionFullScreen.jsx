@@ -46,7 +46,6 @@ export default function PhoneQuestionFullScreen() {
 
   useEffect(() => {
     return () => {
-      console.log("clear answers");
       dispatch(answersListActions.clearComments());
       dispatch(questionsActions.clearReviews());
     };
@@ -127,7 +126,6 @@ export default function PhoneQuestionFullScreen() {
 
   useEffect(() => {
     if (currentReview && currentReview.acceptedAns) {
-      console.log("add answer");
       dispatch(
         answersListActions.addAcceptedAnswer({
           acceptedAnswer: currentReviewData.acceptedAns,
@@ -298,9 +296,7 @@ export default function PhoneQuestionFullScreen() {
       };
 
       addOneReplyToLoadedComments(reply);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const deleteReviewFromStore = (id) => {

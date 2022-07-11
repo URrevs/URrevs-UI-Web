@@ -46,7 +46,6 @@ function OwnedPhonesPage() {
       showSnackbar(textContainer.youMustVerifyFromSameMobileDevice);
     } else {
       verifyRequest({ id }).then(({ data }) => {
-        console.log(0);
         const i = phonesList.findIndex((e) => e._id === id);
 
         phonesList[i] = {

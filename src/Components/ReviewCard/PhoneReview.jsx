@@ -81,9 +81,7 @@ export default function PhoneReview({
     try {
       deleteReviewFromStore(reviewDetails._id);
       await dontLikeThisRequest({ reviewId: reviewDetails._id });
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const [likePhoneReview] = useLikePhoneReviewMutation();
@@ -137,7 +135,6 @@ export default function PhoneReview({
 
     verifyPhoneReviewRequest({ reviewId: reviewDetails._id }).then(
       ({ data }) => {
-        console.log(data.verificationRatio);
         dispatch(
           reviewsActions.setReviewAsVerified({
             id: reviewDetails._id,

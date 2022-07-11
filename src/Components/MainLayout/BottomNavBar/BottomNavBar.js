@@ -31,7 +31,6 @@ export default function BottomNavBar() {
   );
 
   React.useEffect(() => {
-    console.log("change");
     setValue(map[location.pathname.substring(1, location.pathname.length)]);
   }, [location.pathname]);
 

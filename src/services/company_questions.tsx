@@ -90,7 +90,6 @@ export const companyQuestionsApi = createApi({
         try {
           await queryFulfilled;
         } catch (e: any) {
-          console.log(e.error.data.status);
           if (e.error.data.status !== "already liked") {
             payload.unDoFn();
           }
@@ -107,7 +106,6 @@ export const companyQuestionsApi = createApi({
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
         payload.doFn();
-        console.log("a");
 
         try {
           await queryFulfilled;

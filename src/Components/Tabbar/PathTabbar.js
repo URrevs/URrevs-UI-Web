@@ -21,7 +21,6 @@ export const PathTabbar = ({
   const [value, setValue] = React.useState(pathValue === -1 ? 0 : pathValue);
 
   React.useEffect(() => {
-    console.log('changed')
     currentPath = location.pathname.split("/").slice(-1)[0];
     pathValue = arrayOfTabs.findIndex(
       (element) => element.to.split("?")[0] === currentPath

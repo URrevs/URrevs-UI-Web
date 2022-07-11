@@ -21,7 +21,6 @@ export function ProductReviews() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     return () => {
-      console.log("clear reviews");
       setPage(1);
       dispatch(reviewsActions.clearReviews());
     };
@@ -40,7 +39,6 @@ export function ProductReviews() {
   });
 
   const stateLike = (id) => {
-    console.log(id);
     dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
   };
 
@@ -55,7 +53,6 @@ export function ProductReviews() {
     );
 
   const increasePage = () => {
-    console.log(page);
     return setPage(page + 1);
   };
 

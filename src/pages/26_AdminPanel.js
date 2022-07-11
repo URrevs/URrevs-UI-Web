@@ -31,8 +31,6 @@ export const AdminPanel = () => {
   const { data: lastCompetetionData, error: latestCompetetionError } =
     useGetLatestCompetetionQuery();
 
-  console.log(lastCompetetionData);
-
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(0);
   const handleOpen = () => setOpen(true);

@@ -42,7 +42,6 @@ export default function CompanyReviewFullScreen() {
 
   useEffect(() => {
     return () => {
-      console.log("clear comments");
       dispatch(commentsListActions.clearComments());
       dispatch(reviewsActions.clearReviews());
     };
@@ -254,9 +253,7 @@ export default function CompanyReviewFullScreen() {
       };
 
       addOneReplyToLoadedComments(reply);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const deleteReviewFromStore = (id) => {

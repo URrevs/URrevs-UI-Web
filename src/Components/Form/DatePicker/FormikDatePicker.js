@@ -43,9 +43,7 @@ const FormikDatePicker = ({ label, fieldName }) => {
                   let day = newValue.toString().replace(/[0-9]+/, "01");
                   day = day.replace(/[0-9]+:[0-9]+:[0-9]+/, "00:00:00");
                   setFieldValue(fieldName, day);
-                } catch (e) {
-                  // console.log(e);
-                }
+                } catch (e) {}
 
                 if (newValue) sessionStorage.setItem(fieldName, newValue);
               }}

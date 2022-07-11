@@ -99,7 +99,6 @@ export const SendReports = () => {
                   spacing={2}
                   style={{ display: "flex", flexDirection: "column" }}
                 >
-                  {/* {console.log(errors)} */}
                   <FormControl>
                     <RadioGroup
                       name={fieldNames.radioGroup}

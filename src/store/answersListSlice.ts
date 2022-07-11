@@ -27,10 +27,8 @@ const answersList = createSlice({
       action: { payload: { acceptedAnswer: APIAnswer } }
     ) {
       const answer = { ...action.payload.acceptedAnswer, isAccepted: true };
-      console.log(answer);
       let answerReplies: any = [];
       answer.replies.forEach((reply, i) => {
-        console.log(reply);
         answerReplies.push({
           ...reply,
           commentId: answer._id,
@@ -77,8 +75,6 @@ const answersList = createSlice({
         return element._id.toString() === action.payload.id.toString();
       });
 
-      console.log(action.payload);
-
       if (targetReview !== -1) {
         if (state.newComments[targetReview].isReply) {
           state.newComments[targetReview].liked = action.payload.isLiked;
@@ -115,7 +111,6 @@ const answersList = createSlice({
         state.newComments[targetReview].isAccepted = action.payload.isAccepted;
 
         state.newComments[targetReview].replies.forEach((reply, i) => {
-          console.log(state.newComments[targetReview]);
           state.newComments[targetReview].replies[i].acceptedReply =
             action.payload.isAccepted;
         });

@@ -28,7 +28,6 @@ export function PostedPhoneReviews() {
     return () => {
       setPage(1);
       setEndOfData(false);
-      console.log("clear reviews");
       dispatch(reviewsActions.clearReviews());
     };
   }, [userId]);
@@ -46,8 +45,6 @@ export function PostedPhoneReviews() {
     dispatch(reviewsActions.setIsLiked({ id: id, isLiked: false }));
 
   const addToReviewsList = (data) => {
-    console.log(data);
-
     dispatch(
       reviewsActions.addToLoaddedReviews({
         newReviews: data,

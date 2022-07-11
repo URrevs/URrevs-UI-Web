@@ -25,9 +25,7 @@ export const InteractionBody = ({
   avatarSize = "44px",
   userId,
   userName,
-  reportFunction = () => {
-    console.log("report");
-  },
+  reportFunction = () => {},
 }) => {
   const [showReportMenu, setShowReportMenu] = React.useState(false);
   const textContainer = useAppSelector((state) => state.language.textContainer);

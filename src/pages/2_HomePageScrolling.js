@@ -36,7 +36,6 @@ function Reviews() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     return () => {
-      console.log("clear reviews");
       p = 1;
       dispatch(homePageActions.clearReviews());
     };
@@ -83,7 +82,6 @@ function Reviews() {
   const deleteReviewFromStore = (id) => {
     dispatch(homePageActions.clearReviews());
     const n = reviewsList.filter((review) => review._id !== id);
-    console.log(n);
 
     dispatch(
       homePageActions.addToLoaddedReviews({

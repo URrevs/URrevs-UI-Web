@@ -26,7 +26,6 @@ export function ProductQuestions() {
   const { phoneName } = useOutletContext();
   useEffect(() => {
     return () => {
-      console.log("clear questions");
       setPage(1);
       dispatch(questionsActions.clearReviews());
     };

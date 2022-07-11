@@ -51,10 +51,8 @@ export function AllProductsScreen() {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
   useEffect(() => {
-    console.log("clear reviews");
     clearProductsList();
     return () => {
-      console.log("clear reviews");
       clearProductsList();
       maxIndex = 0;
     };
@@ -125,8 +123,6 @@ export function AllProductsScreen() {
     clearProductsList();
     maxIndex = 0;
     window.scrollTo(0, 0);
-
-    console.log("increased", queryParams.page);
 
     queryParams.selectedCompany.index === index
       ? setQueryParams({ page: 1, selectedCompany: { index: -1, id: null } })
