@@ -36,11 +36,11 @@ export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
     color: textContainer.theme,
     languageSub: language === "ar" ? "العربية" : "English",
     theme: isDark ? textContainer.darkTheme : textContainer.lightTheme,
-    delete: textContainer.deleteTheAccountRequest,
-    cancelDel: textContainer.cancelDeleteTheAccountRequest,
+    delete: textContainer.deleteAccount,
+    cancelDel: textContainer.cancelDeleteAccountRequest,
     conTitle: textContainer.areYouSure,
     conWarningText:
-      textContainer.thisWillDeleteYourAccountAndYouWillNeverBeAbleToRecoverIt,
+      textContainer.thisWillCauseYourAccountToBeErasedAndYouWillNotBeAbleToRecoverItAgain,
   };
   //RTK
   const [deleteAccount, { isLoading: sendingDeleteReq }] =

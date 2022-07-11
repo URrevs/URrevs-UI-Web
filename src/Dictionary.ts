@@ -228,6 +228,8 @@ export default interface Dictionary {
   reviewNow: string;
   enterAValidRefCode: string;
   youCannotReportYourContent: string;
+  yourRequestWillBeReviewedAndProcessedAsSoonAsPossible: string;
+  deleteRequestIsCancelledSuccessfully: string;
 }
 
 interface FullDictionary {

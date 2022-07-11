@@ -342,11 +342,14 @@
   "thisElementIsAlreadyVerified": "هذا العنصر تم توثيقه",
   "ownedPhone": "هاتف ممتلك",
   "myProducts": "منتجاتي",
-  "deleteTheAccountRequest": "طلب حذف الحساب",
-  "cancelDeleteTheAccountRequest": "إلغاء طلب حذف الحساب",
+  "deleteAccount": "طلب حذف الحساب",
+  "cancelDeleteAccountRequest": "الغاء طلب حذف الحساب",
   "areYouSure": "هل انت متأكد؟",
-  "thisWillDeleteYourAccountAndYouWillNeverBeAbleToRecoverIt": "سوف يتسبب هذا في مسح حسابك ولن تستطيع استرجاع بياناتك",
+  "thisWillCauseYourAccountToBeErasedAndYouWillNotBeAbleToRecoverItAgain": "سوف يتسبب ذلك في مسح حسابك ولن تستطيع استرداده مرة اخرى",
   "verify": "توثيق",
   "youMustVerifyFromSameMobileDevice": "يجب ان تقوم بفتح الموقع من خلال الجهاز الذي تريد توثيق مراجعته",
-  "verifiedSuccessfully": "تم التوثيق"
+  "verifiedSuccessfully": "تم التوثيق",
+  "yourRequestWillBeReviewedAndProcessedAsSoonAsPossible": "سوف يتم مراجعة طلبك وتنفيذه في اقرب وقت",
+  "retry": "إعادة المحاولة",
+  "deleteRequestIsCancelledSuccessfully": "تم الغاء الطلب بنجاح"
 }
