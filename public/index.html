@@ -32,7 +32,26 @@
     -->
     <title>URrevs</title>
   </head>
-  <body>
+  <body oncontextmenu="return false">
+    <script language="javascript">
+      document.onmousedown = disableclick;
+      status = "Right Click Disabled";
+      function disableclick(event) {
+        if (event.button == 2) {
+          return false;
+        }
+      }
+    </script>
+    <script language="javascript">
+      $.Shortcuts.add({
+        type: "hold",
+        mask: "f12",
+        handler: function () {
+          alert("f12");
+        },
+      });
+      $.Shortcuts.start();
+    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
