@@ -22,4 +22,5 @@ export interface APIReview {
   pros: string;
   cons: string;
   liked: boolean;
+  verificationRatio: number;
 }

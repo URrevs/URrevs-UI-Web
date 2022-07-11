@@ -17,6 +17,7 @@ import {
 } from "../../services/phone_reviews";
 import { useReportPhoneReviewMutation } from "../../services/reports";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { reviewsActions } from "../../store/reviewsSlice";
 import { sendReportActions } from "../../store/uiSendReportSlice";
 import ReviewCard from "./ReviewCard";
 
@@ -134,6 +135,12 @@ export default function PhoneReview({
     verifyPhoneReviewRequest({ reviewId: reviewDetails._id }).then(
       ({ data }) => {
         console.log(data.verificationRatio);
+        dispatch(
+          reviewsActions.setReviewAsVerified({
+            id: reviewDetails._id,
+            verificationRatio: data.verificationRatio,
+          })
+        );
         if (data.verificationRatio === 0) {
           showSnackbar(textContainer.youMustVerifyFromSameMobileDevice);
         } else {

@@ -5,10 +5,10 @@ import {
   ListItem,
   ListItemButton,
   ListItemIcon,
-  Typography,
+  Typography
 } from "@mui/material";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ROUTES_NAMES from "../RoutesNames";
 import { useAppSelector } from "../store/hooks";
 
@@ -21,7 +21,7 @@ import {
   MenuList,
   Paper,
   Popper,
-  Stack,
+  Stack
 } from "@mui/material";
 import { detectDeviceType } from "../functions/detectDevice";
 import { useAppDispatch } from "../store/hooks";
@@ -37,6 +37,9 @@ export default function PhoneListItem({
   const theme = useTheme();
   const navigate = useNavigate();
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const currentUserId = useAppSelector((state) => state.auth.uid);
+  const [searchParams] = useSearchParams();
+  const userId = searchParams.get("userId");
 
   /////////////////////////////////////////////
   const anchorRef = React.useRef(null);
@@ -152,7 +155,9 @@ export default function PhoneListItem({
   return (
     <React.Fragment key={id}>
       <ListItem
-        secondaryAction={verificationRatio === 0 && verifyMenu()}
+        secondaryAction={
+          verificationRatio === 0 && currentUserId === userId && verifyMenu()
+        }
         sx={{ padding: 0, margin: 0, lineHeight: 0 }}
       >
         <ListItemButton

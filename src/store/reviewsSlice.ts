@@ -77,6 +77,23 @@ const reviewsSlice = createSlice({
         state.newReviews[targetReview].shares++;
       }
     },
+
+    setReviewAsVerified(
+      state,
+      action: PayloadAction<{
+        id: string;
+        verificationRatio: number;
+      }>
+    ) {
+      const targetReview = state.newReviews.findIndex((element) => {
+        return element._id.toString() === action.payload.id.toString();
+      });
+
+      if (targetReview !== -1) {
+        state.newReviews[targetReview].verificationRatio =
+          action.payload.verificationRatio;
+      }
+    },
   },
 });
 
