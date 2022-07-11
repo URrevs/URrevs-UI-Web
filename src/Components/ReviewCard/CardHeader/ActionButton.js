@@ -133,6 +133,7 @@ export default function ActionButton({
                           } else {
                             verifyPhone();
                           }
+                          setOpen(false);
                         }}
                       >
                         <Typography variant="S16W700C050505">

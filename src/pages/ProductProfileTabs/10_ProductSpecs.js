@@ -106,6 +106,7 @@ export const ProductSpecsScreen = () => {
           companyRating={statistical.companyRating}
           viewer={statistical.views}
           owned={statistical.owned}
+          verificationRatio={statistical.verificationRatio}
           ratings={[
             statistical.uiRating,
             statistical.manufacturingQuality,

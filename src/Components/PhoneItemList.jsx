@@ -5,7 +5,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemIcon,
-  Typography
+  Typography,
 } from "@mui/material";
 import React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -21,11 +21,8 @@ import {
   MenuList,
   Paper,
   Popper,
-  Stack
+  Stack,
 } from "@mui/material";
-import { detectDeviceType } from "../functions/detectDevice";
-import { useAppDispatch } from "../store/hooks";
-import { snackbarActions } from "../store/uiSnackbarSlice";
 
 export default function PhoneListItem({
   title,
@@ -44,9 +41,6 @@ export default function PhoneListItem({
   /////////////////////////////////////////////
   const anchorRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
-  const currentUser = useAppSelector((state) => state.auth);
-
-  const dispatch = useAppDispatch();
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -125,16 +119,8 @@ export default function PhoneListItem({
                       <MenuItem
                         sx={{ padding: "10px 28px", minHeight: 0 }}
                         onClick={() => {
-                          if (detectDeviceType() !== "mobile") {
-                            dispatch(
-                              snackbarActions.showSnackbar({
-                                message:
-                                  textContainer.youMustVerifyFromSameMobileDevice,
-                              })
-                            );
-                          } else {
-                            verifyPhone(id);
-                          }
+                          verifyPhone(id);
+                          setOpen(false);
                         }}
                       >
                         <Typography variant="S16W700C050505">

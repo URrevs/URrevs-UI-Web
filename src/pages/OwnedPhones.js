@@ -7,13 +7,15 @@ import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import PhoneListItem from "../Components/PhoneItemList";
 import { PAPER_BORDER_RADIUS_DESKTOP } from "../constants";
+import { detectDeviceType } from "../functions/detectDevice";
 import { useShowSnackbar } from "../hooks/useShowSnackbar";
 import { useVerifyOwnedPhoneMutation } from "../services/phones";
 import { useGetOthersOwnedPhonesQuery } from "../services/users";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import VirtualReviewList from "./VirtualListWindowScroll";
 
 function OwnedPhonesPage() {
+  const dispatch = useAppDispatch();
   const [phonesList, setphonesList] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -36,22 +38,26 @@ function OwnedPhonesPage() {
 
   const [verifyRequest] = useVerifyOwnedPhoneMutation();
   const verifyOwnedPhone = (id) => {
-    verifyRequest({ id }).then(({ data }) => {
-      console.log(0);
-      const i = phonesList.findIndex((e) => e._id === id);
+    if (detectDeviceType() !== "mobile") {
+      showSnackbar(textContainer.youMustVerifyFromSameMobileDevice);
+    } else {
+      verifyRequest({ id }).then(({ data }) => {
+        console.log(0);
+        const i = phonesList.findIndex((e) => e._id === id);
 
-      phonesList[i] = {
-        ...phonesList[i],
-        verificationRatio: data.verificationRatio,
-      };
-      setphonesList([...phonesList]);
+        phonesList[i] = {
+          ...phonesList[i],
+          verificationRatio: data.verificationRatio,
+        };
+        setphonesList([...phonesList]);
 
-      if (data.verificationRatio === 0) {
-        showSnackbar(textContainer.youMustVerifyFromSameMobileDevice);
-      } else {
-        showSnackbar(textContainer.verifiedSuccessfully);
-      }
-    });
+        if (data.verificationRatio === 0) {
+          showSnackbar(textContainer.youMustVerifyFromSameMobileDevice);
+        } else {
+          showSnackbar(textContainer.verifiedSuccessfully);
+        }
+      });
+    }
   };
 
   let verificationRatioText = "";
