@@ -83,6 +83,7 @@ export const Answer = ({
   const toggleReplyField = () => setShowReplyField((show) => !show);
   const [showReplies, setShowReplies] = useState(false);
 
+  const repliesPadding = !acceptedAnswer ? "54px" : `${54 + 40}px`;
   return (
     <div
       style={{
@@ -133,7 +134,7 @@ export const Answer = ({
         )}
       </div>
       {/* replies list */}
-      <div style={{ marginRight: "54px" }}>
+      <div style={{ marginRight: repliesPadding }}>
         {replies.length !== 0 && !showReplies ? (
           <TextButton
             title={`${replies.length} ${textContainer.reply}`}
