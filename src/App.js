@@ -4,7 +4,7 @@ import {
   createTheme,
   CssBaseline,
   Grid,
-  useMediaQuery,
+  useMediaQuery
 } from "@mui/material";
 import { arEG } from "@mui/material/locale";
 import { getAuth } from "firebase/auth";
@@ -55,7 +55,7 @@ import { COLORS } from "./Styles/main_light_colors";
 // OUR_TRACKING_ID
 import ReactGA from "react-ga";
 import { getFonts } from "./Styles/fonts";
-const TRACKING_ID = process.env.TRACKING_ID;
+const TRACKING_ID = "UA-165221874-4";
 
 function App() {
   // GOOGLE ANALITYCS
