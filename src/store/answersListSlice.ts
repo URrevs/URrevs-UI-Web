@@ -27,17 +27,8 @@ const answersList = createSlice({
       action: { payload: { acceptedAnswer: APIAnswer } }
     ) {
       const answer = { ...action.payload.acceptedAnswer, isAccepted: true };
-      let answerReplies: any = [];
-      answer.replies.forEach((reply, i) => {
-        answerReplies.push({
-          ...reply,
-          commentId: answer._id,
-          isReply: true,
-          acceptedReply: true,
-        });
-      });
 
-      state.newComments = [answer, ...answerReplies, ...state.newComments];
+      state.newComments = [answer, ...state.newComments];
     },
 
     addNewCommentLocally(
@@ -57,7 +48,10 @@ const answersList = createSlice({
       });
 
       const comment = action.payload.newComment;
-      state.newComments.splice(index + 1, 0, comment);
+      state.newComments[index].replies = [
+        comment,
+        ...state.newComments[index].replies,
+      ];
     },
 
     clearComments(state) {
@@ -109,15 +103,6 @@ const answersList = createSlice({
 
       if (targetReview !== -1) {
         state.newComments[targetReview].isAccepted = action.payload.isAccepted;
-
-        state.newComments[targetReview].replies.forEach((reply, i) => {
-          state.newComments[targetReview].replies[i].acceptedReply =
-            action.payload.isAccepted;
-        });
-        // upvotes
-        // action.payload.isAccepted
-        //   ? state.newComments[targetReview].upvotes++
-        //   : state.newComments[targetReview].upvotes--;
       }
     },
   },

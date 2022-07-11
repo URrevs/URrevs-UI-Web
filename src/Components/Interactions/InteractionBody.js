@@ -14,6 +14,7 @@ import ROUTES_NAMES from "../../RoutesNames";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useTheme } from "@emotion/react";
 import { useAppSelector } from "../../store/hooks";
+import CheckIcon from "@mui/icons-material/Check";
 
 export const InteractionBody = ({
   text,
@@ -25,6 +26,7 @@ export const InteractionBody = ({
   avatarSize = "44px",
   userId,
   userName,
+  showCorrectIcon,
   reportFunction = () => {},
 }) => {
   const [showReportMenu, setShowReportMenu] = React.useState(false);
@@ -55,6 +57,15 @@ export const InteractionBody = ({
         }}
       >
         <Box sx={{ display: "flex" }}>
+          {showCorrectIcon ? (
+            <CheckIcon
+              sx={{
+                fontSize: "40px",
+                padding: 0,
+                color: theme.palette.interactionCard.iconColor,
+              }}
+            ></CheckIcon>
+          ) : null}
           <Link to={`../${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}>
             <Avatar
               src={avatar}

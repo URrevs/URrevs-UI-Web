@@ -1,7 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { faUpLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CheckIcon from "@mui/icons-material/Check";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/hooks";
 import { TextButton } from "../Buttons/TextButton";
@@ -92,15 +91,6 @@ export const Answer = ({
       }}
     >
       <div>
-        {acceptedAnswer ? (
-          <CheckIcon
-            sx={{
-              fontSize: "40px",
-              padding: 0,
-              color: theme.palette.interactionCard.iconColor,
-            }}
-          ></CheckIcon>
-        ) : null}
         <InteractionBody
           userName={userName}
           userId={userId}
@@ -112,6 +102,7 @@ export const Answer = ({
           renderIcon={renderIcon}
           avatar={avatar}
           ownedAt={ownedAt}
+          showCorrectIcon={acceptedAnswer}
           reportFunction={answerReportFunction}
         >
           <InteractionFooter
