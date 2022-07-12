@@ -14,10 +14,10 @@ export const generateLink = ({
 
   const shortLinksApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${config.apiKey}`;
 
-  // todo
-  //const host = "https://" + window.location.host";
+  // TODO:
+  const host = "https://" + window.location.host;
 
-  const host = "https://urrevstest.netlify.app";
+  // const host = "https://urrevstest.netlify.app";
 
   const webLink = new URL(host + "/" + webPath);
   webLink.searchParams.append("id", postId);

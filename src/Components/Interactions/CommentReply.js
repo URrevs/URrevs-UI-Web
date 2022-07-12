@@ -18,6 +18,7 @@ export const CommentReply = ({
   userId,
   userName,
   acceptedAnswerReply = false,
+  reportFunction,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -42,7 +43,7 @@ export const CommentReply = ({
       <div
         style={{
           margin: "0 0px 0 15px",
-          marginRight: acceptedAnswerReply ? "96px" : "50px",
+          // marginRight: acceptedAnswerReply ? "96px" : "50px",
           padding: "4px 0px",
         }}
       >
@@ -56,6 +57,7 @@ export const CommentReply = ({
           buttonName={buttonName}
           renderIcon={renderIcon}
           avatar={avatar}
+          reportFunction={reportFunction}
         >
           <InteractionFooter
             date={date}

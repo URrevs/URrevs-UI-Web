@@ -8,7 +8,7 @@ import Tooltip from "@mui/material/Tooltip";
 const StyledCard = styled(Paper, {
   shouldForwardProp: (prop) => prop !== "disableElevation",
 })(({ theme, disableElevation }) => ({
-  margin: "10px 0px",
+  // margin: "10px 0px",
   padding: "0",
   backgroundColor: theme.palette.reviewCard.reviewCardColor,
   boxShadow: disableElevation ? 0 : 3,

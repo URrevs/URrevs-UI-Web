@@ -44,7 +44,6 @@ export const logout = () => {
   signOut(auth)
     .then(() => {})
     .catch((err) => {
-      console.log(err);
       error = err;
     });
 

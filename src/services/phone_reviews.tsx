@@ -4,27 +4,13 @@ import { APIReview } from "../models/interfaces/APIReview.model";
 import { RootState } from "../store/store";
 import { postingModalActions } from "../store/uiPostingModalSlice";
 import { snackbarActions } from "../store/uiSnackbarSlice";
+import { mainApi } from "./main";
 
-export const phoneReviewsApi = createApi({
-  reducerPath: "phoneReviewsApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_PATH}/reviews`,
-    // add token to all endpoints headers
-    prepareHeaders: (headers, { getState, endpoint }) => {
-      const state = getState();
-      const token = (state as RootState).auth.apiToken;
-
-      if (token && endpoint !== "authenticate") {
-        headers.set("authorization", `bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
-
+export const phoneReviewsApi = mainApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllReviews: builder.query<APIReview[], number>({
       keepUnusedDataFor: 0,
-      query: (round = 1) => `/phone/by/me?round=${1}`,
+      query: (round = 1) => `/reviews/phone/by/me?round=${1}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
       },
@@ -32,7 +18,7 @@ export const phoneReviewsApi = createApi({
 
     getCertainPhoneReview: builder.query<APIReview, string>({
       keepUnusedDataFor: 0,
-      query: (id: string) => `/phone/${id}`,
+      query: (id: string) => `/reviews/phone/${id}`,
       transformResponse: (response: { review: APIReview }) => {
         return response.review;
       },
@@ -41,7 +27,7 @@ export const phoneReviewsApi = createApi({
     getPhoneReviews: builder.query<APIReview[], { round: number; pid: string }>(
       {
         keepUnusedDataFor: 0,
-        query: ({ round, pid }) => `/phone/on/${pid}?round=${round}`,
+        query: ({ round, pid }) => `/reviews/phone/on/${pid}?round=${round}`,
         transformResponse: (response: { reviews: APIReview[] }) => {
           return response.reviews;
         },
@@ -51,11 +37,15 @@ export const phoneReviewsApi = createApi({
     addPhoneReview: builder.mutation({
       query: (review) => {
         return {
-          url: `/phone`,
+          url: `/reviews/phone`,
           method: "POST",
           body: review,
+          headers: {
+            "user-agent": navigator.userAgent,
+          },
         };
       },
+      invalidatesTags: ["phoneStats"],
 
       async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
         try {
@@ -71,16 +61,37 @@ export const phoneReviewsApi = createApi({
             })
           );
           dispatch(postingModalActions.hidePostingModal());
+
+          if (response.data.review.verificationRatio === 0) {
+            setTimeout(() => {
+              dispatch(
+                snackbarActions.showSnackbar({
+                  message:
+                    "حتى تتمكن من توثيق المراجعة عليك فتح الموقع باستخدام هذا الهاتف",
+                })
+              );
+            }, 3000);
+          }
         } catch (e: any) {
           console.error(e);
         }
       },
     }),
 
+    verifyPhoneReview: builder.mutation({
+      query: ({ reviewId }) => {
+        return {
+          url: `/reviews/phone/${reviewId}/verify`,
+          method: "PUT",
+        };
+      },
+      invalidatesTags: ["phoneStats"],
+    }),
+
     likePhoneReview: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/like`,
+          url: `/reviews/phone/${reviewId}/like`,
           method: "POST",
         };
       },
@@ -88,7 +99,20 @@ export const phoneReviewsApi = createApi({
         payload.doFn();
 
         try {
-          await queryFulfilled;
+          const response = await queryFulfilled;
+
+          // dispatch(
+          //   snackbarActions.showSnackbar({
+          //     message: "asdas",
+          //   })
+          // );
+
+          // dispatch(
+          //   snackbarActions.showSnackbar({
+          //     message:
+          //       "حتى تتمكن من توثيق المراجعة عليك فتح الموقع باستخدام هذا الهاتف",
+          //   })
+          // );
         } catch (e: any) {
           if (e.error.data.status !== "already liked") {
             payload.unDoFn();
@@ -100,13 +124,12 @@ export const phoneReviewsApi = createApi({
     unLikePhoneReview: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/unlike`,
+          url: `/reviews/phone/${reviewId}/unlike`,
           method: "POST",
         };
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
         payload.doFn();
-        console.log("a");
 
         try {
           await queryFulfilled;
@@ -124,7 +147,7 @@ export const phoneReviewsApi = createApi({
 
     getUserPhoneReviews: builder.query<APIReview[], number>({
       keepUnusedDataFor: 0,
-      query: (round = 1) => `/phone/by/me?round=${round}`,
+      query: (round = 1) => `/reviews/phone/by/me?round=${round}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
       },
@@ -135,7 +158,7 @@ export const phoneReviewsApi = createApi({
       { round: number; uid: string }
     >({
       keepUnusedDataFor: 0,
-      query: ({ round, uid }) => `/phone/by/${uid}?round=${round}`,
+      query: ({ round, uid }) => `/reviews/phone/by/${uid}?round=${round}`,
       transformResponse: (response: { reviews: APIReview[] }) => {
         return response.reviews;
       },
@@ -144,7 +167,7 @@ export const phoneReviewsApi = createApi({
     addCommentOnPhoneReview: builder.mutation({
       query: ({ reviewId, comment }) => {
         return {
-          url: `/phone/${reviewId}/comments`,
+          url: `/reviews/phone/${reviewId}/comments`,
           method: "POST",
           body: { content: comment },
         };
@@ -157,7 +180,7 @@ export const phoneReviewsApi = createApi({
     >({
       keepUnusedDataFor: 0,
       query: ({ reviewId, round = 1 }) =>
-        `/phone/${reviewId}/comments?round=${round}`,
+        `/reviews/phone/${reviewId}/comments?round=${round}`,
       transformResponse: (response: { comments: APIComment[] }) => {
         return response.comments;
       },
@@ -166,7 +189,7 @@ export const phoneReviewsApi = createApi({
     addReplyOnPhoneReview: builder.mutation({
       query: ({ commentId, reply }) => {
         return {
-          url: `/phone/comments/${commentId}/replies`,
+          url: `/reviews/phone/comments/${commentId}/replies`,
           method: "POST",
           body: { content: reply },
         };
@@ -176,7 +199,7 @@ export const phoneReviewsApi = createApi({
     likePhoneReviewReply: builder.mutation({
       query: ({ commentId, replyId }) => {
         return {
-          url: `/phone/comments/${commentId}/replies/${replyId}/like`,
+          url: `/reviews/phone/comments/${commentId}/replies/${replyId}/like`,
           method: "POST",
         };
       },
@@ -187,7 +210,7 @@ export const phoneReviewsApi = createApi({
           await queryFulfilled;
         } catch (e: any) {
           if (
-            e.error.data.status === "not found" ||
+            // e.error.data.status === "not found" ||
             e.error.data.status === "already liked"
           ) {
           } else {
@@ -200,7 +223,7 @@ export const phoneReviewsApi = createApi({
     unLikePhoneReviewReply: builder.mutation({
       query: ({ commentId, replyId }) => {
         return {
-          url: `/phone/comments/${commentId}/replies/${replyId}/unlike`,
+          url: `/reviews/phone/comments/${commentId}/replies/${replyId}/unlike`,
           method: "POST",
         };
       },
@@ -211,7 +234,7 @@ export const phoneReviewsApi = createApi({
           await queryFulfilled;
         } catch (e: any) {
           if (
-            e.error.data.status === "not found" ||
+            // e.error.data.status === "not found" ||
             e.error.data.status === "already liked"
           ) {
           } else {
@@ -225,7 +248,7 @@ export const phoneReviewsApi = createApi({
     likePhoneReviewComment: builder.mutation({
       query: ({ commentId }) => {
         return {
-          url: `/phone/comments/${commentId}/like`,
+          url: `/reviews/phone/comments/${commentId}/like`,
           method: "POST",
         };
       },
@@ -236,7 +259,7 @@ export const phoneReviewsApi = createApi({
           await queryFulfilled;
         } catch (e: any) {
           if (
-            e.error.data.status === "not found" ||
+            // e.error.data.status === "not found" ||
             e.error.data.status === "already liked"
           ) {
           } else {
@@ -249,7 +272,7 @@ export const phoneReviewsApi = createApi({
     unLikePhoneReviewComment: builder.mutation({
       query: ({ commentId }) => {
         return {
-          url: `/phone/comments/${commentId}/unlike`,
+          url: `/reviews/phone/comments/${commentId}/unlike`,
           method: "POST",
         };
       },
@@ -259,10 +282,10 @@ export const phoneReviewsApi = createApi({
         try {
           await queryFulfilled;
         } catch (e: any) {
-          if (e.error.data.status === "not found") {
-          } else {
-            payload.unDoFn(payload.commentId);
-          }
+          // if (e.error.data.status === "not found") {
+          // } else {
+          payload.unDoFn(payload.commentId);
+          // }
         }
       },
     }),
@@ -270,7 +293,7 @@ export const phoneReviewsApi = createApi({
     idontLikeThisPhoneReview: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/hate`,
+          url: `/reviews/phone/${reviewId}/hate`,
           method: "POST",
         };
       },
@@ -279,7 +302,7 @@ export const phoneReviewsApi = createApi({
     userPressFullScreen: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/fullscreen`,
+          url: `/reviews/phone/${reviewId}/fullscreen`,
           method: "POST",
         };
       },
@@ -288,7 +311,7 @@ export const phoneReviewsApi = createApi({
     userPressSeeMore: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/seemore`,
+          url: `/reviews/phone/${reviewId}/seemore`,
           method: "POST",
         };
       },
@@ -297,7 +320,7 @@ export const phoneReviewsApi = createApi({
     increaseViewCounter: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/view`,
+          url: `/reviews/phone/${reviewId}/view`,
           method: "PUT",
         };
       },
@@ -306,7 +329,7 @@ export const phoneReviewsApi = createApi({
     increaseShareCounter: builder.mutation({
       query: ({ reviewId }) => {
         return {
-          url: `/phone/${reviewId}/share`,
+          url: `/reviews/phone/${reviewId}/share`,
           method: "PUT",
         };
       },
@@ -319,10 +342,12 @@ export const {
   useGetCertainPhoneReviewQuery,
   useGetPhoneReviewsQuery,
   useAddPhoneReviewMutation,
+  useVerifyPhoneReviewMutation,
   useLikePhoneReviewMutation,
   useUnLikePhoneReviewMutation,
   useGetUserPhoneReviewsQuery,
   useGetOtherUserPhoneReviewsQuery,
+  useLazyGetOtherUserPhoneReviewsQuery,
   useAddCommentOnPhoneReviewMutation,
   useGetPhoneReviewCommentsQuery,
   useLazyGetPhoneReviewCommentsQuery,

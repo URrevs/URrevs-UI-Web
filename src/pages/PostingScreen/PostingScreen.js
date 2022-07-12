@@ -2,6 +2,7 @@ import { useTheme } from "@emotion/react";
 import { Formik } from "formik";
 import { useSearchParams } from "react-router-dom";
 import * as Yup from "yup";
+import { GAevent } from "../../functions/gaEvents";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useAddPhoneReviewMutation } from "../../services/phone_reviews";
 import { useAppSelector } from "../../store/hooks";
@@ -32,6 +33,7 @@ const PostingScreen = ({
     hatedAboutManufacturerErrorMsg:
       textContainer.hatedAboutManufacturerErrorMsg,
     purchaseDateErrorMsg: textContainer.purchaseDateErrorMsg,
+    enterAValidRefCode: textContainer.enterAValidRefCode,
   };
   /* Form Validation */
   const BasicValidationSchema = Yup.object().shape({
@@ -61,7 +63,10 @@ const PostingScreen = ({
     hateAbout: Yup.string()
       .trim()
       .required(pageDictionary.hatedAboutManufacturerErrorMsg),
-    // invitationCode: Yup.string().required("Required"),
+    invitationCode: Yup.string().matches(
+      /^ur[1-9][0-9]*$/gi,
+      pageDictionary.enterAValidRefCode
+    ),
   });
   return (
     <div style={{ marginBottom: theme.isMobile ? "85px" : 0 }}>
@@ -108,14 +113,18 @@ const PostingScreen = ({
                 compPros: values.likeAbout,
                 compCons: values.hateAbout,
               };
-              // console.log(JSON.stringify(reviewPost, null, 2));
               try {
                 await addReview(reviewPost).unwrap();
                 //Success Message
+                // TODO uncomment
                 sessionStorage.clear();
-              } catch (e) {
-                console.log("asd askjd bhasb", e);
-              }
+                GAevent(
+                  "User interaction",
+                  "Adding review",
+                  "Adding review",
+                  false
+                );
+              } catch (e) {}
               setSubmitting(false);
             }
           }}

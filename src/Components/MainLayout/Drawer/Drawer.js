@@ -18,6 +18,7 @@ import ROUTES_NAMES from "../../../RoutesNames";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { menuActions } from "../../../store/uiMenuSlice";
 import { postingModalActions } from "../../../store/uiPostingModalSlice";
+import { ConditionalLink } from "../../ConditionalLink";
 import { MenuSideBar } from "./Sidebar/MenuSideBar";
 
 export const drawerWidth = 240;
@@ -124,10 +125,10 @@ export const MyDrawer = (props) => {
         />
       ),
       title: textContainer.homeNavBarItem,
+      to: `../${ROUTES_NAMES.HOME}`,
       itemValue: 0,
       onClick: () => {
         setValue(0);
-        navigate(ROUTES_NAMES.HOME);
       },
     },
 
@@ -164,9 +165,10 @@ export const MyDrawer = (props) => {
       ),
       title: textContainer.categoryNavBarItem,
       itemValue: 1,
+      to: ROUTES_NAMES.ALL_PRODUCTS,
+
       onClick: () => {
         setValue(1);
-        navigate(ROUTES_NAMES.ALL_PRODUCTS);
       },
       path: ROUTES_NAMES.ALL_PRODUCTS,
     },
@@ -183,9 +185,9 @@ export const MyDrawer = (props) => {
       ),
       title: textContainer.leaderboardNavBarItem,
       itemValue: 2,
+      to: ROUTES_NAMES.LEADERBOARD,
       onClick: () => {
         setValue(2);
-        navigate(ROUTES_NAMES.LEADERBOARD);
       },
     },
     //Menu
@@ -246,45 +248,25 @@ export const MyDrawer = (props) => {
         <div style={{ ...theme.mixins.toolbar }}></div>
         <List>
           {drawerTiles.map((item, i) => (
-            <ListItem
-              style={{
-                padding: 0,
-                justifyContent: "center",
-                minHeight: "85px",
-              }}
-              onClick={item.onClick}
-              button
-              key={item.title}
-            >
-              <div style={{ textAlign: "center", padding: "8px 0" }}>
-                <ListItemIcon sx={{ justifyContent: "center" }}>
-                  {item.icon}
-                </ListItemIcon>
+            <ConditionalLink condition={item.to ? item.to : false} to={item.to}>
+              <ListItem
+                style={{
+                  padding: 0,
+                  justifyContent: "center",
+                  minHeight: "85px",
+                }}
+                onClick={item.onClick}
+                button
+                key={item.title}
+              >
+                <div style={{ textAlign: "center", padding: "8px 0" }}>
+                  <ListItemIcon sx={{ justifyContent: "center" }}>
+                    {item.icon}
+                  </ListItemIcon>
 
-                {currentPage === item.itemValue && !menuShow && !showPosting ? (
-                  <Typography
-                    // variant="S14W700C2196f3"
-                    sx={{
-                      textAlign: "center",
-                      ...theme.typography.S14W700C2196f3,
-                    }}
-                  >
-                    {item.title}
-                  </Typography>
-                ) : item.itemValue === 3 && menuShow ? (
-                  <Typography
-                    // variant="S14W700C2196f3"
-                    sx={{
-                      textAlign: "center",
-                      ...theme.typography.S14W700C2196f3,
-                    }}
-                  >
-                    {item.title}
-                  </Typography>
-                ) : (
-                  item.itemValue === 4 &&
-                  showPosting &&
-                  !menuShow && (
+                  {currentPage === item.itemValue &&
+                  !menuShow &&
+                  !showPosting ? (
                     <Typography
                       // variant="S14W700C2196f3"
                       sx={{
@@ -294,10 +276,34 @@ export const MyDrawer = (props) => {
                     >
                       {item.title}
                     </Typography>
-                  )
-                )}
-              </div>
-            </ListItem>
+                  ) : item.itemValue === 3 && menuShow ? (
+                    <Typography
+                      // variant="S14W700C2196f3"
+                      sx={{
+                        textAlign: "center",
+                        ...theme.typography.S14W700C2196f3,
+                      }}
+                    >
+                      {item.title}
+                    </Typography>
+                  ) : (
+                    item.itemValue === 4 &&
+                    showPosting &&
+                    !menuShow && (
+                      <Typography
+                        // variant="S14W700C2196f3"
+                        sx={{
+                          textAlign: "center",
+                          ...theme.typography.S14W700C2196f3,
+                        }}
+                      >
+                        {item.title}
+                      </Typography>
+                    )
+                  )}
+                </div>
+              </ListItem>
+            </ConditionalLink>
           ))}
         </List>
       </PerDrawer>

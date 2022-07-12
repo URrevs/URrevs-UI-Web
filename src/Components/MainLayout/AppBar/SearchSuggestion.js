@@ -107,7 +107,6 @@ export const SearchSuggestion = () => {
 
             if (toBeAdded > -1) {
               const newRecents = [...recentResults];
-              console.log(toBeAdded);
               newRecents.splice(toBeAdded, 1);
 
               setRecentResults([
@@ -176,7 +175,6 @@ export const SearchSuggestion = () => {
 
             if (toBeAdded > -1) {
               const newRecents = [...recentResults];
-              console.log(toBeAdded);
               newRecents.splice(toBeAdded, 1);
 
               setRecentResults([
@@ -318,9 +316,7 @@ export const SearchSuggestion = () => {
                   const results = await search(e.target.value.trim()).unwrap();
                   setResults(results);
                 }
-              } catch (e) {
-                console.log(e);
-              }
+              } catch (e) {}
             }}
           />
           {searchSuggestion ? (

@@ -1,10 +1,12 @@
 import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
+import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import { PostingField } from "../Components/PostingComponents/PostingField";
 import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
 import { useShowSnackbar } from "../hooks/useShowSnackbar";
 import { AnswersList } from "../pages/AnswersList";
@@ -21,11 +23,19 @@ import {
   useUnLikeCompanyQuestionReplyMutation,
   useUnmarkAnswerAsAcceptedMutation,
 } from "../services/company_questions";
+import {
+  useReportACompanyQuestionAnswerMutation,
+  useReportACompanyQuestionAnswerReplyMutation,
+} from "../services/reports";
 import { answersListActions } from "../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { questionsActions } from "../store/questionsSlice";
+import { sendReportActions } from "../store/uiSendReportSlice";
 
 export default function CompanyQuestionFullScreen() {
+  const theme = useTheme();
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   const dispatch = useAppDispatch();
 
   const showSnackbar = useShowSnackbar();
@@ -36,7 +46,6 @@ export default function CompanyQuestionFullScreen() {
 
   useEffect(() => {
     return () => {
-      console.log("clear answers");
       dispatch(answersListActions.clearComments());
       dispatch(questionsActions.clearReviews());
     };
@@ -77,6 +86,37 @@ export default function CompanyQuestionFullScreen() {
   //reject answer
   const [rejectAnswer] = useUnmarkAnswerAsAcceptedMutation();
 
+  // report a comment
+  const [reportACompanyAnswer] = useReportACompanyQuestionAnswerMutation();
+  // report a reply
+  const [reportAnswerReply] = useReportACompanyQuestionAnswerReplyMutation();
+  // Comment Report Function
+  const answerReportFunction = (answerId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportACompanyAnswer({
+            quesId: reviewId,
+            answerId: answerId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
+  // Comment Reply Report Function
+  const replyReportFunction = (answerId, replyId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportAnswerReply({
+            quesId: reviewId,
+            answerId: answerId,
+            replyId: replyId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
   // get review from server
   const {
     data: currentReview,
@@ -86,7 +126,6 @@ export default function CompanyQuestionFullScreen() {
 
   useEffect(() => {
     if (currentReview && currentReview.acceptedAns) {
-      console.log("add answer");
       dispatch(
         answersListActions.addAcceptedAnswer({
           acceptedAnswer: currentReviewData.acceptedAns,
@@ -226,6 +265,7 @@ export default function CompanyQuestionFullScreen() {
         createdAt: new Date(),
         likes: 0,
         liked: false,
+        replies: [],
       };
 
       addOneCommentToLoadedComments(comment);
@@ -256,9 +296,7 @@ export default function CompanyQuestionFullScreen() {
       };
 
       addOneReplyToLoadedComments(reply);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const deleteReviewFromStore = (id) => {
@@ -334,28 +372,49 @@ export default function CompanyQuestionFullScreen() {
               <div>Error</div>
             ) : (
               currentReviewData && (
-                <AnswersList
-                  reviewCard={reviewCard}
-                  commentsList={commentsList}
-                  commentLike={likeCommentRequest}
-                  commentUnlike={unLikeCommentRequest}
-                  replyLike={likeReplyRequest}
-                  replyUnlike={unLikeReplyRequest}
-                  addToReviewsList={addToLoadedComments}
-                  submitReplyHandler={submitReplyHandler}
-                  acceptAnswer={acceptAnswerRequest}
-                  rejectAnswer={rejectAnswerRequest}
-                  questionOwnerId={currentReviewData.userId}
-                  questionId={currentReviewData._id}
-                  endOfData={endOfData}
-                  loadMore={loadMore}
-                  submitCommentHandler={submitCommentHandler}
-                />
+                <React.Fragment>
+                  <AnswersList
+                    reviewCard={reviewCard}
+                    commentsList={commentsList}
+                    commentLike={likeCommentRequest}
+                    commentUnlike={unLikeCommentRequest}
+                    replyLike={likeReplyRequest}
+                    replyUnlike={unLikeReplyRequest}
+                    addToReviewsList={addToLoadedComments}
+                    submitReplyHandler={submitReplyHandler}
+                    acceptAnswer={acceptAnswerRequest}
+                    rejectAnswer={rejectAnswerRequest}
+                    questionOwnerId={currentReviewData.userId}
+                    questionId={currentReviewData._id}
+                    endOfData={endOfData}
+                    loadMore={loadMore}
+                    submitCommentHandler={submitCommentHandler}
+                    answerReportFunction={answerReportFunction}
+                    replyReportFunction={replyReportFunction}
+                  />
+                </React.Fragment>
               )
             )}
           </Box>
         </AlonePostsGrid>
       </FixedGrid>
+      {isMobile && (
+        <div
+          style={{
+            width: "100%",
+            position: "fixed",
+            padding: "6px",
+            bottom: -1,
+            left: 0,
+            background: theme.palette.interactionCard.backgroundMobileColor,
+          }}
+        >
+          <PostingField
+            placeholder={textContainer.writeAComment}
+            onSubmit={(comment) => submitCommentHandler(comment)}
+          />
+        </div>
+      )}
     </CustomAppBar>
   );
 }

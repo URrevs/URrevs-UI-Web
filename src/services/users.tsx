@@ -44,12 +44,14 @@ export const usersApi = createApi({
         return new User(response.user);
       },
     }),
+
     getOtherUserProfile: builder.query<User, { uid: string }>({
       query: (uid) => `/${uid}/profile`,
       transformResponse: (response: { user: APIUser }) => {
         return new User(response.user);
       },
     }),
+
     logoutFromAllDevices: builder.mutation({
       query: () => {
         return {
@@ -58,6 +60,7 @@ export const usersApi = createApi({
         };
       },
     }),
+
     getMyOwnedPhones: builder.mutation<APIOwnedPhone, number>({
       query: (round) => {
         return {
@@ -66,6 +69,7 @@ export const usersApi = createApi({
         };
       },
     }),
+
     getOthersOwnedPhones: builder.query<
       APIOwnedPhone[],
       { round: number; uid: string }

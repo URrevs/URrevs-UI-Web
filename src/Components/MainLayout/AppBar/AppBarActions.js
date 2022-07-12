@@ -88,12 +88,7 @@ export const AppBarActions = ({
             to={`/${ROUTES_NAMES.USER_PROFILE}?userId=${user.uid}`}
             condition={isLoggedIn}
           >
-            <CircleBtn
-              onClick={
-                // !isLoggedIn && handleRegestrationOpen
-                () => {}
-              }
-            >
+            <CircleBtn onClick={!isLoggedIn && handleRegestrationOpen}>
               {!isLoggedIn ? (
                 <AccountCircle />
               ) : (

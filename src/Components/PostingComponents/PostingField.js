@@ -10,6 +10,7 @@ import React from "react";
 import { SEARCH_INPUT_BORDER_RADIUS } from "../../constants";
 import { useAppSelector } from "../../store/hooks";
 import SendIcon from "@mui/icons-material/Send";
+import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 
 export const PostingField = ({
   placeholder = "",
@@ -20,11 +21,23 @@ export const PostingField = ({
   reply = false,
 }) => {
   const userProfile = useAppSelector((state) => state.auth);
+
+  const checkIsLoggedIn = useCheckSignedIn();
+
+  const submitComment = () => {
+    if (checkIsLoggedIn()) {
+      if (value.trim() !== "") {
+        onSubmit(value);
+        setValue("");
+      }
+    }
+  };
+
   const [value, setValue] = React.useState("");
   const theme = useTheme();
   const textFieldParams = {
     multiline: true,
-    // maxRows: 3,
+    maxRows: 26,
     variant: "standard",
     InputProps: {
       endAdornment: theme.isMobile && (
@@ -34,12 +47,7 @@ export const PostingField = ({
               // position: "absolute",
               bottom: 0,
             }}
-            onClick={() => {
-              if (value.trim() !== "") {
-                onSubmit(value);
-                setValue("");
-              }
-            }}
+            onClick={() => submitComment()}
           >
             <SendIcon
               fontSize={"30px"}
@@ -123,10 +131,7 @@ export const PostingField = ({
           value={value}
           onKeyDown={(e) => {
             if (e.code === "Enter" && !e.shiftKey) {
-              if (value.trim() !== "") {
-                onSubmit(value);
-                setValue("");
-              }
+              submitComment();
               e.preventDefault();
             }
           }}

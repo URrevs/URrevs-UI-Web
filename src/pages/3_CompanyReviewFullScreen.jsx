@@ -1,10 +1,11 @@
 import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import { PostingField } from "../Components/PostingComponents/PostingField";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
 import { useShowSnackbar } from "../hooks/useShowSnackbar";
 import ROUTES_NAMES from "../RoutesNames";
@@ -18,12 +19,20 @@ import {
   useUnLikeCompanyReviewCommentMutation,
   useUnLikeCompanyReviewReplyMutation,
 } from "../services/company_reviews";
+import {
+  useReportACompanyReviewCommentMutation,
+  useReportACompanyReviewCommentReplyMutation,
+} from "../services/reports";
 import { commentsListActions } from "../store/commentsListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
+import { sendReportActions } from "../store/uiSendReportSlice";
 import CommentsList from "./CommentsList";
 
 export default function CompanyReviewFullScreen() {
+  const theme = useTheme();
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   const dispatch = useAppDispatch();
   const showSnackbar = useShowSnackbar();
 
@@ -33,8 +42,8 @@ export default function CompanyReviewFullScreen() {
 
   useEffect(() => {
     return () => {
-      console.log("clear comments");
       dispatch(commentsListActions.clearComments());
+      dispatch(reviewsActions.clearReviews());
     };
   }, []);
 
@@ -69,7 +78,37 @@ export default function CompanyReviewFullScreen() {
   const [likeReply] = useLikeCompanyReviewReplyMutation();
   // unlike reply
   const [unLikeReply] = useUnLikeCompanyReviewReplyMutation();
-
+  // report a comment
+  const [reportACompanyComment] = useReportACompanyReviewCommentMutation();
+  // report a reply
+  const [reportACommentReply] = useReportACompanyReviewCommentReplyMutation();
+  // Comment Report Function
+  const commentReportFunction = (commentId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportACompanyComment({
+            revId: reviewId,
+            commentId: commentId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
+  // Comment Reply Report Function
+  const replyReportFunction = (commentId, replyId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportACommentReply({
+            revId: reviewId,
+            commentId: commentId,
+            replyId: replyId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
   // get review from server
   const {
     data: currentReview,
@@ -183,6 +222,7 @@ export default function CompanyReviewFullScreen() {
         createdAt: new Date(),
         likes: 0,
         liked: false,
+        replies: [],
       };
 
       addOneCommentToLoadedComments(comment);
@@ -213,9 +253,7 @@ export default function CompanyReviewFullScreen() {
       };
 
       addOneReplyToLoadedComments(reply);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const deleteReviewFromStore = (id) => {
@@ -287,23 +325,45 @@ export default function CompanyReviewFullScreen() {
               <div>Error</div>
             ) : (
               currentReviewData && (
-                <CommentsList
-                  commentsList={commentsList}
-                  reviewCard={reviewCard}
-                  submitReplyHandler={submitReplyHandler}
-                  submitCommentHandler={submitCommentHandler}
-                  endOfData={endOfData}
-                  loadMore={loadMore}
-                  likeCommentRequest={likeCommentRequest}
-                  unLikeCommentRequest={unLikeCommentRequest}
-                  likeReplyRequest={likeReplyRequest}
-                  unLikeReplyRequest={unLikeReplyRequest}
-                />
+                <React.Fragment>
+                  <div style={{ height: "25px" }}></div>
+                  <CommentsList
+                    commentsList={commentsList}
+                    reviewCard={reviewCard}
+                    submitReplyHandler={submitReplyHandler}
+                    submitCommentHandler={submitCommentHandler}
+                    endOfData={endOfData}
+                    loadMore={loadMore}
+                    likeCommentRequest={likeCommentRequest}
+                    unLikeCommentRequest={unLikeCommentRequest}
+                    likeReplyRequest={likeReplyRequest}
+                    unLikeReplyRequest={unLikeReplyRequest}
+                    commentReportFunction={commentReportFunction}
+                    replyReportFunction={replyReportFunction}
+                  />
+                </React.Fragment>
               )
             )}
           </Box>
         </AlonePostsGrid>
       </FixedGrid>
+      {isMobile && (
+        <div
+          style={{
+            width: "100%",
+            position: "fixed",
+            padding: "6px",
+            bottom: -1,
+            left: 0,
+            background: theme.palette.interactionCard.backgroundMobileColor,
+          }}
+        >
+          <PostingField
+            placeholder={textContainer.writeAComment}
+            onSubmit={(comment) => submitCommentHandler(comment)}
+          />
+        </div>
+      )}
     </CustomAppBar>
   );
 }

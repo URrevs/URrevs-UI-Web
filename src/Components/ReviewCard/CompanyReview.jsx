@@ -17,11 +17,11 @@ import {
 import ReviewCard from "./ReviewCard";
 import { sendReportActions } from "../../store/uiSendReportSlice";
 import { useReportCompanyReviewMutation } from "../../services/reports";
+import { useCheckSignedInWithoutModal } from "../../hooks/useCheckIsSignedInWithoutModal";
 
 const CompanyReview = ({
   reviewDetails,
   index,
-  clearIndexCache,
   targetProfilePath,
   userProfilePath,
   stateLikeFn,
@@ -34,6 +34,8 @@ const CompanyReview = ({
   disableElevation = false,
   showBottomLine,
 }) => {
+  const checkSignedInWithoutModal = useCheckSignedInWithoutModal();
+
   const [dontLikeThisRequest] = useIdontLikeThisCompanyReviewMutation();
   const [fullScreenRequest] = useUserPressFullScreenMutation();
   const [seeMoreRequest] = useUserPressSeeMoreMutation();
@@ -76,9 +78,7 @@ const CompanyReview = ({
     try {
       deleteReviewFromStore(reviewDetails._id);
       await dontLikeThisRequest({ reviewId: reviewDetails._id });
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const [likePhoneReview] = useLikeCompanyReviewMutation();
@@ -101,10 +101,14 @@ const CompanyReview = ({
   };
 
   const fullScreenHandler = () => {
-    fullScreenRequest({ reviewId: reviewDetails._id });
+    if (checkSignedInWithoutModal()) {
+      fullScreenRequest({ reviewId: reviewDetails._id });
+    }
   };
   const seeMoreHandler = () => {
-    seeMoreRequest({ reviewId: reviewDetails._id });
+    if (checkSignedInWithoutModal()) {
+      seeMoreRequest({ reviewId: reviewDetails._id });
+    }
     increaseViewCounterRequest({ reviewId: reviewDetails._id });
   };
 
@@ -124,7 +128,6 @@ const CompanyReview = ({
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}
-      clearIndexCache={clearIndexCache}
       reviewDetails={reviewDetails}
       isPhoneReview={false}
       targetProfilePath={targetProfilePath}
@@ -136,6 +139,7 @@ const CompanyReview = ({
       fullScreenFn={fullScreenHandler}
       seeMoreFn={seeMoreHandler}
       shareBtnFn={shareBtnHandler}
+      verificationRatio={reviewDetails.verificationRatio}
     />
   );
 };

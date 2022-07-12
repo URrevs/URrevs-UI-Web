@@ -1,4 +1,5 @@
 import { generateLink } from "../../functions/dynamicLinkGenerator";
+import { useCheckSignedInWithoutModal } from "../../hooks/useCheckIsSignedInWithoutModal";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
@@ -18,7 +19,6 @@ import QuestionCard from "./QuestionCard";
 export default function CompanyQuestion({
   reviewDetails,
   index,
-  clearIndexCache,
   targetProfilePath,
   userProfilePath,
   stateLikeFn,
@@ -32,6 +32,8 @@ export default function CompanyQuestion({
   disableElevation,
   showBottomLine,
 }) {
+  const checkSignedInWithoutModal = useCheckSignedInWithoutModal();
+
   const [dontLikeThisRequest] = useIdontLikeThisCompanyQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenCompanyQuestionMutation();
 
@@ -51,9 +53,7 @@ export default function CompanyQuestion({
     try {
       deleteReviewFromStore(reviewDetails._id);
       await dontLikeThisRequest({ reviewId: reviewDetails._id });
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const [likeCompanyReview] = useLikeCompanyQuestionMutation();
@@ -97,7 +97,9 @@ export default function CompanyQuestion({
   };
 
   const fullScreenHandler = () => {
-    fullScreenRequest(reviewDetails._id);
+    if (checkSignedInWithoutModal()) {
+      fullScreenRequest(reviewDetails._id);
+    }
   };
 
   const shareBtnHandler = () => {
@@ -115,7 +117,6 @@ export default function CompanyQuestion({
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}
-      clearIndexCache={clearIndexCache}
       reviewDetails={reviewDetails}
       isPhoneReview={false}
       targetProfilePath={targetProfilePath}

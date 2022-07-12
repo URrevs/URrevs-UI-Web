@@ -5,12 +5,14 @@ interface InitialState {
   newReviews: APIReview[];
   page: number;
   currentIndex: number;
+  reset: boolean;
 }
 
 const initialState: InitialState = {
   newReviews: [],
   page: 1,
   currentIndex: 0,
+  reset: false,
 };
 
 const reviewsSlice = createSlice({
@@ -22,8 +24,8 @@ const reviewsSlice = createSlice({
       state.newReviews.push(...loadedReviews);
     },
     clearReviews(state) {
-      console.log("clear");
       state.newReviews = [];
+      state.reset = !state.reset;
     },
     // setIsExpanded(
     //   state,
@@ -39,7 +41,6 @@ const reviewsSlice = createSlice({
       state.page = state.page + 1;
     },
     setIndex(state, action) {
-      console.log(action.payload.currentIndex);
       state.currentIndex = action.payload.currentIndex;
     },
     setIsLiked(
@@ -73,6 +74,23 @@ const reviewsSlice = createSlice({
 
       if (targetReview !== -1) {
         state.newReviews[targetReview].shares++;
+      }
+    },
+
+    setReviewAsVerified(
+      state,
+      action: PayloadAction<{
+        id: string;
+        verificationRatio: number;
+      }>
+    ) {
+      const targetReview = state.newReviews.findIndex((element) => {
+        return element._id.toString() === action.payload.id.toString();
+      });
+
+      if (targetReview !== -1) {
+        state.newReviews[targetReview].verificationRatio =
+          action.payload.verificationRatio;
       }
     },
   },

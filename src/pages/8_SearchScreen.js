@@ -70,7 +70,6 @@ export const SearchScreen = () => {
   const theme = useTheme();
   //TextField styling
 
-  // console.log(results);
   const renderSearchItems = (title, type, id) => (
     <React.Fragment key={id}>
       <ListItem sx={{ padding: 0, margin: 0, lineHeight: 0 }}>
@@ -128,12 +127,12 @@ export const SearchScreen = () => {
           onClick={() => {
             //Navigate to that phone
             type === "phone"
-            ? navigate(
-                `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${id}`
-              )
-            : navigate(
-                `/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${id}`
-              );
+              ? navigate(
+                  `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${id}`
+                )
+              : navigate(
+                  `/${ROUTES_NAMES.COMPANY_PROFILE}/${ROUTES_NAMES.REVIEWS}?cid=${id}`
+                );
           }}
         >
           <ListItemIcon>
@@ -236,9 +235,7 @@ export const SearchScreen = () => {
                 const results = await search(e.target.value.trim()).unwrap();
                 setResults(results);
               }
-            } catch (e) {
-              console.log(e);
-            }
+            } catch (e) {}
           }}
           // value={searchQuery}
         />

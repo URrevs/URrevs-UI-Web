@@ -7,7 +7,6 @@ export const useCheckSignedIn = () => {
 
   function checkSignedIn() {
     if (!currentUser.isLoggedIn) {
-      console.log("show reg");
       dispatch(regDialogActions.toggleRegistration());
       return false;
     }

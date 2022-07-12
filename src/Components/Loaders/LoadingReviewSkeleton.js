@@ -7,14 +7,7 @@ import React, { useEffect } from "react";
 
 export const loadingSkeletonHeight = 320;
 
-const LoadingReviewSkeleton = ({ clear }) => {
-  useEffect(() => {
-    return () => {
-      console.log("cleared");
-      clear();
-    };
-  }, []);
-
+const LoadingReviewSkeleton = () => {
   const theme = useTheme();
   return (
     <div

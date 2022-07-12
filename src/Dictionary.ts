@@ -226,6 +226,10 @@ export default interface Dictionary {
   youHaventReviewedThatPhone: string;
   youCantAnswerAQuestionMessage: string;
   reviewNow: string;
+  enterAValidRefCode: string;
+  youCannotReportYourContent: string;
+  yourRequestWillBeReviewedAndProcessedAsSoonAsPossible: string;
+  deleteRequestIsCancelledSuccessfully: string;
 }
 
 interface FullDictionary {

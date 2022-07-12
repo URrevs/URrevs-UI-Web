@@ -15,17 +15,8 @@ const commentsList = createSlice({
   reducers: {
     addToLoaddedComments(state, action: PayloadAction<InitialState>) {
       // make list of comments and replies
-      let newList: APIComment[] = [];
       const loadedComments = action.payload.newComments;
-      loadedComments.forEach((comment) => {
-        newList.push({ ...comment, isReply: false });
-        if (comment.replies) {
-          comment.replies.forEach((reply) => {
-            newList.push({ ...reply, commentId: comment._id, isReply: true });
-          });
-        }
-      });
-      state.newComments.push(...newList);
+      state.newComments.push(...loadedComments);
     },
 
     addNewCommentLocally(
@@ -45,7 +36,10 @@ const commentsList = createSlice({
       });
 
       const comment = action.payload.newComment;
-      state.newComments.splice(index + 1, 0, comment);
+      state.newComments[index].replies = [
+        comment,
+        ...state.newComments[index].replies,
+      ];
     },
 
     clearComments(state) {
@@ -59,7 +53,6 @@ const commentsList = createSlice({
         isLiked: boolean;
       }>
     ) {
-      // console.log(action.payload.id);
 
       const targetReview = state.newComments.findIndex((element) => {
         return element._id.toString() === action.payload.id.toString();

@@ -1,22 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { RootState } from "../store/store";
+import { mainApi } from "./main";
 
-export const phoneApi = createApi({
-  reducerPath: "phoneApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_API_PATH}`,
-    // add token to all endpoints headers
-    prepareHeaders: (headers, { getState, endpoint }) => {
-      const state = getState();
-      const token = (state as RootState).auth.apiToken;
-
-      if (token) {
-        headers.set("authorization", `bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
-
+export const phoneApi = mainApi.injectEndpoints({
   endpoints: (builder) => ({
     getPhoneSpecs: builder.query({
       keepUnusedDataFor: 0,
@@ -95,6 +79,7 @@ export const phoneApi = createApi({
           method: "GET",
         };
       },
+      providesTags: ["phoneStats"],
       transformResponse: (response: any) => {
         return response.stats;
       },
@@ -123,6 +108,15 @@ export const phoneApi = createApi({
         return response.company;
       },
     }),
+
+    verifyOwnedPhone: builder.mutation({
+      query: ({ id }) => {
+        return {
+          url: `/phones/${id}/verify`,
+          method: "PUT",
+        };
+      },
+    }),
   }),
 });
 
@@ -135,5 +129,6 @@ export const {
   useGetStatisticalInfoQuery,
   useIndicateUserComparingMutation,
   useGetAllCompaniesQuery,
+  useVerifyOwnedPhoneMutation,
   // useGetExactCompanyPhonesQuery,
 } = phoneApi;

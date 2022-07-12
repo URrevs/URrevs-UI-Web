@@ -2,21 +2,14 @@ import { useTheme } from "@emotion/react";
 import { Box, ButtonBase, Divider, Typography } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import * as React from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND,
   MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND,
-  USER_CIRCLE_AVATAR_LARGE,
+  USER_CIRCLE_AVATAR_LARGE
 } from "../../constants";
 import { cropText } from "../../functions/cropText";
-import ROUTES_NAMES from "../../RoutesNames";
-import {
-  useLikePhoneReviewMutation,
-  useUnLikePhoneReviewMutation,
-} from "../../services/phone_reviews";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import reviewsSlice from "../../store/reviewsSlice";
 import Card from "../Card";
 import { StarLine } from "../StarLine";
 import CardActionButtons from "./CardActions/CardActionButtons";
@@ -27,7 +20,6 @@ import CardHeader from "./CardHeader/CardHeader";
 
 export default function ReviewCard({
   ukey,
-  clearIndexCache,
   index,
   reviewDetails,
   isPhoneReview,
@@ -44,6 +36,8 @@ export default function ReviewCard({
   shareBtnFn,
   disableElevation = false,
   showBottomLine,
+  verificationRatio,
+  verifyPhone
 }) {
   const isReview = true;
   const navigate = useNavigate();
@@ -103,7 +97,6 @@ export default function ReviewCard({
           MAX_REVIEW_LETTERS_LIST_AFTER_EXPAND
         )
       );
-      clearIndexCache(index);
     } else {
       setCroppedText({ pros: pros, cons: cons, endOfText: true });
     }
@@ -115,7 +108,6 @@ export default function ReviewCard({
   };
 
   const handleSeeMoreExpansion = () => {
-    clearIndexCache(index);
     if (croppedText.endOfText) {
       // shrink
       setExpanded(false);
@@ -147,7 +139,6 @@ export default function ReviewCard({
   };
 
   const handleExpandClick = () => {
-    clearIndexCache(index);
     if (expanded) {
       // shrink
       setExpanded(false);
@@ -200,6 +191,8 @@ export default function ReviewCard({
         userProfilePath={userProfilePath}
         actionBtnFunction={actionBtnFunction}
         reportFunction={reportFunction}
+        verificationRatio={verificationRatio}
+        verifyPhone={verifyPhone}
       />
       <CardContent style={{ padding: 0 }}>
         <ButtonBase
@@ -233,7 +226,6 @@ export default function ReviewCard({
               <FullStars
                 starsRatingTextContainer={starsRatingTextContainer}
                 expanded={expanded}
-                clearIndexCache={clearIndexCache}
                 index={index}
                 ratings={ratings}
               />

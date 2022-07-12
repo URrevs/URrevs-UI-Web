@@ -30,6 +30,10 @@ export default function BottomNavBar() {
     map[location.pathname.substring(1, location.pathname.length)]
   );
 
+  React.useEffect(() => {
+    setValue(map[location.pathname.substring(1, location.pathname.length)]);
+  }, [location.pathname]);
+
   const theme = useTheme();
   const backgroundColor = theme.palette.bottomNavigationBar.backgroundColor;
   const focusedColor = theme.palette.bottomNavigationBar.selectedTap;

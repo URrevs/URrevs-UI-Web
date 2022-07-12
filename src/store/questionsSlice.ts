@@ -19,7 +19,6 @@ const questionsSlice = createSlice({
   reducers: {
     addToLoaddedReviews(state, action: PayloadAction<InitialState>) {
       const loadedReviews = action.payload.newReviews;
-      console.log(loadedReviews);
 
       state.newReviews.push(...loadedReviews);
     },
@@ -40,7 +39,6 @@ const questionsSlice = createSlice({
       state.page = state.page + 1;
     },
     setIndex(state, action) {
-      console.log(action.payload.currentIndex);
       state.currentIndex = action.payload.currentIndex;
     },
 
@@ -75,8 +73,6 @@ const questionsSlice = createSlice({
           element.acceptedAns._id.toString() === action.payload.id.toString()
         );
       });
-
-      console.log(targetReview);
 
       if (targetReview !== -1) {
         state.newReviews[targetReview].acceptedAns.upvoted =

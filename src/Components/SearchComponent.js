@@ -135,9 +135,7 @@ export default function SearchComponent({
                     setResults(phones);
                   } else setErrorMsg(pageDictionary.noInputError);
                 }, SEARCH_INPUT_DELAY);
-              } catch (e) {
-                console.log(e);
-              }
+              } catch (e) {}
             }}
             onChange={async (e) => {
               setSearchQuery(e.target.value);
@@ -152,9 +150,7 @@ export default function SearchComponent({
                     setResults(phones);
                   }
                 }, SEARCH_INPUT_DELAY);
-              } catch (e) {
-                console.log(e);
-              }
+              } catch (e) {}
             }}
             error={error}
             helperText={error && errorMsg}

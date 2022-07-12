@@ -12,7 +12,7 @@ import ROUTES_NAMES from "../RoutesNames";
 import {
   useGetLatestCompetetionQuery,
   useGetMyCurrentRankQuery,
-  useGetTopCompetetionUsersQuery
+  useGetTopCompetetionUsersQuery,
 } from "../services/competetion";
 import { useAppSelector } from "../store/hooks";
 
@@ -37,8 +37,6 @@ export const Leaderboard = () => {
     error: topUsersError,
     isLoading: topUsersIsLoading,
   } = useGetTopCompetetionUsersQuery();
-
-  // console.log(latestCompetitionData);
 
   const theme = useTheme();
 
@@ -101,7 +99,6 @@ export const Leaderboard = () => {
       </Modal>
     </React.Fragment>
   );
-  console.log(myRankData);
 
   const renderEntry = () =>
     topUsersError ? (
