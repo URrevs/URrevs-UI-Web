@@ -14,6 +14,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import useFitText from "use-fit-text";
 import ROUTES_NAMES from "../../../RoutesNames";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { menuActions } from "../../../store/uiMenuSlice";
@@ -218,6 +219,11 @@ export const MyDrawer = (props) => {
       if (menuShow) dispatch(menuActions.hideMenu());
     }, 200);
   };
+
+  const { fontSize, ref } = useFitText({
+    maxFontSize: 100,
+  });
+
   return (
     <React.Fragment>
       <ClickAwayListener
@@ -267,15 +273,18 @@ export const MyDrawer = (props) => {
                   {currentPage === item.itemValue &&
                   !menuShow &&
                   !showPosting ? (
-                    <Typography
+                    <div
+                      ref={ref}
                       // variant="S14W700C2196f3"
-                      sx={{
-                        textAlign: "center",
+                      style={{
                         ...theme.typography.S14W700C2196f3,
+                        fontSize: fontSize,
+                        width: "70px",
+                        textAlign: "center",
                       }}
                     >
                       {item.title}
-                    </Typography>
+                    </div>
                   ) : item.itemValue === 3 && menuShow ? (
                     <Typography
                       // variant="S14W700C2196f3"
