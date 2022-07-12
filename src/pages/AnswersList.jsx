@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { Virtuoso } from "react-virtuoso";
 import { Answer } from "../Components/Interactions/Answer";
 import { CommentReply } from "../Components/Interactions/CommentReply";
+import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { PostingField } from "../Components/PostingComponents/PostingField";
 
 export function AnswersList({
@@ -107,7 +108,7 @@ const Footer = ({ context }) => {
           justifyContent: "center",
         }}
       >
-        Loading...
+        <LoadingSpinner />
       </div>
     )
   );

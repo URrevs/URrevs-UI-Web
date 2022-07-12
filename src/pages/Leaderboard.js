@@ -6,6 +6,7 @@ import { HowToWinDialog } from "../Components/Dialogs/HowToWinDialog";
 import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
 import { PrizeDialog } from "../Components/Dialogs/PrizeDialog";
 import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
+import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { CARD_BORDER_RADIUS } from "../constants";
 import ROUTES_NAMES from "../RoutesNames";
@@ -104,7 +105,7 @@ export const Leaderboard = () => {
     topUsersError ? (
       <div>Error</div>
     ) : topUsersIsLoading ? (
-      <div>Loading...</div>
+      <LoadingSpinner />
     ) : (
       topUsersData.map((item, i) => (
         <Fragment>
@@ -168,7 +169,7 @@ export const Leaderboard = () => {
       }
     } else {
       if (latestCompetetionIsLoading) {
-        return <div>Loading...</div>;
+        return <LoadingSpinner />;
       } else if (!isCurrentlyHeld) {
         return (
           <div>
@@ -198,7 +199,7 @@ export const Leaderboard = () => {
           {myRankError ? (
             <div>Error</div>
           ) : myRankIsLoading ? (
-            <div>Loading...</div>
+            <LoadingSpinner />
           ) : !myRankData ? (
             <Typography>login first</Typography>
           ) : (

@@ -1,21 +1,21 @@
 - Add Review confirmation <b>MODAL</b> before navigating out of add review.
 - Fab in add review, add question screens and in Owned products tab.+ fix padding for postingmodal mobile// extremely slow in infinite scrolling screens opt out of it
 - Long Press comment/reply to report on mobile
-- Phone verification
-- Add mobile posting field in all comments full screen
+- [x] Phone verification
+- [x] Add mobile posting field in all comments full screen
 
 = Postponed:
 
-- Accepting answer then unaccepting it in full question screen has weird effect.
-- Collapsed replies
-- See previous comments
+- [x] Accepting answer then unaccepting it in full question screen has weird effect.
+- [x] Collapsed replies
+- [x] See previous comments
 - Reporting Admin Side
 
 = Security:
 
 - Don’t store any credentials in code.
-- Content Security Policy (CSP).
-- use SSL when making requests to APIs.
+- [x] Content Security Policy (CSP).
+- [x] use SSL when making requests to APIs.
 - Never trust user data (XSS, JavaScript injection)
 - Verify the source of data CSRF
 - Don't leak information to users (no console logging, don't return the message from server/sql errors to users)

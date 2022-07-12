@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { Virtuoso } from "react-virtuoso";
 import { Comment } from "../Components/Interactions/Comment";
 import { CommentReply } from "../Components/Interactions/CommentReply";
+import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { PostingField } from "../Components/PostingComponents/PostingField";
 
 export default function CommentsList({
@@ -99,7 +100,7 @@ const Footer = ({ context }) => {
           justifyContent: "center",
         }}
       >
-        Loading...
+        <LoadingSpinner />
       </div>
     )
   );

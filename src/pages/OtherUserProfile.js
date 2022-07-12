@@ -124,7 +124,8 @@ export default function OtherUserProfilePage({ uid }) {
             </div>
           </div>
         ) : (
-          <div>Loading...</div>
+          <></>
+          // <div>Loading...</div>
         )}
       </FixedGrid>
     </CustomAppBar>

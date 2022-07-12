@@ -107,6 +107,7 @@ export const ProfileTabbar = ({ children, arrayOfTabs }) => {
       </div>
     </React.Fragment>
   ) : (
-    <div>Loading...</div>
+    <></>
+    // <div>Loading...</div>
   );
 };

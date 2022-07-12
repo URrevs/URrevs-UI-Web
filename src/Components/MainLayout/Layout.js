@@ -10,13 +10,12 @@ import { MyDrawer } from "./Drawer/Drawer";
 
 import { Link } from "react-router-dom";
 import Registeration from "../../pages/1_Authentication";
-import { useAppSelector } from "../../store/hooks";
+import { Footer } from "../Banners/Footer";
+import { ConfirmationDialog } from "../Dialogs/ConfirmationDialog";
 import { SendReports } from "../Dialogs/SendReports";
 import { PostingModal } from "../PostingComponents/PostingModal";
 import CustomizedSnackbar from "../Snackbar";
-import { CustomAppBar } from "./AppBar/CustomAppBar";
 import BottomNavBar from "./BottomNavBar/BottomNavBar";
-import { ConfirmationDialog } from "../Dialogs/ConfirmationDialog";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -106,7 +105,7 @@ export default function Layout(props) {
   // };
 
   return (
-    <Box sx={{}}>
+    <Box>
       {!theme.isMobile && appBar()}
       {theme.isMobile ? <></> : <MyDrawer open={open} setOpen={setOpen} />}
       <Registeration />
@@ -135,6 +134,8 @@ export default function Layout(props) {
         )}
         {/* </div> */}
       </Box>
+
+      {/* <Footer fullScreen={true} /> */}
     </Box>
   );
 }

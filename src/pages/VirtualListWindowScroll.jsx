@@ -41,16 +41,16 @@ export default function VirtualReviewList({
 
 const ListFooter = ({ context }) => {
   const end = context.endOfData;
-  return !end ? (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <LoadingReviewSkeleton />
-    </div>
-  ) : (
-    <Footer fullScreen={false} />
+  return (
+    !end && (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <LoadingReviewSkeleton />
+      </div>
+    )
   );
 };
