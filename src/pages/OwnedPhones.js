@@ -72,7 +72,7 @@ function OwnedPhonesPage() {
         verificationRatioText = textContainer.thisReviewIsFromAnApplePhone;
       } else {
         verificationRatioText =
-          textContainer.thisReviewIsVerifiedBy + " " + ratio + "%";
+          textContainer.thisReviewIsVerifiedBy + " " + ratio.toFixed(0) + "%";
       }
     }
     return verificationRatioText;

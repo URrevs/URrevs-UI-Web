@@ -9,6 +9,8 @@ import OrangeGradientButton from "../Buttons/OrangeGradientButton";
 
 export const CompetitionBanner = ({ daysLeft, prize, setModal }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const language = useAppSelector((state) => state.language.language);
+
   const pageDictionary = {
     helpOthersAndGetPoints: textContainer.helpOthersAndGetPoints,
     remainigDays: textContainer.remainigDays,
@@ -17,6 +19,7 @@ export const CompetitionBanner = ({ daysLeft, prize, setModal }) => {
     inviteFriends: textContainer.inviteFriends,
     howToCollectPoints: textContainer.howToCollectPoints,
   };
+
   const isActive = Boolean(daysLeft && prize);
   // const isActive = Boolean(false);
   const btnGradientColor = isActive ? "red" : "blue";
@@ -52,7 +55,7 @@ export const CompetitionBanner = ({ daysLeft, prize, setModal }) => {
           {/* dayes left */}
           {isActive && (
             <Typography variant="S22W500Cffffff">
-              {subtractDate(daysLeft, "ar") + pageDictionary.remainigDays}
+              {subtractDate(daysLeft, language) + pageDictionary.remainigDays}
             </Typography>
           )}
           {/* prize */}

@@ -53,6 +53,8 @@ export const Comment = ({
 
   const toggleReplyField = () => setShowReplyField((show) => !show);
 
+  const repliesPadding = "54px";
+
   return (
     <div style={{ maxWidth: "calc(100% - 20px)", padding: "4px 0px" }}>
       <InteractionBody
@@ -76,17 +78,20 @@ export const Comment = ({
           showReplyField={toggleReplyField}
         ></InteractionFooter>
       </InteractionBody>
+      {/* Posting field */}
+      <div style={{ marginBottom: "10px", paddingRight: repliesPadding }}>
+        {showReplyField && (
+          <PostingField
+            avatar={true}
+            placeholder="اكتب رد"
+            reply
+            onSubmit={(text) => submitReplyHandler(text, commentId)}
+          />
+        )}
+      </div>
 
-      {showReplyField && (
-        <PostingField
-          avatar={true}
-          placeholder="اكتب رد"
-          reply
-          onSubmit={(text) => submitReplyHandler(text, commentId)}
-        />
-      )}
       {/* replies list */}
-      <div style={{ marginRight: "54px" }}>
+      <div style={{ marginRight: repliesPadding }}>
         {replies.length !== 0 && !showReplies ? (
           <TextButton
             title={`${replies.length} ${textContainer.reply}`}

@@ -32,7 +32,10 @@ const CardSubheader = ({
     verificationRatioText = textContainer.thisReviewIsFromAnApplePhone;
   } else {
     verificationRatioText =
-      textContainer.thisReviewIsVerifiedBy + " " + verificationRatio + "%";
+      textContainer.thisReviewIsVerifiedBy +
+      " " +
+      verificationRatio.toFixed(0) +
+      "%";
   }
 
   return (

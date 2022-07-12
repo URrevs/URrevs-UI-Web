@@ -3,13 +3,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { DialogTemplate } from "./DialogTemplate";
 
-export const HowToWinDialog = ({ handleClose }) => {
+export const HowToWinDialog = ({ handleClose, isCurrentlyHeld }) => {
   const textContainer = useSelector((state) => state.language.textContainer);
   return (
     <React.Fragment>
       <DialogTemplate
         handleClose={handleClose}
-        title={textContainer.howToWinPromptTitle}
+        title={isCurrentlyHeld ? textContainer.howToWinPromptTitle : ""}
         sx={
           {
             // paddingBottom:"16"

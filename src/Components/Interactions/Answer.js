@@ -115,14 +115,16 @@ export const Answer = ({
             showReplyField={toggleReplyField}
           ></InteractionFooter>
         </InteractionBody>
-        {showReplyField && (
-          <PostingField
-            avatar={true}
-            placeholder="اكتب رد"
-            reply
-            onSubmit={(text) => submitReplyHandler(text, commentId)}
-          />
-        )}
+        <div style={{ marginBottom: "10px", paddingRight: repliesPadding }}>
+          {showReplyField && (
+            <PostingField
+              avatar={true}
+              placeholder="اكتب رد"
+              reply
+              onSubmit={(text) => submitReplyHandler(text, commentId)}
+            />
+          )}
+        </div>
       </div>
       {/* replies list */}
       <div style={{ marginRight: repliesPadding }}>

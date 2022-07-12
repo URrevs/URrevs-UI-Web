@@ -73,7 +73,10 @@ export const Leaderboard = () => {
         dir={theme.direction}
       >
         <Box>
-          <HowToWinDialog handleClose={handleCloseDialog} />
+          <HowToWinDialog
+            handleClose={handleCloseDialog}
+            isCurrentlyHeld={isCurrentlyHeld}
+          />
         </Box>
       </Modal>
       <Modal

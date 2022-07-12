@@ -98,7 +98,6 @@ export const PostingField = ({
       style={{
         marginTop: "10px",
         marginLeft: 0,
-        marginRight: reply ? "50px" : "0",
       }}
     >
       <Box
