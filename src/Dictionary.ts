@@ -230,6 +230,8 @@ export default interface Dictionary {
   youCannotReportYourContent: string;
   yourRequestWillBeReviewedAndProcessedAsSoonAsPossible: string;
   deleteRequestIsCancelledSuccessfully: string;
+  youAreBlockedCannotTakeThatAction: string;
+  contentIsUnavailable: string;
 }
 
 interface FullDictionary {

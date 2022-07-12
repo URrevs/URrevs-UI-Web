@@ -61,6 +61,16 @@ const correspondingErrorMessage = (
     case "too many unverified":
       error.message = "شوف فتوح كتب too many unverified ولا لا";
       break;
+    case "not found" ||
+      "review not found" ||
+      "comment not found" ||
+      "track review not found" ||
+      "question not found" ||
+      "answer not found" ||
+      "question or answer not found":
+      error.message = textContainer.contentIsUnavailable;
+      break;
+
     //TO DO : WRITE TRANSLATIONS AND FIND MORE ERRORS
     // case "track internal server error":
     //   error.message = textContainer.trackInternalServerError;
@@ -77,10 +87,10 @@ const correspondingErrorMessage = (
       error.message = "textContainer.noLikes";
       error.isError = false;
       break;
-    case "not found":
-      error.message = "textContainer.notFound";
-      error.isError = false;
-      break;
+    // case "not found":
+    //   error.message = "textContainer.notFound";
+    //   error.isError = false;
+    //   break;
     // case "not owned":
     //   error.message = textContainer.notOwned;
     //   break;
@@ -100,9 +110,9 @@ const correspondingErrorMessage = (
     case "already reported":
       error.message = textContainer.youHaveAlreadyReportedThisElement;
       break;
-    // case "blocked":
-    //   error.message = textContainer.blocked;
-    //   break;
+    case "blocked":
+      error.message = textContainer.youAreBlockedCannotTakeThatAction;
+      break;
     case "already accepted":
       error.message = "textContainer.alreadyAccepted";
       error.isError = false;
