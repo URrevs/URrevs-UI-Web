@@ -340,6 +340,7 @@
   "ownedPhone": "Owned phone",
   "myProducts": "My products",
   "deleteAccount": "Delete account",
+  "filters":"Filters",
   "cancelDeleteAccountRequest": "Cancel delete account request",
   "areYouSure": "Are you sure?",
   "thisWillCauseYourAccountToBeErasedAndYouWillNotBeAbleToRecoverItAgain": "This will cause your account to be erased and you will not be able to recover it again",

@@ -345,6 +345,7 @@
   "deleteAccount": "طلب حذف الحساب",
   "cancelDeleteAccountRequest": "الغاء طلب حذف الحساب",
   "areYouSure": "هل انت متأكد؟",
+  "filters":"الفلاتر",
   "thisWillCauseYourAccountToBeErasedAndYouWillNotBeAbleToRecoverItAgain": "سوف يتسبب ذلك في مسح حسابك ولن تستطيع استرداده مرة اخرى",
   "verify": "توثيق",
   "youMustVerifyFromSameMobileDevice": "يجب ان تقوم بفتح الموقع من خلال الجهاز الذي تريد توثيق مراجعته",
