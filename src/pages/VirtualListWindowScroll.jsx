@@ -1,5 +1,6 @@
-import { Fragment } from "react";
+import { Fragment, useRef } from "react";
 import { Virtuoso } from "react-virtuoso";
+import { Footer } from "../Components/Banners/Footer";
 import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
 
 export default function VirtualReviewList({
@@ -8,11 +9,17 @@ export default function VirtualReviewList({
   endOfData,
   loadMore,
 }) {
+  const listRef = useRef(null);
+
   return (
-    <Fragment>
+    <div>
       <Virtuoso
+        id="cl"
+        ref={listRef}
         useWindowScroll
-        context={{ endOfData }}
+        context={{
+          endOfData,
+        }}
         data={reviewsList}
         endReached={loadMore}
         increaseViewportBy={{ top: 4000, bottom: 4000 }}
@@ -26,24 +33,24 @@ export default function VirtualReviewList({
             </Fragment>
           );
         }}
-        components={{ Footer }}
+        components={{ Footer: ListFooter }}
       />
-    </Fragment>
+    </div>
   );
 }
 
-const Footer = ({ context }) => {
+const ListFooter = ({ context }) => {
   const end = context.endOfData;
-  return (
-    !end && (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <LoadingReviewSkeleton />
-      </div>
-    )
+  return !end ? (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <LoadingReviewSkeleton />
+    </div>
+  ) : (
+    <Footer fullScreen={false} />
   );
 };
