@@ -1,12 +1,14 @@
 import { useTheme } from "@emotion/react";
 import { faUpLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CheckIcon from "@mui/icons-material/Check";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../store/hooks";
+import { TextButton } from "../Buttons/TextButton";
 import { PostingField } from "../PostingComponents/PostingField";
+import { CommentReply } from "./CommentReply";
 import { InteractionBody } from "./InteractionBody";
 import { InteractionFooter } from "./InteractionFooter";
+import { Virtuoso } from "react-virtuoso";
 
 export const Answer = ({
   commentId,
@@ -27,6 +29,11 @@ export const Answer = ({
   ownedAt,
   userId,
   userName,
+  answerReportFunction,
+  replies = [],
+  likeReplyRequest,
+  unLikeReplyRequest,
+  replyReportFunction,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const currentUserId = useAppSelector((state) => state.auth).uid;
@@ -73,18 +80,16 @@ export const Answer = ({
   const [showReplyField, setShowReplyField] = useState(false);
 
   const toggleReplyField = () => setShowReplyField((show) => !show);
+  const [showReplies, setShowReplies] = useState(false);
 
+  const repliesPadding = !acceptedAnswer ? "54px" : `${54 + 40}px`;
   return (
-    <div style={{ display: "flex", padding: "4px 0px" }}>
-      {acceptedAnswer ? (
-        <CheckIcon
-          sx={{
-            fontSize: "40px",
-            padding: 0,
-            color: theme.palette.interactionCard.iconColor,
-          }}
-        ></CheckIcon>
-      ) : null}
+    <div
+      style={{
+        maxWidth: "calc(100% - 20px)",
+        padding: "4px 0px",
+      }}
+    >
       <div>
         <InteractionBody
           userName={userName}
@@ -97,6 +102,8 @@ export const Answer = ({
           renderIcon={renderIcon}
           avatar={avatar}
           ownedAt={ownedAt}
+          showCorrectIcon={acceptedAnswer}
+          reportFunction={answerReportFunction}
         >
           <InteractionFooter
             date={date}
@@ -114,6 +121,42 @@ export const Answer = ({
             placeholder="اكتب رد"
             reply
             onSubmit={(text) => submitReplyHandler(text, commentId)}
+          />
+        )}
+      </div>
+      {/* replies list */}
+      <div style={{ marginRight: repliesPadding }}>
+        {replies.length !== 0 && !showReplies ? (
+          <TextButton
+            title={`${replies.length} ${textContainer.reply}`}
+            onClick={() => setShowReplies((show) => !show)}
+          />
+        ) : (
+          <Virtuoso
+            useWindowScroll
+            data={replies}
+            increaseViewportBy={{ top: 500, bottom: 500 }}
+            overscan={10}
+            itemContent={(index, reply) => {
+              return (
+                <CommentReply
+                  replyId={reply._id}
+                  date={reply.createdAt}
+                  likes={reply.likes}
+                  text={reply.content}
+                  liked={reply.liked}
+                  replyLike={likeReplyRequest}
+                  replyUnlike={unLikeReplyRequest}
+                  commentId={reply.commentId}
+                  avatar={reply.userPicture}
+                  userName={reply.userName}
+                  userId={reply.userId}
+                  reportFunction={() => {
+                    replyReportFunction(reply.commentId, reply._id);
+                  }}
+                />
+              );
+            }}
           />
         )}
       </div>

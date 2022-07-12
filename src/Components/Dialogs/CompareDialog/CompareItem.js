@@ -17,7 +17,6 @@ export const CompareItem = ({ item }) => {
     label: "",
     type: "",
   });
-  // console.log(item);
   const textContainer = useSelector((state) => {
     return state.language.textContainer;
   });
@@ -71,12 +70,9 @@ export const CompareItem = ({ item }) => {
                   compareId: compareItem.id,
                 })
               );
-              // console.log(compareItem);
               try {
                 indicateComparison({ pid1: item._id, pid2: compareItem.id });
-              } catch (e) {
-                console.log(e);
-              }
+              } catch (e) {}
 
               navigate(
                 `../../../${ROUTES_NAMES.COMPARISON}?cid=${compareItem.id}&pid=${item._id}`

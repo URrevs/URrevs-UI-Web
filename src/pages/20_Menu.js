@@ -35,6 +35,7 @@ import ROUTES_NAMES from "../RoutesNames";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { menuActions } from "../store/uiMenuSlice";
 import { KeyboardArrowRightOutlined } from "@mui/icons-material";
+import { ConditionalLink } from "../Components/ConditionalLink";
 
 export default function Menu({ isDesktop = false, drawerRef }) {
   const theme = useTheme();
@@ -276,7 +277,22 @@ export default function Menu({ isDesktop = false, drawerRef }) {
     },
     endIcon
   ) => {
-    return (
+    return title === pageDictionry.contactUs ? (
+      <a
+        href="mailto: urrevsofficial@gmail.com"
+        style={{ textDecoration: "inherit", color: "inherit" }}
+        // underline="always"
+      >
+        <ListItemNavigator
+          title={title}
+          subTitle={subTitle}
+          icon={icon}
+          to={to}
+          onClick={onClick}
+          endIcon={endIcon}
+        />
+      </a>
+    ) : (
       <ListItemNavigator
         title={title}
         subTitle={subTitle}

@@ -1,18 +1,39 @@
+import { useTheme } from "@emotion/react";
+import CheckCircleSharpIcon from "@mui/icons-material/CheckCircleSharp";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { Tooltip } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { useConvertNumberToHumanLanguage } from "../../../hooks/useMillify";
-import { useAppSelector } from "../../../store/hooks";
 import { convertDateToString } from "../../../functions/convertDateToString";
 import { subtractDate } from "../../../functions/subtractDate";
+import { useConvertNumberToHumanLanguage } from "../../../hooks/useMillify";
+import { useAppSelector } from "../../../store/hooks";
 
-const CardSubheader = ({ reviewDate, buyDate, showViewsCounter, views }) => {
+const CardSubheader = ({
+  reviewDate,
+  buyDate,
+  showViewsCounter,
+  views,
+  verificationRatio = 0,
+}) => {
   const convert = useConvertNumberToHumanLanguage;
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const language = useAppSelector((state) => state.language.language);
+  const theme = useTheme();
 
   reviewDate = convertDateToString(reviewDate, language);
   if (buyDate) buyDate = subtractDate(buyDate, language);
+
+  let verificationRatioText = "";
+
+  if (verificationRatio === 0) {
+    verificationRatioText = "";
+  } else if (verificationRatio === -1) {
+    verificationRatioText = textContainer.thisReviewIsFromAnApplePhone;
+  } else {
+    verificationRatioText =
+      textContainer.thisReviewIsVerifiedBy + " " + verificationRatio + "%";
+  }
 
   return (
     <React.Fragment>
@@ -27,7 +48,6 @@ const CardSubheader = ({ reviewDate, buyDate, showViewsCounter, views }) => {
             </Typography>
           </Typography>
         )}
-
         {showViewsCounter && (
           <Typography variant="S14W400C65676b">
             <Typography variant="S14W700C050505"> •</Typography>
@@ -40,6 +60,22 @@ const CardSubheader = ({ reviewDate, buyDate, showViewsCounter, views }) => {
               }}
             />
             {convert(views)}
+          </Typography>
+        )}
+        {verificationRatioText !== "" && (
+          <Typography variant="S14W400C65676b">
+            <Typography variant="S14W700C050505"> •</Typography>
+            <Tooltip title={verificationRatioText}>
+              <CheckCircleSharpIcon
+                style={{
+                  fontSize: "16",
+                  verticalAlign: "middle",
+                  margin: "0 2px",
+                  marginTop: "-2px",
+                  color: theme.palette.reviewCard.actionBtnIconHighlight,
+                }}
+              />
+            </Tooltip>
           </Typography>
         )}
       </div>

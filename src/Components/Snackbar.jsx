@@ -9,6 +9,7 @@ import { Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import ROUTES_NAMES from "../RoutesNames";
 import { useLocation, useNavigate } from "react-router-dom";
+import { SnackbarProvider, useSnackbar } from "notistack";
 
 export default function CustomizedSnackbar() {
   const theme = useTheme();
@@ -55,8 +56,13 @@ export default function CustomizedSnackbar() {
           onClick={
             //if path is given then onClick navigate to that path
             () => {
-              if (!navPath) actionFn();
-              else navigate(navPath, { replace: true });
+              if (!navPath) {
+                actionFn();
+                dispatch(snackbarActions.hideSnackbar());
+              } else {
+                navigate(navPath, { replace: true });
+                dispatch(snackbarActions.hideSnackbar());
+              }
             }
           }
           sx={{

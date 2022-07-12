@@ -12,6 +12,7 @@ import {
   useGetLastUpdateInfoQuery,
   useUpdateMutation,
 } from "../services/update";
+import { FormSubmitButton } from "./PostingScreen/FormSubmitButton";
 
 export const UpdateProducts = () => {
   const [refetch, setRefetch] = useState(false);
@@ -38,6 +39,7 @@ export const UpdateProducts = () => {
     noUpdateOperationsYet: textContainer.noUpdateOperationsYet,
     updateFailed: textContainer.updateHasNotBeenCompleted,
     updateProducts: textContainer.updateProducts,
+    updating: textContainer.updating,
   };
 
   const handleUpdateProducts = async () => {
@@ -51,7 +53,6 @@ export const UpdateProducts = () => {
     } catch (e) {
       setButtonLoading(false);
       setUpdateError(e.data.status);
-      console.log(e);
     }
   };
 
@@ -102,7 +103,32 @@ export const UpdateProducts = () => {
             </Box>
           )}
           {!error && (data.isUpdating || buttonLoading) ? (
-            <div>Update is currently working...</div>
+            <Box
+              style={{
+                bottom: 0,
+                marginTop: 22,
+              }}
+            >
+              <FormSubmitButton loading>
+                {buttonLoading ? (
+                  <LoadingSpinner size={20} />
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <UpdateOutlinedIcon
+                      sx={{ fontSize: "28", marginRight: "5px" }}
+                    />
+                    <Typography variant="S18W700Cffffff">
+                      {pageDictionary.updating}
+                    </Typography>
+                  </div>
+                )}
+              </FormSubmitButton>
+            </Box>
           ) : (
             <Box
               style={{

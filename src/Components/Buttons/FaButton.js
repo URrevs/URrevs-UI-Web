@@ -28,6 +28,9 @@ export const FaButton = ({ children, icon, onClick }) => {
         background: "#2196F3",
         position: "fixed",
         bottom: "15px",
+        borderRadius: "",
+        // textTransform: "none",
+
         zIndex: 5,
         "&:hover": {
           background: "#2196F3",

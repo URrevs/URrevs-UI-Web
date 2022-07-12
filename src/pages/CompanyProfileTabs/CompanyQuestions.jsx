@@ -1,5 +1,7 @@
+import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useOutletContext, useSearchParams } from "react-router-dom";
+import { FaButton } from "../../Components/Buttons/FaButton";
 import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { Answer } from "../../Components/Interactions/Answer";
 import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
@@ -14,6 +16,8 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { questionsActions } from "../../store/questionsSlice";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
+import AddIcon from "@mui/icons-material/Add";
+import { useTheme } from "@emotion/react";
 
 export function CompanyQuestions() {
   const dispatch = useAppDispatch();
@@ -22,14 +26,14 @@ export function CompanyQuestions() {
 
   useEffect(() => {
     return () => {
-      console.log("clear questions");
+      setPage(1);
       dispatch(questionsActions.clearReviews());
     };
   }, []);
 
   const reviewsList = useAppSelector((state) => state.questions.newReviews);
   const [page, setPage] = useState(1);
-
+  const theme = useTheme();
   const [searchParams] = useSearchParams();
   const cid = searchParams.get("cid");
 
@@ -95,27 +99,28 @@ export function CompanyQuestions() {
   };
 
   // add accepted answer if found
-  const acceptedAnswerWidget = (index) => {
-    if (reviewsList[index].acceptedAns) {
+  const acceptedAnswerWidget = (review) => {
+    if (review.acceptedAns) {
       return (
         <Answer
-          commentId={reviewsList[index].acceptedAns._id}
-          date={reviewsList[index].acceptedAns.createdAt}
-          user={reviewsList[index].acceptedAns.userName}
-          likes={reviewsList[index].acceptedAns.upvotes}
-          text={reviewsList[index].acceptedAns.content}
+          commentId={review.acceptedAns._id}
+          date={review.acceptedAns.createdAt}
+          userId={review.acceptedAns._id}
+          userName={review.acceptedAns.userName}
+          likes={review.acceptedAns.upvotes}
+          text={review.acceptedAns.content}
           commentLike={likeCommentRequest}
           commentUnlike={unLikeCommentRequest}
-          avatar={reviewsList[index].acceptedAns.picture}
-          ownerId={reviewsList[index].acceptedAns.userId}
-          ownedAt={reviewsList[index].acceptedAns.ownedAt}
-          questionOwnerId={reviewsList[index].userId}
-          questionId={reviewsList[index]._id}
+          avatar={review.acceptedAns.picture}
+          ownerId={review.acceptedAns.userId}
+          ownedAt={review.acceptedAns.ownedAt}
+          questionOwnerId={review.userId}
+          questionId={review._id}
           acceptAnswer={() => {}}
           rejectAnswer={() => {}}
           acceptedAnswer={true}
           showReply={false}
-          upvoted={reviewsList[index].acceptedAns.upvoted}
+          upvoted={review.acceptedAns.upvoted}
         />
       );
     }
@@ -124,34 +129,81 @@ export function CompanyQuestions() {
   const stateIncreaseShareCounter = (id) =>
     dispatch(questionsActions.increaseShareCounter({ id: id }));
 
-  const reviewCard = (index, clearCache) => {
+  const reviewCard = (review) => {
     return (
       <CompanyQuestion
-        key={reviewsList[index]._id}
+        key={review._id}
         index={0}
         fullScreen={false}
         isExpanded={false}
-        clearIndexCache={clearCache}
-        reviewDetails={reviewsList[index]}
+        reviewDetails={review}
         isPhoneReview={false}
-        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.QUESTIONS}?pid=${reviewsList[index].targetId}`}
-        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
+        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.QUESTIONS}?pid=${review.targetId}`}
+        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${review.userId}`}
         stateLikeFn={stateLike}
         stateUnLikeFn={stateUnLike}
         stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
         acceptedAnswerWidget={
-          reviewsList[index].acceptedAns &&
-          acceptedAnswerWidget.bind(null, index)
+          review.acceptedAns && acceptedAnswerWidget.bind(null, review)
         }
       />
     );
   };
 
+  useEffect(() => {
+    if (data) {
+      addToReviewsList(data);
+
+      if (data.length === 0) {
+        setEndOfData(true);
+      }
+    }
+  }, [data]);
+
+  const [endOfData, setEndOfData] = useState(false);
+
+  // function loads additional comments
+  const loadMore = () => {
+    if (!endOfData && !isFetching) {
+      increasePage();
+    }
+  };
+
   return (
     <AlonePostsGrid>
       <div style={{ height: "20px" }}></div>
+      <FaButton
+        icon={
+          <AddIcon
+            sx={{
+              color: theme.palette.defaultRedBtnIconColor,
+              fontSize: "28px",
+            }}
+          />
+        }
+        onClick={() => {
+          dispatch(
+            postingModalActions.showPostingModal({
+              tab: 0,
+            })
+          );
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="S14W700Cffffff">
+            {textContainer.addReview}
+          </Typography>
+        </Box>
+      </FaButton>
       <PostingComponent
         label={textContainer.youCanAddQuestion}
         placeholder={textContainer.writeYourQuestionP}
@@ -172,15 +224,10 @@ export function CompanyQuestions() {
       <div style={{ height: "36px" }}></div>
 
       <VirtualReviewList
+        endOfData={endOfData}
+        loadMore={loadMore}
         reviewCard={reviewCard}
         reviewsList={reviewsList}
-        page={page}
-        data={data}
-        isFetching={isFetching}
-        error={error}
-        isLoading={isLoading}
-        addToReviewsList={addToReviewsList}
-        increasePage={increasePage}
       />
     </AlonePostsGrid>
   );

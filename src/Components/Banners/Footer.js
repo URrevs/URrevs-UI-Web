@@ -6,7 +6,7 @@ import FacebookIcon from "../Icons/FacebookIcon";
 import GoogleBadge from "../Icons/GooglePlayStoreBadge";
 import LinkedIn from "../Icons/LinkedIn";
 
-export const Footer = () => {
+export const Footer = ({ fullScreen = true }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageContainer = {
     followUs: textContainer.followUs,
@@ -17,6 +17,7 @@ export const Footer = () => {
     <Paper
       sx={{
         zIndex: theme.footer,
+        borderRadius: "15px 15px 0px 0px",
       }}
     >
       <Grid container>

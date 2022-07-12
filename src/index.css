@@ -3,33 +3,55 @@
   src: local("Tajawal"),
     url("./fonts/Tajawal/Tajawal-Bold.ttf") format("truetype");
   font-weight: 700;
+  font-display: swap;
 }
 @font-face {
   font-family: "Tajawal";
   src: local("Tajawal"),
     url("./fonts/Tajawal/Tajawal-ExtraBold.ttf") format("truetype");
   font-weight: 800;
+  font-display: swap;
 }
 @font-face {
   font-family: "Tajawal";
   src: local("Tajawal"),
     url("./fonts/Tajawal/Tajawal-Medium.ttf") format("truetype");
   font-weight: 500;
+  font-display: swap;
 }
 @font-face {
   font-family: "Tajawal";
   src: local("Tajawal"),
     url("./fonts/Tajawal/Tajawal-Regular.ttf") format("truetype");
   font-weight: 400;
+  font-display: swap;
 }
 @font-face {
   font-family: "Tajawal";
   src: local("Tajawal"),
     url("./fonts/Tajawal/Tajawal-Light.ttf") format("truetype");
   font-weight: 300;
+  font-display: swap;
 }
 
+/* ::-webkit-scrollbar {
+  width: 20px;
+}
 
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+} */
 
 body {
   margin: 0;

@@ -1,8 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store/store";
-import {
-  sendReportActions
-} from "../store/uiSendReportSlice";
+import { sendReportActions } from "../store/uiSendReportSlice";
 import { snackbarActions } from "../store/uiSnackbarSlice";
 
 export const reportsApi = createApi({
@@ -118,6 +116,198 @@ export const reportsApi = createApi({
         }
       },
     }),
+    reportAPhoneReviewComment: builder.mutation({
+      query: ({ revId, commentId, reportContent }) => {
+        return {
+          url: `/review/phone/${revId}/comments/${commentId}`,
+          method: "POST",
+          body: { reason: reportContent.reason, info: reportContent.info },
+        };
+      },
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: textContainer.successfullyReported,
+            })
+          );
+          dispatch(sendReportActions.hideSendReport());
+        } catch (e: any) {
+          console.error(e);
+        }
+      },
+    }),
+    reportACompanyReviewComment: builder.mutation({
+      query: ({ revId, commentId, reportContent }) => {
+        return {
+          url: `/review/company/${revId}/comments/${commentId}`,
+          method: "POST",
+          body: { reason: reportContent.reason, info: reportContent.info },
+        };
+      },
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: textContainer.successfullyReported,
+            })
+          );
+          dispatch(sendReportActions.hideSendReport());
+        } catch (e: any) {
+          console.error(e);
+        }
+      },
+    }),
+    reportAPhoneQuestionAnswer: builder.mutation({
+      query: ({ quesId, answerId, reportContent }) => {
+        return {
+          url: `/question/phone/${quesId}/answers/${answerId}`,
+          method: "POST",
+          body: { reason: reportContent.reason, info: reportContent.info },
+        };
+      },
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: textContainer.successfullyReported,
+            })
+          );
+          dispatch(sendReportActions.hideSendReport());
+        } catch (e: any) {
+          console.error(e);
+        }
+      },
+    }),
+    reportACompanyQuestionAnswer: builder.mutation({
+      query: ({ quesId, answerId, reportContent }) => {
+        return {
+          url: `/question/company/${quesId}/answers/${answerId}`,
+          method: "POST",
+          body: { reason: reportContent.reason, info: reportContent.info },
+        };
+      },
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: textContainer.successfullyReported,
+            })
+          );
+          dispatch(sendReportActions.hideSendReport());
+        } catch (e: any) {
+          console.error(e);
+        }
+      },
+    }),
+    reportAPhoneReviewCommentReply: builder.mutation({
+      query: ({ revId, commentId, replyId, reportContent }) => {
+        return {
+          url: `/review/phone/${revId}/comments/${commentId}/replies/${replyId}`,
+          method: "POST",
+          body: { reason: reportContent.reason, info: reportContent.info },
+        };
+      },
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: textContainer.successfullyReported,
+            })
+          );
+          dispatch(sendReportActions.hideSendReport());
+        } catch (e: any) {
+          console.error(e);
+        }
+      },
+    }),
+    ReportACompanyReviewCommentReply: builder.mutation({
+      query: ({ revId, commentId, replyId, reportContent }) => {
+        return {
+          url: `/review/company/${revId}/comments/${commentId}/replies/${replyId}`,
+          method: "POST",
+          body: { reason: reportContent.reason, info: reportContent.info },
+        };
+      },
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: textContainer.successfullyReported,
+            })
+          );
+          dispatch(sendReportActions.hideSendReport());
+        } catch (e: any) {
+          console.error(e);
+        }
+      },
+    }),
+    reportAPhoneQuestionAnswerReply: builder.mutation({
+      query: ({ quesId, answerId, replyId, reportContent }) => {
+        return {
+          url: `/question/phone/${quesId}/answers/${answerId}/replies/${replyId}`,
+          method: "POST",
+          body: { reason: reportContent.reason, info: reportContent.info },
+        };
+      },
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: textContainer.successfullyReported,
+            })
+          );
+          dispatch(sendReportActions.hideSendReport());
+        } catch (e: any) {
+          console.error(e);
+        }
+      },
+    }),
+    reportACompanyQuestionAnswerReply: builder.mutation({
+      query: ({ quesId, answerId, replyId, reportContent }) => {
+        return {
+          url: `/question/phone/${quesId}/answers/${answerId}/replies/${replyId}`,
+          method: "POST",
+          body: { reason: reportContent.reason, info: reportContent.info },
+        };
+      },
+      async onQueryStarted(payload, { dispatch, getState, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          const state = getState();
+          const textContainer = (state as RootState).language.textContainer;
+          dispatch(
+            snackbarActions.showSnackbar({
+              message: textContainer.successfullyReported,
+            })
+          );
+          dispatch(sendReportActions.hideSendReport());
+        } catch (e: any) {
+          console.error(e);
+        }
+      },
+    }),
   }),
 });
 
@@ -127,4 +317,12 @@ export const {
   useReportCompanyReviewMutation,
   useReportPhoneQuestionMutation,
   useReportCompanyQuestionMutation,
+  useReportACompanyQuestionAnswerMutation,
+  useReportACompanyQuestionAnswerReplyMutation,
+  useReportACompanyReviewCommentMutation,
+  useReportACompanyReviewCommentReplyMutation,
+  useReportAPhoneQuestionAnswerMutation,
+  useReportAPhoneQuestionAnswerReplyMutation,
+  useReportAPhoneReviewCommentMutation,
+  useReportAPhoneReviewCommentReplyMutation,
 } = reportsApi;

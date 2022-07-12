@@ -1,10 +1,12 @@
 import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
+import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
+import { PostingField } from "../Components/PostingComponents/PostingField";
 import PhoneReview from "../Components/ReviewCard/PhoneReview";
 import { useShowSnackbar } from "../hooks/useShowSnackbar";
 import ROUTES_NAMES from "../RoutesNames";
@@ -18,23 +20,29 @@ import {
   useUnLikePhoneReviewCommentMutation,
   useUnLikePhoneReviewReplyMutation,
 } from "../services/phone_reviews";
+import {
+  useReportAPhoneReviewCommentMutation,
+  useReportAPhoneReviewCommentReplyMutation,
+} from "../services/reports";
 import { commentsListActions } from "../store/commentsListSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { reviewsActions } from "../store/reviewsSlice";
+import { sendReportActions } from "../store/uiSendReportSlice";
 import CommentsList from "./CommentsList";
 
 export default function PhoneReviewFullScreen() {
   const dispatch = useAppDispatch();
+  const theme = useTheme();
   const showSnackbar = useShowSnackbar();
-
+  const textContainer = useAppSelector((state) => state.language.textContainer);
   const isMobile = useTheme().isMobile;
 
   const navigate = useNavigate();
 
   useEffect(() => {
     return () => {
-      console.log("clear comments");
       dispatch(commentsListActions.clearComments());
+      dispatch(reviewsActions.clearReviews());
     };
   }, []);
 
@@ -69,7 +77,37 @@ export default function PhoneReviewFullScreen() {
   const [likeReply] = useLikePhoneReviewReplyMutation();
   // unlike reply
   const [unLikeReply] = useUnLikePhoneReviewReplyMutation();
-
+  // report a comment
+  const [reportAPhoneComment] = useReportAPhoneReviewCommentMutation();
+  // report a reply
+  const [reportACommentReply] = useReportAPhoneReviewCommentReplyMutation();
+  // Comment Report Function
+  const commentReportFunction = (commentId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportAPhoneComment({
+            revId: reviewId,
+            commentId: commentId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
+  // Comment Reply Report Function
+  const replyReportFunction = (commentId, replyId) => {
+    dispatch(
+      sendReportActions.showSendReport({
+        reportAction: async (reportContent) =>
+          reportACommentReply({
+            revId: reviewId,
+            commentId: commentId,
+            replyId: replyId,
+            reportContent: reportContent,
+          }),
+      })
+    );
+  };
   // get review from server
   const {
     data: currentReview,
@@ -179,6 +217,7 @@ export default function PhoneReviewFullScreen() {
         createdAt: new Date(),
         likes: 0,
         liked: false,
+        replies: [],
       };
 
       addOneCommentToLoadedComments(comment);
@@ -209,9 +248,7 @@ export default function PhoneReviewFullScreen() {
       };
 
       addOneReplyToLoadedComments(reply);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const deleteReviewFromStore = (id) => {
@@ -288,23 +325,44 @@ export default function PhoneReviewFullScreen() {
               <div>Error</div>
             ) : (
               currentReviewData && (
-                <CommentsList
-                  commentsList={commentsList}
-                  reviewCard={reviewCard}
-                  submitReplyHandler={submitReplyHandler}
-                  submitCommentHandler={submitCommentHandler}
-                  endOfData={endOfData}
-                  loadMore={loadMore}
-                  likeCommentRequest={likeCommentRequest}
-                  unLikeCommentRequest={unLikeCommentRequest}
-                  likeReplyRequest={likeReplyRequest}
-                  unLikeReplyRequest={unLikeReplyRequest}
-                />
+                <React.Fragment>
+                  <CommentsList
+                    commentsList={commentsList}
+                    reviewCard={reviewCard}
+                    submitReplyHandler={submitReplyHandler}
+                    submitCommentHandler={submitCommentHandler}
+                    endOfData={endOfData}
+                    loadMore={loadMore}
+                    likeCommentRequest={likeCommentRequest}
+                    unLikeCommentRequest={unLikeCommentRequest}
+                    likeReplyRequest={likeReplyRequest}
+                    unLikeReplyRequest={unLikeReplyRequest}
+                    commentReportFunction={commentReportFunction}
+                    replyReportFunction={replyReportFunction}
+                  />
+                </React.Fragment>
               )
             )}
           </Box>
         </AlonePostsGrid>
       </FixedGrid>
+      {isMobile && (
+        <div
+          style={{
+            width: "100%",
+            position: "fixed",
+            padding: "6px",
+            bottom: -1,
+            left: 0,
+            background: theme.palette.interactionCard.backgroundMobileColor,
+          }}
+        >
+          <PostingField
+            placeholder={textContainer.writeAComment}
+            onSubmit={(comment) => submitCommentHandler(comment)}
+          />
+        </div>
+      )}
     </CustomAppBar>
   );
 }

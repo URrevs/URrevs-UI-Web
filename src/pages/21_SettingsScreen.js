@@ -1,18 +1,30 @@
 import { useTheme } from "@emotion/react";
 import LanguageIcon from "@mui/icons-material/Language";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import { Box, List, Modal } from "@mui/material";
+import DarkModeIconOutlined from "@mui/icons-material/DarkModeOutlined";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { Box, List, Modal, Stack } from "@mui/material";
 import React from "react";
 import { LanguageDialog } from "../Components/Dialogs/LanguageDialog";
 import { ThemeDialog } from "../Components/Dialogs/ThemeDialog";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import ListItemNavigator from "../Components/Shared/ListItemNavigator";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import {
+  useDeleteAccountMutation,
+  useUndoDeleteRequestMutation,
+} from "../services/misc.tsx";
+import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
+import { confirmationActions } from "../store/uiConfirmationModalSlice";
+import { ConfirmationBody } from "../Components/Dialogs/ConfiramtionBody";
 
 export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
+  const dispatch = useAppDispatch();
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const language = useAppSelector((state) => state.language.language);
   const isDark = useAppSelector((state) => state.darkMode.isDark);
+  const delReq = useAppSelector((state) => state.auth.requestedDelete);
   const theme = useTheme();
   const [modal, setModal] = React.useState("");
   const handleClose = () => {
@@ -24,13 +36,30 @@ export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
     color: textContainer.theme,
     languageSub: language === "ar" ? "العربية" : "English",
     theme: isDark ? textContainer.darkTheme : textContainer.lightTheme,
+    delete: textContainer.deleteAccount,
+    cancelDel: textContainer.cancelDeleteAccountRequest,
+    conTitle: textContainer.areYouSure,
+    conWarningText:
+      textContainer.thisWillCauseYourAccountToBeErasedAndYouWillNotBeAbleToRecoverItAgain,
+  };
+  //RTK
+  const [deleteAccount, { isLoading: sendingDeleteReq }] =
+    useDeleteAccountMutation();
+  const [undoDeleteRequest, { isLoading: sendingUndoReq }] =
+    useUndoDeleteRequestMutation();
+  //ConfirmationModal args
+  const yesAction = delReq ? undoDeleteRequest : deleteAccount;
+  const noAction = () => {
+    setModal("");
   };
   //window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
   //use this to check if the current browser theme is dark.
   const listItems = [
     {
       title: pageDictionary.language,
-      icon: <LanguageIcon sx={{ fontSize: 45 }} />,
+      icon: (
+        <LanguageIcon sx={{ fontSize: 45, color: theme.palette.iconColor }} />
+      ),
       onClick: () => {
         setModal("language");
       },
@@ -39,11 +68,53 @@ export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
 
     {
       title: pageDictionary.color,
-      icon: <LightModeOutlinedIcon sx={{ fontSize: 45 }} />,
+      icon: isDark ? (
+        <DarkModeIconOutlined
+          sx={{ fontSize: 45, color: theme.palette.iconColor }}
+        />
+      ) : (
+        <LightModeOutlinedIcon
+          sx={{ fontSize: 45, color: theme.palette.iconColor }}
+        />
+      ),
       onClick: () => {
         setModal("theme");
       },
       subTitle: pageDictionary.theme,
+    },
+    {
+      title: !(sendingDeleteReq || sendingUndoReq)
+        ? delReq
+          ? pageDictionary.cancelDel
+          : pageDictionary.delete
+        : "",
+      icon: !(sendingDeleteReq || sendingUndoReq) ? (
+        delReq ? (
+          <CancelIcon
+            htmlColor={theme.palette.iconColor}
+            sx={{ fontSize: 45 }}
+          />
+        ) : (
+          <DeleteForeverIcon
+            htmlColor={theme.colors.ce41d1d}
+            sx={{ fontSize: 45 }}
+          />
+        )
+      ) : (
+        <LoadingSpinner
+          sx={{
+            fontSize: 50,
+            backgroundColor: delReq
+              ? theme.colors.ce41d1d
+              : theme.palette.iconColor,
+          }}
+        />
+      ),
+      subTitle: "",
+      onClick: () => {
+        if (!delReq) setModal("confirmation");
+        else yesAction();
+      },
     },
   ];
   const listItem = (title, subTitle, icon, to, onClick) => {
@@ -77,6 +148,23 @@ export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
           <ThemeDialog handleClose={handleClose} />
         </div>
       </Modal>
+      <Modal
+        open={modal === "confirmation"}
+        direction={theme.direction}
+        onClose={handleClose}
+      >
+        <div style={{ direction: theme.direction }}>
+          <ConfirmationBody
+            title={pageDictionary.conTitle}
+            warningText={pageDictionary.conWarningText}
+            yesAction={() => {
+              yesAction();
+              noAction();
+            }}
+            noAction={noAction}
+          />
+        </div>
+      </Modal>
     </div>
   );
 
@@ -91,7 +179,7 @@ export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
         />
       )}
       <List>
-        <Box>
+        <Stack spacing={1}>
           {listItems.map((item, index) => (
             <div key={item.title + index}>
               {listItem(
@@ -103,7 +191,7 @@ export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
               )}
             </div>
           ))}
-        </Box>
+        </Stack>
       </List>
     </React.Fragment>
   );

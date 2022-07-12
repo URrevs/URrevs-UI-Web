@@ -5,6 +5,7 @@ import { companyQuestionsApi } from "../services/company_questions";
 import { companyReviewsApi } from "../services/company_reviews";
 import { competetionApi } from "../services/competetion";
 import { homeApi } from "../services/homePage";
+import { mainApi } from "../services/main";
 import { phoneApi } from "../services/phones";
 import { phoneQuestionsApi } from "../services/phone_questions";
 import { phoneReviewsApi } from "../services/phone_reviews";
@@ -20,9 +21,11 @@ import compareSlice from "./compareSlice";
 import isDarkSlice from "./darkModeSlice";
 import homePageSlice from "./homePageSlice";
 import languageSlice from "./languageSlice";
+import { rtkQueryErrorLogger } from "./middlewares/authenticationMiddleware";
 import { snackbarErrorHandle } from "./middlewares/errorSnackbarHandleMiddleware";
 import questionsSlice from "./questionsSlice";
 import reviewsSlice from "./reviewsSlice";
+import confirmationSlice from "./uiConfirmationModalSlice";
 import menuSlice from "./uiMenuSlice";
 import postingModalSlice from "./uiPostingModalSlice";
 import regDialogSlice from "./uiRegisterDialogSlice";
@@ -31,6 +34,7 @@ import snackbarSlice from "./uiSnackbarSlice";
 
 export const store = configureStore({
   reducer: {
+    [mainApi.reducerPath]: mainApi.reducer,
     [reportsApi.reducerPath]: reportsApi.reducer,
     [phoneApi.reducerPath]: phoneApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
@@ -58,15 +62,15 @@ export const store = configureStore({
     [postingModalSlice.name]: postingModalSlice.reducer,
     [sendReportSlice.name]: sendReportSlice.reducer,
     [menuSlice.name]: menuSlice.reducer,
+    [confirmationSlice.name]: confirmationSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     })
       .concat(snackbarErrorHandle)
-      // .concat(rtkQueryErrorLogger)
-      .concat(phoneReviewsApi.middleware)
-      .concat(phoneApi.middleware)
+      .concat(rtkQueryErrorLogger)
+      // .concat(phoneReviewsApi.middleware)
       .concat(searchApi.middleware)
       .concat(companyReviewsApi.middleware)
       .concat(phoneQuestionsApi.middleware)
@@ -74,6 +78,7 @@ export const store = configureStore({
       .concat(homeApi.middleware)
       .concat(competetionApi.middleware)
       .concat(usersApi.middleware)
+      .concat(mainApi.middleware)
       .concat(reportsApi.middleware),
 });
 

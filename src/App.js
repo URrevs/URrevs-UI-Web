@@ -50,7 +50,7 @@ import Profile from "./pages/Profile";
 import { SplashScreen } from "./pages/SplashScreen";
 import ROUTES_NAMES from "./RoutesNames";
 import { authActions } from "./store/authSlice";
-import { useAppDispatch } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { COLORS } from "./Styles/main_light_colors";
 // OUR_TRACKING_ID
 import ReactGA from "react-ga";
@@ -235,7 +235,7 @@ function App() {
         },
         progressBar: {
           backgroundColor: isDark ? COLORS.cffffff : COLORS.cffffff,
-          barColor: isDark ? COLORS.cffffff : COLORS.c2196f3,
+          barColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
           barBorder: isDark ? COLORS.cffffff : COLORS.c050505,
         },
         authenticationButtons: {
@@ -279,7 +279,7 @@ function App() {
           tabbarBg: isDark ? COLORS.c050505 : COLORS.cffffff,
         },
         iconColor: isDark ? darkThemeColors.iconsColor : COLORS.c606266, // Menu Icons
-        sendIconColor: isDark ? darkThemeColors.iconsColor : COLORS.c2196f3, // Comment Icon
+        sendIconColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3, // Comment Icon
         blackIconColor: isDark ? darkThemeColors.iconsColor : COLORS.c050505, // X button
         defaultRedBtnIconColor: isDark ? COLORS.cCED0D4 : COLORS.cffffff,
         defaultIconColor: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
@@ -296,18 +296,32 @@ function App() {
   );
 
   const dispatch = useAppDispatch();
+  const refetchToken = useAppSelector((state) => state.auth.refetch);
+
+  const storeUser = useAppSelector((state) => state.auth);
 
   const [getUserProfile, { isLoading }] = useLazyXauthenticateQuery();
 
   const [firebaseIsLoading, setFirebaseIsLoading] = useState(true);
 
+  // test for polling interval to update token
+  useEffect(() => {
+    const intervalGetToken = window.setInterval(() => {
+      dispatch(authActions.toggleRefetch({ refetch: true }));
+    }, 3000000);
+    return () => {
+      console.log("Refreshing");
+      clearInterval(intervalGetToken);
+    };
+  }, []);
+
   useEffect(async () => {
+    dispatch(authActions.toggleRefetch({ refetch: false }));
     const unregisterObserver = getAuth().onAuthStateChanged(async (user) => {
       if (user) {
-        // console.log(storeUser);
+        if (refetchToken) {
+          const { data } = await getUserProfile(user.accessToken);
 
-        const { data } = await getUserProfile(user.accessToken);
-        if (data) {
           dispatch(
             authActions.login({
               isLoggedIn: true,
@@ -320,6 +334,7 @@ function App() {
               photo: data.profile.picture,
               name: data.profile.name,
               points: data.profile.points,
+              refetch: false,
             })
           );
           setFirebaseIsLoading(false);
@@ -333,7 +348,7 @@ function App() {
     return () => {
       unregisterObserver();
     };
-  }, [dispatch]);
+  }, [dispatch, refetchToken]);
 
   return (
     <ThemeProvider theme={theme}>

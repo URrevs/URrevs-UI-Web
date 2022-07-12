@@ -76,7 +76,7 @@ export const CompetitionBanner = ({ daysLeft, prize, setModal }) => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "space-around",
             padding: "8px 22px",
           }}
         >

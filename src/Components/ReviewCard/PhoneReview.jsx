@@ -1,7 +1,10 @@
 import { generateLink } from "../../functions/dynamicLinkGenerator";
+import { GAevent } from "../../functions/gaEvents";
+import { useCheckSignedInWithoutModal } from "../../hooks/useCheckIsSignedInWithoutModal";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
+import { useShowSnackbar } from "../../hooks/useShowSnackbar";
 import ROUTES_NAMES from "../../RoutesNames";
 import {
   useIdontLikeThisPhoneReviewMutation,
@@ -11,9 +14,11 @@ import {
   useUnLikePhoneReviewMutation,
   useUserPressFullScreenMutation,
   useUserPressSeeMoreMutation,
+  useVerifyPhoneReviewMutation,
 } from "../../services/phone_reviews";
 import { useReportPhoneReviewMutation } from "../../services/reports";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { reviewsActions } from "../../store/reviewsSlice";
 import { sendReportActions } from "../../store/uiSendReportSlice";
 import ReviewCard from "./ReviewCard";
 
@@ -22,7 +27,6 @@ export default function PhoneReview({
   showBottomLine,
   reviewDetails,
   index,
-  clearIndexCache,
   targetProfilePath,
   userProfilePath,
   stateLikeFn,
@@ -33,13 +37,19 @@ export default function PhoneReview({
   isExpanded,
   stateShare,
 }) {
+  const checkSignedInWithoutModal = useCheckSignedInWithoutModal();
+
   /*RTK Queries */
   const [dontLikeThisRequest] = useIdontLikeThisPhoneReviewMutation();
   const [fullScreenRequest] = useUserPressFullScreenMutation();
   const [seeMoreRequest] = useUserPressSeeMoreMutation();
   const [increaseViewCounterRequest] = useIncreaseViewCounterMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
+  const [verifyPhoneReviewRequest] = useVerifyPhoneReviewMutation();
+
   const [reportPhoneReview] = useReportPhoneReviewMutation();
+
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const generateShareLink = generateLink({
     webPath: "phone-review",
@@ -50,6 +60,7 @@ export default function PhoneReview({
   });
 
   const showShareSnackbar = useShareSnackbar();
+  const showSnackbar = useShowSnackbar();
 
   const dispatch = useAppDispatch();
 
@@ -70,9 +81,7 @@ export default function PhoneReview({
     try {
       deleteReviewFromStore(reviewDetails._id);
       await dontLikeThisRequest({ reviewId: reviewDetails._id });
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const [likePhoneReview] = useLikePhoneReviewMutation();
@@ -101,10 +110,14 @@ export default function PhoneReview({
   };
 
   const fullScreenHandler = () => {
-    fullScreenRequest({ reviewId: reviewDetails._id });
+    if (checkSignedInWithoutModal()) {
+      fullScreenRequest({ reviewId: reviewDetails._id });
+    }
   };
   const seeMoreHandler = () => {
-    seeMoreRequest({ reviewId: reviewDetails._id });
+    if (checkSignedInWithoutModal()) {
+      seeMoreRequest({ reviewId: reviewDetails._id });
+    }
     increaseViewCounterRequest({ reviewId: reviewDetails._id });
   };
 
@@ -117,6 +130,26 @@ export default function PhoneReview({
     });
   };
 
+  const verifyPhone = () => {
+    GAevent("User interaction", "Verify review", "Verify review", false);
+
+    verifyPhoneReviewRequest({ reviewId: reviewDetails._id }).then(
+      ({ data }) => {
+        dispatch(
+          reviewsActions.setReviewAsVerified({
+            id: reviewDetails._id,
+            verificationRatio: data.verificationRatio,
+          })
+        );
+        if (data.verificationRatio === 0) {
+          showSnackbar(textContainer.youMustVerifyFromSameMobileDevice);
+        } else {
+          showSnackbar(textContainer.verifiedSuccessfully);
+        }
+      }
+    );
+  };
+
   return (
     <ReviewCard
       disableElevation={disableElevation}
@@ -124,7 +157,6 @@ export default function PhoneReview({
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}
-      clearIndexCache={clearIndexCache}
       reviewDetails={reviewDetails}
       isPhoneReview={true}
       targetProfilePath={targetProfilePath}
@@ -136,6 +168,8 @@ export default function PhoneReview({
       reportFunction={reportFunction}
       likeBtnHandler={likeBtnHandler}
       shareBtnFn={shareBtnHandler}
+      verificationRatio={reviewDetails.verificationRatio}
+      verifyPhone={verifyPhone}
     />
   );
 }

@@ -1,18 +1,19 @@
-import RemoveRedEyeRoundedIcon from "@mui/icons-material/RemoveRedEyeRounded";
 import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
-import { Box, Button, Card, Grid, styled, Typography } from "@mui/material";
+import { Box, Button, Card, styled, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { CARD_BORDER_RADIUS, BUTTON_BORDER_RADIUS } from "../../constants";
-import { useConvertNumberToHumanLanguage } from "../../hooks/useMillify";
-import StarRating from "../Form/StarRating";
-import { CircularProductRate } from "./CircularProductRate";
 import { useTheme } from "@emotion/react";
-import { OverviewCard } from "./OverviewCard";
-import { StarLine } from "../StarLine";
+import { BUTTON_BORDER_RADIUS, CARD_BORDER_RADIUS } from "../../constants";
+import { detectDeviceType } from "../../functions/detectDevice";
+import { useShowSnackbar } from "../../hooks/useShowSnackbar";
+import { useVerifyOwnedPhoneMutation } from "../../services/phones";
 import { useAppDispatch } from "../../store/hooks";
+import { StarLine } from "../StarLine";
+import { CircularProductRate } from "./CircularProductRate";
+import { OverviewCard } from "./OverviewCard";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
+import LoadingSpinner from "../Loaders/LoadingSpinner";
 const CardStyled = styled(
   Card,
   {}
@@ -32,11 +33,30 @@ export const ProductOverviewCard = ({
   phone,
   type,
   owned = false,
+  verificationRatio = 0,
   paramId = "",
   productRating,
   companyRating,
   ratings,
 }) => {
+  const showSnackbar = useShowSnackbar();
+
+  const [verifyRequest, { isLoading: verifyIsLoading }] =
+    useVerifyOwnedPhoneMutation();
+  const verifyOwnedPhone = () => {
+    if (detectDeviceType() !== "mobile") {
+      dispatch(showSnackbar(textContainer.youMustVerifyFromSameMobileDevice));
+    } else {
+      verifyRequest({ id: paramId }).then(({ data }) => {
+        if (data.verificationRatio === 0) {
+          showSnackbar(textContainer.youMustVerifyFromSameMobileDevice);
+        } else {
+          showSnackbar(textContainer.verifiedSuccessfully);
+        }
+      });
+    }
+  };
+
   const textContainer = useSelector((state) => {
     return state.language.textContainer;
   });
@@ -48,35 +68,55 @@ export const ProductOverviewCard = ({
   return (
     <React.Fragment>
       <OverviewCard viewer={viewer} title={phone} subtitle={type}>
-        <Box
-          sx={{ display: "flex", justifyContent: "center", padding: "5px 0px" }}
-        >
-          <ButtonStyled
+        {verifyIsLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <Box
             sx={{
-              filter: owned && "grayscale(1)",
-            }}
-            elevation="3"
-            variant="contained"
-            disabled={owned}
-            onClick={() => {
-              dispatch(
-                postingModalActions.showPostingModal({
-                  tab: 0,
-                  id: paramId,
-                  type: "phone",
-                  name: phone,
-                })
-              );
+              display: "flex",
+              justifyContent: "center",
+              padding: "5px 0px",
             }}
           >
-            <PlaylistAddOutlinedIcon
-              sx={{ color: theme.palette.productRateCard.addPlaylistIconColor }}
-            ></PlaylistAddOutlinedIcon>
-            <Typography variant="S14W400C050505">
-              {textContainer.setAsOwnedPhone}
-            </Typography>
-          </ButtonStyled>
-        </Box>
+            <ButtonStyled
+              sx={{
+                filter: owned && verificationRatio !== 0 && "grayscale(1)",
+              }}
+              elevation="3"
+              variant="contained"
+              disabled={owned && verificationRatio !== 0}
+              onClick={
+                owned && verificationRatio === 0
+                  ? () => verifyOwnedPhone()
+                  : owned && verificationRatio !== 0
+                  ? () => {}
+                  : () => {
+                      dispatch(
+                        postingModalActions.showPostingModal({
+                          tab: 0,
+                          id: paramId,
+                          type: "phone",
+                          name: phone,
+                        })
+                      );
+                    }
+              }
+            >
+              <PlaylistAddOutlinedIcon
+                sx={{
+                  color: theme.palette.productRateCard.addPlaylistIconColor,
+                }}
+              ></PlaylistAddOutlinedIcon>
+              <Typography variant="S14W400C050505">
+                {owned && verificationRatio === 0
+                  ? textContainer.verifyPhone
+                  : owned && verificationRatio !== 0
+                  ? textContainer.ownedPhone
+                  : textContainer.setAsOwnedPhone}
+              </Typography>
+            </ButtonStyled>
+          </Box>
+        )}
 
         <Box
           sx={{

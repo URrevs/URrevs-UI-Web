@@ -21,7 +21,6 @@ const correspondingErrorMessage = (
     isError: true,
     path: "",
   };
-  console.log(action);
   switch (serverMessage) {
     case "invalid token":
       error.message = textContainer.invalidToken;
@@ -52,6 +51,15 @@ const correspondingErrorMessage = (
         error.message = textContainer.youHaventReviewedThatPhone;
         error.path = `../phone/specs?pid=${action.meta.arg.originalArgs.phoneId}`;
       } else error.message = textContainer.youCantAnswerAQuestionMessage;
+      break;
+    case "invalid referral code":
+      error.message = textContainer.enterAValidRefCode;
+      break;
+    case "owned":
+      error.message = textContainer.youCannotReportYourContent;
+      break;
+    case "too many unverified":
+      error.message = "شوف فتوح كتب too many unverified ولا لا";
       break;
     //TO DO : WRITE TRANSLATIONS AND FIND MORE ERRORS
     // case "track internal server error":
@@ -114,14 +122,12 @@ export const snackbarErrorHandle: Middleware =
 
     // RTK Query uses `createAsyncThunk` from redux-toolkit under the hood, so we're able to utilize these matchers!
     if (isRejectedWithValue(action)) {
-      console.log(action);
       const serverMessage: string = action.payload.data.status;
       const message: Error = correspondingErrorMessage(
         serverMessage,
         textContainer,
         action
       );
-      // console.log(message.isError);
       if (message.isError) {
         dispatch(
           snackbarActions.showSnackbar({

@@ -1,17 +1,23 @@
 import { useTheme } from "@emotion/react";
 import HelpIcon from "@mui/icons-material/Help";
 import {
-  Box, IconButton,
+  Box,
+  Card,
+  Divider,
+  IconButton,
   Modal,
   Stack,
-  Typography
+  Tooltip,
+  Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DialogText } from "../../Components/Dialogs/DialogText";
 import FormikDatePicker from "../../Components/Form/DatePicker/FormikDatePicker";
 import FormikSearchComponent from "../../Components/Form/FormikSearchComponent";
 import FormikStar from "../../Components/Form/FormikStar";
 import FormikTextField from "../../Components/Form/FormikTextField";
+import { StarCounter } from "../../Components/StarCounter/StarCounter";
 import { useGetManufacturingCompanyMutation } from "../../services/phones";
 import { useSearchPhonesOnlyMutation } from "../../services/search";
 import { useAppSelector } from "../../store/hooks";
@@ -34,10 +40,31 @@ import { FormSubmitButton } from "./FormSubmitButton";
 //     : empty;
 // };
 export const AddReviewTab = ({ ...props }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  // window.addEventListener("beforeunload", (e) => {
+  //   console.log("UNLOAD:1");
+  //   e.returnValue = "";
+  // });
+
+  // const handleUnload = (e) => {
+  //   console.log("hey");
+  //   alert("HEY");
+  // };
+
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", handleUnload);
+
+  //   return () => window.removeEventListener("beforeunload", handleUnload);
+  // }, [handleUnload]);
+
   const textContainer = useAppSelector((state) => {
     return state.language.textContainer;
   });
   const [open, setOpen] = React.useState(false);
+  const [openStar, setOpenStar] = React.useState(false);
+  const [count, setCount] = React.useState(0);
+  const [contribution, setContribution] = React.useState(0);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const theme = useTheme();
@@ -124,15 +151,57 @@ export const AddReviewTab = ({ ...props }) => {
   React.useEffect(() => {
     if (props.values.chooseProduct.id !== "") handleManufacturingCompany();
   }, []);
+  // Star Counter Use Effect
+  // Search Component
+  const beforeUnLoadFunction = () => {
+    console.log("Hell");
+  };
+  React.useEffect(() => {
+    window.addEventListener("beforeunload", beforeUnLoadFunction);
+    return (_) => {
+      window.removeEventListener("beforeunload", beforeUnLoadFunction);
+    };
+  }, []);
+  // Can be easily done with measuring contributions
+
+  React.useEffect(() => {
+    const limit = 1200;
+    let sum = 0;
+    let sumChar = 0;
+    sum = props.values.chooseProduct.label ? ++sum : sum;
+    sum = props.values.invitationCode ? ++sum : sum;
+    sum = props.values.purchaseDate ? ++sum : sum;
+    sum = props.values.battery > 0 ? ++sum : sum;
+    sum = props.values.callsQuality > 0 ? ++sum : sum;
+    sum = props.values.camera > 0 ? ++sum : sum;
+    sum = props.values.manufacturingQuality > 0 ? ++sum : sum;
+    sum = props.values.overAllExp > 0 ? ++sum : sum;
+    sum = props.values.priceQuality > 0 ? ++sum : sum;
+    sum = props.values.rateManufacturer > 0 ? ++sum : sum;
+    sum = props.values.userInterface > 0 ? ++sum : sum;
+    sumChar += props.values.likeAboutProduct.length;
+    sumChar += props.values.hateAboutProduct.length;
+    sumChar += props.values.likeAbout.length; //Company
+    sumChar += props.values.hateAbout.length; //Company
+    sumChar = sumChar > limit ? limit : sumChar; // Not really necessary
+    setCount((sum * 50) / 11 + (sumChar * 50) / limit);
+  }, [props.values]);
   return (
     <React.Fragment>
-      {/* <Stack spacing={1}>
-          <StarCounter />
-          <Divider />
-        </Stack> */}
       <Modal open={open} onClose={handleClose} dir={theme.direction}>
         <Box>
           <DialogText text={pageDictionary.referralCodeHelpPrompt} />
+        </Box>
+      </Modal>
+      <Modal
+        open={openStar}
+        onClose={() => {
+          setOpenStar(false);
+        }}
+        dir={theme.direction}
+      >
+        <Box>
+          <DialogText text="بطاطس محمرة" />
         </Box>
       </Modal>
       <form onSubmit={props.handleSubmit}>
@@ -145,6 +214,25 @@ export const AddReviewTab = ({ ...props }) => {
           Fix: add validation to companyId probably
   
           */}
+        {/* Star Counter */}
+        <div
+          style={{
+            position: "sticky",
+            zIndex: 1000,
+            border:
+              theme.isMobile && `2px solid ${theme.palette.background.default}`,
+            backgroundColor: theme.isMobile
+              ? theme.palette.background.default
+              : theme.palette.modalColor,
+            top: theme.isMobile ? "45px" : 0,
+          }}
+          onClick={() => {
+            setOpenStar(true);
+          }}
+        >
+          <StarCounter value={count} />
+        </div>
+        <Divider />
         <Typography variant="S18W500C050505">
           {pageDictionary.chooseProduct + ":"}
         </Typography>
@@ -230,6 +318,16 @@ export const AddReviewTab = ({ ...props }) => {
           variant="S18W500C050505"
         >
           {pageDictionary.enterInvitationCode + ":"}
+          {/* <Tooltip title={pageDictionary.referralCodeHelpPrompt}>
+            <HelpIcon
+              sx={{
+                marginLeft: "4px",
+                padding: 0,
+                fontSize: "25px",
+                color: theme.palette.defaultIconColor,
+              }}
+            />
+          </Tooltip> */}
           <IconButton
             onClick={handleOpen}
             sx={{

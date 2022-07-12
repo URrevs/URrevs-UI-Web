@@ -1,5 +1,8 @@
+import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useOutletContext, useSearchParams } from "react-router-dom";
+import { FaButton } from "../../Components/Buttons/FaButton";
+import AddIcon from "@mui/icons-material/Add";
 
 import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
@@ -10,15 +13,17 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { reviewsActions } from "../../store/reviewsSlice";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
+import { useTheme } from "@emotion/react";
 
 export function ProductReviews() {
   const { phoneName } = useOutletContext();
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    console.log("clear reviews");
-
-    dispatch(reviewsActions.clearReviews());
+    return () => {
+      setPage(1);
+      dispatch(reviewsActions.clearReviews());
+    };
   }, [dispatch]);
 
   const reviewsList = useAppSelector((state) => state.reviews.newReviews);
@@ -26,6 +31,7 @@ export function ProductReviews() {
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const [searchParams] = useSearchParams();
   const phoneId = searchParams.get("pid");
+  const theme = useTheme();
 
   const { data, isLoading, isFetching, error } = useGetPhoneReviewsQuery({
     round: page,
@@ -33,7 +39,6 @@ export function ProductReviews() {
   });
 
   const stateLike = (id) => {
-    console.log(id);
     dispatch(reviewsActions.setIsLiked({ id: id, isLiked: true }));
   };
 
@@ -48,7 +53,6 @@ export function ProductReviews() {
     );
 
   const increasePage = () => {
-    console.log(page);
     return setPage(page + 1);
   };
 
@@ -66,20 +70,18 @@ export function ProductReviews() {
   const stateIncreaseShareCounter = (id) =>
     dispatch(reviewsActions.increaseShareCounter({ id: id }));
 
-  const reviewCard = (index, clearCache) => {
+  const reviewCard = (review) => {
     return (
       <PhoneReview
-        key={reviewsList[index]._id}
-        index={index}
+        key={review._id}
         fullScreen={false}
         isExpanded={false}
-        clearIndexCache={clearCache}
-        reviewDetails={reviewsList[index]}
+        reviewDetails={review}
         isPhoneReview={true}
-        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.REVIEWS}?pid=${reviewsList[index].targetId}`}
-        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${reviewsList[index].userId}`}
-        stateLikeFn={stateLike.bind(null, reviewsList[index]._id)}
-        stateUnLikeFn={stateUnLike.bind(null, reviewsList[index]._id)}
+        targetProfilePath={`/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.REVIEWS}?pid=${review.targetId}`}
+        userProfilePath={`/${ROUTES_NAMES.USER_PROFILE}?userId=${review.userId}`}
+        stateLikeFn={stateLike.bind(null, review._id)}
+        stateUnLikeFn={stateUnLike.bind(null, review._id)}
         stateShare={stateIncreaseShareCounter}
         showActionBtn={true}
         deleteReviewFromStore={deleteReviewFromStore}
@@ -87,9 +89,58 @@ export function ProductReviews() {
     );
   };
 
+  useEffect(() => {
+    if (data) {
+      addToReviewsList(data);
+
+      if (data.length === 0) {
+        setEndOfData(true);
+      }
+    }
+  }, [data]);
+
+  const [endOfData, setEndOfData] = useState(false);
+
+  // function loads additional comments
+  const loadMore = () => {
+    if (!endOfData && !isFetching) {
+      increasePage();
+    }
+  };
+
   return (
     <AlonePostsGrid>
       <div style={{ height: "20px" }} />
+      <FaButton
+        icon={
+          <AddIcon
+            sx={{
+              color: theme.palette.defaultRedBtnIconColor,
+              fontSize: "28px",
+            }}
+          />
+        }
+        onClick={() => {
+          dispatch(
+            postingModalActions.showPostingModal({
+              tab: 0,
+            })
+          );
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="S14W700Cffffff">
+            {textContainer.addReview}
+          </Typography>
+        </Box>
+      </FaButton>
       <PostingComponent
         label={textContainer.youCanAddReview}
         placeholder={textContainer.writeYourReview}
@@ -110,17 +161,10 @@ export function ProductReviews() {
       <div style={{ marginTop: "18px" }}></div>
 
       <VirtualReviewList
+        endOfData={endOfData}
+        loadMore={loadMore}
         reviewCard={reviewCard}
         reviewsList={reviewsList}
-        page={page}
-        data={data}
-        error={error}
-        isLoading={isLoading}
-        isFetching={isFetching}
-        stateLike={stateLike}
-        stateUnLike={stateUnLike}
-        addToReviewsList={addToReviewsList}
-        increasePage={increasePage}
       />
     </AlonePostsGrid>
   );

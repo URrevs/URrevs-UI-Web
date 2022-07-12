@@ -3,6 +3,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import FormikSearchComponent from "../../Components/Form/FormikSearchComponent";
 import FormikTextField from "../../Components/Form/FormikTextField";
+import { GAevent } from "../../functions/gaEvents";
 import { useAddCompanyQuestionMutation } from "../../services/company_questions";
 import { useAddPhoneQuestionMutation } from "../../services/phone_questions";
 import { useSearchAllMutation } from "../../services/search";
@@ -50,7 +51,6 @@ export const QuestionsTab = ({ initValues }) => {
   // const [addQuestionError, setAddQuestionError] = React.useState(null);
   //Handle Submit
   const handleSubmit = async (values) => {
-    console.log(JSON.stringify(values));
     // alert(JSON.stringify(values));
     try {
       if (values.spoc.type === "company") {
@@ -64,9 +64,8 @@ export const QuestionsTab = ({ initValues }) => {
           phone: values.spoc.id,
         });
       }
-    } catch (e) {
-      console.log(e);
-    }
+      GAevent("User interaction", "Adding question", "Adding question", false);
+    } catch (e) {}
     dispatch(postingModalActions.hidePostingModal());
   };
   // Validation:
@@ -90,7 +89,6 @@ export const QuestionsTab = ({ initValues }) => {
         query={query}
         label={pageDictionary.searchForAProductOrACompany}
         searchFn={searchFn}
-        toGetManufacturingCompany={false}
       />
       <div></div>
     </Stack>

@@ -79,7 +79,6 @@ export const companyReviewsApi = createApi({
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
         payload.doFn();
-        console.log("a");
 
         try {
           await queryFulfilled;
@@ -160,7 +159,7 @@ export const companyReviewsApi = createApi({
           await queryFulfilled;
         } catch (e: any) {
           if (
-            e.error.data.status === "not found" ||
+            // e.error.data.status === "not found" ||
             e.error.data.status === "already liked"
           ) {
           } else {
@@ -184,7 +183,7 @@ export const companyReviewsApi = createApi({
           await queryFulfilled;
         } catch (e: any) {
           if (
-            e.error.data.status === "not found" ||
+            // e.error.data.status === "not found" ||
             e.error.data.status === "already liked"
           ) {
           } else {
@@ -209,7 +208,7 @@ export const companyReviewsApi = createApi({
           await queryFulfilled;
         } catch (e: any) {
           if (
-            e.error.data.status === "not found" ||
+            // e.error.data.status === "not found" ||
             e.error.data.status === "already liked"
           ) {
           } else {
@@ -232,10 +231,10 @@ export const companyReviewsApi = createApi({
         try {
           await queryFulfilled;
         } catch (e: any) {
-          if (e.error.data.status === "not found") {
-          } else {
+          // if (e.error.data.status === "not found") {
+          // } else {
             payload.unDoFn(payload.commentId);
-          }
+          // }
         }
       },
     }),
@@ -295,6 +294,7 @@ export const {
   useUnLikeCompanyReviewMutation,
   useGetUserCompanyReviewsQuery,
   useGetOtherUserCompanyReviewsQuery,
+  useLazyGetOtherUserCompanyReviewsQuery,
   useAddCommentOnCompanyReviewMutation,
   useGetCompanyReviewCommentsQuery,
   useLazyGetCompanyReviewCommentsQuery,

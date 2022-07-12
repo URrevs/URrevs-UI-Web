@@ -1,4 +1,5 @@
 import { generateLink } from "../../functions/dynamicLinkGenerator";
+import { useCheckSignedInWithoutModal } from "../../hooks/useCheckIsSignedInWithoutModal";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
@@ -20,7 +21,6 @@ export default function PhoneQuestion({
   showBottomLine,
   reviewDetails,
   index,
-  clearIndexCache,
   targetProfilePath,
   userProfilePath,
   stateLikeFn,
@@ -33,6 +33,8 @@ export default function PhoneQuestion({
   showAcceptedAnswer,
   stateShare,
 }) {
+  const checkSignedInWithoutModal = useCheckSignedInWithoutModal();
+
   const [dontLikeThisRequest] = useIdontLikeThisPhoneQuestionMutation();
   const [fullScreenRequest] = useUserPressesFullScreenPhoneQuestionMutation();
   const [increaseShareCounterRequest] = useIncreaseShareCounterMutation();
@@ -66,9 +68,7 @@ export default function PhoneQuestion({
     try {
       deleteReviewFromStore(reviewDetails._id);
       await dontLikeThisRequest({ reviewId: reviewDetails._id });
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const [likePhoneReview] = useLikePhoneQuestionMutation();
@@ -97,7 +97,9 @@ export default function PhoneQuestion({
   };
 
   const fullScreenHandler = () => {
-    fullScreenRequest(reviewDetails._id);
+    if (checkSignedInWithoutModal()) {
+      fullScreenRequest(reviewDetails._id);
+    }
   };
 
   const shareBtnHandler = () => {
@@ -116,7 +118,6 @@ export default function PhoneQuestion({
       index={index}
       fullScreen={fullScreen}
       isExpanded={isExpanded}
-      clearIndexCache={clearIndexCache}
       reviewDetails={reviewDetails}
       isPhoneReview={true}
       targetProfilePath={targetProfilePath}

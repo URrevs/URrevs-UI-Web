@@ -39,7 +39,6 @@ export const CustomAppBar = ({
   const navigate = useNavigate();
 
   const backBtnHandler = () => {
-    console.log("backButtonHandler");
     navigate(-1);
   };
 

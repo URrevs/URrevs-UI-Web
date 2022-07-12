@@ -1,0 +1,16 @@
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+	cache-control = "max-age=31536000, public"
+[[headers]]
+  for = "static/media/*"
+  [headers.values]
+	cache-control = "max-age=31536000, public"
+[[headers]]
+  for = "/all-products"
+  [headers.values]
+	cache-control = "max-age=2419200, public"
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 200

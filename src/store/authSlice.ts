@@ -14,7 +14,9 @@ const initialAuthState: User = {
   refCode: "",
   points: 0,
   isAdmin: false,
-  expiration: "",
+  expiration: 0,
+  refetch: true,
+  requestedDelete: false,
 };
 
 const authSlice = createSlice({
@@ -29,7 +31,7 @@ const authSlice = createSlice({
       state.apiToken = action.payload.apiToken;
       localStorage.setItem("token", action.payload.apiToken);
       state.expiration = action.payload.expiration;
-      localStorage.setItem("expiration", action.payload.expiration);
+      localStorage.setItem("expiration", action.payload.expiration.toString());
 
       state.name = action.payload.name;
       state.refreshToken = action.payload.refreshToken;
@@ -38,6 +40,8 @@ const authSlice = createSlice({
       state.refCode = action.payload.refCode;
       state.points = action.payload.points;
       state.isAdmin = action.payload.isAdmin;
+      state.refetch = false;
+      state.requestedDelete = action.payload.requestedDelete;
     },
     logout: (state) => {
       state.isLoggedIn = false;
@@ -54,6 +58,15 @@ const authSlice = createSlice({
       state.refCode = "";
       state.points = 0;
       state.isAdmin = false;
+      state.requestedDelete = false;
+    },
+    toggleRefetch: (state, action) => {
+      state.refetch = action.payload.refetch;
+      state.apiToken = "";
+    },
+    //Fady Help
+    setRequestedDelete: (state, action) => {
+      state.requestedDelete = action.payload.requestedDelete;
     },
   },
 });
