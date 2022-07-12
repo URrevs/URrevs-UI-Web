@@ -221,7 +221,7 @@ export const MyDrawer = (props) => {
   };
 
   const { fontSize, ref } = useFitText({
-    maxFontSize: 100,
+    maxFontSize: 90,
   });
 
   return (

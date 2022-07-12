@@ -1,6 +1,8 @@
-import { Box, Card, Divider, Grid, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import { useTheme } from "@emotion/react";
+import { Box, Card, Divider, Grid } from "@mui/material";
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import useFitText from "use-fit-text";
 import { TABCARD_BORDER_RADIUS } from "../../constants";
 import { useAppSelector } from "../../store/hooks";
 
@@ -11,6 +13,7 @@ export const PathTabbar = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const theme = useTheme();
 
   // set tab indicator on current route
   let currentPath = location.pathname.split("/").slice(-1)[0];
@@ -51,6 +54,11 @@ export const PathTabbar = ({
       setTranslation(100 * id);
     }
   };
+
+  const { fontSize, ref } = useFitText({
+    maxFontSize: 100,
+  });
+
   return (
     <React.Fragment>
       <Card
@@ -92,15 +100,19 @@ export const PathTabbar = ({
                   // borderBottom: value === id ? "3px solid #22CBF4" : null,
                 }}
               >
-                <Typography
-                  {...(value === id
-                    ? {
-                        variant: "S18W800C050505",
-                      }
-                    : { variant: "S18W300C050505" })}
+                <div
+                  ref={ref}
+                  style={{
+                    maxWidth: "calc(90vw / 3)",
+                    ...(value === id
+                      ? theme.typography.S18W800C050505
+                      : theme.typography.S18W300C050505),
+                    fontSize: fontSize,
+                    whiteSpace: "nowrap",
+                  }}
                 >
                   {tab.title}
-                </Typography>
+                </div>
               </Grid>
               <Grid
                 item
