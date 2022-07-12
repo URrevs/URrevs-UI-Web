@@ -1,10 +1,12 @@
 import { useTheme } from "@emotion/react";
+import { Typography } from "@mui/material";
 import { Fragment } from "react";
 import { Virtuoso } from "react-virtuoso";
 import { Comment } from "../Components/Interactions/Comment";
 import { CommentReply } from "../Components/Interactions/CommentReply";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { PostingField } from "../Components/PostingComponents/PostingField";
+import { useAppSelector } from "../store/hooks";
 
 export default function CommentsList({
   commentsList,
@@ -49,7 +51,7 @@ export default function CommentsList({
           )}
           <Virtuoso
             useWindowScroll
-            context={{ endOfData }}
+            context={{ endOfData, noData: commentsList.length }}
             data={commentsList}
             endReached={loadMore}
             increaseViewportBy={{ top: 2500, bottom: 2500 }}
@@ -90,18 +92,29 @@ export default function CommentsList({
   );
 }
 const Footer = ({ context }) => {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   const end = context.endOfData;
-  return (
-    !end && (
-      <div
-        style={{
-          padding: "2rem",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <LoadingSpinner />
-      </div>
-    )
+  return !end ? (
+    <div
+      style={{
+        padding: "2rem",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <LoadingSpinner />
+    </div>
+  ) : (
+    <Typography
+      style={{
+        display: "flex",
+        padding: "16px 0",
+        justifyContent: "center",
+      }}
+      variant="S15W500C050505"
+    >
+      {textContainer.itemsNotFound}
+    </Typography>
   );
 };
