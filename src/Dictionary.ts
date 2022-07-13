@@ -233,6 +233,7 @@ export default interface Dictionary {
   youAreBlockedCannotTakeThatAction: string;
   contentIsUnavailable: string;
   reviewYourPhoneCurrentlyInUseOrVerifyYourUnverifiedReviews: string;
+  youMustVerifyFromSameMobileDevice: string;
 }
 
 interface FullDictionary {
