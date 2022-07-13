@@ -37,37 +37,7 @@ export function PostedReviews() {
       showBackBtn
       tabBar={<FilterTabbar value={filter} setValue={setFilter} />}
     >
-      {currentUserId === paramId && (
-        // <FaButton
-        //   icon={
-        //     <AddIcon
-        //       sx={{
-        //         color: theme.palette.defaultRedBtnIconColor,
-        //         fontSize: "28px",
-        //       }}
-        //     />
-        //   }
-        //   onClick={() => {
-        //     dispatch(
-        //       postingModalActions.showPostingModal({
-        //         tab: 0,
-        //       })
-        //     );
-        //   }}
-        // >
-        //   <Box
-        //     sx={{
-        //       display: "flex",
-        //       alignItems: "center",
-        //       justifyContent: "center",
-        //       textAlign: "center",
-        //     }}
-        //   >
-        //     <Typography variant="S14W700Cffffff">
-        //       {textContainer.addReview}
-        //     </Typography>
-        //   </Box>
-        // </FaButton>
+      {theme.isMobile && currentUserId === paramId && (
         <Fab
           onClick={() => {
             dispatch(
@@ -84,6 +54,9 @@ export function PostedReviews() {
             position: "fixed",
             bottom: "15px",
             borderRadius: "",
+            right: "15px",
+            // width: "50px",
+            // height: "50px",
             // textTransform: "none",
 
             zIndex: 5,
@@ -101,7 +74,6 @@ export function PostedReviews() {
           />
         </Fab>
       )}
-
       <FixedGrid>
         <div style={{ marginTop: "20px" }}>
           {currentUserId === paramId && (
