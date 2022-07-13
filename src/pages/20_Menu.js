@@ -36,9 +36,14 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { menuActions } from "../store/uiMenuSlice";
 import { KeyboardArrowRightOutlined } from "@mui/icons-material";
 import { ConditionalLink } from "../Components/ConditionalLink";
+import { useGetCurrentUserProfileMutation } from "../services/users";
+import { useEffect } from "react";
+import { authActions } from "../store/authSlice";
 
 export default function Menu({ isDesktop = false, drawerRef }) {
   const theme = useTheme();
+
+  const [getUserProfile] = useGetCurrentUserProfileMutation();
 
   const currentUserProfile = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -51,6 +56,16 @@ export default function Menu({ isDesktop = false, drawerRef }) {
   const handleSignOutClose = () => setSignOutDialog(false);
   const handleInvitationOpen = () => setInvitationCodeDialog(true);
   const handleInvitationClose = () => setInvitationCodeDialog(false);
+
+  useEffect(() => {
+    getUserProfile().then((data) => {
+      dispatch(
+        authActions.login({
+          points: data.profile.points,
+        })
+      );
+    });
+  }, []);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const language = useAppSelector((state) => state.language.language);
