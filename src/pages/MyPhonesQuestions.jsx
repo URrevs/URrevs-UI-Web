@@ -91,8 +91,6 @@ export function MyPhonesQuestions() {
         <Answer
           commentId={review.acceptedAns._id}
           date={review.acceptedAns.createdAt}
-          userId={review.acceptedAns._id}
-          userName={review.acceptedAns.userName}
           likes={review.acceptedAns.upvotes}
           text={review.acceptedAns.content}
           commentLike={likeCommentRequest}
@@ -107,6 +105,8 @@ export function MyPhonesQuestions() {
           acceptedAnswer={true}
           showReply={false}
           upvoted={review.acceptedAns.upvoted}
+          userId={review.acceptedAns.userId}
+          userName={review.acceptedAns.userName}
         />
       );
     }

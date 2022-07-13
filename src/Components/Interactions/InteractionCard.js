@@ -69,7 +69,7 @@ export const InteractionCard = ({
       <InteractionCardStyle>
         <Link
           style={{ textDecoration: "none" }}
-          to={`../${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}
+          to={`../../${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}
         >
           <Typography
             sx={{

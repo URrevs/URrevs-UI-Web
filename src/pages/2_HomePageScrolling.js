@@ -191,6 +191,8 @@ function Reviews() {
               acceptedAnswer={true}
               showReply={false}
               upvoted={review.acceptedAns.upvoted}
+              userId={review.acceptedAns.userId}
+              userName={review.acceptedAns.userName}
             />
           );
         }
@@ -267,6 +269,8 @@ function Reviews() {
               acceptedAnswer={true}
               showReply={false}
               upvoted={review.acceptedAns.upvoted}
+              userId={review.acceptedAns.userId}
+              userName={review.acceptedAns.userName}
             />
           );
         }

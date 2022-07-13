@@ -66,7 +66,7 @@ export const InteractionBody = ({
               }}
             ></CheckIcon>
           ) : null}
-          <Link to={`../${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}>
+          <Link to={`../../${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}>
             <Avatar
               src={avatar}
               sx={{ marginRight: "6px", height: avatarSize, width: avatarSize }}
