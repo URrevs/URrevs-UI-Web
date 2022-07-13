@@ -77,7 +77,7 @@ export const PrivacyPolicyScreen = () => {
         direction: direction,
       }}
     >
-      <CustomAppBar showLogo label={pageDictionary[language].title} showLabel>
+      <CustomAppBar label={pageDictionary[language].title} showLabel>
         <AlonePostsGrid>
           <Stack spacing={5}>
             <div></div>

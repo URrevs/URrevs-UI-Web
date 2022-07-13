@@ -48,7 +48,7 @@ export const SignoutDialog = ({ handleClose }) => {
           sx={{
             display: "flex",
             alignItems: "center",
-            padding: "0px 0px 20px 0px",
+            padding: "0px 0px 16px 0px",
           }}
         >
           <Checkbox
@@ -83,7 +83,7 @@ export const SignoutDialog = ({ handleClose }) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "flex-end",
-            paddingBottom: "12px",
+            // paddingBottom: "12px",
           }}
         >
           <Button
