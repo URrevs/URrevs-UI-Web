@@ -106,13 +106,13 @@ export const ProductOverviewCard = ({
               }
             >
               {owned && verificationRatio === 0 ? (
-                <PlaylistAddCheckOutlinedIcon
+                <CheckIcon
                   sx={{
                     color: theme.palette.productRateCard.addPlaylistIconColor,
                   }}
                 />
               ) : owned && verificationRatio !== 0 ? (
-                <CheckIcon
+                <PlaylistAddCheckOutlinedIcon
                   sx={{
                     color: theme.palette.productRateCard.addPlaylistIconColor,
                   }}
