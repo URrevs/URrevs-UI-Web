@@ -17,7 +17,7 @@ export function MyPhonesQuestions() {
 
   useEffect(() => {
     return () => {
-      setPage(1)
+      setPage(1);
       dispatch(questionsActions.clearReviews());
     };
   }, []);
@@ -157,8 +157,14 @@ export function MyPhonesQuestions() {
     }
   };
 
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   return (
-    <CustomAppBar showLabel label="الاسئلة المطروحة على منتجاتي" showBackBtn>
+    <CustomAppBar
+      showLabel
+      label={textContainer.questionsAboutMyProducts}
+      showBackBtn
+    >
       <VirtualReviewList
         endOfData={endOfData}
         loadMore={loadMore}

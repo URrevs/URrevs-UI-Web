@@ -3,21 +3,22 @@ import { useTheme } from "@emotion/react";
 import { Card, CardContent, CardHeader, Typography } from "@mui/material";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
 import { regDialogActions } from "../../store/uiRegisterDialogSlice";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { CARD_BORDER_RADIUS } from "../../constants";
 
 export default function Banner() {
   const dispatch = useAppDispatch();
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const theme = useTheme();
   const cardShadow = "0px 14px 80px rgba(34, 35, 58, 0.2)";
   const headerShadow = "4px 4px 20px 1px rgba(33, 203, 243, .3)";
   const pageContainer = {
-    headerTitle: "أول منصة لمراجعات المستخدمين بالشرق الأوسط",
-    subheaderTitle: "اَراء مستخدمي الهواتف في مكان واحد",
-    subtitle: "هدفنا مساعدتك تختار",
-    primaryActionText: "راجع الاَن",
-    secondaryActionText: "سجل الاَن",
+    headerTitle: textContainer.landingPageHeaderTitle,
+    subheaderTitle: textContainer.landingPageSubheaderTitle,
+    subtitle: textContainer.landingPageSubtitle,
+    primaryActionText: textContainer.landingPagePrimaryActionText,
+    secondaryActionText: textContainer.landingPageSecondaryActionText,
   };
 
   return (

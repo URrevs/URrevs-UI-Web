@@ -8,7 +8,7 @@ import {
   Grid,
   IconButton,
   Modal,
-  Typography
+  Typography,
 } from "@mui/material";
 import { styled } from "@mui/styles";
 import React, { Fragment } from "react";
@@ -26,7 +26,7 @@ import classes from "../../scrollbar.module.css";
 import {
   useGetPhoneSpecsQuery,
   useGetSimilarPhonesQuery,
-  useGetStatisticalInfoQuery
+  useGetStatisticalInfoQuery,
 } from "../../services/phones";
 
 const CardStyled = styled(
@@ -80,7 +80,7 @@ export const ProductSpecsScreen = () => {
     if (isLoading) {
       return <CircularProgress />;
     } else if (error) {
-      return;
+      return <p>{textContainer.errorHappend}</p>;
     } else {
       return (
         <CardStyled>
@@ -117,7 +117,7 @@ export const ProductSpecsScreen = () => {
           ]}
           paramId={paramId}
           phone={statistical.name}
-          type="هاتف ذكي"
+          type={textContainer.smartphone}
         />
       </div>
     );
@@ -126,7 +126,7 @@ export const ProductSpecsScreen = () => {
     if (isLoading) {
       return <CircularProgress />;
     } else if (error) {
-      return <p>حدث خطأ</p>;
+      return <p>{textContainer.errorHappend}</p>;
     } else {
       return (
         <Box
@@ -188,7 +188,7 @@ export const ProductSpecsScreen = () => {
     if (isLoading) {
       return <CircularProgress />;
     } else if (error) {
-      return <p>حدث خطأ</p>;
+      return <p>{textContainer.errorHappend}</p>;
     } else {
       return (
         <CardStyled elevation={3}>
@@ -202,7 +202,7 @@ export const ProductSpecsScreen = () => {
     if (isLoading) {
       return <CircularProgress />;
     } else if (error) {
-      return <p>حدث خطأ</p>;
+      return <p>{textContainer.errorHappend}</p>;
     } else {
       return <ProductDetailsTable phoneData={data} />;
     }

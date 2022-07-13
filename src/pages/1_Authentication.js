@@ -84,6 +84,8 @@ const Registeration = ({}) => {
     dispatch(regDialogActions.toggleRegistration());
   };
 
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   return (
     <Modal
       aria-labelledby="register"
@@ -108,7 +110,7 @@ const Registeration = ({}) => {
                     style={{ display: "flex", justifyContent: "center" }}
                     variant="S20W700C050505"
                   >
-                    انضم الى يورفز
+                    {textContainer.joinUrrevs}
                   </Typography>
                   <List>
                     <ListItem>

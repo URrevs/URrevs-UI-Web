@@ -23,8 +23,8 @@ export const InvitationDialog = ({ handleClose }) => {
     paragraph: textContainer.reviewEncouragement,
     title: `${textContainer.yourInvitationCode}:`,
     shareCode: textContainer.shareInvitationLink,
-    codeCopyWasSuccessful: "تم نسخ كود الدعوة",
-    linkCopyWasSuccessful: "تم نسخ رابط الدعوة",
+    codeCopyWasSuccessful: textContainer.invitationCodeCopied,
+    linkCopyWasSuccessful: textContainer.invitationLinkCopied,
   };
 
   const showShareSnackbar = useShareSnackbar();

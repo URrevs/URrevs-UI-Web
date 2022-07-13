@@ -36,6 +36,7 @@ export function AnswersList({
         borderRadius: "10px",
       }
     : {};
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   return (
     <Fragment>
@@ -47,7 +48,7 @@ export function AnswersList({
             <Fragment>
               <PostingField
                 avatar={true}
-                placeholder="اكتب اجابة"
+                placeholder={textContainer.writeAnAnswer}
                 onSubmit={(comment) => submitCommentHandler(comment)}
               />
               <br />
@@ -113,7 +114,7 @@ const Footer = ({ context }) => {
     >
       <LoadingSpinner />
     </div>
-  ) : context.noData===0 ? (
+  ) : context.noData === 0 ? (
     <Typography
       style={{
         display: "flex",

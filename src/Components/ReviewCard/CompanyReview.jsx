@@ -2,7 +2,7 @@ import { generateLink } from "../../functions/dynamicLinkGenerator";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 import { useShareSnackbar } from "../../hooks/useShareSnackbar";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 import ROUTES_NAMES from "../../RoutesNames";
 import {
@@ -53,10 +53,12 @@ const CompanyReview = ({
     linkType: "post",
   });
 
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   const checkIsSignedIn = useCheckSignedIn();
   const checkOwnerShip = useCheckOwnership({
     ownerId: reviewDetails.userId,
-    message: "لا يمكنك الاعجاب بالمراجعة الخاصة بك",
+    message: textContainer.youCantLikeYourReview,
   });
 
   const showShareSnackbar = useShareSnackbar();
@@ -117,7 +119,7 @@ const CompanyReview = ({
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
 
     generateShareLink().then((data) => {
-      showShareSnackbar(data.data.shortLink, "تم نسخ رابط المنشور");
+      showShareSnackbar(data.data.shortLink, textContainer.postLinkCopied);
     });
   };
 
