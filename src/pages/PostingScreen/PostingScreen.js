@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Formik } from "formik";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import * as Yup from "yup";
 import { GAevent } from "../../functions/gaEvents";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
@@ -19,6 +19,7 @@ const PostingScreen = ({
 }) => {
   const [searchParams] = useSearchParams();
   const paramId = searchParams.get("refCode");
+  const location = useLocation();
   const isPhone = initValues.type === "phone";
   const checkSignedIn = useCheckSignedIn();
   const [addReview] = useAddPhoneReviewMutation();
@@ -69,7 +70,14 @@ const PostingScreen = ({
     ),
   });
   return (
-    <div style={{ marginBottom: theme.isMobile ? "85px" : 0 }}>
+    <div
+      style={{
+        marginBottom:
+          theme.isMobile && location.pathname === "/add-review"
+            ? "85px"
+            : "16px",
+      }}
+    >
       {value === 0 ? (
         <Formik
           initialValues={{
@@ -93,7 +101,7 @@ const PostingScreen = ({
             invitationCode: paramId ?? "",
           }}
           validationSchema={BasicValidationSchema}
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={async (values, { setSubmitting, resetForm }) => {
             if (checkSignedIn()) {
               const reviewPost = {
                 phoneId: values.chooseProduct.id,
@@ -117,6 +125,7 @@ const PostingScreen = ({
                 await addReview(reviewPost).unwrap();
                 //Success Message
                 // TODO uncomment
+                resetForm();
                 sessionStorage.clear();
                 GAevent(
                   "User interaction",

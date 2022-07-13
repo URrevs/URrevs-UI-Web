@@ -69,6 +69,7 @@ export const AddReviewTab = ({ ...props }) => {
   const handleClose = () => setOpen(false);
   const theme = useTheme();
   const pageDictionary = {
+    reviewEncouragement: textContainer.reviewEncouragement,
     referralCodeHelpPrompt: textContainer.referralCodeHelpPrompt,
     chooseProduct: textContainer.chooseProduct,
     writeProductName: textContainer.writeProductName,
@@ -201,7 +202,7 @@ export const AddReviewTab = ({ ...props }) => {
         dir={theme.direction}
       >
         <Box>
-          <DialogText text="بطاطس محمرة" />
+          <DialogText text={pageDictionary.reviewEncouragement} />
         </Box>
       </Modal>
       <form onSubmit={props.handleSubmit}>
@@ -220,11 +221,17 @@ export const AddReviewTab = ({ ...props }) => {
             position: "sticky",
             zIndex: 1000,
             border:
-              theme.isMobile && `2px solid ${theme.palette.background.default}`,
-            backgroundColor: theme.isMobile
-              ? theme.palette.background.default
-              : theme.palette.modalColor,
-            top: theme.isMobile ? "45px" : 0,
+              theme.isMobile &&
+              location.pathname === "/add-review" &&
+              `2px solid ${theme.palette.background.default}`,
+            backgroundColor:
+              theme.isMobile && location.pathname === "/add-review"
+                ? theme.palette.background.default
+                : theme.palette.modalColor,
+            top:
+              theme.isMobile && location.pathname === "/add-review"
+                ? "45px"
+                : 0,
           }}
           onClick={() => {
             setOpenStar(true);

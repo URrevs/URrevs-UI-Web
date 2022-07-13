@@ -157,7 +157,7 @@ export const TermsAndConditionsScreen = () => {
         direction: direction,
       }}
     >
-      <CustomAppBar label={pageDictionary[language].title} showLabel showLogo>
+      <CustomAppBar label={pageDictionary[language].title} showLabel>
         <AlonePostsGrid>
           <Stack spacing={2}>
             <div></div>

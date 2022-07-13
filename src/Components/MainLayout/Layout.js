@@ -8,7 +8,7 @@ import { MyAppBar } from "./AppBar/AppBar";
 import { AppBarActions } from "./AppBar/AppBarActions";
 import { MyDrawer } from "./Drawer/Drawer";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Registeration from "../../pages/1_Authentication";
 import { Footer } from "../Banners/Footer";
 import { ConfirmationDialog } from "../Dialogs/ConfirmationDialog";
@@ -33,6 +33,7 @@ export default function Layout(props) {
   const logoHeight = 30;
   const appBarHeight = theme.isMobile ? 0 : 64;
   const drawerWidth = theme.isMobile ? 0 : theme.drawer.width;
+  const location = useLocation();
 
   // const dictionary = useAppSelector((state) => state.language.textContainer);
 
@@ -129,7 +130,7 @@ export default function Layout(props) {
         {/* <div style={{ marginTop: `${appBarHeight + 30}px` }}> */}
         {props.children}
         {/* Don't add margin in the add-review page */}
-        {theme.isMobile && window.location.pathname !== "/add-review" && (
+        {theme.isMobile && location.pathname !== "/add-review" && (
           <div style={{ height: "75px" }}></div>
         )}
         {/* </div> */}
