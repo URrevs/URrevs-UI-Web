@@ -8,7 +8,7 @@ import {
   Grid,
   IconButton,
   Modal,
-  Typography
+  Typography,
 } from "@mui/material";
 import { styled } from "@mui/styles";
 import React, { Fragment } from "react";
@@ -26,7 +26,7 @@ import classes from "../../scrollbar.module.css";
 import {
   useGetPhoneSpecsQuery,
   useGetSimilarPhonesQuery,
-  useGetStatisticalInfoQuery
+  useGetStatisticalInfoQuery,
 } from "../../services/phones";
 
 const CardStyled = styled(
@@ -117,7 +117,7 @@ export const ProductSpecsScreen = () => {
           ]}
           paramId={paramId}
           phone={statistical.name}
-          type="هاتف ذكي"
+          type={textContainer.smartphone}
         />
       </div>
     );
