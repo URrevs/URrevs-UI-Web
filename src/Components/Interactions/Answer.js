@@ -155,7 +155,7 @@ export const Answer = ({
                   userName={reply.userName}
                   userId={reply.userId}
                   reportFunction={() => {
-                    replyReportFunction(reply.commentId, reply._id);
+                    replyReportFunction(commentId, reply._id);
                   }}
                 />
               );

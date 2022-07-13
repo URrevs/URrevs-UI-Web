@@ -34,7 +34,7 @@ export const usersApi = createApi({
     }),
 
     getCurrentUserProfile: builder.mutation<User, string>({
-      query: (token) => {
+      query: () => {
         return {
           url: "/profile",
           method: "GET",

@@ -76,7 +76,7 @@ export const Comment = ({
           onClickHandler={onLikeClickHandler}
           ownerId={userId}
           showReplyField={toggleReplyField}
-          type={'comment'}
+          type={"comment"}
         ></InteractionFooter>
       </InteractionBody>
       {/* Posting field */}
@@ -119,7 +119,7 @@ export const Comment = ({
                   userName={reply.userName}
                   userId={reply.userId}
                   reportFunction={() => {
-                    replyReportFunction(reply.commentId, reply._id);
+                    replyReportFunction(commentId, reply._id);
                   }}
                 />
               );
