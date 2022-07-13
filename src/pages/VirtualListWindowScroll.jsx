@@ -59,9 +59,6 @@ const ListFooter = ({ context }) => {
     <Typography variant="S15W500C050505">
       {textContainer.itemsNotFound}
     </Typography>
-  ) : (
-    <div style={{ position: "" }}>
-      <Footer fullScreen={false} />
-    </div>
-  );
+  ) : null;
+  //     <Footer fullScreen={false} />
 };

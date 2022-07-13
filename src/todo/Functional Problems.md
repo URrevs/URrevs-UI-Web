@@ -1,12 +1,15 @@
 - Add Review confirmation <b>MODAL</b> before navigating out of add review.
-- Fab in add review, add question screens and in Owned products tab.+ fix padding for postingmodal mobile// extremely slow in infinite scrolling screens opt out of it
-- Long Press comment/reply to report on mobile
-- Fix report icon for commen/reply
-- Cleanup forms
+- Mobile left in arabic right in english Fab in add review, add question screens and in Owned products tab.animation is extremely slow in infinite scrolling screens opt out of it.
+- [ ] Long Press comment/reply to report on mobile
+- [ ] Fix report icon for comment/reply
+- [x] Cleanup forms
+- [x] add mobile comment field to all fullscreens
+- [ ] Footer
 
 # Postponed:
 
-- Reporting Admin Side
+- [ ] Dark theme
+- [ ] Reporting Admin Side
 
 # Security:
 
