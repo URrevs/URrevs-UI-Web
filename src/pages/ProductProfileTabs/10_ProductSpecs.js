@@ -80,7 +80,7 @@ export const ProductSpecsScreen = () => {
     if (isLoading) {
       return <CircularProgress />;
     } else if (error) {
-      return;
+      return <p>{textContainer.errorHappend}</p>;
     } else {
       return (
         <CardStyled>
@@ -126,7 +126,7 @@ export const ProductSpecsScreen = () => {
     if (isLoading) {
       return <CircularProgress />;
     } else if (error) {
-      return <p>حدث خطأ</p>;
+      return <p>{textContainer.errorHappend}</p>;
     } else {
       return (
         <Box
@@ -188,7 +188,7 @@ export const ProductSpecsScreen = () => {
     if (isLoading) {
       return <CircularProgress />;
     } else if (error) {
-      return <p>حدث خطأ</p>;
+      return <p>{textContainer.errorHappend}</p>;
     } else {
       return (
         <CardStyled elevation={3}>
@@ -202,7 +202,7 @@ export const ProductSpecsScreen = () => {
     if (isLoading) {
       return <CircularProgress />;
     } else if (error) {
-      return <p>حدث خطأ</p>;
+      return <p>{textContainer.errorHappend}</p>;
     } else {
       return <ProductDetailsTable phoneData={data} />;
     }

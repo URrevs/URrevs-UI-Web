@@ -362,6 +362,7 @@
   "areYouSure": "Are you sure?",
   "thisWillCauseYourAccountToBeErasedAndYouWillNotBeAbleToRecoverItAgain": "This will cause your account to be erased and you will not be able to recover it again",
   "verify": "Verify",
+  "errorHappend": "Error happend",
   "youMustVerifyFromSameMobileDevice": "You must open the website from the device you want to verify your review on it",
   "yourRequestWillBeReviewedAndProcessedAsSoonAsPossible": "Your request will be reviewed and processed as soon as possible",
   "retry": "Retry",

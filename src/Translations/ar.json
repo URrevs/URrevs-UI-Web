@@ -365,6 +365,7 @@
   "landingPageSecondaryActionText": "سجل الاَن",
   "thisWillCauseYourAccountToBeErasedAndYouWillNotBeAbleToRecoverItAgain": "سوف يتسبب ذلك في مسح حسابك ولن تستطيع استرداده مرة اخرى",
   "verify": "توثيق",
+  "errorHappend":"حدث خطأ ما",
   "youMustVerifyFromSameMobileDevice": "يجب ان تقوم بفتح الموقع من خلال الجهاز الذي تريد توثيق مراجعته",
   "verifiedSuccessfully": "تم التوثيق",
   "yourRequestWillBeReviewedAndProcessedAsSoonAsPossible": "سوف يتم مراجعة طلبك وتنفيذه في اقرب وقت",
