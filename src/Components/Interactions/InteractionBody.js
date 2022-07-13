@@ -94,7 +94,13 @@ export const InteractionBody = ({
                 renderIcon={renderIcon}
               />
               {!theme.isMobile && showReportMenu && userId !== uid && (
-                <div style={{ position: "absolute", left: "-34px" }}>
+                <div
+                  style={{
+                    position: "absolute",
+                    left: theme.direction === "rtl" && "-34px",
+                    right: theme.direction === "ltr" && "-34px",
+                  }}
+                >
                   <IconButton onClick={handleClick}>
                     <MoreHorizIcon
                       sx={{

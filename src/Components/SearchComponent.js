@@ -65,8 +65,8 @@ export default function SearchComponent({
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionary = {
     noInputError: textContainer.nothingToSearchFor,
-    phoneNotFound: textContainer.phoneNotFound,
-    selectPhone: textContainer.selectPhone,
+    incorrectName: textContainer.incorrectName,
+    selectFromMenu: textContainer.selectFromMenu,
   };
 
   const [searchQuery, setSearchQuery] = React.useState(query);
@@ -129,9 +129,9 @@ export default function SearchComponent({
                     const phones = await searchFn(
                       e.target.value.trim()
                     ).unwrap();
-                    setErrorMsg(pageDictionary.selectPhone);
+                    setErrorMsg(pageDictionary.selectFromMenu);
                     if (phones.length === 0)
-                      setErrorMsg(pageDictionary.phoneNotFound);
+                      setErrorMsg(pageDictionary.incorrectName);
                     setResults(phones);
                   } else setErrorMsg(pageDictionary.noInputError);
                 }, SEARCH_INPUT_DELAY);
@@ -174,7 +174,7 @@ export default function SearchComponent({
                             type: "",
                           })
                         );
-                        setErrorMsg(pageDictionary.selectPhone);
+                        setErrorMsg(pageDictionary.incorrectName);
                         setLock(false);
                         onResult({
                           label: "",
