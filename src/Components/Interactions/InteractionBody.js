@@ -1,11 +1,14 @@
 import {
   Avatar,
   Box,
+  Card,
   Grid,
   IconButton,
   Menu,
   MenuItem,
+  Modal,
   Stack,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import { InteractionCard } from "./InteractionCard";
@@ -30,16 +33,20 @@ export const InteractionBody = ({
   reportFunction = () => {},
 }) => {
   const [showReportMenu, setShowReportMenu] = React.useState(false);
+
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const uid = useAppSelector((state) => state.auth.uid);
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [timeoutId, setTimeoutId] = React.useState();
+  const [modal, setModal] = React.useState("");
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <div
       onMouseEnter={() => {
@@ -48,7 +55,42 @@ export const InteractionBody = ({
       onMouseLeave={() => {
         setShowReportMenu(false);
       }}
+      onTouchStart={(e) => {
+        setTimeoutId(
+          setTimeout(() => {
+            setModal("report");
+          }, 500)
+        );
+      }}
+      onTouchEnd={() => {
+        clearTimeout(timeoutId);
+      }}
     >
+      <Modal
+        open={modal === "report"}
+        direction={theme.direction}
+        onClose={() => {
+          setModal("");
+        }}
+      >
+        <Card
+          sx={{
+            position: "fixed",
+            bottom: "0",
+            width: "100%",
+            borderRadius: "15px 15px 0px 0px",
+            padding: "15px",
+          }}
+          onClick={() => {
+            reportFunction();
+            setModal("");
+          }}
+        >
+          <Typography variant="S18W700C050505">
+            {textContainer.report}
+          </Typography>
+        </Card>
+      </Modal>
       <div
         style={{
           maxWidth: "calc(100% - 20px)",
