@@ -16,6 +16,8 @@ import { SendReports } from "../Dialogs/SendReports";
 import { PostingModal } from "../PostingComponents/PostingModal";
 import CustomizedSnackbar from "../Snackbar";
 import BottomNavBar from "./BottomNavBar/BottomNavBar";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -103,6 +105,16 @@ export default function Layout(props) {
   //     <CustomAppBar showLabel={false} showLogo={true} showProfile showSearch />
   //   );
   // };
+  const location = useLocation();
+  const [bottomPadding, setBottomPadding] = useState(false);
+  console.log(location.pathname);
+  React.useEffect(() => {
+    if (theme.isMobile && location.pathname !== "/add-review") {
+      setBottomPadding(true);
+    } else {
+      setBottomPadding(false);
+    }
+  }, [location.pathname]);
 
   return (
     <Box>
@@ -129,9 +141,7 @@ export default function Layout(props) {
         {/* <div style={{ marginTop: `${appBarHeight + 30}px` }}> */}
         {props.children}
         {/* Don't add margin in the add-review page */}
-        {theme.isMobile && window.location.pathname !== "/add-review" && (
-          <div style={{ height: "75px" }}></div>
-        )}
+        {bottomPadding && <div style={{ height: "125px" }}></div>}
         {/* </div> */}
       </Box>
 

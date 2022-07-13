@@ -105,7 +105,7 @@ const Footer = ({ context }) => {
     >
       <LoadingSpinner />
     </div>
-  ) : (
+  ) : context.noData === 0 ? (
     <Typography
       style={{
         display: "flex",
@@ -116,5 +116,7 @@ const Footer = ({ context }) => {
     >
       {textContainer.itemsNotFound}
     </Typography>
+  ) : (
+    <></>
   );
 };

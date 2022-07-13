@@ -55,8 +55,8 @@ export function AnswersList({
           )}
           <Virtuoso
             useWindowScroll
-            context={{ endOfData, noData: commentsList.length }}
             data={commentsList}
+            context={{ endOfData, noData: commentsList.length }}
             endReached={loadMore}
             increaseViewportBy={{ top: 2500, bottom: 2500 }}
             overscan={20}
@@ -113,7 +113,7 @@ const Footer = ({ context }) => {
     >
       <LoadingSpinner />
     </div>
-  ) : (
+  ) : context.noData===0 ? (
     <Typography
       style={{
         display: "flex",
@@ -124,5 +124,7 @@ const Footer = ({ context }) => {
     >
       {textContainer.itemsNotFound}
     </Typography>
+  ) : (
+    <></>
   );
 };
