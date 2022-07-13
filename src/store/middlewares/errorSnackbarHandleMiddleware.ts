@@ -59,7 +59,8 @@ const correspondingErrorMessage = (
       error.message = textContainer.youCannotReportYourContent;
       break;
     case "too many unverified":
-      error.message = "شوف فتوح كتب too many unverified ولا لا";
+      error.message =
+        textContainer.reviewYourPhoneCurrentlyInUseOrVerifyYourUnverifiedReviews;
       break;
     case "not found" ||
       "review not found" ||

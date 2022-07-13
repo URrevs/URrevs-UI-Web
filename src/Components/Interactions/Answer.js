@@ -120,7 +120,7 @@ export const Answer = ({
           {showReplyField && (
             <PostingField
               avatar={true}
-              placeholder="اكتب رد"
+              placeholder={textContainer.writeAReply}
               reply
               onSubmit={(text) => submitReplyHandler(text, commentId)}
             />

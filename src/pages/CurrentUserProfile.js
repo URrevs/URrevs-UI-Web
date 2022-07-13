@@ -103,7 +103,7 @@ export default function CurrentUserProfilePage({}) {
   };
 
   return (
-    <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true}>
+    <CustomAppBar showLabel={true} label={textContainer.myProfile} showBackBtn={true}>
       <div style={{ paddingTop: "12px" }}>
         <Modal
           open={invitationCodeDialog}

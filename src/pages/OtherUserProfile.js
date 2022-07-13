@@ -25,7 +25,7 @@ export default function OtherUserProfilePage({ uid }) {
     myReviews: textContainer.reviews,
     ownedProducts: textContainer.ownedProducts,
     askedQuestions: textContainer.askedQuestions,
-    account: "الحساب",
+    account: textContainer.userProfile,
   };
 
   const listItems = [

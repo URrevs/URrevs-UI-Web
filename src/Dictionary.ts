@@ -232,6 +232,7 @@ export default interface Dictionary {
   deleteRequestIsCancelledSuccessfully: string;
   youAreBlockedCannotTakeThatAction: string;
   contentIsUnavailable: string;
+  reviewYourPhoneCurrentlyInUseOrVerifyYourUnverifiedReviews: string;
 }
 
 interface FullDictionary {

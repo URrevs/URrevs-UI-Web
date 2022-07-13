@@ -33,6 +33,8 @@ export default function CommentsList({
       }
     : {};
 
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   return (
     <Fragment>
       <div style={{ height: "16px" }}></div>
@@ -43,7 +45,7 @@ export default function CommentsList({
             <Fragment>
               <PostingField
                 avatar={true}
-                placeholder="اكتب تعليقا"
+                placeholder={textContainer.writeAComment}
                 onSubmit={(comment) => submitCommentHandler(comment)}
               />
               <br />

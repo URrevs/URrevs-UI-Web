@@ -37,7 +37,7 @@ export const SearchScreen = () => {
     search: textContainer.search,
     placeholder: textContainer.searchForAProductOrACompany,
     recentResults: textContainer.previousSearchResults,
-    suggestedResults: "النتائج المقترحة",
+    suggestedResults: textContainer.suggestedResults,
     smartphone: textContainer.smartphone,
     company: textContainer.company,
   };

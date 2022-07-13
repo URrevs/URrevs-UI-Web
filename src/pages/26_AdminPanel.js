@@ -103,10 +103,10 @@ export const AdminPanel = () => {
           subTitle={
             latestCompetetionError &&
             latestCompetetionError.data.status === "not yet"
-              ? "لا يوجد مسابقات بعد"
+              ? textContainer.noCompetetionsYet
               : lastCompetetionData &&
                 new Date(lastCompetetionData.deadline) - new Date() > 0
-              ? "هناك مسابقة قائمة الان"
+              ? textContainer.thereIsAnActiveCompetition
               : listItems[1].subtitle +
                 " " +
                 convertDateToString(
@@ -120,7 +120,7 @@ export const AdminPanel = () => {
               ? () => {
                   dispatch(
                     snackbarActions.showSnackbar({
-                      message: "يوجد مسابقة قائمة بالفعل",
+                      message: textContainer.thereACompetetionNow,
                     })
                   );
                 }
