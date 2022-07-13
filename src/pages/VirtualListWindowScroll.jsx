@@ -1,7 +1,9 @@
+import { Typography } from "@mui/material";
 import { Fragment, useRef } from "react";
 import { Virtuoso } from "react-virtuoso";
 import { Footer } from "../Components/Banners/Footer";
 import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
+import { useAppSelector } from "../store/hooks";
 
 export default function VirtualReviewList({
   reviewsList,
@@ -19,11 +21,12 @@ export default function VirtualReviewList({
         useWindowScroll
         context={{
           endOfData,
+          noData: reviewsList.length,
         }}
         data={reviewsList}
         endReached={loadMore}
-        increaseViewportBy={{ top: 4000, bottom: 4000 }}
-        overscan={100}
+        increaseViewportBy={{ top: 2500, bottom: 2500 }}
+        overscan={50}
         itemContent={(index, review) => {
           return (
             <Fragment>
@@ -40,17 +43,25 @@ export default function VirtualReviewList({
 }
 
 const ListFooter = ({ context }) => {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   const end = context.endOfData;
-  return (
-    !end && (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <LoadingReviewSkeleton />
-      </div>
-    )
+  return !end ? (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <LoadingReviewSkeleton />
+    </div>
+  ) : context.noData === 0 ? (
+    <Typography variant="S15W500C050505">
+      {textContainer.itemsNotFound}
+    </Typography>
+  ) : (
+    <div style={{ position: "" }}>
+      <Footer fullScreen={false} />
+    </div>
   );
 };

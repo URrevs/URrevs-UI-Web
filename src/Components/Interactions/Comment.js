@@ -76,6 +76,7 @@ export const Comment = ({
           onClickHandler={onLikeClickHandler}
           ownerId={userId}
           showReplyField={toggleReplyField}
+          type={'comment'}
         ></InteractionFooter>
       </InteractionBody>
       {/* Posting field */}

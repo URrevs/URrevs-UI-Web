@@ -113,6 +113,7 @@ export const Answer = ({
             buttonName={buttonName}
             ownerId={ownerId}
             showReplyField={toggleReplyField}
+            type={"answer"}
           ></InteractionFooter>
         </InteractionBody>
         <div style={{ marginBottom: "10px", paddingRight: repliesPadding }}>

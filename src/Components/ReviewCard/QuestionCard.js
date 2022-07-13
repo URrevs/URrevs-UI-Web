@@ -164,6 +164,9 @@ export default function QuestionCard({
       />
       <CardContent style={{ padding: 0 }}>
         <ButtonBase
+          disabled={
+            fullScreen || content.length < MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND
+          }
           component="div"
           style={{
             display: "block",
@@ -218,7 +221,7 @@ export default function QuestionCard({
         >
           <CardFooter
             isReview={false}
-            navigateToFullScreen={navigateToFullScreen}
+            navigateToFullScreen={!fullScreen ? navigateToFullScreen : () => {}}
             shareCounter={reviewDetails.shares}
             likesCounter={reviewDetails.upvotes}
             commentsCounter={reviewDetails.ansCount}
@@ -240,7 +243,7 @@ export default function QuestionCard({
             isLiked={isLiked}
             firstButtonNonPressedText={textContainer.vote}
             firstButtonPressedText={textContainer.vote}
-            navigateToFullScreen={navigateToFullScreen}
+            navigateToFullScreen={!fullScreen ? navigateToFullScreen : () => {}}
             shareBtnHandler={shareBtnFn}
             isReview={false}
           />

@@ -69,6 +69,7 @@ export const CommentReply = ({
             commentUnlike={replyUnlike}
             commentId={commentId}
             ownerId={userId}
+            type={"reply"}
           ></InteractionFooter>
         </InteractionBody>
       </div>

@@ -422,7 +422,9 @@ export function AllProductsScreen() {
             padding: "0 12px 0 6px",
           }}
         >
-          <Typography variant="S16W700C050505">الفلاتر:</Typography>
+          <Typography variant="S16W700C050505">
+            {textContainer.filters}:
+          </Typography>
           <div style={{ height: "calc(85vh)" }}>
             <div>
               <List
