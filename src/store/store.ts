@@ -31,6 +31,7 @@ import postingModalSlice from "./uiPostingModalSlice";
 import regDialogSlice from "./uiRegisterDialogSlice";
 import sendReportSlice from "./uiSendReportSlice";
 import snackbarSlice from "./uiSnackbarSlice";
+import { listenerMiddleware } from "./middlewares/updateTokenMiddleware";
 
 export const store = configureStore({
   reducer: {
@@ -68,6 +69,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     })
+      // .prepend(listenerMiddleware.middleware)
       .concat(snackbarErrorHandle)
       .concat(rtkQueryErrorLogger)
       // .concat(phoneReviewsApi.middleware)
