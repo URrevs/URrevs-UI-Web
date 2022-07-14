@@ -1,10 +1,6 @@
-- Add Review confirmation <b>MODAL</b> before navigating out of add review.
-- [x] Mobile left in arabic right in english Fab in add review, add question screens and in Owned products tab.animation is extremely slow in infinite scrolling screens opt out of it.
-- [ ] Long Press comment/reply to report on mobile
-- [ ] Fix report icon for comment/reply
-- [x] Cleanup forms
-- [x] add mobile comment field to all fullscreens
-- [ ] Footer
+# Need to be done
+
+- [ ] Refresh tokens
 
 # Postponed:
 
@@ -29,6 +25,12 @@
 
 # Done:
 
+- [x] Add Review confirmation <b>MODAL</b> before navigating out of add review.
+- [x] Mobile left in arabic right in english Fab in add review, add question screens and in Owned products tab.animation is extremely slow in infinite scrolling screens opt out of it.
+- [x] Long Press comment/reply to report on mobile
+- [x] Fix report icon for comment/reply
+- [x] Cleanup forms
+- [x] add mobile comment field to all fullscreens
 - Accepting answer then unaccepting it in full question screen has weird effect. (x)
 - Collapsed replies (x)
 - See previous comments (x)

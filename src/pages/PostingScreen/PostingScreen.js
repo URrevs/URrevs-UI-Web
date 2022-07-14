@@ -8,6 +8,7 @@ import { useAddPhoneReviewMutation } from "../../services/phone_reviews";
 import { useAppSelector } from "../../store/hooks";
 import { AddReviewTab } from "./AddReviewTab";
 import { QuestionsTab } from "./QuestionsTab";
+import React from "react";
 
 const PostingScreen = ({
   value,
@@ -17,6 +18,31 @@ const PostingScreen = ({
     type: "",
   },
 }) => {
+  const handleInitialValues = (fieldName, initialValue) => {
+    const stored = sessionStorage.getItem(fieldName);
+    if (stored) {
+      if (typeof initialValue === "object") return JSON.parse(stored);
+      if (typeof initialValue === "number") return parseInt(stored);
+      return stored;
+    } else {
+      return initialValue;
+    }
+  };
+  //Handle Blocking Navigation
+  React.useEffect(() => {
+    window.onbeforeunload = () => {
+      sessionStorage.clear();
+      return null;
+    };
+  }, []);
+  //Handle Blocking Navigation
+  React.useEffect(() => {
+    window.onbeforeunload = () => {
+      sessionStorage.clear();
+      return null;
+    };
+  }, []);
+
   const [searchParams] = useSearchParams();
   const paramId = searchParams.get("refCode");
   const location = useLocation();
@@ -81,24 +107,36 @@ const PostingScreen = ({
       {value === 0 ? (
         <Formik
           initialValues={{
-            companyId: { _id: "", name: "", type: "" },
+            companyId: handleInitialValues("companyId", {
+              _id: "",
+              name: "",
+              type: "",
+            }),
             chooseProduct: isPhone
               ? initValues
-              : { id: "", label: "", type: "" },
-            overAllExp: 0,
-            manufacturingQuality: 0,
-            userInterface: 0,
-            priceQuality: 0,
-            camera: 0,
-            callsQuality: 0,
-            battery: 0,
-            rateManufacturer: 0,
-            purchaseDate: "",
-            likeAboutProduct: "",
-            hateAboutProduct: "",
-            likeAbout: "",
-            hateAbout: "",
-            invitationCode: paramId ?? "",
+              : handleInitialValues("chooseProduct", {
+                  id: "",
+                  label: "",
+                  type: "",
+                }),
+            overAllExp: handleInitialValues("overAllExp", 0),
+            manufacturingQuality: handleInitialValues(
+              "manufacturingQuality",
+              0
+            ),
+            userInterface: handleInitialValues("userInterface", 0),
+            priceQuality: handleInitialValues("priceQuality", 0),
+            camera: handleInitialValues("camera", 0),
+            callsQuality: handleInitialValues("callsQuality", 0),
+            battery: handleInitialValues("battery", 0),
+            rateManufacturer: handleInitialValues("rateManufacturer", 0),
+            purchaseDate: handleInitialValues("purchaseDate", ""),
+            likeAboutProduct: handleInitialValues("likeAboutProduct", ""),
+            hateAboutProduct: handleInitialValues("hateAboutProduct", ""),
+            likeAbout: handleInitialValues("likeAbout", ""),
+            hateAbout: handleInitialValues("hateAbout", ""),
+            invitationCode:
+              paramId ?? handleInitialValues("invitationCode", ""),
           }}
           validationSchema={BasicValidationSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {

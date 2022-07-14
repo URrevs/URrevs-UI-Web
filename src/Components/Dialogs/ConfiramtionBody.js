@@ -12,7 +12,7 @@ export const ConfirmationBody = ({
   noAction,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
-
+  const theme = useTheme();
   return (
     <React.Fragment>
       <DialogTemplate handleClose={noAction} title={title}>
@@ -20,9 +20,9 @@ export const ConfirmationBody = ({
         <div style={{ display: "flex", justifyContent: "space-around" }}>
           <Button
             variant="text"
-            type="submit"
+            // type="submit"
             sx={{
-              color: "#2196F3",
+              color: theme.colors.ce41d1d,
             }}
             onClick={(e) => {
               yesAction();

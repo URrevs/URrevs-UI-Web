@@ -21,7 +21,9 @@ import { StarCounter } from "../../Components/StarCounter/StarCounter";
 import { useGetManufacturingCompanyMutation } from "../../services/phones";
 import { useSearchPhonesOnlyMutation } from "../../services/search";
 import { useAppSelector } from "../../store/hooks";
+import { useCallbackPrompt } from "../../hooks/useCallbackPrompt";
 import { FormSubmitButton } from "./FormSubmitButton";
+import { ConfirmationBody } from "../../Components/Dialogs/ConfiramtionBody";
 
 /*Documentation */
 /*
@@ -42,21 +44,6 @@ import { FormSubmitButton } from "./FormSubmitButton";
 export const AddReviewTab = ({ ...props }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  // window.addEventListener("beforeunload", (e) => {
-  //   console.log("UNLOAD:1");
-  //   e.returnValue = "";
-  // });
-
-  // const handleUnload = (e) => {
-  //   console.log("hey");
-  //   alert("HEY");
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener("beforeunload", handleUnload);
-
-  //   return () => window.removeEventListener("beforeunload", handleUnload);
-  // }, [handleUnload]);
 
   const textContainer = useAppSelector((state) => {
     return state.language.textContainer;
@@ -64,7 +51,9 @@ export const AddReviewTab = ({ ...props }) => {
   const [open, setOpen] = React.useState(false);
   const [openStar, setOpenStar] = React.useState(false);
   const [count, setCount] = React.useState(0);
-  const [contribution, setContribution] = React.useState(0);
+  const [showDialog, setShowDialog] = React.useState(false);
+  const [showPrompt, confirmNavigation, cancelNavigation] =
+    useCallbackPrompt(showDialog);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const theme = useTheme();
@@ -152,17 +141,8 @@ export const AddReviewTab = ({ ...props }) => {
   React.useEffect(() => {
     if (props.values.chooseProduct.id !== "") handleManufacturingCompany();
   }, []);
+
   // Star Counter Use Effect
-  // Search Component
-  const beforeUnLoadFunction = () => {
-    console.log("Hell");
-  };
-  React.useEffect(() => {
-    window.addEventListener("beforeunload", beforeUnLoadFunction);
-    return (_) => {
-      window.removeEventListener("beforeunload", beforeUnLoadFunction);
-    };
-  }, []);
   // Can be easily done with measuring contributions
 
   React.useEffect(() => {
@@ -186,9 +166,23 @@ export const AddReviewTab = ({ ...props }) => {
     sumChar += props.values.hateAbout.length; //Company
     sumChar = sumChar > limit ? limit : sumChar; // Not really necessary
     setCount((sum * 50) / 11 + (sumChar * 50) / limit);
+    if (sum >= 1 || sumChar >= 1) setShowDialog(true);
   }, [props.values]);
   return (
     <React.Fragment>
+      <Modal open={showPrompt} direction={theme.direction}>
+        <div style={{ direction: theme.direction }}>
+          <ConfirmationBody
+            title={textContainer.doYouReallyWantToLeave}
+            warningText={textContainer.thisWillCauseTheDataYouEnteredToBeErased}
+            yesAction={() => {
+              confirmNavigation();
+              sessionStorage.clear();
+            }}
+            noAction={cancelNavigation}
+          />
+        </div>
+      </Modal>
       <Modal open={open} onClose={handleClose} dir={theme.direction}>
         <Box>
           <DialogText text={pageDictionary.referralCodeHelpPrompt} />
@@ -252,6 +246,7 @@ export const AddReviewTab = ({ ...props }) => {
           toGetManufacturingCompany
         />
         <br />
+
         {/* Datepicker*/}
         <Typography variant="S18W500C050505">
           {pageDictionary.howLong}

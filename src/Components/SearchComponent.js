@@ -84,8 +84,8 @@ export default function SearchComponent({
           setError(false);
           onResult(value);
           if (isFormik) {
-            sessionStorage.setItem("chooseProduct", value.id);
-            sessionStorage.setItem("search field", value.label);
+            // sessionStorage.setItem("chooseProduct", JSON.stringify(value));
+            // sessionStorage.setItem("search field", value.label);
           }
         }}
         freeSolo
@@ -165,6 +165,10 @@ export default function SearchComponent({
                     <IconButton
                       onClick={() => {
                         setSearchQuery("");
+                        sessionStorage.setItem(
+                          "companyId",
+                          '{"_id":"","name":"","type":""}'
+                        );
                         setResults([]);
                         dispatch(
                           postingModalActions.initializePostingModal({
