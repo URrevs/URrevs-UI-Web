@@ -418,7 +418,7 @@ export function AllProductsScreen() {
             top: "64px",
             maxHeight: "100vh",
             overflow: "scroll",
-            background: "#FFF",
+            background: theme.palette.interactionCard.backgroundMobileColor,
             padding: "0 12px 0 6px",
           }}
         >
