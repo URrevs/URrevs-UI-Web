@@ -34,7 +34,7 @@ const CardHeader = ({
       }}
       avatar={
         <Link to={userProfilePath}>
-          <CircleAvatar userAvatar={userAvatar} avatarRadius={avatarRadius} />
+          <CircleAvatar userName={userName} userAvatar={userAvatar} avatarRadius={avatarRadius} />
         </Link>
       }
       action={

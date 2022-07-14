@@ -1,5 +1,7 @@
 import { useTheme } from "@emotion/react";
 import React, { Fragment, useEffect } from "react";
+import DocumentMeta from "react-document-meta";
+import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
 import { Outlet, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
@@ -66,28 +68,41 @@ export const ProductProfile = () => {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <CustomAppBar
-          showBackBtn
-          englishName
-          showLabel
-          label={data.name}
-          showSearch
-          showProfile
-          // tabBar={<PathTabbar />}
+        <DocumentMeta
+          {...{
+            description: `${data.name} phone specs - ${data.name} مواصفات هاتف `,
+            canonical: `https://${window.location.hostname}/phone/specs?pid=${data._id}`,
+            meta: {
+              charset: "utf-8",
+              name: {
+                keywords: `specs,phone,reviews,Q&A,questions and answers,${data.name},اسئلة واجوبة,مراجعات,هاتف,مواصفات`,
+              },
+            },
+          }}
         >
-          <Fragment>
-            {!isMobile ? (
-              <StickyTabbar
-                hasParent={false}
-                arrayOfTabs={listOfItems}
-                userName={data.name}
-              />
-            ) : (
-              <PathTabbar arrayOfTabs={listOfItems} />
-            )}
-            <Outlet context={{ phoneName: data.name }} />
-          </Fragment>
-        </CustomAppBar>
+          <CustomAppBar
+            showBackBtn
+            englishName
+            showLabel
+            label={data.name}
+            showSearch
+            showProfile
+            // tabBar={<PathTabbar />}
+          >
+            <Fragment>
+              {!isMobile ? (
+                <StickyTabbar
+                  hasParent={false}
+                  arrayOfTabs={listOfItems}
+                  userName={data.name}
+                />
+              ) : (
+                <PathTabbar arrayOfTabs={listOfItems} />
+              )}
+              <Outlet context={{ phoneName: data.name }} />
+            </Fragment>
+          </CustomAppBar>
+        </DocumentMeta>
       )}
     </React.Fragment>
   );

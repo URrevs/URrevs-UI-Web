@@ -112,7 +112,10 @@ export const InteractionBody = ({
             <Avatar
               src={avatar}
               sx={{ marginRight: "6px", height: avatarSize, width: avatarSize }}
-            ></Avatar>
+              alt={`${userName} profile picture`}
+            >
+              <Avatar />
+            </Avatar>
           </Link>
           <Box
             sx={{

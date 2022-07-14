@@ -95,7 +95,10 @@ export const AppBarActions = ({
                 <Avatar
                   sx={{ width: circleWidth, height: circleHeight }}
                   src={photo}
-                />
+                  alt={`${user.name} profile picture`}
+                >
+                  <Avatar />
+                </Avatar>
               )}
             </CircleBtn>
           </ConditionalLink>

@@ -50,7 +50,9 @@ export const ProfileTabbar = ({ children, arrayOfTabs }) => {
             width: `90px`,
             transition: "0.1s",
           }}
-        />
+        >
+          <Avatar />
+        </Avatar>
         <Typography variant="S32W700C050505">{userProfile.name}</Typography>
       </Box>
 

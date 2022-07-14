@@ -1,7 +1,7 @@
 import { Avatar } from "@mui/material";
 import { blue } from "@mui/material/colors";
 
-const CircleAvatar = ({ userAvatar, avatarRadius }) => {
+const CircleAvatar = ({ userAvatar, avatarRadius, userName }) => {
   return (
     <Avatar
       src={userAvatar}
@@ -10,8 +10,11 @@ const CircleAvatar = ({ userAvatar, avatarRadius }) => {
         width: `${avatarRadius}px`,
         height: `${avatarRadius}px`,
       }}
-      aria-label="user_picture"
-    ></Avatar>
+      aria-label="user picture"
+      alt={`${userName} profile picture`}
+    >
+      <Avatar />
+    </Avatar>
   );
 };
 
