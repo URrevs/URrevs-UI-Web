@@ -29,7 +29,7 @@ export default function Banner() {
         boxShadow: cardShadow,
         position: "relative",
         overflow: "initial",
-        background: "#ffffff",
+        // background: "#ffffff",
         // space between header and list
         marginBottom: "12px",
         marginTop: theme.spacing(4),

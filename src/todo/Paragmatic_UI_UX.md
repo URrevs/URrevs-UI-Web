@@ -15,6 +15,19 @@
 - [ ] Leaderboard menu should be ellipsis in English translation
 - [ ] Add border for the sidebar to serapate it from the menu (optional)
 
+# Dark theme:
+
+- [x] Textfields placeholder and fonts, Searchscreen + Search Suggestion
+- [x] Filter Buttons
+- [x] Icons {currentProfile icons} {reviewCard top icon needs to be blue}
+- [x] Star Counter
+- [x] Tabbar mobile add review
+- [x] Leaderboard Card, Ranking Circle.
+- [x] All Products screen filter
+- [x] Path Tabbar
+- [x] Progressbar
+- [x] Snackbar keep same old font color
+
 = Improvements:
 
 - Authentication page.

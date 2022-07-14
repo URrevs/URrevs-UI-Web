@@ -184,8 +184,7 @@ export const SearchScreen = () => {
       input: {
         "&::placeholder": {
           opacity: 1,
-          fontWeight: 300,
-          fontSize: 16,
+          ...theme.typography.S16W300C050505,
         },
       },
     },
@@ -204,7 +203,7 @@ export const SearchScreen = () => {
         height: "50px",
         ...theme.typography.S16W500C050505,
         alignContent: "center",
-        color: theme.palette.textField.inputFieldText,
+        // color: theme.palette.textField.inputFieldText,
         background: theme.palette.textField.inputFieldBackground,
         borderRadius: 90,
         border: `0.8px solid ${theme.palette.textField.borderColor} `,

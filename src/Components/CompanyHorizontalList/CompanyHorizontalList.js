@@ -45,7 +45,7 @@ export const CompanyHorizontalList = ({
         backgroundColor={
           selectedCompany.index === index
             ? alpha(theme.palette.allProductsScreen.selectedItemBackground, 0.8)
-            : "white"
+            : theme.palette.interactionCard.backgroundMobileColor
         }
       >
         <ListItemAvatar
@@ -76,7 +76,7 @@ export const CompanyHorizontalList = ({
     <List
       className={classes.list}
       sx={{
-        bgcolor: "background.paper",
+        bgcolor: theme.palette.interactionCard.backgroundMobileColor,
         overflowX: "scroll",
         display: "flex",
         margin: "0px",

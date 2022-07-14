@@ -25,7 +25,7 @@ export const CompetitionBanner = ({ daysLeft, prize, setModal }) => {
   const btnGradientColor = isActive ? "red" : "blue";
   const cardGradientColor = isActive
     ? "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)"
-    : "#FFF";
+    : "";
   return (
     <React.Fragment>
       <Card

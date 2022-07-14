@@ -91,6 +91,7 @@ export default function CustomizedSnackbar() {
             backgroundColor: "#C4C4C4",
             borderRadius: "12px",
             ...theme.typography.S16W500C050505,
+            color:"#050505",
             lineHeight: 1,
             marginBottom: marginBottom,
           },

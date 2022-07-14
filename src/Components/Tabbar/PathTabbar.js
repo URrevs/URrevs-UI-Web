@@ -65,7 +65,7 @@ export const PathTabbar = ({
         sx={{
           display: "flex",
           flexDirection: "row",
-          backgroundColor: "#FFF", //Add theme
+          // backgroundColor: "#FFF", //Add theme
           borderRadius: `${TABCARD_BORDER_RADIUS}px`,
           minHeight: "35px",
           marginBottom: "12px",

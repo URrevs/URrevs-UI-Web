@@ -187,6 +187,7 @@ function App() {
       palette: {
         mode: isDark ? "dark" : "light",
         modalColor: isDark ? "#18191A" : COLORS.cffffff,
+        darkThemeColors,
         appBar: {
           appBarColor: isDark ? darkThemeColors.cardsColor : COLORS.cffffff,
           appBarIconBackgroundColor: isDark ? "000" : COLORS.ce5e5e7,
@@ -196,7 +197,7 @@ function App() {
         reviewCard: {
           reviewCardColor: isDark ? darkThemeColors.cardsColor : COLORS.cffffff,
           actionBtnIcon: isDark ? "#B0B3B8" : COLORS.c606266,
-          actionBtnIconHighlight: isDark ? "#2196F3" : COLORS.c2196f3,
+          actionBtnIconHighlight: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
           actionBtnHover: isDark ? COLORS.c000000 : COLORS.c000000,
           actionBtnBG: isDark ? COLORS.c000000 : COLORS.c000000,
           expandIcon: COLORS.c4ed5f6,
@@ -204,7 +205,7 @@ function App() {
           outlinedStarColor: isDark ? COLORS.c65676b : COLORS.c050505,
           emptyStarColor: isDark ? COLORS.c65676b : COLORS.c65676b,
           reviewArrow: isDark ? COLORS.c65676b : COLORS.c65676b,
-          indicatorColor: isDark ? COLORS.c65676b : COLORS.c2196f3,
+          indicatorColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
         },
         drawer: {
           drawerColor: isDark ? darkThemeColors.cardsColor : COLORS.cffffff,
@@ -235,7 +236,9 @@ function App() {
           mobileColor: isDark ? COLORS.cffffff : COLORS.c606266,
         },
         progressBar: {
-          backgroundColor: isDark ? COLORS.cffffff : COLORS.cffffff,
+          backgroundColor: isDark
+            ? darkThemeColors.textFieldBackground
+            : COLORS.cffffff,
           barColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
           barBorder: isDark ? COLORS.cffffff : COLORS.c050505,
         },
@@ -245,7 +248,9 @@ function App() {
         },
         leaderBoard: {
           entryCard: isDark ? darkThemeColors.cardsColor : COLORS.cffffff,
-          rankCircle: isDark ? COLORS.cffffff : COLORS.cf0f2f5,
+          rankCircle: isDark
+            ? darkThemeColors.negativeSpaceBackground
+            : COLORS.cf0f2f5,
         },
         bottomNavigationBar: {
           background: isDark ? "#18191A" : COLORS.cffffff,
@@ -263,21 +268,25 @@ function App() {
         },
         productRateCard: {
           addPlaylistIconColor: isDark ? "#18191A" : COLORS.c050505,
-          barPrimaryColor: isDark ? "#18191A" : COLORS.c2196f3,
-          barSecondaryColor: isDark ? "#18191A" : COLORS.cBADEFB,
+          barPrimaryColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
+          barSecondaryColor: isDark
+            ? darkThemeColors.textFieldBackground
+            : COLORS.cBADEFB,
         },
         allProductsScreen: {
-          selectedItemBackground: isDark ? "#18191A" : COLORS.c2196f3,
-          brandHover: isDark ? "#18191A" : COLORS.c2196f3,
+          selectedItemBackground: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
+          brandHover: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
         },
         dialogs: {
           textFieldInput: isDark ? darkThemeColors.cardsColor : COLORS.c050505,
         },
         filterTabbar: {
-          buttonBgActive: isDark ? "#FFFFFF" : COLORS.c22cbf4,
-          buttonBg: isDark ? "#FFFFFF" : COLORS.cffffff,
-          borderColor: isDark ? "#FFFFFF" : COLORS.c606266,
-          tabbarBg: isDark ? COLORS.c050505 : COLORS.cffffff,
+          buttonBgActive: isDark ? darkThemeColors.iconsColor : COLORS.c22cbf4,
+          buttonBg: isDark ? darkThemeColors.cardsColor : COLORS.cffffff,
+          borderColor: isDark ? darkThemeColors.fontsColor : COLORS.c606266,
+          tabbarBg: isDark ? darkThemeColors.cardsColor : COLORS.cffffff,
+          activeText: isDark ? darkThemeColors.cardsColor : COLORS.cffffff,
+          text: isDark ? darkThemeColors.iconsColor : COLORS.c65676B,
         },
         iconColor: isDark ? darkThemeColors.iconsColor : COLORS.c606266, // Menu Icons
         sendIconColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3, // Comment Icon
@@ -287,7 +296,7 @@ function App() {
         cancel: isDark ? COLORS.cCED0D4 : COLORS.c050505,
         divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
         defaultPageBtn: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
-        hover: isDark ? COLORS.cCED0D4 : alpha(COLORS.c65676b, 0.1),
+        hover: isDark ? alpha(COLORS.c65676b, 0.1) : alpha(COLORS.c65676b, 0.1),
         background: {
           default: isDark ? "#18191a" : COLORS.cf0f2f5,
         },

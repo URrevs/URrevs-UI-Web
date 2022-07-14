@@ -38,22 +38,38 @@ export default function CurrentUserProfilePage({}) {
   const listItems = [
     {
       title: pageDictionry.myReviews,
-      icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <RateReviewOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}?userId=${profileData.uid}`,
     },
     {
       title: pageDictionry.myQuestions,
-      icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <ForumOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}?userId=${profileData.uid}`,
     },
     {
       title: pageDictionry.ownedProducts,
-      icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <DevicesOtherOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?userId=${profileData.uid}`,
     },
     {
       title: pageDictionry.referalCode,
-      icon: <GroupsOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <GroupsOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       onClick: () => {
         handleInvitationOpen();
       },
@@ -62,7 +78,11 @@ export default function CurrentUserProfilePage({}) {
     },
     {
       title: pageDictionry.askedQuestions,
-      icon: <HelpCenterOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <HelpCenterOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       subtitle: pageDictionry.helpOthers,
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.MY_QUESTIONS}?userId=${profileData.uid}`,
     },
@@ -103,7 +123,11 @@ export default function CurrentUserProfilePage({}) {
   };
 
   return (
-    <CustomAppBar showLabel={true} label={textContainer.myProfile} showBackBtn={true}>
+    <CustomAppBar
+      showLabel={true}
+      label={textContainer.myProfile}
+      showBackBtn={true}
+    >
       <div style={{ paddingTop: "12px" }}>
         <Modal
           open={invitationCodeDialog}

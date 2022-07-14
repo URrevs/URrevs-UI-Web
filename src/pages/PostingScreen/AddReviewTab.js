@@ -167,6 +167,7 @@ export const AddReviewTab = ({ ...props }) => {
     sumChar = sumChar > limit ? limit : sumChar; // Not really necessary
     setCount((sum * 50) / 11 + (sumChar * 50) / limit);
     if (sum >= 1 || sumChar >= 1) setShowDialog(true);
+    else setShowDialog(false);
   }, [props.values]);
   return (
     <React.Fragment>

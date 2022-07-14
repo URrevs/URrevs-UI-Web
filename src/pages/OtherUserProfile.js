@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react";
 import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
@@ -18,7 +19,7 @@ export default function OtherUserProfilePage({ uid }) {
     isError,
     data: profileData,
   } = useGetOtherUserProfileQuery(uid);
-
+  const theme = useTheme();
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
@@ -31,17 +32,29 @@ export default function OtherUserProfilePage({ uid }) {
   const listItems = [
     {
       title: pageDictionry.myReviews,
-      icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <RateReviewOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}?userId=${uid}`,
     },
     {
       title: pageDictionry.ownedProducts,
-      icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <DevicesOtherOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?userId=${uid}`,
     },
     {
       title: pageDictionry.askedQuestions,
-      icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <ForumOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       subtitle: pageDictionry.helpOthers,
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}?userId=${uid}`,
     },

@@ -107,18 +107,18 @@ export default function SearchComponent({
               transition: "font-size 0.6s ease-in",
               ".Mui-disabled": {
                 //Change Disabled CSS
-                fontWeight: 800,
-                fontSize: 18,
+                ...theme.typography.S18W800C050505,
 
-                WebkitTextFillColor: "black !important",
+                WebkitTextFillColor: `${
+                  theme.isDark ? theme.colors.ce4e6eb : theme.colors.c050505
+                } !important`,
               },
 
               input: {
                 "&::placeholder": {
                   //Change placeholder font
                   opacity: 1,
-                  fontWeight: 300,
-                  fontSize: 16,
+                  ...theme.typography.S16W300C050505,
                 },
               },
             }}
@@ -202,10 +202,11 @@ export default function SearchComponent({
               style: {
                 // backgroundColor: lock ? "#d5dcf2" : "",
                 height: "50px",
-                fontWeight: 500,
-                fontSize: 18,
+                // fontWeight: 500,
+                // fontSize: 18,
+                ...theme.typography.S18W500C050505,
                 alignContent: "center",
-                color: theme.palette.textField.inputFieldText,
+                // color: theme.palette.textField.inputFieldText,
                 background: theme.palette.textField.inputFieldBackground, //Change Background color of textfield
                 borderRadius: `${SEARCH_INPUT_BORDER_RADIUS}px`,
                 border: `0.8px solid ${theme.palette.textField.borderColor} `,
