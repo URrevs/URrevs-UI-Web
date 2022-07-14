@@ -12,7 +12,7 @@ const CardStyled = styled(
   padding: "6px 12px 19px 21px",
   marginBottom: "15px",
   margin: "0 0px",
-}));  
+}));
 export const OverviewCard = ({
   viewer = "0",
   title = "",
@@ -41,8 +41,12 @@ export const OverviewCard = ({
                 alignItems: "center",
               }}
             >
-              <Typography variant="S18W700C050505">{title}</Typography>
-              <Typography variant="S14W400C65676B">{subtitle}</Typography>
+              <Typography component="h1" variant="S18W700C050505">
+                {title}
+              </Typography>
+              <Typography component="h2" variant="S14W400C65676B">
+                {subtitle}
+              </Typography>
             </Box>
           </Grid>
           <Grid item xs={2}>

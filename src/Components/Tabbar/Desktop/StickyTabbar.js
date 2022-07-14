@@ -109,7 +109,9 @@ export const StickyTabbar = ({
               }}
             />
           )}
-          <Typography variant="S18W700C050505">{userName}</Typography>
+          <Typography component="h1" variant="S18W700C050505">
+            {userName}
+          </Typography>
         </div>
       ) : null}
     </Card>
