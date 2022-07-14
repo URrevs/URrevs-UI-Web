@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
 import CheckCircleSharpIcon from "@mui/icons-material/CheckCircleSharp";
-import { Box, Paper, Tooltip, Typography } from "@mui/material";
+import { Box, Fab, Paper, Tooltip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaButton } from "../Components/Buttons/FaButton";
@@ -168,36 +168,43 @@ function OwnedPhonesPage() {
           reviewCard={phoneTile}
           reviewsList={phonesList}
         />
-        <FaButton
-          icon={
+        {theme.isMobile && (
+          <Fab
+            onClick={() => {
+              dispatch(
+                postingModalActions.showPostingModal({
+                  tab: 0,
+                })
+              );
+            }}
+            variant="circular"
+            disableFocusRipple
+            disableRipple
+            sx={{
+              background: "#2196F3",
+              position: "fixed",
+              bottom: "15px",
+              borderRadius: "",
+              right: "15px",
+              // width: "50px",
+              // height: "50px",
+              // textTransform: "none",
+
+              zIndex: 5,
+              "&:hover": {
+                background: "#2196F3",
+              },
+              transition: "all 0.6s ease",
+            }}
+          >
             <AddIcon
               sx={{
                 color: theme.palette.defaultRedBtnIconColor,
                 fontSize: "28px",
               }}
             />
-          }
-          onClick={() => {
-            dispatch(
-              postingModalActions.showPostingModal({
-                tab: 0,
-              })
-            );
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-            }}
-          >
-            <Typography variant="S14W700Cffffff">
-              {textContainer.addReview}
-            </Typography>
-          </Box>
-        </FaButton>
+          </Fab>
+        )}
       </FixedGrid>
     </CustomAppBar>
   );
