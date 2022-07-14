@@ -107,7 +107,9 @@ export const StickyTabbar = ({
                 // width: `${width}px`,
                 transition: "0.1s",
               }}
-            />
+            >
+              <Avatar />
+            </Avatar>
           )}
           <Typography component="h1" variant="S18W700C050505">
             {userName}

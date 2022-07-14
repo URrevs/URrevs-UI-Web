@@ -94,7 +94,9 @@ export default function CurrentUserProfilePage({}) {
         src={profileData.photo}
         alt="User profile picture"
         sx={{ width: 90, height: 90 }}
-      ></Avatar>
+      >
+        <Avatar />
+      </Avatar>
     );
   };
 
@@ -103,7 +105,11 @@ export default function CurrentUserProfilePage({}) {
   };
 
   return (
-    <CustomAppBar showLabel={true} label={textContainer.myProfile} showBackBtn={true}>
+    <CustomAppBar
+      showLabel={true}
+      label={textContainer.myProfile}
+      showBackBtn={true}
+    >
       <div style={{ paddingTop: "12px" }}>
         <Modal
           open={invitationCodeDialog}

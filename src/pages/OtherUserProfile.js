@@ -64,7 +64,9 @@ export default function OtherUserProfilePage({ uid }) {
         src={profileData.photo}
         alt="User profile picture"
         sx={{ width: 90, height: 90 }}
-      ></Avatar>
+      >
+        <Avatar />
+      </Avatar>
     );
   };
 

@@ -58,13 +58,16 @@ export default function Menu({ isDesktop = false, drawerRef }) {
   const handleInvitationClose = () => setInvitationCodeDialog(false);
 
   useEffect(() => {
-    getUserProfile().then((data) => {
-      dispatch(
-        authActions.login({
-          points: data.profile.points,
-        })
-      );
-    });
+    if (currentUserProfile.isLoggedIn) {
+      getUserProfile().then((data) => {
+        dispatch(
+          authActions.login({
+            ...profileData,
+            points: data.data.points,
+          })
+        );
+      });
+    }
   }, []);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
@@ -227,7 +230,9 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       src={profileData.photo}
       alt="User profile picture"
       sx={{ mr: "8px" }}
-    ></Avatar>
+    >
+      <Avatar />
+    </Avatar>
   );
   const userProfileButton = () => (
     <Link

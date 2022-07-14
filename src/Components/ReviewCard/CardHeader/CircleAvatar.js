@@ -12,7 +12,9 @@ const CircleAvatar = ({ userAvatar, avatarRadius, userName }) => {
       }}
       aria-label="user picture"
       alt={`${userName} profile picture`}
-    ></Avatar>
+    >
+      <Avatar />
+    </Avatar>
   );
 };
 
