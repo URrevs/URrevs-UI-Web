@@ -10,6 +10,7 @@ export default function VirtualReviewList({
   reviewCard,
   endOfData,
   loadMore,
+  loadingWidget = null,
 }) {
   const listRef = useRef(null);
 
@@ -22,6 +23,7 @@ export default function VirtualReviewList({
         context={{
           endOfData,
           noData: reviewsList.length,
+          loadingWidget,
         }}
         data={reviewsList}
         endReached={loadMore}
@@ -53,12 +55,15 @@ const ListFooter = ({ context }) => {
         justifyContent: "center",
       }}
     >
-      <LoadingReviewSkeleton />
+      {context.loadingWidget ? (
+        context.loadingWidget
+      ) : (
+        <LoadingReviewSkeleton />
+      )}
     </div>
   ) : context.noData === 0 ? (
     <Typography variant="S15W500C050505">
       {textContainer.itemsNotFound}
     </Typography>
   ) : null;
-  //     <Footer fullScreen={false} />
 };

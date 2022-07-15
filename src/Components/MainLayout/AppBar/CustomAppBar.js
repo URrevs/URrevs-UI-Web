@@ -102,7 +102,12 @@ export const CustomAppBar = ({
                   )
                 )}
               </div>
-              <div style={{ width: theme.isMobile ? "" : "100%" }}>
+              <div
+                style={{
+                  width: theme.isMobile ? "" : "100%",
+                  textAlign: "center",
+                }}
+              >
                 {!englishName ? (
                   <AppBarActions
                     showSearch={showSearch}
@@ -112,7 +117,19 @@ export const CustomAppBar = ({
                   />
                 ) : (
                   showLabel && (
-                    <Typography variant="S20W700C050505">{label}</Typography>
+                    <Typography
+                      sx={{
+                        textDecoration: "none",
+                        display: "-webkit-box",
+                        overflow: "hidden",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: 1,
+                        textAlign: "center",
+                      }}
+                      variant="S20W700C050505"
+                    >
+                      {label}
+                    </Typography>
                   )
                 )}
               </div>

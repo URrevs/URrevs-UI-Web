@@ -34,7 +34,7 @@ const CardHeaderTitle = ({
             WebkitBoxOrient: "vertical",
             WebkitLineClamp: 2,
             textAlign: "center",
-            direction: "rtl",
+            direction: theme.direction,
             maxWidth: "50%",
           }}
           to={userProfilePath}
@@ -80,7 +80,7 @@ const CardHeaderTitle = ({
             WebkitBoxOrient: "vertical",
             WebkitLineClamp: 2,
             textAlign: "center",
-            direction: "rtl",
+            direction: theme.direction,
             maxWidth: "50%",
           }}
           to={targetProfilePath}

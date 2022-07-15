@@ -17,6 +17,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 import VirtualReviewList from "./VirtualListWindowScroll";
 import { postingModalActions } from "../store/uiPostingModalSlice";
+import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 
 function OwnedPhonesPage() {
   const dispatch = useAppDispatch();
@@ -167,6 +168,7 @@ function OwnedPhonesPage() {
           loadMore={loadMore}
           reviewCard={phoneTile}
           reviewsList={phonesList}
+          loadingWidget={<LoadingSpinner />}
         />
         {theme.isMobile && (
           <Fab
