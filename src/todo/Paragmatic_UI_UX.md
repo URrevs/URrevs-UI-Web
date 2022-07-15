@@ -1,20 +1,19 @@
-- [ ]
-- [ ] Reply field not indented in English (fix in posting field) ###
 - [x] Remove Logo from mobile in ToS and Privacy policy
-- [ ] Logout red loader
-- [ ] replace ...Loading with a loader
 - [x] Tiny reply field in Question screen for some reason
-- [ ] LeaderboardEntry points should be no-wrap
 - [x] BottomNavBar Icon doesn't change glow in homescreen
 - [x] Posted Review and Posting Questions FULLSCREEN need padding above.
-- [ ] Tooltip vs Modal for help messages
-- [ ] Error HelperText for star rating on validation
 - [x] Owned Products Tab needs some fixing to look like desktop view All Products.
 - [x] Linebreak in subtitle of review/question
 - [x] Below Posting field should be total 30px
 - [x] Why mobile view has posting field below it 50px?
 - [ ] Leaderboard menu should be ellipsis in English translation
 - [ ] Add border for the sidebar to serapate it from the menu (optional)
+- [ ] Tooltip vs Modal for help messages
+- [ ] Error HelperText for star rating on validation
+- [ ] LeaderboardEntry points should be no-wrap
+- [ ] Logout red loader
+- [ ] replace ...Loading with a loader
+- [ ] Reply field not indented in English (fix in posting field) ###
 
 # Dark theme:
 

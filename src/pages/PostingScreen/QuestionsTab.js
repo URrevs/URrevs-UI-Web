@@ -68,7 +68,7 @@ export const QuestionsTab = ({ initValues }) => {
   const [addCompanyQuestion] = useAddCompanyQuestionMutation();
   // const [addQuestionError, setAddQuestionError] = React.useState(null);
   //Handle Submit
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     // alert(JSON.stringify(values));
     try {
       if (values.spoc.type === "company") {
@@ -82,6 +82,7 @@ export const QuestionsTab = ({ initValues }) => {
           phone: values.spoc.id,
         });
       }
+      resetForm();
       sessionStorage.clear();
       GAevent("User interaction", "Adding question", "Adding question", false);
     } catch (e) {}

@@ -1,10 +1,10 @@
 # Need to be done
 
 - [ ] Refresh tokens
+- [ ] BottomNavBar should only switch color after navigation is success
 
 # Postponed:
 
-- [ ] Dark theme
 - [ ] Reporting Admin Side
 
 # Security:
@@ -25,6 +25,7 @@
 
 # Done:
 
+- [x] Dark theme
 - [x] Add Review confirmation <b>MODAL</b> before navigating out of add review.
 - [x] Mobile left in arabic right in english Fab in add review, add question screens and in Owned products tab.animation is extremely slow in infinite scrolling screens opt out of it.
 - [x] Long Press comment/reply to report on mobile
