@@ -64,6 +64,7 @@ export function AnswersList({
             itemContent={(index, comment) => {
               return (
                 <Answer
+                  key={comment._id}
                   commentId={comment._id}
                   text={comment.content}
                   date={comment.createdAt}
