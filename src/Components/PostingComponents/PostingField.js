@@ -15,6 +15,7 @@ import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 export const PostingField = ({
   placeholder = "",
   comment = false,
+  backgroundColor,
   avatar = true,
   onSubmit = () => {},
   params = {}, //Adding new textfield params or overwriting existing ones
@@ -68,7 +69,8 @@ export const PostingField = ({
         },
         ...theme.typography.S16W500C050505,
         alignContent: "center",
-        background: theme.palette.textField.postingFieldBackground,
+        background:
+          backgroundColor ?? theme.palette.textField.postingFieldBackground,
         borderRadius: `${SEARCH_INPUT_BORDER_RADIUS}px`,
       },
     },
