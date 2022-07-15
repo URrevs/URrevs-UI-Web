@@ -18,6 +18,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useTheme } from "@emotion/react";
 import { useAppSelector } from "../../store/hooks";
 import CheckIcon from "@mui/icons-material/Check";
+import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 
 export const InteractionBody = ({
   text,
@@ -32,8 +33,8 @@ export const InteractionBody = ({
   showCorrectIcon,
   reportFunction = () => {},
 }) => {
+  const checkSignedIn = useCheckSignedIn();
   const [showReportMenu, setShowReportMenu] = React.useState(false);
-
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const uid = useAppSelector((state) => state.auth.uid);
   const theme = useTheme();
@@ -41,7 +42,7 @@ export const InteractionBody = ({
   const [timeoutId, setTimeoutId] = React.useState();
   const [modal, setModal] = React.useState("");
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    if (checkSignedIn()) setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -58,7 +59,7 @@ export const InteractionBody = ({
       onTouchStart={(e) => {
         setTimeoutId(
           setTimeout(() => {
-            setModal("report");
+            if (checkSignedIn()) setModal("report");
           }, 500)
         );
       }}
