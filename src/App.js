@@ -85,12 +85,88 @@ function App() {
 
   const theme = createTheme(
     {
+      // overrides: {
+      //   CssBaseline: {
+      //     "@global": {
+      //       "*::-webkit-scrollbar": {
+      //         height: 0,
+      //         width: "8px",
+      //       },
+
+      //       /* Track */
+      //       "*::-webkit-scrollbar-track": {
+      //         background: "#f1f1f1",
+      //       },
+
+      //       /* Handle */
+      //       "*::-webkit-scrollbar-thumb": {
+      //         background: "rgb(154, 152, 152)",
+      //         borderRadius: "15px",
+      //       },
+
+      //       /* Handle on hover */
+      //       "*::-webkit-scrollbar-thumb:hover": {
+      //         background: "#555",
+      //       },
+      //     },
+      //   },
+      // },
       isMobile: isMobile,
       isDark: isDark,
       direction: `${direction}`,
       typography: fonts,
       colors: COLORS,
       components: {
+        MuiCssBaseline: {
+          styleOverrides: (themeParam) => ({
+            body:
+              themeParam.palette.mode === "dark"
+                ? {
+                    "&::-webkit-scrollbar": {
+                      height: 0,
+                      width: "8px",
+                    },
+
+                    /* Track */
+                    "&::-webkit-scrollbar-track": {
+                      background: "#242526",
+                    },
+
+                    /* Handle */
+                    "&::-webkit-scrollbar-thumb": {
+                      background: "rgb(154, 152, 152)",
+                      borderRadius: "15px",
+                    },
+
+                    /* Handle on hover */
+                    "&::-webkit-scrollbar-thumb:hover": {
+                      background: "#555",
+                    },
+                  }
+                : {
+                    "&::-webkit-scrollbar": {
+                      height: 0,
+                      width: "8px",
+                    },
+
+                    /* Track */
+                    "&::-webkit-scrollbar-track": {
+                      background: "#f1f1f1",
+                    },
+
+                    /* Handle */
+                    "&::-webkit-scrollbar-thumb": {
+                      background: "rgb(154, 152, 152)",
+                      borderRadius: "15px",
+                    },
+
+                    /* Handle on hover */
+                    "&::-webkit-scrollbar-thumb:hover": {
+                      background: "#555",
+                    },
+                  },
+          }),
+        },
         MuiTab: {
           styleOverrides: {
             root: {

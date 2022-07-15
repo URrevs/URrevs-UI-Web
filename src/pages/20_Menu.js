@@ -398,6 +398,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
             // width: "95%",
           }}
         >
+          {/* follow us section */}
           <Typography variant="S22W500C050505">{`${pageDictionry.followUs}`}</Typography>
           <Box
             sx={{
@@ -436,6 +437,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
               </div>
             </Box>
           </Box>
+          {/* footer */}
           <Box
             sx={{
               display: "flex",

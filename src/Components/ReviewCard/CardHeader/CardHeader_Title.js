@@ -80,7 +80,7 @@ const CardHeaderTitle = ({
             WebkitBoxOrient: "vertical",
             WebkitLineClamp: 2,
             textAlign: "center",
-            direction: theme.direction,
+            direction: 'ltr',
             maxWidth: "50%",
           }}
           to={targetProfilePath}
