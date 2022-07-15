@@ -52,7 +52,12 @@ export const Leaderboard = () => {
   const handleCloseDialog = () => {
     setModal("");
   };
-
+  // useEffect(() => {
+  //   const counter = setInterval();
+  //   return () => {
+  //     clearInterval(counter);
+  //   };
+  // }, []);
   const [isCurrentlyHeld, setIsCurrentlyHeld] = useState(false);
   useEffect(() => {
     if (
@@ -111,7 +116,7 @@ export const Leaderboard = () => {
       <LoadingSpinner />
     ) : (
       topUsersData.map((item, i) => (
-        <Fragment>
+        <Fragment key={item.name}>
           <LeaderboardEntry
             isBody={theme.isMobile}
             userRank={i + 1}
@@ -236,6 +241,7 @@ export const Leaderboard = () => {
           {competetionBanner()}
           {/* Your Rank In The Leaderboard */}
           {currentUserRank()}
+          <div style={{ height: "16px" }}></div>
           {leaderboardList()}
         </div>
       )}
