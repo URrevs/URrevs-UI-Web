@@ -179,7 +179,10 @@ export function ProductQuestions() {
           onClick={() => {
             dispatch(
               postingModalActions.showPostingModal({
-                tab: 1, //Questions Tab
+                type: "phone",
+                id: pid,
+                name: phoneName,
+                tab: 1, //Question Tab
               })
             );
           }}

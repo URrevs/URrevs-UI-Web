@@ -179,7 +179,10 @@ export function CompanyQuestions() {
           onClick={() => {
             dispatch(
               postingModalActions.showPostingModal({
-                tab: 1, //Questions tab
+                tab: 1,
+                type: "company",
+                name: companyName,
+                id: cid,
               })
             );
           }}
