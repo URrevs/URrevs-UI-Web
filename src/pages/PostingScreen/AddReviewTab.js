@@ -20,10 +20,11 @@ import FormikTextField from "../../Components/Form/FormikTextField";
 import { StarCounter } from "../../Components/StarCounter/StarCounter";
 import { useGetManufacturingCompanyMutation } from "../../services/phones";
 import { useSearchPhonesOnlyMutation } from "../../services/search";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { useCallbackPrompt } from "../../hooks/useCallbackPrompt";
 import { FormSubmitButton } from "./FormSubmitButton";
 import { ConfirmationBody } from "../../Components/Dialogs/ConfiramtionBody";
+import { postingModalActions } from "../../store/uiPostingModalSlice";
 
 /*Documentation */
 /*
@@ -48,6 +49,7 @@ export const AddReviewTab = ({ ...props }) => {
   const textContainer = useAppSelector((state) => {
     return state.language.textContainer;
   });
+  const dispatch = useAppDispatch();
   const [open, setOpen] = React.useState(false);
   const [openStar, setOpenStar] = React.useState(false);
   const [count, setCount] = React.useState(0);
@@ -179,6 +181,7 @@ export const AddReviewTab = ({ ...props }) => {
             yesAction={() => {
               confirmNavigation();
               sessionStorage.clear();
+              dispatch(postingModalActions.hidePostingModal());
             }}
             noAction={cancelNavigation}
           />

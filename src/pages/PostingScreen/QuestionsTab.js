@@ -129,6 +129,7 @@ export const QuestionsTab = ({ initValues }) => {
             yesAction={() => {
               confirmNavigation();
               sessionStorage.clear();
+              dispatch(postingModalActions.hidePostingModal());
             }}
             noAction={cancelNavigation}
           />
