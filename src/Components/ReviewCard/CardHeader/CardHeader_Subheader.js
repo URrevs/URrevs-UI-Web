@@ -21,8 +21,8 @@ const CardSubheader = ({
   const language = useAppSelector((state) => state.language.language);
   const theme = useTheme();
 
+  if (buyDate) buyDate = subtractDate(buyDate, language, new Date(reviewDate));
   reviewDate = convertDateToString(reviewDate, language);
-  if (buyDate) buyDate = subtractDate(buyDate, language, reviewDate);
 
   let verificationRatioText = "";
 

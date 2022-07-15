@@ -8,8 +8,6 @@ export const subtractDate = (
 ) => {
   const locale = language === "ar" ? ar : enCA;
 
-  subtractedDate = new Date(subtractedDate);
-
   const date = new Date(isoString);
   // used for
   const usedFor = formatDistanceStrict(date, subtractedDate, {
