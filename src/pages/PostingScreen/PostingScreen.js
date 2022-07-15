@@ -139,7 +139,10 @@ const PostingScreen = ({
               paramId ?? handleInitialValues("invitationCode", ""),
           }}
           validationSchema={BasicValidationSchema}
-          onSubmit={async (values, { setSubmitting, resetForm }) => {
+          onSubmit={async (
+            values,
+            { setSubmitting, resetForm, setFieldValue }
+          ) => {
             if (checkSignedIn()) {
               const reviewPost = {
                 phoneId: values.chooseProduct.id,
@@ -163,6 +166,13 @@ const PostingScreen = ({
                 await addReview(reviewPost).unwrap();
                 //Success Message
                 // TODO uncomment
+                setFieldValue("chooseProduct", {
+                  id: "",
+                  label: "success",
+                  type: "",
+                });
+                setFieldValue("purchaseDate", null);
+                await setTimeout(() => {}, 100);
                 resetForm();
                 sessionStorage.clear();
                 GAevent(
