@@ -187,7 +187,7 @@ export const phoneQuestionsApi = createApi({
         };
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-        payload.doFn(payload.replyId);
+        payload.doFn(payload.commentId, payload.replyId);
 
         try {
           await queryFulfilled;
@@ -197,7 +197,7 @@ export const phoneQuestionsApi = createApi({
             e.error.data.status === "already liked"
           ) {
           } else {
-            payload.unDoFn(payload.replyId);
+            payload.unDoFn(payload.commentId, payload.replyId);
           }
         }
       },
@@ -211,7 +211,7 @@ export const phoneQuestionsApi = createApi({
         };
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-        payload.doFn(payload.replyId);
+        payload.doFn(payload.commentId, payload.replyId);
 
         try {
           await queryFulfilled;
@@ -221,7 +221,7 @@ export const phoneQuestionsApi = createApi({
             e.error.data.status === "already liked"
           ) {
           } else {
-            payload.unDoFn(payload.replyId);
+            payload.unDoFn(payload.commentId, payload.replyId);
           }
         }
       },
@@ -267,7 +267,7 @@ export const phoneQuestionsApi = createApi({
         } catch (e: any) {
           // if (e.error.data.status === "not found") {
           // } else {
-            payload.unDoFn(payload.replyId);
+          payload.unDoFn(payload.replyId);
           // }
         }
       },

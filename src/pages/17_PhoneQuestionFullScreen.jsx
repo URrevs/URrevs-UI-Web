@@ -174,11 +174,25 @@ export default function PhoneQuestionFullScreen() {
   };
 
   // reply like and unlike
-  const stateLikePhoneReply = (id) =>
-    dispatch(answersListActions.setIsLiked({ id: id, isLiked: true }));
+  const stateLikePhoneReply = (commentId, replyId) => {
+    dispatch(
+      answersListActions.setReplyIsLiked({
+        commentId: commentId,
+        replyId: replyId,
+        isLiked: true,
+      })
+    );
+  };
 
-  const stateUnLikePhoneReply = (id) =>
-    dispatch(answersListActions.setIsLiked({ id: id, isLiked: false }));
+  const stateUnLikePhoneReply = (commentId, replyId) => {
+    dispatch(
+      answersListActions.setReplyIsLiked({
+        commentId: commentId,
+        replyId: replyId,
+        isLiked: false,
+      })
+    );
+  };
 
   const likeReplyRequest = (commentId, replyId) => {
     likeReply({

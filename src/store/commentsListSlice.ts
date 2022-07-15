@@ -53,7 +53,6 @@ const commentsList = createSlice({
         isLiked: boolean;
       }>
     ) {
-
       const targetReview = state.newComments.findIndex((element) => {
         return element._id.toString() === action.payload.id.toString();
       });
@@ -63,6 +62,36 @@ const commentsList = createSlice({
         action.payload.isLiked
           ? state.newComments[targetReview].likes++
           : state.newComments[targetReview].likes--;
+      }
+    },
+
+    setReplyIsLiked(
+      state,
+      action: PayloadAction<{
+        commentId: string;
+        replyId: string;
+        isLiked: boolean;
+      }>
+    ) {
+      console.log(action.payload.commentId, action.payload.replyId);
+
+      const targetComment = state.newComments.findIndex((element) => {
+        return element._id.toString() === action.payload.commentId.toString();
+      });
+
+      const targetReply = state.newComments[targetComment].replies.findIndex(
+        (element) => {
+          return element._id.toString() === action.payload.replyId.toString();
+        }
+      );
+      console.log(targetComment, targetReply);
+
+      if (targetReply !== -1) {
+        state.newComments[targetComment].replies[targetReply].liked =
+          action.payload.isLiked;
+        action.payload.isLiked
+          ? state.newComments[targetComment].replies[targetReply].likes++
+          : state.newComments[targetComment].replies[targetReply].likes--;
       }
     },
   },
