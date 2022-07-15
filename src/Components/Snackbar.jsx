@@ -62,25 +62,27 @@ export default function CustomizedSnackbar() {
           <Typography variant="S16W800C2196F3">{actionText}</Typography>
         </a>
       ) : (
-        <Button
-          onClick={
-            //if path is given then onClick navigate to that path
-            () => {
-              if (!navPath) {
-                actionFn();
-                dispatch(snackbarActions.hideSnackbar());
-              } else {
-                navigate(navPath, { replace: true });
-                dispatch(snackbarActions.hideSnackbar());
+        showActionBtn && (
+          <Button
+            onClick={
+              //if path is given then onClick navigate to that path
+              () => {
+                if (!navPath) {
+                  actionFn();
+                  dispatch(snackbarActions.hideSnackbar());
+                } else {
+                  navigate(navPath, { replace: true });
+                  dispatch(snackbarActions.hideSnackbar());
+                }
               }
             }
-          }
-          sx={{
-            textTransform: "none",
-          }}
-        >
-          <Typography variant="S16W800C2196F3">{actionText}</Typography>
-        </Button>
+            sx={{
+              textTransform: "none",
+            }}
+          >
+            <Typography variant="S16W800C2196F3">{actionText}</Typography>
+          </Button>
+        )
       )}
       {!theme.isMobile && (
         <IconButton

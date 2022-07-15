@@ -62,13 +62,13 @@ const correspondingErrorMessage = (
       error.message =
         textContainer.reviewYourPhoneCurrentlyInUseOrVerifyYourUnverifiedReviews;
       break;
-    case "not found" ||
-      "review not found" ||
-      "comment not found" ||
-      "track review not found" ||
-      "question not found" ||
-      "answer not found" ||
-      "question or answer not found":
+    case "not found":
+    case "review not found":
+    case "comment not found":
+    case "track review not found":
+    case "question not found":
+    case "answer not found":
+    case "question or answer not found":
       error.message = textContainer.contentIsUnavailable;
       break;
 
