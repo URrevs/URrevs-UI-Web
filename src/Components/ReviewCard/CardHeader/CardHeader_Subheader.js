@@ -22,7 +22,7 @@ const CardSubheader = ({
   const theme = useTheme();
 
   reviewDate = convertDateToString(reviewDate, language);
-  if (buyDate) buyDate = subtractDate(buyDate, language);
+  if (buyDate) buyDate = subtractDate(buyDate, language, reviewDate);
 
   let verificationRatioText = "";
 
