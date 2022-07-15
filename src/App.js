@@ -54,6 +54,7 @@ import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { COLORS } from "./Styles/main_light_colors";
 // OUR_TRACKING_ID
 import ReactGA from "react-ga";
+import { snackbarActions } from "./store/uiSnackbarSlice";
 import { getFonts } from "./Styles/fonts";
 
 const TRACKING_ID = "UA-165221874-4";
@@ -65,6 +66,8 @@ function App() {
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
+
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const language = useSelector((state) => state.language.language);
   const direction = language === "ar" ? "rtl" : "ltr";
@@ -433,6 +436,24 @@ function App() {
       unregisterObserver();
     };
   }, [dispatch, refetchToken]);
+
+  // tell user to download application
+  useEffect(() => {
+    if (isMobile) {
+      const intervalShowSnackbar = window.setTimeout(() => {
+        dispatch(
+          snackbarActions.showSnackbar({
+            message: textContainer.downloadAppNow,
+            showActionBtn: true,
+            actionBtnText: textContainer.download,
+          })
+        );
+      }, 4000);
+      return () => {
+        clearTimeout(intervalShowSnackbar);
+      };
+    }
+  });
 
   return (
     <ThemeProvider theme={theme}>

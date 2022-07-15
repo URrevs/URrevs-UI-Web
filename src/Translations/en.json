@@ -366,5 +366,7 @@
   "youMustVerifyFromSameMobileDevice": "You must open the website from the device you want to verify your review on it",
   "yourRequestWillBeReviewedAndProcessedAsSoonAsPossible": "Your request will be reviewed and processed as soon as possible",
   "retry": "Retry",
-  "deleteRequestIsCancelledSuccessfully": "Delete request is cancelled successfully"
+  "deleteRequestIsCancelledSuccessfully": "Delete request is cancelled successfully",
+  "downloadAppNow": "Download App",
+  "download": "Download"
 }
