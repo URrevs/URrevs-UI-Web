@@ -41,7 +41,7 @@ export function PostedQuestions() {
           onClick={() => {
             dispatch(
               postingModalActions.showPostingModal({
-                tab: 0,
+                tab: 1, //Questions tab
               })
             );
           }}
