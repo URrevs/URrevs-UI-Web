@@ -7,11 +7,13 @@ import ROUTES_NAMES from "../../../RoutesNames";
 import { useIndicateUserComparingMutation } from "../../../services/phones";
 import { useSearchPhonesOnlyMutation } from "../../../services/search";
 import { compareActions } from "../../../store/compareSlice";
-import { useAppDispatch } from "../../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import OrangeGradientButton from "../../Buttons/OrangeGradientButton";
 import SearchComponent from "../../SearchComponent";
 
 export const CompareItem = ({ item }) => {
+  const currentUser = useAppSelector((state) => state.auth);
+
   const [compareItem, setCompareItem] = React.useState({
     id: "",
     label: "",
@@ -71,7 +73,9 @@ export const CompareItem = ({ item }) => {
                 })
               );
               try {
-                indicateComparison({ pid1: item._id, pid2: compareItem.id });
+                if (currentUser.isLoggedIn) {
+                  indicateComparison({ pid1: item._id, pid2: compareItem.id });
+                }
               } catch (e) {}
 
               navigate(

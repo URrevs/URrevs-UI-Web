@@ -30,6 +30,8 @@ import {
 import { useAppSelector } from "../store/hooks";
 
 export const SearchScreen = () => {
+  const currentUser = useAppSelector((state) => state.auth);
+
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const user = useAppSelector((state) => state.auth);
 
@@ -78,11 +80,10 @@ export const SearchScreen = () => {
             padding: 0,
           }}
           onClick={() => {
-            // add recent search locally
-            // setResults([...results, { _id: id, name: title, type }]);
-
-            // add recent search to server
-            addRecentSearch({ type, id });
+            // save to user's recent search
+            if (currentUser.isLoggedIn) {
+              addRecentSearch({ type, id });
+            }
             type === "phone"
               ? navigate(
                   `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${id}`
