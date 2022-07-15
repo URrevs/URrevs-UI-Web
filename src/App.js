@@ -54,8 +54,8 @@ import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { COLORS } from "./Styles/main_light_colors";
 // OUR_TRACKING_ID
 import ReactGA from "react-ga";
-import { Footer } from "./Components/Banners/Footer";
 import { getFonts } from "./Styles/fonts";
+
 const TRACKING_ID = "UA-165221874-4";
 
 function App() {
@@ -316,14 +316,12 @@ function App() {
 
   // test for polling interval to update token
   useEffect(() => {
-    const intervalGetToken = window.setInterval(() => {
-      dispatch(authActions.toggleRefetch({ refetch: true }));
-    }, 3000000);
-    return () => {
-      console.log("Refreshing");
-      clearInterval(intervalGetToken);
-    };
-  }, []);
+    if (storeUser.isLoggedIn) {
+      const intervalGetToken = window.setInterval(() => {
+        dispatch(authActions.toggleRefetch({ refetch: true }));
+      }, 3000000);
+    }
+  }, [storeUser.isLoggedIn]);
 
   useEffect(async () => {
     dispatch(authActions.toggleRefetch({ refetch: false }));

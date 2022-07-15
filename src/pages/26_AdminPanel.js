@@ -28,8 +28,11 @@ export const AdminPanel = () => {
     {},
     { refetchOnMountOrArgChange: true }
   );
-  const { data: lastCompetetionData, error: latestCompetetionError } =
-    useGetLatestCompetetionQuery();
+  const {
+    data: lastCompetetionData,
+    isLoading: lastCompetetionIsLoading,
+    error: latestCompetetionError,
+  } = useGetLatestCompetetionQuery();
 
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(0);
@@ -80,7 +83,7 @@ export const AdminPanel = () => {
   }, [data]);
 
   const renderAdminOption = () =>
-    isLoading ? (
+    isLoading || lastCompetetionIsLoading ? (
       <LoadingSpinner />
     ) : (
       <React.Fragment>
