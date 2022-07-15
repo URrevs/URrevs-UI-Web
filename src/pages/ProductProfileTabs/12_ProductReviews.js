@@ -116,7 +116,10 @@ export function ProductReviews() {
           onClick={() => {
             dispatch(
               postingModalActions.showPostingModal({
-                tab: 0,
+                type: "phone",
+                id: phoneId,
+                name: phoneName,
+                tab: 0, //AddReview Tab
               })
             );
           }}
