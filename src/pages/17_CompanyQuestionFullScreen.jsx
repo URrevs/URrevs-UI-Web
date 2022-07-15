@@ -174,11 +174,25 @@ export default function CompanyQuestionFullScreen() {
   };
 
   // reply like and unlike
-  const stateLikeCompanyReply = (id) =>
-    dispatch(answersListActions.setIsLiked({ id: id, isLiked: true }));
+  const stateLikeCompanyReply = (commentId, replyId) => {
+    dispatch(
+      answersListActions.setReplyIsLiked({
+        commentId: commentId,
+        replyId: replyId,
+        isLiked: true,
+      })
+    );
+  };
 
-  const stateUnLikeCompanyReply = (id) =>
-    dispatch(answersListActions.setIsLiked({ id: id, isLiked: false }));
+  const stateUnLikeCompanyReply = (commentId, replyId) => {
+    dispatch(
+      answersListActions.setReplyIsLiked({
+        commentId: commentId,
+        replyId: replyId,
+        isLiked: false,
+      })
+    );
+  };
 
   const likeReplyRequest = (commentId, replyId) => {
     likeReply({

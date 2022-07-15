@@ -79,7 +79,10 @@ export const Answer = ({
 
   const [showReplyField, setShowReplyField] = useState(false);
 
-  const toggleReplyField = () => setShowReplyField((show) => !show);
+  const toggleReplyField = () => {
+    setShowReplyField((show) => !show);
+    setShowReplies((s) => !s);
+  };
   const [showReplies, setShowReplies] = useState(false);
 
   const repliesPadding = !acceptedAnswer ? "50px" : `${50 + 40}px`;
@@ -161,7 +164,7 @@ export const Answer = ({
                   liked={reply.liked}
                   replyLike={likeReplyRequest}
                   replyUnlike={unLikeReplyRequest}
-                  commentId={reply.commentId}
+                  commentId={commentId}
                   avatar={reply.userPicture}
                   userName={reply.userName}
                   userId={reply.userId}

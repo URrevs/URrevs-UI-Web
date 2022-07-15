@@ -51,7 +51,10 @@ export const Comment = ({
   const [showReplyField, setShowReplyField] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
 
-  const toggleReplyField = () => setShowReplyField((show) => !show);
+  const toggleReplyField = () => {
+    setShowReplyField((show) => !show);
+    setShowReplies((s) => !s);
+  };
 
   const repliesPadding = "50px";
 
@@ -88,12 +91,12 @@ export const Comment = ({
         }}
       >
         {showReplyField && (
-          <PostingField
-            avatar={true}
-            placeholder={textContainer.writeAReply}
-            reply
-            onSubmit={(text) => submitReplyHandler(text, commentId)}
-          />
+            <PostingField
+              avatar={true}
+              placeholder={textContainer.writeAReply}
+              reply
+              onSubmit={(text) => submitReplyHandler(text, commentId)}
+            />
         )}
       </div>
 
@@ -125,7 +128,7 @@ export const Comment = ({
                   liked={reply.liked}
                   replyLike={likeReplyRequest}
                   replyUnlike={unLikeReplyRequest}
-                  commentId={reply.commentId}
+                  commentId={commentId}
                   avatar={reply.userPicture}
                   userName={reply.userName}
                   userId={reply.userId}
