@@ -15,7 +15,7 @@ import { snackbarActions } from "../../../store/uiSnackbarSlice";
 export default function ActionButton({
   actionBtnFunction,
   reportFunction,
-  verificationRatio,
+  verificationRatio = null,
   userId,
   verifyPhone,
 }) {
