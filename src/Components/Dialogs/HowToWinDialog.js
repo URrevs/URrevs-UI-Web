@@ -27,6 +27,8 @@ export const HowToWinDialog = ({ handleClose, isCurrentlyHeld }) => {
           <Link
             href="https://play.google.com/store/apps/details?id=com.urrevs.urrevsmobile" //Placeholder Link
             underline="always"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <Typography variant="S16W700C050505">
               {textContainer.ourMobileApp}

@@ -48,7 +48,9 @@ export const QuestionsTab = ({ initValues }) => {
     }
   };
   React.useEffect(() => {
-    sessionStorage.setItem("spoc", JSON.stringify(initValues));
+    if (initValues.label > 0) {
+      sessionStorage.setItem("spoc", JSON.stringify(initValues));
+    }
   }, []);
   const [showDialog, setShowDialog] = React.useState(false);
   const [showPrompt, confirmNavigation, cancelNavigation] =
