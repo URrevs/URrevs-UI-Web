@@ -254,7 +254,11 @@ export const MyDrawer = (props) => {
         <div style={{ ...theme.mixins.toolbar }}></div>
         <List>
           {drawerTiles.map((item, i) => (
-            <ConditionalLink condition={item.to ? item.to : false} to={item.to}>
+            <ConditionalLink
+              condition={item.to ? item.to : false}
+              to={item.to}
+              key={item.title}
+            >
               <ListItem
                 style={{
                   padding: 0,
@@ -263,7 +267,6 @@ export const MyDrawer = (props) => {
                 }}
                 onClick={item.onClick}
                 button
-                key={item.title}
               >
                 <div style={{ textAlign: "center", padding: "8px 0" }}>
                   <ListItemIcon sx={{ justifyContent: "center" }}>

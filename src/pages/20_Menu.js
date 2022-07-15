@@ -339,9 +339,9 @@ export default function Menu({ isDesktop = false, drawerRef }) {
           //Margin from top appbar
           display: "flex",
           flexDirection: "column",
-
           height: currentUserProfile ? "80vh" : "",
-          marginBottom: 70,
+          minHeight: "650px",
+          // marginBottom: 70,
           padding: "0px 14px",
         }}
       >
