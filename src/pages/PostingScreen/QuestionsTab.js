@@ -84,6 +84,7 @@ export const QuestionsTab = ({ initValues }) => {
         });
       }
       setQuery("success");
+      await setTimeout(() => {}, 100);
       resetForm();
       sessionStorage.clear();
       GAevent("User interaction", "Adding question", "Adding question", false);
@@ -122,6 +123,7 @@ export const QuestionsTab = ({ initValues }) => {
       sum = values.spoc.label ? ++sum : sum;
       sum = values.question ? ++sum : sum;
       if (sum >= 1) setShowDialog(true);
+      else setShowDialog(false);
     }, [values]);
     return (
       <Modal open={showPrompt} direction={theme.direction}>
