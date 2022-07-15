@@ -93,7 +93,10 @@ export const SignoutDialog = ({ handleClose }) => {
             {textContainer.logOut}
           </Button>
           <Box sx={{ width: 12 }}></Box>
-          <Button sx={{ color: theme.colors.c050505 }} onClick={handleClose}>
+          <Button
+            sx={{ ...theme.typography.S16W800C050505 }}
+            onClick={handleClose}
+          >
             {textContainer.cancel}
           </Button>
         </Box>
