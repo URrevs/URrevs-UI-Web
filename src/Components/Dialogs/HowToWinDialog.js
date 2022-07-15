@@ -26,7 +26,7 @@ export const HowToWinDialog = ({ handleClose, isCurrentlyHeld }) => {
         </Typography>
 
         <Link
-          href="https://play.google.com/store/apps/details?id=org.telegram.messenger" //Placeholder Link
+          href="https://play.google.com/store/apps/details?id=com.urrevs.urrevsmobile" //Placeholder Link
           underline="always"
         >
           <Typography variant="S16W700C050505">
