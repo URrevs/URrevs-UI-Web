@@ -72,14 +72,16 @@ export default function CustomizedSnackbar() {
           <Typography variant="S16W800C2196F3">{actionText}</Typography>
         </Button>
       )}
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
+      {!theme.isMobile && (
+        <IconButton
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={handleClose}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      )}
     </React.Fragment>
   );
 
@@ -91,9 +93,10 @@ export default function CustomizedSnackbar() {
             backgroundColor: "#C4C4C4",
             borderRadius: "12px",
             ...theme.typography.S16W500C050505,
-            color:"#050505",
+            color: "#050505",
             lineHeight: 1,
             marginBottom: marginBottom,
+            maxWidth: theme.isMobile ? "100vw" : "50vw",
           },
         }}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
