@@ -118,6 +118,10 @@ export const CustomAppBar = ({
                 ) : (
                   showLabel && (
                     <Typography
+                      variant="S20W700C050505"
+                      style={{
+                        direction: "ltr",
+                      }}
                       sx={{
                         textDecoration: "none",
                         display: "-webkit-box",
@@ -126,7 +130,6 @@ export const CustomAppBar = ({
                         WebkitLineClamp: 1,
                         textAlign: "center",
                       }}
-                      variant="S20W700C050505"
                     >
                       {label}
                     </Typography>
