@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
+import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { PostingField } from "../Components/PostingComponents/PostingField";
 import PhoneReview from "../Components/ReviewCard/PhoneReview";
@@ -262,7 +263,7 @@ export default function PhoneReviewFullScreen() {
     return (
       <div>
         {reviewLoading ? (
-          <div>Loading review...</div>
+          <LoadingReviewSkeleton />
         ) : reviewError ? (
           <div>Error</div>
         ) : (
@@ -320,7 +321,7 @@ export default function PhoneReviewFullScreen() {
         <AlonePostsGrid>
           <Box>
             {reviewLoading ? (
-              <div>Loading review...</div>
+              <LoadingReviewSkeleton />
             ) : reviewError ? (
               <div>Error</div>
             ) : (

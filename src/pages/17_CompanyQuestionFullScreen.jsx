@@ -310,7 +310,7 @@ export default function CompanyQuestionFullScreen() {
     return (
       <div>
         {reviewLoading ? (
-          <div>Loading review...</div>
+          <LoadingReviewSkeleton />
         ) : reviewError ? (
           <div>Error</div>
         ) : (
@@ -367,7 +367,7 @@ export default function CompanyQuestionFullScreen() {
         <AlonePostsGrid>
           <Box>
             {reviewLoading ? (
-              <div>Loading review...</div>
+              <LoadingReviewSkeleton />
             ) : reviewError ? (
               <div>Error</div>
             ) : (

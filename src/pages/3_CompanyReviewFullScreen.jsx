@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
+import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { PostingField } from "../Components/PostingComponents/PostingField";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
@@ -265,7 +266,7 @@ export default function CompanyReviewFullScreen() {
 
   const reviewCard = () => {
     if (reviewLoading) {
-      return <div>Loading review...</div>;
+      return <LoadingReviewSkeleton />;
     } else if (reviewError) {
       return <div>Error</div>;
     } else if (currentReview) {
@@ -320,7 +321,7 @@ export default function CompanyReviewFullScreen() {
         <AlonePostsGrid>
           <Box>
             {reviewLoading ? (
-              <div>Loading review...</div>
+              <LoadingReviewSkeleton />
             ) : reviewError ? (
               <div>Error</div>
             ) : (
