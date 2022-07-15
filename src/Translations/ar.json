@@ -370,5 +370,7 @@
   "verifiedSuccessfully": "تم التوثيق",
   "yourRequestWillBeReviewedAndProcessedAsSoonAsPossible": "سوف يتم مراجعة طلبك وتنفيذه في اقرب وقت",
   "retry": "إعادة المحاولة",
-  "deleteRequestIsCancelledSuccessfully": "تم الغاء الطلب بنجاح"
+  "deleteRequestIsCancelledSuccessfully": "تم الغاء الطلب بنجاح",
+  "downloadAppNow": "تحميل التطبيق",
+  "download":"تحميل"
 }
