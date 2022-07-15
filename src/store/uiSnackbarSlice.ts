@@ -7,6 +7,7 @@ interface initialState {
   actionBtnText: string;
   actionNavPath: string;
   actionBtnFunction: () => void;
+  newTab: boolean;
 }
 
 const initialSnackbarSliceState: initialState = {
@@ -16,6 +17,7 @@ const initialSnackbarSliceState: initialState = {
   actionBtnText: "",
   actionNavPath: "",
   actionBtnFunction: () => {},
+  newTab: false,
 };
 
 const snackbarSlice = createSlice({
@@ -29,6 +31,7 @@ const snackbarSlice = createSlice({
       state.actionBtnText = action.payload.actionBtnText;
       state.actionBtnFunction = action.payload.actionBtnFunction;
       state.actionNavPath = action.payload.actionNavPath;
+      state.newTab = action.payload.newTab;
     },
     hideSnackbar(state) {
       state.show = false;
