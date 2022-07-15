@@ -58,7 +58,10 @@ export const PathTabbar = ({
   const { fontSize, ref } = useFitText({
     maxFontSize: 100,
   });
-
+  //Fix for indicator not changing when pressing backspace
+  React.useEffect(() => {
+    handleTranslation(value);
+  }, [value]);
   return (
     <React.Fragment>
       <Card

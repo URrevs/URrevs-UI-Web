@@ -64,6 +64,7 @@ export const QuestionsTab = ({ initValues }) => {
   // RTK:
   const [searchFn] = useSearchAllMutation();
   const dispatch = useAppDispatch();
+  const [query, setQuery] = React.useState(initValues.label);
   const [addPhoneQuestion] = useAddPhoneQuestionMutation();
   const [addCompanyQuestion] = useAddCompanyQuestionMutation();
   // const [addQuestionError, setAddQuestionError] = React.useState(null);
@@ -82,6 +83,8 @@ export const QuestionsTab = ({ initValues }) => {
           phone: values.spoc.id,
         });
       }
+      setQuery("success");
+      await setTimeout(() => {}, 100);
       resetForm();
       sessionStorage.clear();
       GAevent("User interaction", "Adding question", "Adding question", false);
@@ -100,7 +103,7 @@ export const QuestionsTab = ({ initValues }) => {
   });
   // Render Functions:
   //Search
-  const renderSearch = (query) => (
+  const renderSearch = () => (
     <Stack spacing={1} sx={{ width: "100%" }}>
       <Typography variant="S18W500C050505">
         {pageDictionary.yourQuestionRegarding}
@@ -120,6 +123,7 @@ export const QuestionsTab = ({ initValues }) => {
       sum = values.spoc.label ? ++sum : sum;
       sum = values.question ? ++sum : sum;
       if (sum >= 1) setShowDialog(true);
+      else setShowDialog(false);
     }, [values]);
     return (
       <Modal open={showPrompt} direction={theme.direction}>
@@ -168,7 +172,7 @@ export const QuestionsTab = ({ initValues }) => {
         <div>
           <ConfirmationWindow values={formik.values} />
           <Form>
-            {renderSearch(formik.values.spoc.label)}
+            {renderSearch()}
             {renderField()}
             <FormSubmitButton
               loading={formik.isSubmitting}

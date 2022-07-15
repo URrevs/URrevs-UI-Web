@@ -74,6 +74,13 @@ export default function SearchComponent({
   const [lock, setLock] = React.useState(query !== "");
   const [errorMsg, setErrorMsg] = React.useState(pageDictionary.noInputError);
   const theme = useTheme();
+  //Clear on Success from QuestionsTab or AddReviewTab
+  React.useEffect(() => {
+    if (query === "success") {
+      setSearchQuery("");
+      setLock(false);
+    }
+  }, [query]);
   return (
     <Stack spacing={2} sx={{ width: "100%" }}>
       <Autocomplete
