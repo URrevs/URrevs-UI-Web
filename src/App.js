@@ -446,9 +446,12 @@ function App() {
             message: textContainer.downloadAppNow,
             showActionBtn: true,
             actionBtnText: textContainer.download,
+            actionNavPath:
+              "https://play.google.com/store/apps/details?id=com.urrevs.urrevsmobile",
+            newTab: true,
           })
         );
-      }, 4000);
+      }, 120000);
       return () => {
         clearTimeout(intervalShowSnackbar);
       };

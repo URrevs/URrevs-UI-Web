@@ -8,7 +8,7 @@ import { snackbarActions } from "../store/uiSnackbarSlice";
 import { Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import ROUTES_NAMES from "../RoutesNames";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { SnackbarProvider, useSnackbar } from "notistack";
 
 export default function CustomizedSnackbar() {
@@ -23,6 +23,7 @@ export default function CustomizedSnackbar() {
   const actionText = useAppSelector((state) => state.snackbar.actionBtnText);
   const showActionBtn = useAppSelector((state) => state.snackbar.showActionBtn);
   const navPath = useAppSelector((state) => state.snackbar.actionNavPath);
+  const newTab = useAppSelector((state) => state.snackbar.newTab);
 
   // for snackbar not to be hidden under bottom nav bar
   const navbarRoutes = [
@@ -51,7 +52,16 @@ export default function CustomizedSnackbar() {
 
   const action = (
     <React.Fragment>
-      {showActionBtn && (
+      {showActionBtn && newTab ? (
+        <a
+          href={navPath}
+          rel="noreferrer"
+          target="_blank"
+          style={{ textDecoration: "none" }}
+        >
+          <Typography variant="S16W800C2196F3">{actionText}</Typography>
+        </a>
+      ) : (
         <Button
           onClick={
             //if path is given then onClick navigate to that path
