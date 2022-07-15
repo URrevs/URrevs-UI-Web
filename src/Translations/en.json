@@ -368,5 +368,6 @@
   "retry": "Retry",
   "deleteRequestIsCancelledSuccessfully": "Delete request is cancelled successfully",
   "downloadAppNow": "Download our mobile app from Google Play to get extra points",
-  "download": "Download now"
+  "download": "Download now",
+  "usersRankingInCurrentCompetetion": "Ranking of users in the competition"
 }
