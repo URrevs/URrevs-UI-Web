@@ -39,6 +39,7 @@ import { ConditionalLink } from "../Components/ConditionalLink";
 import { useGetCurrentUserProfileMutation } from "../services/users";
 import { useEffect } from "react";
 import { authActions } from "../store/authSlice";
+import GoogleBadge from "../Components/Icons/GooglePlayStoreBadge";
 
 export default function Menu({ isDesktop = false, drawerRef }) {
   const theme = useTheme();
@@ -436,6 +437,22 @@ export default function Menu({ isDesktop = false, drawerRef }) {
                 </a>
               </div>
             </Box>
+            <div
+              style={{
+                padding: "0px 5px",
+                cursor: "pointer",
+              }}
+            >
+              <a
+                href={
+                  "https://play.google.com/store/apps/details?id=com.urrevs.urrevsmobile"
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <GoogleBadge />
+              </a>
+            </div>
           </Box>
           {/* footer */}
           <Box
