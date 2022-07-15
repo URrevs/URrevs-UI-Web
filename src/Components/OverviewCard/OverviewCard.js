@@ -41,7 +41,11 @@ export const OverviewCard = ({
                 alignItems: "center",
               }}
             >
-              <Typography component="h1" variant="S18W700C050505">
+              <Typography
+                component="h1"
+                variant="S18W700C050505"
+                style={{ textAlign: "center" }}
+              >
                 {title}
               </Typography>
               <Typography component="h2" variant="S14W400C65676B">
