@@ -23,20 +23,22 @@ export const HowToWinDialog = ({ handleClose, isCurrentlyHeld }) => {
           }}
         >
           {textContainer.howToWinPrompt}
+
+          <Link
+            href="https://play.google.com/store/apps/details?id=com.urrevs.urrevsmobile" //Placeholder Link
+            underline="always"
+          >
+            <Typography variant="S16W700C050505">
+              {textContainer.ourMobileApp}
+            </Typography>
+          </Link>
         </Typography>
 
-        <Link
-          href="https://play.google.com/store/apps/details?id=com.urrevs.urrevsmobile" //Placeholder Link
-          underline="always"
-        >
-          <Typography variant="S16W700C050505">
-            {textContainer.ourMobileApp}
+        {isCurrentlyHeld && (
+          <Typography variant="S16W500C050505">
+            {textContainer.howToWinPrompt2}
           </Typography>
-        </Link>
-
-        <Typography variant="S16W500C050505">
-          {textContainer.howToWinPrompt2}
-        </Typography>
+        )}
       </DialogTemplate>
     </React.Fragment>
   );
