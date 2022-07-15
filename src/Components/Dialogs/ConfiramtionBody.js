@@ -32,9 +32,7 @@ export const ConfirmationBody = ({
           </Button>
           <Button
             variant="text"
-            sx={{
-              color: "#050505",
-            }}
+            sx={{ ...theme.typography.S16W800C050505 }}
             onClick={noAction}
           >
             {textContainer.no}

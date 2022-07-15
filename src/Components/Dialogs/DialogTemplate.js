@@ -64,7 +64,10 @@ export const DialogTemplate = ({
                 <Typography variant="S16W700C050505">{title}</Typography>
               </Stack>
             ) : (
-              <Typography sx={{ paddingTop: "16px" }} variant="S16W700C050505">
+              <Typography
+                sx={{ paddingTop: title && "16px" }}
+                variant="S16W700C050505"
+              >
                 {title}
               </Typography>
             )}

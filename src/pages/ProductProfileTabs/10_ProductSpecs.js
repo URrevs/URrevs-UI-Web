@@ -17,6 +17,7 @@ import { useSearchParams } from "react-router-dom";
 import { FaButton } from "../../Components/Buttons/FaButton";
 import { CompareDialog } from "../../Components/Dialogs/CompareDialog/CompareDialog";
 import { CompareItem } from "../../Components/Dialogs/CompareDialog/CompareItem";
+import { DialogText } from "../../Components/Dialogs/DialogText";
 import { HorizontalPhoneList } from "../../Components/HorizontalPhoneList/HorizontalPhoneList";
 import LoadingSpinner from "../../Components/Loaders/LoadingSpinner";
 import { ProductOverviewCard } from "../../Components/OverviewCard/ProductOverviewCard";
@@ -53,9 +54,10 @@ export const ProductSpecsScreen = () => {
     specs: textContainer.tabBarSpecs,
     similarPhones: textContainer.similarPhones,
     compareWithAnotherProduct: textContainer.compareWithAnotherProduct,
+    disclaimer: textContainer.disclaimer,
   };
 
-  const [open, setOpen] = React.useState(false);
+  const [modal, setModal] = React.useState("");
 
   const {
     data: statistical,
@@ -73,8 +75,7 @@ export const ProductSpecsScreen = () => {
     // pollingInterval: 3000,
   });
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => setModal("");
   const theme = useTheme();
   const ComparePaper = (item) => {
     if (isLoading) {
@@ -142,7 +143,9 @@ export const ProductSpecsScreen = () => {
                 sx={{ fontSize: "28px", color: "#FFFFFF" }}
               />
             }
-            onClick={handleOpen}
+            onClick={() => {
+              setModal("compare");
+            }}
           >
             <Box
               sx={{
@@ -157,7 +160,7 @@ export const ProductSpecsScreen = () => {
               </Typography>
             </Box>
           </FaButton>
-          <Modal open={open} onClose={handleClose}>
+          <Modal open={modal === "compare"} onClose={handleClose}>
             <div>
               <CompareDialog item={data} handleClose={handleClose} />
             </div>
@@ -210,6 +213,11 @@ export const ProductSpecsScreen = () => {
 
   return (
     <React.Fragment>
+      <Modal open={modal === "help"} onClose={handleClose}>
+        <div>
+          <DialogText text={componentDictionary.disclaimer} />
+        </div>
+      </Modal>
       <Grid container>
         {/* Right Grid */}
         <Grid item xl={2} lg={1} md={0.5} xs={0}></Grid>
@@ -234,6 +242,9 @@ export const ProductSpecsScreen = () => {
           >
             {componentDictionary.specs + ":"}
             <IconButton
+              onClick={() => {
+                setModal("help");
+              }}
               sx={{
                 padding: 0,
                 marginLeft: "4px",
