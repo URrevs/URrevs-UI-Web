@@ -31,6 +31,8 @@ import { useAppSelector } from "../../../store/hooks";
 import LoadingSpinner from "../../Loaders/LoadingSpinner";
 
 export const SearchSuggestion = () => {
+  const currentUser = useAppSelector((state) => state.auth);
+
   const [searchSuggestion, setSearchSuggestion] = React.useState(false);
   const searchRef = React.useRef();
   const textContainer = useAppSelector((state) => state.language.textContainer);
@@ -99,20 +101,22 @@ export const SearchSuggestion = () => {
             // add recent search to server
             setSearchQuery("");
             setSearchSuggestion(false);
-            addRecentSearch({ type, id });
 
-            const toBeAdded = recentResults.findIndex(
-              (item) => item._id === id
-            );
+            if (currentUser.isLoggedIn) {
+              addRecentSearch({ type, id });
+              const toBeAdded = recentResults.findIndex(
+                (item) => item._id === id
+              );
 
-            if (toBeAdded > -1) {
-              const newRecents = [...recentResults];
-              newRecents.splice(toBeAdded, 1);
+              if (toBeAdded > -1) {
+                const newRecents = [...recentResults];
+                newRecents.splice(toBeAdded, 1);
 
-              setRecentResults([
-                { name: title, type: type, _id: id },
-                ...newRecents,
-              ]);
+                setRecentResults([
+                  { name: title, type: type, _id: id },
+                  ...newRecents,
+                ]);
+              }
             } else {
               setRecentResults([
                 { name: title, type: type, _id: id },
