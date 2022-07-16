@@ -75,7 +75,7 @@ export const ProductProfile = () => {
             meta: {
               charset: "utf-8",
               name: {
-                keywords: `specs,phone,reviews,Q&A,questions and answers,${data.name},اسئلة واجوبة,مراجعات,هاتف,مواصفات`,
+                keywords: `specs,phone,reviews,Q&A,questions and answers,price,pros,cons,${data.name},مميزات,عيوب,سعر,اسئلة واجوبة,مراجعات,هاتف,مواصفات`,
               },
             },
           }}
