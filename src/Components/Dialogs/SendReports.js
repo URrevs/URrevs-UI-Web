@@ -164,7 +164,7 @@ export const SendReports = () => {
                     <Button
                       variant="text"
                       sx={{
-                        color: "#050505",
+                        ...theme.typography.S16W800C050505,
                       }}
                       onClick={handleClose}
                     >
