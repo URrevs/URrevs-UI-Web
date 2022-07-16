@@ -50,6 +50,14 @@ export const ThemeDialog = ({ handleClose }) => {
                 control={<Radio />}
                 label={textContainer.darkTheme}
               />
+              {/* <FormControlLabel
+                value="system"
+                onChange={() => {
+                  dispatch(isDarkActions.changeMode("system"));
+                }}
+                control={<Radio />}
+                label={textContainer.systemTheme}
+              /> */}
             </RadioGroup>
           </FormControl>
         </DialogTemplate>
