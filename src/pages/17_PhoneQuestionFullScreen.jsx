@@ -62,8 +62,8 @@ export default function PhoneQuestionFullScreen() {
   const reviewId = searchParams.get("id");
 
   const currentReviewData = useAppSelector(
-    (state) => state.questions.newReviews
-  )[0];
+    (state) => state.questions.newReviews[0]
+  );
 
   const [getComments, {}] = useLazyGetPhoneQuestionCommentsQuery();
 
@@ -126,16 +126,6 @@ export default function PhoneQuestionFullScreen() {
     isLoading: reviewLoading,
     error: reviewError,
   } = useGetCertainPhoneQuestionQuery(reviewId);
-
-  useEffect(() => {
-    if (currentReview && currentReview.acceptedAns) {
-      dispatch(
-        answersListActions.addAcceptedAnswer({
-          acceptedAnswer: currentReviewData.acceptedAns,
-        })
-      );
-    }
-  }, [currentReviewData]);
 
   useEffect(() => {
     if (!reviewLoading) {

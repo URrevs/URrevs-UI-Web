@@ -26,6 +26,7 @@ const answersList = createSlice({
       state,
       action: { payload: { acceptedAnswer: APIAnswer } }
     ) {
+      console.log('a')
       const answer = { ...action.payload.acceptedAnswer, isAccepted: true };
 
       state.newComments = [answer, ...state.newComments];
