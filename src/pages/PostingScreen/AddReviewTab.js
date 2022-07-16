@@ -116,7 +116,7 @@ export const AddReviewTab = ({ ...props }) => {
     controlled = true
   ) => {
     return (
-      <Stack spacing={2} sx={{ width: "100%" }}>
+      <Stack spacing={1} sx={{ width: "100%" }}>
         <Typography sx={{}} variant="S18W500C050505">
           {text}
         </Typography>
@@ -241,30 +241,38 @@ export const AddReviewTab = ({ ...props }) => {
         >
           <StarCounter value={count} />
         </div>
+        <div style={{ height: "15px" }}></div>
         <Divider />
-        <Typography variant="S18W500C050505">
-          {pageDictionary.chooseProduct + ":"}
-        </Typography>
+        <Stack spacing={1}>
+          <div></div>
+          <div></div>
+          <Typography variant="S18W500C050505">
+            {pageDictionary.chooseProduct + ":"}
+          </Typography>
 
-        <FormikSearchComponent
-          fieldName="chooseProduct"
-          query={props.values.chooseProduct.label}
-          label={textContainer.writeProductName}
-          searchFn={searchFn}
-          toGetManufacturingCompany
-        />
-        <br />
-
+          <FormikSearchComponent
+            fieldName="chooseProduct"
+            query={props.values.chooseProduct.label}
+            label={textContainer.writeProductName}
+            searchFn={searchFn}
+            toGetManufacturingCompany
+          />
+          <div></div>
+          <div></div>
+        </Stack>
         {/* Datepicker*/}
-        <Typography variant="S18W500C050505">
-          {pageDictionary.howLong}
-        </Typography>
-        <Stack spacing={2} sx={{ width: "100%" }}>
+
+        <Stack spacing={1} sx={{ width: "100%" }}>
+          <Typography variant="S18W500C050505">
+            {pageDictionary.howLong}
+          </Typography>
           <FormikDatePicker
             isRequired={false}
             label={pageDictionary.purchaseDate}
             fieldName={"purchaseDate"}
           />
+          <div></div>
+          <div></div>
         </Stack>
         <Typography variant="S18W500C050505">
           {pageDictionary.overAllExp + ":"}
@@ -287,17 +295,21 @@ export const AddReviewTab = ({ ...props }) => {
             </div>
           );
         })}
-        {/* TextFields */}
-        {renderFields(
-          pageDictionary.likeAboutProduct,
-          "likeAboutProduct",
-          pageDictionary.pros
-        )}
-        {renderFields(
-          pageDictionary.hateAboutProduct,
-          "hateAboutProduct",
-          pageDictionary.cons
-        )}
+        <Stack spacing={2}>
+          <div></div>
+          {/* TextFields */}
+          {renderFields(
+            pageDictionary.likeAboutProduct,
+            "likeAboutProduct",
+            pageDictionary.pros
+          )}
+          {renderFields(
+            pageDictionary.hateAboutProduct,
+            "hateAboutProduct",
+            pageDictionary.cons
+          )}
+          <div></div>
+        </Stack>
         {/* RENDER COMPANY REVIEW FIELDS */}
         {props.values.companyId?._id ? (
           <React.Fragment>
@@ -307,28 +319,33 @@ export const AddReviewTab = ({ ...props }) => {
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <FormikStar fieldName="rateManufacturer" />
             </Box>
-            {renderFields(
-              `${pageDictionary.likeAbout} ${props.values.companyId.name}`,
-              "likeAbout",
-              pageDictionary.pros
-            )}
-            {renderFields(
-              `${pageDictionary.hateAbout} ${props.values.companyId.name}`,
-              "hateAbout",
-              pageDictionary.cons
-            )}
+            <Stack spacing={2}>
+              <div></div>
+              {renderFields(
+                `${pageDictionary.likeAbout} ${props.values.companyId.name}`,
+                "likeAbout",
+                pageDictionary.pros
+              )}
+              {renderFields(
+                `${pageDictionary.hateAbout} ${props.values.companyId.name}`,
+                "hateAbout",
+                pageDictionary.cons
+              )}
+              <div></div>
+            </Stack>
           </React.Fragment>
         ) : null}
-        <Typography
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-          variant="S18W500C050505"
-        >
-          {pageDictionary.enterInvitationCode + ":"}
-          {/* <Tooltip title={pageDictionary.referralCodeHelpPrompt}>
+        <Stack spacing={1}>
+          <Typography
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+            variant="S18W500C050505"
+          >
+            {pageDictionary.enterInvitationCode + ":"}
+            {/* <Tooltip title={pageDictionary.referralCodeHelpPrompt}>
             <HelpIcon
               sx={{
                 marginLeft: "4px",
@@ -338,30 +355,30 @@ export const AddReviewTab = ({ ...props }) => {
               }}
             />
           </Tooltip> */}
-          <IconButton
-            onClick={handleOpen}
-            sx={{
-              padding: 0,
-              marginLeft: "4px",
-            }}
-          >
-            <HelpIcon
+            <IconButton
+              onClick={handleOpen}
               sx={{
                 padding: 0,
-                fontSize: "25px",
-                color: theme.palette.defaultIconColor,
+                marginLeft: "4px",
               }}
-            />
-          </IconButton>
-        </Typography>
-        <br />
-        {/* Invitation Code */}
-        <FormikTextField
-          fieldName={"invitationCode"}
-          label={pageDictionary.invitationCode}
-          isControlled={true}
-          multiline={false}
-        />
+            >
+              <HelpIcon
+                sx={{
+                  padding: 0,
+                  fontSize: "25px",
+                  color: theme.palette.defaultIconColor,
+                }}
+              />
+            </IconButton>
+          </Typography>
+          {/* Invitation Code */}
+          <FormikTextField
+            fieldName={"invitationCode"}
+            label={pageDictionary.invitationCode}
+            isControlled={true}
+            multiline={false}
+          />
+        </Stack>
         {/* Submit Button */}
         <FormSubmitButton
           loading={props.isSubmitting}
