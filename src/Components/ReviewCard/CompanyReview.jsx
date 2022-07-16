@@ -142,6 +142,7 @@ const CompanyReview = ({
       seeMoreFn={seeMoreHandler}
       shareBtnFn={shareBtnHandler}
       verificationRatio={reviewDetails.verificationRatio}
+      isCompany={true}
     />
   );
 };
