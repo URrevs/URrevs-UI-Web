@@ -131,6 +131,10 @@ export const Answer = ({
               avatar={true}
               placeholder={textContainer.writeAReply}
               reply
+              backgroundColor={
+                theme.isMobile &&
+                theme.palette.interactionCard.backgroundMobileColor
+              }
               onSubmit={(text) => submitReplyHandler(text, commentId)}
             />
           )}

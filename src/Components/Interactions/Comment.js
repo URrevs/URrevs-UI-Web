@@ -91,12 +91,16 @@ export const Comment = ({
         }}
       >
         {showReplyField && (
-            <PostingField
-              avatar={true}
-              placeholder={textContainer.writeAReply}
-              reply
-              onSubmit={(text) => submitReplyHandler(text, commentId)}
-            />
+          <PostingField
+            avatar={true}
+            placeholder={textContainer.writeAReply}
+            reply
+            backgroundColor={
+              theme.isMobile &&
+              theme.palette.interactionCard.backgroundMobileColor
+            }
+            onSubmit={(text) => submitReplyHandler(text, commentId)}
+          />
         )}
       </div>
 
