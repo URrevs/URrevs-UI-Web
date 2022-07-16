@@ -12,6 +12,7 @@
 /build
 
 # misc
+.env
 .DS_Store
 .env.local
 .env.development.local
@@ -30,4 +31,4 @@ yarn-error.log*
 .vscode
 
 /public/images/logos
-# src/firebase-config.json
+src/firebase-config.json
