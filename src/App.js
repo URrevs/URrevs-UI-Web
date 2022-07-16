@@ -10,7 +10,13 @@ import { arEG } from "@mui/material/locale";
 import { getAuth } from "firebase/auth";
 import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 import { useLazyXauthenticateQuery } from "../src/services/users";
 import "./App.css";
 import Layout from "./Components/MainLayout/Layout";
@@ -344,7 +350,7 @@ function App() {
           borderColor: isDark ? "#18191A" : COLORS.c606266,
         },
         checkbox: {
-          borderColor: isDark ? "#18191A" : COLORS.c050505,
+          borderColor: isDark ? darkThemeColors.iconsColor : COLORS.c050505,
         },
         productRateCard: {
           addPlaylistIconColor: isDark ? "#18191A" : COLORS.c050505,
