@@ -42,11 +42,13 @@ export const phoneQuestionsApi = createApi({
         try {
           const response = await queryFulfilled;
 
-          dispatch(
-            answersListActions.addAcceptedAnswer({
-              acceptedAnswer: response.data.acceptedAns,
-            })
-          );
+          if (response.data.acceptedAns) {
+            dispatch(
+              answersListActions.addAcceptedAnswer({
+                acceptedAnswer: response.data.acceptedAns,
+              })
+            );
+          }
         } catch (e: any) {}
       },
     }),
