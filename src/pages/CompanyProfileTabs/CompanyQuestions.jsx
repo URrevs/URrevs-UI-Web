@@ -1,7 +1,8 @@
-import { Box, Fab, Typography } from "@mui/material";
+import { useTheme } from "@emotion/react";
+import AddIcon from "@mui/icons-material/Add";
+import { Fab } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useOutletContext, useSearchParams } from "react-router-dom";
-import { FaButton } from "../../Components/Buttons/FaButton";
 import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { Answer } from "../../Components/Interactions/Answer";
 import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
@@ -10,14 +11,13 @@ import ROUTES_NAMES from "../../RoutesNames";
 import {
   useGetCompanyQuestionsQuery,
   useLikeCompanyQuestionCommentMutation,
-  useUnLikeCompanyQuestionCommentMutation,
+  useUnLikeCompanyQuestionCommentMutation
 } from "../../services/company_questions";
+import { answersListActions } from "../../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { questionsActions } from "../../store/questionsSlice";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
-import AddIcon from "@mui/icons-material/Add";
-import { useTheme } from "@emotion/react";
 
 export function CompanyQuestions() {
   const dispatch = useAppDispatch();
@@ -28,6 +28,7 @@ export function CompanyQuestions() {
     return () => {
       setPage(1);
       dispatch(questionsActions.clearReviews());
+      dispatch(answersListActions.clearComments());
     };
   }, []);
 
