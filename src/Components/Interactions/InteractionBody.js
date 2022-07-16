@@ -31,7 +31,7 @@ export const InteractionBody = ({
   userId,
   userName,
   showCorrectIcon,
-  reportFunction = () => {},
+  reportFunction = null,
 }) => {
   const checkSignedIn = useCheckSignedIn();
   const [showReportMenu, setShowReportMenu] = React.useState(false);
@@ -51,7 +51,7 @@ export const InteractionBody = ({
   return (
     <div
       onMouseEnter={() => {
-        setShowReportMenu(true);
+        setShowReportMenu(Boolean(reportFunction) && true);
       }}
       onMouseLeave={() => {
         setShowReportMenu(false);
@@ -68,7 +68,7 @@ export const InteractionBody = ({
       }}
     >
       <Modal
-        open={modal === "report"}
+        open={modal === "report" && Boolean(reportFunction)}
         direction={theme.direction}
         onClose={() => {
           setModal("");
@@ -82,7 +82,8 @@ export const InteractionBody = ({
             borderRadius: "15px 15px 0px 0px",
             padding: "15px",
           }}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             reportFunction();
             setModal("");
           }}

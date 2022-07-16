@@ -270,7 +270,9 @@ export const Leaderboard = () => {
                 position: "absolute",
                 padding: "0px",
                 display: "flex",
+                width: "100%",
                 flexDirection: "column",
+                alignItems: "center",
                 justifyContent: "center",
               }}
             >
