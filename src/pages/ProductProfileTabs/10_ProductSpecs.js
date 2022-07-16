@@ -289,6 +289,7 @@ export const ProductSpecsScreen = () => {
                 {similarPhonesComponent()}
                 <div style={{ height: "23px" }}></div>
                 {ComparePaper(data)}
+                <div style={{ height: "50px" }}></div>
               </div>
             </div>
           )}
