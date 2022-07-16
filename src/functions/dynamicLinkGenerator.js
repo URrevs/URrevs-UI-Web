@@ -9,8 +9,8 @@ export const generateLink = ({
   linkType,
   refCode,
 }) => {
-  const uriPrefix = "https://urevs.page.link";
-  const packageName = "com.example.urrevs_ui_mobile";
+  const uriPrefix = process.env.REACT_APP_URI_PREFIX;
+  const packageName = process.env.REACT_APP_PACKAGE_NAME;
 
   const shortLinksApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${config.apiKey}`;
 

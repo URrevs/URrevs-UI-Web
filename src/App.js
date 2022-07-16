@@ -64,7 +64,7 @@ import { snackbarActions } from "./store/uiSnackbarSlice";
 import { getFonts } from "./Styles/fonts";
 import { NotFoundPage } from "./pages/404/404";
 
-const TRACKING_ID = "UA-165221874-4";
+const TRACKING_ID = process.env.REACT_APP_TRACKING_ID;
 
 function App() {
   // GOOGLE ANALITYCS
