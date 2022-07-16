@@ -2,7 +2,7 @@ import { useTheme } from "@emotion/react";
 import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, Stack, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import StarWithCount from "../Components/Leaderboard/StarWithCount";
@@ -128,14 +128,16 @@ export default function OtherUserProfilePage({ uid }) {
             </div>
             <div>
               <List>
-                {listItems.map((item, index) => {
-                  return listItem(
-                    item.title,
-                    item.subtitle,
-                    item.icon,
-                    item.to
-                  );
-                })}
+                <Stack spacing={1}>
+                  {listItems.map((item, index) => {
+                    return listItem(
+                      item.title,
+                      item.subtitle,
+                      item.icon,
+                      item.to
+                    );
+                  })}
+                </Stack>
               </List>
             </div>
           </div>

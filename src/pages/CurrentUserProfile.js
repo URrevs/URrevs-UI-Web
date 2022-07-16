@@ -4,7 +4,7 @@ import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
-import { Avatar, Box, Modal, Typography } from "@mui/material";
+import { Avatar, Box, Modal, Stack, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -169,15 +169,17 @@ export default function CurrentUserProfilePage({}) {
         </div>
         <div>
           <List>
-            {listItems.map((item, index) => {
-              return listItem(
-                item.title,
-                item.subtitle,
-                item.icon,
-                item.to,
-                item.onClick
-              );
-            })}
+            <Stack spacing={1}>
+              {listItems.map((item, index) => {
+                return listItem(
+                  item.title,
+                  item.subtitle,
+                  item.icon,
+                  item.to,
+                  item.onClick
+                );
+              })}
+            </Stack>
           </List>
         </div>
       </div>
