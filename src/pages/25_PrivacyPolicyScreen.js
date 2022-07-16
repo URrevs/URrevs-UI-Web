@@ -290,7 +290,7 @@ export const PrivacyPolicyScreen = () => {
               {pageDictionary[language].securityParagraph}
             </Typography>
             {/* linksToOtherSites */}
-            <Typography varinat={headerStyling}>
+            <Typography variant={headerStyling}>
               {pageDictionary[language].linksToOtherSites}
             </Typography>
             <Typography>
