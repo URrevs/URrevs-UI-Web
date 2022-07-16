@@ -93,6 +93,7 @@ export default function OtherUserProfilePage({ uid }) {
       label={pageDictionry.account}
       showBackBtn={true}
     >
+      <div style={{ height: "12px" }}></div>
       <FixedGrid>
         {isError ? (
           <ErrorScreen>error</ErrorScreen>
