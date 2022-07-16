@@ -25,13 +25,19 @@ export const PostingModal = ({ linkShow = false }) => {
   const type = useAppSelector((state) => state.postingModal.type);
 
   const handleClose = () => {
-    if (sessionStorage.length > 0) {
-      const answer = window.confirm(`${textContainer.doYouReallyWantToLeave}
+    if (
+      !(Boolean(sessionStorage.getItem("_cltk")) && sessionStorage.length === 1)
+    ) {
+      if (sessionStorage.length > 0) {
+        const answer = window.confirm(`${textContainer.doYouReallyWantToLeave}
     ${textContainer.thisWillCauseTheDataYouEnteredToBeErased}`);
-      if (answer) {
-        // if modal was up because of route
-        if (linkShow) navigate("/");
-        sessionStorage.clear();
+        if (answer) {
+          // if modal was up because of route
+          if (linkShow) navigate("/");
+          sessionStorage.clear();
+          dispatch(postingModalActions.hidePostingModal());
+        }
+      } else {
         dispatch(postingModalActions.hidePostingModal());
       }
     } else {

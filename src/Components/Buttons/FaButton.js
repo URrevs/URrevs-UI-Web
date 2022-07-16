@@ -35,7 +35,7 @@ export const FaButton = ({ children, icon, onClick }) => {
         "&:hover": {
           background: "#2196F3",
         },
-        transition: "all 0.6s ease",
+        // transition: "all 0.6s ease",
       }}
     >
       {icon}
