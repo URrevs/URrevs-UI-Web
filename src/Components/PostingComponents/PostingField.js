@@ -25,11 +25,13 @@ export const PostingField = ({
 
   const checkIsLoggedIn = useCheckSignedIn();
 
-  const submitComment = () => {
+  const submitComment = async () => {
     if (checkIsLoggedIn()) {
       if (value.trim() !== "") {
-        onSubmit(value);
-        setValue("");
+        try {
+          await onSubmit(value);
+          setValue("");
+        } catch (e) {}
       }
     }
   };

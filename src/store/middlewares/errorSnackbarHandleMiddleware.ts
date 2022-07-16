@@ -133,6 +133,16 @@ export const snackbarErrorHandle: Middleware =
 
     // RTK Query uses `createAsyncThunk` from redux-toolkit under the hood, so we're able to utilize these matchers!
     if (isRejectedWithValue(action)) {
+      // no internet connection
+      if (action.payload.status === "FETCH_ERROR") {
+        dispatch(
+          snackbarActions.showSnackbar({
+            message: textContainer.thereIsNoInternetConnection,
+          })
+        );
+        return next(action);
+      }
+
       const serverMessage: string = action.payload.data.status;
       const message: Error = correspondingErrorMessage(
         serverMessage,

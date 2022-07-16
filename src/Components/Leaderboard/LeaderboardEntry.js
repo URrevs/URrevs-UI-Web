@@ -134,7 +134,7 @@ const LeaderboardEntry = ({
             </div>
           </RankCircle>
           <div style={{ width: "18px" }}></div>
-          <UserAvatar src={userPicture}></UserAvatar>
+          <UserAvatar alt="user picture" src={userPicture}></UserAvatar>
           <div style={{ width: "18px" }}></div>
           <Typography variant="S20W700C050505">{userName}</Typography>
         </div>

@@ -28,7 +28,7 @@ const CardHeader = ({
   const currentUser = useAppSelector((state) => state.auth);
 
   const action = () => {
-    if (actionBtnFunction) {
+    if (actionBtnFunction && currentUser.isLoggedIn) {
       if (userId === currentUser.uid) {
         if (verificationRatio !== 0) {
           return <></>;
