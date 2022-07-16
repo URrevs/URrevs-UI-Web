@@ -372,7 +372,7 @@ function App() {
         sendIconColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3, // Comment Icon
         blackIconColor: isDark ? darkThemeColors.iconsColor : COLORS.c050505, // X button
         defaultRedBtnIconColor: isDark ? COLORS.cCED0D4 : COLORS.cffffff,
-        defaultIconColor: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,
+        defaultIconColor: isDark ? COLORS.c2196f3 : COLORS.c2196f3,
         cancel: isDark ? COLORS.cCED0D4 : COLORS.c050505,
         divider: isDark ? COLORS.cCED0D4 : COLORS.cCED0D4,
         defaultPageBtn: isDark ? COLORS.cCED0D4 : COLORS.c2196f3,

@@ -35,13 +35,6 @@ const PostingScreen = ({
       return null;
     };
   }, []);
-  //Handle Blocking Navigation
-  React.useEffect(() => {
-    window.onbeforeunload = () => {
-      sessionStorage.clear();
-      return null;
-    };
-  }, []);
 
   const [searchParams] = useSearchParams();
   const paramId = searchParams.get("refCode");

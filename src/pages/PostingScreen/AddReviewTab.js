@@ -137,12 +137,12 @@ export const AddReviewTab = ({ ...props }) => {
     const companyId = await getManufacturingCompany(
       props.values.chooseProduct.id
     );
-    sessionStorage.setItem(
-      "chooseProduct",
-      JSON.stringify(props.values.chooseProduct)
-    );
+    // sessionStorage.setItem(
+    //   "chooseProduct",
+    //   JSON.stringify(props.values.chooseProduct)
+    // );
     props.setFieldValue("companyId", companyId.data);
-    sessionStorage.setItem("companyId", JSON.stringify(companyId.data));
+    // sessionStorage.setItem("companyId", JSON.stringify(companyId.data));
   };
   React.useEffect(() => {
     if (props.values.chooseProduct.id !== "") handleManufacturingCompany();
