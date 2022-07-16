@@ -20,7 +20,7 @@ export const InvitationDialog = ({ handleClose }) => {
   const currentUserProfile = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const pageDictionary = {
-    paragraph: textContainer.reviewEncouragement,
+    paragraph: textContainer.invitationCodePrompt,
     title: `${textContainer.yourInvitationCode}:`,
     shareCode: textContainer.shareInvitationLink,
     codeCopyWasSuccessful: textContainer.invitationCodeCopied,
@@ -79,10 +79,11 @@ export const InvitationDialog = ({ handleClose }) => {
                 // margin="normal"
                 inputProps={{
                   style: {
-                    fontWeight: 500,
-                    fontSize: 22,
+                    ...theme.typography.S22W500C050505,
+
                     textAlign: "center",
-                    WebkitTextFillColor: theme.palette.textField.inputFieldText,
+                    WebkitTextFillColor:
+                      !theme.isDark && theme.palette.textField.inputFieldText,
                     background: theme.palette.textField.inputFieldBackground,
                     borderRadius: TEXT_FIELD_BORDER_RADIUS,
                     border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,
