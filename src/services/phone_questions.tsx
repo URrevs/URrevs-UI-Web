@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import APIAnswer from "../models/interfaces/APIAnswer.model";
 import { APIQuestion } from "../models/interfaces/APIQuestion.model";
+import { answersListActions } from "../store/answersListSlice";
 import { RootState } from "../store/store";
 import { postingModalActions } from "../store/uiPostingModalSlice";
 import { snackbarActions } from "../store/uiSnackbarSlice";
@@ -35,6 +36,18 @@ export const phoneQuestionsApi = createApi({
       query: (id: string) => `/${id}`,
       transformResponse: (response: { question: APIQuestion }) => {
         return response.question;
+      },
+
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        try {
+          const response = await queryFulfilled;
+
+          dispatch(
+            answersListActions.addAcceptedAnswer({
+              acceptedAnswer: response.data.acceptedAns,
+            })
+          );
+        } catch (e: any) {}
       },
     }),
 

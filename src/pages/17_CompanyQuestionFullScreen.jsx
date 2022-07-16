@@ -128,16 +128,6 @@ export default function CompanyQuestionFullScreen() {
   } = useGetCertainCompanyQuestionQuery(reviewId);
 
   useEffect(() => {
-    if (currentReview && currentReview.acceptedAns) {
-      dispatch(
-        answersListActions.addAcceptedAnswer({
-          acceptedAnswer: currentReviewData.acceptedAns,
-        })
-      );
-    }
-  }, [currentReviewData]);
-
-  useEffect(() => {
     if (!reviewLoading) {
       dispatch(questionsActions.clearReviews());
       dispatch(
