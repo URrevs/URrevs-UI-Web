@@ -8,15 +8,14 @@ import { MyAppBar } from "./AppBar/AppBar";
 import { AppBarActions } from "./AppBar/AppBarActions";
 import { MyDrawer } from "./Drawer/Drawer";
 
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Registeration from "../../pages/1_Authentication";
-import { Footer } from "../Banners/Footer";
 import { ConfirmationDialog } from "../Dialogs/ConfirmationDialog";
 import { SendReports } from "../Dialogs/SendReports";
 import { PostingModal } from "../PostingComponents/PostingModal";
 import CustomizedSnackbar from "../Snackbar";
 import BottomNavBar from "./BottomNavBar/BottomNavBar";
-import { useState } from "react";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -137,7 +136,7 @@ export default function Layout(props) {
   // }, []);
 
   return (
-    <React.Fragment>
+    <div>
       <Box>
         {!theme.isMobile && appBar()}
         {theme.isMobile ? <></> : <MyDrawer open={open} setOpen={setOpen} />}
@@ -178,6 +177,6 @@ export default function Layout(props) {
       >
         <Footer fullScreen={false} />
       </div> */}
-    </React.Fragment>
+    </div>
   );
 }
