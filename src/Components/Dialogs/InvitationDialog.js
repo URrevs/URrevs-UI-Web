@@ -82,8 +82,7 @@ export const InvitationDialog = ({ handleClose }) => {
                     ...theme.typography.S22W500C050505,
 
                     textAlign: "center",
-                    WebkitTextFillColor:
-                      !theme.isDark && theme.palette.textField.inputFieldText,
+                    WebkitTextFillColor: theme.palette.textField.inputFieldText,
                     background: theme.palette.textField.inputFieldBackground,
                     borderRadius: TEXT_FIELD_BORDER_RADIUS,
                     border: `${TEXT_FIELD_BORDER_THICKNESS}px solid ${theme.palette.textField.borderColor}`,
