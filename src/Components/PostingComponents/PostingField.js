@@ -71,8 +71,9 @@ export const PostingField = ({
         },
         ...theme.typography.S16W500C050505,
         alignContent: "center",
-        background:
-          backgroundColor ?? theme.palette.textField.postingFieldBackground,
+        background: backgroundColor
+          ? backgroundColor
+          : theme.palette.textField.postingFieldBackground,
         borderRadius: `${SEARCH_INPUT_BORDER_RADIUS}px`,
       },
     },
