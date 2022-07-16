@@ -31,7 +31,10 @@ export const rtkQueryErrorLogger: Middleware =
       console.warn(action);
       const serverMessage: string = action.payload.data.status;
 
-      if (serverMessage === "invalid token") {
+      if (
+        serverMessage === "invalid token" ||
+        serverMessage === "token expired"
+      ) {
         // to get new token
         document.location.reload();
         dispatch(authActions.toggleRefetch({ refetch: true }));

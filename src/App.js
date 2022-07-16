@@ -10,7 +10,7 @@ import { arEG } from "@mui/material/locale";
 import { getAuth } from "firebase/auth";
 import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import { useLazyXauthenticateQuery } from "../src/services/users";
 import "./App.css";
 import Layout from "./Components/MainLayout/Layout";
@@ -56,6 +56,7 @@ import { COLORS } from "./Styles/main_light_colors";
 import ReactGA from "react-ga";
 import { snackbarActions } from "./store/uiSnackbarSlice";
 import { getFonts } from "./Styles/fonts";
+import { NotFoundPage } from "./pages/404/404";
 
 const TRACKING_ID = "UA-165221874-4";
 
@@ -473,11 +474,11 @@ function App() {
                   <Grid item md={12} sm={12} xs={11}>
                     <Routes>
                       {/* not found handling */}
-                      {/* <Route path="/404" element={<NotFoundPage />} />
+                      <Route path="/404" element={<NotFoundPage />} />
                       <Route
                         path="*"
                         element={<Navigate to="/404" replace />}
-                      /> */}
+                      />
 
                       {/* review full review */}
                       <Route
@@ -558,14 +559,16 @@ function App() {
                           path={ROUTES_NAMES.SETTINGS}
                           element={<SettingsScreen />}
                         />
-                        {/* {storeUser.isAdmin && ( */}
-                        <Route path={ROUTES_NAMES.ADMIN_PANEL}>
-                          <Route index element={<AdminPanel />} />
-                          <Route path={ROUTES_NAMES.UPDATE}>
-                            <Route index element={<UpdateProducts />} />
+
+                        {storeUser.isAdmin && (
+                          <Route path={ROUTES_NAMES.ADMIN_PANEL}>
+                            <Route index element={<AdminPanel />} />
+                            <Route path={ROUTES_NAMES.UPDATE}>
+                              <Route index element={<UpdateProducts />} />
+                            </Route>
                           </Route>
-                        </Route>
-                        {/* )} */}
+                        )}
+
                         {/* profile */}
                         {!isMobile ? (
                           <Route
