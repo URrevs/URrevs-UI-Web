@@ -2,6 +2,7 @@ import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
 import React from "react";
 import { useCallback, useEffect, useState } from "react";
+import DocumentMeta from "react-document-meta";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { FullScreenError } from "../Components/FullScreenError";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
@@ -389,7 +390,19 @@ export default function PhoneQuestionFullScreen() {
               <FullScreenError />
             ) : (
               currentReviewData && (
-                <React.Fragment>
+                <DocumentMeta
+                  {...{
+                    description: `${currentReviewData.targetName} phone pros and cons - ${currentReviewData.targetName} مميزات وعيوب هاتف `,
+                    canonical: `https://${window.location.hostname}/phone-question/?id=${currentReviewData._id}`,
+                    meta: {
+                      charset: "utf-8",
+                      name: {
+                        keywords: `questions,Q&A,phone,${currentReviewData.targetName}اسئلة,اسئلة و اجوبة,هاتف, ${currentReviewData.content}`,
+                      },
+                    },
+                  }}
+                >
+                  {" "}
                   <AnswersList
                     reviewCard={reviewCard}
                     commentsList={commentsList}
@@ -409,7 +422,7 @@ export default function PhoneQuestionFullScreen() {
                     answerReportFunction={answerReportFunction}
                     replyReportFunction={replyReportFunction}
                   />
-                </React.Fragment>
+                </DocumentMeta>
               )
             )}
           </Box>

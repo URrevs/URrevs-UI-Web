@@ -80,12 +80,13 @@ const CardHeaderTitle = ({
             WebkitBoxOrient: "vertical",
             WebkitLineClamp: 2,
             textAlign: "center",
-            direction: 'ltr',
+            direction: "ltr",
             maxWidth: "50%",
           }}
           to={targetProfilePath}
         >
           <Typography
+            component="h1"
             variant="S16W700C050505"
             sx={{
               "&:hover": {

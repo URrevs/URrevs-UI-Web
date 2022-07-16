@@ -8,6 +8,7 @@ const BodyCardText = ({ text, title }) => {
       }}
     >
       <Typography
+        component="h1"
         variant="S18W500C050505"
         style={{
           padding: 0,
