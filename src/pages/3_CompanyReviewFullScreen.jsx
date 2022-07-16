@@ -1,7 +1,8 @@
 import { useTheme } from "@emotion/react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { FullScreenError } from "../Components/FullScreenError";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
@@ -175,7 +176,7 @@ export default function CompanyReviewFullScreen() {
       })
     );
   };
-  
+
   const likeReplyRequest = (commentId, replyId) => {
     likeReply({
       commentId: commentId,
@@ -282,7 +283,7 @@ export default function CompanyReviewFullScreen() {
     if (reviewLoading) {
       return <LoadingReviewSkeleton />;
     } else if (reviewError) {
-      return <div>Error</div>;
+      return <FullScreenError />;
     } else if (currentReview) {
       return (
         <CompanyReview
@@ -337,7 +338,7 @@ export default function CompanyReviewFullScreen() {
             {reviewLoading ? (
               <LoadingReviewSkeleton />
             ) : reviewError ? (
-              <div>Error</div>
+              <FullScreenError />
             ) : (
               currentReviewData && (
                 <React.Fragment>

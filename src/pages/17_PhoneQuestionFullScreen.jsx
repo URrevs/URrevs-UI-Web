@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { FullScreenError } from "../Components/FullScreenError";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
@@ -327,7 +328,7 @@ export default function PhoneQuestionFullScreen() {
         {reviewLoading ? (
           <LoadingReviewSkeleton />
         ) : reviewError ? (
-          <div>Error</div>
+          <FullScreenError />
         ) : (
           currentReviewData && (
             <PhoneQuestion
@@ -385,7 +386,7 @@ export default function PhoneQuestionFullScreen() {
             {reviewLoading ? (
               <LoadingReviewSkeleton />
             ) : reviewError ? (
-              <div>Error</div>
+              <FullScreenError />
             ) : (
               currentReviewData && (
                 <React.Fragment>

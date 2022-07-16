@@ -372,5 +372,6 @@
   "retry": "إعادة المحاولة",
   "deleteRequestIsCancelledSuccessfully": "تم الغاء الطلب بنجاح",
   "downloadAppNow": "قم بتحميل تطبيقنا من جوجل بلاي واحصل علي نقاط إضافية",
-  "download": "حمل الان"
+  "download": "حمل الان",
+  "contentIsNotAvailable": "المحتوى غير متوفر"
 }

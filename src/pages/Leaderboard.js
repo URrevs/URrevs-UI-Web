@@ -116,7 +116,7 @@ export const Leaderboard = () => {
       <LoadingSpinner />
     ) : (
       topUsersData.map((item, i) => (
-        <Fragment key={item.name}>
+        <Fragment key={item.name + i}>
           <LeaderboardEntry
             isBody={theme.isMobile}
             userRank={i + 1}
