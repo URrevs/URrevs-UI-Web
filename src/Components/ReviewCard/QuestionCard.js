@@ -144,8 +144,8 @@ export default function QuestionCard({
       reviewIcon={false}
       tooltipTitle={
         isPhoneReview
-          ? textContainer.askedQuestion
-          : textContainer.companyReview
+          ? textContainer.phoneQuestion
+          : textContainer.companyQuestion
       }
     >
       <CardHeader
