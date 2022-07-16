@@ -57,9 +57,7 @@ export default function ReviewCard({
     reviewDetails.battery,
   ];
 
-  const pros =
-    reviewDetails.pros +
-    " salk dnlasn dasnd asklnd kasn dkasn dskand sak salk dnlasnsalk dnlasn dasnd asklnd kasn dkasn dskand sak salk dnlasnsalk dnlasn dasnd asklnd kasn dkasn dskand sak salk dnlasnsalk dnlasn dasnd asklnd kasn dkasn dskand sak salk dnlasnsalk dnlasn dasnd asklnd kasn dkasn dskand sak salk dnlasnsalk dnlasn dasnd asklnd kasn dkasn dskand sak salk dnlasnsalk dnlasn dasnd asklnd kasn dkasn dskand sak salk dnlasnsalk dnlasn dasnd asklnd kasn dkasn dskand sak salk dnlasn salk dnlasn dasnd asklnd kasn dkasn dskand sak salk dnlasn dasnd asklnd kasn dkasn dskand saksalk dnlasn dasnd asklnd kasn dkasn dskand saksalk dnlasn dasnd asklnd kasn dkasn dskand saksalk dnlasn dasnd asklnd kasn dkasn dskand saksalk dnlasn dasnd asklnd kasn dkasn dskand saksalk dnlasn dasnd asklnd kasn dkasn dskand saksalk dnlasn dasnd asklnd kasn dkasn dskand saksalk dnlasn dasnd asklnd kasn dkasn dskand saksalk dnlasn dasnd asklnd kasn dkasn dskand saksalk dnlasn dasnd asklnd kasn dkasn dskand saksalk dnlasn dasnd asklnd kasn dkasn dskand sak";
+  const pros = reviewDetails.pros;
   const cons = reviewDetails.cons;
 
   const userName = reviewDetails.userName;

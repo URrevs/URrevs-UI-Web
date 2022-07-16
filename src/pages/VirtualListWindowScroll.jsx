@@ -22,7 +22,7 @@ export default function VirtualReviewList({
         useWindowScroll
         context={{
           endOfData,
-          noData: reviewsList.length,
+          length: reviewsList.length,
           loadingWidget,
         }}
         data={reviewsList}
@@ -58,10 +58,27 @@ const ListFooter = ({ context }) => {
       {context.loadingWidget ? (
         context.loadingWidget
       ) : (
-        <LoadingReviewSkeleton />
+        <div
+          style={{
+            width: "100%",
+          }}
+        >
+          {context.length === 0 ? (
+            <Fragment>
+              <LoadingReviewSkeleton />
+              <LoadingReviewSkeleton />
+              <LoadingReviewSkeleton />
+            </Fragment>
+          ) : (
+            <Fragment>
+              <LoadingReviewSkeleton />
+              <LoadingReviewSkeleton />
+            </Fragment>
+          )}
+        </div>
       )}
     </div>
-  ) : context.noData === 0 ? (
+  ) : context.length === 0 ? (
     <Typography variant="S15W500C050505">
       {textContainer.itemsNotFound}
     </Typography>
