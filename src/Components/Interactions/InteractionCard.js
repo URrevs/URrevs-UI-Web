@@ -52,11 +52,26 @@ export const InteractionCard = ({
   userId,
 }) => {
   const [cropTextLength, setCropTextLength] = React.useState(300);
+
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const lang = useAppSelector((state) => state.language.language);
 
+  // const numberOfNewLines = 6;
+  // const getIndexOfNewLines = (text) => {
+  //   let index = text.indexOf("\n");
+  //   for (let i = 0; i < numberOfNewLines - 1; ++i) {
+  //     index = text.indexOf("\n", index + 1);
+  //   }
+  //   return index;
+  // };
+
   //See more function
   const handleText = (text) => {
+    // const newlines = text.split("\n");
+    // if (newlines.length > numberOfNewLines)
+    //   return `${text.slice(0, numberOfNewLines)} ${
+    //     cropTextLength !== 300 ? "" : "..."
+    //   }`;
     if (text.length > 300)
       return `${text.slice(0, cropTextLength)} ${
         cropTextLength === 300 ? "... " : ""
