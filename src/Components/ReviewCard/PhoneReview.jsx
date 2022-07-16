@@ -114,6 +114,7 @@ export default function PhoneReview({
       fullScreenRequest({ reviewId: reviewDetails._id });
     }
   };
+  
   const seeMoreHandler = () => {
     if (checkSignedInWithoutModal()) {
       seeMoreRequest({ reviewId: reviewDetails._id });
