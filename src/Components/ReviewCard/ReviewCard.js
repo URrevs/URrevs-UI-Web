@@ -38,6 +38,7 @@ export default function ReviewCard({
   showBottomLine,
   verificationRatio,
   verifyPhone,
+  isCompany = false,
 }) {
   const isReview = true;
   const navigate = useNavigate();
@@ -228,7 +229,11 @@ export default function ReviewCard({
       {/* card main content */}
 
       <ButtonBase
-        disabled={fullScreen}
+        disabled={
+          fullScreen ||
+          (isCompany &&
+            cons.length + pros.length < MAX_REVIEW_LETTERS_LIST_BEFORE_EXPAND)
+        }
         component="div"
         style={{
           display: "block",

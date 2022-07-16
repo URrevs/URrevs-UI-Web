@@ -103,7 +103,11 @@ export default function ActionButton({
                     {currentUser.uid !== userId ? (
                       <React.Fragment>
                         <MenuItem
-                          sx={{ padding: "10px 28px", minHeight: 0 }}
+                          sx={{
+                            padding: "10px 28px",
+                            minHeight: 0,
+                            justifyContent:'center'
+                          }}
                           onClick={actionBtnFunction}
                         >
                           <Typography variant="S16W700C050505">
@@ -111,7 +115,11 @@ export default function ActionButton({
                           </Typography>
                         </MenuItem>
                         <MenuItem
-                          sx={{ padding: "10px 28px", minHeight: 0 }}
+                          sx={{
+                            padding: "10px 28px",
+                            minHeight: 0,
+                            justifyContent:'center'
+                          }}
                           onClick={reportFunction}
                         >
                           <Typography variant="S16W700C050505">
@@ -121,7 +129,11 @@ export default function ActionButton({
                       </React.Fragment>
                     ) : (
                       <MenuItem
-                        sx={{ padding: "10px 28px", minHeight: 0 }}
+                        sx={{
+                          padding: "10px 28px",
+                          minHeight: 0,
+                          justifyContent:'center'
+                        }}
                         onClick={() => {
                           if (detectDeviceType() !== "mobile") {
                             dispatch(
