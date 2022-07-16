@@ -41,12 +41,13 @@ export const companyQuestionsApi = createApi({
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
         try {
           const response = await queryFulfilled;
-
-          dispatch(
-            answersListActions.addAcceptedAnswer({
-              acceptedAnswer: response.data.acceptedAns,
-            })
-          );
+          if (response.data.acceptedAns) {
+            dispatch(
+              answersListActions.addAcceptedAnswer({
+                acceptedAnswer: response.data.acceptedAns,
+              })
+            );
+          }
         } catch (e: any) {}
       },
     }),

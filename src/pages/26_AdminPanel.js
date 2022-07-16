@@ -114,7 +114,7 @@ export const AdminPanel = () => {
                 " " +
                 convertDateToString(
                   new Date(lastCompetetionData.createdAt),
-                  "ar"
+                  language
                 )
           }
           onClick={
