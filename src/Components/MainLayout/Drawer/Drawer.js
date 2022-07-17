@@ -98,6 +98,11 @@ export const MyDrawer = (props) => {
   const [currentPage, setValue] = React.useState(
     map[location.pathname.substring(1, location.pathname.length)]
   );
+
+  React.useEffect(() => {
+    setValue(map[location.pathname.substring(1, location.pathname.length)]);
+  }, [location.pathname]);
+
   // Change Icon Color based on pathname
   const iconColor = (val) =>
     currentPage === val && !menuShow && !showPosting
