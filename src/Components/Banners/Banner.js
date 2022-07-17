@@ -61,7 +61,7 @@ export default function Banner() {
             variant="subtitle1"
             component="h1"
             style={{
-              color: theme.palette.getContrastText(theme.palette.primary.main),
+              color: theme.palette.getContrastText("#050505"),
               fontWeight: 700,
               letterSpacing: 1,
             }}
@@ -74,7 +74,7 @@ export default function Banner() {
             variant="subtitle2"
             component="h1"
             style={{
-              color: theme.palette.getContrastText(theme.palette.primary.main),
+              color: theme.palette.getContrastText("#050505"),
               opacity: 0.87,
               fontWeight: 400,
               letterSpacing: 0.4,
