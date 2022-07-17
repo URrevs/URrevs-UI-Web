@@ -26,7 +26,6 @@ const answersList = createSlice({
       state,
       action: { payload: { acceptedAnswer: APIAnswer } }
     ) {
-      console.log('a')
       const answer = { ...action.payload.acceptedAnswer, isAccepted: true };
 
       state.newComments = [answer, ...state.newComments];
@@ -93,8 +92,6 @@ const answersList = createSlice({
         isLiked: boolean;
       }>
     ) {
-      console.log(action.payload.commentId, action.payload.replyId);
-
       const targetComment = state.newComments.findIndex((element) => {
         return element._id.toString() === action.payload.commentId.toString();
       });
@@ -104,8 +101,6 @@ const answersList = createSlice({
           return element._id.toString() === action.payload.replyId.toString();
         }
       );
-      console.log(targetComment, targetReply);
-
       if (targetReply !== -1) {
         state.newComments[targetComment].replies[targetReply].liked =
           action.payload.isLiked;

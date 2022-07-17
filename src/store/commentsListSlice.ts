@@ -73,8 +73,6 @@ const commentsList = createSlice({
         isLiked: boolean;
       }>
     ) {
-      console.log(action.payload.commentId, action.payload.replyId);
-
       const targetComment = state.newComments.findIndex((element) => {
         return element._id.toString() === action.payload.commentId.toString();
       });
@@ -84,7 +82,6 @@ const commentsList = createSlice({
           return element._id.toString() === action.payload.replyId.toString();
         }
       );
-      console.log(targetComment, targetReply);
 
       if (targetReply !== -1) {
         state.newComments[targetComment].replies[targetReply].liked =
