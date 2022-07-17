@@ -416,10 +416,11 @@ export function AllProductsScreen() {
           style={{
             position: "fixed",
             top: "64px",
-            maxHeight: "100vh",
+            height: "calc(100vh - 64px)",
             overflow: "scroll",
             background: theme.palette.interactionCard.backgroundMobileColor,
             padding: "0 12px 0 6px",
+            overflowX: "hidden",
           }}
         >
           <Typography variant="S16W700C050505">
