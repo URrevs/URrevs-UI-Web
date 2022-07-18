@@ -74,9 +74,9 @@ export const PrivacyPolicyScreen = () => {
       changesToThisPrivacyPolicyParagraph: `قد نقوم بتحديث سياسة الخصوصية الخاصة بنا من وقت لآخر. وبالتالي ، يُنصح بمراجعة هذه الصفحة بشكل دوري لمعرفة أي تغييرات. سنخطرك بأي تغييرات عن طريق نشر سياسة الخصوصية الجديدة على هذه الصفحة.
       هذه السياسة سارية اعتبارًا من 2019-08-08`,
       forAccountDeletion: `لحذف الحساب`,
-      forAccountDeletionParagraph1: `يرجى إرسال طلبك إلى `,
-      forAccountDeletionParagraph2: ` و سنقوم بحذف جميع بياناتك عند إرسالك لهذا الطلب.`,
-      forAccountDeletionParagraph3: ` او من القائمة اذهب الي صفحة الاعدادات و اضغط على طلب حذف الحساب.`,
+      forAccountDeletionParagraph1: `لحذف الحساب (ومعه جميع البيانات المتعلقة بك)
+      يرجى إرسال طلبك بحذف الحساب إلى `,
+      forAccountDeletionParagraph2: `   بعنوان طلب مسح الحساب وجميع البيانات الشخصية مع كتابة انك تريد مسح الحساب بالاضافة الي كافة المعلومات الشخصية من المنصة في محتوي البريد، او من خلال الموقع من القائمة اذهب الي صفحة الاعدادات و اضغط على طلب حذف الحساب، و سنقوم بحذف جميع بياناتك بالتبعية عند إرسالك لهذا الطلب.`,
       termsOfService: `شروط الخدمة`,
       termsOfServiceParagraph: `تتوفر شروط خدمة URrevs الحالية على هذا الرابط وتم دمجها هنا من خلال `,
       contactUs: `اتصل بنا`,
@@ -147,9 +147,9 @@ export const PrivacyPolicyScreen = () => {
       changesToThisPrivacyPolicyParagraph: `We may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page.
       This policy is effective as of 2019-08-08`,
       forAccountDeletion: `For Account Deletion`,
-      forAccountDeletionParagraph1: `Kindly send your request to `,
-      forAccountDeletionParagraph2: `, we will delete all your data when you submit this request.`,
-      forAccountDeletionParagraph3: `\nOr alternatively, from menu screen go to settings and click on delete account.`,
+      forAccountDeletionParagraph1: `To delete the account (including all your personal data)
+      Kindly send your request to delete the account to `,
+      forAccountDeletionParagraph2: ` with the subject "Delete account and all personal informations request" and write that you want to delete the account in addition to all personal information from the platform in the content of this mail.\nOr alternatively, on our website from menu go to settings and click on delete account. We will consequently delete all your data when you submit this request.`,
       termsOfService: `Terms of Service`,
       termsOfServiceParagraph: `URrevs’s current Terms of Service are available at `,
       termsOfServiceParagraph2: ` and are incorporated herein by this reference.`,
@@ -322,7 +322,6 @@ export const PrivacyPolicyScreen = () => {
                 {pageDictionary[language].emailAddress}
               </Link>
               {pageDictionary[language].forAccountDeletionParagraph2}
-              {pageDictionary[language].forAccountDeletionParagraph3}
             </Typography>
             {/* termsOfService */}
             <Typography variant={headerStyling}>
