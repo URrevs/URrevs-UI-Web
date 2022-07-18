@@ -14,7 +14,7 @@ export default function Banner() {
   const cardShadow = "0px 14px 80px rgba(34, 35, 58, 0.2)";
   const headerShadow = "4px 4px 20px 1px rgba(33, 203, 243, .3)";
   const pageContainer = {
-    headerTitle: textContainer.landingPageHeaderTitle,
+    headerTitle: textContainer.brandBriefing,
     subheaderTitle: textContainer.landingPageSubheaderTitle,
     subtitle: textContainer.landingPageSubtitle,
     primaryActionText: textContainer.landingPagePrimaryActionText,
