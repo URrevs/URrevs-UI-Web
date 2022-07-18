@@ -15,8 +15,8 @@ export const generateLink = ({
   const shortLinksApi = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${config.apiKey}`;
 
   // TODO:
-  const host = "https://" + "urrevs.com";
-  // const host = "https://urrevstest.netlify.app";
+  // const host = "https://" + "urrevs.com";
+  const host = "https://urrevstest.netlify.app";
 
   const webLink = new URL(host + "/" + webPath);
 
