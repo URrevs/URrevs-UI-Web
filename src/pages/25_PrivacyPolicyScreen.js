@@ -75,7 +75,8 @@ export const PrivacyPolicyScreen = () => {
       هذه السياسة سارية اعتبارًا من 2019-08-08`,
       forAccountDeletion: `لحذف الحساب`,
       forAccountDeletionParagraph1: `يرجى إرسال طلبك إلى `,
-      forAccountDeletionParagraph2: `، سنقوم بحذف جميع بياناتك عند إرسالك لهذا الطلب.`,
+      forAccountDeletionParagraph2: ` و سنقوم بحذف جميع بياناتك عند إرسالك لهذا الطلب.`,
+      forAccountDeletionParagraph3: ` او من القائمة اذهب الي صفحة الاعدادات و اضغط على طلب حذف الحساب.`,
       termsOfService: `شروط الخدمة`,
       termsOfServiceParagraph: `تتوفر شروط خدمة URrevs الحالية على هذا الرابط وتم دمجها هنا من خلال `,
       contactUs: `اتصل بنا`,
@@ -146,8 +147,9 @@ export const PrivacyPolicyScreen = () => {
       changesToThisPrivacyPolicyParagraph: `We may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page.
       This policy is effective as of 2019-08-08`,
       forAccountDeletion: `For Account Deletion`,
-      forAccountDeletionParagraph1: `Please send your request to `,
-      forAccountDeletionParagraph2: `, We will delete all your data when you submit this request.`,
+      forAccountDeletionParagraph1: `Kindly send your request to `,
+      forAccountDeletionParagraph2: `, we will delete all your data when you submit this request.`,
+      forAccountDeletionParagraph3: `\nOr alternatively, from menu screen go to settings and click on delete account.`,
       termsOfService: `Terms of Service`,
       termsOfServiceParagraph: `URrevs’s current Terms of Service are available at `,
       termsOfServiceParagraph2: ` and are incorporated herein by this reference.`,
@@ -320,6 +322,7 @@ export const PrivacyPolicyScreen = () => {
                 {pageDictionary[language].emailAddress}
               </Link>
               {pageDictionary[language].forAccountDeletionParagraph2}
+              {pageDictionary[language].forAccountDeletionParagraph3}
             </Typography>
             {/* termsOfService */}
             <Typography variant={headerStyling}>
