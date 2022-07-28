@@ -115,7 +115,16 @@ export default function BottomNavBar() {
       path: ROUTES_NAMES.MENU,
     },
   ];
-
+  const mapLocation = {
+    "/all-products": 0,
+    "/add-review": 1,
+    "/": 2,
+    "/leaderboard": 3,
+    "/menu": 4,
+  };
+  React.useEffect(() => {
+    setValue(mapLocation[location.pathname]);
+  }, [location.pathname]);
   // this condition is to show bottom nav bar or not
   if (
     location.pathname === "/" ||
@@ -142,7 +151,6 @@ export default function BottomNavBar() {
         showLabels
         currentPage={currentPage}
         onChange={(event, newValue) => {
-          setValue(newValue);
           navigate(navBarItems[newValue].path);
         }}
       >

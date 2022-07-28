@@ -22,6 +22,7 @@ import { ConfirmationBody } from "../Components/Dialogs/ConfiramtionBody";
 export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
   const dispatch = useAppDispatch();
   const textContainer = useAppSelector((state) => state.language.textContainer);
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   const language = useAppSelector((state) => state.language.language);
   const isDark = useAppSelector((state) => state.darkMode.isDark);
   const delReq = useAppSelector((state) => state.auth.requestedDelete);
@@ -180,17 +181,20 @@ export const SettingsScreen = ({ isDesktop = false, setSettingsSlide }) => {
       )}
       <List>
         <Stack spacing={1}>
-          {listItems.map((item, index) => (
-            <div key={item.title + index}>
-              {listItem(
-                item.title,
-                item.subTitle,
-                item.icon,
-                item.to,
-                item.onClick
-              )}
-            </div>
-          ))}
+          {listItems.map((item, index) => {
+            if (index === 2 && !isLoggedIn) return <></>;
+            return (
+              <div key={item.title + index}>
+                {listItem(
+                  item.title,
+                  item.subTitle,
+                  item.icon,
+                  item.to,
+                  item.onClick
+                )}
+              </div>
+            );
+          })}
         </Stack>
       </List>
     </React.Fragment>

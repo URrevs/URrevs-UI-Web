@@ -1,9 +1,12 @@
 import { useTheme } from "@emotion/react";
+import { Typography } from "@mui/material";
 import { Fragment } from "react";
 import { Virtuoso } from "react-virtuoso";
 import { Answer } from "../Components/Interactions/Answer";
 import { CommentReply } from "../Components/Interactions/CommentReply";
+import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { PostingField } from "../Components/PostingComponents/PostingField";
+import { useAppSelector } from "../store/hooks";
 
 export function AnswersList({
   commentsList,
@@ -33,6 +36,7 @@ export function AnswersList({
         borderRadius: "10px",
       }
     : {};
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   return (
     <Fragment>
@@ -44,7 +48,7 @@ export function AnswersList({
             <Fragment>
               <PostingField
                 avatar={true}
-                placeholder="اكتب اجابة"
+                placeholder={textContainer.writeAnAnswer}
                 onSubmit={(comment) => submitCommentHandler(comment)}
               />
               <br />
@@ -52,14 +56,15 @@ export function AnswersList({
           )}
           <Virtuoso
             useWindowScroll
-            context={{ endOfData }}
             data={commentsList}
+            context={{ endOfData, noData: commentsList.length }}
             endReached={loadMore}
             increaseViewportBy={{ top: 2500, bottom: 2500 }}
             overscan={20}
             itemContent={(index, comment) => {
               return (
                 <Answer
+                  key={comment._id}
                   commentId={comment._id}
                   text={comment.content}
                   date={comment.createdAt}
@@ -97,18 +102,31 @@ export function AnswersList({
 }
 
 const Footer = ({ context }) => {
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   const end = context.endOfData;
-  return (
-    !end && (
-      <div
-        style={{
-          padding: "2rem",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        Loading...
-      </div>
-    )
+  return !end ? (
+    <div
+      style={{
+        padding: "2rem",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <LoadingSpinner />
+    </div>
+  ) : context.noData === 0 ? (
+    <Typography
+      style={{
+        display: "flex",
+        padding: "16px 0",
+        justifyContent: "center",
+      }}
+      variant="S15W500C050505"
+    >
+      {textContainer.itemsNotFound}
+    </Typography>
+  ) : (
+    <></>
   );
 };

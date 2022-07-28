@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import APIAnswer from "../models/interfaces/APIAnswer.model";
 import { APIQuestion } from "../models/interfaces/APIQuestion.model";
+import { answersListActions } from "../store/answersListSlice";
 import { RootState } from "../store/store";
 import { postingModalActions } from "../store/uiPostingModalSlice";
 import { snackbarActions } from "../store/uiSnackbarSlice";
@@ -35,6 +36,20 @@ export const phoneQuestionsApi = createApi({
       query: (id: string) => `/${id}`,
       transformResponse: (response: { question: APIQuestion }) => {
         return response.question;
+      },
+
+      async onQueryStarted(payload, { dispatch, queryFulfilled }) {
+        try {
+          const response = await queryFulfilled;
+
+          if (response.data.acceptedAns) {
+            dispatch(
+              answersListActions.addAcceptedAnswer({
+                acceptedAnswer: response.data.acceptedAns,
+              })
+            );
+          }
+        } catch (e: any) {}
       },
     }),
 
@@ -187,7 +202,7 @@ export const phoneQuestionsApi = createApi({
         };
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-        payload.doFn(payload.replyId);
+        payload.doFn(payload.commentId, payload.replyId);
 
         try {
           await queryFulfilled;
@@ -197,7 +212,7 @@ export const phoneQuestionsApi = createApi({
             e.error.data.status === "already liked"
           ) {
           } else {
-            payload.unDoFn(payload.replyId);
+            payload.unDoFn(payload.commentId, payload.replyId);
           }
         }
       },
@@ -211,7 +226,7 @@ export const phoneQuestionsApi = createApi({
         };
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-        payload.doFn(payload.replyId);
+        payload.doFn(payload.commentId, payload.replyId);
 
         try {
           await queryFulfilled;
@@ -221,7 +236,7 @@ export const phoneQuestionsApi = createApi({
             e.error.data.status === "already liked"
           ) {
           } else {
-            payload.unDoFn(payload.replyId);
+            payload.unDoFn(payload.commentId, payload.replyId);
           }
         }
       },
@@ -267,7 +282,7 @@ export const phoneQuestionsApi = createApi({
         } catch (e: any) {
           // if (e.error.data.status === "not found") {
           // } else {
-            payload.unDoFn(payload.replyId);
+          payload.unDoFn(payload.replyId);
           // }
         }
       },

@@ -65,8 +65,8 @@ export default function SearchComponent({
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionary = {
     noInputError: textContainer.nothingToSearchFor,
-    phoneNotFound: textContainer.phoneNotFound,
-    selectPhone: textContainer.selectPhone,
+    incorrectName: textContainer.incorrectName,
+    selectFromMenu: textContainer.selectFromMenu,
   };
 
   const [searchQuery, setSearchQuery] = React.useState(query);
@@ -74,6 +74,13 @@ export default function SearchComponent({
   const [lock, setLock] = React.useState(query !== "");
   const [errorMsg, setErrorMsg] = React.useState(pageDictionary.noInputError);
   const theme = useTheme();
+  //Clear on Success from QuestionsTab or AddReviewTab
+  React.useEffect(() => {
+    if (query === "success") {
+      setSearchQuery("");
+      setLock(false);
+    }
+  }, [query]);
   return (
     <Stack spacing={2} sx={{ width: "100%" }}>
       <Autocomplete
@@ -84,8 +91,8 @@ export default function SearchComponent({
           setError(false);
           onResult(value);
           if (isFormik) {
-            sessionStorage.setItem("chooseProduct", value.id);
-            sessionStorage.setItem("search field", value.label);
+            // sessionStorage.setItem("chooseProduct", JSON.stringify(value));
+            // sessionStorage.setItem("search field", value.label);
           }
         }}
         freeSolo
@@ -107,18 +114,18 @@ export default function SearchComponent({
               transition: "font-size 0.6s ease-in",
               ".Mui-disabled": {
                 //Change Disabled CSS
-                fontWeight: 800,
-                fontSize: 18,
+                ...theme.typography.S18W800C050505,
 
-                WebkitTextFillColor: "black !important",
+                WebkitTextFillColor: `${
+                  theme.isDark ? theme.colors.ce4e6eb : theme.colors.c050505
+                } !important`,
               },
 
               input: {
                 "&::placeholder": {
                   //Change placeholder font
                   opacity: 1,
-                  fontWeight: 300,
-                  fontSize: 16,
+                  ...theme.typography.S16W300C050505,
                 },
               },
             }}
@@ -129,9 +136,9 @@ export default function SearchComponent({
                     const phones = await searchFn(
                       e.target.value.trim()
                     ).unwrap();
-                    setErrorMsg(pageDictionary.selectPhone);
+                    setErrorMsg(pageDictionary.selectFromMenu);
                     if (phones.length === 0)
-                      setErrorMsg(pageDictionary.phoneNotFound);
+                      setErrorMsg(pageDictionary.incorrectName);
                     setResults(phones);
                   } else setErrorMsg(pageDictionary.noInputError);
                 }, SEARCH_INPUT_DELAY);
@@ -165,6 +172,10 @@ export default function SearchComponent({
                     <IconButton
                       onClick={() => {
                         setSearchQuery("");
+                        sessionStorage.setItem(
+                          "companyId",
+                          '{"_id":"","name":"","type":""}'
+                        );
                         setResults([]);
                         dispatch(
                           postingModalActions.initializePostingModal({
@@ -174,7 +185,7 @@ export default function SearchComponent({
                             type: "",
                           })
                         );
-                        setErrorMsg(pageDictionary.selectPhone);
+                        setErrorMsg(pageDictionary.incorrectName);
                         setLock(false);
                         onResult({
                           label: "",
@@ -198,10 +209,11 @@ export default function SearchComponent({
               style: {
                 // backgroundColor: lock ? "#d5dcf2" : "",
                 height: "50px",
-                fontWeight: 500,
-                fontSize: 18,
+                // fontWeight: 500,
+                // fontSize: 18,
+                ...theme.typography.S18W500C050505,
                 alignContent: "center",
-                color: theme.palette.textField.inputFieldText,
+                // color: theme.palette.textField.inputFieldText,
                 background: theme.palette.textField.inputFieldBackground, //Change Background color of textfield
                 borderRadius: `${SEARCH_INPUT_BORDER_RADIUS}px`,
                 border: `0.8px solid ${theme.palette.textField.borderColor} `,

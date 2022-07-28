@@ -1,10 +1,9 @@
 import { ButtonBase, styled, Typography } from "@mui/material";
 import React from "react";
-import { convertDateToString } from "../../functions/convertDateToString";
 import { subtractDate } from "../../functions/subtractDate";
 import { useCheckOwnership } from "../../hooks/useCheckOwnership";
 import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppSelector } from "../../store/hooks";
 
 const CommentButton = styled(
   ButtonBase,
@@ -27,6 +26,7 @@ export const InteractionFooter = ({
   reply,
   ownerId,
   showReplyField,
+  type,
 }) => {
   const textContainer = useAppSelector((state) => state.language.textContainer);
 
@@ -36,7 +36,14 @@ export const InteractionFooter = ({
   const checkSignedIn = useCheckSignedIn();
   const checkOwnership = useCheckOwnership({
     ownerId: ownerId,
-    message: "لا يمكنك الاعجاب بالتعليق الخاص بك",
+    message:
+      type === "comment"
+        ? textContainer.youCantLikeYourComment
+        : type === "reply"
+        ? textContainer.youCantLikeYourReply
+        : type === "answer"
+        ? textContainer.youCantLikeYourAnswer
+        : "",
   });
 
   return (

@@ -148,7 +148,7 @@ export function AllProductsScreen() {
   }, [companiesData]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
@@ -326,7 +326,7 @@ export function AllProductsScreen() {
           <div style={{ ...style, direction: theme.direction }}>
             {index >= productsList.length ? (
               data.length === 0 ? (
-                <div>لا يوجد عناصر</div>
+                <div>{textContainer.noItems}</div>
               ) : (
                 [...Array(1)].map((a, index) => (
                   <div
@@ -378,7 +378,7 @@ export function AllProductsScreen() {
       <div key={key}>
         {index >= companiesList.length ? (
           companiesData.length === 0 ? (
-            <div>لا يوجد عناصر</div>
+            <div>{textContainer.noItems}</div>
           ) : (
             [...Array(1)].map((a, index) => (
               <div
@@ -416,13 +416,16 @@ export function AllProductsScreen() {
           style={{
             position: "fixed",
             top: "64px",
-            maxHeight: "100vh",
+            height: "calc(100vh - 64px)",
             overflow: "scroll",
-            background: "#FFF",
+            background: theme.palette.interactionCard.backgroundMobileColor,
             padding: "0 12px 0 6px",
+            overflowX: "hidden",
           }}
         >
-          <Typography variant="S16W700C050505">الفلاتر:</Typography>
+          <Typography variant="S16W700C050505">
+            {textContainer.filters}:
+          </Typography>
           <div style={{ height: "calc(85vh)" }}>
             <div>
               <List

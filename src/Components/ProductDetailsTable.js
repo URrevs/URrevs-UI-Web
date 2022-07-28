@@ -173,7 +173,7 @@ const ProductDetailsTable = ({
             borderBottom:
               index !== productEntries.length - 1 ? borderBottom : "none",
             borderRight: compData ? "none" : borderRight,
-            maxWidth: "20vw",
+            // maxWidth: "20vw",
           }}
           align="center"
         >

@@ -1,5 +1,6 @@
 import { useTheme } from "@emotion/react";
 import React, { Fragment } from "react";
+import DocumentMeta from "react-document-meta";
 import { useSelector } from "react-redux";
 import { Outlet, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
@@ -21,7 +22,6 @@ export const CompanyProfile = () => {
   } = useGetCompanyStatsInfoQuery(companyId);
 
   const textContainer = useSelector((state) => state.language.textContainer);
-
 
   const pageDictionry = {
     reviews: textContainer.tabBarReviews,
@@ -46,29 +46,42 @@ export const CompanyProfile = () => {
       ) : companyStatsError ? (
         <div>{companyStatsError.data.status}</div>
       ) : (
-        <CustomAppBar
-          label={companyStatsData.name}
-          showLabel
-          showBackBtn
-          showProfile
-          englishName
-          showSearch
+        <DocumentMeta
+          {...{
+            description: `${companyStatsData.name} phone specs - ${companyStatsData.name} مواصفات هاتف `,
+            canonical: `https://${window.location.hostname}/phone/specs?pid=${companyStatsData._id}`,
+            meta: {
+              charset: "utf-8",
+              name: {
+                keywords: `Company,reviews,Q&A,questions and answers,${companyStatsData.name},شركة,مراجعات,اسئلة واجوبة`,
+              },
+            },
+          }}
         >
-          {
-            <Fragment>
-              {!isMobile ? (
-                <StickyTabbar
-                  hasParent={false}
-                  arrayOfTabs={listOfItems}
-                  userName={companyStatsData.name}
-                />
-              ) : (
-                <PathTabbar arrayOfTabs={listOfItems} />
-              )}
-              <Outlet context={{ companyName: companyStatsData.name }} />
-            </Fragment>
-          }
-        </CustomAppBar>
+          <CustomAppBar
+            label={companyStatsData.name}
+            showLabel
+            showBackBtn
+            showProfile
+            englishName
+            showSearch
+          >
+            {
+              <Fragment>
+                {!isMobile ? (
+                  <StickyTabbar
+                    hasParent={false}
+                    arrayOfTabs={listOfItems}
+                    userName={companyStatsData.name}
+                  />
+                ) : (
+                  <PathTabbar arrayOfTabs={listOfItems} />
+                )}
+                <Outlet context={{ companyName: companyStatsData.name }} />
+              </Fragment>
+            }
+          </CustomAppBar>
+        </DocumentMeta>
       )}
     </React.Fragment>
   );

@@ -17,7 +17,7 @@ export function MyPhonesQuestions() {
 
   useEffect(() => {
     return () => {
-      setPage(1)
+      setPage(1);
       dispatch(questionsActions.clearReviews());
     };
   }, []);
@@ -91,8 +91,6 @@ export function MyPhonesQuestions() {
         <Answer
           commentId={review.acceptedAns._id}
           date={review.acceptedAns.createdAt}
-          userId={review.acceptedAns._id}
-          userName={review.acceptedAns.userName}
           likes={review.acceptedAns.upvotes}
           text={review.acceptedAns.content}
           commentLike={likeCommentRequest}
@@ -107,6 +105,8 @@ export function MyPhonesQuestions() {
           acceptedAnswer={true}
           showReply={false}
           upvoted={review.acceptedAns.upvoted}
+          userId={review.acceptedAns.userId}
+          userName={review.acceptedAns.userName}
         />
       );
     }
@@ -157,8 +157,14 @@ export function MyPhonesQuestions() {
     }
   };
 
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   return (
-    <CustomAppBar showLabel label="الاسئلة المطروحة على منتجاتي" showBackBtn>
+    <CustomAppBar
+      showLabel
+      label={textContainer.questionsAboutMyProducts}
+      showBackBtn
+    >
       <VirtualReviewList
         endOfData={endOfData}
         loadMore={loadMore}

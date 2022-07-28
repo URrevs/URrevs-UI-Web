@@ -28,8 +28,11 @@ export const AdminPanel = () => {
     {},
     { refetchOnMountOrArgChange: true }
   );
-  const { data: lastCompetetionData, error: latestCompetetionError } =
-    useGetLatestCompetetionQuery();
+  const {
+    data: lastCompetetionData,
+    isLoading: lastCompetetionIsLoading,
+    error: latestCompetetionError,
+  } = useGetLatestCompetetionQuery();
 
   const [open, setOpen] = React.useState(false);
   const [page, setPage] = React.useState(0);
@@ -80,7 +83,7 @@ export const AdminPanel = () => {
   }, [data]);
 
   const renderAdminOption = () =>
-    isLoading ? (
+    isLoading || lastCompetetionIsLoading ? (
       <LoadingSpinner />
     ) : (
       <React.Fragment>
@@ -103,15 +106,15 @@ export const AdminPanel = () => {
           subTitle={
             latestCompetetionError &&
             latestCompetetionError.data.status === "not yet"
-              ? "لا يوجد مسابقات بعد"
+              ? textContainer.noCompetetionsYet
               : lastCompetetionData &&
                 new Date(lastCompetetionData.deadline) - new Date() > 0
-              ? "هناك مسابقة قائمة الان"
+              ? textContainer.thereIsAnActiveCompetition
               : listItems[1].subtitle +
                 " " +
                 convertDateToString(
                   new Date(lastCompetetionData.createdAt),
-                  "ar"
+                  language
                 )
           }
           onClick={
@@ -120,7 +123,7 @@ export const AdminPanel = () => {
               ? () => {
                   dispatch(
                     snackbarActions.showSnackbar({
-                      message: "يوجد مسابقة قائمة بالفعل",
+                      message: textContainer.thereACompetetionNow,
                     })
                   );
                 }

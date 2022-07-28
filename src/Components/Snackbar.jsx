@@ -8,7 +8,7 @@ import { snackbarActions } from "../store/uiSnackbarSlice";
 import { Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import ROUTES_NAMES from "../RoutesNames";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { SnackbarProvider, useSnackbar } from "notistack";
 
 export default function CustomizedSnackbar() {
@@ -23,6 +23,7 @@ export default function CustomizedSnackbar() {
   const actionText = useAppSelector((state) => state.snackbar.actionBtnText);
   const showActionBtn = useAppSelector((state) => state.snackbar.showActionBtn);
   const navPath = useAppSelector((state) => state.snackbar.actionNavPath);
+  const newTab = useAppSelector((state) => state.snackbar.newTab);
 
   // for snackbar not to be hidden under bottom nav bar
   const navbarRoutes = [
@@ -51,35 +52,48 @@ export default function CustomizedSnackbar() {
 
   const action = (
     <React.Fragment>
-      {showActionBtn && (
-        <Button
-          onClick={
-            //if path is given then onClick navigate to that path
-            () => {
-              if (!navPath) {
-                actionFn();
-                dispatch(snackbarActions.hideSnackbar());
-              } else {
-                navigate(navPath, { replace: true });
-                dispatch(snackbarActions.hideSnackbar());
-              }
-            }
-          }
-          sx={{
-            textTransform: "none",
-          }}
+      {showActionBtn && newTab ? (
+        <a
+          href={navPath}
+          rel="noreferrer"
+          target="_blank"
+          style={{ textDecoration: "none" }}
         >
           <Typography variant="S16W800C2196F3">{actionText}</Typography>
-        </Button>
+        </a>
+      ) : (
+        showActionBtn && (
+          <Button
+            onClick={
+              //if path is given then onClick navigate to that path
+              () => {
+                if (!navPath) {
+                  actionFn();
+                  dispatch(snackbarActions.hideSnackbar());
+                } else {
+                  navigate(navPath, { replace: true });
+                  dispatch(snackbarActions.hideSnackbar());
+                }
+              }
+            }
+            sx={{
+              textTransform: "none",
+            }}
+          >
+            <Typography variant="S16W800C2196F3">{actionText}</Typography>
+          </Button>
+        )
       )}
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
+      {!theme.isMobile && (
+        <IconButton
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={handleClose}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      )}
     </React.Fragment>
   );
 
@@ -91,8 +105,10 @@ export default function CustomizedSnackbar() {
             backgroundColor: "#C4C4C4",
             borderRadius: "12px",
             ...theme.typography.S16W500C050505,
+            color: "#050505",
             lineHeight: 1,
             marginBottom: marginBottom,
+            maxWidth: theme.isMobile ? "100vw" : "50vw",
           },
         }}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}

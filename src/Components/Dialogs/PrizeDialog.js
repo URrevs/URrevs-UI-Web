@@ -19,16 +19,25 @@ export const PrizeDialog = ({ prize, prizeImgSrc, handleClose }) => {
           }}
         >
           <Typography variant="S22W800C050505">{prize}</Typography>
-          <img
-            alt=""
-            src={prizeImgSrc}
+          <div
             style={{
-              alignSelf: "center",
-              margin: "10px 0px",
-              height: "120px",
-              width: "auto",
+              padding: "20px",
             }}
-          />
+          >
+            <img
+              alt=""
+              src={prizeImgSrc}
+              style={{
+                alignSelf: "center",
+                margin: "10px 0px",
+                width: "350px",
+                height: "auto",
+                borderRadius: "15px",
+
+                // borderRadius: "15px",
+              }}
+            />
+          </div>
         </Box>
       </DialogTemplate>
     </Fragment>

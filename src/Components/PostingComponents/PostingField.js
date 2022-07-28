@@ -15,6 +15,7 @@ import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 export const PostingField = ({
   placeholder = "",
   comment = false,
+  backgroundColor,
   avatar = true,
   onSubmit = () => {},
   params = {}, //Adding new textfield params or overwriting existing ones
@@ -24,11 +25,13 @@ export const PostingField = ({
 
   const checkIsLoggedIn = useCheckSignedIn();
 
-  const submitComment = () => {
+  const submitComment = async () => {
     if (checkIsLoggedIn()) {
       if (value.trim() !== "") {
-        onSubmit(value);
-        setValue("");
+        try {
+          await onSubmit(value);
+          setValue("");
+        } catch (e) {}
       }
     }
   };
@@ -37,7 +40,7 @@ export const PostingField = ({
   const theme = useTheme();
   const textFieldParams = {
     multiline: true,
-    maxRows: 26,
+    maxRows: theme.isMobile ? 4 : 26,
     variant: "standard",
     InputProps: {
       endAdornment: theme.isMobile && (
@@ -68,7 +71,9 @@ export const PostingField = ({
         },
         ...theme.typography.S16W500C050505,
         alignContent: "center",
-        background: theme.palette.textField.postingFieldBackground,
+        background: backgroundColor
+          ? backgroundColor
+          : theme.palette.textField.postingFieldBackground,
         borderRadius: `${SEARCH_INPUT_BORDER_RADIUS}px`,
       },
     },
@@ -98,7 +103,6 @@ export const PostingField = ({
       style={{
         marginTop: "10px",
         marginLeft: 0,
-        marginRight: reply ? "50px" : "0",
       }}
     >
       <Box

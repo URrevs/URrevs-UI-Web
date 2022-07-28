@@ -36,9 +36,15 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { menuActions } from "../store/uiMenuSlice";
 import { KeyboardArrowRightOutlined } from "@mui/icons-material";
 import { ConditionalLink } from "../Components/ConditionalLink";
+import { useGetCurrentUserProfileMutation } from "../services/users";
+import { useEffect } from "react";
+import { authActions } from "../store/authSlice";
+import GoogleBadge from "../Components/Icons/GooglePlayStoreBadge";
 
 export default function Menu({ isDesktop = false, drawerRef }) {
   const theme = useTheme();
+
+  const [getUserProfile] = useGetCurrentUserProfileMutation();
 
   const currentUserProfile = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -51,6 +57,19 @@ export default function Menu({ isDesktop = false, drawerRef }) {
   const handleSignOutClose = () => setSignOutDialog(false);
   const handleInvitationOpen = () => setInvitationCodeDialog(true);
   const handleInvitationClose = () => setInvitationCodeDialog(false);
+
+  useEffect(() => {
+    if (currentUserProfile.isLoggedIn) {
+      getUserProfile().then((data) => {
+        dispatch(
+          authActions.login({
+            ...profileData,
+            points: data.data.points,
+          })
+        );
+      });
+    }
+  }, []);
 
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const language = useAppSelector((state) => state.language.language);
@@ -212,7 +231,9 @@ export default function Menu({ isDesktop = false, drawerRef }) {
       src={profileData.photo}
       alt="User profile picture"
       sx={{ mr: "8px" }}
-    ></Avatar>
+    >
+      <Avatar />
+    </Avatar>
   );
   const userProfileButton = () => (
     <Link
@@ -319,9 +340,9 @@ export default function Menu({ isDesktop = false, drawerRef }) {
           //Margin from top appbar
           display: "flex",
           flexDirection: "column",
-
           height: currentUserProfile ? "80vh" : "",
-          marginBottom: 70,
+          minHeight: "650px",
+          // marginBottom: 70,
           padding: "0px 14px",
         }}
       >
@@ -378,6 +399,7 @@ export default function Menu({ isDesktop = false, drawerRef }) {
             // width: "95%",
           }}
         >
+          {/* follow us section */}
           <Typography variant="S22W500C050505">{`${pageDictionry.followUs}`}</Typography>
           <Box
             sx={{
@@ -415,7 +437,24 @@ export default function Menu({ isDesktop = false, drawerRef }) {
                 </a>
               </div>
             </Box>
+            <div
+              style={{
+                padding: "0px 5px",
+                cursor: "pointer",
+              }}
+            >
+              <a
+                href={
+                  "https://play.google.com/store/apps/details?id=com.urrevs.urrevsmobile"
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <GoogleBadge />
+              </a>
+            </div>
           </Box>
+          {/* footer */}
           <Box
             sx={{
               display: "flex",

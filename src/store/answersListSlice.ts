@@ -84,6 +84,32 @@ const answersList = createSlice({
       }
     },
 
+    setReplyIsLiked(
+      state,
+      action: PayloadAction<{
+        commentId: string;
+        replyId: string;
+        isLiked: boolean;
+      }>
+    ) {
+      const targetComment = state.newComments.findIndex((element) => {
+        return element._id.toString() === action.payload.commentId.toString();
+      });
+
+      const targetReply = state.newComments[targetComment].replies.findIndex(
+        (element) => {
+          return element._id.toString() === action.payload.replyId.toString();
+        }
+      );
+      if (targetReply !== -1) {
+        state.newComments[targetComment].replies[targetReply].liked =
+          action.payload.isLiked;
+        action.payload.isLiked
+          ? state.newComments[targetComment].replies[targetReply].likes++
+          : state.newComments[targetComment].replies[targetReply].likes--;
+      }
+    },
+
     setIsAccepted(
       state,
       action: PayloadAction<{

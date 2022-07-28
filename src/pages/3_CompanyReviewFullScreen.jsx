@@ -1,9 +1,12 @@
 import { useTheme } from "@emotion/react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
+import DocumentMeta from "react-document-meta";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { FullScreenError } from "../Components/FullScreenError";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
+import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { PostingField } from "../Components/PostingComponents/PostingField";
 import CompanyReview from "../Components/ReviewCard/CompanyReview";
@@ -155,11 +158,25 @@ export default function CompanyReviewFullScreen() {
   };
 
   // reply like and unlike
-  const stateLikePhoneReply = (id) =>
-    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: true }));
+  const stateLikePhoneReply = (commentId, replyId) => {
+    dispatch(
+      commentsListActions.setReplyIsLiked({
+        commentId: commentId,
+        replyId: replyId,
+        isLiked: true,
+      })
+    );
+  };
 
-  const stateUnLikePhoneReply = (id) =>
-    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: false }));
+  const stateUnLikePhoneReply = (commentId, replyId) => {
+    dispatch(
+      commentsListActions.setReplyIsLiked({
+        commentId: commentId,
+        replyId: replyId,
+        isLiked: false,
+      })
+    );
+  };
 
   const likeReplyRequest = (commentId, replyId) => {
     likeReply({
@@ -265,9 +282,9 @@ export default function CompanyReviewFullScreen() {
 
   const reviewCard = () => {
     if (reviewLoading) {
-      return <div>Loading review...</div>;
+      return <LoadingReviewSkeleton />;
     } else if (reviewError) {
-      return <div>Error</div>;
+      return <FullScreenError />;
     } else if (currentReview) {
       return (
         <CompanyReview
@@ -320,12 +337,23 @@ export default function CompanyReviewFullScreen() {
         <AlonePostsGrid>
           <Box>
             {reviewLoading ? (
-              <div>Loading review...</div>
+              <LoadingReviewSkeleton />
             ) : reviewError ? (
-              <div>Error</div>
+              <FullScreenError />
             ) : (
               currentReviewData && (
-                <React.Fragment>
+                <DocumentMeta
+                  {...{
+                    description: `${currentReviewData.targetName} company pros and cons - ${currentReviewData.targetName} مميزات وعيوب شركة `,
+                    canonical: `https://${window.location.hostname}/company-review/?id=${currentReviewData._id}`,
+                    meta: {
+                      charset: "utf-8",
+                      name: {
+                        keywords: `reviews,review,company,pros,cons,${currentReviewData.targetName},مميزات,عيوب,مراجعات,شركة`,
+                      },
+                    },
+                  }}
+                >
                   <div style={{ height: "25px" }}></div>
                   <CommentsList
                     commentsList={commentsList}
@@ -341,7 +369,7 @@ export default function CompanyReviewFullScreen() {
                     commentReportFunction={commentReportFunction}
                     replyReportFunction={replyReportFunction}
                   />
-                </React.Fragment>
+                </DocumentMeta>
               )
             )}
           </Box>

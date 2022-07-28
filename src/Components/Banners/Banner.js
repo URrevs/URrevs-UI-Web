@@ -3,21 +3,22 @@ import { useTheme } from "@emotion/react";
 import { Card, CardContent, CardHeader, Typography } from "@mui/material";
 import OrangeGradientButton from "../Buttons/OrangeGradientButton";
 import { regDialogActions } from "../../store/uiRegisterDialogSlice";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { CARD_BORDER_RADIUS } from "../../constants";
 
 export default function Banner() {
   const dispatch = useAppDispatch();
+  const textContainer = useAppSelector((state) => state.language.textContainer);
 
   const theme = useTheme();
   const cardShadow = "0px 14px 80px rgba(34, 35, 58, 0.2)";
   const headerShadow = "4px 4px 20px 1px rgba(33, 203, 243, .3)";
   const pageContainer = {
-    headerTitle: "أول منصة لمراجعات المستخدمين بالشرق الأوسط",
-    subheaderTitle: "اَراء مستخدمي الهواتف في مكان واحد",
-    subtitle: "هدفنا مساعدتك تختار",
-    primaryActionText: "راجع الاَن",
-    secondaryActionText: "سجل الاَن",
+    headerTitle: textContainer.brandBriefing,
+    subheaderTitle: textContainer.landingPageSubheaderTitle,
+    subtitle: textContainer.landingPageSubtitle,
+    primaryActionText: textContainer.landingPagePrimaryActionText,
+    secondaryActionText: textContainer.landingPageSecondaryActionText,
   };
 
   return (
@@ -28,7 +29,7 @@ export default function Banner() {
         boxShadow: cardShadow,
         position: "relative",
         overflow: "initial",
-        background: "#ffffff",
+        // background: "#ffffff",
         // space between header and list
         marginBottom: "12px",
         marginTop: theme.spacing(4),
@@ -60,7 +61,7 @@ export default function Banner() {
             variant="subtitle1"
             component="h1"
             style={{
-              color: theme.palette.getContrastText(theme.palette.primary.main),
+              color: theme.palette.getContrastText("#050505"),
               fontWeight: 700,
               letterSpacing: 1,
             }}
@@ -73,7 +74,7 @@ export default function Banner() {
             variant="subtitle2"
             component="h1"
             style={{
-              color: theme.palette.getContrastText(theme.palette.primary.main),
+              color: theme.palette.getContrastText("#050505"),
               opacity: 0.87,
               fontWeight: 400,
               letterSpacing: 0.4,

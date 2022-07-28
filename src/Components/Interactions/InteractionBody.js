@@ -1,11 +1,14 @@
 import {
   Avatar,
   Box,
+  Card,
   Grid,
   IconButton,
   Menu,
   MenuItem,
+  Modal,
   Stack,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import { InteractionCard } from "./InteractionCard";
@@ -15,6 +18,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useTheme } from "@emotion/react";
 import { useAppSelector } from "../../store/hooks";
 import CheckIcon from "@mui/icons-material/Check";
+import { useCheckSignedIn } from "../../hooks/useCheckSignedIn";
 
 export const InteractionBody = ({
   text,
@@ -27,28 +31,68 @@ export const InteractionBody = ({
   userId,
   userName,
   showCorrectIcon,
-  reportFunction = () => {},
+  reportFunction = null,
 }) => {
+  const checkSignedIn = useCheckSignedIn();
   const [showReportMenu, setShowReportMenu] = React.useState(false);
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const uid = useAppSelector((state) => state.auth.uid);
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [timeoutId, setTimeoutId] = React.useState();
+  const [modal, setModal] = React.useState("");
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    if (checkSignedIn()) setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <div
       onMouseEnter={() => {
-        setShowReportMenu(true);
+        setShowReportMenu(Boolean(reportFunction) && true);
       }}
       onMouseLeave={() => {
         setShowReportMenu(false);
       }}
+      onTouchStart={(e) => {
+        setTimeoutId(
+          setTimeout(() => {
+            if (checkSignedIn()) setModal("report");
+          }, 500)
+        );
+      }}
+      onTouchEnd={() => {
+        clearTimeout(timeoutId);
+      }}
     >
+      <Modal
+        open={modal === "report" && Boolean(reportFunction)}
+        direction={theme.direction}
+        onClose={() => {
+          setModal("");
+        }}
+      >
+        <Card
+          sx={{
+            position: "fixed",
+            bottom: "0",
+            width: "100%",
+            borderRadius: "15px 15px 0px 0px",
+            padding: "15px",
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            reportFunction();
+            setModal("");
+          }}
+        >
+          <Typography variant="S18W700C050505">
+            {textContainer.report}
+          </Typography>
+        </Card>
+      </Modal>
       <div
         style={{
           maxWidth: "calc(100% - 20px)",
@@ -66,11 +110,14 @@ export const InteractionBody = ({
               }}
             ></CheckIcon>
           ) : null}
-          <Link to={`../${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}>
+          <Link to={`../../${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}>
             <Avatar
               src={avatar}
               sx={{ marginRight: "6px", height: avatarSize, width: avatarSize }}
-            ></Avatar>
+              alt={`${userName} profile picture`}
+            >
+              <Avatar />
+            </Avatar>
           </Link>
           <Box
             sx={{
@@ -94,7 +141,13 @@ export const InteractionBody = ({
                 renderIcon={renderIcon}
               />
               {!theme.isMobile && showReportMenu && userId !== uid && (
-                <div style={{ position: "absolute", left: "-34px" }}>
+                <div
+                  style={{
+                    position: "absolute",
+                    left: theme.direction === "rtl" && "-34px",
+                    right: theme.direction === "ltr" && "-34px",
+                  }}
+                >
                   <IconButton onClick={handleClick}>
                     <MoreHorizIcon
                       sx={{

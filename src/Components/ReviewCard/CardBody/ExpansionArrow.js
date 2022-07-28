@@ -5,7 +5,7 @@ import { Container } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import * as React from "react";
 
-const ExpansionArrow = ({
+export const ExpansionArrow = ({
   index,
   expanded,
   setExpanded,
@@ -18,6 +18,7 @@ const ExpansionArrow = ({
       style={{
         display: "flex",
         justifyContent: "center",
+        marginTop: "8px",
       }}
     >
       <Avatar
@@ -32,22 +33,20 @@ const ExpansionArrow = ({
         {expanded ? (
           <ArrowDropUpRoundedIcon
             sx={{ fontSize: "30px" }}
-            onClick={() => {
-              setExpanded(false);
-              handleExpandClick();
-            }}
+            // onClick={() => {
+            //   setExpanded(false);
+            //   handleExpandClick();
+            // }}
           />
         ) : (
           <ArrowDropDownRoundedIcon
             sx={{ fontSize: "30px" }}
-            onClick={() => {
-              handleExpandClick();
-            }}
+            // onClick={() => {
+            //   handleExpandClick();
+            // }}
           />
         )}
       </Avatar>
     </Container>
   );
 };
-
-export default ExpansionArrow;

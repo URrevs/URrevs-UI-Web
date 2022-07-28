@@ -14,6 +14,9 @@ import { CircularProductRate } from "./CircularProductRate";
 import { OverviewCard } from "./OverviewCard";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
 import LoadingSpinner from "../Loaders/LoadingSpinner";
+import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
+import CheckIcon from "@mui/icons-material/Check";
+
 const CardStyled = styled(
   Card,
   {}
@@ -102,11 +105,25 @@ export const ProductOverviewCard = ({
                     }
               }
             >
-              <PlaylistAddOutlinedIcon
-                sx={{
-                  color: theme.palette.productRateCard.addPlaylistIconColor,
-                }}
-              ></PlaylistAddOutlinedIcon>
+              {owned && verificationRatio === 0 ? (
+                <CheckIcon
+                  sx={{
+                    color: theme.palette.productRateCard.addPlaylistIconColor,
+                  }}
+                />
+              ) : owned && verificationRatio !== 0 ? (
+                <PlaylistAddCheckOutlinedIcon
+                  sx={{
+                    color: theme.palette.productRateCard.addPlaylistIconColor,
+                  }}
+                />
+              ) : (
+                <PlaylistAddOutlinedIcon
+                  sx={{
+                    color: theme.palette.productRateCard.addPlaylistIconColor,
+                  }}
+                />
+              )}
               <Typography variant="S14W400C050505">
                 {owned && verificationRatio === 0
                   ? textContainer.verifyPhone

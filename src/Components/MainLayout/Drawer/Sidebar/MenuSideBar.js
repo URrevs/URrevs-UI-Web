@@ -9,12 +9,13 @@ export const MenuSideBar = ({ drawerRef }) => {
   const menuOpen = useAppSelector((state) => state.menu.show);
 
   return (
-    <React.Fragment>
+    <div>
       <Slide
         direction={theme.direction === "rtl" ? "left" : "right"}
         in={menuOpen}
         mountOnEnter
         unmountOnExit
+        style={{ maxHeight: "calc(100vh - 60px)" }}
       >
         <Paper
           sx={{
@@ -32,6 +33,6 @@ export const MenuSideBar = ({ drawerRef }) => {
           <Menu isDesktop={true} drawerRef={drawerRef} />
         </Paper>
       </Slide>
-    </React.Fragment>
+    </div>
   );
 };

@@ -6,6 +6,7 @@ import { HowToWinDialog } from "../Components/Dialogs/HowToWinDialog";
 import { InvitationDialog } from "../Components/Dialogs/InvitationDialog";
 import { PrizeDialog } from "../Components/Dialogs/PrizeDialog";
 import LeaderboardEntry from "../Components/Leaderboard/LeaderboardEntry";
+import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { CARD_BORDER_RADIUS } from "../constants";
 import ROUTES_NAMES from "../RoutesNames";
@@ -51,7 +52,12 @@ export const Leaderboard = () => {
   const handleCloseDialog = () => {
     setModal("");
   };
-
+  // useEffect(() => {
+  //   const counter = setInterval();
+  //   return () => {
+  //     clearInterval(counter);
+  //   };
+  // }, []);
   const [isCurrentlyHeld, setIsCurrentlyHeld] = useState(false);
   useEffect(() => {
     if (
@@ -72,7 +78,10 @@ export const Leaderboard = () => {
         dir={theme.direction}
       >
         <Box>
-          <HowToWinDialog handleClose={handleCloseDialog} />
+          <HowToWinDialog
+            handleClose={handleCloseDialog}
+            isCurrentlyHeld={isCurrentlyHeld}
+          />
         </Box>
       </Modal>
       <Modal
@@ -104,10 +113,10 @@ export const Leaderboard = () => {
     topUsersError ? (
       <div>Error</div>
     ) : topUsersIsLoading ? (
-      <div>Loading...</div>
+      <LoadingSpinner />
     ) : (
       topUsersData.map((item, i) => (
-        <Fragment>
+        <Fragment key={item.name + i}>
           <LeaderboardEntry
             isBody={theme.isMobile}
             userRank={i + 1}
@@ -168,7 +177,7 @@ export const Leaderboard = () => {
       }
     } else {
       if (latestCompetetionIsLoading) {
-        return <div>Loading...</div>;
+        return <LoadingSpinner />;
       } else if (!isCurrentlyHeld) {
         return (
           <div>
@@ -198,7 +207,7 @@ export const Leaderboard = () => {
           {myRankError ? (
             <div>Error</div>
           ) : myRankIsLoading ? (
-            <div>Loading...</div>
+            <LoadingSpinner />
           ) : !myRankData ? (
             <Typography>login first</Typography>
           ) : (
@@ -232,6 +241,7 @@ export const Leaderboard = () => {
           {competetionBanner()}
           {/* Your Rank In The Leaderboard */}
           {currentUserRank()}
+          <div style={{ height: "16px" }}></div>
           {leaderboardList()}
         </div>
       )}
@@ -260,7 +270,9 @@ export const Leaderboard = () => {
                 position: "absolute",
                 padding: "0px",
                 display: "flex",
+                width: "100%",
                 flexDirection: "column",
+                alignItems: "center",
                 justifyContent: "center",
               }}
             >

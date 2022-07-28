@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Box, Typography } from "@mui/material";
+import { Box, Fab, Typography } from "@mui/material";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaButton } from "../Components/Buttons/FaButton";
@@ -30,46 +30,50 @@ export function PostedReviews() {
     <CustomAppBar
       showLabel
       label={
-        currentUserId === paramId && (
-          <FaButton
-            icon={
-              <AddIcon
-                sx={{
-                  color: theme.palette.defaultRedBtnIconColor,
-                  fontSize: "28px",
-                }}
-              />
-            }
-            onClick={() => {
-              dispatch(
-                postingModalActions.showPostingModal({
-                  tab: 0,
-                })
-              );
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <Typography variant="S14W700Cffffff">
-                {textContainer.addReview}
-              </Typography>
-            </Box>
-          </FaButton>
-        )
+        currentUserId === paramId
+          ? textContainer.myReviews
+          : textContainer.reviews
       }
       showBackBtn
       tabBar={<FilterTabbar value={filter} setValue={setFilter} />}
     >
-      {currentUserId === paramId
-        ? textContainer.myReviews
-        : textContainer.reviews}
+      {theme.isMobile && currentUserId === paramId && (
+        <Fab
+          onClick={() => {
+            dispatch(
+              postingModalActions.showPostingModal({
+                tab: 0,
+              })
+            );
+          }}
+          variant="circular"
+          disableFocusRipple
+          disableRipple
+          sx={{
+            background: "#2196F3",
+            position: "fixed",
+            bottom: "15px",
+            borderRadius: "",
+            right: "15px",
+            // width: "50px",
+            // height: "50px",
+            // textTransform: "none",
 
+            zIndex: 5,
+            "&:hover": {
+              background: "#2196F3",
+            },
+            transition: "all 0.6s ease",
+          }}
+        >
+          <AddIcon
+            sx={{
+              color: theme.palette.defaultRedBtnIconColor,
+              fontSize: "28px",
+            }}
+          />
+        </Fab>
+      )}
       <FixedGrid>
         <div style={{ marginTop: "20px" }}>
           {currentUserId === paramId && (

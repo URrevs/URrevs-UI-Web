@@ -30,6 +30,8 @@ import {
 import { useAppSelector } from "../store/hooks";
 
 export const SearchScreen = () => {
+  const currentUser = useAppSelector((state) => state.auth);
+
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const user = useAppSelector((state) => state.auth);
 
@@ -37,7 +39,7 @@ export const SearchScreen = () => {
     search: textContainer.search,
     placeholder: textContainer.searchForAProductOrACompany,
     recentResults: textContainer.previousSearchResults,
-    suggestedResults: "النتائج المقترحة",
+    suggestedResults: textContainer.suggestedResults,
     smartphone: textContainer.smartphone,
     company: textContainer.company,
   };
@@ -78,11 +80,10 @@ export const SearchScreen = () => {
             padding: 0,
           }}
           onClick={() => {
-            // add recent search locally
-            // setResults([...results, { _id: id, name: title, type }]);
-
-            // add recent search to server
-            addRecentSearch({ type, id });
+            // save to user's recent search
+            if (currentUser.isLoggedIn) {
+              addRecentSearch({ type, id });
+            }
             type === "phone"
               ? navigate(
                   `/${ROUTES_NAMES.PHONE_PROFILE}/${ROUTES_NAMES.SPECS}?pid=${id}`
@@ -184,8 +185,7 @@ export const SearchScreen = () => {
       input: {
         "&::placeholder": {
           opacity: 1,
-          fontWeight: 300,
-          fontSize: 16,
+          ...theme.typography.S16W300C050505,
         },
       },
     },
@@ -204,7 +204,7 @@ export const SearchScreen = () => {
         height: "50px",
         ...theme.typography.S16W500C050505,
         alignContent: "center",
-        color: theme.palette.textField.inputFieldText,
+        // color: theme.palette.textField.inputFieldText,
         background: theme.palette.textField.inputFieldBackground,
         borderRadius: 90,
         border: `0.8px solid ${theme.palette.textField.borderColor} `,

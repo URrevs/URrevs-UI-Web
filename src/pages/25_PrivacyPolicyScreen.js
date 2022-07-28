@@ -36,7 +36,53 @@ export const PrivacyPolicyScreen = () => {
       adSense: `ادسنس AdSense`,
       paragraph3: `” ) او خوادم الشبكات الاعلانيه لمزيد من المعلومات عن ممارساتها وانشطتها المختلفة .
 
-      اخيرا .. فنحن ملزمون ضمن بنود هذه الاتفاقية بان نبين لك كيفية تعطيل خاصية الكوكيز ، يمكنك فعل ذلك من خلال خيارات المتصفح الخاص بك .`,
+      اخيرا .. فنحن ملزمون ضمن بنود هذه الاتفاقية بان نبين لك كيفية تعطيل خاصية الكوكيز ، يمكنك فعل ذلك من خلال خيارات المتصفح الخاص بك .
+      
+      أنشأ URrevs تطبيق URrevs كتطبيق تجاري. يتم توفير هذه الخدمة من قبل URrevs وهي مخصصة للاستخدام كما هي.
+      تُستخدم هذه الصفحة لإعلام الزائرين بسياساتنا المتعلقة بجمع المعلومات الشخصية واستخدامها والكشف عنها إذا قرر أي شخص استخدام خدمتنا.
+      إذا اخترت استخدام خدمتنا ، فأنت توافق على جمع واستخدام المعلومات المتعلقة بهذه السياسة. تُستخدم المعلومات الشخصية التي نجمعها لتوفير الخدمة وتحسينها. لن نستخدم أو نشارك معلوماتك مع أي شخص باستثناء ما هو موضح في سياسة الخصوصية هذه.
+      المصطلحات المستخدمة في سياسة الخصوصية هذه لها نفس المعاني الواردة في الشروط والأحكام الخاصة بنا ، والتي يمكن الوصول إليها في URrevs ما لم يتم تحديد خلاف ذلك في سياسة الخصوصية هذه.
+      
+      `,
+      informationCollectionAndUse: `جمع المعلومات واستخدامها`,
+      informationCollectionAndUseParagraph: `للحصول على تجربة أفضل ، أثناء استخدام خدمتنا ، قد نطلب منك تزويدنا بمعلومات تعريف شخصية معينة. سيتم الاحتفاظ بالمعلومات التي نطلبها من قبلنا واستخدامها كما هو موضح في سياسة الخصوصية هذه.
+      يستخدم التطبيق خدمات الجهات الخارجية التي قد تجمع المعلومات المستخدمة لتحديد هويتك.
+      رابط لسياسة الخصوصية لمقدمي خدمات الطرف الثالث التي يستخدمها التطبيق`,
+      informationCollectionAndUseGooglePlayServices: `Google Play Services`,
+      informationCollectionAndUseGoogleAnalyticsForFirebase: `Google Analytics for Firebase`,
+      informationCollectionAndUseFirebaseCrashlytics: `Firebase Crashlytics`,
+      informationCollectionAndUseFacebook: `Facebook`,
+      logData: `تسجيل البيانات`,
+      logDataParagraph: `نود إعلامك أنه كلما استخدمت خدمتنا ، في حالة حدوث خطأ في التطبيق ، نجمع البيانات والمعلومات (من خلال منتجات الجهات الخارجية) على هاتفك تسمى Log Data. قد تتضمن بيانات السجل هذه معلومات مثل عنوان بروتوكول الإنترنت ("IP") الخاص بجهازك ، واسم الجهاز ، وإصدار نظام التشغيل ، ووكيل المستخدم ، وتكوين التطبيق عند استخدام خدمتنا ، ووقت وتاريخ استخدامك للخدمة ، وإحصائيات أخرى.`,
+      cookies: `ملفات تعريف الارتباط "الكوكيز"`,
+      cookiesParagraph: `ملفات تعريف الارتباط هي ملفات تحتوي على كمية صغيرة من البيانات التي يتم استخدامها بشكل شائع كمعرفات فريدة مجهولة الهوية. يتم إرسالها إلى متصفحك من مواقع الويب التي تزورها ويتم تخزينها على الذاكرة الداخلية لجهازك.
+      لا تستخدم هذه الخدمة "ملفات تعريف الارتباط" بشكل صريح. ومع ذلك ، قد يستخدم التطبيق رموزًا ومكتبات تابعة لجهات خارجية تستخدم "ملفات تعريف الارتباط" لجمع المعلومات وتحسين خدماتهم. لديك خيار إما قبول أو رفض ملفات تعريف الارتباط هذه ومعرفة متى يتم إرسال ملف تعريف الارتباط إلى جهازك. إذا اخترت رفض ملفات تعريف الارتباط الخاصة بنا ، فقد لا تتمكن من استخدام بعض أجزاء هذه الخدمة.`,
+      serviceProviders: `مقدمي الخدمة`,
+      serviceProvidersParagraph: `يجوز لنا توظيف شركات وأفراد تابعين لجهات خارجية للأسباب التالية`,
+      serviceProvidersFacilitate: `لتسهيل خدمتنا ؛`,
+      serviceProvidersProvideServiceOnOurBehalf: `لتقديم الخدمة نيابة عنا ؛`,
+      serviceProvidersPerformServiceRelatedServices: `لأداء الخدمات المتعلقة بالخدمة ؛ أو`,
+      serviceProvidersAssistUsinAnalyzing: `لمساعدتنا في تحليل كيفية استخدام خدمتنا.`,
+      serviceProvidersParagraph2: `نريد إبلاغ مستخدمي هذه الخدمة أن هذه الأطراف الثالثة لديها حق الوصول إلى معلوماتهم الشخصية. والسبب هو أداء المهام الموكلة إليهم نيابة عنا. ومع ذلك ، فهم ملزمون بعدم الكشف عن المعلومات أو استخدامها لأي غرض آخر.`,
+      security: `حماية`,
+      securityParagraph: `نحن نقدر ثقتك في تزويدنا بمعلوماتك الشخصية ، وبالتالي فإننا نسعى جاهدين لاستخدام وسائل مقبولة تجاريًا لح                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            مايتها. لكن تذكر أنه لا توجد وسيلة نقل عبر الإنترنت أو طريقة تخزين إلكتروني آمنة وموثوقة بنسبة 100٪ ، ولا يمكننا ضمان أمانها المطلق.`,
+      linksToOtherSites: `روابط لمواقع أخرى`,
+      linksToOtherSitesParagraph: `قد تحتوي هذه الخدمة على روابط لمواقع أخرى. إذا قمت بالنقر فوق ارتباط جهة خارجية ، فسيتم توجيهك إلى هذا الموقع. لاحظ أن هذه المواقع الخارجية لا يتم تشغيلها بواسطتنا. لذلك ، ننصحك بشدة بمراجعة سياسة الخصوصية الخاصة بهذه المواقع. ليس لدينا أي سيطرة ولا نتحمل أي مسؤولية عن المحتوى أو سياسات الخصوصية أو الممارسات الخاصة بأي مواقع أو خدمات تابعة لجهات خارجية.`,
+      childrensPrivacy: `خصوصية الاطفال`,
+      childrensPrivacyParagraph: `لا تخاطب هذه الخدمات أي شخص يقل عمره عن 13 عامًا. نحن لا نجمع عن عمد معلومات التعريف الشخصية من الأطفال دون سن 13 عامًا. في الحالة التي اكتشفنا فيها أن طفلًا أقل من 13 عامًا قد زودنا بمعلومات شخصية ، فنحن نحذفها على الفور من خوادمنا. إذا كنت والدًا أو وصيًا وكنت على علم بأن طفلك قد زودنا بمعلومات شخصية ، فيرجى الاتصال بنا حتى نتمكن من القيام بالإجراءات اللازمة. `,
+      changesToThisPrivacyPolicy: `التغييرات على سياسة الخصوصية هذه`,
+      changesToThisPrivacyPolicyParagraph: `قد نقوم بتحديث سياسة الخصوصية الخاصة بنا من وقت لآخر. وبالتالي ، يُنصح بمراجعة هذه الصفحة بشكل دوري لمعرفة أي تغييرات. سنخطرك بأي تغييرات عن طريق نشر سياسة الخصوصية الجديدة على هذه الصفحة.
+      هذه السياسة سارية اعتبارًا من 2019-08-08`,
+      forAccountDeletion: `لحذف الحساب`,
+      forAccountDeletionParagraph1: `لحذف الحساب (ومعه جميع البيانات المتعلقة بك)
+      يرجى إرسال طلبك بحذف الحساب إلى `,
+      forAccountDeletionParagraph2: `   بعنوان طلب مسح الحساب وجميع البيانات الشخصية مع كتابة انك تريد مسح الحساب بالاضافة الي كافة المعلومات الشخصية من المنصة في محتوي البريد، او من خلال الموقع من القائمة اذهب الي صفحة الاعدادات و اضغط على طلب حذف الحساب، و سنقوم بحذف جميع بياناتك بالتبعية عند إرسالك لهذا الطلب.`,
+      termsOfService: `شروط الخدمة`,
+      termsOfServiceParagraph: `تتوفر شروط خدمة URrevs الحالية على هذا الرابط وتم دمجها هنا من خلال `,
+      contactUs: `اتصل بنا`,
+      contactUsParagraph: `إذا كانت لديك أي أسئلة أو اقتراحات حول سياسة الخصوصية الخاصة بنا ، فلا تتردد في الاتصال بنا على `,
+      emailAddress: `هذا البريد الالكتروني`,
+      thisLink: `هذا الرابط`,
     },
     en: {
       title: `Privacy Policy`,
@@ -65,10 +111,56 @@ export const PrivacyPolicyScreen = () => {
       adSense: `AdSense`,
       paragraph3: `”) or ad network servers for more information on their various practices and activities.
 
-      Finally, we are obligated within the terms of this agreement to show you how to disable the cookies feature. You can do this through your browser options.`,
+      We are obligated within the terms of this agreement to show you how to disable the cookies feature. You can do this through your browser options.
+      URrevs built the URrevs app as a Commercial app. This SERVICE is provided by URrevs and is intended for use as is.
+      This page is used to inform visitors regarding our policies regarding the collection, use, and disclosure of Personal Information if anyone decided to use our Service.
+      If you choose to use our Service, then you agree to the collection and use of information in relation to this policy. The Personal Information that we collect is used for providing and improving the Service. We will not use or share your information with anyone except as described in this Privacy Policy.
+      The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which are accessible at URrevs unless otherwise defined in this Privacy Policy.
+      `,
+      informationCollectionAndUse: `Information Collection and Use`,
+      informationCollectionAndUseParagraph: `For a better experience, while using our Service, we may require you to provide us with certain personally identifiable information. The information that we request will be retained by us and used as described in this privacy policy.
+      The app does use third-party services that may collect information used to identify you.
+      Link to the privacy policy of third-party service providers used by the app`,
+      informationCollectionAndUseGooglePlayServices: `Google Play Services`,
+      informationCollectionAndUseGoogleAnalyticsForFirebase: `Google Analytics for Firebase`,
+      informationCollectionAndUseFirebaseCrashlytics: `Firebase Crashlytics`,
+      informationCollectionAndUseFacebook: `Facebook`,
+      logData: `Log Data`,
+      logDataParagraph: `We want to inform you that whenever you use our Service, in a case of an error in the app we collect data and information (through third-party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, user agent, the configuration of the app when utilizing our Service, the time and date of your use of the Service, and other statistics.      `,
+      cookies: `Cookies`,
+      cookiesParagraph: `Cookies are files with a small amount of data that are commonly used as anonymous unique identifiers. These are sent to your browser from the websites that you visit and are stored on your device's internal memory.
+      This Service does not use these “cookies” explicitly. However, the app may use third-party code and libraries that use “cookies” to collect information and improve their services. You have the option to either accept or refuse these cookies and know when a cookie is being sent to your device. If you choose to refuse our cookies, you may not be able to use some portions of this Service.`,
+      serviceProviders: `Service Providers`,
+      serviceProvidersParagraph: `We may employ third-party companies and individuals due to the following reasons:`,
+      serviceProvidersFacilitate: `To facilitate our Service;`,
+      serviceProvidersProvideServiceOnOurBehalf: `To provide the Service on our behalf;`,
+      serviceProvidersPerformServiceRelatedServices: `To perform Service-related services; or`,
+      serviceProvidersAssistUsinAnalyzing: `To assist us in analyzing how our Service is used.`,
+      serviceProvidersParagraph2: `We want to inform users of this Service that these third parties have access to their Personal Information. The reason is to perform the tasks assigned to them on our behalf. However, they are obligated not to disclose or use the information for any other purpose.`,
+      security: `Security`,
+      securityParagraph: `We value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and we cannot guarantee its absolute security.      `,
+      linksToOtherSites: `Links to Other Sites`,
+      linksToOtherSitesParagraph: `This Service may contain links to other sites. If you click on a third-party link, you will be directed to that site. Note that these external sites are not operated by us. Therefore, we strongly advise you to review the Privacy Policy of these websites. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.      `,
+      childrensPrivacy: `Children’s Privacy`,
+      childrensPrivacyParagraph: `These Services do not address anyone under the age of 13. We do not knowingly collect personally identifiable information from children under 13 years of age. In the case we discover that a child under 13 has provided us with personal information, we immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us so that we will be able to do the necessary actions.      `,
+      changesToThisPrivacyPolicy: `Changes to This Privacy Policy`,
+      changesToThisPrivacyPolicyParagraph: `We may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page.
+      This policy is effective as of 2019-08-08`,
+      forAccountDeletion: `For Account Deletion`,
+      forAccountDeletionParagraph1: `To delete the account (including all your personal data)
+      Kindly send your request to delete the account to `,
+      forAccountDeletionParagraph2: ` with the subject "Delete account and all personal informations request" and write that you want to delete the account in addition to all personal information from the platform in the content of this mail.\nOr alternatively, on our website from menu go to settings and click on delete account. We will consequently delete all your data when you submit this request.`,
+      termsOfService: `Terms of Service`,
+      termsOfServiceParagraph: `URrevs’s current Terms of Service are available at `,
+      termsOfServiceParagraph2: ` and are incorporated herein by this reference.`,
+      contactUs: `Contact Us`,
+      contactUsParagraph: `If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at `,
+      emailAddress: `This email`,
+      thisLink: `This Link`,
     },
   };
-  // const headerStyle = "";
+  const headerStyling = "S20W700C050505";
+
   // const subHeaderStyle = "";
   return (
     <div
@@ -77,7 +169,7 @@ export const PrivacyPolicyScreen = () => {
         direction: direction,
       }}
     >
-      <CustomAppBar showLogo label={pageDictionary[language].title} showLabel>
+      <CustomAppBar label={pageDictionary[language].title} showLabel>
         <AlonePostsGrid>
           <Stack spacing={5}>
             <div></div>
@@ -102,6 +194,158 @@ export const PrivacyPolicyScreen = () => {
                 {pageDictionary[language].adSense}
               </Link>
               {pageDictionary[language].paragraph3}
+            </Typography>
+            {/* informationCollectionAndUse */}
+            <Typography variant={headerStyling}>
+              {pageDictionary[language].informationCollectionAndUse}
+            </Typography>
+            <Typography>
+              {pageDictionary[language].informationCollectionAndUseParagraph}
+              <ul>
+                <li>
+                  <a
+                    href="https://policies.google.com/privacy"
+                    underline="always"
+                  >
+                    {
+                      pageDictionary[language]
+                        .informationCollectionAndUseGooglePlayServices
+                    }
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://firebase.google.com/policies/analytics"
+                    underline="always"
+                  >
+                    {
+                      pageDictionary[language]
+                        .informationCollectionAndUseGoogleAnalyticsForFirebase
+                    }
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://firebase.google.com/support/privacy/"
+                    underline="always"
+                  >
+                    {
+                      pageDictionary[language]
+                        .informationCollectionAndUseFirebaseCrashlytics
+                    }
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.facebook.com/about/privacy/update/printable"
+                    underline="always"
+                  >
+                    {
+                      pageDictionary[language]
+                        .informationCollectionAndUseFacebook
+                    }
+                  </a>
+                </li>
+              </ul>
+            </Typography>
+            {/*  logData */}
+            <Typography variant={headerStyling}>
+              {pageDictionary[language].logData}
+            </Typography>
+            <Typography>{pageDictionary[language].logDataParagraph}</Typography>
+            {/* cookies */}
+            <Typography variant={headerStyling}>
+              {pageDictionary[language].cookies}
+            </Typography>
+            <Typography>{pageDictionary[language].cookiesParagraph}</Typography>
+            {/* serviceProviders  */}
+            <Typography variant={headerStyling}>
+              {pageDictionary[language].serviceProviders}
+            </Typography>
+            <Typography>
+              {pageDictionary[language].serviceProvidersParagraph}
+              <ul>
+                <li>{pageDictionary[language].serviceProvidersFacilitate}</li>
+                <li>
+                  {
+                    pageDictionary[language]
+                      .serviceProvidersProvideServiceOnOurBehalf
+                  }
+                </li>
+                <li>
+                  {
+                    pageDictionary[language]
+                      .serviceProvidersPerformServiceRelatedServices
+                  }
+                </li>
+                <li>
+                  {pageDictionary[language].serviceProvidersAssistUsinAnalyzing}
+                </li>
+              </ul>
+              {pageDictionary[language].serviceProvidersParagraph2}
+            </Typography>
+            {/* security */}
+            <Typography variant={headerStyling}>
+              {pageDictionary[language].security}
+            </Typography>
+            <Typography>
+              {pageDictionary[language].securityParagraph}
+            </Typography>
+            {/* linksToOtherSites */}
+            <Typography variant={headerStyling}>
+              {pageDictionary[language].linksToOtherSites}
+            </Typography>
+            <Typography>
+              {pageDictionary[language].linksToOtherSitesParagraph}
+            </Typography>
+            {/* childrensPrivacy */}
+            <Typography variant={headerStyling}>
+              {pageDictionary[language].childrensPrivacy}
+            </Typography>
+            <Typography>
+              {pageDictionary[language].childrensPrivacyParagraph}
+            </Typography>
+            {/* changesToThisPrivacyPolicy */}
+            <Typography variant={headerStyling}>
+              {pageDictionary[language].changesToThisPrivacyPolicy}
+            </Typography>
+            <Typography>
+              {pageDictionary[language].changesToThisPrivacyPolicyParagraph}
+            </Typography>
+            {/* forAccountDeletion */}
+            <Typography variant={headerStyling}>
+              {pageDictionary[language].forAccountDeletion}
+            </Typography>
+            <Typography>
+              {pageDictionary[language].forAccountDeletionParagraph1}
+              <Link href="mailto: urrevsofficial@gmail.com" underline="always">
+                {pageDictionary[language].emailAddress}
+              </Link>
+              {pageDictionary[language].forAccountDeletionParagraph2}
+            </Typography>
+            {/* termsOfService */}
+            <Typography variant={headerStyling}>
+              {pageDictionary[language].termsOfService}
+            </Typography>
+            <Typography>
+              {pageDictionary[language].termsOfServiceParagraph}
+              <Link
+                href="https://docs.google.com/document/d/e/2PACX-1vTG4kawFFmI0ku7erJPGiOlrp6gYW4Ybj-_qHFMSlTWqgI2dSTPYZPTraZh2MMzqxMn7KmZVL0QiOqJ/pub"
+                underline="always"
+              >
+                {pageDictionary[language].thisLink}.
+              </Link>
+              {pageDictionary[language].termsOfServiceParagraph2}
+            </Typography>
+            {/* contactUs */}
+            <Typography variant={headerStyling}>
+              {pageDictionary[language].contactUs}
+            </Typography>
+            <Typography>
+              {pageDictionary[language].contactUsParagraph}
+              <Link href="mailto: urrevsofficial@gmail.com" underline="always">
+                {pageDictionary[language].emailAddress}.
+              </Link>
             </Typography>
             <div></div>
           </Stack>

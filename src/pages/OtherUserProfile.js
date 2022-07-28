@@ -1,7 +1,8 @@
+import { useTheme } from "@emotion/react";
 import DevicesOtherOutlinedIcon from "@mui/icons-material/DevicesOtherOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, Stack, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
 import StarWithCount from "../Components/Leaderboard/StarWithCount";
@@ -18,30 +19,42 @@ export default function OtherUserProfilePage({ uid }) {
     isError,
     data: profileData,
   } = useGetOtherUserProfileQuery(uid);
-
+  const theme = useTheme();
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionry = {
     collectedStars: textContainer.collectedStars,
     myReviews: textContainer.reviews,
     ownedProducts: textContainer.ownedProducts,
     askedQuestions: textContainer.askedQuestions,
-    account: "الحساب",
+    account: textContainer.userProfile,
   };
 
   const listItems = [
     {
       title: pageDictionry.myReviews,
-      icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <RateReviewOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}?userId=${uid}`,
     },
     {
       title: pageDictionry.ownedProducts,
-      icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <DevicesOtherOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?userId=${uid}`,
     },
     {
       title: pageDictionry.askedQuestions,
-      icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <ForumOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       subtitle: pageDictionry.helpOthers,
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}?userId=${uid}`,
     },
@@ -64,7 +77,9 @@ export default function OtherUserProfilePage({ uid }) {
         src={profileData.photo}
         alt="User profile picture"
         sx={{ width: 90, height: 90 }}
-      ></Avatar>
+      >
+        <Avatar />
+      </Avatar>
     );
   };
 
@@ -78,6 +93,7 @@ export default function OtherUserProfilePage({ uid }) {
       label={pageDictionry.account}
       showBackBtn={true}
     >
+      <div style={{ height: "12px" }}></div>
       <FixedGrid>
         {isError ? (
           <ErrorScreen>error</ErrorScreen>
@@ -112,19 +128,22 @@ export default function OtherUserProfilePage({ uid }) {
             </div>
             <div>
               <List>
-                {listItems.map((item, index) => {
-                  return listItem(
-                    item.title,
-                    item.subtitle,
-                    item.icon,
-                    item.to
-                  );
-                })}
+                <Stack spacing={1}>
+                  {listItems.map((item, index) => {
+                    return listItem(
+                      item.title,
+                      item.subtitle,
+                      item.icon,
+                      item.to
+                    );
+                  })}
+                </Stack>
               </List>
             </div>
           </div>
         ) : (
-          <div>Loading...</div>
+          <></>
+          // <div>Loading...</div>
         )}
       </FixedGrid>
     </CustomAppBar>

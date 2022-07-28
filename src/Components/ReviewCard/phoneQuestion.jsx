@@ -12,7 +12,7 @@ import {
   useUserPressesFullScreenPhoneQuestionMutation,
 } from "../../services/phone_questions";
 import { useReportPhoneQuestionMutation } from "../../services/reports";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { sendReportActions } from "../../store/uiSendReportSlice";
 import QuestionCard from "./QuestionCard";
 
@@ -74,10 +74,12 @@ export default function PhoneQuestion({
   const [likePhoneReview] = useLikePhoneQuestionMutation();
   const [unLikePhoneReview] = useUnLikePhoneQuestionMutation();
 
+  const textContainer = useAppSelector((state) => state.language.textContainer);
+
   const checkIsSignedIn = useCheckSignedIn();
   const checkOwnerShip = useCheckOwnership({
     ownerId: reviewDetails.userId,
-    message: "لا يمكنك التصويت للسؤال الخاص بك",
+    message: textContainer.youCantUpvoteYourQuestion,
   });
 
   const likeBtnHandler = async () => {
@@ -106,7 +108,7 @@ export default function PhoneQuestion({
     stateShare(reviewDetails._id);
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
     generateShareLink().then((data) => {
-      showShareSnackbar(data.data.shortLink, "تم نسخ رابط المنشور");
+      showShareSnackbar(data.data.shortLink, textContainer.postLinkCopied);
     });
   };
 

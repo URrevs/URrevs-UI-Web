@@ -4,7 +4,7 @@ import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
-import { Avatar, Box, Modal, Typography } from "@mui/material";
+import { Avatar, Box, Modal, Stack, Typography } from "@mui/material";
 import List from "@mui/material/List";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -38,22 +38,38 @@ export default function CurrentUserProfilePage({}) {
   const listItems = [
     {
       title: pageDictionry.myReviews,
-      icon: <RateReviewOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <RateReviewOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.REVIEWS}?userId=${profileData.uid}`,
     },
     {
       title: pageDictionry.myQuestions,
-      icon: <ForumOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <ForumOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.QUESTIONS}?userId=${profileData.uid}`,
     },
     {
       title: pageDictionry.ownedProducts,
-      icon: <DevicesOtherOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <DevicesOtherOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.OWNED_PHONES}?userId=${profileData.uid}`,
     },
     {
       title: pageDictionry.referalCode,
-      icon: <GroupsOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <GroupsOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       onClick: () => {
         handleInvitationOpen();
       },
@@ -62,7 +78,11 @@ export default function CurrentUserProfilePage({}) {
     },
     {
       title: pageDictionry.askedQuestions,
-      icon: <HelpCenterOutlinedIcon sx={{ fontSize: 40 }} />,
+      icon: (
+        <HelpCenterOutlinedIcon
+          sx={{ fontSize: 40, color: theme.palette.iconColor }}
+        />
+      ),
       subtitle: pageDictionry.helpOthers,
       to: `../../${ROUTES_NAMES.USER_PROFILE}/${ROUTES_NAMES.MY_QUESTIONS}?userId=${profileData.uid}`,
     },
@@ -94,7 +114,9 @@ export default function CurrentUserProfilePage({}) {
         src={profileData.photo}
         alt="User profile picture"
         sx={{ width: 90, height: 90 }}
-      ></Avatar>
+      >
+        <Avatar />
+      </Avatar>
     );
   };
 
@@ -103,7 +125,11 @@ export default function CurrentUserProfilePage({}) {
   };
 
   return (
-    <CustomAppBar showLabel={true} label="حسابي" showBackBtn={true}>
+    <CustomAppBar
+      showLabel={true}
+      label={textContainer.myProfile}
+      showBackBtn={true}
+    >
       <div style={{ paddingTop: "12px" }}>
         <Modal
           open={invitationCodeDialog}
@@ -143,15 +169,17 @@ export default function CurrentUserProfilePage({}) {
         </div>
         <div>
           <List>
-            {listItems.map((item, index) => {
-              return listItem(
-                item.title,
-                item.subtitle,
-                item.icon,
-                item.to,
-                item.onClick
-              );
-            })}
+            <Stack spacing={1}>
+              {listItems.map((item, index) => {
+                return listItem(
+                  item.title,
+                  item.subtitle,
+                  item.icon,
+                  item.to,
+                  item.onClick
+                );
+              })}
+            </Stack>
           </List>
         </div>
       </div>

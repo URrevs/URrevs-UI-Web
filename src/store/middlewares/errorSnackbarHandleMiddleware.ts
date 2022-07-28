@@ -59,8 +59,19 @@ const correspondingErrorMessage = (
       error.message = textContainer.youCannotReportYourContent;
       break;
     case "too many unverified":
-      error.message = "شوف فتوح كتب too many unverified ولا لا";
+      error.message =
+        textContainer.reviewYourPhoneCurrentlyInUseOrVerifyYourUnverifiedReviews;
       break;
+    case "not found":
+    case "review not found":
+    case "comment not found":
+    case "track review not found":
+    case "question not found":
+    case "answer not found":
+    case "question or answer not found":
+      error.message = textContainer.contentIsUnavailable;
+      break;
+
     //TO DO : WRITE TRANSLATIONS AND FIND MORE ERRORS
     // case "track internal server error":
     //   error.message = textContainer.trackInternalServerError;
@@ -77,10 +88,10 @@ const correspondingErrorMessage = (
       error.message = "textContainer.noLikes";
       error.isError = false;
       break;
-    case "not found":
-      error.message = "textContainer.notFound";
-      error.isError = false;
-      break;
+    // case "not found":
+    //   error.message = "textContainer.notFound";
+    //   error.isError = false;
+    //   break;
     // case "not owned":
     //   error.message = textContainer.notOwned;
     //   break;
@@ -100,9 +111,9 @@ const correspondingErrorMessage = (
     case "already reported":
       error.message = textContainer.youHaveAlreadyReportedThisElement;
       break;
-    // case "blocked":
-    //   error.message = textContainer.blocked;
-    //   break;
+    case "blocked":
+      error.message = textContainer.youAreBlockedCannotTakeThatAction;
+      break;
     case "already accepted":
       error.message = "textContainer.alreadyAccepted";
       error.isError = false;
@@ -122,6 +133,16 @@ export const snackbarErrorHandle: Middleware =
 
     // RTK Query uses `createAsyncThunk` from redux-toolkit under the hood, so we're able to utilize these matchers!
     if (isRejectedWithValue(action)) {
+      // no internet connection
+      if (action.payload.status === "FETCH_ERROR") {
+        dispatch(
+          snackbarActions.showSnackbar({
+            message: textContainer.thereIsNoInternetConnection,
+          })
+        );
+        return next(action);
+      }
+
       const serverMessage: string = action.payload.data.status;
       const message: Error = correspondingErrorMessage(
         serverMessage,
