@@ -10,12 +10,14 @@ import { MyDrawer } from "./Drawer/Drawer";
 
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Registeration from "../../pages/1_Authentication";
 import { ConfirmationDialog } from "../Dialogs/ConfirmationDialog";
 import { SendReports } from "../Dialogs/SendReports";
 import { PostingModal } from "../PostingComponents/PostingModal";
 import CustomizedSnackbar from "../Snackbar";
 import BottomNavBar from "./BottomNavBar/BottomNavBar";
+import loadable from "@loadable/component";
+
+const Registeration = loadable(() => import("../../pages/1_Authentication"));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",

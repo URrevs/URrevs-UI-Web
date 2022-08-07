@@ -2,8 +2,13 @@ import { useTheme } from "@emotion/react";
 import { Box, IconButton, Paper, Slide, Typography } from "@mui/material";
 import React from "react";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
-import { SettingsScreen } from "../../../../pages/21_SettingsScreen";
 import { useSelector } from "react-redux";
+import loadable from "@loadable/component";
+
+const SettingsScreen = loadable(
+  () => import("../../../../pages/21_SettingsScreen"),
+  { resolveComponent: (comp) => comp.SettingsScreen }
+);
 
 export const SettingsSideBar = ({
   settingsSlide,

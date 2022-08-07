@@ -1,11 +1,15 @@
 import { useTheme } from "@emotion/react";
+import loadable from "@loadable/component";
 import { Modal, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import PostingScreen from "../../pages/PostingScreen/PostingScreen";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
 import { DialogTemplate } from "../Dialogs/DialogTemplate";
 import { Tabbar } from "../Tabbar/Tabbar";
+
+const PostingScreen = loadable(() =>
+  import("../../pages/PostingScreen/PostingScreen")
+);
 
 //This should go into Layout
 export const PostingModal = ({ linkShow = false }) => {

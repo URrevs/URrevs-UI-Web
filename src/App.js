@@ -22,47 +22,112 @@ import "./App.css";
 import Layout from "./Components/MainLayout/Layout";
 import { PostingModal } from "./Components/PostingComponents/PostingModal";
 import RTL from "./Components/RTL";
-import { ProductProfile } from "./pages/10_ProductProfile";
-import { ComparisonScreen } from "./pages/11_ComparisonScreen";
-import { CompanyProfile } from "./pages/14_CompanyProfile";
-import { AllProductsScreen } from "./pages/16_AllProductsScreen";
+
 import CompanyQuestionFullScreen from "./pages/17_CompanyQuestionFullScreen";
 import PhoneQuestionFullScreen from "./pages/17_PhoneQuestionFullScreen";
-import ReviewPostingScreen from "./pages/18_ReviewPostingScreen";
 import Menu from "./pages/20_Menu";
-import { SettingsScreen } from "./pages/21_SettingsScreen";
-import { AboutUsScreen } from "./pages/23_AboutUsScreen";
-import { TermsAndConditionsScreen } from "./pages/24_TermsAndConditionsScreen";
-import { PrivacyPolicyScreen } from "./pages/25_PrivacyPolicyScreen";
-import { AdminPanel } from "./pages/26_AdminPanel";
-import { UpdateProducts } from "./pages/29_UpdateProducts";
-import Reviews from "./pages/2_HomePageScrolling";
+
 import CompanyReviewFullScreen from "./pages/3_CompanyReviewFullScreen";
 import PhoneReviewFullScreen from "./pages/3_PhoneReviewFullScreen";
-import { PostedReviews } from "./pages/5_PostedReviews";
-import { PostedQuestions } from "./pages/7_PostedQuestions";
-import { SearchScreen } from "./pages/8_SearchScreen";
+
 import AddReview from "./pages/AddReview";
-import { CompanyQuestions } from "./pages/CompanyProfileTabs/CompanyQuestions";
-import { CompanyReviews } from "./pages/CompanyProfileTabs/CompanyReviews";
-import { ComponentsTest } from "./pages/ComponentsTest";
-import { Leaderboard } from "./pages/Leaderboard";
-import { MyPhonesQuestions } from "./pages/MyPhonesQuestions";
+
 import OwnedPhonesPage from "./pages/OwnedPhones";
-import { ProductSpecsScreen } from "./pages/ProductProfileTabs/10_ProductSpecs";
-import { ProductReviews } from "./pages/ProductProfileTabs/12_ProductReviews";
-import { ProductQuestions } from "./pages/ProductProfileTabs/13_ProductQuestions";
-import Profile from "./pages/Profile";
-import { SplashScreen } from "./pages/SplashScreen";
+
 import ROUTES_NAMES from "./RoutesNames";
 import { authActions } from "./store/authSlice";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { COLORS } from "./Styles/main_light_colors";
 // OUR_TRACKING_ID
 import ReactGA from "react-ga";
+import { NotFoundPage } from "./pages/404/404";
 import { snackbarActions } from "./store/uiSnackbarSlice";
 import { getFonts } from "./Styles/fonts";
-import { NotFoundPage } from "./pages/404/404";
+import loadable from "@loadable/component";
+import Profile from "./pages/Profile";
+
+// screen splitting
+const ComparisonScreen = loadable(() => import("./pages/11_ComparisonScreen"), {
+  resolveComponent: (component) => component.ComparisonScreen,
+});
+const CompanyProfile = loadable(() => import("./pages/14_CompanyProfile"), {
+  resolveComponent: (component) => component.CompanyProfile,
+});
+const SettingsScreen = loadable(() => import("./pages/21_SettingsScreen"), {
+  resolveComponent: (component) => component.SettingsScreen,
+});
+const AboutUsScreen = loadable(() => import("./pages/23_AboutUsScreen"), {
+  resolveComponent: (component) => component.AboutUsScreen,
+});
+const TermsAndConditionsScreen = loadable(
+  () => import("./pages/24_TermsAndConditionsScreen"),
+  { resolveComponent: (component) => component.TermsAndConditionsScreen }
+);
+const PrivacyPolicyScreen = loadable(
+  () => import("./pages/25_PrivacyPolicyScreen"),
+  { resolveComponent: (component) => component.PrivacyPolicyScreen }
+);
+const AdminPanel = loadable(() => import("./pages/26_AdminPanel"), {
+  resolveComponent: (component) => component.AdminPanel,
+});
+const UpdateProducts = loadable(() => import("./pages/29_UpdateProducts"), {
+  resolveComponent: (component) => component.UpdateProducts,
+});
+
+const PostedReviews = loadable(() => import("./pages/5_PostedReviews"), {
+  resolveComponent: (component) => component.PostedReviews,
+});
+const PostedQuestions = loadable(() => import("./pages/7_PostedQuestions"), {
+  resolveComponent: (component) => component.PostedQuestions,
+});
+const SearchScreen = loadable(() => import("./pages/8_SearchScreen"), {
+  resolveComponent: (component) => component.SearchScreen,
+});
+const CompanyQuestions = loadable(
+  () => import("./pages/CompanyProfileTabs/CompanyQuestions"),
+  { resolveComponent: (component) => component.CompanyQuestions }
+);
+const CompanyReviews = loadable(
+  () => import("./pages/CompanyProfileTabs/CompanyReviews"),
+  { resolveComponent: (component) => component.CompanyReviews }
+);
+const ComponentsTest = loadable(() => import("./pages/ComponentsTest"), {
+  resolveComponent: (component) => component.ComponentsTest,
+});
+const MyPhonesQuestions = loadable(() => import("./pages/MyPhonesQuestions"), {
+  resolveComponent: (component) => component.MyPhonesQuestions,
+});
+const ProductSpecsScreen = loadable(
+  () => import("./pages/ProductProfileTabs/10_ProductSpecs"),
+  { resolveComponent: (component) => component.ProductSpecsScreen }
+);
+const ProductReviews = loadable(
+  () => import("./pages/ProductProfileTabs/12_ProductReviews"),
+  { resolveComponent: (component) => component.ProductReviews }
+);
+const ProductQuestions = loadable(
+  () => import("./pages/ProductProfileTabs/13_ProductQuestions"),
+  { resolveComponent: (component) => component.ProductQuestions }
+);
+const SplashScreen = loadable(() => import("./pages/SplashScreen"), {
+  resolveComponent: (component) => component.SplashScreen,
+});
+
+const ProductProfile = loadable(() => import("./pages/10_ProductProfile"), {
+  resolveComponent: (components) => components.ProductProfile,
+});
+
+const Reviews = loadable(() => import("./pages/2_HomePageScrolling"));
+const ReviewPostingScreen = loadable(() =>
+  import("./pages/18_ReviewPostingScreen")
+);
+const AllProductsScreen = loadable(
+  () => import("./pages/16_AllProductsScreen"),
+  { resolveComponent: (components) => components.AllProductsScreen }
+);
+const Leaderboard = loadable(() => import("./pages/Leaderboard"), {
+  resolveComponent: (components) => components.Leaderboard,
+});
 
 const TRACKING_ID = process.env.REACT_APP_TRACKING_ID;
 

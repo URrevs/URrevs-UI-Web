@@ -1,8 +1,10 @@
 import { useTheme } from "@emotion/react";
+import loadable from "@loadable/component";
 import { Paper, Slide } from "@mui/material";
 import React from "react";
-import Menu from "../../../../pages/20_Menu";
 import { useAppSelector } from "../../../../store/hooks";
+
+const Menu = loadable(() => import("../../../../pages/20_Menu"));
 
 export const MenuSideBar = ({ drawerRef }) => {
   const theme = useTheme();
