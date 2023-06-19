@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store/store";
 export const mainApi = createApi({
+reducerPath:'main',
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_API_PATH}/`,
     prepareHeaders: (headers, { getState, endpoint }) => {

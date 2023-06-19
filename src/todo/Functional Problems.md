@@ -1,34 +1,42 @@
-- Add Review confirmation <b>MODAL</b> before navigating out of add review.
-- Fab in add review, add question screens and in Owned products tab.+ fix padding for postingmodal mobile// extremely slow in infinite scrolling screens opt out of it
-- Long Press comment/reply to report on mobile
-- Phone verification
-- Add mobile posting field in all comments full screen
+# Need to be done
 
-= Postponed:
+- [ ] Refresh tokens
+- [ ] BottomNavBar should only switch color after navigation is success
 
-- Accepting answer then unaccepting it in full question screen has weird effect.
-- Collapsed replies
-- See previous comments
-- Reporting Admin Side
+# Postponed:
 
-= Security:
+- [ ] Reporting Admin Side
+
+# Security:
 
 - Don’t store any credentials in code.
-- Content Security Policy (CSP).
-- use SSL when making requests to APIs.
-- Never trust user data (XSS, JavaScript injection)
-- Verify the source of data CSRF
-- Don't leak information to users (no console logging, don't return the message from server/sql errors to users)
+- [x] Content Security Policy (CSP).
+- [x] use SSL when making requests to APIs.
+- [ ] Never trust user data (XSS, JavaScript injection)
+- [ ] Verify the source of data CSRF
+- [ ] Don't leak information to users (no console logging, don't return the message from server/sql errors to users)
 
-=Minor or Improvement:
+# Minor or Improvement:
 
 - I don't like this snackbar?
 - unFocus Posting Field on submitting ### Not even handled in facebook lmao
 - Reviews don’t show up immediately after adding a review
 - use Yup + RegExp to handle SearchComponent errors for faster response instead of useState ###
 
-= Done:
+# Done:
 
+- [x] Dark theme
+- [x] Add Review confirmation <b>MODAL</b> before navigating out of add review.
+- [x] Mobile left in arabic right in english Fab in add review, add question screens and in Owned products tab.animation is extremely slow in infinite scrolling screens opt out of it.
+- [x] Long Press comment/reply to report on mobile
+- [x] Fix report icon for comment/reply
+- [x] Cleanup forms
+- [x] add mobile comment field to all fullscreens
+- Accepting answer then unaccepting it in full question screen has weird effect. (x)
+- Collapsed replies (x)
+- See previous comments (x)
+- Phone verification (x)
+- Add mobile posting field in all comments full screen (x)
 - Set As Owned should be locked the moment review is posted (x)
 - Delete Account Feature USER (x)
 - Add Review Star Counter needs to be 1200 char instead of 3000(x)

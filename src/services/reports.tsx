@@ -287,7 +287,7 @@ export const reportsApi = createApi({
     reportACompanyQuestionAnswerReply: builder.mutation({
       query: ({ quesId, answerId, replyId, reportContent }) => {
         return {
-          url: `/question/phone/${quesId}/answers/${answerId}/replies/${replyId}`,
+          url: `/question/company/${quesId}/answers/${answerId}/replies/${replyId}`,
           method: "POST",
           body: { reason: reportContent.reason, info: reportContent.info },
         };

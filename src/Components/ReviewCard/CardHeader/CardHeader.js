@@ -23,9 +23,40 @@ const CardHeader = ({
   actionBtnFunction,
   reportFunction,
   verificationRatio,
-  verifyPhone
+  verifyPhone,
 }) => {
   const currentUser = useAppSelector((state) => state.auth);
+
+  const action = () => {
+    if (actionBtnFunction && currentUser.isLoggedIn) {
+      if (userId === currentUser.uid) {
+        if (verificationRatio !== 0) {
+          return <></>;
+        } else {
+          return (
+            <ActionButton
+              actionBtnFunction={actionBtnFunction}
+              reportFunction={reportFunction}
+              verificationRatio={verificationRatio}
+              userId={userId}
+              verifyPhone={verifyPhone}
+            />
+          );
+        }
+      } else {
+        return (
+          <ActionButton
+            actionBtnFunction={actionBtnFunction}
+            reportFunction={reportFunction}
+            verificationRatio={null}
+            userId={userId}
+            verifyPhone={verifyPhone}
+          />
+        );
+      }
+      return <></>;
+    }
+  };
 
   return (
     <MUICardHeader
@@ -34,22 +65,14 @@ const CardHeader = ({
       }}
       avatar={
         <Link to={userProfilePath}>
-          <CircleAvatar userAvatar={userAvatar} avatarRadius={avatarRadius} />
+          <CircleAvatar
+            userName={userName}
+            userAvatar={userAvatar}
+            avatarRadius={avatarRadius}
+          />
         </Link>
       }
-      action={
-        actionBtnFunction &&
-        currentUser.isLoggedIn &&
-        verificationRatio === 0 && (
-          <ActionButton
-            actionBtnFunction={actionBtnFunction}
-            reportFunction={reportFunction}
-            verificationRatio={verificationRatio}
-            userId={userId}
-            verifyPhone={verifyPhone}
-          />
-        )
-      }
+      action={action()}
       title={
         <CardHeaderTitle
           userProfilePath={userProfilePath}

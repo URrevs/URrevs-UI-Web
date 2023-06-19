@@ -1,17 +1,32 @@
-- Reply field not indented in English (fix in posting field) ###
-- Remove Logo from mobile in ToS and Privacy policy
-- Logout red loader
-- replace ...Loading with a loader
-- Tiny reply field in Question screen for some reason
-- LeaderboardEntry points should be no-wrap
-- BottomNavBar Icon doesn't change glow in homescreen
-- Posted Review and Posting Questions FULLSCREEN need padding above.
-- Tooltip vs Modal for help messages
-- Error HelperText for star rating on validation
-- Owned Products Tab needs some fixing to look like desktop view All Products.
-- Linebreak in subtitle of review/question
-- Below Posting field should be total 30px
-- Why mobile view has posting field below it 50px?
+- [x] Remove Logo from mobile in ToS and Privacy policy
+- [x] Tiny reply field in Question screen for some reason
+- [x] BottomNavBar Icon doesn't change glow in homescreen
+- [x] Posted Review and Posting Questions FULLSCREEN need padding above.
+- [x] Owned Products Tab needs some fixing to look like desktop view All Products.
+- [x] Linebreak in subtitle of review/question
+- [x] Below Posting field should be total 30px
+- [x] Why mobile view has posting field below it 50px?
+- [ ] Leaderboard menu should be ellipsis in English translation
+- [ ] Add border for the sidebar to serapate it from the menu (optional)
+- [ ] Tooltip vs Modal for help messages
+- [ ] Error HelperText for star rating on validation
+- [ ] LeaderboardEntry points should be no-wrap
+- [ ] Logout red loader
+- [ ] replace ...Loading with a loader
+- [ ] Reply field not indented in English (fix in posting field) ###
+
+# Dark theme:
+
+- [x] Textfields placeholder and fonts, Searchscreen + Search Suggestion
+- [x] Filter Buttons
+- [x] Icons {currentProfile icons} {reviewCard top icon needs to be blue}
+- [x] Star Counter
+- [x] Tabbar mobile add review
+- [x] Leaderboard Card, Ranking Circle.
+- [x] All Products screen filter
+- [x] Path Tabbar
+- [x] Progressbar
+- [x] Snackbar keep same old font color
 
 = Improvements:
 

@@ -63,6 +63,12 @@ export const FilterTabbar = ({
         >
           <Typography
             variant={value === 0 ? "S14W700CFFFFFF" : "S14W700C65676B"}
+            sx={{
+              color:
+                value === 0
+                  ? theme.palette.filterTabbar.activeText
+                  : theme.palette.filterTabbar.text,
+            }}
           >
             {textContainer.phones}
           </Typography>
@@ -108,6 +114,12 @@ export const FilterTabbar = ({
         >
           <Typography
             variant={value === 1 ? "S14W700CFFFFFF" : "S14W700C65676B"}
+            sx={{
+              color:
+                value === 1
+                  ? theme.palette.filterTabbar.activeText
+                  : theme.palette.filterTabbar.text,
+            }}
           >
             {textContainer.companies}
           </Typography>

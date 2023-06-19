@@ -79,10 +79,13 @@ export const Answer = ({
 
   const [showReplyField, setShowReplyField] = useState(false);
 
-  const toggleReplyField = () => setShowReplyField((show) => !show);
+  const toggleReplyField = () => {
+    setShowReplyField((show) => !show);
+    setShowReplies((s) => !s);
+  };
   const [showReplies, setShowReplies] = useState(false);
 
-  const repliesPadding = !acceptedAnswer ? "54px" : `${54 + 40}px`;
+  const repliesPadding = !acceptedAnswer ? "50px" : `${50 + 40}px`;
   return (
     <div
       style={{
@@ -113,19 +116,37 @@ export const Answer = ({
             buttonName={buttonName}
             ownerId={ownerId}
             showReplyField={toggleReplyField}
+            type={"answer"}
           ></InteractionFooter>
         </InteractionBody>
-        {showReplyField && (
-          <PostingField
-            avatar={true}
-            placeholder="اكتب رد"
-            reply
-            onSubmit={(text) => submitReplyHandler(text, commentId)}
-          />
-        )}
+        <div
+          style={{
+            marginBottom: "10px",
+            paddingRight: theme.direction === "rtl" && repliesPadding,
+            marginLeft: theme.direction === "ltr" && repliesPadding,
+          }}
+        >
+          {showReplyField && (
+            <PostingField
+              avatar={true}
+              placeholder={textContainer.writeAReply}
+              reply
+              backgroundColor={
+                theme.isMobile &&
+                theme.palette.interactionCard.backgroundMobileColor
+              }
+              onSubmit={(text) => submitReplyHandler(text, commentId)}
+            />
+          )}
+        </div>
       </div>
       {/* replies list */}
-      <div style={{ marginRight: repliesPadding }}>
+      <div
+        style={{
+          paddingRight: theme.direction === "rtl" && repliesPadding,
+          marginLeft: theme.direction === "ltr" && repliesPadding,
+        }}
+      >
         {replies.length !== 0 && !showReplies ? (
           <TextButton
             title={`${replies.length} ${textContainer.reply}`}
@@ -147,12 +168,12 @@ export const Answer = ({
                   liked={reply.liked}
                   replyLike={likeReplyRequest}
                   replyUnlike={unLikeReplyRequest}
-                  commentId={reply.commentId}
+                  commentId={commentId}
                   avatar={reply.userPicture}
                   userName={reply.userName}
                   userId={reply.userId}
                   reportFunction={() => {
-                    replyReportFunction(reply.commentId, reply._id);
+                    replyReportFunction(commentId, reply._id);
                   }}
                 />
               );

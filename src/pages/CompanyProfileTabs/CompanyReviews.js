@@ -3,6 +3,7 @@ import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { Fragment, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import LoadingSpinner from "../../Components/Loaders/LoadingSpinner";
 import { CompanyOverviewCard } from "../../Components/OverviewCard/CompanyOverviewCard";
 import CompanyReview from "../../Components/ReviewCard/CompanyReview";
 import ROUTES_NAMES from "../../RoutesNames";
@@ -91,7 +92,7 @@ export function CompanyReviews({ viewer, companyRating, companyName, type }) {
 
   const companyOverView = () => {
     if (companyStatsIsLoading) {
-      return <div>Loading...</div>;
+      return <LoadingSpinner />;
     } else if (companyStatsError) {
       return <div>Error</div>;
     } else {

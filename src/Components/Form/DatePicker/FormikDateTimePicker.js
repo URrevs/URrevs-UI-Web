@@ -64,16 +64,21 @@ const FormikDateTimePicker = ({ label, fieldName }) => {
                 return (
                   <TextField
                     autoComplete="off"
+                    {...params}
                     sx={{
+                      ...theme.typography.S16W300C050505,
                       input: {
                         "&::placeholder": {
+                          ...theme.typography.S16W300C050505,
                           opacity: 1,
                         },
                       },
                     }}
-                    {...params}
                     inputProps={{
                       ...params.inputProps,
+                      style: {
+                        ...theme.typography.S16W500C050505,
+                      },
                       placeholder: label,
                     }}
                     onKeyDown={(e) => {

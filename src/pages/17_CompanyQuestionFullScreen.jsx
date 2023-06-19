@@ -2,9 +2,12 @@ import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
 import React from "react";
 import { useCallback, useEffect, useState } from "react";
+import DocumentMeta from "react-document-meta";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { FullScreenError } from "../Components/FullScreenError";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
+import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { PostingField } from "../Components/PostingComponents/PostingField";
 import CompanyQuestion from "../Components/ReviewCard/companyQuestion";
@@ -125,16 +128,6 @@ export default function CompanyQuestionFullScreen() {
   } = useGetCertainCompanyQuestionQuery(reviewId);
 
   useEffect(() => {
-    if (currentReview && currentReview.acceptedAns) {
-      dispatch(
-        answersListActions.addAcceptedAnswer({
-          acceptedAnswer: currentReviewData.acceptedAns,
-        })
-      );
-    }
-  }, [currentReviewData]);
-
-  useEffect(() => {
     if (!reviewLoading) {
       dispatch(questionsActions.clearReviews());
       dispatch(
@@ -173,11 +166,25 @@ export default function CompanyQuestionFullScreen() {
   };
 
   // reply like and unlike
-  const stateLikeCompanyReply = (id) =>
-    dispatch(answersListActions.setIsLiked({ id: id, isLiked: true }));
+  const stateLikeCompanyReply = (commentId, replyId) => {
+    dispatch(
+      answersListActions.setReplyIsLiked({
+        commentId: commentId,
+        replyId: replyId,
+        isLiked: true,
+      })
+    );
+  };
 
-  const stateUnLikeCompanyReply = (id) =>
-    dispatch(answersListActions.setIsLiked({ id: id, isLiked: false }));
+  const stateUnLikeCompanyReply = (commentId, replyId) => {
+    dispatch(
+      answersListActions.setReplyIsLiked({
+        commentId: commentId,
+        replyId: replyId,
+        isLiked: false,
+      })
+    );
+  };
 
   const likeReplyRequest = (commentId, replyId) => {
     likeReply({
@@ -310,9 +317,9 @@ export default function CompanyQuestionFullScreen() {
     return (
       <div>
         {reviewLoading ? (
-          <div>Loading review...</div>
+          <LoadingReviewSkeleton />
         ) : reviewError ? (
-          <div>Error</div>
+          <FullScreenError />
         ) : (
           currentReviewData && (
             <CompanyQuestion
@@ -367,12 +374,23 @@ export default function CompanyQuestionFullScreen() {
         <AlonePostsGrid>
           <Box>
             {reviewLoading ? (
-              <div>Loading review...</div>
+              <LoadingReviewSkeleton />
             ) : reviewError ? (
-              <div>Error</div>
+              <FullScreenError />
             ) : (
               currentReviewData && (
-                <React.Fragment>
+                <DocumentMeta
+                  {...{
+                    description: `${currentReviewData.targetName} company pros and cons - ${currentReviewData.targetName} مميزات وعيوب شركة `,
+                    canonical: `https://${window.location.hostname}/company-review/?id=${currentReviewData._id}`,
+                    meta: {
+                      charset: "utf-8",
+                      name: {
+                        keywords: `questions,Q&A,company,${currentReviewData.targetName}اسئلة,اسئلة و اجوبة,شركة, ${currentReviewData.content}`,
+                      },
+                    },
+                  }}
+                >
                   <AnswersList
                     reviewCard={reviewCard}
                     commentsList={commentsList}
@@ -392,7 +410,7 @@ export default function CompanyQuestionFullScreen() {
                     answerReportFunction={answerReportFunction}
                     replyReportFunction={replyReportFunction}
                   />
-                </React.Fragment>
+                </DocumentMeta>
               )
             )}
           </Box>

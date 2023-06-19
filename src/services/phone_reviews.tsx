@@ -66,8 +66,7 @@ export const phoneReviewsApi = mainApi.injectEndpoints({
             setTimeout(() => {
               dispatch(
                 snackbarActions.showSnackbar({
-                  message:
-                    "حتى تتمكن من توثيق المراجعة عليك فتح الموقع باستخدام هذا الهاتف",
+                  message: textContainer.youMustVerifyFromSameMobileDevice,
                 })
               );
             }, 3000);
@@ -100,19 +99,6 @@ export const phoneReviewsApi = mainApi.injectEndpoints({
 
         try {
           const response = await queryFulfilled;
-
-          // dispatch(
-          //   snackbarActions.showSnackbar({
-          //     message: "asdas",
-          //   })
-          // );
-
-          // dispatch(
-          //   snackbarActions.showSnackbar({
-          //     message:
-          //       "حتى تتمكن من توثيق المراجعة عليك فتح الموقع باستخدام هذا الهاتف",
-          //   })
-          // );
         } catch (e: any) {
           if (e.error.data.status !== "already liked") {
             payload.unDoFn();
@@ -204,7 +190,7 @@ export const phoneReviewsApi = mainApi.injectEndpoints({
         };
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-        payload.doFn(payload.replyId);
+        payload.doFn(payload.commentId, payload.replyId);
 
         try {
           await queryFulfilled;
@@ -214,7 +200,7 @@ export const phoneReviewsApi = mainApi.injectEndpoints({
             e.error.data.status === "already liked"
           ) {
           } else {
-            payload.unDoFn(payload.replyId);
+            payload.unDoFn(payload.commentId, payload.replyId);
           }
         }
       },
@@ -228,7 +214,7 @@ export const phoneReviewsApi = mainApi.injectEndpoints({
         };
       },
       async onQueryStarted(payload, { dispatch, queryFulfilled }) {
-        payload.doFn(payload.replyId);
+        payload.doFn(payload.commentId, payload.replyId);
 
         try {
           await queryFulfilled;
@@ -238,7 +224,7 @@ export const phoneReviewsApi = mainApi.injectEndpoints({
             e.error.data.status === "already liked"
           ) {
           } else {
-            payload.unDoFn(payload.replyId);
+            payload.unDoFn(payload.commentId, payload.replyId);
           }
         }
       },

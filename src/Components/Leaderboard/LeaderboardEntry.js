@@ -1,12 +1,11 @@
 import { useTheme } from "@emotion/react";
+import { faGift } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Card, IconButton, styled, Typography } from "@mui/material";
 import { Fragment } from "react";
-import useFitText from "use-fit-text";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGift } from "@fortawesome/free-solid-svg-icons";
-import { CARD_BORDER_RADIUS } from "../../constants";
-import StarWithCount from "./StarWithCount";
 import { Link, useNavigate } from "react-router-dom";
+import useFitText from "use-fit-text";
+import StarWithCount from "./StarWithCount";
 
 const LeaderboardEntryCard = styled(
   Card,
@@ -61,10 +60,11 @@ const LeaderboardEntry = ({
   isSameUser = false,
 }) => {
   const theme = useTheme();
-  const navigate = useNavigate();
+
   const { fontSize, ref } = useFitText({
     maxFontSize: 90,
   });
+
   const prizeIcon = isWinner ? (
     <IconButton
       onClick={(e) => {
@@ -134,7 +134,9 @@ const LeaderboardEntry = ({
             </div>
           </RankCircle>
           <div style={{ width: "18px" }}></div>
-          <UserAvatar src={userPicture}></UserAvatar>
+          <UserAvatar alt="user picture" src={userPicture}>
+            <Avatar />
+          </UserAvatar>
           <div style={{ width: "18px" }}></div>
           <Typography variant="S20W700C050505">{userName}</Typography>
         </div>

@@ -8,15 +8,14 @@ import { MyAppBar } from "./AppBar/AppBar";
 import { AppBarActions } from "./AppBar/AppBarActions";
 import { MyDrawer } from "./Drawer/Drawer";
 
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Registeration from "../../pages/1_Authentication";
-import { useAppSelector } from "../../store/hooks";
+import { ConfirmationDialog } from "../Dialogs/ConfirmationDialog";
 import { SendReports } from "../Dialogs/SendReports";
 import { PostingModal } from "../PostingComponents/PostingModal";
 import CustomizedSnackbar from "../Snackbar";
-import { CustomAppBar } from "./AppBar/CustomAppBar";
 import BottomNavBar from "./BottomNavBar/BottomNavBar";
-import { ConfirmationDialog } from "../Dialogs/ConfirmationDialog";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -34,6 +33,7 @@ export default function Layout(props) {
   const logoHeight = 30;
   const appBarHeight = theme.isMobile ? 0 : 64;
   const drawerWidth = theme.isMobile ? 0 : theme.drawer.width;
+  const location = useLocation();
 
   // const dictionary = useAppSelector((state) => state.language.textContainer);
 
@@ -104,37 +104,79 @@ export default function Layout(props) {
   //     <CustomAppBar showLabel={false} showLogo={true} showProfile showSearch />
   //   );
   // };
+  const [bottomPadding, setBottomPadding] = useState(false);
+  // const [footerFixed, setFooterFixed] = useState(false);
+  // const ref = React.useRef();
+
+  // function isInViewport() {
+  //   const rect = ref?.current.getBoundingClientRect();
+  //   setFooterFixed(
+  //     rect.top >= 0 &&
+  //       rect.left >= 0 &&
+  //       rect.bottom <= document.documentElement.clientHeight &&
+  //       rect.right <= document.documentElement.clientWidth + 10
+  //   );
+  // }
+  // React.useEffect(() => {
+  //   isInViewport();
+  // }, [ref]);
+  React.useEffect(() => {
+    if (theme.isMobile && location.pathname !== "/add-review") {
+      setBottomPadding(true);
+    } else {
+      setBottomPadding(false);
+    }
+  }, [location.pathname]);
+
+  // React.useEffect(() => {
+  //   window.addEventListener("scroll", isInViewport);
+  //   return () => {
+  //     window.removeEventListener("scroll", isInViewport);
+  //   };
+  // }, []);
 
   return (
-    <Box sx={{}}>
-      {!theme.isMobile && appBar()}
-      {theme.isMobile ? <></> : <MyDrawer open={open} setOpen={setOpen} />}
-      <Registeration />
-      <CustomizedSnackbar />
-      <ConfirmationDialog />
-      <PostingModal />
-      <SendReports />
-      {theme.isMobile ? <BottomNavBar /> : <></>}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          padding: 0,
-          marginTop: `${appBarHeight}px`,
-          marginLeft: drawerWidth,
-          // marginBottom: theme.isMobile ? "75px" : "",
+    <div>
+      <Box>
+        {!theme.isMobile && appBar()}
+        {theme.isMobile ? <></> : <MyDrawer open={open} setOpen={setOpen} />}
+        <Registeration />
+        <CustomizedSnackbar />
+        <ConfirmationDialog />
+        <PostingModal />
+        <SendReports />
+        {theme.isMobile ? <BottomNavBar /> : <></>}
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            padding: 0,
+            marginTop: `${appBarHeight}px`,
+            marginLeft: drawerWidth,
+            // marginBottom: theme.isMobile ? "75px" : "",
+          }}
+        >
+          {/* <DrawerHeader /> */}
+          {/* div for spacing between app bar and whole pages */}
+          {/* <div style={{ marginTop: `${appBarHeight + 30}px` }}> */}
+          {props.children}
+          {/* Don't add margin in the add-review page */}
+          {bottomPadding && <div style={{ height: "125px" }}></div>}
+          {/* </div> */}
+        </Box>
+
+        {/* <Footer fullScreen={true} /> */}
+      </Box>
+      {/* <div
+        ref={ref}
+        style={{
+          position: footerFixed && "fixed",
+          bottom: footerFixed && "0",
+          width: "100%",
         }}
       >
-        {/* <DrawerHeader /> */}
-        {/* div for spacing between app bar and whole pages */}
-        {/* <div style={{ marginTop: `${appBarHeight + 30}px` }}> */}
-        {props.children}
-        {/* Don't add margin in the add-review page */}
-        {theme.isMobile && window.location.pathname !== "/add-review" && (
-          <div style={{ height: "75px" }}></div>
-        )}
-        {/* </div> */}
-      </Box>
-    </Box>
+        <Footer fullScreen={false} />
+      </div> */}
+    </div>
   );
 }

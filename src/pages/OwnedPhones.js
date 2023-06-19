@@ -1,6 +1,6 @@
 import { useTheme } from "@emotion/react";
 import CheckCircleSharpIcon from "@mui/icons-material/CheckCircleSharp";
-import { Box, Paper, Tooltip, Typography } from "@mui/material";
+import { Box, Fab, Paper, Tooltip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaButton } from "../Components/Buttons/FaButton";
@@ -17,6 +17,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 import VirtualReviewList from "./VirtualListWindowScroll";
 import { postingModalActions } from "../store/uiPostingModalSlice";
+import LoadingSpinner from "../Components/Loaders/LoadingSpinner";
 
 function OwnedPhonesPage() {
   const dispatch = useAppDispatch();
@@ -72,7 +73,7 @@ function OwnedPhonesPage() {
         verificationRatioText = textContainer.thisReviewIsFromAnApplePhone;
       } else {
         verificationRatioText =
-          textContainer.thisReviewIsVerifiedBy + " " + ratio + "%";
+          textContainer.thisReviewIsVerifiedBy + " " + ratio.toFixed(0) + "%";
       }
     }
     return verificationRatioText;
@@ -167,37 +168,45 @@ function OwnedPhonesPage() {
           loadMore={loadMore}
           reviewCard={phoneTile}
           reviewsList={phonesList}
+          loadingWidget={<LoadingSpinner />}
         />
-        <FaButton
-          icon={
+        {theme.isMobile && (
+          <Fab
+            onClick={() => {
+              dispatch(
+                postingModalActions.showPostingModal({
+                  tab: 0,
+                })
+              );
+            }}
+            variant="circular"
+            disableFocusRipple
+            disableRipple
+            sx={{
+              background: "#2196F3",
+              position: "fixed",
+              bottom: "15px",
+              borderRadius: "",
+              right: "15px",
+              // width: "50px",
+              // height: "50px",
+              // textTransform: "none",
+
+              zIndex: 5,
+              "&:hover": {
+                background: "#2196F3",
+              },
+              transition: "all 0.6s ease",
+            }}
+          >
             <AddIcon
               sx={{
                 color: theme.palette.defaultRedBtnIconColor,
                 fontSize: "28px",
               }}
             />
-          }
-          onClick={() => {
-            dispatch(
-              postingModalActions.showPostingModal({
-                tab: 0,
-              })
-            );
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-            }}
-          >
-            <Typography variant="S14W700Cffffff">
-              {textContainer.addReview}
-            </Typography>
-          </Box>
-        </FaButton>
+          </Fab>
+        )}
       </FixedGrid>
     </CustomAppBar>
   );

@@ -1,7 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { useTheme } from "@emotion/react";
+import AddIcon from "@mui/icons-material/Add";
+import { Fab } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useOutletContext, useSearchParams } from "react-router-dom";
-import { FaButton } from "../../Components/Buttons/FaButton";
 import { AlonePostsGrid } from "../../Components/Grid/AlonePostsGrid";
 import { Answer } from "../../Components/Interactions/Answer";
 import { PostingComponent } from "../../Components/PostingComponents/PostingComponent";
@@ -10,14 +11,13 @@ import ROUTES_NAMES from "../../RoutesNames";
 import {
   useGetCompanyQuestionsQuery,
   useLikeCompanyQuestionCommentMutation,
-  useUnLikeCompanyQuestionCommentMutation,
+  useUnLikeCompanyQuestionCommentMutation
 } from "../../services/company_questions";
+import { answersListActions } from "../../store/answersListSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { questionsActions } from "../../store/questionsSlice";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
 import VirtualReviewList from "../VirtualListWindowScroll";
-import AddIcon from "@mui/icons-material/Add";
-import { useTheme } from "@emotion/react";
 
 export function CompanyQuestions() {
   const dispatch = useAppDispatch();
@@ -28,6 +28,7 @@ export function CompanyQuestions() {
     return () => {
       setPage(1);
       dispatch(questionsActions.clearReviews());
+      dispatch(answersListActions.clearComments());
     };
   }, []);
 
@@ -105,8 +106,6 @@ export function CompanyQuestions() {
         <Answer
           commentId={review.acceptedAns._id}
           date={review.acceptedAns.createdAt}
-          userId={review.acceptedAns._id}
-          userName={review.acceptedAns.userName}
           likes={review.acceptedAns.upvotes}
           text={review.acceptedAns.content}
           commentLike={likeCommentRequest}
@@ -121,6 +120,8 @@ export function CompanyQuestions() {
           acceptedAnswer={true}
           showReply={false}
           upvoted={review.acceptedAns.upvoted}
+          userId={review.acceptedAns.userId}
+          userName={review.acceptedAns.userName}
         />
       );
     }
@@ -174,36 +175,47 @@ export function CompanyQuestions() {
   return (
     <AlonePostsGrid>
       <div style={{ height: "20px" }}></div>
-      <FaButton
-        icon={
+      {theme.isMobile && (
+        <Fab
+          onClick={() => {
+            dispatch(
+              postingModalActions.showPostingModal({
+                tab: 1,
+                type: "company",
+                name: companyName,
+                id: cid,
+              })
+            );
+          }}
+          variant="circular"
+          disableFocusRipple
+          disableRipple
+          sx={{
+            background: "#2196F3",
+            position: "fixed",
+            bottom: "15px",
+            borderRadius: "",
+
+            right: "15px",
+            // width: "50px",
+            // height: "50px",
+            // textTransform: "none",
+
+            zIndex: 5,
+            "&:hover": {
+              background: "#2196F3",
+            },
+            transition: "all 0.6s ease",
+          }}
+        >
           <AddIcon
             sx={{
               color: theme.palette.defaultRedBtnIconColor,
               fontSize: "28px",
             }}
           />
-        }
-        onClick={() => {
-          dispatch(
-            postingModalActions.showPostingModal({
-              tab: 0,
-            })
-          );
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-          }}
-        >
-          <Typography variant="S14W700Cffffff">
-            {textContainer.addReview}
-          </Typography>
-        </Box>
-      </FaButton>
+        </Fab>
+      )}
       <PostingComponent
         label={textContainer.youCanAddQuestion}
         placeholder={textContainer.writeYourQuestionP}

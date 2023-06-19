@@ -24,7 +24,7 @@ export default function ProductList({ list = [] }) {
       elevation={3}
     >
       <Typography variant="S20W500C050505">
-        لم يتم العثور على منتجات جديدة
+        {textContainer.noNewProductsFound}
       </Typography>
     </Card>
   ) : (

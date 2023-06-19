@@ -15,9 +15,14 @@ export const Footer = ({ fullScreen = true }) => {
   const theme = useTheme();
   return (
     <Paper
-      sx={{
+      style={{
         zIndex: theme.footer,
-        borderRadius: "15px 15px 0px 0px",
+        borderRadius: fullScreen ? "none" : "15px 15px 0px 0px",
+        marginTop: "1rem",
+        padding: "1rem",
+        bottom: "0",
+        left: "0",
+        width: "100%",
       }}
     >
       <Grid container>

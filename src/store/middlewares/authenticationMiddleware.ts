@@ -1,5 +1,5 @@
 import type { Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
-import { isRejectedWithValue } from "@reduxjs/toolkit";
+import { isRejectedWithValue, createAsyncThunk } from "@reduxjs/toolkit";
 import { authActions } from "../authSlice";
 import { RootState } from "../store";
 
@@ -31,10 +31,15 @@ export const rtkQueryErrorLogger: Middleware =
       console.warn(action);
       const serverMessage: string = action.payload.data.status;
 
-      if (serverMessage === "invalid token") {
+      if (
+        serverMessage === "invalid token" ||
+        serverMessage === "token expired"
+      ) {
         // to get new token
+        document.location.reload();
         dispatch(authActions.toggleRefetch({ refetch: true }));
       }
+      createAsyncThunk("", action);
     }
 
     return next(action);

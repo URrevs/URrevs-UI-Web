@@ -25,7 +25,7 @@ export default function CompanyList({ list = [] }) {
       elevation={3}
     >
       <Typography variant="S20W500C050505">
-        لم يتم العثور على شركات جديدة
+        {textContainer.noNewCompaniesFound}
       </Typography>
     </Card>
   ) : (

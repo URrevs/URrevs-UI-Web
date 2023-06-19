@@ -44,23 +44,38 @@ const LikeCounterStyle = styled(
 }));
 
 export const InteractionCard = ({
-  text,
+  text = "",
   likes,
   ownedAt,
   renderIcon,
   userName,
   userId,
 }) => {
-  const [cropTextLength, setCropTextLength] = React.useState(300);
+  const cropLength = 50;
+  const [cropTextLength, setCropTextLength] = React.useState(cropLength);
+
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const lang = useAppSelector((state) => state.language.language);
 
+  // const numberOfNewLines = 6;
+  // const getIndexOfNewLines = (text) => {
+  //   let index = text.indexOf("\n");
+  //   for (let i = 0; i < numberOfNewLines - 1; ++i) {
+  //     index = text.indexOf("\n", index + 1);
+  //   }
+  //   return index;
+  // };
+
   //See more function
   const handleText = (text) => {
-    if (text.length > 300)
-      return `${text.slice(0, cropTextLength)} ${
-        cropTextLength === 300 ? "... " : ""
+    const newlines = text.trim().split("\n");
+    if (text.length === cropTextLength) return text.trim();
+    if (text.length > cropLength)
+      return `${text.trim().slice(0, cropTextLength)} ${
+        cropTextLength === cropLength ? "... " : ""
       }`;
+    if (newlines.length > 3)
+      return newlines.map((newline, i) => (i < 4 ? newline + "\n" : null));
     else return text;
   };
 
@@ -69,7 +84,7 @@ export const InteractionCard = ({
       <InteractionCardStyle>
         <Link
           style={{ textDecoration: "none" }}
-          to={`../${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}
+          to={`../../${ROUTES_NAMES.USER_PROFILE}?userId=${userId}`}
         >
           <Typography
             sx={{
@@ -95,20 +110,21 @@ export const InteractionCard = ({
         )}
         <Typography variant="S14W400C050505">
           {handleText(text)}
-          {text.length > 300 && text.length !== cropTextLength && (
-            <Typography
-              sx={{
-                cursor: "pointer",
-                textDecoration: "underline",
-              }}
-              onClick={() => {
-                setCropTextLength(text.length);
-              }}
-              variant="S18W800C050505"
-            >
-              {textContainer.seeMore}
-            </Typography>
-          )}
+          {(text.length > cropLength || text.split("\n").length > 4) &&
+            text.length !== cropTextLength && (
+              <Typography
+                sx={{
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                }}
+                onClick={() => {
+                  setCropTextLength(text.length);
+                }}
+                variant="S18W800C050505"
+              >
+                {textContainer.seeMore}
+              </Typography>
+            )}
         </Typography>
 
         <LikeCounterStyle>

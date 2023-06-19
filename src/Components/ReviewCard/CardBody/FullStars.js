@@ -1,10 +1,9 @@
 import { useTheme } from "@emotion/react";
 import * as React from "react";
-import StarRating from "../../Form/StarRating";
 import { StarLine } from "../../StarLine";
-import ExpansionArrow from "./ExpansionArrow";
+import { ExpansionArrow } from "./ExpansionArrow";
 
-const FullStars = ({
+export const FullStars = ({
   // from number of objects in {starsRatingTextContainer}, number of rows will be rendered
   starsRatingTextContainer,
   // to know if card is expanded or not
@@ -13,6 +12,7 @@ const FullStars = ({
   setExpanded,
   arrowExpansion,
   ratings,
+  isFullScreen,
 }) => {
   const theme = useTheme();
   return (
@@ -46,7 +46,7 @@ const FullStars = ({
         </div>
       )}
       {/* Shrinking Arrow */}
-      {expanded && (
+      {expanded && !isFullScreen && (
         <ExpansionArrow
           index={index}
           expanded={expanded}
@@ -57,5 +57,3 @@ const FullStars = ({
     </div>
   );
 };
-
-export default FullStars;

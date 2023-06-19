@@ -16,7 +16,7 @@ import {
   ListItemText,
   Paper,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -25,12 +25,14 @@ import {
   useAddToMyRecentSearchesMutation,
   useDeleteRecentSearchesMutation,
   useGetMyRecentSearchesQuery,
-  useSearchAllMutation
+  useSearchAllMutation,
 } from "../../../services/search";
 import { useAppSelector } from "../../../store/hooks";
 import LoadingSpinner from "../../Loaders/LoadingSpinner";
 
 export const SearchSuggestion = () => {
+  const currentUser = useAppSelector((state) => state.auth);
+
   const [searchSuggestion, setSearchSuggestion] = React.useState(false);
   const searchRef = React.useRef();
   const textContainer = useAppSelector((state) => state.language.textContainer);
@@ -99,20 +101,22 @@ export const SearchSuggestion = () => {
             // add recent search to server
             setSearchQuery("");
             setSearchSuggestion(false);
-            addRecentSearch({ type, id });
 
-            const toBeAdded = recentResults.findIndex(
-              (item) => item._id === id
-            );
+            if (currentUser.isLoggedIn) {
+              addRecentSearch({ type, id });
+              const toBeAdded = recentResults.findIndex(
+                (item) => item._id === id
+              );
 
-            if (toBeAdded > -1) {
-              const newRecents = [...recentResults];
-              newRecents.splice(toBeAdded, 1);
+              if (toBeAdded > -1) {
+                const newRecents = [...recentResults];
+                newRecents.splice(toBeAdded, 1);
 
-              setRecentResults([
-                { name: title, type: type, _id: id },
-                ...newRecents,
-              ]);
+                setRecentResults([
+                  { name: title, type: type, _id: id },
+                  ...newRecents,
+                ]);
+              }
             } else {
               setRecentResults([
                 { name: title, type: type, _id: id },
@@ -254,13 +258,14 @@ export const SearchSuggestion = () => {
     variant: "standard",
     autoComplete: "off",
     sx: {
+      padding: "0px 15px",
+      width: "100%",
       flex: 1,
       // width: "100",
       input: {
         "&::placeholder": {
           opacity: 1,
-          fontWeight: 300,
-          fontSize: 16,
+          ...theme.typography.S16W300C050505,
         },
       },
     },
@@ -278,11 +283,12 @@ export const SearchSuggestion = () => {
       style: {
         width: "100%",
         height: "50px",
-        ...theme.typography.S16W500C050505,
         alignContent: "center",
         color: theme.palette.textField.inputFieldText,
         background: theme.palette.textField.inputFieldBackground,
         borderRadius: 90,
+        ...theme.typography.S16W500C050505,
+
         // border: `0.1px solid ${theme.palette.textField.borderColor} `,
         //
         // borderRadius: TEXT_FIELD_BORDER_RADIUS,
@@ -299,9 +305,8 @@ export const SearchSuggestion = () => {
       >
         <div>
           <TextField
-            {...params}
             ref={searchRef}
-            sx={{ padding: "0px 15px", width: "100%" }}
+            {...params}
             onClick={() => {
               setSearchSuggestion(true);
             }}

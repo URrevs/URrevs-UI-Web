@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Modal, Stack, Typography } from "@mui/material";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import FormikSearchComponent from "../../Components/Form/FormikSearchComponent";
@@ -10,6 +10,10 @@ import { useSearchAllMutation } from "../../services/search";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { postingModalActions } from "../../store/uiPostingModalSlice";
 import { FormSubmitButton } from "./FormSubmitButton";
+import React from "react";
+import { useCallbackPrompt } from "../../hooks/useCallbackPrompt";
+import { ConfirmationBody } from "../../Components/Dialogs/ConfiramtionBody";
+import { useTheme } from "@emotion/react";
 
 /* DOCUMENTATION */
 /*
@@ -33,7 +37,26 @@ and not just when page reloads
 - Search Component
  */
 export const QuestionsTab = ({ initValues }) => {
+  const handleInitialValues = (fieldName, initialValue) => {
+    const stored = sessionStorage.getItem(fieldName);
+    if (stored) {
+      if (typeof initialValue === "object") return JSON.parse(stored);
+      if (typeof initialValue === "number") return parseInt(stored);
+      return stored;
+    } else {
+      return initialValue;
+    }
+  };
+  // React.useEffect(() => {
+  //   if (initValues.label > 0) {
+  //     sessionStorage.setItem("spoc", JSON.stringify(initValues));
+  //   }
+  // }, []);
+  const [showDialog, setShowDialog] = React.useState(false);
+  const [showPrompt, confirmNavigation, cancelNavigation] =
+    useCallbackPrompt(showDialog);
   // UI, theme, and Text:
+  const theme = useTheme();
   const textContainer = useAppSelector((state) => state.language.textContainer);
   const pageDictionary = {
     yourQuestionRegarding: textContainer.yourQuestionRegarding,
@@ -46,11 +69,12 @@ export const QuestionsTab = ({ initValues }) => {
   // RTK:
   const [searchFn] = useSearchAllMutation();
   const dispatch = useAppDispatch();
+  const [query, setQuery] = React.useState(initValues.label);
   const [addPhoneQuestion] = useAddPhoneQuestionMutation();
   const [addCompanyQuestion] = useAddCompanyQuestionMutation();
   // const [addQuestionError, setAddQuestionError] = React.useState(null);
   //Handle Submit
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     // alert(JSON.stringify(values));
     try {
       if (values.spoc.type === "company") {
@@ -64,9 +88,14 @@ export const QuestionsTab = ({ initValues }) => {
           phone: values.spoc.id,
         });
       }
+      setQuery("success");
+      await setTimeout(() => {}, 100);
+      resetForm();
+      sessionStorage.clear();
       GAevent("User interaction", "Adding question", "Adding question", false);
     } catch (e) {}
     dispatch(postingModalActions.hidePostingModal());
+    setSubmitting(false);
   };
   // Validation:
   const QuestionValidationSchema = Yup.object().shape({
@@ -79,7 +108,7 @@ export const QuestionsTab = ({ initValues }) => {
   });
   // Render Functions:
   //Search
-  const renderSearch = (query) => (
+  const renderSearch = () => (
     <Stack spacing={1} sx={{ width: "100%" }}>
       <Typography variant="S18W500C050505">
         {pageDictionary.yourQuestionRegarding}
@@ -93,7 +122,32 @@ export const QuestionsTab = ({ initValues }) => {
       <div></div>
     </Stack>
   );
-  //TextField
+  const ConfirmationWindow = ({ values }) => {
+    React.useEffect(() => {
+      let sum = 0;
+      sum = values.spoc.label ? ++sum : sum;
+      sum = values.question ? ++sum : sum;
+      if (sum >= 1) setShowDialog(true);
+      else setShowDialog(false);
+    }, [values]);
+    return (
+      <Modal open={showPrompt} direction={theme.direction}>
+        <div style={{ direction: theme.direction }}>
+          <ConfirmationBody
+            title={textContainer.doYouReallyWantToLeave}
+            warningText={textContainer.thisWillCauseTheDataYouEnteredToBeErased}
+            yesAction={() => {
+              confirmNavigation();
+              sessionStorage.clear();
+              dispatch(postingModalActions.hidePostingModal());
+            }}
+            noAction={cancelNavigation}
+          />
+        </div>
+      </Modal>
+    );
+  };
+
   const renderField = () => {
     return (
       <Stack spacing={1} sx={{ width: "100%" }}>
@@ -113,16 +167,17 @@ export const QuestionsTab = ({ initValues }) => {
   return (
     <Formik
       initialValues={{
-        spoc: initValues,
-        question: "",
+        spoc: handleInitialValues("spoc", initValues),
+        question: handleInitialValues("question", ""),
       }}
       onSubmit={handleSubmit}
       validationSchema={QuestionValidationSchema}
     >
       {(formik) => (
         <div>
+          <ConfirmationWindow values={formik.values} />
           <Form>
-            {renderSearch(formik.values.spoc.label)}
+            {renderSearch()}
             {renderField()}
             <FormSubmitButton
               loading={formik.isSubmitting}

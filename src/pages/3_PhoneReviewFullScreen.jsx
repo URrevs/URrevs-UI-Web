@@ -2,9 +2,12 @@ import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
 import React from "react";
 import { useCallback, useEffect, useState } from "react";
+import DocumentMeta from "react-document-meta";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { FullScreenError } from "../Components/FullScreenError";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { FixedGrid } from "../Components/Grid/FixedGrid";
+import LoadingReviewSkeleton from "../Components/Loaders/LoadingReviewSkeleton";
 import { CustomAppBar } from "../Components/MainLayout/AppBar/CustomAppBar";
 import { PostingField } from "../Components/PostingComponents/PostingField";
 import PhoneReview from "../Components/ReviewCard/PhoneReview";
@@ -154,11 +157,25 @@ export default function PhoneReviewFullScreen() {
   };
 
   // reply like and unlike
-  const stateLikePhoneReply = (id) =>
-    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: true }));
+  const stateLikePhoneReply = (commentId, replyId) => {
+    dispatch(
+      commentsListActions.setReplyIsLiked({
+        commentId: commentId,
+        replyId: replyId,
+        isLiked: true,
+      })
+    );
+  };
 
-  const stateUnLikePhoneReply = (id) =>
-    dispatch(commentsListActions.setIsLiked({ id: id, isLiked: false }));
+  const stateUnLikePhoneReply = (commentId, replyId) => {
+    dispatch(
+      commentsListActions.setReplyIsLiked({
+        commentId: commentId,
+        replyId: replyId,
+        isLiked: false,
+      })
+    );
+  };
 
   const likeReplyRequest = (commentId, replyId) => {
     likeReply({
@@ -262,9 +279,9 @@ export default function PhoneReviewFullScreen() {
     return (
       <div>
         {reviewLoading ? (
-          <div>Loading review...</div>
+          <LoadingReviewSkeleton />
         ) : reviewError ? (
-          <div>Error</div>
+          <FullScreenError />
         ) : (
           currentReviewData && (
             <PhoneReview
@@ -320,12 +337,23 @@ export default function PhoneReviewFullScreen() {
         <AlonePostsGrid>
           <Box>
             {reviewLoading ? (
-              <div>Loading review...</div>
+              <LoadingReviewSkeleton />
             ) : reviewError ? (
-              <div>Error</div>
+              <FullScreenError />
             ) : (
               currentReviewData && (
-                <React.Fragment>
+                <DocumentMeta
+                  {...{
+                    description: `${currentReviewData.targetName} phone pros and cons - ${currentReviewData.targetName} مميزات وعيوب هاتف `,
+                    canonical: `https://${window.location.hostname}/phone-review/?id=${currentReviewData._id}`,
+                    meta: {
+                      charset: "utf-8",
+                      name: {
+                        keywords: `reviews,review,phone,pros,cons,${currentReviewData.targetName},مميزات,عيوب,مراجعات,هاتف`,
+                      },
+                    },
+                  }}
+                >
                   <CommentsList
                     commentsList={commentsList}
                     reviewCard={reviewCard}
@@ -340,7 +368,7 @@ export default function PhoneReviewFullScreen() {
                     commentReportFunction={commentReportFunction}
                     replyReportFunction={replyReportFunction}
                   />
-                </React.Fragment>
+                </DocumentMeta>
               )
             )}
           </Box>

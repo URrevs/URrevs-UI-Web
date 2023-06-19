@@ -14,6 +14,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import useFitText from "use-fit-text";
 import ROUTES_NAMES from "../../../RoutesNames";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { menuActions } from "../../../store/uiMenuSlice";
@@ -97,6 +98,11 @@ export const MyDrawer = (props) => {
   const [currentPage, setValue] = React.useState(
     map[location.pathname.substring(1, location.pathname.length)]
   );
+
+  React.useEffect(() => {
+    setValue(map[location.pathname.substring(1, location.pathname.length)]);
+  }, [location.pathname]);
+
   // Change Icon Color based on pathname
   const iconColor = (val) =>
     currentPage === val && !menuShow && !showPosting
@@ -218,6 +224,11 @@ export const MyDrawer = (props) => {
       if (menuShow) dispatch(menuActions.hideMenu());
     }, 200);
   };
+
+  const { fontSize, ref } = useFitText({
+    maxFontSize: 90,
+  });
+
   return (
     <React.Fragment>
       <ClickAwayListener
@@ -248,7 +259,11 @@ export const MyDrawer = (props) => {
         <div style={{ ...theme.mixins.toolbar }}></div>
         <List>
           {drawerTiles.map((item, i) => (
-            <ConditionalLink condition={item.to ? item.to : false} to={item.to}>
+            <ConditionalLink
+              condition={item.to ? item.to : false}
+              to={item.to}
+              key={item.title}
+            >
               <ListItem
                 style={{
                   padding: 0,
@@ -257,7 +272,6 @@ export const MyDrawer = (props) => {
                 }}
                 onClick={item.onClick}
                 button
-                key={item.title}
               >
                 <div style={{ textAlign: "center", padding: "8px 0" }}>
                   <ListItemIcon sx={{ justifyContent: "center" }}>
@@ -267,15 +281,18 @@ export const MyDrawer = (props) => {
                   {currentPage === item.itemValue &&
                   !menuShow &&
                   !showPosting ? (
-                    <Typography
+                    <div
+                      ref={ref}
                       // variant="S14W700C2196f3"
-                      sx={{
-                        textAlign: "center",
+                      style={{
                         ...theme.typography.S14W700C2196f3,
+                        fontSize: fontSize,
+                        width: "70px",
+                        textAlign: "center",
                       }}
                     >
                       {item.title}
-                    </Typography>
+                    </div>
                   ) : item.itemValue === 3 && menuShow ? (
                     <Typography
                       // variant="S14W700C2196f3"

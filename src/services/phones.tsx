@@ -116,6 +116,7 @@ export const phoneApi = mainApi.injectEndpoints({
           method: "PUT",
         };
       },
+      invalidatesTags: ["phoneStats"],
     }),
   }),
 });

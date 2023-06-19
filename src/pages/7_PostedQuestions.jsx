@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Box, Typography } from "@mui/material";
+import { Box, Fab, Typography } from "@mui/material";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FaButton } from "../Components/Buttons/FaButton";
@@ -36,37 +36,43 @@ export function PostedQuestions() {
       showBackBtn
       tabBar={<FilterTabbar value={filter} setValue={setFilter} />}
     >
-      {currentUserId === paramId && (
-        <FaButton
-          icon={
-            <AddIcon
-              sx={{
-                color: theme.palette.defaultRedBtnIconColor,
-                fontSize: "28px",
-              }}
-            />
-          }
+      {theme.isMobile && currentUserId === paramId && (
+        <Fab
           onClick={() => {
             dispatch(
               postingModalActions.showPostingModal({
-                tab: 0,
+                tab: 1, //Questions tab
               })
             );
           }}
+          variant="circular"
+          disableFocusRipple
+          disableRipple
+          sx={{
+            background: "#2196F3",
+            position: "fixed",
+            bottom: "15px",
+            borderRadius: "",
+
+            right: "15px",
+            // width: "50px",
+            // height: "50px",
+            // textTransform: "none",
+
+            zIndex: 5,
+            "&:hover": {
+              background: "#2196F3",
+            },
+            transition: "all 0.6s ease",
+          }}
         >
-          <Box
+          <AddIcon
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
+              color: theme.palette.defaultRedBtnIconColor,
+              fontSize: "28px",
             }}
-          >
-            <Typography variant="S14W700Cffffff">
-              {textContainer.addReview}
-            </Typography>
-          </Box>
-        </FaButton>
+          />
+        </Fab>
       )}
 
       <FixedGrid>

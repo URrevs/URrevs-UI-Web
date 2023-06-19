@@ -58,13 +58,16 @@ export const DialogTemplate = ({
             }}
           >
             {/* Empty spacing to remove the padding from sticky starCounter */}
-            {title === "" ? (
+            {title === "" && handleClose !== null ? (
               <Stack spacing={5}>
                 <div></div>
                 <Typography variant="S16W700C050505">{title}</Typography>
               </Stack>
             ) : (
-              <Typography sx={{ paddingTop: "16px" }} variant="S16W700C050505">
+              <Typography
+                sx={{ paddingTop: title && "16px" }}
+                variant="S16W700C050505"
+              >
                 {title}
               </Typography>
             )}

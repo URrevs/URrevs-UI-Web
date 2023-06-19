@@ -71,7 +71,10 @@ export const AppBarActions = ({
         {/* search icon */}
         {theme.isMobile
           ? showSearch && (
-              <CircleBtn onClick={navigateToSearchPage}>
+              <CircleBtn
+                style={{ background: theme.isDark ? "#3A3B3C" : "transparent" }}
+                onClick={navigateToSearchPage}
+              >
                 <SearchIcon />
               </CircleBtn>
             )
@@ -95,7 +98,10 @@ export const AppBarActions = ({
                 <Avatar
                   sx={{ width: circleWidth, height: circleHeight }}
                   src={photo}
-                />
+                  alt={`${user.name} profile picture`}
+                >
+                  <Avatar />
+                </Avatar>
               )}
             </CircleBtn>
           </ConditionalLink>

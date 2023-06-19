@@ -20,8 +20,11 @@ import FormikTextField from "../../Components/Form/FormikTextField";
 import { StarCounter } from "../../Components/StarCounter/StarCounter";
 import { useGetManufacturingCompanyMutation } from "../../services/phones";
 import { useSearchPhonesOnlyMutation } from "../../services/search";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useCallbackPrompt } from "../../hooks/useCallbackPrompt";
 import { FormSubmitButton } from "./FormSubmitButton";
+import { ConfirmationBody } from "../../Components/Dialogs/ConfiramtionBody";
+import { postingModalActions } from "../../store/uiPostingModalSlice";
 
 /*Documentation */
 /*
@@ -42,33 +45,22 @@ import { FormSubmitButton } from "./FormSubmitButton";
 export const AddReviewTab = ({ ...props }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  // window.addEventListener("beforeunload", (e) => {
-  //   console.log("UNLOAD:1");
-  //   e.returnValue = "";
-  // });
-
-  // const handleUnload = (e) => {
-  //   console.log("hey");
-  //   alert("HEY");
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener("beforeunload", handleUnload);
-
-  //   return () => window.removeEventListener("beforeunload", handleUnload);
-  // }, [handleUnload]);
 
   const textContainer = useAppSelector((state) => {
     return state.language.textContainer;
   });
+  const dispatch = useAppDispatch();
   const [open, setOpen] = React.useState(false);
   const [openStar, setOpenStar] = React.useState(false);
   const [count, setCount] = React.useState(0);
-  const [contribution, setContribution] = React.useState(0);
+  const [showDialog, setShowDialog] = React.useState(false);
+  const [showPrompt, confirmNavigation, cancelNavigation] =
+    useCallbackPrompt(showDialog);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const theme = useTheme();
   const pageDictionary = {
+    reviewEncouragement: textContainer.reviewEncouragement,
     referralCodeHelpPrompt: textContainer.referralCodeHelpPrompt,
     chooseProduct: textContainer.chooseProduct,
     writeProductName: textContainer.writeProductName,
@@ -124,7 +116,7 @@ export const AddReviewTab = ({ ...props }) => {
     controlled = true
   ) => {
     return (
-      <Stack spacing={2} sx={{ width: "100%" }}>
+      <Stack spacing={1} sx={{ width: "100%" }}>
         <Typography sx={{}} variant="S18W500C050505">
           {text}
         </Typography>
@@ -145,23 +137,18 @@ export const AddReviewTab = ({ ...props }) => {
     const companyId = await getManufacturingCompany(
       props.values.chooseProduct.id
     );
+    // sessionStorage.setItem(
+    //   "chooseProduct",
+    //   JSON.stringify(props.values.chooseProduct)
+    // );
     props.setFieldValue("companyId", companyId.data);
-    sessionStorage.setItem("companyId", JSON.stringify(companyId.data));
+    // sessionStorage.setItem("companyId", JSON.stringify(companyId.data));
   };
   React.useEffect(() => {
     if (props.values.chooseProduct.id !== "") handleManufacturingCompany();
   }, []);
+
   // Star Counter Use Effect
-  // Search Component
-  const beforeUnLoadFunction = () => {
-    console.log("Hell");
-  };
-  React.useEffect(() => {
-    window.addEventListener("beforeunload", beforeUnLoadFunction);
-    return (_) => {
-      window.removeEventListener("beforeunload", beforeUnLoadFunction);
-    };
-  }, []);
   // Can be easily done with measuring contributions
 
   React.useEffect(() => {
@@ -185,9 +172,25 @@ export const AddReviewTab = ({ ...props }) => {
     sumChar += props.values.hateAbout.length; //Company
     sumChar = sumChar > limit ? limit : sumChar; // Not really necessary
     setCount((sum * 50) / 11 + (sumChar * 50) / limit);
+    if (sum >= 1 || sumChar >= 1) setShowDialog(true);
+    else setShowDialog(false);
   }, [props.values]);
   return (
     <React.Fragment>
+      <Modal open={showPrompt} direction={theme.direction}>
+        <div style={{ direction: theme.direction }}>
+          <ConfirmationBody
+            title={textContainer.doYouReallyWantToLeave}
+            warningText={textContainer.thisWillCauseTheDataYouEnteredToBeErased}
+            yesAction={() => {
+              confirmNavigation();
+              sessionStorage.clear();
+              dispatch(postingModalActions.hidePostingModal());
+            }}
+            noAction={cancelNavigation}
+          />
+        </div>
+      </Modal>
       <Modal open={open} onClose={handleClose} dir={theme.direction}>
         <Box>
           <DialogText text={pageDictionary.referralCodeHelpPrompt} />
@@ -201,7 +204,7 @@ export const AddReviewTab = ({ ...props }) => {
         dir={theme.direction}
       >
         <Box>
-          <DialogText text="بطاطس محمرة" />
+          <DialogText text={pageDictionary.reviewEncouragement} />
         </Box>
       </Modal>
       <form onSubmit={props.handleSubmit}>
@@ -220,11 +223,17 @@ export const AddReviewTab = ({ ...props }) => {
             position: "sticky",
             zIndex: 1000,
             border:
-              theme.isMobile && `2px solid ${theme.palette.background.default}`,
-            backgroundColor: theme.isMobile
-              ? theme.palette.background.default
-              : theme.palette.modalColor,
-            top: theme.isMobile ? "45px" : 0,
+              theme.isMobile &&
+              location.pathname === "/add-review" &&
+              `2px solid ${theme.palette.background.default}`,
+            backgroundColor:
+              theme.isMobile && location.pathname === "/add-review"
+                ? theme.palette.background.default
+                : theme.palette.modalColor,
+            top:
+              theme.isMobile && location.pathname === "/add-review"
+                ? "45px"
+                : 0,
           }}
           onClick={() => {
             setOpenStar(true);
@@ -232,29 +241,38 @@ export const AddReviewTab = ({ ...props }) => {
         >
           <StarCounter value={count} />
         </div>
+        <div style={{ height: "15px" }}></div>
         <Divider />
-        <Typography variant="S18W500C050505">
-          {pageDictionary.chooseProduct + ":"}
-        </Typography>
+        <Stack spacing={1}>
+          <div></div>
+          <div></div>
+          <Typography variant="S18W500C050505">
+            {pageDictionary.chooseProduct + ":"}
+          </Typography>
 
-        <FormikSearchComponent
-          fieldName="chooseProduct"
-          query={props.values.chooseProduct.label}
-          label={textContainer.writeProductName}
-          searchFn={searchFn}
-          toGetManufacturingCompany
-        />
-        <br />
+          <FormikSearchComponent
+            fieldName="chooseProduct"
+            query={props.values.chooseProduct.label}
+            label={textContainer.writeProductName}
+            searchFn={searchFn}
+            toGetManufacturingCompany
+          />
+          <div></div>
+          <div></div>
+        </Stack>
         {/* Datepicker*/}
-        <Typography variant="S18W500C050505">
-          {pageDictionary.howLong}
-        </Typography>
-        <Stack spacing={2} sx={{ width: "100%" }}>
+
+        <Stack spacing={1} sx={{ width: "100%" }}>
+          <Typography variant="S18W500C050505">
+            {pageDictionary.howLong}
+          </Typography>
           <FormikDatePicker
             isRequired={false}
             label={pageDictionary.purchaseDate}
             fieldName={"purchaseDate"}
           />
+          <div></div>
+          <div></div>
         </Stack>
         <Typography variant="S18W500C050505">
           {pageDictionary.overAllExp + ":"}
@@ -277,17 +295,21 @@ export const AddReviewTab = ({ ...props }) => {
             </div>
           );
         })}
-        {/* TextFields */}
-        {renderFields(
-          pageDictionary.likeAboutProduct,
-          "likeAboutProduct",
-          pageDictionary.pros
-        )}
-        {renderFields(
-          pageDictionary.hateAboutProduct,
-          "hateAboutProduct",
-          pageDictionary.cons
-        )}
+        <Stack spacing={2}>
+          <div></div>
+          {/* TextFields */}
+          {renderFields(
+            pageDictionary.likeAboutProduct,
+            "likeAboutProduct",
+            pageDictionary.pros
+          )}
+          {renderFields(
+            pageDictionary.hateAboutProduct,
+            "hateAboutProduct",
+            pageDictionary.cons
+          )}
+          <div></div>
+        </Stack>
         {/* RENDER COMPANY REVIEW FIELDS */}
         {props.values.companyId?._id ? (
           <React.Fragment>
@@ -297,28 +319,33 @@ export const AddReviewTab = ({ ...props }) => {
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <FormikStar fieldName="rateManufacturer" />
             </Box>
-            {renderFields(
-              `${pageDictionary.likeAbout} ${props.values.companyId.name}`,
-              "likeAbout",
-              pageDictionary.pros
-            )}
-            {renderFields(
-              `${pageDictionary.hateAbout} ${props.values.companyId.name}`,
-              "hateAbout",
-              pageDictionary.cons
-            )}
+            <Stack spacing={2}>
+              <div></div>
+              {renderFields(
+                `${pageDictionary.likeAbout} ${props.values.companyId.name}`,
+                "likeAbout",
+                pageDictionary.pros
+              )}
+              {renderFields(
+                `${pageDictionary.hateAbout} ${props.values.companyId.name}`,
+                "hateAbout",
+                pageDictionary.cons
+              )}
+              <div></div>
+            </Stack>
           </React.Fragment>
         ) : null}
-        <Typography
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-          variant="S18W500C050505"
-        >
-          {pageDictionary.enterInvitationCode + ":"}
-          {/* <Tooltip title={pageDictionary.referralCodeHelpPrompt}>
+        <Stack spacing={1}>
+          <Typography
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+            variant="S18W500C050505"
+          >
+            {pageDictionary.enterInvitationCode + ":"}
+            {/* <Tooltip title={pageDictionary.referralCodeHelpPrompt}>
             <HelpIcon
               sx={{
                 marginLeft: "4px",
@@ -328,30 +355,30 @@ export const AddReviewTab = ({ ...props }) => {
               }}
             />
           </Tooltip> */}
-          <IconButton
-            onClick={handleOpen}
-            sx={{
-              padding: 0,
-              marginLeft: "4px",
-            }}
-          >
-            <HelpIcon
+            <IconButton
+              onClick={handleOpen}
               sx={{
                 padding: 0,
-                fontSize: "25px",
-                color: theme.palette.defaultIconColor,
+                marginLeft: "4px",
               }}
-            />
-          </IconButton>
-        </Typography>
-        <br />
-        {/* Invitation Code */}
-        <FormikTextField
-          fieldName={"invitationCode"}
-          label={pageDictionary.invitationCode}
-          isControlled={true}
-          multiline={false}
-        />
+            >
+              <HelpIcon
+                sx={{
+                  padding: 0,
+                  fontSize: "25px",
+                  color: theme.palette.defaultIconColor,
+                }}
+              />
+            </IconButton>
+          </Typography>
+          {/* Invitation Code */}
+          <FormikTextField
+            fieldName={"invitationCode"}
+            label={pageDictionary.invitationCode}
+            isControlled={true}
+            multiline={false}
+          />
+        </Stack>
         {/* Submit Button */}
         <FormSubmitButton
           loading={props.isSubmitting}

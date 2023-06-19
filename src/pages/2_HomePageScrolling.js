@@ -22,7 +22,7 @@ import {
   useUnLikeCompanyQuestionCommentMutation,
 } from "../services/company_questions";
 import Banner from "../Components/Banners/Banner";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Fab, Grid, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { AlonePostsGrid } from "../Components/Grid/AlonePostsGrid";
 import { PostingComponent } from "../Components/PostingComponents/PostingComponent";
@@ -191,6 +191,8 @@ function Reviews() {
               acceptedAnswer={true}
               showReply={false}
               upvoted={review.acceptedAns.upvoted}
+              userId={review.acceptedAns.userId}
+              userName={review.acceptedAns.userName}
             />
           );
         }
@@ -267,6 +269,8 @@ function Reviews() {
               acceptedAnswer={true}
               showReply={false}
               upvoted={review.acceptedAns.upvoted}
+              userId={review.acceptedAns.userId}
+              userName={review.acceptedAns.userName}
             />
           );
         }
@@ -341,36 +345,6 @@ function Reviews() {
         <AlonePostsGrid>
           {currentUser.isLoggedIn ? (
             <div>
-              {/* <FaButton
-                icon={
-                  <AddIcon
-                    sx={{
-                      color: theme.palette.defaultRedBtnIconColor,
-                      fontSize: "28px",
-                    }}
-                  />
-                }
-                onClick={() => {
-                  dispatch(
-                    postingModalActions.showPostingModal({
-                      tab: 0,
-                    })
-                  );
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography variant="S14W700Cffffff">
-                    {textContainer.addReview}
-                  </Typography>
-                </Box>
-              </FaButton> */}
               <PostingComponent
                 label={textContainer.youCanWriteReviewOrAskAQuestion}
                 placeholder={textContainer.writeYourPost}

@@ -20,11 +20,11 @@ export const InvitationDialog = ({ handleClose }) => {
   const currentUserProfile = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const pageDictionary = {
-    paragraph: textContainer.reviewEncouragement,
+    paragraph: textContainer.invitationCodePrompt,
     title: `${textContainer.yourInvitationCode}:`,
     shareCode: textContainer.shareInvitationLink,
-    codeCopyWasSuccessful: "تم نسخ كود الدعوة",
-    linkCopyWasSuccessful: "تم نسخ رابط الدعوة",
+    codeCopyWasSuccessful: textContainer.invitationCodeCopied,
+    linkCopyWasSuccessful: textContainer.invitationLinkCopied,
   };
 
   const showShareSnackbar = useShareSnackbar();
@@ -79,8 +79,8 @@ export const InvitationDialog = ({ handleClose }) => {
                 // margin="normal"
                 inputProps={{
                   style: {
-                    fontWeight: 500,
-                    fontSize: 22,
+                    ...theme.typography.S22W500C050505,
+
                     textAlign: "center",
                     WebkitTextFillColor: theme.palette.textField.inputFieldText,
                     background: theme.palette.textField.inputFieldBackground,

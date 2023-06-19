@@ -21,8 +21,8 @@ const CardSubheader = ({
   const language = useAppSelector((state) => state.language.language);
   const theme = useTheme();
 
+  if (buyDate) buyDate = subtractDate(buyDate, language, new Date(reviewDate));
   reviewDate = convertDateToString(reviewDate, language);
-  if (buyDate) buyDate = subtractDate(buyDate, language);
 
   let verificationRatioText = "";
 
@@ -32,7 +32,10 @@ const CardSubheader = ({
     verificationRatioText = textContainer.thisReviewIsFromAnApplePhone;
   } else {
     verificationRatioText =
-      textContainer.thisReviewIsVerifiedBy + " " + verificationRatio + "%";
+      textContainer.thisReviewIsVerifiedBy +
+      " " +
+      verificationRatio.toFixed(0) +
+      "%";
   }
 
   return (

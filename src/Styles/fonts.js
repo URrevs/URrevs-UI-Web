@@ -9,7 +9,7 @@ export const getFonts = (isDark) => {
     red: "#E41D1D",
   };
   const DARK_FONTS = {
-    blue: "#65676b",
+    blue: "#B0B3B8",
     lightBlue: "#2196F3",
     black: "#E4E6EB",
     white: "#E4E6EB",

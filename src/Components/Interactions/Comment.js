@@ -51,7 +51,12 @@ export const Comment = ({
   const [showReplyField, setShowReplyField] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
 
-  const toggleReplyField = () => setShowReplyField((show) => !show);
+  const toggleReplyField = () => {
+    setShowReplyField((show) => !show);
+    setShowReplies((s) => !s);
+  };
+
+  const repliesPadding = "50px";
 
   return (
     <div style={{ maxWidth: "calc(100% - 20px)", padding: "4px 0px" }}>
@@ -74,19 +79,38 @@ export const Comment = ({
           onClickHandler={onLikeClickHandler}
           ownerId={userId}
           showReplyField={toggleReplyField}
+          type={"comment"}
         ></InteractionFooter>
       </InteractionBody>
+      {/* Posting field */}
+      <div
+        style={{
+          marginBottom: "10px",
+          paddingRight: theme.direction === "rtl" && repliesPadding,
+          marginLeft: theme.direction === "ltr" && repliesPadding,
+        }}
+      >
+        {showReplyField && (
+          <PostingField
+            avatar={true}
+            placeholder={textContainer.writeAReply}
+            reply
+            backgroundColor={
+              theme.isMobile &&
+              theme.palette.interactionCard.backgroundMobileColor
+            }
+            onSubmit={(text) => submitReplyHandler(text, commentId)}
+          />
+        )}
+      </div>
 
-      {showReplyField && (
-        <PostingField
-          avatar={true}
-          placeholder="اكتب رد"
-          reply
-          onSubmit={(text) => submitReplyHandler(text, commentId)}
-        />
-      )}
       {/* replies list */}
-      <div style={{ marginRight: "54px" }}>
+      <div
+        style={{
+          marginRight: theme.direction === "rtl" && repliesPadding,
+          marginLeft: theme.direction === "ltr" && repliesPadding,
+        }}
+      >
         {replies.length !== 0 && !showReplies ? (
           <TextButton
             title={`${replies.length} ${textContainer.reply}`}
@@ -108,12 +132,12 @@ export const Comment = ({
                   liked={reply.liked}
                   replyLike={likeReplyRequest}
                   replyUnlike={unLikeReplyRequest}
-                  commentId={reply.commentId}
+                  commentId={commentId}
                   avatar={reply.userPicture}
                   userName={reply.userName}
                   userId={reply.userId}
                   reportFunction={() => {
-                    replyReportFunction(reply.commentId, reply._id);
+                    replyReportFunction(commentId, reply._id);
                   }}
                 />
               );

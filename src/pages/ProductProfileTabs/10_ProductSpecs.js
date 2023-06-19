@@ -8,7 +8,7 @@ import {
   Grid,
   IconButton,
   Modal,
-  Typography
+  Typography,
 } from "@mui/material";
 import { styled } from "@mui/styles";
 import React, { Fragment } from "react";
@@ -17,6 +17,7 @@ import { useSearchParams } from "react-router-dom";
 import { FaButton } from "../../Components/Buttons/FaButton";
 import { CompareDialog } from "../../Components/Dialogs/CompareDialog/CompareDialog";
 import { CompareItem } from "../../Components/Dialogs/CompareDialog/CompareItem";
+import { DialogText } from "../../Components/Dialogs/DialogText";
 import { HorizontalPhoneList } from "../../Components/HorizontalPhoneList/HorizontalPhoneList";
 import LoadingSpinner from "../../Components/Loaders/LoadingSpinner";
 import { ProductOverviewCard } from "../../Components/OverviewCard/ProductOverviewCard";
@@ -26,7 +27,7 @@ import classes from "../../scrollbar.module.css";
 import {
   useGetPhoneSpecsQuery,
   useGetSimilarPhonesQuery,
-  useGetStatisticalInfoQuery
+  useGetStatisticalInfoQuery,
 } from "../../services/phones";
 
 const CardStyled = styled(
@@ -53,9 +54,10 @@ export const ProductSpecsScreen = () => {
     specs: textContainer.tabBarSpecs,
     similarPhones: textContainer.similarPhones,
     compareWithAnotherProduct: textContainer.compareWithAnotherProduct,
+    disclaimer: textContainer.disclaimer,
   };
 
-  const [open, setOpen] = React.useState(false);
+  const [modal, setModal] = React.useState("");
 
   const {
     data: statistical,
@@ -73,14 +75,13 @@ export const ProductSpecsScreen = () => {
     // pollingInterval: 3000,
   });
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => setModal("");
   const theme = useTheme();
   const ComparePaper = (item) => {
     if (isLoading) {
       return <CircularProgress />;
     } else if (error) {
-      return;
+      return <p>{textContainer.errorHappend}</p>;
     } else {
       return (
         <CardStyled>
@@ -117,7 +118,7 @@ export const ProductSpecsScreen = () => {
           ]}
           paramId={paramId}
           phone={statistical.name}
-          type="هاتف ذكي"
+          type={textContainer.smartphone}
         />
       </div>
     );
@@ -126,7 +127,7 @@ export const ProductSpecsScreen = () => {
     if (isLoading) {
       return <CircularProgress />;
     } else if (error) {
-      return <p>حدث خطأ</p>;
+      return <p>{textContainer.errorHappend}</p>;
     } else {
       return (
         <Box
@@ -142,7 +143,9 @@ export const ProductSpecsScreen = () => {
                 sx={{ fontSize: "28px", color: "#FFFFFF" }}
               />
             }
-            onClick={handleOpen}
+            onClick={() => {
+              setModal("compare");
+            }}
           >
             <Box
               sx={{
@@ -157,7 +160,7 @@ export const ProductSpecsScreen = () => {
               </Typography>
             </Box>
           </FaButton>
-          <Modal open={open} onClose={handleClose}>
+          <Modal open={modal === "compare"} onClose={handleClose}>
             <div>
               <CompareDialog item={data} handleClose={handleClose} />
             </div>
@@ -188,7 +191,7 @@ export const ProductSpecsScreen = () => {
     if (isLoading) {
       return <CircularProgress />;
     } else if (error) {
-      return <p>حدث خطأ</p>;
+      return <p>{textContainer.errorHappend}</p>;
     } else {
       return (
         <CardStyled elevation={3}>
@@ -202,7 +205,7 @@ export const ProductSpecsScreen = () => {
     if (isLoading) {
       return <CircularProgress />;
     } else if (error) {
-      return <p>حدث خطأ</p>;
+      return <p>{textContainer.errorHappend}</p>;
     } else {
       return <ProductDetailsTable phoneData={data} />;
     }
@@ -210,6 +213,11 @@ export const ProductSpecsScreen = () => {
 
   return (
     <React.Fragment>
+      <Modal open={modal === "help"} onClose={handleClose}>
+        <div>
+          <DialogText text={componentDictionary.disclaimer} />
+        </div>
+      </Modal>
       <Grid container>
         {/* Right Grid */}
         <Grid item xl={2} lg={1} md={0.5} xs={0}></Grid>
@@ -234,6 +242,9 @@ export const ProductSpecsScreen = () => {
           >
             {componentDictionary.specs + ":"}
             <IconButton
+              onClick={() => {
+                setModal("help");
+              }}
               sx={{
                 padding: 0,
                 marginLeft: "4px",
@@ -278,6 +289,7 @@ export const ProductSpecsScreen = () => {
                 {similarPhonesComponent()}
                 <div style={{ height: "23px" }}></div>
                 {ComparePaper(data)}
+                <div style={{ height: "50px" }}></div>
               </div>
             </div>
           )}

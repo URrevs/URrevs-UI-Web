@@ -90,7 +90,7 @@ export default function PhoneReview({
   const checkIsSignedIn = useCheckSignedIn();
   const checkOwnerShip = useCheckOwnership({
     ownerId: reviewDetails.userId,
-    message: "لا يمكنك الاعجاب بالمراجعة الخاصة بك",
+    message: textContainer.youCantLikeYourReview,
   });
 
   const likeBtnHandler = async () => {
@@ -114,6 +114,7 @@ export default function PhoneReview({
       fullScreenRequest({ reviewId: reviewDetails._id });
     }
   };
+  
   const seeMoreHandler = () => {
     if (checkSignedInWithoutModal()) {
       seeMoreRequest({ reviewId: reviewDetails._id });
@@ -126,7 +127,7 @@ export default function PhoneReview({
     increaseShareCounterRequest({ reviewId: reviewDetails._id });
 
     generateShareLink().then((data) => {
-      showShareSnackbar(data.data.shortLink, "تم نسخ رابط المنشور");
+      showShareSnackbar(data.data.shortLink, textContainer.postLinkCopied);
     });
   };
 
